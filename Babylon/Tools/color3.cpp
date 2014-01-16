@@ -19,7 +19,7 @@ string Babylon::Color3::toString() {
 
 // Operators
 Color3::Ptr Babylon::Color3::multiply(Color3::Ptr otherColor) {
-	return make_shared<Color3>(new Color3(this->r * otherColor->r, this->g * otherColor->g, this->b * otherColor->b));
+	return make_shared<Color3>(this->r * otherColor->r, this->g * otherColor->g, this->b * otherColor->b);
 };
 
 void Babylon::Color3::multiplyToRef(Color3::Ptr otherColor, Color3::Ptr result) {
@@ -33,7 +33,7 @@ bool Babylon::Color3::equals(Color3::Ptr otherColor) {
 };
 
 Babylon::Color3::Ptr Babylon::Color3::scale(float scale) {
-	return make_shared<Color3>(new Color3(this->r * scale, this->g * scale, this->b * scale));
+	return make_shared<Color3>(this->r * scale, this->g * scale, this->b * scale);
 };
 
 void Babylon::Color3::scaleToRef(float scale, Color3::Ptr result) {
@@ -43,7 +43,7 @@ void Babylon::Color3::scaleToRef(float scale, Color3::Ptr result) {
 };
 
 Color3::Ptr Babylon::Color3::clone() {
-	return make_shared<Color3>(new Color3(this->r, this->g, this->b));
+	return make_shared<Color3>(this->r, this->g, this->b);
 };
 
 void Babylon::Color3::copyFrom(Color3::Ptr source) {
@@ -60,5 +60,5 @@ void Babylon::Color3::copyFromFloats(float r, float g, float b) {
 
 // Statics
 Color3::Ptr Babylon::Color3::FromArray(vector<float> vals) {
-	return make_shared<Color3>(new Color3(vals[0], vals[1], vals[2]));
+	return make_shared<Color3>(vals[0], vals[1], vals[2]);
 };
