@@ -485,15 +485,17 @@ void Babylon::Engine::setAlphaMode(mode) {
 		break;
 	}
 };
+*/
 
-void Babylon::Engine::setAlphaTesting(enable) {
+void Babylon::Engine::setAlphaTesting(bool enable) {
 	this->_alphaTest = enable;
 };
 
-void Babylon::Engine::getAlphaTesting() {
+bool Babylon::Engine::getAlphaTesting() {
 	return this->_alphaTest;
 };
 
+/*
 // Textures
 void Babylon::Engine::wipeCaches() {
 	this->_activeTexturesCache = [];

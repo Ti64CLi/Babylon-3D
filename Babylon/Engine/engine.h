@@ -66,6 +66,7 @@ namespace Babylon {
 		bool isFullscreen;
 		bool _pointerLockRequested;
 		Viewport::Ptr _cachedViewport;
+		bool _alphaTest;
 
 	public: 
 		Engine(Canvas::Ptr canvas, bool antialias);
@@ -122,8 +123,10 @@ namespace Babylon {
 		virtual void setDepthWrite(enable);
 		virtual void setColorWrite(enable);
 		virtual void setAlphaMode(mode);
-		virtual void setAlphaTesting(enable);
-		virtual void getAlphaTesting();
+		*/
+		virtual void setAlphaTesting(bool enable);
+		virtual bool getAlphaTesting();
+		/*
 		// Textures
 		virtual void wipeCaches();
 		virtual void createTexture(url, noMipmap, invertY, scene);
