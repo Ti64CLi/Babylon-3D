@@ -196,50 +196,50 @@ Vector3::Ptr Babylon::Vector3::Up() {
 	return make_shared<Vector3>(0, 1.0, 0);
 };
 
-Vector3::Ptr Babylon::Vector3::TransformCoordinates(Vector3::Ptr vector, transformation) {
+Vector3::Ptr Babylon::Vector3::TransformCoordinates(Vector3::Ptr vector, Matrix::Ptr transformation) {
 	auto result = Vector3::Zero();
 	Vector3::TransformCoordinatesToRef(vector, transformation, result);
 	return result;
 };
 
-void Babylon::Vector3::TransformCoordinatesToRef(Vector3::Ptr vector, transformation, Vector3::Ptr result) {
-	auto x = (vector->x * transformation.m[0]) + (vector->y * transformation.m[4]) + (vector->z * transformation.m[8]) + transformation.m[12];
-	auto y = (vector->x * transformation.m[1]) + (vector->y * transformation.m[5]) + (vector->z * transformation.m[9]) + transformation.m[13];
-	auto z = (vector->x * transformation.m[2]) + (vector->y * transformation.m[6]) + (vector->z * transformation.m[10]) + transformation.m[14];
-	auto w = (vector->x * transformation.m[3]) + (vector->y * transformation.m[7]) + (vector->z * transformation.m[11]) + transformation.m[15];
+void Babylon::Vector3::TransformCoordinatesToRef(Vector3::Ptr vector, Matrix::Ptr transformation, Vector3::Ptr result) {
+	auto x = (vector->x * transformation->m[0]) + (vector->y * transformation->m[4]) + (vector->z * transformation->m[8]) + transformation->m[12];
+	auto y = (vector->x * transformation->m[1]) + (vector->y * transformation->m[5]) + (vector->z * transformation->m[9]) + transformation->m[13];
+	auto z = (vector->x * transformation->m[2]) + (vector->y * transformation->m[6]) + (vector->z * transformation->m[10]) + transformation->m[14];
+	auto w = (vector->x * transformation->m[3]) + (vector->y * transformation->m[7]) + (vector->z * transformation->m[11]) + transformation->m[15];
 
 	result->x = x / w;
 	result->y = y / w;
 	result->z = z / w;
 };
 
-void Babylon::Vector3::TransformCoordinatesFromFloatsToRef(float x, float y, float z, transformation, Vector3::Ptr result) {
-	auto rx = (x * transformation.m[0]) + (y * transformation.m[4]) + (z * transformation.m[8]) + transformation.m[12];
-	auto ry = (x * transformation.m[1]) + (y * transformation.m[5]) + (z * transformation.m[9]) + transformation.m[13];
-	auto rz = (x * transformation.m[2]) + (y * transformation.m[6]) + (z * transformation.m[10]) + transformation.m[14];
-	auto rw = (x * transformation.m[3]) + (y * transformation.m[7]) + (z * transformation.m[11]) + transformation.m[15];
+void Babylon::Vector3::TransformCoordinatesFromFloatsToRef(float x, float y, float z, Matrix::Ptr transformation, Vector3::Ptr result) {
+	auto rx = (x * transformation->m[0]) + (y * transformation->m[4]) + (z * transformation->m[8]) + transformation->m[12];
+	auto ry = (x * transformation->m[1]) + (y * transformation->m[5]) + (z * transformation->m[9]) + transformation->m[13];
+	auto rz = (x * transformation->m[2]) + (y * transformation->m[6]) + (z * transformation->m[10]) + transformation->m[14];
+	auto rw = (x * transformation->m[3]) + (y * transformation->m[7]) + (z * transformation->m[11]) + transformation->m[15];
 
 	result->x = rx / rw;
 	result->y = ry / rw;
 	result->z = rz / rw;
 };
 
-Vector3::Ptr Babylon::Vector3::TransformNormal(Vector3::Ptr vector, transformation) {
+Vector3::Ptr Babylon::Vector3::TransformNormal(Vector3::Ptr vector, Matrix::Ptr transformation) {
 	auto result = Vector3::Zero();
 	Vector3::TransformNormalToRef(vector, transformation, result);
 	return result;
 };
 
-void Babylon::Vector3::TransformNormalToRef(Vector3::Ptr vector, transformation, Vector3::Ptr result) {
-	result->x = (vector->x * transformation.m[0]) + (vector->y * transformation.m[4]) + (vector->z * transformation.m[8]);
-	result->y = (vector->x * transformation.m[1]) + (vector->y * transformation.m[5]) + (vector->z * transformation.m[9]);
-	result->z = (vector->x * transformation.m[2]) + (vector->y * transformation.m[6]) + (vector->z * transformation.m[10]);
+void Babylon::Vector3::TransformNormalToRef(Vector3::Ptr vector, Matrix::Ptr transformation, Vector3::Ptr result) {
+	result->x = (vector->x * transformation->m[0]) + (vector->y * transformation->m[4]) + (vector->z * transformation->m[8]);
+	result->y = (vector->x * transformation->m[1]) + (vector->y * transformation->m[5]) + (vector->z * transformation->m[9]);
+	result->z = (vector->x * transformation->m[2]) + (vector->y * transformation->m[6]) + (vector->z * transformation->m[10]);
 };
 
-void Babylon::Vector3::TransformNormalFromFloatsToRef(float x, float y, float z, transformation, Vector3::Ptr result) {
-	result->x = (x * transformation.m[0]) + (y * transformation.m[4]) + (z * transformation.m[8]);
-	result->y = (x * transformation.m[1]) + (y * transformation.m[5]) + (z * transformation.m[9]);
-	result->z = (x * transformation.m[2]) + (y * transformation.m[6]) + (z * transformation.m[10]);
+void Babylon::Vector3::TransformNormalFromFloatsToRef(float x, float y, float z, Matrix::Ptr transformation, Vector3::Ptr result) {
+	result->x = (x * transformation->m[0]) + (y * transformation->m[4]) + (z * transformation->m[8]);
+	result->y = (x * transformation->m[1]) + (y * transformation->m[5]) + (z * transformation->m[9]);
+	result->z = (x * transformation->m[2]) + (y * transformation->m[6]) + (z * transformation->m[10]);
 };
 
 Vector3::Ptr Babylon::Vector3::CatmullRom(Vector3::Ptr value1, Vector3::Ptr value2, Vector3::Ptr value3, Vector3::Ptr value4, float amount) {
@@ -327,9 +327,9 @@ void Babylon::Vector3::NormalizeToRef(Vector3::Ptr vector, Vector3::Ptr result) 
 	result->normalize();
 };
 
-Vector3::Ptr Babylon::Vector3::Project(Vector3::Ptr vector, world, transform, Viewport::Ptr viewport) {
-	auto cw = viewport.width;
-	auto ch = viewport.height;
+Vector3::Ptr Babylon::Vector3::Project(Vector3::Ptr vector, Matrix::Ptr world, Matrix::Ptr transform, Viewport::Ptr viewport) {
+	auto cw = viewport->width;
+	auto ch = viewport->height;
 	auto cx = viewport->x;
 	auto cy = viewport->y;
 
@@ -344,15 +344,15 @@ Vector3::Ptr Babylon::Vector3::Project(Vector3::Ptr vector, world, transform, Vi
 	return Vector3::TransformCoordinates(vector, finalMatrix);
 };
 
-Vector3::Ptr Babylon::Vector3::Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, world, view, projection) {
-	auto matrix = world.multiply(view).multiply(projection);
+Vector3::Ptr Babylon::Vector3::Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection) {
+	auto matrix = world->multiply(view)->multiply(projection);
 	matrix.invert();
 	source->x = source->x / viewportWidth * 2 - 1;
 	source->y = -(source->y / viewportHeight * 2 - 1);
 	auto vector = Vector3::TransformCoordinates(source, matrix);
-	auto num = source->x * matrix.m[3] + source->y * matrix.m[7] + source->z * matrix.m[11] + matrix.m[15];
+	auto num = source->x * matrix->m[3] + source->y * matrix->m[7] + source->z * matrix->m[11] + matrix->m[15];
 
-	if (BABYLON.Tools.WithinEpsilon(num, 1.0)) {
+	if (Tools::WithinEpsilon(num, 1.0)) {
 		vector = vector->scale(1.0 / num);
 	}
 

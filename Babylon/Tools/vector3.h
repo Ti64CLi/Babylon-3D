@@ -6,6 +6,7 @@
 
 #include "igl.h"
 #include "viewport.h"
+#include "matrix.h"
 
 using namespace std;
 
@@ -64,12 +65,12 @@ namespace Babylon {
 		virtual void FromFloatsToRef(float x, float y, float z, Vector3::Ptr result);
 		static Vector3::Ptr Zero();
 		static Vector3::Ptr Up();
-		virtual Vector3::Ptr TransformCoordinates(Vector3::Ptr vector, transformation);
-		virtual void TransformCoordinatesToRef(Vector3::Ptr vector, transformation, Vector3::Ptr result);
-		virtual void TransformCoordinatesFromFloatsToRef(float x, float y, float z, transformation, Vector3::Ptr result);
-		virtual Vector3::Ptr TransformNormal(Vector3::Ptr vector, transformation);
-		virtual void TransformNormalToRef(Vector3::Ptr vector, transformation, Vector3::Ptr result);
-		virtual void TransformNormalFromFloatsToRef(float x, float y, float z, transformation, Vector3::Ptr result);
+		virtual Vector3::Ptr TransformCoordinates(Vector3::Ptr vector, Matrix::Ptr transformation);
+		virtual void TransformCoordinatesToRef(Vector3::Ptr vector, Matrix::Ptr transformation, Vector3::Ptr result);
+		virtual void TransformCoordinatesFromFloatsToRef(float x, float y, float z, Matrix::Ptr transformation, Vector3::Ptr result);
+		virtual Vector3::Ptr TransformNormal(Vector3::Ptr vector, Matrix::Ptr transformation);
+		virtual void TransformNormalToRef(Vector3::Ptr vector, Matrix::Ptr transformation, Vector3::Ptr result);
+		virtual void TransformNormalFromFloatsToRef(float x, float y, float z, Matrix::Ptr transformation, Vector3::Ptr result);
 		virtual Vector3::Ptr CatmullRom(Vector3::Ptr value1, Vector3::Ptr value2, Vector3::Ptr value3, Vector3::Ptr value4, float amount);
 		virtual Vector3::Ptr Clamp(Vector3::Ptr value, Vector3::Ptr min, Vector3::Ptr max);
 		virtual Vector3::Ptr Hermite(Vector3::Ptr value1, Vector3::Ptr tangent1, Vector3::Ptr value2, Vector3::Ptr tangent2, float amount);
@@ -79,8 +80,8 @@ namespace Babylon {
 		virtual void CrossToRef(Vector3::Ptr left, Vector3::Ptr right, Vector3::Ptr result);
 		virtual Vector3::Ptr Normalize(Vector3::Ptr vector);
 		virtual void NormalizeToRef(Vector3::Ptr vector, Vector3::Ptr result);
-		virtual Vector3::Ptr Project(Vector3::Ptr vector, world, transform, Viewport::Ptr viewport);
-		virtual Vector3::Ptr Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, world, view, projection);
+		virtual Vector3::Ptr Project(Vector3::Ptr vector, Matrix::Ptr world, Matrix::Ptr transform, Viewport::Ptr viewport);
+		virtual Vector3::Ptr Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection);
 		virtual Vector3::Ptr Minimize(Vector3::Ptr left, Vector3::Ptr right);
 		virtual Vector3::Ptr Maximize(Vector3::Ptr left, Vector3::Ptr right);
 		virtual float Distance(Vector3::Ptr value1, Vector3::Ptr value2);
