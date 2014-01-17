@@ -1,5 +1,5 @@
-#ifndef BABYLON_MATH_H
-#define BABYLON_MATH_H
+#ifndef BABYLON_COLOR3_H
+#define BABYLON_COLOR3_H
 
 #include <memory>
 #include <vector>
@@ -36,4 +36,4 @@ namespace Babylon {
 
 };
 
-#endif // BABYLON_MATH_H
+#endif // BABYLON_COLOR3_H

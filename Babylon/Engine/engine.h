@@ -4,62 +4,34 @@
 #include <memory>
 #include <vector>
 
-#include "canvas.h"
+#include "igl.h"
+#include "iengine.h"
+#include "baseTexture.h"
+#include "effect.h"
 #include "tools.h"
 
 using namespace std;
 
 namespace Babylon {
 
-	struct Capabilities {
-		// Caps
-		int maxTexturesImageUnits;
-		int maxTextureSize;
-		int maxCubemapTextureSize;
-		int maxRenderTextureSize;
-
-		// Extensions
-		bool standardDerivatives;
-		bool textureFloat;        
-		void* textureAnisotropicFilterExtension;
-		int maxAnisotropy;
-	};
-
-	class Engine: public enable_shared_from_this<Engine> {
+	class Engine: public enable_shared_from_this<Engine>, public IEngine {
 
 	public:
 		typedef shared_ptr<Engine> Ptr;
-		// TODO: Texture should go to Texture files
-		typedef shared_ptr<void> TexturePtr;
-		typedef vector<TexturePtr> Textures;
 		typedef void (*RenderFunction)();
 
 	public:
 		// Statics
 		const static char* ShadersRepository;
 
-		enum ALPHA {
-			ALPHA_DISABLE = 0,
-			ALPHA_ADD =  1,
-			ALPHA_COMBINE = 2,
-		};
-
-		// Statics
-		enum DELAYLOADSTATE {
-			DELAYLOADSTATE_NONE = 0,
-			DELAYLOADSTATE_LOADED = 1,
-			DELAYLOADSTATE_LOADING = 2,
-			DELAYLOADSTATE_NOTLOADED = 4
-		};
-
 		float epsilon;
 		float collisionsEpsilon;
 
 	private: 
 		float _aspectRatio;
-		Canvas::Ptr _renderingCanvas;
+		ICanvas::Ptr _renderingCanvas;
 		float _hardwareScalingLevel;
-		Textures _loadedTexturesCache;
+		BaseTexture::Array _loadedTexturesCache;
 		Capabilities _caps;
 		RenderFunction _renderFunction;
 		bool _runningLoop;
@@ -67,39 +39,48 @@ namespace Babylon {
 		bool _pointerLockRequested;
 		Viewport::Ptr _cachedViewport;
 		bool _alphaTest;
+		IGL::Ptr _gl;
+		BaseTexture::Array _activeTexturesCache;
+		Effect::Ptr _currentEffect;
+		State _currentState;
+		IGLBuffer::Ptr _cachedVertexBuffer;
+		Effect::Ptr _cachedEffectForVertexBuffer;
+		IGLBuffer::Array _cachedVertexBuffers;
+		Effect::Ptr _cachedEffectForVertexBuffers;
+		IGLBuffer::Ptr _cachedIndexBuffer;
 
 	public: 
-		Engine(Canvas::Ptr canvas, bool antialias);
+		Engine(ICanvas::Ptr canvas, bool antialias);
 
 		virtual float getAspectRatio();
 		virtual int getRenderWidth();
 		virtual int getRenderHeight();
-		virtual Canvas::Ptr getRenderingCanvas();
+		virtual ICanvas::Ptr getRenderingCanvas();
 		virtual void setHardwareScalingLevel(float level);
 		virtual float getHardwareScalingLevel();
-		virtual Textures getLoadedTexturesCache();
+		virtual BaseTexture::Array& getLoadedTexturesCache();
 		virtual Capabilities getCaps();
 		virtual void stopRenderLoop();
 		virtual void _renderLoop();
 		virtual void runRenderLoop(RenderFunction renderFunction);
 		virtual void switchFullscreen(bool requestPointerLock);
-		virtual void clear(Color3::Ptr color, bool backBuffer, bool depthStencil);
+		virtual void clear(Color4::Ptr color, bool backBuffer, bool depthStencil);
 		virtual void setViewport(Viewport::Ptr viewport, int requiredWidth, int requiredHeight);
 		virtual void setDirectViewport(int x, int y, int width, int height);
 		virtual void beginFrame();
 		virtual void endFrame();
 		virtual void resize();
-		/*
-		virtual void bindFramebuffer(TexturePtr texture);
-		virtual void unBindFramebuffer(TexturePtr texture);
+		virtual void bindFramebuffer(BaseTexture::Ptr texture);
+		virtual void unBindFramebuffer(BaseTexture::Ptr texture);
 		virtual void flushFramebuffer();
 		virtual void restoreDefaultFramebuffer();
-		virtual void createVertexBuffer(vertices);
-		virtual void createDynamicVertexBuffer(capacity);
-		virtual void updateDynamicVertexBuffer(vertexBuffer, vertices, length);
-		virtual void createIndexBuffer(indices);
-		virtual void bindBuffers(vertexBuffer, indexBuffer, vertexDeclaration, vertexStrideSize, effect);
-		virtual void bindMultiBuffers(vertexBuffers, indexBuffer, effect);
+		virtual IGLBuffer::Ptr createVertexBuffer(vector<float> vertices);
+		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
+		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length);
+		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array indices);
+		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect);
+		virtual void bindMultiBuffers(IGLBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
+		/*
 		virtual void _releaseBuffer(buffer);
 		virtual void draw(useTriangles, indexStart, indexCount);
 		virtual void createEffect(baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
@@ -126,9 +107,9 @@ namespace Babylon {
 		*/
 		virtual void setAlphaTesting(bool enable);
 		virtual bool getAlphaTesting();
-		/*
 		// Textures
 		virtual void wipeCaches();
+		/*
 		virtual void createTexture(url, noMipmap, invertY, scene);
 		virtual void createDynamicTexture(width, height, generateMipMaps);
 		virtual void updateDynamicTexture(texture, canvas, invertY);

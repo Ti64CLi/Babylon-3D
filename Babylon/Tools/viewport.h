@@ -4,12 +4,11 @@
 #include <memory>
 #include <vector>
 
+#include "iengine.h"
+
 using namespace std;
 
 namespace Babylon {
-
-	class Engine;
-	typedef shared_ptr<Engine> EnginePtr;
 
 	struct Viewport: public enable_shared_from_this<Viewport> {
 
@@ -25,7 +24,7 @@ namespace Babylon {
 	public: 
 		Viewport(int x, int y, int width, int height);		
 
-		virtual Viewport::Ptr toGlobal(EnginePtr engine);
+		virtual Viewport::Ptr toGlobal(IEngine::Ptr engine);
 	};
 
 };

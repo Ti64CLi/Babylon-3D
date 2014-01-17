@@ -1,3 +1,5 @@
 add_subdirectory (Tools) 
 add_subdirectory (Context) 
+add_subdirectory (Textures) 
+add_subdirectory (Materials) 
 add_subdirectory (Engine) 

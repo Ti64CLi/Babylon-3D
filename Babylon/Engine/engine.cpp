@@ -4,10 +4,10 @@ using namespace Babylon;
 
 const char* Babylon::Engine::ShadersRepository = "Babylon/Shaders/";
 
-Babylon::Engine::Engine(shared_ptr<Canvas> canvas, bool antialias)
+Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 {
-	epsilon = 0.001;
-	collisionsEpsilon = 0.001;
+	epsilon = 0.001f;
+	collisionsEpsilon = 0.001f;
 };
 
 // Properties
@@ -23,7 +23,7 @@ int Babylon::Engine::getRenderHeight() {
 	return this->_renderingCanvas->getHeight();
 };
 
-Canvas::Ptr Babylon::Engine::getRenderingCanvas() {
+ICanvas::Ptr Babylon::Engine::getRenderingCanvas() {
 	return this->_renderingCanvas;
 };
 
@@ -36,7 +36,7 @@ float Babylon::Engine::getHardwareScalingLevel() {
 	return this->_hardwareScalingLevel;
 };
 
-Engine::Textures Babylon::Engine::getLoadedTexturesCache() {
+BaseTexture::Array& Babylon::Engine::getLoadedTexturesCache() {
 	return this->_loadedTexturesCache;
 };
 
@@ -97,10 +97,9 @@ void Babylon::Engine::switchFullscreen(bool requestPointerLock) {
 	}
 };
 
-/*
-void Babylon::Engine::clear(Color3::Ptr color, bool backBuffer, bool depthStencil) {
-	this->_gl->clearColor(color->r, color->g, color->b, color->a || 1.0);
-	this->_gl->clearDepth(1.0);
+void Babylon::Engine::clear(Color4::Ptr color, bool backBuffer, bool depthStencil) {
+	this->_gl->clearColor(color->r, color->g, color->b, color->a != 0.0f ? color->a : 1.0f);
+	this->_gl->clearDepth(1.0f);
 	auto mode = 0;
 
 	if (backBuffer)
@@ -112,11 +111,11 @@ void Babylon::Engine::clear(Color3::Ptr color, bool backBuffer, bool depthStenci
 	this->_gl->clear(mode);
 };
 
-void Babylon::Engine::setViewport(Viewport::Ptr viewport, int requiredWidth, int requiredHeight) {
-	auto width = requiredWidth || this->_renderingCanvas->getWidth();
-	auto height = requiredHeight || this->_renderingCanvas->getHeight();
-	auto x = viewport->x || 0;
-	auto y = viewport->y || 0;
+void Babylon::Engine::setViewport(Viewport::Ptr viewport, int requiredWidth = 0, int requiredHeight = 0) {
+	auto width = requiredWidth != 0 ? requiredWidth : this->_renderingCanvas->getWidth();
+	auto height = requiredHeight != 0 ? requiredHeight : this->_renderingCanvas->getHeight();
+	auto x = viewport->x;
+	auto y = viewport->y;
 
 	this->_cachedViewport = viewport;
 
@@ -130,26 +129,22 @@ void Babylon::Engine::setDirectViewport(int x, int y, int width, int height) {
 	this->_gl->viewport(x, y, width, height);
 	this->_aspectRatio = width / height;
 };
-*/
 
 void Babylon::Engine::beginFrame() {
 	//TODO:
 	//BABYLON->Tools->_MeasureFps();
 };
 
-/*
 void Babylon::Engine::endFrame() {
 	this->flushFramebuffer();
 };
-*/
 
 void Babylon::Engine::resize() {
 	this->_renderingCanvas->setWidth(this->_renderingCanvas->getClientWidth() / this->_hardwareScalingLevel);
 	this->_renderingCanvas->setHeight(this->_renderingCanvas->getClientHeight() / this->_hardwareScalingLevel);        
 };
 
-/*
-void Babylon::Engine::bindFramebuffer(TexturePtr texture) {
+void Babylon::Engine::bindFramebuffer(BaseTexture::Ptr texture) {
 	auto gl = this->_gl;
 	gl->bindFramebuffer(gl->FRAMEBUFFER, texture->_framebuffer);
 	this->_gl->viewport(0, 0, texture->_width, texture->_height);
@@ -158,10 +153,10 @@ void Babylon::Engine::bindFramebuffer(TexturePtr texture) {
 	this->wipeCaches();
 };
 
-void Babylon::Engine::unBindFramebuffer(TexturePtr texture) {
+void Babylon::Engine::unBindFramebuffer(BaseTexture::Ptr texture) {
 	if (texture->generateMipMaps) {
 		auto gl = this->_gl;
-		gl->bindTexture(gl->TEXTURE_2D, texture);
+		gl->bindTexture(gl->TEXTURE_2D, texture->_texture);
 		gl->generateMipmap(gl->TEXTURE_2D);
 		gl->bindTexture(gl->TEXTURE_2D, nullptr);
 	}
@@ -180,16 +175,16 @@ void Babylon::Engine::restoreDefaultFramebuffer() {
 };
 
 // VBOs
-void Babylon::Engine::createVertexBuffer(vertices) {
+IGLBuffer::Ptr Babylon::Engine::createVertexBuffer(Float32Array vertices) {
 	auto vbo = this->_gl->createBuffer();
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vbo);
-	this->_gl->bufferData(this->_gl->ARRAY_BUFFER, new Float32Array(vertices), this->_gl->STATIC_DRAW);
+	this->_gl->bufferData(this->_gl->ARRAY_BUFFER, vertices, this->_gl->STATIC_DRAW);
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, nullptr);
 	vbo->references = 1;
 	return vbo;
 };
 
-void Babylon::Engine::createDynamicVertexBuffer(capacity) {
+IGLBuffer::Ptr Babylon::Engine::createDynamicVertexBuffer(GLsizeiptr capacity) {
 	auto vbo = this->_gl->createBuffer();
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vbo);
 	this->_gl->bufferData(this->_gl->ARRAY_BUFFER, capacity, this->_gl->DYNAMIC_DRAW);
@@ -198,36 +193,35 @@ void Babylon::Engine::createDynamicVertexBuffer(capacity) {
 	return vbo;
 };
 
-void Babylon::Engine::updateDynamicVertexBuffer(vertexBuffer, vertices, length) {
+void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) {
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
-	// Should be (vertices instanceof Float32Array ? vertices : new Float32Array(vertices)) but Chrome raises an Exception in this case :(
 	if (length) {
-		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, new Float32Array(vertices, 0, length));
+		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, Float32Array(vertices.begin(), vertices.begin() + length));
 	} else {
-		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, new Float32Array(vertices));
+		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, vertices);
 	}
 
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, nullptr);
 };
 
-void Babylon::Engine::createIndexBuffer(indices) {
+IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array indices) {
 	auto vbo = this->_gl->createBuffer();
 	this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, vbo);
-	this->_gl->bufferData(this->_gl->ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this->_gl->STATIC_DRAW);
+	this->_gl->bufferData(this->_gl->ELEMENT_ARRAY_BUFFER, indices, this->_gl->STATIC_DRAW);
 	this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, nullptr);
 	vbo->references = 1;
 	return vbo;
 };
 
-void Babylon::Engine::bindBuffers(vertexBuffer, indexBuffer, vertexDeclaration, vertexStrideSize, effect) {
-	if (this->_cachedVertexBuffers !== vertexBuffer || this->_cachedEffectForVertexBuffers !== effect) {
-		this->_cachedVertexBuffers = vertexBuffer;
-		this->_cachedEffectForVertexBuffers = effect;
+void Babylon::Engine::bindBuffers(VertexBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect) {
+	if (this->_cachedVertexBuffer != vertexBuffer || this->_cachedEffectForVertexBuffer != effect) {
+		this->_cachedVertexBuffer = vertexBuffer;
+		this->_cachedEffectForVertexBuffer = effect;
 
 		this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
 
 		auto offset = 0;
-		for (auto index = 0; index < vertexDeclaration->length; index++) {
+		for (auto index = 0; index < vertexDeclaration.size(); index++) {
 			auto order = effect->getAttribute(index);
 
 			if (order >= 0) {
@@ -237,24 +231,25 @@ void Babylon::Engine::bindBuffers(vertexBuffer, indexBuffer, vertexDeclaration, 
 		}
 	}
 
-	if (this->_cachedIndexBuffer !== indexBuffer) {
+	if (this->_cachedIndexBuffer != indexBuffer) {
 		this->_cachedIndexBuffer = indexBuffer;
 		this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, indexBuffer);
 	}
 };
 
-void Babylon::Engine::bindMultiBuffers(vertexBuffers, indexBuffer, effect) {
-	if (this->_cachedVertexBuffers !== vertexBuffers || this->_cachedEffectForVertexBuffers !== effect) {
+void Babylon::Engine::bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect) {
+	if (this->_cachedVertexBuffers != vertexBuffers || this->_cachedEffectForVertexBuffers != effect) {
 		this->_cachedVertexBuffers = vertexBuffers;
 		this->_cachedEffectForVertexBuffers = effect;
 
 		auto attributes = effect->getAttributesNames();
 
-		for (auto index = 0; index < attributes->length; index++) {
+		for (auto index = 0; index < attributes.size(); index++) {
 			auto order = effect->getAttribute(index);
 
 			if (order >= 0) {
-				auto vertexBuffer = vertexBuffers[attributes[index]];
+				// TODO: double check if vertexBuffers[attributes[index]] can be replaced with vertexBuffers[order]
+				auto vertexBuffer = vertexBuffers.at(order);
 				auto stride = vertexBuffer->getStrideSize();
 				this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer->_buffer);
 				this->_gl->vertexAttribPointer(order, stride, this->_gl->FLOAT, false, stride * 4, 0);
@@ -262,12 +257,13 @@ void Babylon::Engine::bindMultiBuffers(vertexBuffers, indexBuffer, effect) {
 		}
 	}
 
-	if (this->_cachedIndexBuffer !== indexBuffer) {
+	if (this->_cachedIndexBuffer != indexBuffer) {
 		this->_cachedIndexBuffer = indexBuffer;
 		this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, indexBuffer);
 	}
 };
 
+/*
 void Babylon::Engine::_releaseBuffer(buffer) {
 	buffer->references--;
 
@@ -495,20 +491,18 @@ bool Babylon::Engine::getAlphaTesting() {
 	return this->_alphaTest;
 };
 
-/*
 // Textures
 void Babylon::Engine::wipeCaches() {
-	this->_activeTexturesCache = [];
+	this->_activeTexturesCache;
 	this->_currentEffect = nullptr;
-	this->_currentState = {
-culling: nullptr
-	};
-
-	this->_cachedVertexBuffers = nullptr;
-	this->_cachedVertexBuffers = nullptr;
+	this->_currentState.culling = nullptr;
+	this->_cachedVertexBuffers.clear();
 	this->_cachedEffectForVertexBuffers = nullptr;
+	this->_cachedVertexBuffer = nullptr;
+	this->_cachedEffectForVertexBuffer = nullptr;
 };
 
+/*
 void Babylon::Engine::getExponantOfTwo(value, max) {
 	auto count = 1;
 
