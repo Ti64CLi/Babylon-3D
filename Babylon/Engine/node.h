@@ -8,19 +8,21 @@ using namespace std;
 
 namespace Babylon {
 
-	class Node: public enable_shared_from_this<Node> {
+	class Node : public enable_shared_from_this<Node> {
 
-		typedef shared_ptr<Node> NodePtr;
-		typedef vector<NodePtr> Nodes;
+		typedef shared_ptr<Node> Ptr;
+		typedef vector<Ptr> Array;
 
 	private: 
-		NodePtr parent;
+		Node::Ptr parent;
 		bool _childrenFlag;
 		bool _isReady;
 		bool _isEnabled;
 
 	public: 
 		Node();
+
+		Node(Node::Ptr parent);
 
 		virtual bool isSynchronized ();    
 
@@ -32,11 +34,11 @@ namespace Babylon {
 
 		virtual void setEnabled (bool value);
 
-		virtual bool isDescendantOf (NodePtr ancestor);
+		virtual bool isDescendantOf (Node::Ptr ancestor);
 
-		virtual void _getDescendants(Nodes list, Nodes& results);
+		virtual void _getDescendants(Node::Array list, Node::Array& results);
 
-		virtual Nodes getDescendants ();
+		virtual Node::Array getDescendants ();
 	};
 
 };

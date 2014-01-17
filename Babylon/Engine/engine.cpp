@@ -213,6 +213,7 @@ IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array indices) {
 	return vbo;
 };
 
+/*
 void Babylon::Engine::bindBuffers(VertexBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect) {
 	if (this->_cachedVertexBuffer != vertexBuffer || this->_cachedEffectForVertexBuffer != effect) {
 		this->_cachedVertexBuffer = vertexBuffer;
@@ -262,7 +263,7 @@ void Babylon::Engine::bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuf
 		this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, indexBuffer);
 	}
 };
-
+*/
 /*
 void Babylon::Engine::_releaseBuffer(buffer) {
 	buffer->references--;

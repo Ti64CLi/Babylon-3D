@@ -4,5 +4,6 @@
 #include "color3.h"
 #include "color4.h"
 #include "viewport.h"
+#include "vector3.h"
 
 #endif // BABYLON_TOOLS_H
