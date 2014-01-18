@@ -31,9 +31,8 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(enable_shared_from_th
 
 	this->_positions.clear();
 
-	// TODO: finish it
 	// Cache
-	//_initCache.call(shared_from_this());
+	_initCache();
 
 	this->_childrenFlag = false;
 	this->_localScaling = Matrix::Zero();

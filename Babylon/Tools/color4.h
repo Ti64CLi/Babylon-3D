@@ -14,13 +14,13 @@ namespace Babylon {
 		typedef shared_ptr<Color4> Ptr;
 
 	public:
-		int r;
-		int g;
-		int b;
-		int a;
+		float r;
+		float g;
+		float b;
+		float a;
 
 	public: 
-		Color4(int initialR, int initialG, int initialB, int initialA);		
+		Color4(float initialR, float initialG, float initialB, float initialA);		
 
 		virtual string toString();
 		virtual void addInPlace(Color4::Ptr right);

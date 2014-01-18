@@ -20,9 +20,9 @@ namespace Babylon {
 		typedef shared_ptr<Vector3> Ptr;
 
 	public:
-		int x;
-		int y;
-		int z;
+		float x;
+		float y;
+		float z;
 
 	public: 
 		Vector3(float initialX, float initialY, float initialZ);		
@@ -62,32 +62,32 @@ namespace Babylon {
 		virtual void copyFromFloats(float x, float y, float z);
 
 		// Statics
-		virtual Vector3::Ptr FromArray(Float32Array array, int offset);
-		virtual void FromArrayToRef(Float32Array array, int offset, Vector3::Ptr result);
-		virtual void FromFloatsToRef(float x, float y, float z, Vector3::Ptr result);
+		static Vector3::Ptr FromArray(Float32Array array, int offset);
+		static void FromArrayToRef(Float32Array array, int offset, Vector3::Ptr result);
+		static void FromFloatsToRef(float x, float y, float z, Vector3::Ptr result);
 		static Vector3::Ptr Zero();
 		static Vector3::Ptr Up();
-		virtual Vector3::Ptr TransformCoordinates(Vector3::Ptr vector, MatrixPtr transformation);
-		virtual void TransformCoordinatesToRef(Vector3::Ptr vector, MatrixPtr transformation, Vector3::Ptr result);
-		virtual void TransformCoordinatesFromFloatsToRef(float x, float y, float z, MatrixPtr transformation, Vector3::Ptr result);
-		virtual Vector3::Ptr TransformNormal(Vector3::Ptr vector, MatrixPtr transformation);
-		virtual void TransformNormalToRef(Vector3::Ptr vector, MatrixPtr transformation, Vector3::Ptr result);
-		virtual void TransformNormalFromFloatsToRef(float x, float y, float z, MatrixPtr transformation, Vector3::Ptr result);
-		virtual Vector3::Ptr CatmullRom(Vector3::Ptr value1, Vector3::Ptr value2, Vector3::Ptr value3, Vector3::Ptr value4, float amount);
-		virtual Vector3::Ptr Clamp(Vector3::Ptr value, Vector3::Ptr min, Vector3::Ptr max);
-		virtual Vector3::Ptr Hermite(Vector3::Ptr value1, Vector3::Ptr tangent1, Vector3::Ptr value2, Vector3::Ptr tangent2, float amount);
-		virtual Vector3::Ptr Lerp(Vector3::Ptr start, Vector3::Ptr end, float amount);
+		static Vector3::Ptr TransformCoordinates(Vector3::Ptr vector, MatrixPtr transformation);
+		static void TransformCoordinatesToRef(Vector3::Ptr vector, MatrixPtr transformation, Vector3::Ptr result);
+		static void TransformCoordinatesFromFloatsToRef(float x, float y, float z, MatrixPtr transformation, Vector3::Ptr result);
+		static Vector3::Ptr TransformNormal(Vector3::Ptr vector, MatrixPtr transformation);
+		static void TransformNormalToRef(Vector3::Ptr vector, MatrixPtr transformation, Vector3::Ptr result);
+		static void TransformNormalFromFloatsToRef(float x, float y, float z, MatrixPtr transformation, Vector3::Ptr result);
+		static Vector3::Ptr CatmullRom(Vector3::Ptr value1, Vector3::Ptr value2, Vector3::Ptr value3, Vector3::Ptr value4, float amount);
+		static Vector3::Ptr Clamp(Vector3::Ptr value, Vector3::Ptr min, Vector3::Ptr max);
+		static Vector3::Ptr Hermite(Vector3::Ptr value1, Vector3::Ptr tangent1, Vector3::Ptr value2, Vector3::Ptr tangent2, float amount);
+		static Vector3::Ptr Lerp(Vector3::Ptr start, Vector3::Ptr end, float amount);
 		static float Dot(Vector3::Ptr left, Vector3::Ptr right);
-		virtual Vector3::Ptr Cross(Vector3::Ptr left, Vector3::Ptr right);
+		static Vector3::Ptr Cross(Vector3::Ptr left, Vector3::Ptr right);
 		static void CrossToRef(Vector3::Ptr left, Vector3::Ptr right, Vector3::Ptr result);
-		virtual Vector3::Ptr Normalize(Vector3::Ptr vector);
-		virtual void NormalizeToRef(Vector3::Ptr vector, Vector3::Ptr result);
-		virtual Vector3::Ptr Project(Vector3::Ptr vector, MatrixPtr world, MatrixPtr transform, Viewport::Ptr viewport);
-		virtual Vector3::Ptr Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, MatrixPtr world, MatrixPtr view, MatrixPtr projection);
-		virtual Vector3::Ptr Minimize(Vector3::Ptr left, Vector3::Ptr right);
-		virtual Vector3::Ptr Maximize(Vector3::Ptr left, Vector3::Ptr right);
-		virtual float Distance(Vector3::Ptr value1, Vector3::Ptr value2);
-		virtual float DistanceSquared(Vector3::Ptr value1, Vector3::Ptr value2);
+		static Vector3::Ptr Normalize(Vector3::Ptr vector);
+		static void NormalizeToRef(Vector3::Ptr vector, Vector3::Ptr result);
+		static Vector3::Ptr Project(Vector3::Ptr vector, MatrixPtr world, MatrixPtr transform, Viewport::Ptr viewport);
+		static Vector3::Ptr Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, MatrixPtr world, MatrixPtr view, MatrixPtr projection);
+		static Vector3::Ptr Minimize(Vector3::Ptr left, Vector3::Ptr right);
+		static Vector3::Ptr Maximize(Vector3::Ptr left, Vector3::Ptr right);
+		static float Distance(Vector3::Ptr value1, Vector3::Ptr value2);
+		static float DistanceSquared(Vector3::Ptr value1, Vector3::Ptr value2);
 	};
 
 };

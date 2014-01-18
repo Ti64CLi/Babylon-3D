@@ -3,7 +3,7 @@
 
 using namespace Babylon;
 
-Babylon::Color4::Color4(int initialR, int initialG, int initialB, int initialA) {
+Babylon::Color4::Color4(float initialR, float initialG, float initialB, float initialA) {
 	this->r = initialR;
 	this->g = initialG;
 	this->b = initialB;

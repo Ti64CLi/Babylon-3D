@@ -98,8 +98,8 @@ void Babylon::Engine::switchFullscreen(bool requestPointerLock) {
 };
 
 void Babylon::Engine::clear(Color4::Ptr color, bool backBuffer, bool depthStencil) {
-	this->_gl->clearColor(color->r, color->g, color->b, color->a != 0.0f ? color->a : 1.0f);
-	this->_gl->clearDepth(1.0f);
+	this->_gl->clearColor(color->r, color->g, color->b, color->a != 0 ? color->a : 1);
+	this->_gl->clearDepth(1.);
 	auto mode = 0;
 
 	if (backBuffer)
@@ -148,7 +148,7 @@ void Babylon::Engine::bindFramebuffer(BaseTexture::Ptr texture) {
 	auto gl = this->_gl;
 	gl->bindFramebuffer(gl->FRAMEBUFFER, texture->_framebuffer);
 	this->_gl->viewport(0, 0, texture->_width, texture->_height);
-	this->_aspectRatio = texture->_width / texture->_height;
+	this->_aspectRatio = (float)texture->_width / (float)texture->_height;
 
 	this->wipeCaches();
 };

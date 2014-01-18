@@ -10,7 +10,7 @@ Babylon::Plane::Plane(float a, float b, float c, float d) {
 // Methods
 void Babylon::Plane::normalize() {
 	auto norm = (sqrt((this->normal->x * this->normal->x) + (this->normal->y * this->normal->y) + (this->normal->z * this->normal->z)));
-	auto magnitude = 0;
+	auto magnitude = 0.;
 
 	if (norm != 0) {
 		magnitude = 1.0 / norm;

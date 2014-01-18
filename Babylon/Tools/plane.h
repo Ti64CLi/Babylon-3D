@@ -31,10 +31,10 @@ namespace Babylon {
 		virtual bool isFrontFacingTo(Vector3::Ptr direction, float epsilon);
 		virtual float signedDistanceTo(Vector3::Ptr point);
 		// Statics
-		virtual Plane::Ptr FromArray(Float32Array array);
-		virtual Plane::Ptr FromPoints(Vector3::Ptr point1, Vector3::Ptr point2, Vector3::Ptr point3);
-		virtual Plane::Ptr FromPositionAndNormal(Vector3::Ptr origin, Vector3::Ptr normal);
-		virtual float SignedDistanceToPlaneFromPositionAndNormal(Vector3::Ptr origin, Vector3::Ptr normal, Vector3::Ptr point);
+		static Plane::Ptr FromArray(Float32Array array);
+		static Plane::Ptr FromPoints(Vector3::Ptr point1, Vector3::Ptr point2, Vector3::Ptr point3);
+		static Plane::Ptr FromPositionAndNormal(Vector3::Ptr origin, Vector3::Ptr normal);
+		static float SignedDistanceToPlaneFromPositionAndNormal(Vector3::Ptr origin, Vector3::Ptr normal, Vector3::Ptr point);
 	};
 
 };

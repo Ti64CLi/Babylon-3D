@@ -4,22 +4,74 @@ using namespace Babylon;
 
 Babylon::Node::Node() 
 {
-	parent = nullptr;
-	_childrenFlag = false;
-	_isReady = true;
-	_isEnabled = true;
+	// Cache
+	_initCache();
+
+	_init(nullptr);
 }
 
 Babylon::Node::Node(Node::Ptr parent)
 {
-	this->parent = parent;
+	// Cache
+	_initCache();
+
+	_init(parent);
+}
+
+void Babylon::Node::_init(Node::Ptr parent)
+{
 	_childrenFlag = false;
 	_isReady = true;
 	_isEnabled = true;
+	this->parent = parent;
 }
 
-bool Babylon::Node::isSynchronized () {
+void Babylon::Node::_initCache() {
+	this->_cache.clear();
+	this->_cache_parent = nullptr;
+};
+
+void Babylon::Node::updateCache (bool force) {
+	if (!force && this->isSynchronized())
+		return;
+
+	this->_cache_parent = this->parent;
+
+	this->_updateCache();
+};
+
+void Babylon::Node::_updateCache (bool ignoreParentClass) {
+	// override it in derived class if you add new variables to the cache
+	// and call the parent class method if !ignoreParentClass
+};
+
+bool Babylon::Node::_isSynchronized () {
 	return true;
+};
+
+bool Babylon::Node::isSynchronized (bool updateCache) {
+	auto r = this->hasNewParent();
+
+	r = r || (this->parent && this->parent->_needToSynchonizeChildren());
+
+	r = r || !this->_isSynchronized();
+
+	if (updateCache)
+	{
+		this->updateCache(true);
+	}
+
+	return !r;
+};
+
+bool Babylon::Node::hasNewParent(bool update) {
+    if (this->_cache_parent == this->parent)
+        return false;
+        
+    if(update)
+        this->_cache_parent = this->parent;
+        
+    return true;
 };
 
 bool Babylon::Node::_needToSynchonizeChildren () {
