@@ -9,6 +9,7 @@ using namespace std;
 namespace Babylon {
 
 	class BaseTexture;
+	class Mesh;
 
 	class IScene {
 
@@ -17,6 +18,7 @@ namespace Babylon {
 
 	public:
 		virtual vector<shared_ptr<BaseTexture>>& getTextures() = 0;
+		virtual vector<shared_ptr<Mesh>>& getMeshes() = 0;
 	};
 
 };

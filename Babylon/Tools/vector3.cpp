@@ -1,5 +1,6 @@
 #include "vector3.h"
 #include <sstream>
+#include "matrix.h"
 
 using namespace Babylon;
 
@@ -346,7 +347,7 @@ Vector3::Ptr Babylon::Vector3::Project(Vector3::Ptr vector, Matrix::Ptr world, M
 
 Vector3::Ptr Babylon::Vector3::Unproject(Vector3::Ptr source, int viewportWidth, int viewportHeight, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection) {
 	auto matrix = world->multiply(view)->multiply(projection);
-	matrix.invert();
+	matrix->invert();
 	source->x = source->x / viewportWidth * 2 - 1;
 	source->y = -(source->y / viewportHeight * 2 - 1);
 	auto vector = Vector3::TransformCoordinates(source, matrix);

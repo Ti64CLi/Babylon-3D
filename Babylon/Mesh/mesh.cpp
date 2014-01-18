@@ -10,14 +10,15 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(shared_from_this()) {
 	this->_totalVertices = 0;
 	this->_worldMatrix = Matrix::Identity();
 
-	scene->meshes.push_back(shared_from_this());
+	// TODO: finish it
+	//scene->getMeshes().push_back(shared_from_this());
 
-	this->position = new Vector3(0, 0, 0);
-	this->rotation = new Vector3(0, 0, 0);
+	this->position = make_shared<Vector3>(0, 0, 0);
+	this->rotation = make_shared<Vector3>(0, 0, 0);
 	this->rotationQuaternion = nullptr;
-	this->scaling = new Vector3(1, 1, 1);
+	this->scaling = make_shared<Vector3>(1, 1, 1);
 
-	this->_pivotMatrix = Matrix.Identity();
+	this->_pivotMatrix = Matrix::Identity();
 
 	this->_indices.clear();
 	this->subMeshes.clear();
@@ -31,22 +32,25 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(shared_from_this()) {
 
 	this->_positions.clear();
 
+	// TODO: finish it
 	// Cache
-	_initCache.call(shared_from_this());
+	//_initCache.call(shared_from_this());
 
 	this->_childrenFlag = false;
-	this->_localScaling = Matrix.Zero();
-	this->_localRotation = Matrix.Zero();
-	this->_localTranslation = Matrix.Zero();
-	this->_localBillboard = Matrix.Zero();
-	this->_localPivotScaling = Matrix.Zero();
-	this->_localPivotScalingRotation = Matrix.Zero();
-	this->_localWorld = Matrix.Zero();
-	this->_worldMatrix = Matrix.Zero();
-	this->_rotateYByPI = Matrix.RotationY(Math.PI);
+	this->_localScaling = Matrix::Zero();
+	this->_localRotation = Matrix::Zero();
+	this->_localTranslation = Matrix::Zero();
+	this->_localBillboard = Matrix::Zero();
+	this->_localPivotScaling = Matrix::Zero();
+	this->_localPivotScalingRotation = Matrix::Zero();
+	this->_localWorld = Matrix::Zero();
+	this->_worldMatrix = Matrix::Zero();
 
-	this->_collisionsTransformMatrix = Matrix.Zero();
-	this->_collisionsScalingMatrix = Matrix.Zero();
+	auto PI = 4. * atan(1.);
+	this->_rotateYByPI = Matrix::RotationY(PI);
 
-	this->_absolutePosition = Vector3.Zero();
+	this->_collisionsTransformMatrix = Matrix::Zero();
+	this->_collisionsScalingMatrix = Matrix::Zero();
+
+	this->_absolutePosition = Vector3::Zero();
 };

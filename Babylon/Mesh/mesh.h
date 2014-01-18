@@ -7,6 +7,8 @@
 #include "node.h"
 #include "igl.h"
 #include "iscene.h"
+#include "vector3.h"
+#include "matrix.h"
 
 using namespace std;
 
@@ -23,19 +25,19 @@ namespace Babylon {
 		string id;
 		IScene::Ptr _scene;
 		int _totalVertices;
-		Matrix _worldMatrix;
+		Matrix::Ptr _worldMatrix;
 
-		Vector3 position;
-		Vector3 rotation;
+		Vector3::Ptr position;
+		Vector3::Ptr rotation;
 		void* rotationQuaternion;
-		Vector3 scaling = new BABYLON.Vector3(1, 1, 1);
+		Vector3::Ptr scaling;
 
-		Matrix _pivotMatrix;
+		Matrix::Ptr _pivotMatrix;
 
 		Int32Array _indices;
 		Mesh::Array subMeshes;
 
-		int _renderId = 0;
+		int _renderId;
 
 		Int32Array _onBeforeRenderCallbacks;
 
@@ -45,20 +47,19 @@ namespace Babylon {
 		Int32Array _positions;
 
 		bool _childrenFlag;
-		Matrix _localScaling;
-		Matrix _localRotation;
-		Matrix _localTranslation;
-		Matrix _localBillboard;
-		Matrix _localPivotScaling;
-		Matrix _localPivotScalingRotation;
-		Matrix _localWorld;
-		Matrix _worldMatrix;
-		Matrix _rotateYByPI;
+		Matrix::Ptr _localScaling;
+		Matrix::Ptr _localRotation;
+		Matrix::Ptr _localTranslation;
+		Matrix::Ptr _localBillboard;
+		Matrix::Ptr _localPivotScaling;
+		Matrix::Ptr _localPivotScalingRotation;
+		Matrix::Ptr _localWorld;
+		Matrix::Ptr _rotateYByPI;
 
-		Matrix _collisionsTransformMatrix;
-		Matrix _collisionsScalingMatrix;
+		Matrix::Ptr _collisionsTransformMatrix;
+		Matrix::Ptr _collisionsScalingMatrix;
 
-		Vector3 _absolutePosition;
+		Vector3::Ptr _absolutePosition;
 
 	public: 
 		Mesh(string name, IScene::Ptr scene);		
