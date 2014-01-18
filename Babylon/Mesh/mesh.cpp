@@ -2,7 +2,7 @@
 
 using namespace Babylon;
 
-Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(shared_from_this()) {
+Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(enable_shared_from_this<Mesh>::shared_from_this()) {
 	this->name = name;
 	this->id = name;
 	this->_scene = scene;
@@ -10,8 +10,7 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(shared_from_this()) {
 	this->_totalVertices = 0;
 	this->_worldMatrix = Matrix::Identity();
 
-	// TODO: finish it
-	//scene->getMeshes().push_back(shared_from_this());
+	scene->getMeshes().push_back(enable_shared_from_this<Mesh>::shared_from_this());
 
 	this->position = make_shared<Vector3>(0, 0, 0);
 	this->rotation = make_shared<Vector3>(0, 0, 0);

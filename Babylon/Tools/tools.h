@@ -1,10 +1,13 @@
 #ifndef BABYLON_TOOLS_H
 #define BABYLON_TOOLS_H
 
-#include "color3.h"
-#include "color4.h"
-#include "viewport.h"
-#include "vector3.h"
-#include "matrix.h"
+namespace Babylon {
+
+	class Tools {
+	public:	
+		static bool WithinEpsilon(float a, float b);
+	};
+
+};
 
 #endif // BABYLON_TOOLS_H

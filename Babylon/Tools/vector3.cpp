@@ -1,6 +1,7 @@
 #include "vector3.h"
 #include <sstream>
 #include "matrix.h"
+#include "tools.h"
 
 using namespace Babylon;
 

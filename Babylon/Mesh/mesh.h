@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Mesh: public Node {
+	class Mesh: public Node, public enable_shared_from_this<Mesh> {
 
 	public:
 		typedef shared_ptr<Mesh> Ptr;

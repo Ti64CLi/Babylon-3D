@@ -8,7 +8,7 @@
 #include "iengine.h"
 #include "baseTexture.h"
 #include "effect.h"
-#include "tools.h"
+#include "tools_math.h"
 
 using namespace std;
 
