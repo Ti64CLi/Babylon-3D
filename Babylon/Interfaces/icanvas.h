@@ -11,10 +11,20 @@ namespace Babylon {
 	class IImage {
 	public:
 		typedef shared_ptr<IImage> Ptr;
+		typedef vector<Ptr> Array;
 
 	public: 
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
+	};
+
+	class IVideo {
+	public:
+		typedef shared_ptr<IVideo> Ptr;
+
+	public: 
+		virtual int getVideoWidth() = 0;
+		virtual int getVideoHeight() = 0;
 	};
 
 	class I2D {
@@ -24,6 +34,7 @@ namespace Babylon {
 
 	public: 
 		virtual int drawImage(IImage::Ptr image, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+		virtual int drawImage(IVideo::Ptr video, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
 	};
 
 	class ICanvas {

@@ -51,6 +51,13 @@ namespace Babylon {
 		DELAYLOADSTATE_NOTLOADED = 4
 	};
 
+	// TODO: Move to Texture class
+	enum SAMPLINGMODES {
+	    NEAREST_SAMPLINGMODE = 1,
+		BILINEAR_SAMPLINGMODE = 2,
+		TRILINEAR_SAMPLINGMODE = 3
+	};
+
 	class IEngine {
 
 	public:

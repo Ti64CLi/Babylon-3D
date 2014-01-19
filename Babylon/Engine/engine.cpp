@@ -57,7 +57,7 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 
 	// Fullscreen
 	this->isFullscreen = false;
-	
+
 	////auto that = this;
 
 	////auto onFullscreenChange = []() {
@@ -241,7 +241,7 @@ void Babylon::Engine::resize() {
 	this->_renderingCanvas->setHeight(this->_renderingCanvas->getClientHeight() / this->_hardwareScalingLevel);        
 };
 
-void Babylon::Engine::bindFramebuffer(BaseTexture::Ptr texture) {
+void Babylon::Engine::bindFramebuffer(IGLTexture::Ptr texture) {
 	auto gl = this->_gl;
 	gl->bindFramebuffer(gl->FRAMEBUFFER, texture->_framebuffer);
 	this->_gl->viewport(0, 0, texture->_width, texture->_height);
@@ -250,10 +250,10 @@ void Babylon::Engine::bindFramebuffer(BaseTexture::Ptr texture) {
 	this->wipeCaches();
 };
 
-void Babylon::Engine::unBindFramebuffer(BaseTexture::Ptr texture) {
+void Babylon::Engine::unBindFramebuffer(IGLTexture::Ptr texture) {
 	if (texture->generateMipMaps) {
 		auto gl = this->_gl;
-		gl->bindTexture(gl->TEXTURE_2D, texture->_texture);
+		gl->bindTexture(gl->TEXTURE_2D, texture);
 		gl->generateMipmap(gl->TEXTURE_2D);
 		gl->bindTexture(gl->TEXTURE_2D, nullptr);
 	}
@@ -652,11 +652,11 @@ IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool i
 		that->_gl->bindTexture(that->_gl->TEXTURE_2D, nullptr);
 
 		that->_activeTexturesCache.clear();
-		texture->set_baseWidth(img->getWidth());
-		texture->set_baseHeight(img->getHeight());
-		texture->set_width(potWidth);
-		texture->set_height(potHeight);
-		texture->setIsReady(true);
+		texture->_baseWidth = img->getWidth();
+		texture->_baseHeight = img->getHeight();
+		texture->_width = potWidth;
+		texture->_height = potHeight;
+		texture->isReady = true;
 		scene->_removePendingData(texture);
 	};
 
@@ -668,242 +668,244 @@ IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool i
 	//TODO: finish it
 	//BABYLON->Tools->LoadImage(url, onload, onerror, scene->database);
 
-	texture->setUrl(url);
-	texture->setNoMipmap(noMipmap);
+	texture->url = url;
+	texture->noMipmap = noMipmap;
 	texture->references = 1;
 	this->_loadedTexturesCache.push_back(texture);
 
 	return texture;
 };
 
-/*
-void Babylon::Engine::createDynamicTexture(width, height, generateMipMaps) {
-auto texture = this->_gl->createTexture();
+IGLTexture::Ptr Babylon::Engine::createDynamicTexture(int width, int height, bool generateMipMaps) {
+	auto texture = this->_gl->createTexture();
 
-width = getExponantOfTwo(width, this->_caps->maxTextureSize);
-height = getExponantOfTwo(height, this->_caps->maxTextureSize);
+	width = getExponantOfTwo(width, this->_caps.maxTextureSize);
+	height = getExponantOfTwo(height, this->_caps.maxTextureSize);
 
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MAG_FILTER, this->_gl->LINEAR);
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
+	this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MAG_FILTER, this->_gl->LINEAR);
 
-if (!generateMipMaps) {
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR);
-} else {
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR_MIPMAP_LINEAR);
-}
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
+	if (!generateMipMaps) {
+		this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR);
+	} else {
+		this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR_MIPMAP_LINEAR);
+	}
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
 
-this->_activeTexturesCache = [];
-texture->_baseWidth = width;
-texture->_baseHeight = height;
-texture->_width = width;
-texture->_height = height;
-texture->isReady = false;
-texture->generateMipMaps = generateMipMaps;
-texture->references = 1;
+	this->_activeTexturesCache.clear();
+	texture->_baseWidth = width;
+	texture->_baseHeight = height;
+	texture->_width  = width;
+	texture->_height = height;
+	texture->isReady = false;
+	texture->generateMipMaps = generateMipMaps;
+	texture->references = 1;
 
-this->_loadedTexturesCache->push(texture);
+	this->_loadedTexturesCache.push_back(texture);
 
-return texture;
+	return texture;
 };
 
-void Babylon::Engine::updateDynamicTexture(texture, canvas, invertY) {
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
-this->_gl->pixelStorei(this->_gl->UNPACK_FLIP_Y_WEBGL, invertY);
-this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, canvas);
-if (texture->generateMipMaps) {
-this->_gl->generateMipmap(this->_gl->TEXTURE_2D);
-}
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
-this->_activeTexturesCache = [];
-texture->isReady = true;
+void Babylon::Engine::updateDynamicTexture(IGLTexture::Ptr texture, ICanvas::Ptr canvas, bool invertY) {
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
+	this->_gl->pixelStorei(this->_gl->UNPACK_FLIP_Y_WEBGL, invertY);
+	this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, canvas);
+	if (texture->generateMipMaps) {
+		this->_gl->generateMipmap(this->_gl->TEXTURE_2D);
+	}
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
+	this->_activeTexturesCache.clear();
+	texture->isReady = true;
 };
 
-void Babylon::Engine::updateVideoTexture(texture, video) {
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
-this->_gl->pixelStorei(this->_gl->UNPACK_FLIP_Y_WEBGL, false);
+// TODO: you need to use custom isolated canvas for updateing image
+void Babylon::Engine::updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video) {
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
+	this->_gl->pixelStorei(this->_gl->UNPACK_FLIP_Y_WEBGL, false);
 
-// Scale the video if it is a NPOT
-if (video->videoWidth != texture->_width || video->videoHeight != texture->_height) {
-if (!texture->_workingCanvas) {
-texture->_workingCanvas = document->createElement("canvas");
-texture->_workingContext = texture->_workingCanvas->getContext("2d");
-texture->_workingCanvas->width = texture->_width;
-texture->_workingCanvas->height = texture->_height;
-}
+	// Scale the video if it is a NPOT
+	if (video->getVideoWidth() != texture->_width || video->getVideoHeight() != texture->_height) {
+		if (!texture->_workingCanvas) {
+			texture->_workingCanvas = this->_workingCanvas;
+			texture->_workingContext = this->_workingCanvas->getContext2d();
+			texture->_workingCanvas->setWidth(texture->_width);
+			texture->_workingCanvas->setHeight(texture->_height);
+		}
 
-texture->_workingContext->drawImage(video, 0, 0, video->videoWidth, video->videoHeight, 0, 0, texture->_width, texture->_height);
+		texture->_workingContext->drawImage(video, 0, 0, video->getVideoWidth(), video->getVideoHeight(), 0, 0, texture->_width, texture->_height);
 
-this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, texture->_workingCanvas);
-} else {
-this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, video);
-}
+		this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, texture->_workingCanvas);
+	} else {
+		this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, video);
+	}
 
-if (texture->generateMipMaps) {
-this->_gl->generateMipmap(this->_gl->TEXTURE_2D);
-}
+	if (texture->generateMipMaps) {
+		this->_gl->generateMipmap(this->_gl->TEXTURE_2D);
+	}
 
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
-this->_activeTexturesCache = [];
-texture->isReady = true;
+	this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
+	this->_activeTexturesCache.clear();
+	texture->isReady = true;
 };
 
-void Babylon::Engine::createRenderTargetTexture(size, options) {
-// old version had a "generateMipMaps" arg instead of options->
-// if options->generateMipMaps is undefined, consider that options itself if the generateMipmaps value
-// in the same way, generateDepthBuffer is defaulted to true
-auto generateMipMaps = false;
-auto generateDepthBuffer = true;
-auto samplingMode = BABYLON->Texture->TRILINEAR_SAMPLINGMODE;
-if (options != undefined) {
-generateMipMaps = options->generateMipMaps == undefined ? options : options->generateMipmaps;
-generateDepthBuffer = options->generateDepthBuffer == undefined ? true : options->generateDepthBuffer;
-if (options->samplingMode != undefined) {
-samplingMode = options->samplingMode;
-}
-}
-auto gl = this->_gl;
+IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height, bool generateMipMaps, bool generateDepthBuffer, SAMPLINGMODES samplingMode) {
+	// old version had a "generateMipMaps" arg instead of options->
+	// if options->generateMipMaps is undefined, consider that options itself if the generateMipmaps value
+	// in the same way, generateDepthBuffer is defaulted to true
+	auto gl = this->_gl;
 
-auto texture = gl->createTexture();
-gl->bindTexture(gl->TEXTURE_2D, texture);
+	auto texture = gl->createTexture();
+	gl->bindTexture(gl->TEXTURE_2D, texture);
 
-auto width = size->width || size;
-auto height = size->height || size;
-auto magFilter = gl->NEAREST;
-auto minFilter = gl->NEAREST;
-if (samplingMode == BABYLON->Texture->BILINEAR_SAMPLINGMODE) {
-magFilter = gl->LINEAR;
-if (generateMipMaps) {
-minFilter = gl->LINEAR_MIPMAP_NEAREST;
-} else {
-minFilter = gl->LINEAR;
-}
-} else if (samplingMode == BABYLON->Texture->TRILINEAR_SAMPLINGMODE) {
-magFilter = gl->LINEAR;
-if (generateMipMaps) {
-minFilter = gl->LINEAR_MIPMAP_LINEAR;
-} else {
-minFilter = gl->LINEAR;
-}
-}
-gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_MAG_FILTER, magFilter);
-gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_MIN_FILTER, minFilter);
-gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_S, gl->CLAMP_TO_EDGE);
-gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_T, gl->CLAMP_TO_EDGE);
-gl->texImage2D(gl->TEXTURE_2D, 0, gl->RGBA, width, height, 0, gl->RGBA, gl->UNSIGNED_BYTE, nullptr);
+	auto magFilter = gl->NEAREST;
+	auto minFilter = gl->NEAREST;
+	if (samplingMode == BILINEAR_SAMPLINGMODE) {
+		magFilter = gl->LINEAR;
+		if (generateMipMaps) {
+			minFilter = gl->LINEAR_MIPMAP_NEAREST;
+		} else {
+			minFilter = gl->LINEAR;
+		}
+	} else if (samplingMode == TRILINEAR_SAMPLINGMODE) {
+		magFilter = gl->LINEAR;
+		if (generateMipMaps) {
+			minFilter = gl->LINEAR_MIPMAP_LINEAR;
+		} else {
+			minFilter = gl->LINEAR;
+		}
+	}
+	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_MAG_FILTER, magFilter);
+	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_MIN_FILTER, minFilter);
+	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_S, gl->CLAMP_TO_EDGE);
+	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_T, gl->CLAMP_TO_EDGE);
+	gl->texImage2D(gl->TEXTURE_2D, 0, gl->RGBA, width, height, 0, gl->RGBA, gl->UNSIGNED_BYTE, nullptr);
 
-auto depthBuffer;
-// Create the depth buffer
-if (generateDepthBuffer) {
-depthBuffer = gl->createRenderbuffer();
-gl->bindRenderbuffer(gl->RENDERBUFFER, depthBuffer);
-gl->renderbufferStorage(gl->RENDERBUFFER, gl->DEPTH_COMPONENT16, width, height);
-}
-// Create the framebuffer
-auto framebuffer = gl->createFramebuffer();
-gl->bindFramebuffer(gl->FRAMEBUFFER, framebuffer);
-gl->framebufferTexture2D(gl->FRAMEBUFFER, gl->COLOR_ATTACHMENT0, gl->TEXTURE_2D, texture, 0);
-if (generateDepthBuffer) {
-gl->framebufferRenderbuffer(gl->FRAMEBUFFER, gl->DEPTH_ATTACHMENT, gl->RENDERBUFFER, depthBuffer);
-}
+	IGLRenderbuffer::Ptr depthBuffer;
+	// Create the depth buffer
+	if (generateDepthBuffer) {
+		depthBuffer = gl->createRenderbuffer();
+		gl->bindRenderbuffer(gl->RENDERBUFFER, depthBuffer);
+		gl->renderbufferStorage(gl->RENDERBUFFER, gl->DEPTH_COMPONENT16, width, height);
+	}
 
-// Unbind
-gl->bindTexture(gl->TEXTURE_2D, nullptr);
-gl->bindRenderbuffer(gl->RENDERBUFFER, nullptr);
-gl->bindFramebuffer(gl->FRAMEBUFFER, nullptr);
+	// Create the framebuffer
+	auto framebuffer = gl->createFramebuffer();
+	gl->bindFramebuffer(gl->FRAMEBUFFER, framebuffer);
+	gl->framebufferTexture2D(gl->FRAMEBUFFER, gl->COLOR_ATTACHMENT0, gl->TEXTURE_2D, texture, 0);
+	if (generateDepthBuffer) {
+		gl->framebufferRenderbuffer(gl->FRAMEBUFFER, gl->DEPTH_ATTACHMENT, gl->RENDERBUFFER, depthBuffer);
+	}
 
-texture->_framebuffer = framebuffer;
-if (generateDepthBuffer) {
-texture->_depthBuffer = depthBuffer;
-}
-texture->_width = width;
-texture->_height = height;
-texture->isReady = true;
-texture->generateMipMaps = generateMipMaps;
-texture->references = 1;
-this->_activeTexturesCache = [];
+	// Unbind
+	gl->bindTexture(gl->TEXTURE_2D, nullptr);
+	gl->bindRenderbuffer(gl->RENDERBUFFER, nullptr);
+	gl->bindFramebuffer(gl->FRAMEBUFFER, nullptr);
 
-this->_loadedTexturesCache->push(texture);
+	texture->_framebuffer = framebuffer;
+	if (generateDepthBuffer) {
+		texture->_depthBuffer = depthBuffer;
+	}
 
-return texture;
+	texture->_width = width;
+	texture->_height = height;
+	texture->isReady = true;
+	texture->generateMipMaps = generateMipMaps;
+	texture->references = 1;
+	this->_activeTexturesCache.clear();
+
+	this->_loadedTexturesCache.push_back(texture);
+
+	return texture;
 };
 
-//TODO: finish
+//TODO: finish it
 //auto extensions = ["_px->jpg", "_py->jpg", "_pz->jpg", "_nx->jpg", "_ny->jpg", "_nz->jpg"];
+vector<string> Babylon::Engine::extensions;
 
-void Babylon::Engine::cascadeLoad(rootUrl, index, loadedImages, scene, onfinish) {
-auto img;
+void Babylon::Engine::cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, IScene::Ptr scene) {
+	IImage::Ptr img;
+	auto onload = [&]() {
+		loadedImages.push_back(img);
 
-auto onload() {
-loadedImages->push(img);
+		scene->_removePendingData(img);
 
-scene->_removePendingData(img);
+		if (index != extensions.size() - 1) {
+			cascadeLoad(rootUrl, index + 1, loadedImages, scene);
+		} else {
+			this->onFinish(loadedImages);
+		}
+	};
 
-if (index != extensions->length - 1) {
-cascadeLoad(rootUrl, index + 1, loadedImages, scene, onfinish);
-} else {
-onfinish(loadedImages);
+	auto onerror = [&]() {
+		scene->_removePendingData(img);
+	};
+
+	// TODO: finish it
+	////img = BABYLON->Tools->LoadImage(rootUrl + extensions[index], onload, onerror, scene->database);
+	scene->_addPendingData(img);
+};
+
+void Babylon::Engine::onFinish(IImage::Array imgs)
+{
+	IGLTexture::Ptr texture;
+
+	auto gl = this->_gl;
+	auto that = this;
+
+	auto width = getExponantOfTwo(imgs[0]->getWidth(), that->_caps.maxCubemapTextureSize);
+	auto height = width;
+
+	that->_workingCanvas->setWidth(width);
+	that->_workingCanvas->setHeight(height);
+
+	vector<GLenum> faces;
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_POSITIVE_X);
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_POSITIVE_Y);
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_POSITIVE_Z);
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_NEGATIVE_X);
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_NEGATIVE_Y);
+	faces.push_back(IGL::TEXTURE_CUBE_MAP_NEGATIVE_Z);
+
+	gl->bindTexture(gl->TEXTURE_CUBE_MAP, texture);
+	gl->pixelStorei(gl->UNPACK_FLIP_Y_WEBGL, false);
+
+	for (auto index = 0; index < faces.size(); index++) {
+		that->_workingContext->drawImage(imgs[index], 0, 0, imgs[index]->getWidth(), imgs[index]->getHeight(), 0, 0, width, height);
+		gl->texImage2D(faces[index], 0, gl->RGBA, gl->RGBA, gl->UNSIGNED_BYTE, that->_workingCanvas);
+	}
+
+	gl->generateMipmap(gl->TEXTURE_CUBE_MAP);
+	gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_MAG_FILTER, gl->LINEAR);
+	gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_MIN_FILTER, gl->LINEAR_MIPMAP_LINEAR);
+	gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_WRAP_S, gl->CLAMP_TO_EDGE);
+	gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_WRAP_T, gl->CLAMP_TO_EDGE);
+
+	gl->bindTexture(gl->TEXTURE_CUBE_MAP, nullptr);
+
+	that->_activeTexturesCache.clear();
+
+	texture->_width = width;
+	texture->_height = height;
+	texture->isReady = true;
 }
+
+IGLTexture::Ptr Babylon::Engine::createCubeTexture(string rootUrl, IScene::Ptr scene) {
+	auto gl = this->_gl;
+
+	auto texture = gl->createTexture();
+	texture->isCube = true;
+	texture->url = rootUrl;
+	texture->references = 1;
+	this->_loadedTexturesCache.push_back(texture);
+
+	auto that = this;
+	IImage::Array loadedImages;
+	cascadeLoad(rootUrl, 0, loadedImages, scene);
+
+	return texture;
 };
 
-auto onerror() {
-scene->_removePendingData(img);
-};
-
-img = BABYLON->Tools->LoadImage(rootUrl + extensions[index], onload, onerror, scene->database);
-scene->_addPendingData(img);
-};
-
-void Babylon::Engine::createCubeTexture(rootUrl, scene) {
-auto gl = this->_gl;
-
-auto texture = gl->createTexture();
-texture->isCube = true;
-texture->url = rootUrl;
-texture->references = 1;
-this->_loadedTexturesCache->push(texture);
-
-auto that = this;
-cascadeLoad(rootUrl, 0, [], scene, function (imgs) {
-auto width = getExponantOfTwo(imgs[0]->width, that->_caps->maxCubemapTextureSize);
-auto height = width;
-
-that->_workingCanvas->width = width;
-that->_workingCanvas->height = height;
-
-auto faces = [
-gl->TEXTURE_CUBE_MAP_POSITIVE_X, gl->TEXTURE_CUBE_MAP_POSITIVE_Y, gl->TEXTURE_CUBE_MAP_POSITIVE_Z,
-gl->TEXTURE_CUBE_MAP_NEGATIVE_X, gl->TEXTURE_CUBE_MAP_NEGATIVE_Y, gl->TEXTURE_CUBE_MAP_NEGATIVE_Z
-];
-
-gl->bindTexture(gl->TEXTURE_CUBE_MAP, texture);
-gl->pixelStorei(gl->UNPACK_FLIP_Y_WEBGL, false);
-
-for (auto index = 0; index < faces->length; index++) {
-that->_workingContext->drawImage(imgs[index], 0, 0, imgs[index]->width, imgs[index]->height, 0, 0, width, height);
-gl->texImage2D(faces[index], 0, gl->RGBA, gl->RGBA, gl->UNSIGNED_BYTE, that->_workingCanvas);
-}
-
-gl->generateMipmap(gl->TEXTURE_CUBE_MAP);
-gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_MAG_FILTER, gl->LINEAR);
-gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_MIN_FILTER, gl->LINEAR_MIPMAP_LINEAR);
-gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_WRAP_S, gl->CLAMP_TO_EDGE);
-gl->texParameteri(gl->TEXTURE_CUBE_MAP, gl->TEXTURE_WRAP_T, gl->CLAMP_TO_EDGE);
-
-gl->bindTexture(gl->TEXTURE_CUBE_MAP, nullptr);
-
-that->_activeTexturesCache = [];
-
-texture->_width = width;
-texture->_height = height;
-texture->isReady = true;
-});
-
-return texture;
-};
-*/
-
-void Babylon::Engine::_releaseTexture(BaseTexture::Ptr texture) {
+void Babylon::Engine::_releaseTexture(IGLTexture::Ptr texture) {
 	auto gl = this->_gl;
 
 	if (texture->_framebuffer) {
@@ -914,7 +916,7 @@ void Babylon::Engine::_releaseTexture(BaseTexture::Ptr texture) {
 		gl->deleteRenderbuffer(texture->_depthBuffer);
 	}
 
-	gl->deleteTexture(texture->_texture);
+	gl->deleteTexture(texture);
 
 	// Unbind channels
 	for (auto channel = 0; channel < this->_caps.maxTexturesImageUnits; channel++) {
@@ -924,7 +926,7 @@ void Babylon::Engine::_releaseTexture(BaseTexture::Ptr texture) {
 		this->_activeTexturesCache[channel] = nullptr;
 	}
 
-	auto it = find(begin( this->_loadedTexturesCache ), end ( this->_loadedTexturesCache ), texture->_texture);
+	auto it = find(begin( this->_loadedTexturesCache ), end ( this->_loadedTexturesCache ), texture);
 	if (it != end ( this->_loadedTexturesCache )) {
 		this->_loadedTexturesCache.erase(it);
 	}

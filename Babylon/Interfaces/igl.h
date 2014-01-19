@@ -75,21 +75,20 @@ namespace Babylon {
 		typedef shared_ptr<IGLTexture> Ptr;
 		typedef vector<Ptr> Array;
 
-		virtual GLint get_baseWidth() = 0;
-		virtual GLint get_baseHeight() = 0;
-		virtual GLint get_width() = 0;
-		virtual GLint get_height() = 0;
-		virtual bool getIsReady() = 0;
-		virtual string getUrl() = 0;
-		virtual bool getNoMipmap() = 0;
-
-		virtual void set_baseWidth(GLint) = 0;
-		virtual void set_baseHeight(GLint) = 0;
-		virtual void set_width(GLint) = 0;
-		virtual void set_height(GLint) = 0;
-		virtual void setIsReady(bool) = 0;
-		virtual void setUrl(string) = 0;
-		virtual void setNoMipmap(bool) = 0;
+		// Tag properties
+		GLint _baseWidth;
+		GLint _baseHeight;
+		GLint _width;
+		GLint _height;
+		bool isReady;
+		string url;
+		bool noMipmap;
+		bool generateMipMaps;
+		bool isCube;
+		IGLFramebuffer::Ptr _framebuffer;
+		IGLRenderbuffer::Ptr _depthBuffer;
+		ICanvas::Ptr _workingCanvas;
+		I2D::Ptr _workingContext;
 
 		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
 		// TODO: get rid of it
@@ -695,8 +694,8 @@ namespace Babylon {
 			GLenum format, GLenum type, IImage::Ptr image) = 0; // May throw DOMException
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
 			GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
-		//virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
-		//	GLenum format, GLenum type, HTMLVideoElement video) = 0; // May throw DOMException
+		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+			GLenum format, GLenum type, IVideo::Ptr video) = 0; // May throw DOMException
 
 		virtual void texParameterf(GLenum target, GLenum pname, GLfloat param) = 0;
 		virtual void texParameteri(GLenum target, GLenum pname, GLint param) = 0;

@@ -9,7 +9,6 @@
 #include "icanvas.h"
 #include "igl.h"
 #include "iengine.h"
-#include "baseTexture.h"
 #include "effect.h"
 #include "tools_math.h"
 #include "vertexbuffer.h"
@@ -30,6 +29,8 @@ namespace Babylon {
 
 		float epsilon;
 		float collisionsEpsilon;
+
+		static vector<string> extensions;
 
 	private: 
 		bool forceWireframe;
@@ -82,8 +83,8 @@ namespace Babylon {
 		virtual void beginFrame();
 		virtual void endFrame();
 		virtual void resize();
-		virtual void bindFramebuffer(BaseTexture::Ptr texture);
-		virtual void unBindFramebuffer(BaseTexture::Ptr texture);
+		virtual void bindFramebuffer(IGLTexture::Ptr texture);
+		virtual void unBindFramebuffer(IGLTexture::Ptr texture);
 		virtual void flushFramebuffer();
 		virtual void restoreDefaultFramebuffer();
 		virtual IGLBuffer::Ptr createVertexBuffer(vector<float> vertices);
@@ -122,14 +123,14 @@ namespace Babylon {
 		virtual void wipeCaches();
 		static int getExponantOfTwo(int value, int max);
 		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, IScene::Ptr scene);
-		/*
-		virtual IGLTexture::Ptr createDynamicTexture(width, height, generateMipMaps);
-		virtual IGLTexture::Ptr updateDynamicTexture(texture, canvas, invertY);
-		virtual IGLTexture::Ptr updateVideoTexture(texture, video);
-		virtual IGLTexture::Ptr createRenderTargetTexture(size, options);
-		virtual IGLTexture::Ptr createCubeTexture(rootUrl, scene);
-		*/
-		virtual void _releaseTexture(BaseTexture::Ptr texture);
+		virtual IGLTexture::Ptr createDynamicTexture(int width, int height, bool generateMipMaps);
+		virtual void updateDynamicTexture(IGLTexture::Ptr texture, ICanvas::Ptr canvas, bool invertY);
+		virtual void updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video);
+		virtual IGLTexture::Ptr createRenderTargetTexture(int width, int height, bool generateMipMaps = false, bool generateDepthBuffer = true, SAMPLINGMODES samplingMode = TRILINEAR_SAMPLINGMODE);
+		virtual void cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, IScene::Ptr scene);
+		virtual void onFinish(IImage::Array imgs);
+		virtual IGLTexture::Ptr createCubeTexture(string rootUrl, IScene::Ptr scene);
+		virtual void _releaseTexture(IGLTexture::Ptr texture);
 		virtual void bindSamplers(Effect::Ptr effect);
 		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);
 		/*

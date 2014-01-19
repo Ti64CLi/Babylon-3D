@@ -26,15 +26,8 @@ namespace Babylon {
 		DELAYLOADSTATE delayLoadState;
 		bool hasAlpha;
 		int level;
-		OnDisposeFunc onDispose;
-
-	public:
-		IGLFramebuffer::Ptr _framebuffer;
 		IGLTexture::Ptr _texture;
-		IGLRenderbuffer::Ptr _depthBuffer;
-		int _width;
-		int _height;
-		bool generateMipMaps;
+		OnDisposeFunc onDispose;
 
 	public: 
 		BaseTexture(string url, IScene::Ptr scene);		

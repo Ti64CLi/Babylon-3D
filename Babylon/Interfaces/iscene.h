@@ -20,7 +20,9 @@ namespace Babylon {
 
 	public:
 		virtual void _addPendingData(IGLTexture::Ptr texture) = 0;
+		virtual void _addPendingData(IImage::Ptr image) = 0;
 		virtual void _removePendingData(IGLTexture::Ptr texture) = 0;
+		virtual void _removePendingData(IImage::Ptr image) = 0;
 
 		virtual vector<shared_ptr<BaseTexture>>& getTextures() = 0;
 		virtual vector<shared_ptr<Mesh>>& getMeshes() = 0;
