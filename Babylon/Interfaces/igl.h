@@ -1,6 +1,7 @@
 #ifndef BABYLON_IGL_H
 #define BABYLON_IGL_H
 
+#include <stdint.h>
 #include <memory>
 #include <vector>
 #include "icanvas.h"
@@ -72,6 +73,27 @@ namespace Babylon {
 	class IGLTexture : public IGLObject {
 	public:
 		typedef shared_ptr<IGLTexture> Ptr;
+		typedef vector<Ptr> Array;
+
+		virtual GLint get_baseWidth() = 0;
+		virtual GLint get_baseHeight() = 0;
+		virtual GLint get_width() = 0;
+		virtual GLint get_height() = 0;
+		virtual bool getIsReady() = 0;
+		virtual string getUrl() = 0;
+		virtual bool getNoMipmap() = 0;
+
+		virtual void set_baseWidth(GLint) = 0;
+		virtual void set_baseHeight(GLint) = 0;
+		virtual void set_width(GLint) = 0;
+		virtual void set_height(GLint) = 0;
+		virtual void setIsReady(bool) = 0;
+		virtual void setUrl(string) = 0;
+		virtual void setNoMipmap(bool) = 0;
+
+		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
+		// TODO: get rid of it
+		int references;
 	};
 
 	class IGLUniformLocation {
@@ -669,8 +691,8 @@ namespace Babylon {
 			GLenum type, ArrayBuffer pixels) = 0;
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
 			GLenum format, GLenum type, any pixels) = 0;
-		//virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
-		//	GLenum format, GLenum type, HTMLImageElement image) = 0; // May throw DOMException
+		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+			GLenum format, GLenum type, IImage::Ptr image) = 0; // May throw DOMException
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
 			GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
 		//virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,

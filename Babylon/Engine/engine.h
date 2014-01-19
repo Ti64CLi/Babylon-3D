@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 
+#include "icanvas.h"
 #include "igl.h"
 #include "iengine.h"
 #include "baseTexture.h"
@@ -31,10 +32,14 @@ namespace Babylon {
 		float collisionsEpsilon;
 
 	private: 
+		bool forceWireframe;
+		bool isPointerLock;
+		ICanvas::Ptr _workingCanvas;
+		I2D::Ptr _workingContext;
 		float _aspectRatio;
 		ICanvas::Ptr _renderingCanvas;
 		float _hardwareScalingLevel;
-		BaseTexture::Array _loadedTexturesCache;
+		IGLTexture::Array _loadedTexturesCache;
 		Capabilities _caps;
 		RenderFunction _renderFunction;
 		bool _runningLoop;
@@ -43,7 +48,7 @@ namespace Babylon {
 		Viewport::Ptr _cachedViewport;
 		bool _alphaTest;
 		IGL::Ptr _gl;
-		BaseTexture::Array _activeTexturesCache;
+		IGLTexture::Array _activeTexturesCache;
 		Effect::Ptr _currentEffect;
 		State _currentState;
 		IGLBuffer::Ptr _cachedVertexBuffer;
@@ -65,7 +70,7 @@ namespace Babylon {
 		virtual ICanvas::Ptr getRenderingCanvas();
 		virtual void setHardwareScalingLevel(float level);
 		virtual float getHardwareScalingLevel();
-		virtual BaseTexture::Array& getLoadedTexturesCache();
+		virtual IGLTexture::Array& getLoadedTexturesCache();
 		virtual Capabilities getCaps();
 		virtual void stopRenderLoop();
 		virtual void _renderLoop();
@@ -116,21 +121,21 @@ namespace Babylon {
 		// Textures
 		virtual void wipeCaches();
 		static int getExponantOfTwo(int value, int max);
+		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, IScene::Ptr scene);
 		/*
-		virtual void createTexture(url, noMipmap, invertY, scene);
-		virtual void createDynamicTexture(width, height, generateMipMaps);
-		virtual void updateDynamicTexture(texture, canvas, invertY);
-		virtual void updateVideoTexture(texture, video);
-		virtual void createRenderTargetTexture(size, options);
-		virtual void createCubeTexture(rootUrl, scene);
-		virtual void _releaseTexture(texture);
+		virtual IGLTexture::Ptr createDynamicTexture(width, height, generateMipMaps);
+		virtual IGLTexture::Ptr updateDynamicTexture(texture, canvas, invertY);
+		virtual IGLTexture::Ptr updateVideoTexture(texture, video);
+		virtual IGLTexture::Ptr createRenderTargetTexture(size, options);
+		virtual IGLTexture::Ptr createCubeTexture(rootUrl, scene);
 		*/
+		virtual void _releaseTexture(BaseTexture::Ptr texture);
 		virtual void bindSamplers(Effect::Ptr effect);
 		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);
 		/*
 		virtual void setTextureFromPostProcess(channel, postProcess);
 		virtual void setTexture(int channel, IGLTexture::Ptr texture);
-		virtual void _setAnisotropicLevel(key, Texture texture);
+		virtual void _setAnisotropicLevel(key, IGLTexture::Ptr texture);
 		*/
 		// Dispose
 		virtual void dispose();

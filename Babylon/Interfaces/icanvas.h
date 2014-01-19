@@ -8,6 +8,24 @@ using namespace std;
 
 namespace Babylon {
 
+	class IImage {
+	public:
+		typedef shared_ptr<IImage> Ptr;
+
+	public: 
+		virtual int getWidth() = 0;
+		virtual int getHeight() = 0;
+	};
+
+	class I2D {
+
+	public:
+		typedef shared_ptr<I2D> Ptr;
+
+	public: 
+		virtual int drawImage(IImage::Ptr image, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+	};
+
 	class ICanvas {
 
 	public:
@@ -21,6 +39,7 @@ namespace Babylon {
 
 		virtual int getClientWidth() = 0;
 		virtual int getClientHeight() = 0;
+		virtual I2D::Ptr getContext2d() = 0;
 	};
 
 };

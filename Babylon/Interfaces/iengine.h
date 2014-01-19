@@ -21,10 +21,10 @@ namespace Babylon {
 
 	struct Capabilities {
 		// Caps
-		int maxTexturesImageUnits;
-		int maxTextureSize;
-		int maxCubemapTextureSize;
-		int maxRenderTextureSize;
+		size_t maxTexturesImageUnits;
+		size_t maxTextureSize;
+		size_t maxCubemapTextureSize;
+		size_t maxRenderTextureSize;
 
 		// Extensions
 		bool standardDerivatives;

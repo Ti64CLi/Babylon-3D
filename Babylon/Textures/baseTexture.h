@@ -31,6 +31,7 @@ namespace Babylon {
 	public:
 		IGLFramebuffer::Ptr _framebuffer;
 		IGLTexture::Ptr _texture;
+		IGLRenderbuffer::Ptr _depthBuffer;
 		int _width;
 		int _height;
 		bool generateMipMaps;

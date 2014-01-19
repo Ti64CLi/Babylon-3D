@@ -22,10 +22,13 @@ namespace Babylon {
 		Engine::Ptr engine;
 
 	public:
-		BaseTexture::Array textures;
+		IGLTexture::Array textures;
 
 	public: 
 		Scene(Engine::Ptr engine);
+
+		virtual void _addPendingData(IGLTexture::Ptr texture);
+		virtual void _removePendingData(IGLTexture::Ptr texture);
 	};
 
 };

@@ -1,4 +1,4 @@
-#include "Color4.h"
+#include "color4.h"
 #include <sstream>
 
 using namespace Babylon;
