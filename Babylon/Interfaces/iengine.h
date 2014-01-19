@@ -10,6 +10,15 @@ using namespace std;
 
 namespace Babylon {
 
+	const string ShadersRepository = "Babylon/Shaders/";
+
+	class Matrix;
+	typedef shared_ptr<Matrix> MatrixPtr;
+	struct Vector3;
+	typedef shared_ptr<Vector3> Vector3Ptr;
+	struct Color3;
+	typedef shared_ptr<Color3> Color3Ptr;
+
 	struct Capabilities {
 		// Caps
 		int maxTexturesImageUnits;
@@ -25,10 +34,10 @@ namespace Babylon {
 	};
 
 	struct State {
-		void* culling;
+		bool culling;
 	};
 
-	enum ALPHA {
+	enum ALPHA_MODES {
 		ALPHA_DISABLE = 0,
 		ALPHA_ADD =  1,
 		ALPHA_COMBINE = 2,
@@ -55,8 +64,17 @@ namespace Babylon {
 		virtual float getHardwareScalingLevel() = 0;
 		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) = 0;
 		virtual void _releaseBuffer(IGLBuffer::Ptr vertexBuffer) = 0;
-		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array vertices);
-		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
+		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array vertices) = 0;
+		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity) = 0;
+		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices) = 0;
+		virtual void setMatrix(IGLUniformLocation::Ptr uniform, MatrixPtr matrix) = 0;
+		virtual void setFloat(IGLUniformLocation::Ptr uniform, GLfloat value) = 0;
+		virtual void setFloat2(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y) = 0;
+		virtual void setFloat3(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z) = 0;
+		virtual void setBool(IGLUniformLocation::Ptr uniform, GLboolean _bool) = 0;
+		virtual void setFloat4(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
+		virtual void setColor3(IGLUniformLocation::Ptr uniform, Color3Ptr color3) = 0;
+		virtual void setColor4(IGLUniformLocation::Ptr uniform, Color3Ptr color3, GLfloat alpha) = 0;
 	};
 
 };

@@ -1,3 +1,3 @@
-include_directories(. ${Babylon_SOURCE_DIR}/Babylon/Interfaces)
+include_directories(. ${Babylon_SOURCE_DIR}/Babylon/Interfaces ${Babylon_SOURCE_DIR}/Babylon/Tools)
 
 add_library (Materials effect.cpp)

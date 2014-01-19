@@ -3,12 +3,15 @@
 
 #include <memory>
 #include <vector>
+#include <string>
+#include <map>
 
 #include "igl.h"
 #include "iengine.h"
 #include "baseTexture.h"
 #include "effect.h"
 #include "tools_math.h"
+#include "vertexbuffer.h"
 
 using namespace std;
 
@@ -45,9 +48,13 @@ namespace Babylon {
 		State _currentState;
 		IGLBuffer::Ptr _cachedVertexBuffer;
 		Effect::Ptr _cachedEffectForVertexBuffer;
-		IGLBuffer::Array _cachedVertexBuffers;
+		VertexBuffer::Array _cachedVertexBuffers;
 		Effect::Ptr _cachedEffectForVertexBuffers;
 		IGLBuffer::Ptr _cachedIndexBuffer;
+		map<string, Effect::Ptr> _compiledEffects;
+		bool cullBackFaces;
+
+		vector<IScene::Ptr> scenes;
 
 	public: 
 		Engine(ICanvas::Ptr canvas, bool antialias);
@@ -79,36 +86,36 @@ namespace Babylon {
 		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length);
 		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array indices);
 		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect);
-		virtual void bindMultiBuffers(IGLBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
+		virtual void bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
 		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
-		/*
-		virtual void draw(useTriangles, indexStart, indexCount);
-		virtual void createEffect(baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
-		virtual void compileShader(gl, source, type, defines);
-		virtual void createShaderProgram(vertexCode, fragmentCode, defines);
-		virtual void getUniforms(shaderProgram, uniformsNames);
-		virtual void getAttributes(shaderProgram, attributesNames);
-		virtual void enableEffect(effect);
-		virtual void setMatrices(uniform, matrices);
-		virtual void setMatrix(uniform, matrix);
-		virtual void setFloat(uniform, value);
-		virtual void setFloat2(uniform, x, y);
-		virtual void setFloat3(uniform, x, y, z);
-		virtual void setBool(uniform, bool);
-		virtual void setFloat4(uniform, x, y, z, w);
-		virtual void setColor3(uniform, color3);
-		virtual void setColor4(uniform, color3, alpha);
+		virtual void draw(bool useTriangles, int indexStart, int indexCount);
+		virtual Effect::Ptr createEffect(string baseName, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines);
+		static IGLShader::Ptr compileShader(IGL::Ptr gl, string source, string type, string defines);
+		virtual IGLProgram::Ptr createShaderProgram(string vertexCode, string fragmentCode, string defines);
+		virtual vector<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames);
+		virtual vector<GLint> getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames);
+		virtual void enableEffect(Effect::Ptr effect);
+		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices);
+		virtual void setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr matrix);
+		virtual void setFloat(IGLUniformLocation::Ptr uniform, GLfloat value);
+		virtual void setFloat2(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y);
+		virtual void setFloat3(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z);
+		virtual void setBool(IGLUniformLocation::Ptr uniform, GLboolean _bool);
+		virtual void setFloat4(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+		virtual void setColor3(IGLUniformLocation::Ptr uniform, Color3::Ptr color3);
+		virtual void setColor4(IGLUniformLocation::Ptr uniform, Color3::Ptr color3, GLfloat alpha);
 		// States
-		virtual void setState(culling);
-		virtual void setDepthBuffer(enable);
-		virtual void setDepthWrite(enable);
-		virtual void setColorWrite(enable);
-		virtual void setAlphaMode(mode);
-		*/
+		virtual void setState(bool culling);
+		virtual void setDepthBuffer(bool enable);
+		virtual void setDepthWrite(bool enable);
+		virtual void setColorWrite(bool enable);
+		virtual void setAlphaMode(ALPHA_MODES mode);
 		virtual void setAlphaTesting(bool enable);
 		virtual bool getAlphaTesting();
 		// Textures
 		virtual void wipeCaches();
+		static int getExponantOfTwo(int value, int max);
 		/*
 		virtual void createTexture(url, noMipmap, invertY, scene);
 		virtual void createDynamicTexture(width, height, generateMipMaps);
@@ -117,10 +124,12 @@ namespace Babylon {
 		virtual void createRenderTargetTexture(size, options);
 		virtual void createCubeTexture(rootUrl, scene);
 		virtual void _releaseTexture(texture);
-		virtual void bindSamplers(effect);
-		virtual void _bindTexture(int channel, Texture texture);
+		*/
+		virtual void bindSamplers(Effect::Ptr effect);
+		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);
+		/*
 		virtual void setTextureFromPostProcess(channel, postProcess);
-		virtual void setTexture(iny channel, Texture texture);
+		virtual void setTexture(int channel, IGLTexture::Ptr texture);
 		virtual void _setAnisotropicLevel(key, Texture texture);
 		*/
 		// Dispose

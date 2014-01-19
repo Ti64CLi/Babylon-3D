@@ -519,214 +519,217 @@ namespace Babylon {
 
 	public: 
 
-		void activeTexture(GLenum texture);
-		void attachShader(IGLProgram::Ptr program, IGLShader::Ptr shader);
-		void bindAttribLocation(IGLProgram::Ptr program, GLuint index, string name);
-		void bindBuffer(GLenum target, IGLBuffer::Ptr buffer);
-		void bindFramebuffer(GLenum target, IGLFramebuffer::Ptr framebuffer);
-		void bindRenderbuffer(GLenum target, IGLRenderbuffer::Ptr renderbuffer);
-		void bindTexture(GLenum target, IGLTexture::Ptr texture);
-		void blendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-		void blendEquation(GLenum mode);
-		void blendEquationSeparate(GLenum modeRGB, GLenum modeAlpha);
-		void blendFunc(GLenum sfactor, GLenum dfactor);
-		void blendFuncSeparate(GLenum srcRGB, GLenum dstRGB, 
-			GLenum srcAlpha, GLenum dstAlpha);
+		virtual GLenum getEnumByName (string name) = 0;
+		virtual GLenum getEnumByNameIndex (string name, int index) = 0;
 
-		void bufferData(GLenum target, GLsizeiptr size, GLenum usage);
-		void bufferData(GLenum target, ArrayBuffer data, GLenum usage);
-		void bufferData(GLenum target, Float32Array data, GLenum usage);
-		void bufferData(GLenum target, Int32Array data, GLenum usage);
-		void bufferData(GLenum target, Uint16Array data, GLenum usage);
-		void bufferSubData(GLenum target, GLintptr offset, ArrayBuffer data);
-		void bufferSubData(GLenum target, GLintptr offset, Float32Array data);
-		void bufferSubData(GLenum target, GLintptr offset, Int32Array data);
+		virtual void activeTexture(GLenum texture) = 0;
+		virtual void attachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+		virtual void bindAttribLocation(IGLProgram::Ptr program, GLuint index, string name) = 0;
+		virtual void bindBuffer(GLenum target, IGLBuffer::Ptr buffer) = 0;
+		virtual void bindFramebuffer(GLenum target, IGLFramebuffer::Ptr framebuffer) = 0;
+		virtual void bindRenderbuffer(GLenum target, IGLRenderbuffer::Ptr renderbuffer) = 0;
+		virtual void bindTexture(GLenum target, IGLTexture::Ptr texture) = 0;
+		virtual void blendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) = 0;
+		virtual void blendEquation(GLenum mode) = 0;
+		virtual void blendEquationSeparate(GLenum modeRGB, GLenum modeAlpha) = 0;
+		virtual void blendFunc(GLenum sfactor, GLenum dfactor) = 0;
+		virtual void blendFuncSeparate(GLenum srcRGB, GLenum dstRGB, 
+			GLenum srcAlpha, GLenum dstAlpha) = 0;
 
-		GLenum checkFramebufferStatus(GLenum target);
-		void clear(GLbitfield mask);
-		void clearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-		void clearDepth(GLclampf depth);
-		void clearStencil(GLint s);
-		void colorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
-		void compileShader(IGLShader::Ptr shader);
+		virtual void bufferData(GLenum target, GLsizeiptr size, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, ArrayBuffer data, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, Float32Array data, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, Int32Array data, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, Uint16Array data, GLenum usage) = 0;
+		virtual void bufferSubData(GLenum target, GLintptr offset, ArrayBuffer data) = 0;
+		virtual void bufferSubData(GLenum target, GLintptr offset, Float32Array data) = 0;
+		virtual void bufferSubData(GLenum target, GLintptr offset, Int32Array data) = 0;
 
-		void compressedTexSubImage2D(GLenum target, GLint level,
+		virtual GLenum checkFramebufferStatus(GLenum target) = 0;
+		virtual void clear(GLbitfield mask) = 0;
+		virtual void clearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) = 0;
+		virtual void clearDepth(GLclampf depth) = 0;
+		virtual void clearStencil(GLint s) = 0;
+		virtual void colorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha) = 0;
+		virtual void compileShader(IGLShader::Ptr shader) = 0;
+
+		virtual void compressedTexSubImage2D(GLenum target, GLint level,
 			GLint xoffset, GLint yoffset,
 			GLsizei width, GLsizei height, GLenum format,
-			ArrayBuffer data);
+			ArrayBuffer data) = 0;
 
-		void copyTexImage2D(GLenum target, GLint level, GLenum internalformat, 
+		virtual void copyTexImage2D(GLenum target, GLint level, GLenum internalformat, 
 			GLint x, GLint y, GLsizei width, GLsizei height, 
-			GLint border);
-		void copyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
-			GLint x, GLint y, GLsizei width, GLsizei height);
+			GLint border) = 0;
+		virtual void copyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+			GLint x, GLint y, GLsizei width, GLsizei height) = 0;
 
-		IGLBuffer::Ptr createBuffer();
-		IGLFramebuffer::Ptr createFramebuffer();
-		IGLProgram::Ptr createProgram();
-		IGLRenderbuffer::Ptr createRenderbuffer();
-		IGLShader::Ptr createShader(GLenum type);
-		IGLTexture::Ptr createTexture();
+		virtual IGLBuffer::Ptr createBuffer() = 0;
+		virtual IGLFramebuffer::Ptr createFramebuffer() = 0;
+		virtual IGLProgram::Ptr createProgram() = 0;
+		virtual IGLRenderbuffer::Ptr createRenderbuffer() = 0;
+		virtual IGLShader::Ptr createShader(GLenum type) = 0;
+		virtual IGLTexture::Ptr createTexture() = 0;
 
-		void cullFace(GLenum mode);
+		virtual void cullFace(GLenum mode) = 0;
 
-		void deleteBuffer(IGLBuffer::Ptr buffer);
-		void deleteFramebuffer(IGLFramebuffer::Ptr framebuffer);
-		void deleteProgram(IGLProgram::Ptr program);
-		void deleteRenderbuffer(IGLRenderbuffer::Ptr renderbuffer);
-		void deleteShader(IGLShader::Ptr shader);
-		void deleteTexture(IGLTexture::Ptr texture);
+		virtual void deleteBuffer(IGLBuffer::Ptr buffer) = 0;
+		virtual void deleteFramebuffer(IGLFramebuffer::Ptr framebuffer) = 0;
+		virtual void deleteProgram(IGLProgram::Ptr program) = 0;
+		virtual void deleteRenderbuffer(IGLRenderbuffer::Ptr renderbuffer) = 0;
+		virtual void deleteShader(IGLShader::Ptr shader) = 0;
+		virtual void deleteTexture(IGLTexture::Ptr texture) = 0;
 
-		void depthFunc(GLenum func);
-		void depthMask(GLboolean flag);
-		void depthRange(GLclampf zNear, GLclampf zFar);
-		void detachShader(IGLProgram::Ptr program, IGLShader::Ptr shader);
-		void disable(GLenum cap);
-		void disableVertexAttribArray(GLuint index);
-		void drawArrays(GLenum mode, GLint first, GLsizei count);
-		void drawElements(GLenum mode, GLsizei count, GLenum type, GLintptr offset);
+		virtual void depthFunc(GLenum func) = 0;
+		virtual void depthMask(GLboolean flag) = 0;
+		virtual void depthRange(GLclampf zNear, GLclampf zFar) = 0;
+		virtual void detachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+		virtual void disable(GLenum cap) = 0;
+		virtual void disableVertexAttribArray(GLuint index) = 0;
+		virtual void drawArrays(GLenum mode, GLint first, GLsizei count) = 0;
+		virtual void drawElements(GLenum mode, GLsizei count, GLenum type, GLintptr offset) = 0;
 
-		void enable(GLenum cap);
-		void enableVertexAttribArray(GLuint index);
-		void finish();
-		void flush();
-		void framebufferRenderbuffer(GLenum target, GLenum attachment, 
+		virtual void enable(GLenum cap) = 0;
+		virtual void enableVertexAttribArray(GLuint index) = 0;
+		virtual void finish() = 0;
+		virtual void flush() = 0;
+		virtual void framebufferRenderbuffer(GLenum target, GLenum attachment, 
 			GLenum renderbuffertarget, 
-			IGLRenderbuffer::Ptr renderbuffer);
-		void framebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, 
-			IGLTexture::Ptr texture, GLint level);
-		void frontFace(GLenum mode);
+			IGLRenderbuffer::Ptr renderbuffer) = 0;
+		virtual void framebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, 
+			IGLTexture::Ptr texture, GLint level) = 0;
+		virtual void frontFace(GLenum mode) = 0;
 
-		void generateMipmap(GLenum target);
+		virtual void generateMipmap(GLenum target) = 0;
 
-		IGLActiveInfo::Ptr getActiveAttrib(IGLProgram::Ptr program, GLuint index);
-		IGLActiveInfo::Ptr getActiveUniform(IGLProgram::Ptr program, GLuint index);
-		vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program);
+		virtual IGLActiveInfo::Ptr getActiveAttrib(IGLProgram::Ptr program, GLuint index) = 0;
+		virtual IGLActiveInfo::Ptr getActiveUniform(IGLProgram::Ptr program, GLuint index) = 0;
+		virtual vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
 
-		GLint getAttribLocation(IGLProgram::Ptr program, string name);
+		virtual GLint getAttribLocation(IGLProgram::Ptr program, string name) = 0;
 
-		any getBufferParameter(GLenum target, GLenum pname);
-		any getParameter(GLenum pname);
+		virtual any getBufferParameter(GLenum target, GLenum pname) = 0;
+		virtual any getParameter(GLenum pname) = 0;
 
-		GLenum getError();
+		virtual GLenum getError() = 0;
 
-		any getFramebufferAttachmentParameter(GLenum target, GLenum attachment, 
-			GLenum pname);
-		any getProgramParameter(IGLProgram::Ptr program, GLenum pname);
-		string getProgramInfoLog(IGLProgram::Ptr program);
-		any getRenderbufferParameter(GLenum target, GLenum pname);
-		any getShaderParameter(IGLShader::Ptr shader, GLenum pname);
-		IGLShaderPrecisionFormat::Ptr getShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype);
-		string getShaderInfoLog(IGLShader::Ptr shader);
+		virtual any getFramebufferAttachmentParameter(GLenum target, GLenum attachment, 
+			GLenum pname) = 0;
+		virtual any getProgramParameter(IGLProgram::Ptr program, GLenum pname) = 0;
+		virtual string getProgramInfoLog(IGLProgram::Ptr program) = 0;
+		virtual any getRenderbufferParameter(GLenum target, GLenum pname) = 0;
+		virtual any getShaderParameter(IGLShader::Ptr shader, GLenum pname) = 0;
+		virtual IGLShaderPrecisionFormat::Ptr getShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype) = 0;
+		virtual string getShaderInfoLog(IGLShader::Ptr shader) = 0;
 
-		string getShaderSource(IGLShader::Ptr shader);
+		virtual string getShaderSource(IGLShader::Ptr shader) = 0;
 
-		any getTexParameter(GLenum target, GLenum pname);
+		virtual any getTexParameter(GLenum target, GLenum pname) = 0;
 
-		any getUniform(IGLProgram::Ptr program, IGLUniformLocation::Ptr location);
+		virtual any getUniform(IGLProgram::Ptr program, IGLUniformLocation::Ptr location) = 0;
 
-		IGLUniformLocation::Ptr getUniformLocation(IGLProgram::Ptr program, string name);
+		virtual IGLUniformLocation::Ptr getUniformLocation(IGLProgram::Ptr program, string name) = 0;
 
-		any getVertexAttrib(GLuint index, GLenum pname);
+		virtual any getVertexAttrib(GLuint index, GLenum pname) = 0;
 
-		GLsizeiptr getVertexAttribOffset(GLuint index, GLenum pname);
+		virtual GLsizeiptr getVertexAttribOffset(GLuint index, GLenum pname) = 0;
 
-		void hint(GLenum target, GLenum mode);
-		GLboolean isBuffer(IGLBuffer::Ptr buffer);
-		GLboolean isEnabled(GLenum cap);
-		GLboolean isFramebuffer(IGLFramebuffer::Ptr framebuffer);
-		GLboolean isProgram(IGLProgram::Ptr program);
-		GLboolean isRenderbuffer(IGLRenderbuffer::Ptr renderbuffer);
-		GLboolean isShader(IGLShader::Ptr shader);
-		GLboolean isTexture(IGLTexture::Ptr texture);
-		void lineWidth(GLfloat width);
-		void linkProgram(IGLProgram::Ptr program);
-		void pixelStorei(GLenum pname, GLint param);
-		void polygonOffset(GLfloat factor, GLfloat units);
+		virtual void hint(GLenum target, GLenum mode) = 0;
+		virtual GLboolean isBuffer(IGLBuffer::Ptr buffer) = 0;
+		virtual GLboolean isEnabled(GLenum cap) = 0;
+		virtual GLboolean isFramebuffer(IGLFramebuffer::Ptr framebuffer) = 0;
+		virtual GLboolean isProgram(IGLProgram::Ptr program) = 0;
+		virtual GLboolean isRenderbuffer(IGLRenderbuffer::Ptr renderbuffer) = 0;
+		virtual GLboolean isShader(IGLShader::Ptr shader) = 0;
+		virtual GLboolean isTexture(IGLTexture::Ptr texture) = 0;
+		virtual void lineWidth(GLfloat width) = 0;
+		virtual void linkProgram(IGLProgram::Ptr program) = 0;
+		virtual void pixelStorei(GLenum pname, GLint param) = 0;
+		virtual void polygonOffset(GLfloat factor, GLfloat units) = 0;
 
-		void readPixels(GLint x, GLint y, GLsizei width, GLsizei height, 
-			GLenum format, GLenum type, ArrayBuffer pixels);
+		virtual void readPixels(GLint x, GLint y, GLsizei width, GLsizei height, 
+			GLenum format, GLenum type, ArrayBuffer pixels) = 0;
 
-		void renderbufferStorage(GLenum target, GLenum internalformat, 
-			GLsizei width, GLsizei height);
-		void sampleCoverage(GLclampf value, GLboolean invert);
-		void scissor(GLint x, GLint y, GLsizei width, GLsizei height);
+		virtual void renderbufferStorage(GLenum target, GLenum internalformat, 
+			GLsizei width, GLsizei height) = 0;
+		virtual void sampleCoverage(GLclampf value, GLboolean invert) = 0;
+		virtual void scissor(GLint x, GLint y, GLsizei width, GLsizei height) = 0;
 
-		void shaderSource(IGLShader::Ptr shader, string source);
+		virtual void shaderSource(IGLShader::Ptr shader, string source) = 0;
 
-		void stencilFunc(GLenum func, GLint ref, GLuint mask);
-		void stencilFuncSeparate(GLenum face, GLenum func, GLint ref, GLuint mask);
-		void stencilMask(GLuint mask);
-		void stencilMaskSeparate(GLenum face, GLuint mask);
-		void stencilOp(GLenum fail, GLenum zfail, GLenum zpass);
-		void stencilOpSeparate(GLenum face, GLenum fail, GLenum zfail, GLenum zpass);
+		virtual void stencilFunc(GLenum func, GLint ref, GLuint mask) = 0;
+		virtual void stencilFuncSeparate(GLenum face, GLenum func, GLint ref, GLuint mask) = 0;
+		virtual void stencilMask(GLuint mask) = 0;
+		virtual void stencilMaskSeparate(GLenum face, GLuint mask) = 0;
+		virtual void stencilOp(GLenum fail, GLenum zfail, GLenum zpass) = 0;
+		virtual void stencilOpSeparate(GLenum face, GLenum fail, GLenum zfail, GLenum zpass) = 0;
 
-		void texImage2D(GLenum target, GLint level, GLenum internalformat, 
+		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat, 
 			GLsizei width, GLsizei height, GLint border, GLenum format, 
-			GLenum type, ArrayBuffer pixels);
-		void texImage2D(GLenum target, GLint level, GLenum internalformat,
-			GLenum format, GLenum type, any pixels);
-		//void texImage2D(GLenum target, GLint level, GLenum internalformat,
-		//	GLenum format, GLenum type, HTMLImageElement image); // May throw DOMException
-		void texImage2D(GLenum target, GLint level, GLenum internalformat,
-			GLenum format, GLenum type, ICanvas::Ptr canvas); // May throw DOMException
-		//void texImage2D(GLenum target, GLint level, GLenum internalformat,
-		//	GLenum format, GLenum type, HTMLVideoElement video); // May throw DOMException
+			GLenum type, ArrayBuffer pixels) = 0;
+		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+			GLenum format, GLenum type, any pixels) = 0;
+		//virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+		//	GLenum format, GLenum type, HTMLImageElement image) = 0; // May throw DOMException
+		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+			GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
+		//virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+		//	GLenum format, GLenum type, HTMLVideoElement video) = 0; // May throw DOMException
 
-		void texParameterf(GLenum target, GLenum pname, GLfloat param);
-		void texParameteri(GLenum target, GLenum pname, GLint param);
+		virtual void texParameterf(GLenum target, GLenum pname, GLfloat param) = 0;
+		virtual void texParameteri(GLenum target, GLenum pname, GLint param) = 0;
 
-		void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+		virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
 			GLsizei width, GLsizei height, 
-			GLenum format, GLenum type, ArrayBuffer pixels);
-		void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
-			GLenum format, GLenum type, any pixels);
-		//void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
-		//	GLenum format, GLenum type, HTMLImageElement image); // May throw DOMException
-		void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
-			GLenum format, GLenum type, ICanvas::Ptr canvas); // May throw DOMException
-		//void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
-		//	GLenum format, GLenum type, HTMLVideoElement video); // May throw DOMException
+			GLenum format, GLenum type, ArrayBuffer pixels) = 0;
+		virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+			GLenum format, GLenum type, any pixels) = 0;
+		//virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+		//	GLenum format, GLenum type, HTMLImageElement image) = 0; // May throw DOMException
+		virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+			GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
+		//virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
+		//	GLenum format, GLenum type, HTMLVideoElement video) = 0; // May throw DOMException
 
-		void uniform1f(IGLUniformLocation::Ptr location, GLfloat x);
-		void uniform1fv(IGLUniformLocation::Ptr location, Float32Array v);
-		void uniform1i(IGLUniformLocation::Ptr location, GLint x);
-		void uniform1iv(IGLUniformLocation::Ptr location, Int32Array v);
-		void uniform2f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y);
-		void uniform2fv(IGLUniformLocation::Ptr location, Float32Array v);
-		void uniform2i(IGLUniformLocation::Ptr location, GLint x, GLint y);
-		void uniform2iv(IGLUniformLocation::Ptr location, Int32Array v);
-		void uniform3f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z);
-		void uniform3fv(IGLUniformLocation::Ptr location, Float32Array v);
-		void uniform3i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z);
-		void uniform3iv(IGLUniformLocation::Ptr location, Int32Array v);
-		void uniform4f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-		void uniform4fv(IGLUniformLocation::Ptr location, Float32Array v);
-		void uniform4i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z, GLint w);
-		void uniform4iv(IGLUniformLocation::Ptr location, Int32Array v);
+		virtual void uniform1f(IGLUniformLocation::Ptr location, GLfloat x) = 0;
+		virtual void uniform1fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform1i(IGLUniformLocation::Ptr location, GLint x) = 0;
+		virtual void uniform1iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform2f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y) = 0;
+		virtual void uniform2fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform2i(IGLUniformLocation::Ptr location, GLint x, GLint y) = 0;
+		virtual void uniform2iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform3f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z) = 0;
+		virtual void uniform3fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform3i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z) = 0;
+		virtual void uniform3iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform4f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
+		virtual void uniform4fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform4i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z, GLint w) = 0;
+		virtual void uniform4iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
 
-		void uniformMatrix2fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value);
-		void uniformMatrix3fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value);
-		void uniformMatrix4fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value);
+		virtual void uniformMatrix2fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+			Float32Array value) = 0;
+		virtual void uniformMatrix3fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+			Float32Array value) = 0;
+		virtual void uniformMatrix4fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+			Float32Array value) = 0;
 
-		void useProgram(IGLProgram::Ptr program);
-		void validateProgram(IGLProgram::Ptr program);
+		virtual void useProgram(IGLProgram::Ptr program) = 0;
+		virtual void validateProgram(IGLProgram::Ptr program) = 0;
 
-		void vertexAttrib1f(GLuint indx, GLfloat x);
-		void vertexAttrib1fv(GLuint indx, Float32Array values);
-		void vertexAttrib2f(GLuint indx, GLfloat x, GLfloat y);
-		void vertexAttrib2fv(GLuint indx, Float32Array values);
-		void vertexAttrib3f(GLuint indx, GLfloat x, GLfloat y, GLfloat z);
-		void vertexAttrib3fv(GLuint indx, Float32Array values);
-		void vertexAttrib4f(GLuint indx, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-		void vertexAttrib4fv(GLuint indx, Float32Array values);
-		void vertexAttribPointer(GLuint indx, GLint size, GLenum type, 
-			GLboolean normalized, GLsizei stride, GLintptr offset);
+		virtual void vertexAttrib1f(GLuint indx, GLfloat x) = 0;
+		virtual void vertexAttrib1fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib2f(GLuint indx, GLfloat x, GLfloat y) = 0;
+		virtual void vertexAttrib2fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib3f(GLuint indx, GLfloat x, GLfloat y, GLfloat z) = 0;
+		virtual void vertexAttrib3fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib4f(GLuint indx, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
+		virtual void vertexAttrib4fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttribPointer(GLuint indx, GLint size, GLenum type, 
+			GLboolean normalized, GLsizei stride, GLintptr offset) = 0;
 
-		void viewport(GLint x, GLint y, GLsizei width, GLsizei height);
+		virtual void viewport(GLint x, GLint y, GLsizei width, GLsizei height) = 0;
 	};
 
 };

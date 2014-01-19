@@ -22,6 +22,8 @@ namespace Babylon {
 		virtual vector<shared_ptr<BaseTexture>>& getTextures() = 0;
 		virtual vector<shared_ptr<Mesh>>& getMeshes() = 0;
 		virtual IEngine::Ptr getEngine() = 0;
+		// Dispose
+		virtual void dispose() = 0;
 	};
 
 };

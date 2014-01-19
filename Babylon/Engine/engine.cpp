@@ -1,8 +1,7 @@
 #include "engine.h"
+#include <sstream>
 
 using namespace Babylon;
-
-const char* Babylon::Engine::ShadersRepository = "Babylon/Shaders/";
 
 Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 {
@@ -214,7 +213,7 @@ IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array indices) {
 };
 
 /*
-void Babylon::Engine::bindBuffers(VertexBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect) {
+void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect) {
 	if (this->_cachedVertexBuffer != vertexBuffer || this->_cachedEffectForVertexBuffer != effect) {
 		this->_cachedVertexBuffer = vertexBuffer;
 		this->_cachedEffectForVertexBuffer = effect;
@@ -222,6 +221,7 @@ void Babylon::Engine::bindBuffers(VertexBuffer::Ptr vertexBuffer, IGLBuffer::Ptr
 		this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
 
 		auto offset = 0;
+
 		for (auto index = 0; index < vertexDeclaration.size(); index++) {
 			auto order = effect->getAttribute(index);
 
@@ -273,40 +273,42 @@ void Babylon::Engine::_releaseBuffer(IGLBuffer::Ptr buffer) {
 	}
 };
 
-/*
-void Babylon::Engine::draw(useTriangles, indexStart, indexCount) {
+void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 	this->_gl->drawElements(useTriangles ? this->_gl->TRIANGLES : this->_gl->LINES, indexCount, this->_gl->UNSIGNED_SHORT, indexStart * 2);
 };
 
 // Shaders
-void Babylon::Engine::createEffect(baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines) {
-	auto vertex = baseName->vertex || baseName;
-	auto fragment = baseName->fragment || baseName;
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
+}
 
-	auto name = vertex + "+" + fragment + "@" + defines;
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+	string name; 
+	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {
 		return this->_compiledEffects[name];
 	}
 
-	auto effect = new BABYLON->Effect(baseName, attributesNames, uniformsNames, samplers, this, defines, optionalDefines);
+	auto effect = make_shared<Effect>(Effect(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, shared_from_this(), defines, optionalDefines));
 	this->_compiledEffects[name] = effect;
 
 	return effect;
 };
 
-void Babylon::Engine::compileShader(gl, source, type, defines) {
-	auto shader = gl->createShader(type === "vertex" ? gl->VERTEX_SHADER : gl->FRAGMENT_SHADER);
+IGLShader::Ptr Babylon::Engine::compileShader(IGL::Ptr gl, string source, string type, string defines) {
+	auto shader = gl->createShader(type == "vertex" ? gl->VERTEX_SHADER : gl->FRAGMENT_SHADER);
 
-	gl->shaderSource(shader, (defines ? defines + "\n" : "") + source);
+	gl->shaderSource(shader, (!defines.empty() ? defines + "\n" : "") + source);
 	gl->compileShader(shader);
 
 	if (!gl->getShaderParameter(shader, gl->COMPILE_STATUS)) {
-		throw new Error(gl->getShaderInfoLog(shader));
+		throw gl->getShaderInfoLog(shader);
 	}
+
 	return shader;
 };
 
-void Babylon::Engine::createShaderProgram(vertexCode, fragmentCode, defines) {
+IGLProgram::Ptr Babylon::Engine::createShaderProgram(string vertexCode, string fragmentCode, string defines) {
 	auto vertexShader = compileShader(this->_gl, vertexCode, "vertex", defines);
 	auto fragmentShader = compileShader(this->_gl, fragmentCode, "fragment", defines);
 
@@ -317,8 +319,8 @@ void Babylon::Engine::createShaderProgram(vertexCode, fragmentCode, defines) {
 	this->_gl->linkProgram(shaderProgram);
 
 	auto error = this->_gl->getProgramInfoLog(shaderProgram);
-	if (error) {
-		throw new Error(error);
+	if (!error.empty()) {
+		throw error;
 	}
 
 	this->_gl->deleteShader(vertexShader);
@@ -327,32 +329,32 @@ void Babylon::Engine::createShaderProgram(vertexCode, fragmentCode, defines) {
 	return shaderProgram;
 };
 
-void Babylon::Engine::getUniforms(shaderProgram, uniformsNames) {
-	auto results = [];
+vector<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames) {
+	vector<IGLUniformLocation::Ptr> results;
 
-	for (auto index = 0; index < uniformsNames->length; index++) {
-		results->push(this->_gl->getUniformLocation(shaderProgram, uniformsNames[index]));
+	for (auto uniformsName : uniformsNames) {
+		results.push_back(this->_gl->getUniformLocation(shaderProgram, uniformsName));
 	}
 
 	return results;
 };
 
-void Babylon::Engine::getAttributes(shaderProgram, attributesNames) {
-	auto results = [];
+vector<GLint> Babylon::Engine::getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames) {
+	vector<GLint> results;
 
-	for (auto index = 0; index < attributesNames->length; index++) {
+	for (auto attributesName : attributesNames) {
 		try {
-			results->push(this->_gl->getAttribLocation(shaderProgram, attributesNames[index]));
-		} catch (e) {
-			results->push(-1);
+			results.push_back(this->_gl->getAttribLocation(shaderProgram, attributesName));
+		} catch (...) {
+			results.push_back(-1);
 		}
 	}
 
 	return results;
 };
 
-void Babylon::Engine::enableEffect(effect) {
-	if (!effect || !effect->getAttributesCount() || this->_currentEffect === effect) {
+void Babylon::Engine::enableEffect(Effect::Ptr effect) {
+	if (!effect || !effect->getAttributesCount() || this->_currentEffect == effect) {
 		return;
 	}
 	// Use program
@@ -363,70 +365,70 @@ void Babylon::Engine::enableEffect(effect) {
 		auto order = effect->getAttribute(index);
 
 		if (order >= 0) {
-			this->_gl->enableVertexAttribArray(effect->getAttribute(index));
+			this->_gl->enableVertexAttribArray(order);
 		}
 	}
 
 	this->_currentEffect = effect;
 };
 
-void Babylon::Engine::setMatrices(uniform, matrices) {
+void Babylon::Engine::setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniformMatrix4fv(uniform, false, matrices);
 };
 
-void Babylon::Engine::setMatrix(uniform, matrix) {
+void Babylon::Engine::setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr matrix) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniformMatrix4fv(uniform, false, matrix->toArray());
 };
 
-void Babylon::Engine::setFloat(uniform, value) {
+void Babylon::Engine::setFloat(IGLUniformLocation::Ptr uniform, GLfloat value) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniform1f(uniform, value);
 };
 
-void Babylon::Engine::setFloat2(uniform, x, y) {
+void Babylon::Engine::setFloat2(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniform2f(uniform, x, y);
 };
 
-void Babylon::Engine::setFloat3(uniform, x, y, z) {
+void Babylon::Engine::setFloat3(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniform3f(uniform, x, y, z);
 };
 
-void Babylon::Engine::setBool(uniform, bool) {
+void Babylon::Engine::setBool(IGLUniformLocation::Ptr uniform, GLboolean _bool) {
 	if (!uniform)
 		return;
 
-	this->_gl->uniform1i(uniform, bool);
+	this->_gl->uniform1i(uniform, _bool);
 };
 
-void Babylon::Engine::setFloat4(uniform, x, y, z, w) {
+void Babylon::Engine::setFloat4(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniform4f(uniform, x, y, z, w);
 };
 
-void Babylon::Engine::setColor3(uniform, color3) {
+void Babylon::Engine::setColor3(IGLUniformLocation::Ptr uniform, Color3::Ptr color3) {
 	if (!uniform)
 		return;
 
 	this->_gl->uniform3f(uniform, color3->r, color3->g, color3->b);
 };
 
-void Babylon::Engine::setColor4(uniform, color3, alpha) {
+void Babylon::Engine::setColor4(IGLUniformLocation::Ptr uniform, Color3::Ptr color3, GLfloat alpha) {
 	if (!uniform)
 		return;
 
@@ -434,9 +436,9 @@ void Babylon::Engine::setColor4(uniform, color3, alpha) {
 };
 
 // States
-void Babylon::Engine::setState(culling) {
+void Babylon::Engine::setState(bool culling) {
 	// Culling        
-	if (this->_currentState->culling !== culling) {
+	if (this->_currentState.culling != culling) {
 		if (culling) {
 			this->_gl->cullFace(this->cullBackFaces ? this->_gl->BACK : this->_gl->FRONT);
 			this->_gl->enable(this->_gl->CULL_FACE);
@@ -444,11 +446,11 @@ void Babylon::Engine::setState(culling) {
 			this->_gl->disable(this->_gl->CULL_FACE);
 		}
 
-		this->_currentState->culling = culling;
+		this->_currentState.culling = culling;
 	}
 };
 
-void Babylon::Engine::setDepthBuffer(enable) {
+void Babylon::Engine::setDepthBuffer(bool enable) {
 	if (enable) {
 		this->_gl->enable(this->_gl->DEPTH_TEST);
 	} else {
@@ -456,34 +458,33 @@ void Babylon::Engine::setDepthBuffer(enable) {
 	}
 };
 
-void Babylon::Engine::setDepthWrite(enable) {
+void Babylon::Engine::setDepthWrite(bool enable) {
 	this->_gl->depthMask(enable);
 };
 
-void Babylon::Engine::setColorWrite(enable) {
+void Babylon::Engine::setColorWrite(bool enable) {
 	this->_gl->colorMask(enable, enable, enable, enable);
 };
 
-void Babylon::Engine::setAlphaMode(mode) {
+void Babylon::Engine::setAlphaMode(ALPHA_MODES mode) {
 
 	switch (mode) {
-	case BABYLON->Engine->ALPHA_DISABLE:
+	case ALPHA_DISABLE:
 		this->setDepthWrite(true);
 		this->_gl->disable(this->_gl->BLEND);
 		break;
-	case BABYLON->Engine->ALPHA_COMBINE:
+	case ALPHA_COMBINE:
 		this->setDepthWrite(false);
 		this->_gl->blendFuncSeparate(this->_gl->SRC_ALPHA, this->_gl->ONE_MINUS_SRC_ALPHA, this->_gl->ZERO, this->_gl->ONE);
 		this->_gl->enable(this->_gl->BLEND);
 		break;
-	case BABYLON->Engine->ALPHA_ADD:
+	case ALPHA_ADD:
 		this->setDepthWrite(false);
 		this->_gl->blendFuncSeparate(this->_gl->ONE, this->_gl->ONE, this->_gl->ZERO, this->_gl->ONE);
 		this->_gl->enable(this->_gl->BLEND);
 		break;
 	}
 };
-*/
 
 void Babylon::Engine::setAlphaTesting(bool enable) {
 	this->_alphaTest = enable;
@@ -504,8 +505,7 @@ void Babylon::Engine::wipeCaches() {
 	this->_cachedEffectForVertexBuffer = nullptr;
 };
 
-/*
-void Babylon::Engine::getExponantOfTwo(value, max) {
+int Babylon::Engine::getExponantOfTwo(int value, int max) {
 	auto count = 1;
 
 	do {
@@ -518,6 +518,7 @@ void Babylon::Engine::getExponantOfTwo(value, max) {
 	return count;
 };
 
+/*
 void Babylon::Engine::createTexture(url, noMipmap, invertY, scene) {
 	auto texture = this->_gl->createTexture();
 	auto that = this;
@@ -822,11 +823,12 @@ void Babylon::Engine::_releaseTexture(texture) {
 		this->_loadedTexturesCache->splice(index, 1);
 	}
 };
+*/
 
-void Babylon::Engine::bindSamplers(effect) {
+void Babylon::Engine::bindSamplers(Effect::Ptr effect) {
 	this->_gl->useProgram(effect->getProgram());
 	auto samplers = effect->getSamplers();
-	for (auto index = 0; index < samplers->length; index++) {
+	for (auto index = 0; index < samplers.size(); index++) {
 		auto uniform = effect->getUniform(samplers[index]);
 		this->_gl->uniform1i(uniform, index);
 	}
@@ -834,18 +836,19 @@ void Babylon::Engine::bindSamplers(effect) {
 };
 
 
-void Babylon::Engine::_bindTexture(channel, texture) {
-	this->_gl->activeTexture(this->_gl["TEXTURE" + channel]);
+void Babylon::Engine::_bindTexture(int channel, IGLTexture::Ptr texture) {
+	this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
 	this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
 
 	this->_activeTexturesCache[channel] = nullptr;
 };
 
-void Babylon::Engine::setTextureFromPostProcess(channel, postProcess) {
+/*
+void Babylon::Engine::setTextureFromPostProcess(int channel, postProcess) {
 	this->_bindTexture(channel, postProcess->_texture);
 };
 
-void Babylon::Engine::setTexture(channel, texture) {
+void Babylon::Engine::setTexture(int channel, Texture texture) {
 	if (channel < 0) {
 		return;
 	}
@@ -934,20 +937,22 @@ void Babylon::Engine::_setAnisotropicLevel(key, Texture texture) {
 		texture->_cachedAnisotropicFilteringLevel = texture->anisotropicFilteringLevel;
 	}
 };
+*/
 
 // Dispose
 void Babylon::Engine::dispose() {
 	// Release scenes
-	while (this->scenes->length) {
-		this->scenes[0]->dispose();
+	for (auto scene : this->scenes) {
+		scene->dispose();
 	}
 
+	this->scenes.clear();
+
 	// Release effects
-	for (auto name in this->_compiledEffects->length) {
-		this->_gl->deleteProgram(this->_compiledEffects[name]->_program);
+	for (auto pair : this->_compiledEffects) {
+		this->_gl->deleteProgram(pair.second->_program);
 	}
 };
-*/
 
 bool Babylon::Engine::isSupported() {
 	return true;
