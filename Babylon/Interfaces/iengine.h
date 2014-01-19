@@ -53,6 +53,10 @@ namespace Babylon {
 		virtual int getRenderHeight() = 0;
 		virtual ICanvas::Ptr getRenderingCanvas() = 0;
 		virtual float getHardwareScalingLevel() = 0;
+		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) = 0;
+		virtual void _releaseBuffer(IGLBuffer::Ptr vertexBuffer) = 0;
+		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array vertices);
+		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
 	};
 
 };

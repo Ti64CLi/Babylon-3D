@@ -80,8 +80,8 @@ namespace Babylon {
 		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array indices);
 		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect);
 		virtual void bindMultiBuffers(IGLBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
+		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
 		/*
-		virtual void _releaseBuffer(buffer);
 		virtual void draw(useTriangles, indexStart, indexCount);
 		virtual void createEffect(baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 		virtual void compileShader(gl, source, type, defines);

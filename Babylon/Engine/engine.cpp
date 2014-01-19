@@ -264,15 +264,16 @@ void Babylon::Engine::bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuf
 	}
 };
 */
-/*
-void Babylon::Engine::_releaseBuffer(buffer) {
+
+void Babylon::Engine::_releaseBuffer(IGLBuffer::Ptr buffer) {
 	buffer->references--;
 
-	if (buffer->references === 0) {
+	if (buffer->references == 0) {
 		this->_gl->deleteBuffer(buffer);
 	}
 };
 
+/*
 void Babylon::Engine::draw(useTriangles, indexStart, indexCount) {
 	this->_gl->drawElements(useTriangles ? this->_gl->TRIANGLES : this->_gl->LINES, indexCount, this->_gl->UNSIGNED_SHORT, indexStart * 2);
 };

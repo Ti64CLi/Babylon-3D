@@ -61,8 +61,8 @@ namespace Babylon {
 		static Matrix::Ptr RotationZ(float angle);
 		static void RotationZToRef(float angle, Matrix::Ptr result);
 		static Matrix::Ptr RotationAxis(Vector3::Ptr axis, float angle);
-		//static void RotationYawPitchRoll(yaw, pitch, roll);
-		//static void RotationYawPitchRollToRef(yaw, pitch, roll, Matrix::Ptr result);
+		static Matrix::Ptr RotationYawPitchRoll(float yaw, float pitch, float roll);
+		static void RotationYawPitchRollToRef(float yaw, float pitch, float roll, Matrix::Ptr result);
 		static Matrix::Ptr Scaling(float x, float y, float z);
 		static void ScalingToRef(float x, float y, float z, Matrix::Ptr result);
 		static Matrix::Ptr Translation(float x, float y, float z);
@@ -75,7 +75,6 @@ namespace Babylon {
 		static Matrix::Ptr PerspectiveLH(float width, float height, float znear, float zfar);
 		static Matrix::Ptr PerspectiveFovLH(float fov, float aspect, float znear, float zfar);
 		static void PerspectiveFovLHToRef(float fov, float aspect, float znear, float zfar, Matrix::Ptr result);
-		//virtual Matrix::Ptr AffineTransformation(float scaling, rotationCenter, rotation, translation);
 		static Matrix::Ptr GetFinalMatrix(Viewport::Ptr viewport, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection, float zmin, float zmax);
 		static Matrix::Ptr Transpose(Matrix::Ptr matrix);
 		static Matrix::Ptr Reflection(PlanePtr plane);

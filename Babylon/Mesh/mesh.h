@@ -62,7 +62,12 @@ namespace Babylon {
 		Vector3::Ptr _absolutePosition;
 
 	public: 
-		Mesh(string name, IScene::Ptr scene);		
+		Mesh(string name, IScene::Ptr scene);	
+
+		virtual IScene::Ptr getScene();
+		
+		// Cache
+	    virtual void _resetPointsArrayCache();
 	};
 
 };

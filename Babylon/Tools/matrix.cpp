@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include "quaternion.h"
 #include "plane.h"
 
 using namespace Babylon;
@@ -370,21 +371,17 @@ Matrix::Ptr Babylon::Matrix::RotationAxis(Vector3::Ptr axis, float angle) {
 	return result;
 };
 
-// TODO: finish it
-/*
-Matrix::Ptr Babylon::Matrix::RotationYawPitchRoll(yaw, pitch, roll) {
-auto result = make_shared<Matrix>();
-Matrix::RotationYawPitchRollToRef(yaw, pitch, roll, result);
-return result;
+Matrix::Ptr Babylon::Matrix::RotationYawPitchRoll(float yaw, float pitch, float roll) {
+	auto result = make_shared<Matrix>();
+	Matrix::RotationYawPitchRollToRef(yaw, pitch, roll, result);
+	return result;
 };
 
-auto tempQuaternion = new BABYLON.Quaternion(); // For RotationYawPitchRoll
-void Babylon::Matrix::RotationYawPitchRollToRef(yaw, pitch, roll, result) {
-BABYLON.Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, tempQuaternion);
-
-tempQuaternion.toRotationMatrix(result);
+void Babylon::Matrix::RotationYawPitchRollToRef(float yaw, float pitch, float roll, Matrix::Ptr result) {
+	auto tempQuaternion = make_shared<Quaternion>(0., 0., 0., 0.);
+	Quaternion::RotationYawPitchRollToRef(yaw, pitch, roll, tempQuaternion);
+	tempQuaternion->toRotationMatrix(result);
 };
-*/
 
 Matrix::Ptr Babylon::Matrix::Scaling(float x, float y, float z) {
 	auto result = Matrix::Zero();
@@ -523,17 +520,6 @@ void Babylon::Matrix::PerspectiveFovLHToRef(float fov, float aspect, float znear
 	result->m[12] = result->m[13] = result->m[15] = 0.0;
 	result->m[14] = (znear * zfar) / (znear - zfar);
 };
-
-// TODO: finish it
-/*
-Matrix::Ptr Babylon::Matrix::AffineTransformation(float scaling, rotationCenter, rotation, translation) {
-	return Matrix::Scaling(scaling, scaling, scaling) 
-		* Matrix::Translation(-rotationCenter) 
-		* Matrix::RotationQuaternion(rotation) 
-		* Matrix::Translation(rotationCenter) 
-		* Matrix::Translation(translation);
-};
-*/
 
 Matrix::Ptr Babylon::Matrix::GetFinalMatrix(Viewport::Ptr viewport, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection, float zmin, float zmax) {
 	auto cw = viewport->width;

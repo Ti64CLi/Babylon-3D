@@ -4,9 +4,21 @@
 #include <memory>
 #include <vector>
 
+#include "mesh.h"
+
 using namespace std;
 
 namespace Babylon {
+
+	enum VertexBufferKind {
+		VertexBufferKind_PositionKind = 1,
+		VertexBufferKind_NormalKind,
+		VertexBufferKind_UVKind,
+		VertexBufferKind_UV2Kind,
+		VertexBufferKind_ColorKind,
+		VertexBufferKind_MatricesIndicesKind,
+		VertexBufferKind_MatricesWeightsKind
+	};
 
 	class VertexBuffer: public enable_shared_from_this<VertexBuffer> {
 
@@ -15,9 +27,23 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	public:
+		IEngine::Ptr _engine;
+		size_t _strideSize;
+		VertexBufferKind _kind;
+		Float32Array _data;
+		bool _updatable;
+		IGLBuffer::Ptr _buffer;
+		Mesh::Ptr _mesh;
 
 	public: 
-		VertexBuffer();		
+		VertexBuffer(Mesh::Ptr mesh, Float32Array data, VertexBufferKind kind, bool updatable);		
+
+		virtual bool isUpdatable();
+		virtual Float32Array& getData();
+		virtual size_t getStrideSize();
+		// Methods
+		virtual void update(Float32Array data);
+		virtual void dispose();
 	};
 
 };

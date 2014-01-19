@@ -52,3 +52,8 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(enable_shared_from_th
 
 	this->_absolutePosition = Vector3::Zero();
 };
+
+// Cache
+void Babylon::Mesh::_resetPointsArrayCache() {
+	this->_positions.clear();
+};

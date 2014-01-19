@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "iengine.h"
+
 using namespace std;
 
 namespace Babylon {
@@ -19,6 +21,7 @@ namespace Babylon {
 	public:
 		virtual vector<shared_ptr<BaseTexture>>& getTextures() = 0;
 		virtual vector<shared_ptr<Mesh>>& getMeshes() = 0;
+		virtual IEngine::Ptr getEngine() = 0;
 	};
 
 };
