@@ -16,6 +16,9 @@ namespace Babylon {
 	class Mesh;
 	typedef shared_ptr<Mesh> MeshPtr;
 	typedef vector<MeshPtr> MeshArray;
+	class Matrix;
+	typedef shared_ptr<Matrix> MatrixPtr;
+	typedef vector<MatrixPtr> MatrixArray;
 
 	class IScene {
 
@@ -24,6 +27,7 @@ namespace Babylon {
 
 	public:
 		virtual bool getUseDelayedTextureLoading() = 0;
+		virtual MatrixPtr getProjectionMatrix() = 0;
 
 		virtual void _addPendingData(IGLTexture::Ptr texture) = 0;
 		virtual void _addPendingData(IImage::Ptr image) = 0;

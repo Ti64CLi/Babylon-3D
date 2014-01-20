@@ -51,7 +51,7 @@ namespace Babylon {
 		Viewport::Ptr _cachedViewport;
 		bool _alphaTest;
 		IGL::Ptr _gl;
-		IGLTexture::Array _activeTexturesCache;
+		Texture::Array _activeTexturesCache;
 		Effect::Ptr _currentEffect;
 		State _currentState;
 		IGLBuffer::Ptr _cachedVertexBuffer;

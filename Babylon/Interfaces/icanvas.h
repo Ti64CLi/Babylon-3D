@@ -25,6 +25,18 @@ namespace Babylon {
 	public: 
 		virtual int getVideoWidth() = 0;
 		virtual int getVideoHeight() = 0;
+		virtual bool getAutoplay() = 0;
+		virtual bool getLoop() = 0;
+		virtual bool getPreload() = 0;
+
+		virtual void setVideoWidth(int) = 0;
+		virtual void setVideoHeight(int) = 0;
+		virtual void setAutoplay(bool) = 0;
+		virtual void setLoop(bool) = 0;
+		virtual void setPreload(bool) = 0;
+
+		virtual void appendSource(string url) = 0;
+		virtual void play() = 0;
 	};
 
 	class I2D {

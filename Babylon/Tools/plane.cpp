@@ -84,13 +84,13 @@ Plane::Ptr Babylon::Plane::FromArray(Float32Array array) {
 };
 
 Plane::Ptr Babylon::Plane::FromPoints(Vector3::Ptr point1, Vector3::Ptr point2, Vector3::Ptr point3) {
-	auto result = make_shared<Plane>(0, 0, 0, 0);
+	auto result = make_shared<Plane>(0., 0., 0., 0.);
 	result->copyFromPoints(point1, point2, point3);
 	return result;
 };
 
 Plane::Ptr Babylon::Plane::FromPositionAndNormal(Vector3::Ptr origin, Vector3::Ptr normal) {
-	auto result = make_shared<Plane>(0, 0, 0, 0);
+	auto result = make_shared<Plane>(0., 0., 0., 0.);
 	normal->normalize();
 
 	result->normal = normal;

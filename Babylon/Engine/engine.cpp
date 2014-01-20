@@ -973,7 +973,7 @@ void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {
 	}
 
 	// Video
-	auto videoTexturePointer = dynamic_cast<VideoTexture*>( texture.get() );
+	auto videoTexturePointer = dynamic_pointer_cast<VideoTexture>( texture );
 	if (videoTexturePointer != nullptr) {
 		if (videoTexturePointer->_update()) {
 			this->_activeTexturesCache[channel] = nullptr;

@@ -101,6 +101,7 @@ namespace Babylon {
 		virtual float getHardwareScalingLevel() = 0;
 		virtual IGLTexture::Array& getLoadedTexturesCache() = 0;
 		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) = 0;
+		virtual void updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video);
 		virtual void _releaseBuffer(IGLBuffer::Ptr vertexBuffer) = 0;
 		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array vertices) = 0;
 		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity) = 0;

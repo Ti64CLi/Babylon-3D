@@ -89,7 +89,7 @@ void Babylon::BaseTexture::releaseInternalTexture () {
 
 void Babylon::BaseTexture::dispose () {
 	// Remove from scene
-	auto it = find ( begin( this->_scene->getTextures() ), end( this->_scene->getTextures() ), this);
+	auto it = find ( begin( this->_scene->getTextures() ), end( this->_scene->getTextures() ), shared_from_this());
 
 	if (it != end ( this->_scene->getTextures() )) {
 		this->_scene->getTextures().erase(it);
