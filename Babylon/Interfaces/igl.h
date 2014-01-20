@@ -35,6 +35,28 @@ namespace Babylon {
 	typedef vector<int32_t> Int32Array;
 	typedef vector<uint16_t> Uint16Array;
 
+	struct GLContextAttributes {
+	public:
+		GLboolean alpha;
+		GLboolean depth;
+		GLboolean stencil;
+		GLboolean antialias;
+		GLboolean premultipliedAlpha;
+		GLboolean preserveDrawingBuffer;
+		GLint version; /* New in WebGL 2.0 */
+
+		GLContextAttributes() :
+			alpha ( true ),
+			depth ( true ),
+			stencil ( false ),
+			antialias ( true ),
+			premultipliedAlpha ( true ),
+			preserveDrawingBuffer ( false ),
+			version ( 1 ) /* New in WebGL 2.0 */
+		{
+		}
+	};
+
 	class IGLObject {
 	public:
 		typedef shared_ptr<IGLObject> Ptr;
@@ -80,6 +102,7 @@ namespace Babylon {
 		GLint _baseHeight;
 		GLint _width;
 		GLint _height;
+		GLint _size;
 		bool isReady;
 		string url;
 		bool noMipmap;
@@ -89,6 +112,9 @@ namespace Babylon {
 		IGLRenderbuffer::Ptr _depthBuffer;
 		ICanvas::Ptr _workingCanvas;
 		I2D::Ptr _workingContext;
+		float _cachedCoordinatesMode;
+		int _cachedWrapU;
+		int _cachedWrapV;
 
 		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
 		// TODO: get rid of it
@@ -119,7 +145,6 @@ namespace Babylon {
 	};
 
 	class IGL {
-
 	public:
 		/* ClearBufferMask */
 		const static GLenum DEPTH_BUFFER_BIT               = 0x00000100;
@@ -540,6 +565,16 @@ namespace Babylon {
 
 	public: 
 
+		virtual ICanvas::Ptr getCanvas() = 0;
+		virtual GLsizei getDrawingBufferWidth() = 0;
+		virtual GLsizei getDrawingBufferHeight() = 0;
+
+		virtual GLContextAttributes getContextAttributes() = 0;
+		virtual bool isContextLost() = 0;
+
+		virtual vector<string> getSupportedExtensions() = 0;
+		virtual any getExtension(string name) = 0;
+
 		virtual GLenum getEnumByName (string name) = 0;
 		virtual GLenum getEnumByNameIndex (string name, int index) = 0;
 
@@ -753,6 +788,13 @@ namespace Babylon {
 		virtual void viewport(GLint x, GLint y, GLsizei width, GLsizei height) = 0;
 	};
 
+	class IGL_EXT_texture_filter_anisotropic {
+	public:
+		const static GLenum TEXTURE_MAX_ANISOTROPY_EXT       = 0x84FE;
+		const static GLenum MAX_TEXTURE_MAX_ANISOTROPY_EXT   = 0x84FF;
+
+		typedef shared_ptr<IGL_EXT_texture_filter_anisotropic> Ptr;
+	};
 };
 
 #endif // BABYLON_IGL_H

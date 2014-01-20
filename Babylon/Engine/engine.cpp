@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <sstream>
+#include "videoTexture.h"
 
 using namespace Babylon;
 
@@ -39,10 +40,10 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	this->_caps.maxRenderTextureSize = (size_t) this->_gl->getParameter(this->_gl->MAX_RENDERBUFFER_SIZE);
 
 	// Extensions
-	this->_caps.standardDerivatives = false;//(this->_gl->getExtension("OES_standard_derivatives") != nullptr);
-	this->_caps.textureFloat = false;//(this->_gl->getExtension("OES_texture_float") != nullptr);        
-	this->_caps.textureAnisotropicFilterExtension = nullptr;//this->_gl->getExtension("EXT_texture_filter_anisotropic") || this->_gl->getExtension('WEBKIT_EXT_texture_filter_anisotropic') || this->_gl->getExtension("MOZ_EXT_texture_filter_anisotropic");
-	this->_caps.maxAnisotropy = 0;//this->_caps.textureAnisotropicFilterExtension != nullptr ? (int)this->_gl->getParameter(this->_caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
+	this->_caps.standardDerivatives = this->_gl->getExtension("OES_standard_derivatives") != nullptr;
+	this->_caps.textureFloat = this->_gl->getExtension("OES_texture_float") != nullptr;    
+	this->_caps.textureAnisotropicFilterExtension = this->_gl->getExtension("EXT_texture_filter_anisotropic") != nullptr || this->_gl->getExtension("WEBKIT_EXT_texture_filter_anisotropic") != nullptr || this->_gl->getExtension("MOZ_EXT_texture_filter_anisotropic") != nullptr;
+	this->_caps.maxAnisotropy = this->_caps.textureAnisotropicFilterExtension ? (int)this->_gl->getParameter(IGL_EXT_texture_filter_anisotropic::MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
 
 	// Cache
 	this->_loadedTexturesCache.clear();
@@ -954,97 +955,99 @@ void Babylon::Engine::_bindTexture(int channel, IGLTexture::Ptr texture) {
 void Babylon::Engine::setTextureFromPostProcess(int channel, postProcess) {
 this->_bindTexture(channel, postProcess->_texture);
 };
-
-void Babylon::Engine::setTexture(int channel, Texture texture) {
-if (channel < 0) {
-return;
-}
-// Not ready?
-if (!texture || !texture->isReady()) {
-if (this->_activeTexturesCache[channel] != nullptr) {
-this->_gl->activeTexture(this->_gl["TEXTURE" + channel]);
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
-this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, nullptr);
-this->_activeTexturesCache[channel] = nullptr;
-}
-return;
-}
-
-// Video
-if (texture instanceof BABYLON->VideoTexture) {
-if (texture->_update()) {
-this->_activeTexturesCache[channel] = nullptr;
-}
-} else if (texture->delayLoadState == BABYLON->Engine->DELAYLOADSTATE_NOTLOADED) { // Delay loading
-texture->delayLoad();
-return;
-}
-
-if (this->_activeTexturesCache[channel] == texture) {
-return;
-}
-this->_activeTexturesCache[channel] = texture;
-
-auto internalTexture = texture->getInternalTexture();
-this->_gl->activeTexture(this->_gl["TEXTURE" + channel]);
-
-if (internalTexture->isCube) {
-this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, internalTexture);
-
-if (internalTexture->_cachedCoordinatesMode != texture->coordinatesMode) {
-internalTexture->_cachedCoordinatesMode = texture->coordinatesMode;
-this->_gl->texParameteri(this->_gl->TEXTURE_CUBE_MAP, this->_gl->TEXTURE_WRAP_S, texture->coordinatesMode != BABYLON->CubeTexture->CUBIC_MODE ? this->_gl->REPEAT : this->_gl->CLAMP_TO_EDGE);
-this->_gl->texParameteri(this->_gl->TEXTURE_CUBE_MAP, this->_gl->TEXTURE_WRAP_T, texture->coordinatesMode != BABYLON->CubeTexture->CUBIC_MODE ? this->_gl->REPEAT : this->_gl->CLAMP_TO_EDGE);
-}
-
-this->_setAnisotropicLevel(this->_gl->TEXTURE_CUBE_MAP, texture);
-} else {
-this->_gl->bindTexture(this->_gl->TEXTURE_2D, internalTexture);
-
-if (internalTexture->_cachedWrapU != texture->wrapU) {
-internalTexture->_cachedWrapU = texture->wrapU;
-
-switch (texture->wrapU) {
-case BABYLON->Texture->WRAP_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->REPEAT);
-break;
-case BABYLON->Texture->CLAMP_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->CLAMP_TO_EDGE);
-break;
-case BABYLON->Texture->MIRROR_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->MIRRORED_REPEAT);
-break;
-}
-}
-
-if (internalTexture->_cachedWrapV != texture->wrapV) {
-internalTexture->_cachedWrapV = texture->wrapV;
-switch (texture->wrapV) {
-case BABYLON->Texture->WRAP_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->REPEAT);
-break;
-case BABYLON->Texture->CLAMP_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->CLAMP_TO_EDGE);
-break;
-case BABYLON->Texture->MIRROR_ADDRESSMODE:
-this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->MIRRORED_REPEAT);
-break;
-}
-}
-
-this->_setAnisotropicLevel(this->_gl->TEXTURE_2D, texture);
-}
-};
-
-void Babylon::Engine::_setAnisotropicLevel(key, Texture texture) {
-auto anisotropicFilterExtension = this->_caps->textureAnisotropicFilterExtension;
-
-if (anisotropicFilterExtension && texture->_cachedAnisotropicFilteringLevel != texture->anisotropicFilteringLevel) {
-this->_gl->texParameterf(key, anisotropicFilterExtension->TEXTURE_MAX_ANISOTROPY_EXT, Math->min(texture->anisotropicFilteringLevel, this->_caps->maxAnisotropy));
-texture->_cachedAnisotropicFilteringLevel = texture->anisotropicFilteringLevel;
-}
-};
 */
+
+void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {
+	if (channel < 0) {
+		return;
+	}
+	// Not ready?
+	if (!texture || !texture->isReady()) {
+		if (this->_activeTexturesCache[channel] != nullptr) {
+			this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+			this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
+			this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, nullptr);
+			this->_activeTexturesCache[channel] = nullptr;
+		}
+		return;
+	}
+
+	// Video
+	auto videoTexturePointer = dynamic_cast<VideoTexture*>( texture.get() );
+	if (videoTexturePointer != nullptr) {
+		if (videoTexturePointer->_update()) {
+			this->_activeTexturesCache[channel] = nullptr;
+		}
+	} else if (texture->delayLoadState == DELAYLOADSTATE_NOTLOADED) { // Delay loading
+		texture->delayLoad();
+		return;
+	}
+
+	if (this->_activeTexturesCache[channel] == texture) {
+		return;
+	}
+	this->_activeTexturesCache[channel] = texture;
+
+	auto internalTexture = texture->getInternalTexture();
+	this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+
+	if (internalTexture->isCube) {
+		this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, internalTexture);
+
+		if (internalTexture->_cachedCoordinatesMode != texture->coordinatesMode) {
+			internalTexture->_cachedCoordinatesMode = texture->coordinatesMode;
+			this->_gl->texParameteri(this->_gl->TEXTURE_CUBE_MAP, this->_gl->TEXTURE_WRAP_S, texture->coordinatesMode != CUBIC_MODE ? this->_gl->REPEAT : IGL::CLAMP_TO_EDGE);
+			this->_gl->texParameteri(this->_gl->TEXTURE_CUBE_MAP, this->_gl->TEXTURE_WRAP_T, texture->coordinatesMode != CUBIC_MODE ? this->_gl->REPEAT : IGL::CLAMP_TO_EDGE);
+		}
+
+		this->_setAnisotropicLevel(this->_gl->TEXTURE_CUBE_MAP, texture);
+	} else {
+		this->_gl->bindTexture(this->_gl->TEXTURE_2D, internalTexture);
+
+		if (internalTexture->_cachedWrapU != texture->wrapU) {
+			internalTexture->_cachedWrapU = texture->wrapU;
+
+			switch (texture->wrapU) {
+			case WRAP_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->REPEAT);
+				break;
+			case CLAMP_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->CLAMP_TO_EDGE);
+				break;
+			case MIRROR_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_S, this->_gl->MIRRORED_REPEAT);
+				break;
+			}
+		}
+
+		if (internalTexture->_cachedWrapV != texture->wrapV) {
+			internalTexture->_cachedWrapV = texture->wrapV;
+			switch (texture->wrapV) {
+			case WRAP_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->REPEAT);
+				break;
+			case CLAMP_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->CLAMP_TO_EDGE);
+				break;
+			case MIRROR_ADDRESSMODE:
+				this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_WRAP_T, this->_gl->MIRRORED_REPEAT);
+				break;
+			}
+		}
+
+		this->_setAnisotropicLevel(this->_gl->TEXTURE_2D, texture);
+	}
+};
+
+
+void Babylon::Engine::_setAnisotropicLevel(GLenum key, Texture::Ptr texture) {
+	auto anisotropicFilterExtension = this->_caps.textureAnisotropicFilterExtension;
+
+	if (anisotropicFilterExtension && texture->_cachedAnisotropicFilteringLevel != texture->anisotropicFilteringLevel) {
+		this->_gl->texParameterf(key, IGL_EXT_texture_filter_anisotropic::TEXTURE_MAX_ANISOTROPY_EXT, min(texture->anisotropicFilteringLevel, this->_caps.maxAnisotropy));
+		texture->_cachedAnisotropicFilteringLevel = texture->anisotropicFilteringLevel;
+	}
+};
 
 // Dispose
 void Babylon::Engine::dispose() {

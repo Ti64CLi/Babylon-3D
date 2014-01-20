@@ -18,19 +18,29 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 		typedef void (*OnDisposeFunc) ();
 
-	private:
-		string url;
-		IScene::Ptr scene;
-
 	protected:
-		DELAYLOADSTATE delayLoadState;
+		string url;
+		IScene::Ptr _scene;
 		bool hasAlpha;
 		int level;
 		IGLTexture::Ptr _texture;
 		OnDisposeFunc onDispose;
 
+	public:
+		DELAYLOADSTATE delayLoadState;
+
 	public: 
 		BaseTexture(string url, IScene::Ptr scene);		
+
+		virtual IGLTexture::Ptr getInternalTexture();
+		virtual bool isReady();
+		// Methods
+		virtual Size getSize();
+		virtual Size getBaseSize();
+		virtual IGLTexture::Ptr _getFromCache(string url, bool noMipmap);
+		virtual void delayLoad();
+		virtual void releaseInternalTexture();
+		virtual void dispose();
 	};
 
 };

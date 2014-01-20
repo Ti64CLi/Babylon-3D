@@ -12,6 +12,8 @@
 #include "effect.h"
 #include "tools_math.h"
 #include "vertexbuffer.h"
+#include "baseTexture.h"
+#include "texture.h"
 
 using namespace std;
 
@@ -135,9 +137,9 @@ namespace Babylon {
 		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);
 		/*
 		virtual void setTextureFromPostProcess(channel, postProcess);
-		virtual void setTexture(int channel, IGLTexture::Ptr texture);
-		virtual void _setAnisotropicLevel(key, IGLTexture::Ptr texture);
 		*/
+		virtual void setTexture(int channel, Texture::Ptr texture);
+		virtual void _setAnisotropicLevel(GLenum key, Texture::Ptr texture);
 		// Dispose
 		virtual void dispose();
 		static bool isSupported();
