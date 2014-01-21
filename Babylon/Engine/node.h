@@ -11,6 +11,8 @@ namespace Babylon {
 
 	class Node : public enable_shared_from_this<Node> {
 
+	public:
+
 		typedef shared_ptr<Node> Ptr;
 		typedef vector<Ptr> Array;
 

@@ -3,13 +3,16 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 #include <time.h>
 
 #include "iengine.h"
 #include "iscene.h"
 #include "engine.h"
 #include "mesh.h"
+#include "ray.h"
 #include "baseTexture.h"
+#include "physicsEngine.h"
 
 using namespace std;
 
@@ -157,13 +160,13 @@ namespace Babylon {
 		// Picking
 		virtual void createPickingRay(float x, float y, Matrix::Ptr world = Matrix::Identity());
 		virtual PickingInfo::Ptr _internalPick(RayFunctionFunc rayFunction, PredicateFunc predicate, bool fastCheck);
-		virtual void pick(float x, float y, predicate, bool fastCheck);
+		virtual void pick(float x, float y, PredicateFunc predicate, bool fastCheck);
 		virtual void pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck);
 		// Physics
 		virtual bool enablePhysics(float gravity, int iterations = 10);
 		virtual void disablePhysicsEngine();
 		virtual bool isPhysicsEnabled();
-		virtual void setGravity(float gravity);
+		virtual void setGravity(Vector3::Ptr gravity);
 		////virtual Compound::Ptr createCompoundImpostor(options);
 		////virtual void deleteCompoundImpostor(Compound::Ptr compound);
 	};

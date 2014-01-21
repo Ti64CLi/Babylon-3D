@@ -15,6 +15,7 @@ namespace Babylon {
 
 	public:
 		typedef shared_ptr<Plane> Ptr;
+		typedef vector<Ptr> Array;
 
 	public:
 		Vector3::Ptr normal;

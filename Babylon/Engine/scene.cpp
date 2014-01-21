@@ -744,7 +744,7 @@ void Babylon::Scene::render() {
 	////}
 
 	// Cleaning
-	for (auto _toBeDisposed = 0; index < this->_toBeDisposed.size(); index++) {
+	for (auto index = 0; index < this->_toBeDisposed.size(); index++) {
 		this->_toBeDisposed.data[index].dispose();
 		this->_toBeDisposed[index] = nullptr;
 	}
@@ -1023,7 +1023,7 @@ bool Babylon::Scene::isPhysicsEnabled() {
 	return this->_physicsEngine;
 };
 
-void Babylon::Scene::setGravity(float gravity) {
+void Babylon::Scene::setGravity(Vector3::Ptr gravity) {
 	if (!this->_physicsEngine) {
 		return;
 	}
