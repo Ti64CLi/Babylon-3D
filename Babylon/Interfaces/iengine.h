@@ -50,6 +50,13 @@ namespace Babylon {
 		MIRROR_ADDRESSMODE = 2
 	};
 
+	enum FOGMODES {
+		FOGMODE_NONE = 0,
+		FOGMODE_EXP = 1,
+		FOGMODE_EXP2 = 2,
+		FOGMODE_LINEAR = 3
+	};
+
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	struct Vector3;

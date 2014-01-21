@@ -17,13 +17,13 @@ void Babylon::Effect::_init(string baseName, string vertex, string fragment, vec
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
-	// TODO: finish it
-	//this->_uniformsNames = uniformsNames.append(samplers);
+	this->_uniformsNames.insert(end (this->_uniformsNames), begin(samplers), end(samplers));
 	this->_samplers = samplers;
 	this->_isReady = false;
 	this->_compilationError = "";
 	this->_attributesNames = attributesNames;
 
+	// TODO: finish it
 	/*
 	auto that = this;
 	this->_loadVertexShader(vertex, function (vertexCode) {

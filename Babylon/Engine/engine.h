@@ -62,6 +62,7 @@ namespace Babylon {
 		map<string, Effect::Ptr> _compiledEffects;
 		bool cullBackFaces;
 
+	public:
 		vector<IScene::Ptr> scenes;
 
 	public: 
