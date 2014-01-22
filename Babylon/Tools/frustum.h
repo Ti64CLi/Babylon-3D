@@ -1,10 +1,9 @@
-#ifndef BABYLON_Frustum_H
-#define BABYLON_Frustum_H
+#ifndef BABYLON_FRUSTUM_H
+#define BABYLON_FRUSTUM_H
 
 #include <memory>
 #include <vector>
 
-#include "iengine.h"
 #include "plane.h"
 
 using namespace std;
@@ -21,4 +20,4 @@ namespace Babylon {
 
 };
 
-#endif // BABYLON_Frustum_H
+#endif // BABYLON_FRUSTUM_H

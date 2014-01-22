@@ -375,11 +375,11 @@ void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 };
 
 // Shaders
-Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
 	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 }
 
-Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
 	string name; 
 	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {

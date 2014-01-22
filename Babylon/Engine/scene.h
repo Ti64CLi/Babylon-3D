@@ -6,12 +6,12 @@
 #include <functional>
 #include <time.h>
 
-#include "iengine.h"
 #include "iscene.h"
 #include "engine.h"
 #include "mesh.h"
 #include "ray.h"
 #include "baseTexture.h"
+#include "light.h"
 #include "physicsEngine.h"
 
 using namespace std;
@@ -100,7 +100,7 @@ namespace Babylon {
 	public: 
 		Scene(Engine::Ptr engine);
 
-		virtual IEngine::Ptr getEngine();
+		virtual Engine::Ptr getEngine();
 		virtual int getTotalVertices();
 		virtual int getActiveVertices();
 		virtual int getActiveParticles();

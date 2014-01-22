@@ -2,28 +2,16 @@
 
 using namespace Babylon;
 
-Babylon::Node::Node() 
+Babylon::Node::Node(IScene::Ptr scene)
 {
+	this->_scene = scene;
 	// Cache
 	_initCache();
 
-	_init(nullptr);
-}
-
-Babylon::Node::Node(Node::Ptr parent)
-{
-	// Cache
-	_initCache();
-
-	_init(parent);
-}
-
-void Babylon::Node::_init(Node::Ptr parent)
-{
 	_childrenFlag = false;
 	_isReady = true;
 	_isEnabled = true;
-	this->parent = parent;
+	this->parent = nullptr;
 }
 
 void Babylon::Node::_initCache() {
@@ -45,37 +33,43 @@ void Babylon::Node::_updateCache (bool ignoreParentClass) {
 	// and call the parent class method if !ignoreParentClass
 };
 
+void Babylon::Node::_syncChildFlag() {
+	this->_childrenFlag = this->parent ? this->parent->_childrenFlag : this->_scene->getRenderId();
+};
+
+bool Babylon::Node::isSynchronizedWithParent() {
+	return this->parent ? !this->parent->_needToSynchonizeChildren(this->_childrenFlag) : true;
+};
+
 bool Babylon::Node::_isSynchronized () {
 	return true;
 };
 
 bool Babylon::Node::isSynchronized (bool updateCache) {
-	auto r = this->hasNewParent();
+	auto check = this->hasNewParent();
 
-	r = r || (this->parent && this->parent->_needToSynchonizeChildren());
+	check = check || !this->isSynchronizedWithParent();
 
-	r = r || !this->_isSynchronized();
+	check = check || !this->_isSynchronized();
 
 	if (updateCache)
-	{
 		this->updateCache(true);
-	}
 
-	return !r;
+	return !check;
 };
 
 bool Babylon::Node::hasNewParent(bool update) {
-    if (this->_cache_parent == this->parent)
-        return false;
-        
-    if(update)
-        this->_cache_parent = this->parent;
-        
-    return true;
+	if (this->_cache_parent == this->parent)
+		return false;
+
+	if(update)
+		this->_cache_parent = this->parent;
+
+	return true;
 };
 
-bool Babylon::Node::_needToSynchonizeChildren () {
-	return this->_childrenFlag;
+bool Babylon::Node::_needToSynchonizeChildren (bool childFlag) {
+	return this->_childrenFlag != childFlag;
 };
 
 bool Babylon::Node::isReady () {

@@ -6,6 +6,7 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Materials 
 	${Babylon_SOURCE_DIR}/Babylon/Mesh 
+	${Babylon_SOURCE_DIR}/Babylon/Lights 
 	${Babylon_SOURCE_DIR}/Babylon/PhysicsEngine)
 
 link_directories (
@@ -15,6 +16,7 @@ link_directories (
 	${Babylon_BINARY_DIR}/Babylon/Textures 
 	${Babylon_BINARY_DIR}/Babylon/Materials 
 	${Babylon_BINARY_DIR}/Babylon/Mesh 
+	${Babylon_BINARY_DIR}/Babylon/Lights 
 	${Babylon_BINARY_DIR}/Babylon/PhysicsEngine) 
 
 add_library (Engine node.cpp engine.cpp scene.cpp)

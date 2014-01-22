@@ -5,19 +5,19 @@ using namespace Babylon;
 // Statics
 map<string, Effect::ShaderPtr> Babylon::Effect::ShadersStore;
 
-Babylon::Effect::Effect(string baseName, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+Babylon::Effect::Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
 	_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 }
 
-Babylon::Effect::Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+Babylon::Effect::Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
 	_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 }
 
-void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
-	this->_uniformsNames.insert(end (this->_uniformsNames), begin(samplers), end(samplers));
+	this->_uniformsNames = uniformsNames; // TODO: finish it uniformsNames.concat(samplers);
 	this->_samplers = samplers;
 	this->_isReady = false;
 	this->_compilationError = "";
@@ -59,11 +59,11 @@ size_t Babylon::Effect::getAttributesCount() {
 };
 
 int Babylon::Effect::getUniformIndex(string uniformName) {
-	return this->_uniformsNames.find(uniformName);
+	return find ( begin(this->_uniformsNames), end(this->_uniformsNames), uniformName) - begin(this->_uniformsNames);
 };
 
 IGLUniformLocation::Ptr Babylon::Effect::getUniform(string uniformName) {
-	return this->_uniforms[this->_uniformsNames.find(uniformName)];
+	return this->_uniforms[getUniformIndex(uniformName)];
 };
 
 IGLUniformLocation::Ptr Babylon::Effect::getUniform(int sample) {

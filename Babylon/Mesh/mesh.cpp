@@ -2,7 +2,7 @@
 
 using namespace Babylon;
 
-Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(enable_shared_from_this<Mesh>::shared_from_this()) {
+Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(scene) {
 	this->name = name;
 	this->id = name;
 	this->_scene = scene;

@@ -113,8 +113,8 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	_animationStartDate = 0;
 }
 
-IEngine::Ptr Babylon::Scene::getEngine() {
-	return dynamic_pointer_cast<IEngine>(this->_engine);
+Engine::Ptr Babylon::Scene::getEngine() {
+	return this->_engine;
 };
 
 int Babylon::Scene::getTotalVertices() {

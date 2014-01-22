@@ -7,7 +7,6 @@
 #include <map>
 
 #include "igl.h"
-#include "iengine.h"
 #include "iscene.h"
 #include "tools_math.h"
 
@@ -29,7 +28,7 @@ namespace Babylon {
 		IEngine::Ptr _engine;
 		string name;
 		string defines;
-		string _uniformsNames;
+		vector<string> _uniformsNames;
 		vector<int> _samplers;
 		bool _isReady;
 		string _compilationError;
@@ -45,10 +44,10 @@ namespace Babylon {
 		static map<string, ShaderPtr> ShadersStore;
 
 	private:
-		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
+		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
 	public: 
-		Effect(string baseName, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
-		Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, string uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
+		Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
+		Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
 
 		// Properties
 		virtual bool isReady();

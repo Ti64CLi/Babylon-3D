@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <vector>
-
+#include "igl.h"
 #include "iengine.h"
 
 using namespace std;
@@ -16,6 +16,9 @@ namespace Babylon {
 	class Mesh;
 	typedef shared_ptr<Mesh> MeshPtr;
 	typedef vector<MeshPtr> MeshArray;
+	class Light;
+	typedef shared_ptr<Light> LightPtr;
+	typedef vector<LightPtr> LightArray;
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	typedef vector<MatrixPtr> MatrixArray;
@@ -36,7 +39,9 @@ namespace Babylon {
 
 		virtual BaseTextureArray& getTextures() = 0;
 		virtual MeshArray& getMeshes() = 0;
+		virtual LightArray& getLights() = 0;
 		virtual IEngine::Ptr getEngine() = 0;
+		virtual int getRenderId() = 0;
 		// Dispose
 		virtual void dispose() = 0;
 	};

@@ -5,6 +5,9 @@
 #include <vector>
 #include <map>
 
+#include "iscene.h"
+#include "matrix.h"
+
 using namespace std;
 
 namespace Babylon {
@@ -17,44 +20,35 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	private: 
-		Node::Ptr parent;
-		bool _childrenFlag;
+		int _childrenFlag;
 		bool _isReady;
 		bool _isEnabled;
 		map<string, Node::Ptr> _cache;
 		Node::Ptr _cache_parent;
 
+	protected:
+		IScene::Ptr _scene;
+
+	protected:
+		Node::Ptr parent;
+
 	public: 
-		Node();
-
-		Node(Node::Ptr parent);
-
-		virtual void _init(Node::Ptr parent);
+		Node(IScene::Ptr scene);
 
 		virtual void _initCache();
-
 		virtual void updateCache(bool force);
-
 		virtual void _updateCache(bool ignoreParentClass = false);
-
+		virtual void _syncChildFlag();
+		virtual bool isSynchronizedWithParent();
 		virtual bool _isSynchronized ();    
-
 		virtual bool isSynchronized (bool updateCache = false);    
-
 		virtual bool hasNewParent(bool update = false);
-
-		virtual bool _needToSynchonizeChildren ();    
-
+		virtual bool _needToSynchonizeChildren (bool childFlag);    
 		virtual bool isReady ();
-
 		virtual bool isEnabled ();
-
 		virtual void setEnabled (bool value);
-
 		virtual bool isDescendantOf (Node::Ptr ancestor);
-
 		virtual void _getDescendants(Node::Array list, Node::Array& results);
-
 		virtual Node::Array getDescendants ();
 	};
 
