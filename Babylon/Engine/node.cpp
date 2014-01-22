@@ -15,7 +15,7 @@ Babylon::Node::Node(IScene::Ptr scene)
 }
 
 void Babylon::Node::_initCache() {
-	this->_cache.clear();
+	////this->_cache.clear();
 	this->_cache_parent = nullptr;
 };
 
@@ -111,6 +111,10 @@ void Babylon::Node::_getDescendants(Node::Array list, Node::Array& results) {
 		}
 	}
 };
+
+Matrix::Ptr Babylon::Node::getWorldMatrix() {
+	return nullptr;
+}
 
 Node::Array Babylon::Node::getDescendants () {
 	Node::Array results;

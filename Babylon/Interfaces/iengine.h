@@ -57,6 +57,11 @@ namespace Babylon {
 		FOGMODE_LINEAR = 3
 	};
 
+	enum CAMERAS {
+		PERSPECTIVE_CAMERA = 0,
+		ORTHOGRAPHIC_CAMERA = 1,
+	};
+
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	struct Vector3;
@@ -65,6 +70,8 @@ namespace Babylon {
 	typedef shared_ptr<Color3> Color3Ptr;
 	class IScene;
 	typedef shared_ptr<IScene> IScenePtr;
+	class Effect;
+	typedef shared_ptr<Effect> EffectPtr;
 
 	struct Size {
 	public:
@@ -124,6 +131,8 @@ namespace Babylon {
 		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, IScenePtr scene) = 0;
 		virtual IGLTexture::Ptr createDynamicTexture(int width, int height, bool generateMipMaps) = 0;
 		virtual void _releaseTexture(IGLTexture::Ptr texture) = 0;
+		virtual void enableEffect(EffectPtr effect) = 0;
+		virtual void setState(bool culling) = 0;
 	};
 
 };

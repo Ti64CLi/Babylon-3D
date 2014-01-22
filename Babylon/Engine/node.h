@@ -12,6 +12,24 @@ using namespace std;
 
 namespace Babylon {
 
+	struct _Cache {
+	public:
+		// Camera Cache
+		float orthoLeft;
+		float orthoRight;
+		float orthoBottom;
+		float orthoTop;
+		float fov;
+		float aspectRatio;
+		float minZ;
+		float maxZ;
+		CAMERAS mode;
+		int renderWidth;
+		int renderHeight;
+		Vector3::Ptr position;
+		Vector3::Ptr upVector;
+	};
+
 	class Node : public enable_shared_from_this<Node> {
 
 	public:
@@ -23,20 +41,18 @@ namespace Babylon {
 		int _childrenFlag;
 		bool _isReady;
 		bool _isEnabled;
-		map<string, Node::Ptr> _cache;
 		Node::Ptr _cache_parent;
 
 	protected:
+		_Cache _cache;
 		IScene::Ptr _scene;
-
-	protected:
 		Node::Ptr parent;
 
 	public: 
 		Node(IScene::Ptr scene);
 
 		virtual void _initCache();
-		virtual void updateCache(bool force);
+		virtual void updateCache(bool force = false);
 		virtual void _updateCache(bool ignoreParentClass = false);
 		virtual void _syncChildFlag();
 		virtual bool isSynchronizedWithParent();
@@ -50,6 +66,10 @@ namespace Babylon {
 		virtual bool isDescendantOf (Node::Ptr ancestor);
 		virtual void _getDescendants(Node::Array list, Node::Array& results);
 		virtual Node::Array getDescendants ();
+
+		// my fix for using WorldMatrix for some nodes
+		virtual bool hasWorldMatrix() = 0;
+		virtual Matrix::Ptr getWorldMatrix();
 	};
 
 };

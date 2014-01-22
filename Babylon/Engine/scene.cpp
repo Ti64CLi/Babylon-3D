@@ -1,4 +1,6 @@
 #include "scene.h"
+#include <string>
+#include <limits>
 
 using namespace Babylon;
 
@@ -249,6 +251,7 @@ bool Babylon::Scene::_checkIsReady() {
 };
 
 // Animations
+/*
 void Babylon::Scene::beginAnimation(target, from, to, loop, float speedRatio, onAnimationEnd) {
 	// Local animations
 	if (target->animations) {
@@ -293,6 +296,7 @@ void Babylon::Scene::_animate() {
 		}
 	}
 };
+*/
 
 // Matrix
 Matrix::Ptr Babylon::Scene::getViewMatrix() {
@@ -315,7 +319,7 @@ void Babylon::Scene::setTransformMatrix(Matrix::Ptr view, Matrix::Ptr projection
 };
 
 // Methods
-void Babylon::Scene::activeCameraByID(int id) {
+void Babylon::Scene::activeCameraByID(string id) {
 	for (auto camera : cameras) {
 		if (camera->id == id) {
 			this->activeCamera = camera;
@@ -324,7 +328,7 @@ void Babylon::Scene::activeCameraByID(int id) {
 	}
 };
 
-shared_ptr<void> Babylon::Scene::getMaterialByID(int id) {
+Material::Ptr Babylon::Scene::getMaterialByID(string id) {
 	for (auto material : this->materials) {
 		if (material->id == id) {
 			return material;
@@ -334,7 +338,7 @@ shared_ptr<void> Babylon::Scene::getMaterialByID(int id) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getMaterialByName(string name) {
+Material::Ptr Babylon::Scene::getMaterialByName(string name) {
 	for (auto material : this->materials) {
 		if (material->name == name) {
 			return material;
@@ -344,7 +348,7 @@ shared_ptr<void> Babylon::Scene::getMaterialByName(string name) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getCameraByName(string name) {
+Camera::Ptr Babylon::Scene::getCameraByName(string name) {
 	for (auto camera : cameras) {
 		if (camera->name == name) {
 			return camera;
@@ -354,7 +358,7 @@ shared_ptr<void> Babylon::Scene::getCameraByName(string name) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getLightByID(int id) {
+Light::Ptr Babylon::Scene::getLightByID(string id) {
 	for (auto light : this->lights) {
 		if (light->id == id) {
 			return light;
@@ -364,7 +368,7 @@ shared_ptr<void> Babylon::Scene::getLightByID(int id) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getMeshByID(int id) {
+Mesh::Ptr Babylon::Scene::getMeshByID(string id) {
 	for (auto mesh : this->meshes) {
 		if (mesh->id == id) {
 			return mesh;
@@ -374,7 +378,7 @@ shared_ptr<void> Babylon::Scene::getMeshByID(int id) {
 	return nullptr;
 };
 
-Mesh::Ptr Babylon::Scene::getLastMeshByID(int id) {
+Mesh::Ptr Babylon::Scene::getLastMeshByID(string id) {
 	for (auto index = this->meshes.size() - 1; index >= 0 ; index--) {
 		if (this->meshes[index]->id == id) {
 			return this->meshes[index];
@@ -384,21 +388,21 @@ Mesh::Ptr Babylon::Scene::getLastMeshByID(int id) {
 	return nullptr;
 };
 
-Node::Ptr Babylon::Scene::getLastEntryByID(int id) {
+Node::Ptr Babylon::Scene::getLastEntryByID(string id) {
 	for (auto index = this->meshes.size() - 1; index >= 0 ; index--) {
-		if (this->meshes[index].id == id) {
+		if (this->meshes[index]->id == id) {
 			return this->meshes[index];
 		}
 	}
 
 	for (auto index = this->cameras.size() - 1; index >= 0 ; index--) {
-		if (this->cameras[index].id == id) {
+		if (this->cameras[index]->id == id) {
 			return this->cameras[index];
 		}
 	}
 
 	for (auto index = this->lights.size() - 1; index >= 0 ; index--) {
-		if (this->lights[index].id == id) {
+		if (this->lights[index]->id == id) {
 			return this->lights[index];
 		}
 	}
@@ -416,7 +420,7 @@ Mesh::Ptr Babylon::Scene::getMeshByName(string name) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getLastSkeletonByID(int id) {
+Skeleton::Ptr Babylon::Scene::getLastSkeletonByID(string id) {
 	for (auto index = this->skeletons.size() - 1; index >= 0 ; index--) {
 		if (this->skeletons[index]->id == id) {
 			return this->skeletons[index];
@@ -426,7 +430,7 @@ shared_ptr<void> Babylon::Scene::getLastSkeletonByID(int id) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getSkeletonById(int id) {
+Skeleton::Ptr Babylon::Scene::getSkeletonById(string id) {
 	for (auto skeleton : this->skeletons) {
 		if (skeleton->id == id) {
 			return skeleton;
@@ -436,7 +440,7 @@ shared_ptr<void> Babylon::Scene::getSkeletonById(int id) {
 	return nullptr;
 };
 
-shared_ptr<void> Babylon::Scene::getSkeletonByName(name) {
+Skeleton::Ptr Babylon::Scene::getSkeletonByName(name) {
 	for (auto skeleton : this->skeletons) {
 		if (skeleton->name == name) {
 			return skeleton;
@@ -446,7 +450,7 @@ shared_ptr<void> Babylon::Scene::getSkeletonByName(name) {
 	return nullptr;
 };
 
-bool Babylon::Scene::isActiveMesh(Mesh::Ptr ) {
+bool Babylon::Scene::isActiveMesh(Mesh::Ptr mesh) {
 	return find ( begin ( this->_activeMeshes ), end (this->_activeMeshes) , mesh != end (this->_activeMeshes));
 };
 
@@ -844,14 +848,15 @@ void Babylon::Scene::dispose() {
 };
 
 // Collisions
+/*
 void Babylon::Scene::_getNewPosition(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition) {
-	position.divideToRef(collider->radius, this->_scaledPosition);
-	velocity.divideToRef(collider->radius, this->_scaledVelocity);
+	position->divideToRef(collider->radius, this->_scaledPosition);
+	velocity->divideToRef(collider->radius, this->_scaledVelocity);
 
 	collider->retry = 0;
 	collider->initialVelocity = this->_scaledVelocity;
 	collider->initialPosition = this->_scaledPosition;
-	this->_collideWithWorld(this->_scaledPosition, this->_scaledVelocity, collider, int maximumRetry, finalPosition);
+	this->_collideWithWorld(this->_scaledPosition, this->_scaledVelocity, collider, maximumRetry, finalPosition);
 
 	finalPosition->multiplyInPlace(collider->radius);
 };
@@ -890,6 +895,7 @@ void Babylon::Scene::_collideWithWorld(Vector3::Ptr position, velocity, ollider:
 	collider->retry++;
 	this->_collideWithWorld(position, velocity, collider, maximumRetry, finalPosition);
 };
+*/
 
 void Babylon::Scene::checkExtends(Vector3::Ptr v, Vector3::Ptr min, Vector3::Ptr max) {
 	if (v->x < min->x)
@@ -914,8 +920,8 @@ void Babylon::Scene::createOrUpdateSelectionOctree() {
 	}
 
 	// World limits
-	auto min = make_shared<Vector3>(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-	auto max = make_shared<Vector3>(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
+	auto min = make_shared<Vector3>(max<float>(), max<float>(), max<float>());
+	auto max = make_shared<Vector3>(-max<float>(), -max<float>(), -max<float>());
 	for (auto mesh : this->meshes) {
 		mesh->computeWorldMatrix(true);
 		auto minBox = mesh->getBoundingInfo()->boundingBox->minimumWorld;

@@ -28,8 +28,8 @@ namespace Babylon {
 		// Statics
 		const static char* ShadersRepository;
 
-		float epsilon;
-		float collisionsEpsilon;
+		static float epsilon;
+		static float collisionsEpsilon;
 
 		static vector<string> extensions;
 

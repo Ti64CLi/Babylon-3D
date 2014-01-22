@@ -12,6 +12,11 @@
 #include "ray.h"
 #include "baseTexture.h"
 #include "light.h"
+#include "material.h"
+#include "camera.h"
+#include "pickingInfo.h"
+#include "renderingManager.h"
+#include "postProcessManager.h"
 #include "physicsEngine.h"
 
 using namespace std;
@@ -49,7 +54,7 @@ namespace Babylon {
 		vector<shared_ptr<void>> _toBeDisposed;
 		vector<ExecuteWhenReadyFunc> _onReadyCallbacks;
 		vector<shared_ptr<void>> _pendingData;
-		vector<BeforeRender> _onBeforeRenderCallbacks;
+		vector<BeforeRenderFunc> _onBeforeRenderCallbacks;
 		FOGMODES fogMode;
 		Color3::Ptr fogColor;
 		float fogDensity;
@@ -66,7 +71,7 @@ namespace Babylon {
 		vector<shared_ptr<void>> _activeParticleSystems;
 		vector<shared_ptr<void>> _activeSkeletons;
 		RenderingManager::Ptr _renderingManager;
-		vector<shared_ptr<void>> materials;
+		Material::Array materials;
 		vector<shared_ptr<void>> multiMaterials;
 		Material::Ptr defaultMaterial;
 		bool texturesEnabled;
@@ -87,7 +92,7 @@ namespace Babylon {
 		PostProcessManager::Ptr postProcessManager;
 		bool renderTargetsEnabled;
 		vector<shared_ptr<void>> customRenderTargets;
-		vector<shared_ptr<void>> activeCameras;
+		Camera::Array activeCameras;
 
 		time_t _animationStartDate;
 		Matrix::Ptr _viewMatrix;
@@ -100,7 +105,7 @@ namespace Babylon {
 	public: 
 		Scene(Engine::Ptr engine);
 
-		virtual Engine::Ptr getEngine();
+		virtual IEngine::Ptr getEngine();
 		virtual int getTotalVertices();
 		virtual int getActiveVertices();
 		virtual int getActiveParticles();
@@ -124,26 +129,26 @@ namespace Babylon {
 		virtual void executeWhenReady(ExecuteWhenReadyFunc func);
 		virtual bool _checkIsReady();
 		// Animations
-		virtual void beginAnimation(target, from, to, loop, float speedRatio = 1.0, onAnimationEnd);
-		virtual void stopAnimation(target);
-		virtual void _animate();
+		////virtual void beginAnimation(target, from, to, loop, float speedRatio = 1.0, onAnimationEnd);
+		////virtual void stopAnimation(target);
+		////virtual void _animate();
 		// Matrix
 		virtual Matrix::Ptr getViewMatrix();
 		virtual Matrix::Ptr getProjectionMatrix();
 		virtual Matrix::Ptr getTransformMatrix();
 		virtual void setTransformMatrix(Matrix::Ptr view, Matrix::Ptr projection);
 		// Methods
-		virtual void activeCameraByID(int id);
-		virtual shared_ptr<void> getMaterialByID(int id);
+		virtual void activeCameraByID(string id);
+		virtual shared_ptr<void> getMaterialByID(string id);
 		virtual shared_ptr<void> getMaterialByName(string name);
 		virtual shared_ptr<void> getCameraByName(string name);
-		virtual shared_ptr<void> getLightByID(int id);
-		virtual Mesh::Ptr getMeshByID(int id);
-		virtual Mesh::Ptr getLastMeshByID(int id);
-		virtual Node::Ptr getLastEntryByID(int id);
+		virtual shared_ptr<void> getLightByID(string id);
+		virtual Mesh::Ptr getMeshByID(string id);
+		virtual Mesh::Ptr getLastMeshByID(string id);
+		virtual Node::Ptr getLastEntryByID(string id);
 		virtual Mesh::Ptr getMeshByName(string name);
-		virtual shared_ptr<void> getLastSkeletonByID(int id);
-		virtual shared_ptr<void> getSkeletonById(int id);
+		virtual shared_ptr<void> getLastSkeletonByID(string id);
+		virtual shared_ptr<void> getSkeletonById(string id);
 		virtual shared_ptr<void> getSkeletonByName(string name);
 		virtual bool isActiveMesh(Mesh::Ptr mesh);
 		virtual void _evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh);
@@ -152,8 +157,8 @@ namespace Babylon {
 		virtual void render();
 		virtual void dispose();
 		// Collisions
-		virtual void _getNewPosition(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);
-		virtual void _collideWithWorld(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);
+		////virtual void _getNewPosition(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);
+		////virtual void _collideWithWorld(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);
 		// Octrees
 		static void checkExtends(Vector3::Ptr v, Vector3::Ptr min, Vector3::Ptr max);
 		virtual void createOrUpdateSelectionOctree();
