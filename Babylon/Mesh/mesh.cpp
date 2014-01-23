@@ -98,8 +98,8 @@ int Babylon::Mesh::getTotalVertices() {
 	return this->_totalVertices;
 };
 
-Float32Array Babylon::Mesh::getVerticesData(VertexBufferKind kind) {
-	return this->_vertexBuffers[kind].getData();
+Float32Array& Babylon::Mesh::getVerticesData(VertexBufferKind kind) {
+	return this->_vertexBuffers[kind]->getData();
 };
 
 bool Babylon::Mesh::isVerticesDataPresent(VertexBufferKind kind) {
@@ -143,18 +143,18 @@ bool Babylon::Mesh::_isSynchronized() {
 		return false;
 	}
 
-	if (!this->_cache.position = this->position)
+	if (this->_cache.position != this->position)
 		return false;
 
 	if (this->rotationQuaternion) {
-		if (!this->_cache.rotationQuaternion = this->rotationQuaternion)
+		if (this->_cache.rotationQuaternion != this->rotationQuaternion)
 			return false;
 	} else {
-		if (!this->_cache.rotation = this->rotation)
+		if (this->_cache.rotation != this->rotation)
 			return false;
 	}
 
-	if (!this->_cache.scaling = this->scaling)
+	if (this->_cache.scaling != this->scaling)
 		return false;
 
 	return true;

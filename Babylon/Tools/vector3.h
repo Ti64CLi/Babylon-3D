@@ -91,6 +91,17 @@ namespace Babylon {
 		static float DistanceSquared(Vector3::Ptr value1, Vector3::Ptr value2);
 	};
 
+	struct RangeVector {
+	public:
+		Vector3::Ptr min;
+		Vector3::Ptr max;
+		
+		RangeVector(Vector3::Ptr min_, Vector3::Ptr max_)
+			: min(min_), max(max_)
+		{
+		}
+	};
+
 };
 
 #endif // BABYLON_VECTOR3_H

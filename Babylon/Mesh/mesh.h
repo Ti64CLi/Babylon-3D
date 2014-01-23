@@ -90,6 +90,7 @@ namespace Babylon {
 		VertexBuffer::Array _delayInfo;
 		Float32Array _indices;
 		float _scaleFactor;
+		size_t _vertexStrideSize;
 
 	public: 
 		Mesh(string name, IScene::Ptr scene);	
@@ -100,13 +101,14 @@ namespace Babylon {
 		virtual Matrix::Ptr getWorldMatrix();
 		virtual Vector3::Ptr getAbsolutePosition();
 		virtual int getTotalVertices();
-		virtual Float32Array getVerticesData(VertexBufferKind kind);
+		virtual Float32Array& getVerticesData(VertexBufferKind kind);
 		virtual bool isVerticesDataPresent(VertexBufferKind kind);
 		virtual size_t getTotalIndices();
 		virtual Float32Array getIndices();
 		virtual size_t getVertexStrideSize();
 		virtual void setPivotMatrix(Matrix::Ptr matrix);
 		virtual Matrix::Ptr getPivotMatrix();
+		virtual bool _isSynchronized();
 		virtual bool isReady();
 		virtual bool isAnimated();
 		virtual bool isDisposed();
