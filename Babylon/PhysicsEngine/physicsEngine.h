@@ -30,6 +30,8 @@ namespace Babylon {
 		virtual void disablePhysicsEngine();
 
 		virtual void dispose();
+
+		static bool IsSupported();
 	};
 
 };

@@ -84,8 +84,8 @@ void Babylon::BoundingBox::_update(Matrix::Ptr world) {
 	Vector3::FromArrayToRef(world->m, 8, this->directions[2]);
 };
 
-bool Babylon::BoundingBox::isInFrustrum(Plane::Array& frustumPlanes) {
-	return BoundingBox::IsInFrustrum(this->vectorsWorld, frustumPlanes);
+bool Babylon::BoundingBox::isInFrustum(Plane::Array& frustumPlanes) {
+	return BoundingBox::IsInFrustum(this->vectorsWorld, frustumPlanes);
 };
 
 bool Babylon::BoundingBox::intersectsPoint(Vector3::Ptr point) {
@@ -134,7 +134,7 @@ bool Babylon::BoundingBox::intersects(BoundingBox::Ptr box0, BoundingBox::Ptr bo
 	return true;
 };
 
-bool Babylon::BoundingBox::IsInFrustrum(Vector3::Array boundingVectors, Plane::Array& frustumPlanes) {
+bool Babylon::BoundingBox::IsInFrustum(Vector3::Array boundingVectors, Plane::Array& frustumPlanes) {
 	for (auto p = 0; p < 6; p++) {
 		auto inCount = 8;
 

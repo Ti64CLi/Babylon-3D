@@ -23,7 +23,7 @@ void Babylon::BoundingSphere::_update(Matrix::Ptr world, float scale) {
 	this->radiusWorld = this->radius * scale;
 };
 
-bool Babylon::BoundingSphere::isInFrustrum(Plane::Array& frustumPlanes) {
+bool Babylon::BoundingSphere::isInFrustum(Plane::Array& frustumPlanes) {
 	for (auto i = 0; i < 6; i++) {
 		if (frustumPlanes[i]->dotCoordinate(this->centerWorld) <= -this->radiusWorld)
 			return false;

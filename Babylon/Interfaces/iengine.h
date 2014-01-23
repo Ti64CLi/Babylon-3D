@@ -62,6 +62,14 @@ namespace Babylon {
 		ORTHOGRAPHIC_CAMERA = 1,
 	};
 
+	enum BILLBOARDMODES {
+		BILLBOARDMODE_NONE = 0,
+		BILLBOARDMODE_X = 1,
+		BILLBOARDMODE_Y = 2,
+		BILLBOARDMODE_Z = 4,
+		BILLBOARDMODE_ALL = 7
+	};
+
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	struct Vector3;
@@ -80,6 +88,17 @@ namespace Babylon {
 
 		Size(GLint width_, GLint height_)
 			: width(width_), height(height_)
+		{
+		}
+	};
+
+	struct Range {
+	public:
+		GLfloat min;
+		GLfloat max;
+
+		Range(GLfloat min_, GLfloat max_)
+			: min(min_), max(max_)
 		{
 		}
 	};

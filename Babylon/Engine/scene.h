@@ -32,7 +32,7 @@ namespace Babylon {
 		typedef void (*ExecuteWhenReadyFunc)();
 		//typedef Ray::Ptr (*RayFunctionFunc)(Matrix::Ptr);
 		typedef function<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
-		typedef bool (*PredicateFunc)(Mesh::Ptr);
+		typedef function<PickingInfo::Ptr (Matrix::Ptr)> PredicateFunc;
 
 	private: 
 		Engine::Ptr _engine;
@@ -51,6 +51,7 @@ namespace Babylon {
 		int _animationRatio;
 		int _renderId;
 		int _executeWhenReadyTimeoutId;
+		Matrix::Ptr _pickWithRayInverseMatrix;
 		vector<shared_ptr<void>> _toBeDisposed;
 		vector<ExecuteWhenReadyFunc> _onReadyCallbacks;
 		vector<shared_ptr<void>> _pendingData;
@@ -98,6 +99,7 @@ namespace Babylon {
 		Matrix::Ptr _viewMatrix;
 		Matrix::Ptr _projectionMatrix;
 		PhysicsEngine::Ptr _physicsEngine;
+		Plane::Array _frustumPlanes;
 
 	public:
 		IGLTexture::Array textures;
@@ -163,10 +165,10 @@ namespace Babylon {
 		static void checkExtends(Vector3::Ptr v, Vector3::Ptr min, Vector3::Ptr max);
 		virtual void createOrUpdateSelectionOctree();
 		// Picking
-		virtual void createPickingRay(float x, float y, Matrix::Ptr world = Matrix::Identity());
+		virtual Ray::Ptr createPickingRay(float x, float y, Matrix::Ptr world = Matrix::Identity());
 		virtual PickingInfo::Ptr _internalPick(RayFunctionFunc rayFunction, PredicateFunc predicate, bool fastCheck);
-		virtual void pick(float x, float y, PredicateFunc predicate, bool fastCheck);
-		virtual void pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck);
+		virtual PickingInfo::Ptr pick(float x, float y, PredicateFunc predicate, bool fastCheck);
+		virtual PickingInfo::Ptr pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck);
 		// Physics
 		virtual bool enablePhysics(float gravity, int iterations = 10);
 		virtual void disablePhysicsEngine();

@@ -37,13 +37,13 @@ namespace Babylon {
 
 		// Methods
 		virtual void _update(Matrix::Ptr world);
-		virtual bool isInFrustrum(Plane::Array& frustumPlanes);
+		virtual bool isInFrustum(Plane::Array& frustumPlanes);
 		virtual bool intersectsPoint(Vector3::Ptr point);
 		virtual bool intersectsSphere(BoundingSphere::Ptr sphere);
 		virtual bool intersectsMinMax(Vector3::Ptr min, Vector3::Ptr max);
 		// Statics
-		virtual bool intersects(BoundingBox::Ptr box0, BoundingBox::Ptr box1);
-		virtual bool IsInFrustrum(Vector3::Array boundingVectors, Plane::Array& frustumPlanes);
+		static bool intersects(BoundingBox::Ptr box0, BoundingBox::Ptr box1);
+		static bool IsInFrustum(Vector3::Array boundingVectors, Plane::Array& frustumPlanes);
 	};
 
 };

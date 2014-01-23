@@ -21,3 +21,8 @@ void Babylon::PhysicsEngine::disablePhysicsEngine()
 void Babylon::PhysicsEngine::dispose()
 {
 }
+
+bool Babylon::PhysicsEngine::IsSupported()
+{
+	return false;
+}

@@ -32,7 +32,7 @@ namespace Babylon {
 		BoundingSphere(Vector3::Ptr minimum, Vector3::Ptr maximum);
 
 		virtual void _update(Matrix::Ptr world, float scale);
-		virtual bool isInFrustrum(Plane::Array& frustumPlanes);
+		virtual bool isInFrustum(Plane::Array& frustumPlanes);
 		virtual bool intersectsPoint(Vector3::Ptr point);
 		static bool intersects(BoundingSphere::Ptr sphere0, BoundingSphere::Ptr sphere1);
 	};

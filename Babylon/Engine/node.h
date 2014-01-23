@@ -7,6 +7,7 @@
 
 #include "iscene.h"
 #include "matrix.h"
+#include "quaternion.h"
 
 using namespace std;
 
@@ -26,8 +27,15 @@ namespace Babylon {
 		CAMERAS mode;
 		int renderWidth;
 		int renderHeight;
-		Vector3::Ptr position;
 		Vector3::Ptr upVector;
+
+		// Mesh
+		bool localMatrixUpdated;
+		Vector3::Ptr position;
+		Vector3::Ptr rotation;
+		Quaternion::Ptr rotationQuaternion;
+		Vector3::Ptr scaling;
+		bool pivotMatrixUpdated;
 	};
 
 	class Node : public enable_shared_from_this<Node> {
@@ -37,13 +45,13 @@ namespace Babylon {
 		typedef shared_ptr<Node> Ptr;
 		typedef vector<Ptr> Array;
 
-	private: 
+	protected:
 		int _childrenFlag;
 		bool _isReady;
+		bool _animationStarted;
 		bool _isEnabled;
+		bool _isDisposed;
 		Node::Ptr _cache_parent;
-
-	protected:
 		_Cache _cache;
 		IScene::Ptr _scene;
 		Node::Ptr parent;

@@ -9,6 +9,10 @@
 #include "iscene.h"
 #include "vector3.h"
 #include "matrix.h"
+#include "material.h"
+#include "skeleton.h"
+#include "boundingInfo.h"
+#include "vertexbuffer.h"
 
 using namespace std;
 
@@ -20,6 +24,11 @@ namespace Babylon {
 		typedef shared_ptr<Mesh> Ptr;
 		typedef vector<Ptr> Array;
 
+		typedef void (*OnDisposeFunc)();
+
+	private:
+		int _currentRenderId;
+
 	public:
 		string name;
 		string id;
@@ -29,7 +38,7 @@ namespace Babylon {
 
 		Vector3::Ptr position;
 		Vector3::Ptr rotation;
-		void* rotationQuaternion;
+		Quaternion::Ptr rotationQuaternion;
 		Vector3::Ptr scaling;
 
 		Matrix::Ptr _pivotMatrix;
@@ -60,12 +69,54 @@ namespace Babylon {
 		Matrix::Ptr _collisionsScalingMatrix;
 
 		Vector3::Ptr _absolutePosition;
+		
+		// members
+		DELAYLOADSTATE delayLoadState;
+		Material::Ptr material;
+		bool isVisible = true;
+		bool isPickable = true;
+		float visibility = 1.0;
+		BILLBOARDMODES billboardMode;
+		bool checkCollisions;
+		bool receiveShadows;
+		bool _isDisposed;
+		OnDisposeFunc onDispose;
+		Skeleton::Ptr skeleton;
+		int renderingGroupId;
+		bool infiniteDistance;
+
+		BoundingInfo::Ptr _boundingInfo;
+		map<VertexBufferKind, VertexBuffer::Ptr> _vertexBuffers;
+		VertexBuffer::Array _delayInfo;
+		Float32Array _indices;
+		float _scaleFactor;
 
 	public: 
 		Mesh(string name, IScene::Ptr scene);	
 
 		virtual IScene::Ptr getScene();
 		
+		virtual BoundingInfo::Ptr getBoundingInfo();
+		virtual Matrix::Ptr getWorldMatrix();
+		virtual Vector3::Ptr getAbsolutePosition();
+		virtual int getTotalVertices();
+		virtual Float32Array getVerticesData(VertexBufferKind kind);
+		virtual bool isVerticesDataPresent(VertexBufferKind kind);
+		virtual size_t getTotalIndices();
+		virtual Float32Array getIndices();
+		virtual size_t getVertexStrideSize();
+		virtual void setPivotMatrix(Matrix::Ptr matrix);
+		virtual Matrix::Ptr getPivotMatrix();
+		virtual bool isReady();
+		virtual bool isAnimated();
+		virtual bool isDisposed();
+		virtual void _initCache();
+		virtual void markAsDirty(string property);
+		virtual void refreshBoundingInfo();
+		virtual void _updateBoundingInfo();
+		virtual Matrix::Ptr computeWorldMatrix(bool force);
+		virtual void _createGlobalSubMesh();
+
 		// Cache
 	    virtual void _resetPointsArrayCache();
 	};

@@ -1,6 +1,7 @@
 #include "scene.h"
 #include <string>
 #include <limits>
+#include "frustum.h"
 
 using namespace Babylon;
 
@@ -440,7 +441,7 @@ Skeleton::Ptr Babylon::Scene::getSkeletonById(string id) {
 	return nullptr;
 };
 
-Skeleton::Ptr Babylon::Scene::getSkeletonByName(name) {
+Skeleton::Ptr Babylon::Scene::getSkeletonByName(string name) {
 	for (auto skeleton : this->skeletons) {
 		if (skeleton->name == name) {
 			return skeleton;
@@ -465,7 +466,7 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 					this->_processedMaterials.push_back(material);
 
 					// concat
-					this->_renderTargets.insert(end ( this->_renderTargets ), begin ( material.getRenderTargetTextures() ), end (material.getRenderTargetTextures()) );
+					this->_renderTargets.insert(end ( this->_renderTargets ), begin ( material->getRenderTargetTextures() ), end (material->getRenderTargetTextures()) );
 				}
 			}
 
@@ -483,20 +484,16 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 	this->_activeParticleSystems.reset();
 	this->_activeSkeletons.reset();
 
-	if (!this->_frustumPlanes) {
-		this->_frustumPlanes = Frustum::GetPlanes(this->_transformMatrix);
-	} else {
-		Frustum::GetPlanesToRef(this->_transformMatrix, this->_frustumPlanes);
-	}
+	Frustum::GetPlanesToRef(this->_transformMatrix, this->_frustumPlanes);
 
 	// Meshes
 	if (this->_selectionOctree) { // Octree
 		auto selection = this->_selectionOctree->select(this->_frustumPlanes);
 
-		for (auto blockIndex = 0; blockIndex < selection.size(); blockIndex++) {
+		for (auto blockIndex = 0; blockIndex < selection->size(); blockIndex++) {
 			auto block = selection->data[blockIndex];
 
-			for (auto meshIndex = 0; meshIndex < block.meshes.size(); meshIndex++) {
+			for (auto meshIndex = 0; meshIndex < block->meshes.size(); meshIndex++) {
 				auto mesh = block->meshes[meshIndex];
 
 				if (abs(mesh->_renderId) != this->_renderId) {
@@ -611,7 +608,7 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	this->_evaluateActiveMeshesDuration += now - beforeEvaluateActiveMeshesDate;
 
 	// Skeletons
-	for (auto skeleton : this->_activeSkeletons.data) {
+	for (auto skeleton : this->_activeSkeletons->data) {
 		skeleton->prepare();
 	}
 
@@ -936,19 +933,19 @@ void Babylon::Scene::createOrUpdateSelectionOctree() {
 };
 
 // Picking
-void Babylon::Scene::createPickingRay(float x, float y, Matrix::Ptr world) {
+Ray::Ptr Babylon::Scene::createPickingRay(float x, float y, Matrix::Ptr world) {
 	auto engine = this->_engine;
 
 	if (!this->_viewMatrix) {
 		if (!this->activeCamera)
-			throw new "Active camera not set";
+			throw "Active camera not set";
 
 		this->setTransformMatrix(this->activeCamera->getViewMatrix(), this->activeCamera->getProjectionMatrix());
 	}
 	
 	auto viewport = this->activeCamera->viewport->toGlobal(engine);
 
-	return Ray::CreateNew(x, y, viewport.width, viewport.height, world, this->_viewMatrix, this->_projectionMatrix);
+	return Ray::CreateNew(x, y, viewport->width, viewport->height, world, this->_viewMatrix, this->_projectionMatrix);
 };
 
 PickingInfo::Ptr Babylon::Scene::_internalPick(RayFunctionFunc rayFunction, PredicateFunc predicate, bool fastCheck) {
@@ -970,7 +967,7 @@ PickingInfo::Ptr Babylon::Scene::_internalPick(RayFunctionFunc rayFunction, Pred
 		if (!result.hit)
 			continue;
 
-		if (!fastCheck && pickingInfo != null && result->distance >= pickingInfo->distance)
+		if (!fastCheck && pickingInfo != nullptr && result->distance >= pickingInfo->distance)
 			continue;
 
 		pickingInfo = result;
@@ -983,16 +980,16 @@ PickingInfo::Ptr Babylon::Scene::_internalPick(RayFunctionFunc rayFunction, Pred
 	return pickingInfo;
 };
 
-void Babylon::Scene::pick(float x, float y, PredicateFunc predicate, bool fastCheck) {
+PickingInfo::Ptr Babylon::Scene::pick(float x, float y, PredicateFunc predicate, bool fastCheck) {
 	auto that = this;
-	return this->_internalPick([](Matrix::Ptr& world) {
+	return this->_internalPick([=](Matrix::Ptr world) {
 		return that->createPickingRay(x, y, world);
 	}, predicate, fastCheck);
 };
 
-void Babylon::Scene::pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck) {
+PickingInfo::Ptr Babylon::Scene::pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck) {
 	auto that = this;
-	return this->_internalPick([](Matrix::Ptr& world) {
+	return this->_internalPick([=](Matrix::Ptr world) {
 		if (!that->_pickWithRayInverseMatrix) {
 			that->_pickWithRayInverseMatrix = Matrix::Identity();
 		}
