@@ -37,6 +37,10 @@ Quaternion::Ptr Babylon::Quaternion::add(Quaternion::Ptr other) {
 	return make_shared<Quaternion>(this->x + other->x, this->y + other->y, this->z + other->z, this->w + other->w);
 };
 
+Quaternion::Ptr Babylon::Quaternion::subtract(Quaternion::Ptr other) {
+	return make_shared<Quaternion>(this->x - other->x, this->y - other->y, this->z - other->z, this->w - other->w);
+};
+
 Quaternion::Ptr Babylon::Quaternion::scale(float value) {
 	return make_shared<Quaternion>(this->x * value, this->y * value, this->z * value, this->w * value);
 };

@@ -10,11 +10,13 @@
 #include "iscene.h"
 #include "tools_math.h"
 #include "effect.h"
-#include "mesh.h"
 
 using namespace std;
 
 namespace Babylon {
+
+	class Mesh;
+	typedef shared_ptr<Mesh> MeshPtr;
 
 	// TODO: finish it
 	class Material: public enable_shared_from_this<Material> {
@@ -44,12 +46,12 @@ namespace Babylon {
 	public: 
 		Material(string name, IScene::Ptr scene);
 
-		virtual bool isReady(Mesh::Ptr mesh);
+		virtual bool isReady(MeshPtr mesh);
 		virtual Effect::Ptr getEffect();
 		virtual bool needAlphaBlending();
 		virtual bool needAlphaTesting();
 		virtual void _preBind();
-		virtual void bind(Matrix::Ptr world, Mesh::Ptr mesh);
+		virtual void bind(Matrix::Ptr world, MeshPtr mesh);
 		virtual void unbind();
 		virtual void baseDispose();
 		virtual void dispose();

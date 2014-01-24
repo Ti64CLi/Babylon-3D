@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "mesh.h"
+#include "iengine.h"
 
 using namespace std;
 
@@ -20,6 +20,9 @@ namespace Babylon {
 		VertexBufferKind_MatricesWeightsKind
 	};
 
+	class Mesh;
+	typedef shared_ptr<Mesh> MeshPtr;
+
 	class VertexBuffer: public enable_shared_from_this<VertexBuffer> {
 
 	public:
@@ -33,10 +36,10 @@ namespace Babylon {
 		Float32Array _data;
 		bool _updatable;
 		IGLBuffer::Ptr _buffer;
-		Mesh::Ptr _mesh;
+		MeshPtr _mesh;
 
 	public: 
-		VertexBuffer(Mesh::Ptr mesh, Float32Array data, VertexBufferKind kind, bool updatable);		
+		VertexBuffer(MeshPtr mesh, Float32Array data, VertexBufferKind kind, bool updatable);		
 
 		virtual bool isUpdatable();
 		virtual Float32Array& getData();

@@ -1,4 +1,5 @@
 #include "material.h"
+#include "mesh.h"
 
 using namespace Babylon;
 

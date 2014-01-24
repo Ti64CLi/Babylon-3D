@@ -13,6 +13,7 @@
 #include "skeleton.h"
 #include "boundingInfo.h"
 #include "vertexbuffer.h"
+#include "subMesh.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ namespace Babylon {
 		Matrix::Ptr _pivotMatrix;
 
 		Int32Array _indices;
-		Mesh::Array subMeshes;
+		SubMesh::Array subMeshes;
 
 		int _renderId;
 
@@ -73,9 +74,9 @@ namespace Babylon {
 		// members
 		DELAYLOADSTATE delayLoadState;
 		Material::Ptr material;
-		bool isVisible = true;
-		bool isPickable = true;
-		float visibility = 1.0;
+		bool isVisible;
+		bool isPickable;
+		float visibility;
 		BILLBOARDMODES billboardMode;
 		bool checkCollisions;
 		bool receiveShadows;
@@ -88,7 +89,6 @@ namespace Babylon {
 		BoundingInfo::Ptr _boundingInfo;
 		map<VertexBufferKind, VertexBuffer::Ptr> _vertexBuffers;
 		VertexBuffer::Array _delayInfo;
-		Float32Array _indices;
 		float _scaleFactor;
 		size_t _vertexStrideSize;
 
@@ -116,7 +116,7 @@ namespace Babylon {
 		virtual void markAsDirty(string property);
 		virtual void refreshBoundingInfo();
 		virtual void _updateBoundingInfo();
-		virtual Matrix::Ptr computeWorldMatrix(bool force);
+		virtual Matrix::Ptr computeWorldMatrix(bool force = false);
 		virtual void _createGlobalSubMesh();
 
 		// Cache

@@ -93,11 +93,11 @@ namespace Babylon {
 
 	struct RangeVector {
 	public:
-		Vector3::Ptr min;
-		Vector3::Ptr max;
+		Vector3::Ptr minimum;
+		Vector3::Ptr maximum;
 		
 		RangeVector(Vector3::Ptr min_, Vector3::Ptr max_)
-			: min(min_), max(max_)
+			: minimum(min_), maximum(max_)
 		{
 		}
 	};

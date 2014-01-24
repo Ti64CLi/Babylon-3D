@@ -18,6 +18,7 @@ namespace Babylon {
 
 	public:
 		typedef shared_ptr<Matrix> Ptr;
+		typedef vector<Ptr> Array;
 
 	public:
 		Float32Array m;

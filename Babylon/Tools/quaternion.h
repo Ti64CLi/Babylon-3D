@@ -30,6 +30,7 @@ namespace Babylon {
 		virtual Quaternion::Ptr clone();
 		virtual void copyFrom(Quaternion::Ptr other);
 		virtual Quaternion::Ptr add(Quaternion::Ptr other);
+		virtual Quaternion::Ptr subtract(Quaternion::Ptr other);
 		virtual Quaternion::Ptr scale(float value);
 		virtual Quaternion::Ptr multiply(Quaternion::Ptr q1);
 		virtual void multiplyToRef(Quaternion::Ptr q1, Quaternion::Ptr result);

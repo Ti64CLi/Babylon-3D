@@ -28,6 +28,9 @@ namespace Babylon {
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	typedef vector<MatrixPtr> MatrixArray;
+	class Skeleton;
+	typedef shared_ptr<Skeleton> SkeletonPtr;
+	typedef vector<SkeletonPtr> SkeletonArray;
 
 	class IScene {
 
@@ -48,6 +51,7 @@ namespace Babylon {
 		virtual LightArray& getLights() = 0;
 		virtual CameraArray& getCameras() = 0;
 		virtual MaterialArray& getMaterials() = 0;
+		virtual SkeletonArray& getSkeletons() = 0;
 		virtual IEngine::Ptr getEngine() = 0;
 		virtual CameraPtr getActiveCamera() = 0;
 		virtual int getRenderId() = 0;

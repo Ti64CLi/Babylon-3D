@@ -1,0 +1,57 @@
+#ifndef BABYLON_SubMesh_H
+#define BABYLON_SubMesh_H
+
+#include <memory>
+#include <vector>
+
+#include "boundingInfo.h"
+#include "matrix.h"
+#include "plane.h"
+#include "ray.h"
+
+using namespace std;
+
+namespace Babylon {
+
+	class Mesh;
+	typedef shared_ptr<Mesh> MeshPtr;
+
+	class SubMesh: public enable_shared_from_this<SubMesh> {
+
+	public:
+		typedef shared_ptr<SubMesh> Ptr;
+		typedef vector<Ptr> Array;
+
+	private:
+		IGLBuffer::Ptr _linesIndexBuffer;
+		size_t linesIndexCount;
+
+		MeshPtr _mesh;
+		int materialIndex;
+		size_t verticesStart;
+		int verticesCount;
+		int indexStart;
+		size_t indexCount;
+
+		BoundingInfo::Ptr _boundingInfo;
+
+	public: 
+		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, Mesh::Ptr mesh);		
+
+		virtual BoundingInfo::Ptr getBoundingInfo();
+		virtual Mesh::Ptr getMesh();
+		virtual Material::Ptr getMaterial();
+		virtual void refreshBoundingInfo();
+		virtual void updateBoundingInfo(Matrix::Ptr world, float scale);
+		virtual bool isInFrustum(Plane::Array frustumPlanes);
+		virtual void render();
+		virtual IGLBuffer::Ptr getLinesIndexBuffer(Uint16Array indices, IEngine::Ptr engine);
+		virtual bool canIntersects(Ray::Ptr ray);
+		virtual float intersects(Ray::Ptr ray, Vector3::Array positions, Uint16Array indices, bool fastCheck);
+		virtual SubMesh::Ptr clone(Mesh::Ptr newMesh);
+		virtual SubMesh::Ptr CreateFromIndices(int materialIndex, int startIndex, size_t indexCount, Mesh::Ptr mesh);
+	};
+
+};
+
+#endif // BABYLON_SubMesh_H

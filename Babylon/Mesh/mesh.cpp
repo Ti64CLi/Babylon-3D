@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "camera.h"
 #include "engine.h"
+#include "tools.h"
 
 using namespace Babylon;
 
@@ -114,7 +115,7 @@ size_t Babylon::Mesh::getTotalIndices() {
 	return this->_indices.size();
 };
 
-Float32Array Babylon::Mesh::getIndices() {
+Int32Array Babylon::Mesh::getIndices() {
 	return this->_indices;
 };
 
@@ -189,17 +190,17 @@ void Babylon::Mesh::markAsDirty(string property) {
 };
 
 void Babylon::Mesh::refreshBoundingInfo() {
-	auto data = this->getVerticesData(BABYLON.VertexBuffer.PositionKind);
+	auto data = this->getVerticesData(VertexBufferKind_PositionKind);
 
-	if (!data) {
+	if (data.size() == 0) {
 		return;
 	}
 
 	auto extend = Tools::ExtractMinAndMax(data, 0, this->_totalVertices);
 	this->_boundingInfo = make_shared<BoundingInfo>(extend->minimum, extend->maximum);
 
-	for (auto index = 0; index < this->subMeshes.size(); index++) {
-		this->subMeshes[index]->refreshBoundingInfo();
+	for (auto subMesh : this->subMeshes) {
+		subMesh->refreshBoundingInfo();
 	}
 
 	this->_updateBoundingInfo();
@@ -214,7 +215,7 @@ void Babylon::Mesh::_updateBoundingInfo() {
 		if (parentMesh)
 			this->_scaleFactor = this->_scaleFactor * parentMesh->_scaleFactor;
 
-		this->_boundingInfo._update(this->_worldMatrix, this->_scaleFactor);
+		this->_boundingInfo->_update(this->_worldMatrix, this->_scaleFactor);
 
 		for (auto subMesh : this->subMeshes) {
 			subMesh->updateBoundingInfo(this->_worldMatrix, this->_scaleFactor);
@@ -745,30 +746,30 @@ Babylon::Mesh::intersects(ray, fastCheck) {
 
 // Clone
 Babylon::Mesh::clone(name, newParent, doNotCloneChildren) {
-	auto result = new BABYLON.Mesh(name, this->_scene);
+	auto result = make_shared<Mesh>(name, this->_scene);
 
 	// Buffers
-	result._vertexBuffers = this->_vertexBuffers;
-	for (auto kind in result._vertexBuffers) {
-		result._vertexBuffers[kind].references++;
+	result->_vertexBuffers = this->_vertexBuffers;
+	for (auto kind : result->_vertexBuffers) {
+		result->_vertexBuffers[kind].references++;
 	}
 
-	result._indexBuffer = this->_indexBuffer;
+	result->_indexBuffer = this->_indexBuffer;
 	this->_indexBuffer.references++;
 
 	// Deep copy
-	BABYLON.Tools.DeepCopy(this, result, ["name", "material", "skeleton"], ["_indices", "_totalVertices"]);
+	Tools::DeepCopy(this, result, ["name", "material", "skeleton"], ["_indices", "_totalVertices"]);
 
 	// Bounding info
 	auto extend = BABYLON.Tools.ExtractMinAndMax(this->getVerticesData(BABYLON.VertexBuffer.PositionKind), 0, this->_totalVertices);
-	result._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);
+	result->_boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);
 
 	// Material
-	result.material = this->material;
+	result->material = this->material;
 
 	// Parent
 	if (newParent) {
-		result.parent = newParent;
+		result->parent = newParent;
 	}
 
 	if (!doNotCloneChildren) {
@@ -791,7 +792,7 @@ Babylon::Mesh::clone(name, newParent, doNotCloneChildren) {
 		}
 	}
 
-	result.computeWorldMatrix(true);
+	result->computeWorldMatrix(true);
 
 	return result;
 };
@@ -922,7 +923,7 @@ Babylon::Mesh::setPhysicsLinkWith(otherMesh, pivot1, pivot2) {
 
 // Statics
 BABYLON.Mesh.CreateBox(name, size, scene, updatable) {
-	auto box = new BABYLON.Mesh(name, scene);
+	auto box = make_shared<Mesh>(name, scene);
 
 	auto normalsSource = [
 		new BABYLON.Vector3(0, 0, 1),
@@ -987,7 +988,7 @@ BABYLON.Mesh.CreateBox(name, size, scene, updatable) {
 };
 
 BABYLON.Mesh.CreateSphere(name, segments, diameter, scene, updatable) {
-	auto sphere = new BABYLON.Mesh(name, scene);
+	auto sphere = make_shared<Mesh>(name, scene);
 
 	auto radius = diameter / 2;
 
@@ -1051,7 +1052,7 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 	auto positions = [];
 	auto normals = [];
 	auto uvs = [];
-	auto cylinder = new BABYLON.Mesh(name, scene);
+	auto cylinder = make_shared<Mesh>(name, scene);
 
 	auto getCircleVector(i) {
 		auto angle = (i * 2.0 * PI / tessellation);
@@ -1154,7 +1155,7 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 
 // Torus  (Code from SharpDX.org)
 BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatable) {
-	auto torus = new BABYLON.Mesh(name, scene);
+	auto torus = make_shared<Mesh>(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1213,7 +1214,7 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 
 // Plane
 BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
-	auto plane = new BABYLON.Mesh(name, scene);
+	auto plane = make_shared<Mesh>(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1256,7 +1257,7 @@ BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
 };
 
 BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
-	auto ground = new BABYLON.Mesh(name, scene);
+	auto ground = make_shared<Mesh>(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1296,7 +1297,7 @@ BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
 };
 
 BABYLON.Mesh.CreateGroundFromHeightMap(name, url, width, height, subdivisions, minHeight, maxHeight, scene, updatable) {
-	auto ground = new BABYLON.Mesh(name, scene);
+	auto ground = make_shared<Mesh>(name, scene);
 
 	auto onload(img) {
 		auto indices = [];

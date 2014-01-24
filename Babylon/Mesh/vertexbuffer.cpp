@@ -1,4 +1,5 @@
 #include "vertexbuffer.h"
+#include "mesh.h"
 
 using namespace Babylon;
 
