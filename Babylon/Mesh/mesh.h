@@ -14,6 +14,7 @@
 #include "boundingInfo.h"
 #include "vertexbuffer.h"
 #include "subMesh.h"
+#include "pickingInfo.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 		typedef void (*OnDisposeFunc)();
+		typedef void (*OnBeforeRenderFunc)();
 
 	private:
 		int _currentRenderId;
@@ -34,7 +36,7 @@ namespace Babylon {
 		string name;
 		string id;
 		IScene::Ptr _scene;
-		int _totalVertices;
+		size_t _totalVertices;
 		Matrix::Ptr _worldMatrix;
 
 		Vector3::Ptr position;
@@ -44,12 +46,12 @@ namespace Babylon {
 
 		Matrix::Ptr _pivotMatrix;
 
-		Int32Array _indices;
+		Uint16Array _indices;
 		SubMesh::Array subMeshes;
 
 		int _renderId;
 
-		Int32Array _onBeforeRenderCallbacks;
+		vector<OnBeforeRenderFunc> _onBeforeRenderCallbacks;
 
 		// Animations
 		Int32Array animations;
@@ -91,6 +93,7 @@ namespace Babylon {
 		VertexBuffer::Array _delayInfo;
 		float _scaleFactor;
 		size_t _vertexStrideSize;
+		IGLBuffer::Ptr _indexBuffer;
 
 	public: 
 		Mesh(string name, IScene::Ptr scene);	
@@ -104,7 +107,7 @@ namespace Babylon {
 		virtual Float32Array& getVerticesData(VertexBufferKind kind);
 		virtual bool isVerticesDataPresent(VertexBufferKind kind);
 		virtual size_t getTotalIndices();
-		virtual Float32Array getIndices();
+		virtual Uint16Array getIndices();
 		virtual size_t getVertexStrideSize();
 		virtual void setPivotMatrix(Matrix::Ptr matrix);
 		virtual Matrix::Ptr getPivotMatrix();
@@ -117,10 +120,39 @@ namespace Babylon {
 		virtual void refreshBoundingInfo();
 		virtual void _updateBoundingInfo();
 		virtual Matrix::Ptr computeWorldMatrix(bool force = false);
-		virtual void _createGlobalSubMesh();
-
+		virtual SubMesh::Ptr _createGlobalSubMesh();
+		virtual bool subdivide(int count);
+		virtual void setVerticesData(Float32Array data, VertexBufferKind kind, bool updatable);
+		virtual void updateVerticesData(VertexBufferKind kind, Float32Array data);
+		virtual void setIndices(Uint16Array indices);
+		virtual void bindAndDraw(SubMesh::Ptr subMesh, Effect::Ptr effect, bool wireframe);
+		virtual void registerBeforeRender(OnBeforeRenderFunc func);
+		virtual void unregisterBeforeRender(OnBeforeRenderFunc func);
+		virtual void render(SubMesh::Ptr subMesh);
+		virtual vector<shared_ptr<void>> getEmittedParticleSystems();
+		virtual vector<shared_ptr<void>> getHierarchyEmittedParticleSystems();
+		virtual Mesh::Array getChildren();
+		virtual bool isInFrustum(Plane::Array frustumPlanes);
+		virtual void setMaterialByID(string id);
+		virtual Animatable::Array getAnimatables();
+		virtual void setLocalTranslation(Vector3::Ptr vector3);
+		virtual Vector3::Ptr getLocalTranslation();
+		virtual void setPositionWithLocalVector(Vector3::Ptr vector3);
+		virtual Vector3::Ptr getPositionExpressedInLocalSpace();
+		virtual void locallyTranslate(Vector3::Ptr vector3);
+		virtual void bakeTransformIntoVertices(Matrix::Ptr transform);
+		virtual void lookAt(Vector3::Ptr targetPoint, float yawCor = 0., float pitchCor = 0., float rollCor = 0.);
 		// Cache
 	    virtual void _resetPointsArrayCache();
+		virtual void _generatePointsArray();
+		////virtual void _collideForSubMesh(SubMesh::Ptr subMesh, Matrix::Ptr transformMatrix, Collider::Ptr collider);
+		////virtual void _processCollisionsForSubModels(Collider::Ptr collider, Matrix::Ptr transformMatrix);
+		////virtual void Babylon::Mesh::_checkCollision(Collider::Ptr collider);
+		virtual bool intersectsMesh(Mesh::Ptr mesh, float precise);
+		virtual bool intersectsPoint(Vector3::Ptr point);
+		virtual PickingInfo::Ptr intersects(Ray::Ptr ray, bool fastCheck);
+		virtual Mesh::Ptr clone(string name, Node::Ptr newParent, bool doNotCloneChildren);
+		virtual void dispose(bool doNotRecurse);
 	};
 
 };

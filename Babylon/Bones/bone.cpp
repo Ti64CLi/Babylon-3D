@@ -66,7 +66,7 @@ void Babylon::Bone::_updateDifferenceMatrix() {
 
 	this->_absoluteTransform->invertToRef(this->_invertedAbsoluteTransform);
 
-	for (auto child : this->children.size()) {
+	for (auto child : this->children) {
 		child->_updateDifferenceMatrix();
 	}
 };

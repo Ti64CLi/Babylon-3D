@@ -112,7 +112,7 @@ AnimationValue Babylon::Animation::_interpolate(int currentFrame, int repeatCoun
 	return this->_keys[this->_keys.size() - 1].value;
 };
 
-bool Babylon::Animation::animate(_AnimationContainer::Ptr target, float delay, int from, int to, ANIMATIONLOOPMODES loop, float speedRatio) {
+bool Babylon::Animation::animate(Animatable::Ptr target, float delay, int from, int to, ANIMATIONLOOPMODES loop, float speedRatio) {
 	if (this->targetProperty.empty()) {
 		return false;
 	}

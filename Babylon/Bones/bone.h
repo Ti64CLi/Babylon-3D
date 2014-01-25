@@ -7,6 +7,7 @@
 
 #include "matrix.h"
 #include "animation.h"
+#include "animatable.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ namespace Babylon {
 	class Skeleton;
 	typedef shared_ptr<Skeleton> SkeletonPtr;
 
-	class Bone : public enable_shared_from_this<Bone> {
+	class Bone : public Animatable, public enable_shared_from_this<Bone> {
 
 	public:
 

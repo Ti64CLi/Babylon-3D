@@ -29,9 +29,11 @@ Mesh::Ptr Babylon::SubMesh::getMesh() {
 Material::Ptr Babylon::SubMesh::getMaterial() {
 	auto rootMaterial = this->_mesh->material;
 
-	if (rootMaterial && rootMaterial.getSubMaterial) {
-		return rootMaterial.getSubMaterial(this->materialIndex);
-	}
+	// TODO: finish it when MultiMaterial is added
+	////MultiMaterial::Ptr multiMaterial = dynamic_pointer_cast<MultiMaterial>(rootMaterial);
+	////if (multiMaterial) {
+	////	return multiMaterial->getSubMaterial(this->materialIndex);
+	////}
 
 	if (!rootMaterial) {
 		return this->_mesh->_scene.defaultMaterial;
@@ -49,7 +51,7 @@ void Babylon::SubMesh::refreshBoundingInfo() {
 	}
 
 	auto extend = Tools::ExtractMinAndMax(data, this->verticesStart, this->verticesCount);
-	this->_boundingInfo = make_shared<BoundingInfo>(extend->minimum, extend->maximum);
+	this->_boundingInfo = make_shared<BoundingInfo>(extend.minimum, extend.maximum);
 };
 
 // TODO: finish collider

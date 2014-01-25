@@ -12,14 +12,14 @@ namespace Babylon {
 
 	struct AnimationValue;
 
-	class _AnimationContainer
+	class Animatable
 	{
 	public:
 
-		typedef shared_ptr<_AnimationContainer> Ptr;
+		typedef shared_ptr<Animatable> Ptr;
 		typedef vector<Ptr> Array;
 
-		vector<Animation> animations;
+		Animation::Array animations;
 
 		virtual void markAsDirty(string property) = 0;
 
@@ -40,7 +40,7 @@ namespace Babylon {
 		float _localDelayOffset;
 
 	protected:
-		_AnimationContainer::Ptr target;
+		Animatable::Ptr target;
 
 		bool animationStarted;
 		ANIMATIONLOOPMODES loopAnimation;

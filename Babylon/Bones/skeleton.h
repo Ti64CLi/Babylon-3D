@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Skeleton : public ISkeleton, public _Animatable, public enable_shared_from_this<Skeleton> {
+	class Skeleton : public _Animatable, public enable_shared_from_this<Skeleton> {
 
 	public:
 
@@ -23,7 +23,7 @@ namespace Babylon {
 
 	private:
 		bool _isDirty;
-		_Animatable::Array _animatables;
+		Animatable::Array _animatables;
 		Float32Array _transformMatrices;
 
 	public:
@@ -38,7 +38,7 @@ namespace Babylon {
 		virtual Float32Array getTransformMatrices();
 		virtual void _markAsDirty();
 		virtual void prepare();
-		_Animatable::Array Babylon::Skeleton::getAnimatables();
+		Animatable::Array Babylon::Skeleton::getAnimatables();
 		virtual Skeleton::Ptr clone(string name, string id);
 	};
 

@@ -43,7 +43,7 @@ void Babylon::Skeleton::prepare() {
 		if (parentBone) {
 			bone->_matrix->multiplyToRef(parentBone->_worldTransform, bone->_worldTransform);
 		} else {
-			bone->_worldTransform.copyFrom(bone->_matrix);
+			bone->_worldTransform->copyFrom(bone->_matrix);
 		}
 
 		bone->_invertedAbsoluteTransform->multiplyToArray(bone->_worldTransform, this->_transformMatrices, index * 16);
@@ -52,7 +52,7 @@ void Babylon::Skeleton::prepare() {
 	this->_isDirty = false;
 };
 
-_Animatable::Array Babylon::Skeleton::getAnimatables() {
+Animatable::Array Babylon::Skeleton::getAnimatables() {
 	if (this->_animatables.size() != this->bones.size()) {
 		this->_animatables.clear();
 
@@ -69,10 +69,10 @@ Skeleton::Ptr Babylon::Skeleton::clone(string name, string id) {
 
 	for (auto index = 0; index < this->bones.size(); index++) {
 		auto source = this->bones[index];
-		auto parentBone = nullptr;
+		Bone::Ptr parentBone = nullptr;
 
 		if (source->getParent()) {
-			auto parentIndex = find(begin(this->bones), end(this->bones), source->getParent()) - begin(this->bones));
+			auto parentIndex = find(begin(this->bones), end(this->bones), source->getParent()) - begin(this->bones);
 			parentBone = result->bones[parentIndex];
 		}
 

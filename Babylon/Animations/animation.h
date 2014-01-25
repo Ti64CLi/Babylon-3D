@@ -97,8 +97,8 @@ namespace Babylon {
 		};
 	};
 
-	class _AnimationContainer;
-	typedef shared_ptr<_AnimationContainer> _AnimationContainerPtr;
+	class Animatable;
+	typedef shared_ptr<Animatable> AnimatablePtr;
 
 	class Animation : public enable_shared_from_this<Animation> {
 
@@ -132,7 +132,7 @@ namespace Babylon {
 
 		virtual void setKeys(vector<AnimationKey> values);
 		virtual AnimationValue _interpolate(int currentFrame, int repeatCount, ANIMATIONLOOPMODES loopMode, AnimationValue offsetValue = AnimationValue(), AnimationValue highLimitValue = AnimationValue());
-		virtual bool animate(_AnimationContainerPtr target, float delay, int from, int to, ANIMATIONLOOPMODES loop, float speedRatio);
+		virtual bool animate(AnimatablePtr target, float delay, int from, int to, ANIMATIONLOOPMODES loop, float speedRatio);
 	};
 
 };

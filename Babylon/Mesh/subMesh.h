@@ -8,6 +8,7 @@
 #include "matrix.h"
 #include "plane.h"
 #include "ray.h"
+#include "material.h"
 
 using namespace std;
 
@@ -22,7 +23,6 @@ namespace Babylon {
 		typedef shared_ptr<SubMesh> Ptr;
 		typedef vector<Ptr> Array;
 
-	private:
 		IGLBuffer::Ptr _linesIndexBuffer;
 		size_t linesIndexCount;
 
@@ -36,10 +36,10 @@ namespace Babylon {
 		BoundingInfo::Ptr _boundingInfo;
 
 	public: 
-		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, Mesh::Ptr mesh);		
+		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, MeshPtr mesh);		
 
 		virtual BoundingInfo::Ptr getBoundingInfo();
-		virtual Mesh::Ptr getMesh();
+		virtual MeshPtr getMesh();
 		virtual Material::Ptr getMaterial();
 		virtual void refreshBoundingInfo();
 		virtual void updateBoundingInfo(Matrix::Ptr world, float scale);
@@ -48,8 +48,8 @@ namespace Babylon {
 		virtual IGLBuffer::Ptr getLinesIndexBuffer(Uint16Array indices, IEngine::Ptr engine);
 		virtual bool canIntersects(Ray::Ptr ray);
 		virtual float intersects(Ray::Ptr ray, Vector3::Array positions, Uint16Array indices, bool fastCheck);
-		virtual SubMesh::Ptr clone(Mesh::Ptr newMesh);
-		virtual SubMesh::Ptr CreateFromIndices(int materialIndex, int startIndex, size_t indexCount, Mesh::Ptr mesh);
+		virtual SubMesh::Ptr clone(MeshPtr newMesh);
+		static SubMesh::Ptr CreateFromIndices(int materialIndex, int startIndex, size_t indexCount, MeshPtr mesh);
 	};
 
 };

@@ -24,7 +24,7 @@ bool Babylon::_Animatable::_animate(float delay) {
     auto running = false;
     auto animations = this->target->animations;
     for (auto animation : animations) {
-        auto isRunning = animation.animate(this->target, delay - this->_localDelayOffset, this->fromFrame, this->toFrame, this->loopAnimation, this->speedRatio);
+        auto isRunning = animation->animate(this->target, delay - this->_localDelayOffset, this->fromFrame, this->toFrame, this->loopAnimation, this->speedRatio);
         running = running || isRunning;            
     }
 

@@ -34,7 +34,6 @@ namespace Babylon {
 		typedef function<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
 		typedef function<PickingInfo::Ptr (Matrix::Ptr)> PredicateFunc;
 
-	private: 
 		Engine::Ptr _engine;
 		bool autoClear;
 		Color4::Ptr clearColor;
@@ -81,7 +80,7 @@ namespace Babylon {
 		vector<shared_ptr<void>> particleSystems;
 		vector<shared_ptr<void>> spriteManagers;
 		vector<shared_ptr<void>> layers;
-		vector<shared_ptr<void>> skeletons;
+		Skeleton::Array skeletons;
 		vector<shared_ptr<void>> lensFlareSystems;
 		bool collisionsEnabled;
 		Vector3::Ptr gravity;
@@ -100,8 +99,6 @@ namespace Babylon {
 		Matrix::Ptr _projectionMatrix;
 		PhysicsEngine::Ptr _physicsEngine;
 		Plane::Array _frustumPlanes;
-
-	public:
 		IGLTexture::Array textures;
 
 	public: 
