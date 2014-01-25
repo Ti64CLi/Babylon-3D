@@ -1,6 +1,8 @@
 #include "tools.h"
 #include <limits>
 
+int Babylon::Tools::deltaTime = 0;
+
 bool Babylon::Tools::WithinEpsilon(float a, float b) {
 	auto num = a - b;
 	return -1.401298E-45 <= num && num <= 1.401298E-45;
@@ -19,3 +21,8 @@ Babylon::RangeVector Babylon::Tools::ExtractMinAndMax(Float32Array positions, in
 
 	return RangeVector(minimum, maximum);
 };
+
+int Babylon::Tools::GetDeltaTime()
+{
+	return deltaTime;
+}

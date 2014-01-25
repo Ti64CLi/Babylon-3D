@@ -139,6 +139,22 @@ namespace Babylon {
 		bool culling;
 	};
 
+	class IDisposable {
+	public:
+		typedef shared_ptr<IDisposable> Ptr;
+		typedef vector<Ptr> Array;
+
+		virtual void dispose() = 0;
+	};
+
+	class IRenderable {
+	public:
+		typedef shared_ptr<IRenderable> Ptr;
+		typedef vector<Ptr> Array;
+
+		virtual void render() = 0;
+	};
+
 	class Scene;
 	typedef shared_ptr<Scene> ScenePtr;
 

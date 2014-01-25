@@ -79,7 +79,7 @@ namespace Babylon {
 		virtual void runRenderLoop(RenderFunction renderFunction);
 		virtual void switchFullscreen(bool requestPointerLock);
 		virtual void clear(Color4::Ptr color, bool backBuffer, bool depthStencil);
-		virtual void setViewport(Viewport::Ptr viewport, int requiredWidth, int requiredHeight);
+		virtual void setViewport(Viewport::Ptr viewport, int requiredWidth = 0, int requiredHeight = 0);
 		virtual void setDirectViewport(int x, int y, int width, int height);
 		virtual void beginFrame();
 		virtual void endFrame();

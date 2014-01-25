@@ -27,6 +27,8 @@ namespace Babylon {
 		IGLBuffer::Ptr _linesIndexBuffer;
 		size_t linesIndexCount;
 
+		int _renderId;
+
 		MeshPtr _mesh;
 		int materialIndex;
 		size_t verticesStart;

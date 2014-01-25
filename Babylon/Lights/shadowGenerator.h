@@ -45,7 +45,7 @@ namespace Babylon {
 	public: 
 		ShadowGenerator(int width, int height, LightPtr light);
 		virtual bool isReady(Mesh::Ptr mesh);
-		////virtual RenderTargetTexture::Ptr getShadowMap();
+		virtual Texture::Ptr getShadowMap();
 		virtual LightPtr getLight();
 		virtual bool dispose();
 		virtual Matrix::Ptr getTransformMatrix();

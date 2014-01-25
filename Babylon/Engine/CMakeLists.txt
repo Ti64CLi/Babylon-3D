@@ -8,6 +8,7 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Culling 
 	${Babylon_SOURCE_DIR}/Babylon/Engine 
 	${Babylon_SOURCE_DIR}/Babylon/Interfaces 
+	${Babylon_SOURCE_DIR}/Babylon/Layer
 	${Babylon_SOURCE_DIR}/Babylon/Lights 
 	${Babylon_SOURCE_DIR}/Babylon/Materials 
 	${Babylon_SOURCE_DIR}/Babylon/Mesh 
@@ -32,6 +33,7 @@ link_directories (
 	${Babylon_BINARY_DIR}/Babylon/Rendering 
 	${Babylon_BINARY_DIR}/Babylon/Collisions 
 	${Babylon_BINARY_DIR}/Babylon/PostProcess 
+	${Babylon_BINARY_DIR}/Babylon/Layer 
 	${Babylon_BINARY_DIR}/Babylon/Particles 
 	${Babylon_BINARY_DIR}/Babylon/PhysicsEngine) 
 

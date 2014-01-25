@@ -71,3 +71,9 @@ void Babylon::Material::baseDispose() {
 void Babylon::Material::dispose() {
 	this->baseDispose();
 };
+
+// my addon to support getRenderTargetTextures
+Texture::Array Babylon::Material::getRenderTargetTextures() {
+	Texture::Array _renderTargets;
+	return _renderTargets;
+};

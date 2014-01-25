@@ -12,12 +12,15 @@
 #include "baseTexture.h"
 #include "light.h"
 #include "material.h"
+#include "multiMaterial.h"
 #include "camera.h"
 #include "pickingInfo.h"
 #include "renderingManager.h"
 #include "postProcessManager.h"
 #include "physicsEngine.h"
 #include "particleSystem.h"
+#include "octree.h"
+#include "layer.h"
 
 using namespace std;
 
@@ -32,10 +35,11 @@ namespace Babylon {
 		typedef void (*ExecuteWhenReadyFunc)();
 		//typedef Ray::Ptr (*RayFunctionFunc)(Matrix::Ptr);
 		typedef function<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
-		typedef function<PickingInfo::Ptr (Matrix::Ptr)> PredicateFunc;
+		typedef function<bool (Mesh::Ptr)> PredicateFunc;
 
 		EnginePtr _engine;
 		bool autoClear;
+		bool forceWireframe;
 		Color4::Ptr clearColor;
 		Color3::Ptr ambientColor;
 		int _totalVertices;
@@ -51,7 +55,7 @@ namespace Babylon {
 		int _renderId;
 		int _executeWhenReadyTimeoutId;
 		Matrix::Ptr _pickWithRayInverseMatrix;
-		vector<shared_ptr<void>> _toBeDisposed;
+		IDisposable::Array _toBeDisposed;
 		vector<ExecuteWhenReadyFunc> _onReadyCallbacks;
 		vector<shared_ptr<void>> _pendingData;
 		vector<BeforeRenderFunc> _onBeforeRenderCallbacks;
@@ -66,20 +70,21 @@ namespace Babylon {
 		Camera::Ptr activeCamera;
 		Mesh::Array meshes;
 		Mesh::Array _activeMeshes;
-		vector<shared_ptr<void>> _processedMaterials;
-		vector<shared_ptr<void>> _renderTargets;
+		Material::Array _processedMaterials;
+		IRenderable::Array _renderTargets;
 		vector<shared_ptr<void>> _activeParticleSystems;
-		vector<shared_ptr<void>> _activeSkeletons;
+		Skeleton::Array _activeSkeletons;
+		Octree::Ptr _selectionOctree;
 		RenderingManager::Ptr _renderingManager;
 		Material::Array materials;
-		vector<shared_ptr<void>> multiMaterials;
+		MultiMaterial::Array multiMaterials;
 		Material::Ptr defaultMaterial;
 		bool texturesEnabled;
 		BaseTexture::Array textures;
 		bool particlesEnabled;
 		ParticleSystem::Array particleSystems;
 		vector<shared_ptr<void>> spriteManagers;
-		vector<shared_ptr<void>> layers;
+		Layer::Array layers;
 		Skeleton::Array skeletons;
 		vector<shared_ptr<void>> lensFlareSystems;
 		bool collisionsEnabled;
@@ -91,7 +96,7 @@ namespace Babylon {
 		bool postProcessesEnabled;
 		PostProcessManager::Ptr postProcessManager;
 		bool renderTargetsEnabled;
-		vector<shared_ptr<void>> customRenderTargets;
+		IRenderable::Array customRenderTargets;
 		Camera::Array activeCameras;
 
 		time_t _animationStartDate;
@@ -127,7 +132,7 @@ namespace Babylon {
 		virtual void _removePendingData(shared_ptr<void> data);
 		virtual int getWaitingItemsCount();
 		virtual void executeWhenReady(ExecuteWhenReadyFunc func);
-		virtual bool _checkIsReady();
+		virtual void _checkIsReady();
 		// Animations
 		////virtual void beginAnimation(target, from, to, loop, float speedRatio = 1.0, onAnimationEnd);
 		////virtual void stopAnimation(target);
@@ -139,17 +144,17 @@ namespace Babylon {
 		virtual void setTransformMatrix(Matrix::Ptr view, Matrix::Ptr projection);
 		// Methods
 		virtual void activeCameraByID(string id);
-		virtual shared_ptr<void> getMaterialByID(string id);
-		virtual shared_ptr<void> getMaterialByName(string name);
-		virtual shared_ptr<void> getCameraByName(string name);
-		virtual shared_ptr<void> getLightByID(string id);
+		virtual Material::Ptr getMaterialByID(string id);
+		virtual Material::Ptr getMaterialByName(string name);
+		virtual Camera::Ptr getCameraByName(string name);
+		virtual Light::Ptr getLightByID(string id);
 		virtual Mesh::Ptr getMeshByID(string id);
 		virtual Mesh::Ptr getLastMeshByID(string id);
 		virtual Node::Ptr getLastEntryByID(string id);
 		virtual Mesh::Ptr getMeshByName(string name);
-		virtual shared_ptr<void> getLastSkeletonByID(string id);
-		virtual shared_ptr<void> getSkeletonById(string id);
-		virtual shared_ptr<void> getSkeletonByName(string name);
+		virtual Skeleton::Ptr getLastSkeletonByID(string id);
+		virtual Skeleton::Ptr getSkeletonById(string id);
+		virtual Skeleton::Ptr getSkeletonByName(string name);
 		virtual bool isActiveMesh(Mesh::Ptr mesh);
 		virtual void _evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh);
 		virtual void _evaluateActiveMeshes();

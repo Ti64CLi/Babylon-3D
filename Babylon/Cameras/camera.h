@@ -66,7 +66,7 @@ namespace Babylon {
 		virtual Matrix::Ptr _getViewMatrix();
 		virtual Matrix::Ptr getViewMatrix();
 		virtual Matrix::Ptr _computeViewMatrix(bool force = false);
-		virtual Matrix::Ptr getProjectionMatrix(bool force);
+		virtual Matrix::Ptr getProjectionMatrix(bool force = false);
 		virtual void dispose();
 
 		virtual bool hasWorldMatrix();

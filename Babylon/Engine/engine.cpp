@@ -209,7 +209,7 @@ void Babylon::Engine::clear(Color4::Ptr color, bool backBuffer, bool depthStenci
 	this->_gl->clear(mode);
 };
 
-void Babylon::Engine::setViewport(Viewport::Ptr viewport, int requiredWidth = 0, int requiredHeight = 0) {
+void Babylon::Engine::setViewport(Viewport::Ptr viewport, int requiredWidth, int requiredHeight) {
 	auto width = requiredWidth != 0 ? requiredWidth : this->_renderingCanvas->getWidth();
 	auto height = requiredHeight != 0 ? requiredHeight : this->_renderingCanvas->getHeight();
 	auto x = viewport->x;

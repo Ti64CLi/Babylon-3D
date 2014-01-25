@@ -19,7 +19,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class ParticleSystem : public enable_shared_from_this<ParticleSystem> {
+	class ParticleSystem : public IDisposable, public enable_shared_from_this<ParticleSystem> {
 
 	public:
 

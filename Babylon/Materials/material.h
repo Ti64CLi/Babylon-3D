@@ -54,6 +54,9 @@ namespace Babylon {
 		virtual void unbind();
 		virtual void baseDispose();
 		virtual void dispose();
+
+		// my addon 
+		virtual Texture::Array getRenderTargetTextures();
 	};
 
 };

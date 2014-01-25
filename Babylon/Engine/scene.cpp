@@ -2,7 +2,9 @@
 #include <string>
 #include <limits>
 #include "engine.h"
+#include "tools.h"
 #include "frustum.h"
+#include "shadowGenerator.h"
 
 using namespace Babylon;
 
@@ -10,6 +12,7 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 {
 	this->_engine = engine;
 	this->autoClear = true;
+	this->forceWireframe = false;
 	this->clearColor = make_shared<Color4>(0.2, 0.2, 0.3, 1.0);
 	this->ambientColor = make_shared<Color3>(0, 0, 0);
 
@@ -67,7 +70,8 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	// Materials
 	this->materials.clear();
 	this->multiMaterials.clear();
-	this->defaultMaterial = make_shared<StandardMaterial>("default material", shared_from_this());
+	// TODO: finish it when added StandartMaterial
+	////this->defaultMaterial = make_shared<StandardMaterial>("default material", shared_from_this());
 
 	// Textures
 	this->texturesEnabled = true;
@@ -234,7 +238,7 @@ void Babylon::Scene::executeWhenReady(ExecuteWhenReadyFunc func) {
 	////}, 150);
 };
 
-bool Babylon::Scene::_checkIsReady() {
+void Babylon::Scene::_checkIsReady() {
 	if (this->isReady()) {
 		for (auto func : this->_onReadyCallbacks) {
 			(*func)();
@@ -453,7 +457,7 @@ Skeleton::Ptr Babylon::Scene::getSkeletonByName(string name) {
 };
 
 bool Babylon::Scene::isActiveMesh(Mesh::Ptr mesh) {
-	return find ( begin ( this->_activeMeshes ), end (this->_activeMeshes) , mesh != end (this->_activeMeshes));
+	return find ( begin(this->_activeMeshes), end(this->_activeMeshes) , mesh) != end (this->_activeMeshes);
 };
 
 void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
@@ -472,18 +476,18 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 			}
 
 			// Dispatch
-			this->_activeVertices += subMesh.verticesCount;
+			this->_activeVertices += subMesh->verticesCount;
 			this->_renderingManager->dispatch(subMesh);
 		}
 	}
 };
 
 void Babylon::Scene::_evaluateActiveMeshes() {
-	this->_activeMeshes.reset();
+	this->_activeMeshes.clear();
 	this->_renderingManager.reset();
-	this->_processedMaterials.reset();
-	this->_activeParticleSystems.reset();
-	this->_activeSkeletons.reset();
+	this->_processedMaterials.clear();
+	this->_activeParticleSystems.clear();
+	this->_activeSkeletons.clear();
 
 	Frustum::GetPlanesToRef(this->_transformMatrix, this->_frustumPlanes);
 
@@ -491,9 +495,7 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 	if (this->_selectionOctree) { // Octree
 		auto selection = this->_selectionOctree->select(this->_frustumPlanes);
 
-		for (auto blockIndex = 0; blockIndex < selection->size(); blockIndex++) {
-			auto block = selection->data[blockIndex];
-
+		for (auto block : selection) {
 			for (auto meshIndex = 0; meshIndex < block->meshes.size(); meshIndex++) {
 				auto mesh = block->meshes[meshIndex];
 
@@ -609,7 +611,7 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	this->_evaluateActiveMeshesDuration += now - beforeEvaluateActiveMeshesDate;
 
 	// Skeletons
-	for (auto skeleton : this->_activeSkeletons->data) {
+	for (auto skeleton : this->_activeSkeletons) {
 		skeleton->prepare();
 	}
 
@@ -622,7 +624,7 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	time_t beforeRenderTargetDate;
 	localtime(&beforeRenderTargetDate);
 	if (this->renderTargetsEnabled) {
-		for (auto renderTarget : this->_renderTargets.data) {
+		for (auto renderTarget : this->_renderTargets) {
 			this->_renderId++;
 			renderTarget->render();
 		}
@@ -641,7 +643,7 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	time_t beforeRenderDate;        
 	localtime(&beforeRenderDate);
 	// Backgrounds
-	if (this->layers.size()) {
+	if (this->layers.size() > 0) {
 		engine->setDepthBuffer(false);
 		for (auto layer : this->layers) {
 			if (layer->isBackground) {
@@ -682,7 +684,7 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	this->activeCamera->_updateFromScene();
 
 	// Reset some special arrays
-	this->_renderTargets.reset();
+	this->_renderTargets.clear();
 };
 
 void Babylon::Scene::render() {
@@ -709,7 +711,8 @@ void Babylon::Scene::render() {
 	// Animations
 	auto deltaTime = Tools::GetDeltaTime();
 	this->_animationRatio = deltaTime * (60.0 / 1000.0);
-	this->_animate();
+	// TODO: finish animation
+	////this->_animate();
 
 	// Physics
 	if (this->_physicsEngine) {
@@ -746,13 +749,13 @@ void Babylon::Scene::render() {
 	////}
 
 	// Cleaning
-	for (auto index = 0; index < this->_toBeDisposed.size(); index++) {
-		this->_toBeDisposed.data[index].dispose();
-		this->_toBeDisposed[index] = nullptr;
+	for (auto _toBeDisposedItem : this->_toBeDisposed) {
+		_toBeDisposedItem->dispose();
 	}
 
-	this->_toBeDisposed.reset();
+	this->_toBeDisposed.clear();
 
+	time_t now;
 	localtime(&now);
 	this->_lastFrameDuration = now - startDate;
 };
@@ -771,14 +774,14 @@ void Babylon::Scene::dispose() {
 	}
 
 	// Release lights
-	for (auto light : this->lights)
-		light->dispose(true);
+	for (auto light : this->lights) {
+		light->dispose();
 	}
 
 	this->lights.clear();
 
 	// Release meshes
-	for (auto mesh : this->meshes)
+	for (auto mesh : this->meshes) {
 		mesh->dispose(true);
 	}
 
@@ -786,49 +789,49 @@ void Babylon::Scene::dispose() {
 
 
 	// Release cameras
-	for (auto camera : this->cameras)
-		camera->dispose(true);
+	for (auto camera : this->cameras) {
+		camera->dispose();
 	}
 
 	this->cameras.clear();
 
 	// Release materials
-	for (auto material : this->materials)
-		material->dispose(true);
+	for (auto material : this->materials) {
+		material->dispose();
 	}
 
 	this->materials.clear();
 
 	// Release particles
-	for (auto particleSystem : this->particleSystems)
-		particleSystem->dispose(true);
+	for (auto particleSystem : this->particleSystems) {
+		particleSystem->dispose();
 	}
 
 	this->particleSystems.clear();
 
 	// Release sprites
-	for (auto spriteManager : this->spriteManagers)
-		spriteManager->dispose(true);
+	for (auto spriteManager : this->spriteManagers) {
+		spriteManager->dispose();
 	}
 
 	this->spriteManagers.clear();
 
 	// Release layers
-	for (auto layer : this->layers)
-		layer->dispose(true);
+	for (auto layer : this->layers) {
+		layer->dispose();
 	}
 
 	this->layers.clear();
 
 	// Release textures
-	for (auto texture : this->textures)
-		texture->dispose(true);
+	for (auto texture : this->textures) {
+		texture->dispose();
 	}
 
 	this->textures.clear();
 
 	// Post-processes
-	this->postProcessManager.dispose();
+	this->postProcessManager->dispose();
 
 	// Physics
 	if (this->_physicsEngine) {
@@ -836,7 +839,7 @@ void Babylon::Scene::dispose() {
 	}
 
 	// Remove from engine
-	auto it = find ( being(this->_engine->scenes), end(this->_engine->scenes), shared_from_this());
+	auto it = find ( begin(this->_engine->scenes), end(this->_engine->scenes), shared_from_this());
 	if (it != end(this->_engine->scenes))
 	{
 		this->_engine->scenes.erase(it);
@@ -918,8 +921,8 @@ void Babylon::Scene::createOrUpdateSelectionOctree() {
 	}
 
 	// World limits
-	auto min = make_shared<Vector3>(max<float>(), max<float>(), max<float>());
-	auto max = make_shared<Vector3>(-max<float>(), -max<float>(), -max<float>());
+	auto min = make_shared<Vector3>(numeric_limits<float>::max(), numeric_limits<float>::max(), numeric_limits<float>::max());
+	auto max = make_shared<Vector3>(-numeric_limits<float>::max(), -numeric_limits<float>::max(), -numeric_limits<float>::max());
 	for (auto mesh : this->meshes) {
 		mesh->computeWorldMatrix(true);
 		auto minBox = mesh->getBoundingInfo()->boundingBox->minimumWorld;
@@ -965,7 +968,7 @@ PickingInfo::Ptr Babylon::Scene::_internalPick(RayFunctionFunc rayFunction, Pred
 		auto ray = rayFunction(world);
 
 		auto result = mesh->intersects(ray, fastCheck);
-		if (!result.hit)
+		if (!result->hit)
 			continue;
 
 		if (!fastCheck && pickingInfo != nullptr && result->distance >= pickingInfo->distance)
