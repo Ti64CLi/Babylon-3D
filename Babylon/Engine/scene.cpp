@@ -1,6 +1,7 @@
 #include "scene.h"
 #include <string>
 #include <limits>
+#include "engine.h"
 #include "frustum.h"
 
 using namespace Babylon;
@@ -203,11 +204,11 @@ void Babylon::Scene::unregisterBeforeRender(BeforeRenderFunc func) {
 	}
 };
 
-void Babylon::Scene::_addPendingData(IGLTexture::Ptr data) {
+void Babylon::Scene::_addPendingData(shared_ptr<void> data) {
 	this->_pendingData.push_back(data);
 };
 
-void Babylon::Scene::_removePendingData(IGLTexture::Ptr data) {
+void Babylon::Scene::_removePendingData(shared_ptr<void> data) {
 	auto it = find ( begin( this->_pendingData ), end (this->_pendingData), data);
 
 	if (it != end (this->_pendingData)) {

@@ -1,11 +1,11 @@
-#ifndef BABYLON_RenderingGroups_H
-#define BABYLON_RenderingGroups_H
+#ifndef BABYLON_RENDERINGGROUPS_H
+#define BABYLON_RENDERINGGROUPS_H
 
 #include <memory>
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 
 using namespace std;
 
@@ -19,12 +19,12 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	protected:
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 
 	public: 
-		RenderingGroups(IScene::Ptr scene);
+		RenderingGroups(ScenePtr scene);
 	};
 
 };
 
-#endif // BABYLON_RenderingGroups_H
+#endif // BABYLON_RENDERINGGROUPS_H

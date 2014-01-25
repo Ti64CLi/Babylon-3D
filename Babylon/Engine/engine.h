@@ -9,8 +9,9 @@
 #include "icanvas.h"
 #include "iengine.h"
 #include "igl.h"
-#include "effect.h"
+#include "scene.h"
 #include "tools_math.h"
+#include "effect.h"
 #include "vertexbuffer.h"
 #include "texture.h"
 
@@ -18,7 +19,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Engine: public enable_shared_from_this<Engine>, public IEngine {
+	class Engine: public enable_shared_from_this<Engine> {
 
 	public:
 		typedef shared_ptr<Engine> Ptr;
@@ -32,8 +33,6 @@ namespace Babylon {
 		static float collisionsEpsilon;
 
 		static vector<string> extensions;
-
-	private: 
 		bool forceWireframe;
 		bool isPointerLock;
 		ICanvas::Ptr _workingCanvas;
@@ -62,7 +61,7 @@ namespace Babylon {
 		bool cullBackFaces;
 
 	public:
-		vector<IScene::Ptr> scenes;
+		vector<ScenePtr> scenes;
 
 	public: 
 		Engine(ICanvas::Ptr canvas, bool antialias);
@@ -91,14 +90,14 @@ namespace Babylon {
 		virtual void restoreDefaultFramebuffer();
 		virtual IGLBuffer::Ptr createVertexBuffer(vector<float> vertices);
 		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
-		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length);
+		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0);
 		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array indices);
 		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect);
 		virtual void bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
 		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
 		virtual void draw(bool useTriangles, int indexStart, int indexCount);
-		virtual Effect::Ptr createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines);
-		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines);
 		static IGLShader::Ptr compileShader(IGL::Ptr gl, string source, string type, string defines);
 		virtual IGLProgram::Ptr createShaderProgram(string vertexCode, string fragmentCode, string defines);
 		virtual vector<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames);
@@ -124,14 +123,14 @@ namespace Babylon {
 		// Textures
 		virtual void wipeCaches();
 		static int getExponantOfTwo(int value, int max);
-		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, IScene::Ptr scene);
+		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, ScenePtr scene);
 		virtual IGLTexture::Ptr createDynamicTexture(int width, int height, bool generateMipMaps);
 		virtual void updateDynamicTexture(IGLTexture::Ptr texture, ICanvas::Ptr canvas, bool invertY);
 		virtual void updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video);
 		virtual IGLTexture::Ptr createRenderTargetTexture(int width, int height, bool generateMipMaps = false, bool generateDepthBuffer = true, SAMPLINGMODES samplingMode = TRILINEAR_SAMPLINGMODE);
-		virtual void cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, IScene::Ptr scene);
+		virtual void cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, ScenePtr scene);
 		virtual void onFinish(IImage::Array imgs);
-		virtual IGLTexture::Ptr createCubeTexture(string rootUrl, IScene::Ptr scene);
+		virtual IGLTexture::Ptr createCubeTexture(string rootUrl, ScenePtr scene);
 		virtual void _releaseTexture(IGLTexture::Ptr texture);
 		virtual void bindSamplers(Effect::Ptr effect);
 		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);

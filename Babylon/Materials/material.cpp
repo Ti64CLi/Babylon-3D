@@ -1,9 +1,10 @@
 #include "material.h"
+#include "engine.h"
 #include "mesh.h"
 
 using namespace Babylon;
 
-Babylon::Material::Material(string name, IScene::Ptr scene) {
+Babylon::Material::Material(string name, Scene::Ptr scene) {
 	// Members
 	checkReadyOnEveryCall = true;
 	checkReadyOnlyOnce = false;
@@ -19,7 +20,7 @@ Babylon::Material::Material(string name, IScene::Ptr scene) {
 	this->id = name;
 
 	this->_scene = scene;
-	scene->getMaterials().push_back(shared_from_this());
+	scene->materials.push_back(shared_from_this());
 };
 
 // Properties
@@ -55,10 +56,10 @@ void Babylon::Material::unbind() {
 
 void Babylon::Material::baseDispose() {
 	// Remove from scene
-	auto it = find (begin(this->_scene->getMaterials()), end(this->_scene->getMaterials()), this);
-	if (it != end(this->_scene->getMaterials()))
+	auto it = find (begin(this->_scene->materials), end(this->_scene->materials), this);
+	if (it != end(this->_scene->materials))
 	{
-		this->_scene->getMaterials().erase(it);
+		this->_scene->materials.erase(it);
 	}
 
 	// Callback

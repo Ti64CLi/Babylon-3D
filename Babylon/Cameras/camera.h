@@ -6,7 +6,6 @@
 #include <map>
 
 #include "iengine.h"
-#include "iscene.h"
 #include "node.h"
 
 using namespace std;
@@ -21,7 +20,7 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	public:
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		string name;
 		string id;
 		Vector3::Ptr position;
@@ -51,9 +50,9 @@ namespace Babylon {
 		CAMERAS mode;
 
 	public: 
-		Camera(string name, Vector3::Ptr position, IScene::Ptr scene);
+		Camera(string name, Vector3::Ptr position, ScenePtr scene);
 
-		virtual IScene::Ptr getScene();
+		virtual ScenePtr getScene();
 		virtual void _initCache();
 		virtual void _updateCache(bool ignoreParentClass);
 		virtual bool _isSynchronized();

@@ -7,9 +7,10 @@
 #include <map>
 
 #include "igl.h"
-#include "iscene.h"
+#include "iengine.h"
 #include "tools_math.h"
 #include "effect.h"
+#include "animatable.h"
 
 using namespace std;
 
@@ -19,14 +20,17 @@ namespace Babylon {
 	typedef shared_ptr<Mesh> MeshPtr;
 
 	// TODO: finish it
-	class Material: public enable_shared_from_this<Material> {
+	class Material: public Animatable, public enable_shared_from_this<Material> {
 
 	public:
 		typedef shared_ptr<Material> Ptr;
 		typedef vector<Ptr> Array;
 		typedef void (*OnDisposeFunc)();
 
-	private:
+		string id;
+		string name;
+		ScenePtr _scene;
+
 		// Members
 		bool checkReadyOnEveryCall;
 		bool checkReadyOnlyOnce;
@@ -38,13 +42,8 @@ namespace Babylon {
 
 		OnDisposeFunc onDispose;
 
-	public:
-		string id;
-		string name;
-		IScene::Ptr _scene;
-
 	public: 
-		Material(string name, IScene::Ptr scene);
+		Material(string name, ScenePtr scene);
 
 		virtual bool isReady(MeshPtr mesh);
 		virtual Effect::Ptr getEffect();

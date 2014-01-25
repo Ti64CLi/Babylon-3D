@@ -83,6 +83,11 @@ namespace Babylon {
 		ANIMATIONLOOPMODE_CONSTANT = 2
 	};
 
+	enum BLENDMODES {
+		BLENDMODE_ONEONE = 0,
+		BLENDMODE_STANDARD = 1
+	};
+
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	struct Vector3;
@@ -134,39 +139,11 @@ namespace Babylon {
 		bool culling;
 	};
 
-	class IEngine {
+	class Scene;
+	typedef shared_ptr<Scene> ScenePtr;
 
-	public:
-		typedef shared_ptr<IEngine> Ptr;
-
-	public:
-		virtual float getAspectRatio() = 0;
-		virtual int getRenderWidth() = 0;
-		virtual int getRenderHeight() = 0;
-		virtual ICanvas::Ptr getRenderingCanvas() = 0;
-		virtual float getHardwareScalingLevel() = 0;
-		virtual IGLTexture::Array& getLoadedTexturesCache() = 0;
-		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) = 0;
-		virtual void updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video);
-		virtual void _releaseBuffer(IGLBuffer::Ptr vertexBuffer) = 0;
-		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array vertices) = 0;
-		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity) = 0;
-		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices) = 0;
-		virtual void setMatrix(IGLUniformLocation::Ptr uniform, MatrixPtr matrix) = 0;
-		virtual void setFloat(IGLUniformLocation::Ptr uniform, GLfloat value) = 0;
-		virtual void setFloat2(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y) = 0;
-		virtual void setFloat3(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z) = 0;
-		virtual void setBool(IGLUniformLocation::Ptr uniform, GLboolean _bool) = 0;
-		virtual void setFloat4(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
-		virtual void setColor3(IGLUniformLocation::Ptr uniform, Color3Ptr color3) = 0;
-		virtual void setColor4(IGLUniformLocation::Ptr uniform, Color3Ptr color3, GLfloat alpha) = 0;
-		virtual IGLTexture::Ptr createTexture(string url, bool noMipmap, bool invertY, IScenePtr scene) = 0;
-		virtual IGLTexture::Ptr createDynamicTexture(int width, int height, bool generateMipMaps) = 0;
-		virtual void _releaseTexture(IGLTexture::Ptr texture) = 0;
-		virtual void enableEffect(EffectPtr effect) = 0;
-		virtual void setState(bool culling) = 0;
-	};
-
+	class Engine;
+	typedef shared_ptr<Engine> EnginePtr;
 };
 
 #endif // BABYLON_IENGINE_H

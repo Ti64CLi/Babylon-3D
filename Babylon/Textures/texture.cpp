@@ -1,9 +1,10 @@
 #include "texture.h"
 #include "vector3.h"
+#include "engine.h"
 
 using namespace Babylon;
 
-Babylon::Texture::Texture(string url, IScene::Ptr scene,  bool noMipmap, bool invertY) :
+Babylon::Texture::Texture(string url, Scene::Ptr scene,  bool noMipmap, bool invertY) :
 	BaseTexture(url, scene),
 	uOffset (0),
 	vOffset (0),
@@ -30,7 +31,7 @@ Babylon::Texture::Texture(string url, IScene::Ptr scene,  bool noMipmap, bool in
 	this->_texture = this->_getFromCache(url, noMipmap);
 
 	if (!this->_texture) {
-		if (!scene->getUseDelayedTextureLoading()) {
+		if (!scene->useDelayedTextureLoading) {
 			this->_texture = scene->getEngine()->createTexture(url, noMipmap, invertY, scene);
 		} else {
 			this->delayLoadState = DELAYLOADSTATE_NOTLOADED;

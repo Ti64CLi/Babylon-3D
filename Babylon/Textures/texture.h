@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "iengine.h"
-#include "iscene.h"
 #include "baseTexture.h"
 #include "matrix.h"
 
@@ -62,7 +61,7 @@ namespace Babylon {
 
 
 	public: 
-		Texture(string url, IScene::Ptr scene, bool noMipmap, bool invertY);		
+		Texture(string url, ScenePtr scene, bool noMipmap, bool invertY);		
 		
 		// Methods    
 		virtual void delayLoad ();

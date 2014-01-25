@@ -18,4 +18,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (Textures baseTexture.cpp texture.cpp videoTexture.cpp)
+add_library (Particles particle.cpp particleSystem.cpp)

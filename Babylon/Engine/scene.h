@@ -6,8 +6,7 @@
 #include <functional>
 #include <time.h>
 
-#include "iscene.h"
-#include "engine.h"
+#include "iengine.h"
 #include "mesh.h"
 #include "ray.h"
 #include "baseTexture.h"
@@ -18,12 +17,13 @@
 #include "renderingManager.h"
 #include "postProcessManager.h"
 #include "physicsEngine.h"
+#include "particleSystem.h"
 
 using namespace std;
 
 namespace Babylon {
 
-	class Scene: public enable_shared_from_this<Scene>, IScene {
+	class Scene: public enable_shared_from_this<Scene> {
 
 	public:
 
@@ -34,7 +34,7 @@ namespace Babylon {
 		typedef function<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
 		typedef function<PickingInfo::Ptr (Matrix::Ptr)> PredicateFunc;
 
-		Engine::Ptr _engine;
+		EnginePtr _engine;
 		bool autoClear;
 		Color4::Ptr clearColor;
 		Color3::Ptr ambientColor;
@@ -77,7 +77,7 @@ namespace Babylon {
 		bool texturesEnabled;
 		BaseTexture::Array textures;
 		bool particlesEnabled;
-		vector<shared_ptr<void>> particleSystems;
+		ParticleSystem::Array particleSystems;
 		vector<shared_ptr<void>> spriteManagers;
 		vector<shared_ptr<void>> layers;
 		Skeleton::Array skeletons;
@@ -99,12 +99,13 @@ namespace Babylon {
 		Matrix::Ptr _projectionMatrix;
 		PhysicsEngine::Ptr _physicsEngine;
 		Plane::Array _frustumPlanes;
-		IGLTexture::Array textures;
+
+		bool useDelayedTextureLoading;
 
 	public: 
-		Scene(Engine::Ptr engine);
+		Scene(EnginePtr engine);
 
-		virtual IEngine::Ptr getEngine();
+		virtual EnginePtr getEngine();
 		virtual int getTotalVertices();
 		virtual int getActiveVertices();
 		virtual int getActiveParticles();
@@ -122,8 +123,8 @@ namespace Babylon {
 		virtual bool isReady();
 		virtual void registerBeforeRender(BeforeRenderFunc func);
 		virtual void unregisterBeforeRender(BeforeRenderFunc func);
-		virtual void _addPendingData(IGLTexture::Ptr data);
-		virtual void _removePendingData(IGLTexture::Ptr data);
+		virtual void _addPendingData(shared_ptr<void> data);
+		virtual void _removePendingData(shared_ptr<void> data);
 		virtual int getWaitingItemsCount();
 		virtual void executeWhenReady(ExecuteWhenReadyFunc func);
 		virtual bool _checkIsReady();

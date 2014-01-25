@@ -1,18 +1,20 @@
 #include "light.h"
+#include "engine.h"
+#include "shadowGenerator.h"
 
 using namespace Babylon;
 
 // Members
 float Babylon::Light::intensity = 1.0;
 
-Babylon::Light::Light(string name, IScene::Ptr scene) : Node(scene)
+Babylon::Light::Light(string name, Scene::Ptr scene) : Node(scene)
 {
 	this->name = name;
 	this->id = name;
 
 	this->_scene = scene;
 
-	scene->getLights().push_back(enable_shared_from_this<Light>::shared_from_this());
+	scene->lights.push_back(enable_shared_from_this<Light>::shared_from_this());
 
 	// Animations
 	this->animations.clear();
@@ -22,7 +24,7 @@ Babylon::Light::Light(string name, IScene::Ptr scene) : Node(scene)
 }
 
 // Properties
-IScene::Ptr Babylon::Light::getScene() {
+Scene::Ptr Babylon::Light::getScene() {
 	return this->_scene;
 };
 
@@ -60,9 +62,9 @@ void Babylon::Light::dispose() {
 	}
 
 	// Remove from scene
-	auto it = find( begin(this->_scene->getLights()), end(this->_scene->getLights()), enable_shared_from_this<Light>::shared_from_this());
-	if (it != end(this->_scene->getLights()))
+	auto it = find( begin(this->_scene->lights), end(this->_scene->lights), enable_shared_from_this<Light>::shared_from_this());
+	if (it != end(this->_scene->lights))
 	{
-		this->_scene->getLights().erase(it);
+		this->_scene->lights.erase(it);
 	}
 };

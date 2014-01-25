@@ -5,19 +5,20 @@
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 #include "node.h"
 #include "matrix.h"
 #include "mesh.h"
 #include "vertexBuffer.h"
-#include "ilight.h"
 
 using namespace std;
 
 namespace Babylon {
 
+	class Light;
+	typedef shared_ptr<Light> LightPtr;
+
 	// TODO: add animations
-	// TODO: to avoid cercular reference we do not store light here
 	class ShadowGenerator : public enable_shared_from_this<ShadowGenerator> {
 
 	public:
@@ -25,12 +26,9 @@ namespace Babylon {
 		typedef shared_ptr<ShadowGenerator> Ptr;
 		typedef vector<Ptr> Array;
 
-		class Light;
-		typedef shared_ptr<Light> LightPtr;
-
 	private:
-		ILight::Ptr _light;
-		IScene::Ptr _scene;
+		LightPtr _light;
+		ScenePtr _scene;
 
 		Matrix::Ptr _viewMatrix;
 		Matrix::Ptr _projectionMatrix;
@@ -45,10 +43,10 @@ namespace Babylon {
 		static bool useVarianceShadowMap;
 
 	public: 
-		ShadowGenerator(int width, int height, ILight::Ptr light);
+		ShadowGenerator(int width, int height, LightPtr light);
 		virtual bool isReady(Mesh::Ptr mesh);
 		////virtual RenderTargetTexture::Ptr getShadowMap();
-		virtual ILight::Ptr getLight();
+		virtual LightPtr getLight();
 		virtual bool dispose();
 		virtual Matrix::Ptr getTransformMatrix();
 	};

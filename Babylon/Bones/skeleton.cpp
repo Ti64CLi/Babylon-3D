@@ -1,8 +1,9 @@
 #include "skeleton.h"
+#include "engine.h"
 
 using namespace Babylon;
 
-Babylon::Skeleton::Skeleton(string name, string id, IScene::Ptr scene)
+Babylon::Skeleton::Skeleton(string name, string id, Scene::Ptr scene)
 {
 	this->_scene = scene;
 
@@ -12,7 +13,7 @@ Babylon::Skeleton::Skeleton(string name, string id, IScene::Ptr scene)
 
 	this->_scene = scene;
 
-	scene->getSkeletons().push_back(enable_shared_from_this<Skeleton>::shared_from_this());
+	scene->skeletons.push_back(enable_shared_from_this<Skeleton>::shared_from_this());
 
 	this->_isDirty = true;
 }

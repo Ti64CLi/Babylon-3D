@@ -1,23 +1,25 @@
 #include "effect.h"
+#include "engine.h"
 
 using namespace Babylon;
 
 // Statics
 map<string, Effect::ShaderPtr> Babylon::Effect::ShadersStore;
 
-Babylon::Effect::Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+Babylon::Effect::Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
 	_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 }
 
-Babylon::Effect::Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+Babylon::Effect::Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
 	_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 }
 
-void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines) {
+void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
-	this->_uniformsNames = uniformsNames; // TODO: finish it uniformsNames.concat(samplers);
+	this->_uniformsNames = uniformsNames;
+	this->_uniformsNames.insert(end(this->_uniformsNames), begin(samplers), end(samplers));
 	this->_samplers = samplers;
 	this->_isReady = false;
 	this->_compilationError = "";
@@ -70,7 +72,7 @@ IGLUniformLocation::Ptr Babylon::Effect::getUniform(int sample) {
 	return this->_uniforms[sample];
 };
 
-vector<int>& Babylon::Effect::getSamplers() {
+vector<string>& Babylon::Effect::getSamplers() {
 	return this->_samplers;
 };
 
@@ -125,6 +127,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	//BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
 };
 
+// TODO: finish it
 /*
 void Babylon::Effect::_prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, useFallback) {
 	try {
@@ -160,15 +163,18 @@ void Babylon::Effect::_prepareEffect(vertexSourceCode, fragmentSourceCode, attri
 		}
 	}
 };
+*/
 
-void Babylon::Effect::_bindTexture(channel, texture) {
-	this->_engine->_bindTexture(this->_samplers.indexOf(channel), texture);
+void Babylon::Effect::_bindTexture(string channel, IGLTexture::Ptr texture) {
+	this->_engine->_bindTexture(find(begin(this->_samplers), end(this->_samplers), channel) - begin(this->_samplers), texture);
 };
 
-void Babylon::Effect::setTexture(channel, texture) {
-	this->_engine->setTexture(this->_samplers.indexOf(channel), texture);
+void Babylon::Effect::setTexture(string channel, Texture::Ptr texture) {
+	this->_engine->setTexture(find(begin(this->_samplers), end(this->_samplers), channel) - begin(this->_samplers), texture);
 };
 
+// TODO: finish it
+/*
 void Babylon::Effect::setTextureFromPostProcess(channel, postProcess) {
 	this->_engine->setTextureFromPostProcess(this->_samplers.indexOf(channel), postProcess);
 };

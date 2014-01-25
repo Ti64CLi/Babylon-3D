@@ -30,7 +30,7 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	public:
-		IEngine::Ptr _engine;
+		EnginePtr _engine;
 		size_t _strideSize;
 		VertexBufferKind _kind;
 		Float32Array _data;

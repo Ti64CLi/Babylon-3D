@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 
 using namespace std;
 
@@ -19,10 +19,10 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	protected:
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 
 	public: 
-		RenderingManager(IScene::Ptr scene);
+		RenderingManager(ScenePtr scene);
 	};
 
 };

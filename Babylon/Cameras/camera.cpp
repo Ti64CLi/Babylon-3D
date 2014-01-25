@@ -1,9 +1,10 @@
 #include "camera.h"
 #include <limits>
+#include "engine.h"
 
 using namespace Babylon;
 
-Babylon::Camera::Camera(string name, Vector3::Ptr position, IScene::Ptr scene) : Node(scene)
+Babylon::Camera::Camera(string name, Vector3::Ptr position, Scene::Ptr scene) : Node(scene)
 {
 	this->_scene = scene;
 
@@ -13,10 +14,10 @@ Babylon::Camera::Camera(string name, Vector3::Ptr position, IScene::Ptr scene) :
 	this->upVector = Vector3::Up();
 	this->_childrenFlag = true;
 
-	scene->getCameras().push_back(enable_shared_from_this<Camera>::shared_from_this());
+	scene->cameras.push_back(enable_shared_from_this<Camera>::shared_from_this());
 
-	if (!scene->getActiveCamera()) {
-		scene->setActiveCamera(enable_shared_from_this<Camera>::shared_from_this());
+	if (!scene->activeCamera) {
+		scene->activeCamera = enable_shared_from_this<Camera>::shared_from_this();
 	}
 
 	this->_computedViewMatrix = Matrix::Identity();
@@ -48,7 +49,7 @@ Babylon::Camera::Camera(string name, Vector3::Ptr position, IScene::Ptr scene) :
 // Members
 
 // Properties
-IScene::Ptr Babylon::Camera::getScene() {
+Scene::Ptr Babylon::Camera::getScene() {
 	return this->_scene;
 };
 
@@ -220,10 +221,10 @@ Matrix::Ptr Babylon::Camera::getProjectionMatrix(bool force) {
 
 void Babylon::Camera::dispose() {
 	// Remove from scene
-	auto it = find (begin(this->_scene->getCameras()), end(this->_scene->getCameras()), enable_shared_from_this<Camera>::shared_from_this());
-	if (it != end(this->_scene->getCameras()))
+	auto it = find (begin(this->_scene->cameras), end(this->_scene->cameras), enable_shared_from_this<Camera>::shared_from_this());
+	if (it != end(this->_scene->cameras))
 	{
-		this->_scene->getCameras().erase(it);
+		this->_scene->cameras.erase(it);
 	}
 
 	// Postprocesses

@@ -1,11 +1,11 @@
 #include "mesh.h"
-#include "camera.h"
 #include "engine.h"
+#include "camera.h"
 #include "tools.h"
 
 using namespace Babylon;
 
-Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(scene) {
+Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	this->name = name;
 	this->id = name;
 	this->_scene = scene;
@@ -13,7 +13,7 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(scene) {
 	this->_totalVertices = 0;
 	this->_worldMatrix = Matrix::Identity();
 
-	scene->getMeshes().push_back_back(enable_shared_from_this<Mesh>::shared_from_this());
+	scene->meshes.push_back(enable_shared_from_this<Mesh>::shared_from_this());
 
 	this->position = make_shared<Vector3>(0, 0, 0);
 	this->rotation = make_shared<Vector3>(0, 0, 0);
@@ -70,17 +70,12 @@ Babylon::Mesh::Mesh(string name, IScene::Ptr scene) : Node(scene) {
 	infiniteDistance = false;
 };
 
-// Cache
-void Babylon::Mesh::_resetPointsArrayCache() {
-	this->_positions.clear();
-};
-
 // Properties
 BoundingInfo::Ptr Babylon::Mesh::getBoundingInfo() {
 	return this->_boundingInfo;
 };
 
-IScene::Ptr Babylon::Mesh::getScene() {
+Scene::Ptr Babylon::Mesh::getScene() {
 	return this->_scene;
 };
 
@@ -248,7 +243,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 
 	// Translation
 	if (this->infiniteDistance) {
-		auto camera = this->_scene->getActiveCamera();
+		auto camera = this->_scene->activeCamera;
 		Matrix::TranslationToRef(this->position->x + camera->position->x, this->position->y + camera->position->y, this->position->z + camera->position->z, this->_localTranslation);
 	} else {
 		Matrix::TranslationToRef(this->position->x, this->position->y, this->position->z, this->_localTranslation);
@@ -261,7 +256,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 	// Billboarding
 	if (this->billboardMode != BILLBOARDMODE_NONE) {
 		auto localPosition = this->position->clone();
-		auto zero = this->_scene->getActiveCamera()->position->clone();
+		auto zero = this->_scene->activeCamera->position->clone();
 
 		auto parentMesh = dynamic_pointer_cast<Mesh>(this->parent);
 		if (parentMesh) {
@@ -270,7 +265,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 		}
 
 		if (this->billboardMode & BILLBOARDMODE_ALL == BILLBOARDMODE_ALL) {
-			zero = this->_scene->getActiveCamera()->position;
+			zero = this->_scene->activeCamera->position;
 		} else {
 			if (this->billboardMode & BILLBOARDMODE_X)
 				zero->x = localPosition->x + Engine::epsilon;
@@ -314,10 +309,10 @@ SubMesh::Ptr Babylon::Mesh::_createGlobalSubMesh() {
 	}
 
 	this->subMeshes.clear();
-	return make_shared<SubMesh>(0, 0, this->_totalVertices, 0, this->_indices.size(), enable_shared_from_this<Mesh>::shared_from_this());
+	return make_shared<SubMesh>(SubMesh(0, 0, this->_totalVertices, 0, this->_indices.size(), enable_shared_from_this<Mesh>::shared_from_this()));
 };
 
-bool Babylon::Mesh::subdivide(int count) {
+void Babylon::Mesh::subdivide(int count) {
 	if (count < 1) {
 		return;
 	}
@@ -327,7 +322,7 @@ bool Babylon::Mesh::subdivide(int count) {
 
 	this->subMeshes.clear();
 	for (auto index = 0; index < count; index++) {
-		SubMesh::CreateFromIndices(0, offset, min(subdivisionSize, this->_indices.size() - offset), this);
+		SubMesh::CreateFromIndices(0, offset, min(subdivisionSize, this->_indices.size() - offset), enable_shared_from_this<Mesh>::shared_from_this());
 
 		offset += subdivisionSize;
 	}
@@ -383,14 +378,18 @@ void Babylon::Mesh::bindAndDraw(SubMesh::Ptr subMesh, Effect::Ptr effect, bool w
 	}
 
 	// VBOs
-	engine->bindMultiBuffers(this->_vertexBuffers, indexToBind, effect);
+	VertexBuffer::Array _vertexBuffersValues;
+	for(auto _vertexBuffer: this->_vertexBuffers)
+		_vertexBuffersValues.push_back(_vertexBuffer.second);
+
+	engine->bindMultiBuffers(_vertexBuffersValues, indexToBind, effect);
 
 	// Draw order
 	engine->draw(useTriangles, useTriangles ? subMesh->indexStart : 0, useTriangles ? subMesh->indexCount : subMesh->linesIndexCount);
 };
 
 void Babylon::Mesh::registerBeforeRender(OnBeforeRenderFunc func) {
-	this->_onBeforeRenderCallbacks.push_back_back(func);
+	this->_onBeforeRenderCallbacks.push_back(func);
 };
 
 void Babylon::Mesh::unregisterBeforeRender(OnBeforeRenderFunc func) {
@@ -402,7 +401,7 @@ void Babylon::Mesh::unregisterBeforeRender(OnBeforeRenderFunc func) {
 };
 
 void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
-	if (!this->_vertexBuffers || !this->_indexBuffer) {
+	if (this->_vertexBuffers.size() == 0 || !this->_indexBuffer) {
 		return;
 	}
 
@@ -434,7 +433,7 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 vector<shared_ptr<void>> Babylon::Mesh::getEmittedParticleSystems() {
 	vector<shared_ptr<void>> results;
 	for (auto particleSystem : this->_scene->particleSystems) {
-		if (particleSystem.emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+		if (particleSystem->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
 			results.push_back(particleSystem);
 		}
 	}
@@ -448,7 +447,7 @@ vector<shared_ptr<void>> Babylon::Mesh::getHierarchyEmittedParticleSystems() {
 	descendants.push_back(enable_shared_from_this<Mesh>::shared_from_this());
 
 	for (auto particleSystem : this->_scene->particleSystems) {
-		if (find(begin(descendants), end(descendants), particleSystem.emitter) != end(descendants)) {
+		if (find(begin(descendants), end(descendants), particleSystem->emitter) != end(descendants)) {
 			results.push_back(particleSystem);
 		}
 	}
@@ -478,7 +477,7 @@ bool Babylon::Mesh::isInFrustum(Plane::Array frustumPlanes) {
 		this->delayLoadState = DELAYLOADSTATE_LOADING;
 		auto that = this;
 
-		this->_scene->_addPendingData(this);
+		this->_scene->_addPendingData(enable_shared_from_this<Mesh>::shared_from_this());
 
 		// TODO: finish it when finish LoadFile
 		////Tools::LoadFile(this->delayLoadingFile, [] (data) {
@@ -526,7 +525,7 @@ void Babylon::Mesh::setLocalTranslation(Vector3::Ptr vector3) {
 	////console.warn("deprecated: use setPositionWithLocalVector instead");
 	this->computeWorldMatrix();
 	auto worldMatrix = this->_worldMatrix->clone();
-	worldMatrix.setTranslation(Vector3::Zero());
+	worldMatrix->setTranslation(Vector3::Zero());
 
 	this->position = Vector3::TransformCoordinates(vector3, worldMatrix);
 };
@@ -551,7 +550,7 @@ void Babylon::Mesh::setPositionWithLocalVector(Vector3::Ptr vector3) {
 Vector3::Ptr Babylon::Mesh::getPositionExpressedInLocalSpace() {
 	this->computeWorldMatrix();
 	auto invLocalWorldMatrix = this->_localWorld->clone();
-	invLocalWorldMatrix.invert();
+	invLocalWorldMatrix->invert();
 
 	return Vector3::TransformNormal(this->position, invLocalWorldMatrix);
 };
@@ -570,13 +569,13 @@ void Babylon::Mesh::bakeTransformIntoVertices(Matrix::Ptr transform) {
 
 	this->_resetPointsArrayCache();
 
-	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind].getData();
+	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind]->getData();
 	auto temp = Float32Array(data.size());
 	for (auto index = 0; index < data.size(); index += 3) {
 		Vector3::TransformCoordinates(Vector3::FromArray(data, index), transform)->toArray(temp, index);
 	}
 
-	this->setVerticesData(temp, VertexBufferKind_PositionKind, this->_vertexBuffers[VertexBufferKind_PositionKind].isUpdatable());
+	this->setVerticesData(temp, VertexBufferKind_PositionKind, this->_vertexBuffers[VertexBufferKind_PositionKind]->isUpdatable());
 
 	// Normals
 	if (!this->isVerticesDataPresent(VertexBufferKind_NormalKind)) {
@@ -588,7 +587,7 @@ void Babylon::Mesh::bakeTransformIntoVertices(Matrix::Ptr transform) {
 		Vector3::TransformNormal(Vector3::FromArray(data, index), transform)->toArray(temp, index);
 	}
 
-	this->setVerticesData(temp, VertexBufferKind_NormalKind, this->_vertexBuffers[VertexBufferKind_NormalKind].isUpdatable());
+	this->setVerticesData(temp, VertexBufferKind_NormalKind, this->_vertexBuffers[VertexBufferKind_NormalKind]->isUpdatable());
 };
 
 void Babylon::Mesh::lookAt(Vector3::Ptr targetPoint, float yawCor, float pitchCor, float rollCor) {
@@ -598,6 +597,7 @@ void Babylon::Mesh::lookAt(Vector3::Ptr targetPoint, float yawCor, float pitchCo
 	/// <param name="pitchCor" type="Number">optional pitch (x-axis) correction in radians</param>
 	/// <param name="rollCor" type="Number">optional roll (z-axis) correction in radians</param>
 	/// <returns>Mesh oriented towards targetMesh</returns>
+	auto PI = 4. * atan(1.);
 
 	auto dv = targetPoint->subtract(this->position);
 	auto yaw = -atan2(dv->z, dv->x) - PI / 2;
@@ -608,16 +608,16 @@ void Babylon::Mesh::lookAt(Vector3::Ptr targetPoint, float yawCor, float pitchCo
 
 // Cache
 void Babylon::Mesh::_resetPointsArrayCache() {
-	this->_positions.clear()
+	this->_positions.clear();
 };
 
 void Babylon::Mesh::_generatePointsArray() {
-	if (this->_positions)
+	if (this->_positions.size() == 0)
 		return;
 
 	this->_positions.clear();
 
-	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind].getData();
+	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind]->getData();
 	for (auto index = 0; index < data.size(); index += 3) {
 		this->_positions.push_back(Vector3::FromArray(data, index));
 	}
@@ -726,7 +726,7 @@ PickingInfo::Ptr Babylon::Mesh::intersects(Ray::Ptr ray, bool fastCheck) {
 		pickingInfo->hit = true;
 		pickingInfo->distance = Vector3::Distance(worldOrigin, pickedPoint);
 		pickingInfo->pickedPoint = pickedPoint;
-		pickingInfo->pickedMesh = this;
+		pickingInfo->pickedMesh = enable_shared_from_this<Mesh>::shared_from_this();
 		return pickingInfo;
 	}
 
@@ -739,12 +739,13 @@ Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotClone
 
 	// Buffers
 	result->_vertexBuffers = this->_vertexBuffers;
-	for (auto kind : result->_vertexBuffers) {
-		result->_vertexBuffers[kind].references++;
+	for (auto _vertexBuffer : result->_vertexBuffers) {
+		// TODO: do we need it?
+		////_vertexBuffer.second->references++;
 	}
 
 	result->_indexBuffer = this->_indexBuffer;
-	this->_indexBuffer.references++;
+	this->_indexBuffer->references++;
 
 	// Deep copy
 	// TODO: finish it
@@ -773,7 +774,7 @@ Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotClone
 
 	// Particles
 	for (auto system : this->_scene->particleSystems) {
-		if (system.emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+		if (system->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
 			system->clone(system->name, result);
 		}
 	}
@@ -786,7 +787,7 @@ Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotClone
 // Dispose
 void Babylon::Mesh::dispose(bool doNotRecurse) {
 	for (auto _vertexBuffer : this->_vertexBuffers) {
-		_vertexBuffer->dispose();
+		_vertexBuffer.second->dispose();
 	}
 	this->_vertexBuffers.clear();
 
@@ -808,8 +809,8 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 
 		// Particles
 		for (auto particleSystem : this->_scene->particleSystems) {
-			if (particleSystem.emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
-				particleSystem.dispose();
+			if (particleSystem->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+				particleSystem->dispose();
 			}
 		}
 
@@ -818,7 +819,7 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 		// Children
 		auto objects = this->_scene->meshes;
 		for (auto object : objects) {
-			if (object->parent == this) {
+			if (object->parent == enable_shared_from_this<Mesh>::shared_from_this()) {
 				object->dispose();
 			}
 		}
@@ -840,6 +841,7 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 };
 
 // Physics
+/*
 Babylon::Mesh::setPhysicsState(options) {
 	if (!this->_scene->_physicsEngine) {
 		return;
@@ -910,29 +912,27 @@ Babylon::Mesh::setPhysicsLinkWith(otherMesh, pivot1, pivot2) {
 
 	this->_scene->_physicsEngine._createLink(this, otherMesh, pivot1, pivot2);
 };
+*/
 
 // Statics
-BABYLON.Mesh.CreateBox(name, size, scene, updatable) {
+Mesh::Ptr Babylon::Mesh::CreateBox(string name, float size, Scene::Ptr scene, bool updatable) {
 	auto box = make_shared<Mesh>(name, scene);
 
-	auto normalsSource = [
-		make_shared<Vector3>(0, 0, 1),
-			make_shared<Vector3>(0, 0, -1),
-			make_shared<Vector3>(1, 0, 0),
-			make_shared<Vector3>(-1, 0, 0),
-			make_shared<Vector3>(0, 1, 0),
-			make_shared<Vector3>(0, -1, 0)
-	];
+	Vector3::Array normalsSource;
+	normalsSource.push_back(make_shared<Vector3>(0, 0, 1));
+	normalsSource.push_back(make_shared<Vector3>(0, 0, -1));
+	normalsSource.push_back(make_shared<Vector3>(1, 0, 0));
+	normalsSource.push_back(make_shared<Vector3>(-1, 0, 0));
+	normalsSource.push_back(make_shared<Vector3>(0, 1, 0));
+	normalsSource.push_back(make_shared<Vector3>(0, -1, 0));
 
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
+	Uint16Array indices;
+	Float32Array positions;
+	Float32Array normals;
+	Float32Array uvs;
 
 	// Create each face in turn.
-	for (auto index = 0; index < normalsSource.size(); index++) {
-		auto normal = normalsSource[index];
-
+	for (auto normal : normalsSource) {
 		// Get two vectors perpendicular to the face normal and to each other.
 		auto side1 = make_shared<Vector3>(normal->y, normal->z, normal->x);
 		auto side2 = Vector3::Cross(normal, side1);
@@ -948,36 +948,56 @@ BABYLON.Mesh.CreateBox(name, size, scene, updatable) {
 		indices.push_back(verticesLength + 3);
 
 		// Four vertices per face.
-		auto vertex = normal.subtract(side1).subtract(side2).scale(size / 2);
-		positions.push_back(vertex->x, vertex->y, vertex->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(1.0, 1.0);
+		auto vertex = normal->subtract(side1)->subtract(side2)->scale(size / 2.);
+		positions.push_back(vertex->x);
+		positions.push_back(vertex->y);
+		positions.push_back(vertex->z);
+		normals.push_back(normal->x);
+		normals.push_back(normal->y);
+		normals.push_back(normal->z);
+		uvs.push_back(1.0), 
+		uvs.push_back(1.0);
 
-		vertex = normal.subtract(side1).add(side2).scale(size / 2);
-		positions.push_back(vertex->x, vertex->y, vertex->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(0.0, 1.0);
+		vertex = normal->subtract(side1)->add(side2)->scale(size / 2.);
+		positions.push_back(vertex->x);
+		positions.push_back(vertex->y);
+		positions.push_back(vertex->z);
+		normals.push_back(normal->x);
+		normals.push_back(normal->y);
+		normals.push_back(normal->z);
+		uvs.push_back(0.0);
+		uvs.push_back(1.0);
 
-		vertex = normal.add(side1).add(side2).scale(size / 2);
-		positions.push_back(vertex->x, vertex->y, vertex->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(0.0, 0.0);
+		vertex = normal->add(side1)->add(side2)->scale(size / 2);
+		positions.push_back(vertex->x);
+		positions.push_back(vertex->y);
+		positions.push_back(vertex->z);
+		normals.push_back(normal->x);
+		normals.push_back(normal->y);
+		normals.push_back(normal->z);
+		uvs.push_back(0.0);
+		uvs.push_back(0.0);
 
-		vertex = normal.add(side1).subtract(side2).scale(size / 2);
-		positions.push_back(vertex->x, vertex->y, vertex->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(1.0, 0.0);
+		vertex = normal->add(side1)->subtract(side2)->scale(size / 2);
+		positions.push_back(vertex->x);
+		positions.push_back(vertex->y);
+		positions.push_back(vertex->z);
+		normals.push_back(normal->x);
+		normals.push_back(normal->y);
+		normals.push_back(normal->z);
+		uvs.push_back(1.0); 
+		uvs.push_back(0.0);
 	}
 
-	box.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	box.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	box.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	box.setIndices(indices);
+	box->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+	box->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+	box->setVerticesData(uvs, VertexBufferKind_UVKind, updatable);
+	box->setIndices(indices);
 
 	return box;
 };
 
-BABYLON.Mesh.CreateSphere(name, segments, diameter, scene, updatable) {
+Mesh::Ptr Babylon::Mesh::CreateSphere(string name, size_t segments, float diameter, Scene::Ptr scene, bool updatable) {
 	auto sphere = make_shared<Mesh>(name, scene);
 
 	auto radius = diameter / 2;
@@ -985,10 +1005,12 @@ BABYLON.Mesh.CreateSphere(name, segments, diameter, scene, updatable) {
 	auto totalZRotationSteps = 2 + segments;
 	auto totalYRotationSteps = 2 * totalZRotationSteps;
 
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
+	Uint16Array indices;
+	Float32Array positions;
+	Float32Array normals;
+	Float32Array uvs;
+
+	auto PI = 4. * atan(1.);
 
 	for (auto zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++) {
 		auto normalizedZ = zRotationStep / totalZRotationSteps;
@@ -1004,12 +1026,17 @@ BABYLON.Mesh.CreateSphere(name, segments, diameter, scene, updatable) {
 			auto afterRotZ = Vector3::TransformCoordinates(Vector3::Up(), rotationZ);
 			auto complete = Vector3::TransformCoordinates(afterRotZ, rotationY);
 
-			auto vertex = complete.scale(radius);
+			auto vertex = complete->scale(radius);
 			auto normal = Vector3::Normalize(vertex);
 
-			positions.push_back(vertex->x, vertex->y, vertex->z);
-			normals.push_back(normal->x, normal->y, normal->z);
-			uvs.push_back(normalizedZ, normalizedY);
+			positions.push_back(vertex->x);
+			positions.push_back(vertex->y);
+			positions.push_back(vertex->z);
+			normals.push_back(normal->x);
+			normals.push_back(normal->y);
+			normals.push_back(normal->z);
+			uvs.push_back(normalizedZ);
+			uvs.push_back(normalizedY);
 		}
 
 		if (zRotationStep > 0) {
@@ -1026,14 +1053,16 @@ BABYLON.Mesh.CreateSphere(name, segments, diameter, scene, updatable) {
 		}
 	}
 
-	sphere.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	sphere.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	sphere.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	sphere.setIndices(indices);
+	sphere->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+	sphere->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+	sphere->setVerticesData(uvs, VertexBufferKind_UVKind, updatable);
+	sphere->setIndices(indices);
 
 	return sphere;
 };
 
+// TODO: finish when have time
+/*
 // Cylinder and cone (Code inspired by SharpDX.org)
 BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellation, scene, updatable) {
 	auto radiusTop = diameterTop / 2;
@@ -1082,14 +1111,14 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 		auto textureScale = make_shared<Vector2>(-0.5, -0.5);
 
 		if (!isTop) {
-			normal = normal.scale(-1);
+			normal = normal->scale(-1);
 			textureScale->x = -textureScale->x;
 		}
 
 		// Create cap vertices.
 		for (auto i = 0; i < tessellation; i++) {
 			auto circleVector = getCircleVector(i);
-			auto position = circleVector.scale(radius).add(normal.scale(height));
+			auto position = circleVector->scale(radius).add(normal->scale(height));
 			auto textureCoordinate = make_shared<Vector2>(circleVector->x * textureScale->x + 0.5, circleVector->z * textureScale->y + 0.5);
 
 			positions.push_back(position->x, position->y, position->z);
@@ -1100,15 +1129,15 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 
 	height /= 2;
 
-	auto topOffset = make_shared<Vector3>(0, 1, 0).scale(height);
+	auto topOffset = make_shared<Vector3>(0, 1, 0)->scale(height);
 
 	auto stride = tessellation + 1;
 
 	// Create a ring of triangles around the outside of the cylinder->
 	for (auto i = 0; i <= tessellation; i++) {
 		auto normal = getCircleVector(i);
-		auto sideOffsetBottom = normal.scale(radiusBottom);
-		auto sideOffsetTop = normal.scale(radiusTop);
+		auto sideOffsetBottom = normal->scale(radiusBottom);
+		auto sideOffsetTop = normal->scale(radiusTop);
 		auto textureCoordinate = make_shared<Vector2>(i / tessellation, 0);
 
 		auto position = sideOffsetBottom.add(topOffset);
@@ -1116,7 +1145,7 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 		normals.push_back(normal->x, normal->y, normal->z);
 		uvs.push_back(textureCoordinate->x, textureCoordinate->y);
 
-		position = sideOffsetTop.subtract(topOffset);
+		position = sideOffsetTop->subtract(topOffset);
 		textureCoordinate->y += 1;
 		positions.push_back(position->x, position->y, position->z);
 		normals.push_back(normal->x, normal->y, normal->z);
@@ -1170,7 +1199,7 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 
 			// Create a vertex.
 			auto normal = make_shared<Vector3>(dx, dy, 0);
-			auto position = normal.scale(thickness / 2);
+			auto position = normal->scale(thickness / 2);
 			auto textureCoordinate = make_shared<Vector2>(u, v);
 
 			position = Vector3::TransformCoordinates(position, transform);
@@ -1387,8 +1416,8 @@ BABYLON.Mesh.ComputeNormal(positions, normals, indices) {
 		auto p2 = positionVectors[i2];
 		auto p3 = positionVectors[i3];
 
-		auto p1p2 = p1.subtract(p2);
-		auto p3p2 = p3.subtract(p2);
+		auto p1p2 = p1->subtract(p2);
+		auto p3p2 = p3->subtract(p2);
 
 		facesNormals[index] = Vector3::Normalize(Vector3::Cross(p1p2, p3p2));
 		facesOfVertices[i1].push_back(index);
@@ -1401,13 +1430,14 @@ BABYLON.Mesh.ComputeNormal(positions, normals, indices) {
 
 		auto normal = Vector3::Zero();
 		for (auto faceIndex = 0; faceIndex < faces.size(); faceIndex++) {
-			normal.addInPlace(facesNormals[faces[faceIndex]]);
+			normal->addInPlace(facesNormals[faces[faceIndex]]);
 		}
 
-		normal = Vector3::Normalize(normal.scale(1.0 / faces.size()));
+		normal = Vector3::Normalize(normal->scale(1.0 / faces.size()));
 
 		normals[index * 3] = normal->x;
 		normals[index * 3 + 1] = normal->y;
 		normals[index * 3 + 2] = normal->z;
 	}
 };
+*/

@@ -291,7 +291,7 @@ IGLBuffer::Ptr Babylon::Engine::createDynamicVertexBuffer(GLsizeiptr capacity) {
 	return vbo;
 };
 
-void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0) {
+void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length) {
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
 	if (length) {
 		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, Float32Array(vertices.begin(), vertices.begin() + length));
@@ -375,11 +375,11 @@ void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 };
 
 // Shaders
-Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines) {
 	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 }
 
-Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines) {
 	string name; 
 	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {
@@ -615,7 +615,7 @@ int Babylon::Engine::getExponantOfTwo(int value, int max) {
 	return count;
 };
 
-IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool invertY, IScene::Ptr scene) {
+IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool invertY, Scene::Ptr scene) {
 	auto texture = this->_gl->createTexture();
 	auto that = this;
 
@@ -823,7 +823,7 @@ IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height
 //auto extensions = ["_px->jpg", "_py->jpg", "_pz->jpg", "_nx->jpg", "_ny->jpg", "_nz->jpg"];
 vector<string> Babylon::Engine::extensions;
 
-void Babylon::Engine::cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, IScene::Ptr scene) {
+void Babylon::Engine::cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, Scene::Ptr scene) {
 	IImage::Ptr img;
 	auto onload = [&]() {
 		loadedImages.push_back(img);
@@ -890,7 +890,7 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	texture->isReady = true;
 }
 
-IGLTexture::Ptr Babylon::Engine::createCubeTexture(string rootUrl, IScene::Ptr scene) {
+IGLTexture::Ptr Babylon::Engine::createCubeTexture(string rootUrl, Scene::Ptr scene) {
 	auto gl = this->_gl;
 
 	auto texture = gl->createTexture();

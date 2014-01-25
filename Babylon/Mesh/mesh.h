@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
-#include "node.h"
 #include "igl.h"
-#include "iscene.h"
+#include "iengine.h"
+#include "node.h"
 #include "vector3.h"
 #include "matrix.h"
 #include "material.h"
@@ -35,7 +35,7 @@ namespace Babylon {
 	public:
 		string name;
 		string id;
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		size_t _totalVertices;
 		Matrix::Ptr _worldMatrix;
 
@@ -56,7 +56,7 @@ namespace Babylon {
 		// Animations
 		Int32Array animations;
 
-		Int32Array _positions;
+		Vector3::Array _positions;
 
 		bool _childrenFlag;
 		Matrix::Ptr _localScaling;
@@ -96,9 +96,9 @@ namespace Babylon {
 		IGLBuffer::Ptr _indexBuffer;
 
 	public: 
-		Mesh(string name, IScene::Ptr scene);	
+		Mesh(string name, ScenePtr scene);	
 
-		virtual IScene::Ptr getScene();
+		virtual ScenePtr getScene();
 		
 		virtual BoundingInfo::Ptr getBoundingInfo();
 		virtual Matrix::Ptr getWorldMatrix();
@@ -121,7 +121,7 @@ namespace Babylon {
 		virtual void _updateBoundingInfo();
 		virtual Matrix::Ptr computeWorldMatrix(bool force = false);
 		virtual SubMesh::Ptr _createGlobalSubMesh();
-		virtual bool subdivide(int count);
+		virtual void subdivide(int count);
 		virtual void setVerticesData(Float32Array data, VertexBufferKind kind, bool updatable);
 		virtual void updateVerticesData(VertexBufferKind kind, Float32Array data);
 		virtual void setIndices(Uint16Array indices);
@@ -151,8 +151,10 @@ namespace Babylon {
 		virtual bool intersectsMesh(Mesh::Ptr mesh, float precise);
 		virtual bool intersectsPoint(Vector3::Ptr point);
 		virtual PickingInfo::Ptr intersects(Ray::Ptr ray, bool fastCheck);
-		virtual Mesh::Ptr clone(string name, Node::Ptr newParent, bool doNotCloneChildren);
-		virtual void dispose(bool doNotRecurse);
+		virtual Mesh::Ptr clone(string name, Node::Ptr newParent, bool doNotCloneChildren = false);
+		virtual void dispose(bool doNotRecurse = false);
+		static Mesh::Ptr CreateBox(string name, float size, ScenePtr scene, bool updatable);
+		static Mesh::Ptr CreateSphere(string name, size_t segments, float diameter, ScenePtr scene, bool updatable);
 	};
 
 };

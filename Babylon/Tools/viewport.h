@@ -24,7 +24,7 @@ namespace Babylon {
 	public: 
 		Viewport(int x, int y, int width, int height);		
 
-		virtual Viewport::Ptr toGlobal(IEngine::Ptr engine);
+		virtual Viewport::Ptr toGlobal(EnginePtr engine);
 	};
 
 };

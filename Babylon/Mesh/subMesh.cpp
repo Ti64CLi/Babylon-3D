@@ -1,7 +1,9 @@
 #include "subMesh.h"
 #include <limits>
-#include "mesh.h"
+#include "engine.h"
 #include "tools.h"
+#include "mesh.h"
+#include "material.h"
 
 using namespace Babylon;
 
@@ -36,7 +38,7 @@ Material::Ptr Babylon::SubMesh::getMaterial() {
 	////}
 
 	if (!rootMaterial) {
-		return this->_mesh->_scene.defaultMaterial;
+		return this->_mesh->_scene->defaultMaterial;
 	}
 
 	return rootMaterial;
@@ -73,7 +75,7 @@ void Babylon::SubMesh::render() {
 	this->_mesh->render(shared_from_this());
 };
 
-IGLBuffer::Ptr Babylon::SubMesh::getLinesIndexBuffer(Uint16Array indices, IEngine::Ptr engine) {
+IGLBuffer::Ptr Babylon::SubMesh::getLinesIndexBuffer(Uint16Array indices, Engine::Ptr engine) {
 	if (!this->_linesIndexBuffer) {
 		Uint16Array linesIndices;
 
@@ -126,7 +128,7 @@ float Babylon::SubMesh::intersects(Ray::Ptr ray, Vector3::Array positions, Uint1
 
 // Clone    
 SubMesh::Ptr Babylon::SubMesh::clone(Mesh::Ptr newMesh) {
-	return make_shared<SubMesh>(this->materialIndex, this->verticesStart, this->verticesCount, this->indexStart, this->indexCount, newMesh);
+	return make_shared<SubMesh>(SubMesh(this->materialIndex, this->verticesStart, this->verticesCount, this->indexStart, this->indexCount, newMesh));
 };
 
 // Statics
@@ -134,7 +136,7 @@ SubMesh::Ptr Babylon::SubMesh::CreateFromIndices(int materialIndex, int startInd
 	auto minVertexIndex = numeric_limits<float>::max();
 	auto maxVertexIndex = -numeric_limits<float>::max();
 
-	auto indices = mesh.getIndices();
+	auto indices = mesh->getIndices();
 
 	for (auto index = startIndex; index < startIndex + indexCount; index++) {
 		auto vertexIndex = indices[index];
@@ -145,6 +147,6 @@ SubMesh::Ptr Babylon::SubMesh::CreateFromIndices(int materialIndex, int startInd
 			maxVertexIndex = vertexIndex;
 	}
 
-	return make_shared<SubMesh>(materialIndex, minVertexIndex, maxVertexIndex - minVertexIndex, startIndex, indexCount, mesh);
+	return make_shared<SubMesh>(SubMesh(materialIndex, minVertexIndex, maxVertexIndex - minVertexIndex, startIndex, indexCount, mesh));
 };
 

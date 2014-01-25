@@ -5,18 +5,19 @@
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 #include "node.h"
 #include "mesh.h"
-#include "shadowGenerator.h"
-#include "ilight.h"
 
 using namespace std;
 
 namespace Babylon {
 
+	class ShadowGenerator;
+	typedef shared_ptr<ShadowGenerator> ShadowGeneratorPtr;
+
 	// TODO: add animations
-	class Light : public Node, public ILight, public enable_shared_from_this<Light> {
+	class Light : public Node, public enable_shared_from_this<Light> {
 
 	public:
 
@@ -31,19 +32,19 @@ namespace Babylon {
 
 		string id;
 		string name;
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		Mesh::Array excludedMeshes;
 		vector<shared_ptr<void>> animations;
-		ShadowGenerator::Ptr _shadowGenerator;
+		ShadowGeneratorPtr _shadowGenerator;
 
 	private:
 		////void renderSubMesh(SubMesh::Ptr subMesh);
 
 	public: 
-		Light(string name, IScene::Ptr scene);
+		Light(string name, ScenePtr scene);
 
-		virtual IScene::Ptr getScene();
-		virtual ShadowGenerator::Ptr getShadowGenerator();
+		virtual ScenePtr getScene();
+		virtual ShadowGeneratorPtr getShadowGenerator();
 		// Methods
 		virtual void transferToEffect();
 		virtual Matrix::Ptr getWorldMatrix();

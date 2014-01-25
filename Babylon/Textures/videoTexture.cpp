@@ -1,8 +1,9 @@
 #include "videoTexture.h"
+#include "engine.h"
 
 using namespace Babylon;
 
-Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size, IScene::Ptr scene, bool generateMipMaps)
+Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps)
 	: Texture(nullptr, scene, false, false),
 	_autoLaunch(false)
 {

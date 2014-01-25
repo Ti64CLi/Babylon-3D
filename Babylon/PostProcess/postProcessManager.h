@@ -1,11 +1,11 @@
-#ifndef BABYLON_PostProcessManager_H
-#define BABYLON_PostProcessManager_H
+#ifndef BABYLON_POSTPROCESSMANAGER_H
+#define BABYLON_POSTPROCESSMANAGER_H
 
 #include <memory>
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 
 using namespace std;
 
@@ -19,12 +19,12 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	protected:
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 
 	public: 
-		PostProcessManager(IScene::Ptr scene);
+		PostProcessManager(ScenePtr scene);
 	};
 
 };
 
-#endif // BABYLON_PostProcessManager_H
+#endif // BABYLON_POSTPROCESSMANAGER_H

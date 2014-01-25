@@ -7,8 +7,9 @@
 #include <map>
 
 #include "igl.h"
-#include "iscene.h"
+#include "iengine.h"
 #include "tools_math.h"
+#include "texture.h"
 
 using namespace std;
 
@@ -25,11 +26,11 @@ namespace Babylon {
 
 	public:
 
-		IEngine::Ptr _engine;
+		EnginePtr _engine;
 		string name;
 		string defines;
 		vector<string> _uniformsNames;
-		vector<int> _samplers;
+		vector<string> _samplers;
 		bool _isReady;
 		string _compilationError;
 		vector<string> _attributesNames;
@@ -44,10 +45,10 @@ namespace Babylon {
 		static map<string, ShaderPtr> ShadersStore;
 
 	private:
-		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
+		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
 	public: 
-		Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
-		Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<int> samplers, IEngine::Ptr engine, string defines, string optionalDefines);		
+		Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
+		Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
 
 		// Properties
 		virtual bool isReady();
@@ -58,15 +59,17 @@ namespace Babylon {
 		virtual int getUniformIndex(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(int sample);
-		virtual vector<int>& getSamplers();
+		virtual vector<string>& getSamplers();
 		virtual string getCompilationError();
 		// Methods
 		virtual void _loadVertexShader(string vertex, CallbackFunc callback);
 		virtual void _loadFragmentShader(string fragment, CallbackFunc callback);
 		/*
 		virtual void _prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, useFallback);
-		virtual void _bindTexture(channel, texture);
-		virtual void setTexture(channel, texture);
+		*/
+		virtual void _bindTexture(string channel, IGLTexture::Ptr texture);
+		virtual void setTexture(string channel, Texture::Ptr texture);
+		/*
 		virtual void setTextureFromPostProcess(channel, postProcess);
 		*/
 		virtual void _cacheFloat2(string uniformName, float x, float y);

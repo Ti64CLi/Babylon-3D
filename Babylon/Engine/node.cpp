@@ -1,8 +1,9 @@
 #include "node.h"
+#include "scene.h"
 
 using namespace Babylon;
 
-Babylon::Node::Node(IScene::Ptr scene)
+Babylon::Node::Node(Scene::Ptr scene)
 {
 	this->_scene = scene;
 	// Cache

@@ -5,7 +5,7 @@
 #include <vector>
 #include <time.h>
 
-#include "iscene.h"
+#include "iengine.h"
 #include "texture.h"
 
 using namespace std;
@@ -24,7 +24,7 @@ namespace Babylon {
 		time_t _lastUpdate;
 
 	public: 
-		VideoTexture(string name, vector<string> urls, Size size, IScene::Ptr scene, bool generateMipMaps);		
+		VideoTexture(string name, vector<string> urls, Size size, ScenePtr scene, bool generateMipMaps);		
 
 		virtual bool _update();
 	};

@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 
 #include "bone.h"
 #include "animatable.h"
@@ -27,13 +27,13 @@ namespace Babylon {
 		Float32Array _transformMatrices;
 
 	public:
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		string id;
 		string name;
 		Bone::Array bones;
 
 	public: 
-		Skeleton(string name, string id, IScene::Ptr scene);
+		Skeleton(string name, string id, ScenePtr scene);
 
 		virtual Float32Array getTransformMatrices();
 		virtual void _markAsDirty();

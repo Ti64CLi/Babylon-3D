@@ -6,11 +6,13 @@
 #include <map>
 
 #include "vector3.h"
-#include "mesh.h"
 
 using namespace std;
 
 namespace Babylon {
+
+	class Mesh;
+	typedef shared_ptr<Mesh> MeshPtr;
 
 	class PickingInfo : public enable_shared_from_this<PickingInfo> {
 
@@ -22,7 +24,7 @@ namespace Babylon {
 		bool hit;
 		float distance;
 		Vector3::Ptr pickedPoint;
-		Mesh::Ptr pickedMesh;
+		MeshPtr pickedMesh;
 
 		PickingInfo();
 	};

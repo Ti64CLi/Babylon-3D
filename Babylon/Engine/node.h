@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include "iscene.h"
+#include "iengine.h"
 #include "matrix.h"
 #include "quaternion.h"
 
@@ -53,11 +53,11 @@ namespace Babylon {
 		bool _isDisposed;
 		Node::Ptr _cache_parent;
 		_Cache _cache;
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		Node::Ptr parent;
 
 	public: 
-		Node(IScene::Ptr scene);
+		Node(ScenePtr scene);
 
 		virtual void _initCache();
 		virtual void updateCache(bool force = false);

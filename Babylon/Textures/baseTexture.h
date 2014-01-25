@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "iscene.h"
+#include "iengine.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ namespace Babylon {
 
 	protected:
 		string url;
-		IScene::Ptr _scene;
+		ScenePtr _scene;
 		bool hasAlpha;
 		int level;
 		IGLTexture::Ptr _texture;
@@ -29,7 +29,7 @@ namespace Babylon {
 		DELAYLOADSTATE delayLoadState;
 
 	public: 
-		BaseTexture(string url, IScene::Ptr scene);		
+		BaseTexture(string url, ScenePtr scene);		
 
 		virtual IGLTexture::Ptr getInternalTexture();
 		virtual bool isReady();

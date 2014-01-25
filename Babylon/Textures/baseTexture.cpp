@@ -1,12 +1,13 @@
 #include "baseTexture.h"
 #include <string>
+#include "engine.h"
 
 using namespace Babylon;
 
-Babylon::BaseTexture::BaseTexture(string url, IScene::Ptr scene) 
+Babylon::BaseTexture::BaseTexture(string url, Scene::Ptr scene) 
 	: delayLoadState(DELAYLOADSTATE_NONE), hasAlpha(false), level(1), _texture(nullptr), onDispose(nullptr) {
 		this->_scene = scene;
-		this->_scene->getTextures().push_back(shared_from_this());
+		this->_scene->textures.push_back(shared_from_this());
 };
 
 IGLTexture::Ptr Babylon::BaseTexture::getInternalTexture () {
@@ -89,10 +90,10 @@ void Babylon::BaseTexture::releaseInternalTexture () {
 
 void Babylon::BaseTexture::dispose () {
 	// Remove from scene
-	auto it = find ( begin( this->_scene->getTextures() ), end( this->_scene->getTextures() ), shared_from_this());
+	auto it = find ( begin( this->_scene->textures ), end( this->_scene->textures ), shared_from_this());
 
-	if (it != end ( this->_scene->getTextures() )) {
-		this->_scene->getTextures().erase(it);
+	if (it != end ( this->_scene->textures )) {
+		this->_scene->textures.erase(it);
 	}
 
 	if (this->_texture == nullptr) {

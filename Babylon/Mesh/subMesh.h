@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "iengine.h"
 #include "boundingInfo.h"
 #include "matrix.h"
 #include "plane.h"
@@ -45,7 +46,7 @@ namespace Babylon {
 		virtual void updateBoundingInfo(Matrix::Ptr world, float scale);
 		virtual bool isInFrustum(Plane::Array frustumPlanes);
 		virtual void render();
-		virtual IGLBuffer::Ptr getLinesIndexBuffer(Uint16Array indices, IEngine::Ptr engine);
+		virtual IGLBuffer::Ptr getLinesIndexBuffer(Uint16Array indices, EnginePtr engine);
 		virtual bool canIntersects(Ray::Ptr ray);
 		virtual float intersects(Ray::Ptr ray, Vector3::Array positions, Uint16Array indices, bool fastCheck);
 		virtual SubMesh::Ptr clone(MeshPtr newMesh);

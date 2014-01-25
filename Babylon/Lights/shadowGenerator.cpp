@@ -1,6 +1,7 @@
 #include "shadowGenerator.h"
 #include <string>
 #include <numeric>
+#include "light.h"
 
 using namespace Babylon;
 
@@ -8,7 +9,7 @@ using namespace Babylon;
 bool Babylon::ShadowGenerator::useVarianceShadowMap = true;
 
 // TODO: finish it
-Babylon::ShadowGenerator::ShadowGenerator(int width, int height, ILight::Ptr light)
+Babylon::ShadowGenerator::ShadowGenerator(int width, int height, Light::Ptr light)
 {
 	/*
 	this->_light = light;
