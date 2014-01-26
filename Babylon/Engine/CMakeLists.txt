@@ -9,6 +9,7 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Engine 
 	${Babylon_SOURCE_DIR}/Babylon/Interfaces 
 	${Babylon_SOURCE_DIR}/Babylon/Layer
+	${Babylon_SOURCE_DIR}/Babylon/LensFlare
 	${Babylon_SOURCE_DIR}/Babylon/Lights 
 	${Babylon_SOURCE_DIR}/Babylon/Materials 
 	${Babylon_SOURCE_DIR}/Babylon/Mesh 
@@ -16,6 +17,7 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/PhysicsEngine 
 	${Babylon_SOURCE_DIR}/Babylon/PostProcess 
 	${Babylon_SOURCE_DIR}/Babylon/Rendering 
+	${Babylon_SOURCE_DIR}/Babylon/Sprites
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
@@ -35,7 +37,9 @@ link_directories (
 	${Babylon_BINARY_DIR}/Babylon/PostProcess 
 	${Babylon_BINARY_DIR}/Babylon/Layer 
 	${Babylon_BINARY_DIR}/Babylon/Particles 
-	${Babylon_BINARY_DIR}/Babylon/PhysicsEngine) 
+	${Babylon_BINARY_DIR}/Babylon/PhysicsEngine
+	${Babylon_BINARY_DIR}/Babylon/LensFlare
+	${Babylon_BINARY_DIR}/Babylon/Sprites) 
 
 add_library (Engine node.cpp engine.cpp scene.cpp)
 

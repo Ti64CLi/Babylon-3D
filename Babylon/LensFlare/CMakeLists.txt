@@ -21,4 +21,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (Mesh mesh.cpp subMesh.cpp vertexbuffer.cpp)
+add_library (LensFlare lensFlare.cpp lensFlareSystem.cpp)
