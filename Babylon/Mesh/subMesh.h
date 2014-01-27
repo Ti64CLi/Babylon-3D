@@ -37,6 +37,7 @@ namespace Babylon {
 		size_t indexCount;
 
 		BoundingInfo::Ptr _boundingInfo;
+		float _distanceToCamera;
 
 	public: 
 		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, MeshPtr mesh);		
