@@ -7,6 +7,7 @@
 
 #include "iengine.h"
 #include "node.h"
+#include "postProcess.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ namespace Babylon {
 		// Animations
 		vector<shared_ptr<void>> animations;
 		// Postprocesses
-		vector<shared_ptr<void>> postProcesses;
+		PostProcess::Array postProcesses;
 
 		// Viewport
 		Viewport::Ptr viewport;

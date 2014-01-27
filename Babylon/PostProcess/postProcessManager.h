@@ -18,11 +18,21 @@ namespace Babylon {
 		typedef shared_ptr<PostProcessManager> Ptr;
 		typedef vector<Ptr> Array;
 
+		IGLBuffer::Ptr _vertexBuffer;
+		Int32Array _vertexDeclaration;
+		size_t _vertexStrideSize;
+		IGLBuffer::Ptr _indexBuffer;
+
 	protected:
 		ScenePtr _scene;
 
 	public: 
 		PostProcessManager(ScenePtr scene);
+
+		// Methods
+		virtual void _prepareFrame();
+		virtual void _finalizeFrame();
+		virtual void dispose();
 	};
 
 };

@@ -21,6 +21,8 @@
 #include "particleSystem.h"
 #include "octree.h"
 #include "layer.h"
+#include "lensFlareSystem.h"
+#include "spriteManager.h"
 
 using namespace std;
 
@@ -83,10 +85,10 @@ namespace Babylon {
 		BaseTexture::Array textures;
 		bool particlesEnabled;
 		ParticleSystem::Array particleSystems;
-		vector<shared_ptr<void>> spriteManagers;
+		SpriteManager::Array spriteManagers;
 		Layer::Array layers;
 		Skeleton::Array skeletons;
-		vector<shared_ptr<void>> lensFlareSystems;
+		LensFlareSystem::Array lensFlareSystems;
 		bool collisionsEnabled;
 		Vector3::Ptr gravity;
 		vector<shared_ptr<void>> _activeAnimatables;

@@ -21,4 +21,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (PostProcess postProcessManager.cpp)
+add_library (PostProcess postProcess.cpp postProcessManager.cpp)
