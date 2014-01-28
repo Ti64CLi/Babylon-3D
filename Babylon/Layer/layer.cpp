@@ -90,7 +90,7 @@ void Babylon::Layer::render() {
 	engine->setAlphaMode(ALPHA_DISABLE);
 };
 
-void Babylon::Layer::dispose() {
+void Babylon::Layer::dispose(bool doNotRecurse) {
 	if (this->_vertexBuffer) {
 		this->_scene->getEngine()->_releaseBuffer(this->_vertexBuffer);
 		this->_vertexBuffer = nullptr;

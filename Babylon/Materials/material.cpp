@@ -56,7 +56,7 @@ void Babylon::Material::unbind() {
 
 void Babylon::Material::baseDispose() {
 	// Remove from scene
-	auto it = find (begin(this->_scene->materials), end(this->_scene->materials), this);
+	auto it = find (begin(this->_scene->materials), end(this->_scene->materials), shared_from_this());
 	if (it != end(this->_scene->materials))
 	{
 		this->_scene->materials.erase(it);
@@ -68,7 +68,7 @@ void Babylon::Material::baseDispose() {
 	}
 };
 
-void Babylon::Material::dispose() {
+void Babylon::Material::dispose(bool doNotRecurse) {
 	this->baseDispose();
 };
 

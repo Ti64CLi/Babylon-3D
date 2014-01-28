@@ -2,7 +2,7 @@
 
 using namespace Babylon;
 
-Babylon::PhysicsEngine::PhysicsEngine() 
+Babylon::PhysicsEngine::PhysicsEngine(float gravity, int iterations) 
 {
 }
 
@@ -18,7 +18,7 @@ void Babylon::PhysicsEngine::disablePhysicsEngine()
 {
 }
 
-void Babylon::PhysicsEngine::dispose()
+void Babylon::PhysicsEngine::dispose(bool doNotRecurse)
 {
 }
 

@@ -20,7 +20,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Mesh: public Node, public enable_shared_from_this<Mesh> {
+	class Mesh: public Node, public IDisposable, public enable_shared_from_this<Mesh> {
 
 	public:
 		typedef shared_ptr<Mesh> Ptr;
@@ -101,6 +101,7 @@ namespace Babylon {
 		virtual ScenePtr getScene();
 		
 		virtual BoundingInfo::Ptr getBoundingInfo();
+		virtual bool hasWorldMatrix();
 		virtual Matrix::Ptr getWorldMatrix();
 		virtual Vector3::Ptr getAbsolutePosition();
 		virtual int getTotalVertices();

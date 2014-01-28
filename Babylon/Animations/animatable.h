@@ -21,12 +21,9 @@ namespace Babylon {
 
 		Animation::Array animations;
 
-		virtual void markAsDirty(string property) = 0;
-
-		virtual AnimationValue getValue(string key) = 0;
-
+		virtual void markAsDirty(string property = "") = 0;
 		// TODO: if key has . inside send the value to nested object
-		virtual void setValue(string key, AnimationValue value) = 0;
+		virtual AnimationValue operator[](string key) = 0;
 	};
 
 	class _Animatable : public enable_shared_from_this<_Animatable> {

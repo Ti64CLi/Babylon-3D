@@ -10,7 +10,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class BaseTexture: public enable_shared_from_this<BaseTexture> {
+	class BaseTexture: public IDisposable, public enable_shared_from_this<BaseTexture> {
 
 	public:
 		typedef shared_ptr<BaseTexture> Ptr;
@@ -39,7 +39,7 @@ namespace Babylon {
 		virtual IGLTexture::Ptr _getFromCache(string url, bool noMipmap);
 		virtual void delayLoad();
 		virtual void releaseInternalTexture();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

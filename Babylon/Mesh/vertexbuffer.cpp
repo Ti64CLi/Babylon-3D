@@ -68,6 +68,6 @@ void Babylon::VertexBuffer::update(Float32Array data) {
 	}
 };
 
-void Babylon::VertexBuffer::dispose() {
+void Babylon::VertexBuffer::dispose(bool doNotRecurse) {
 	this->_engine->_releaseBuffer(this->_buffer);
 }; 

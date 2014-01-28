@@ -61,7 +61,7 @@ namespace Babylon {
 
 
 	public: 
-		Texture(string url, ScenePtr scene, bool noMipmap, bool invertY);		
+		Texture(string url, ScenePtr scene, bool noMipmap = false, bool invertY = false);		
 		
 		// Methods    
 		virtual void delayLoad ();

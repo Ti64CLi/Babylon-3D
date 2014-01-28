@@ -15,7 +15,7 @@ Babylon::LensFlare::LensFlare(float size, Vector3::Ptr position, Color3::Ptr col
 }
 
 // Methods
-void Babylon::LensFlare::dispose() {
+void Babylon::LensFlare::dispose(bool doNotRecurse) {
 	if (this->texture) {
 		this->texture->dispose();
 	}

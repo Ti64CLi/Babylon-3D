@@ -19,7 +19,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Engine: public enable_shared_from_this<Engine> {
+	class Engine : public IDisposable, public enable_shared_from_this<Engine> {
 
 	public:
 		typedef shared_ptr<Engine> Ptr;
@@ -127,7 +127,7 @@ namespace Babylon {
 		virtual IGLTexture::Ptr createDynamicTexture(int width, int height, bool generateMipMaps);
 		virtual void updateDynamicTexture(IGLTexture::Ptr texture, ICanvas::Ptr canvas, bool invertY);
 		virtual void updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr video);
-		virtual IGLTexture::Ptr createRenderTargetTexture(int width, int height, bool generateMipMaps = false, bool generateDepthBuffer = true, SAMPLINGMODES samplingMode = TRILINEAR_SAMPLINGMODE);
+		virtual IGLTexture::Ptr createRenderTargetTexture(Size size, bool generateMipMaps = false, bool generateDepthBuffer = true, SAMPLINGMODES samplingMode = TRILINEAR_SAMPLINGMODE);
 		virtual void cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, ScenePtr scene);
 		virtual void onFinish(IImage::Array imgs);
 		virtual IGLTexture::Ptr createCubeTexture(string rootUrl, ScenePtr scene);
@@ -140,7 +140,7 @@ namespace Babylon {
 		virtual void setTexture(int channel, Texture::Ptr texture);
 		virtual void _setAnisotropicLevel(GLenum key, Texture::Ptr texture);
 		// Dispose
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 		static bool isSupported();
 	};
 

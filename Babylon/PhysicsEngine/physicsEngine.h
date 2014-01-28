@@ -12,7 +12,7 @@ using namespace std;
 namespace Babylon {
 
 	// TODO: Add your's implementation
-	class PhysicsEngine : public enable_shared_from_this<PhysicsEngine> {
+	class PhysicsEngine : public IDisposable, public enable_shared_from_this<PhysicsEngine> {
 	
 	public:
 		typedef shared_ptr<PhysicsEngine> Ptr;
@@ -21,7 +21,7 @@ namespace Babylon {
 	private: 
 
 	public: 
-		PhysicsEngine();
+		PhysicsEngine(float gravity, int iterations);
 
 		virtual void _runOneStep(float delta);
 
@@ -29,7 +29,7 @@ namespace Babylon {
 
 		virtual void disablePhysicsEngine();
 
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 
 		static bool IsSupported();
 	};

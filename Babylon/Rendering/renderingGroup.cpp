@@ -1,10 +1,10 @@
-#include "renderingGroups.h"
+#include "renderingGroup.h"
 #include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;
 
-Babylon::RenderingGroups::RenderingGroups(int index, Scene::Ptr scene)
+Babylon::RenderingGroup::RenderingGroup(int index, Scene::Ptr scene)
 {
 	this->index = index;
 	this->_scene = scene;
@@ -15,7 +15,7 @@ Babylon::RenderingGroups::RenderingGroups(int index, Scene::Ptr scene)
 }
 
 // Methods
-bool Babylon::RenderingGroups::render (CustomRenderFunctionFunc customRenderFunction, BeforeTransparentsFunc beforeTransparents) {
+bool Babylon::RenderingGroup::render (CustomRenderFunctionFunc customRenderFunction, BeforeTransparentsFunc beforeTransparents) {
 	if (customRenderFunction) {
 		customRenderFunction(this->_opaqueSubMeshes, this->_alphaTestSubMeshes, this->_transparentSubMeshes, beforeTransparents);
 		return true;
@@ -78,13 +78,13 @@ bool Babylon::RenderingGroups::render (CustomRenderFunctionFunc customRenderFunc
 	return true;
 };
 
-void Babylon::RenderingGroups::prepare () {
+void Babylon::RenderingGroup::prepare () {
 	this->_opaqueSubMeshes.clear();
 	this->_transparentSubMeshes.clear();
 	this->_alphaTestSubMeshes.clear();
 };
 
-void Babylon::RenderingGroups::dispatch (SubMesh::Ptr subMesh) {
+void Babylon::RenderingGroup::dispatch (SubMesh::Ptr subMesh) {
 	auto material = subMesh->getMaterial();
 	auto mesh = subMesh->getMesh();
 

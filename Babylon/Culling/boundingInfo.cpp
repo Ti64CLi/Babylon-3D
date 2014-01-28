@@ -3,10 +3,10 @@
 
 using namespace Babylon;
 
-Babylon::BoundingInfo::BoundingInfo(BoundingBox::Ptr boundingBox, BoundingSphere::Ptr boundingSphere) 
+Babylon::BoundingInfo::BoundingInfo(Vector3::Ptr minimum, Vector3::Ptr maximum) 
 {
-	this->boundingBox = boundingBox;
-	this->boundingSphere = boundingSphere;
+	this->boundingBox = make_shared<BoundingBox>(minimum, maximum);
+	this->boundingSphere = make_shared<BoundingSphere>(minimum, maximum);
 }
 
 // Methods

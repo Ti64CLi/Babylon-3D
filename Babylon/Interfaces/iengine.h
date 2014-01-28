@@ -144,7 +144,7 @@ namespace Babylon {
 		typedef shared_ptr<IDisposable> Ptr;
 		typedef vector<Ptr> Array;
 
-		virtual void dispose() = 0;
+		virtual void dispose(bool doNotRecurse = false) = 0;
 	};
 
 	class IRenderable {

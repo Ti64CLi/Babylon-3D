@@ -15,7 +15,7 @@ namespace Babylon {
 	class Camera;
 	typedef shared_ptr<Camera> CameraPtr;
 
-	class PostProcess : public enable_shared_from_this<PostProcess> {
+	class PostProcess : public IDisposable, public enable_shared_from_this<PostProcess> {
 
 	public:
 
@@ -55,7 +55,7 @@ namespace Babylon {
 		// Methods
 		virtual void activate();
 		virtual Effect::Ptr apply();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

@@ -318,7 +318,7 @@ void Babylon::ParticleSystem::animate() {
 };
 
 // TODO: find out where clipPlane is coming from. seems it is static somewhere
-int Babylon::ParticleSystem::render(Plane::Ptr clipPlane) {
+int Babylon::ParticleSystem::render() {
 	auto effect = this->_getEffect();
 
 	// Check
@@ -336,6 +336,8 @@ int Babylon::ParticleSystem::render(Plane::Ptr clipPlane) {
 	effect->setMatrix("projection", this->_scene->getProjectionMatrix());
 	effect->setFloat4("textureMask", this->textureMask->r, this->textureMask->g, this->textureMask->b, this->textureMask->a);
 
+	// TODO: find out where clipPlane coming from 
+	Plane::Ptr clipPlane = nullptr;
 	if (clipPlane) {
 		auto  invView = viewMatrix->clone();
 		invView->invert();
@@ -358,7 +360,7 @@ int Babylon::ParticleSystem::render(Plane::Ptr clipPlane) {
 	return this->particles.size();
 };
 
-void Babylon::ParticleSystem::dispose() {
+void Babylon::ParticleSystem::dispose(bool doNotRecurse) {
 	if (this->_vertexBuffer) {
 		this->_scene->getEngine()->_releaseBuffer(this->_vertexBuffer);
 		this->_vertexBuffer = nullptr;

@@ -71,7 +71,7 @@ void Babylon::Sprite::_animate(int deltaTime) {
 	}
 };
 
-void Babylon::Sprite::dispose() {
+void Babylon::Sprite::dispose(bool doNotRecurse) {
 	std::remove_if (
 		begin(this->_manager->sprites), 
 		end(this->_manager->sprites

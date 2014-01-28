@@ -17,7 +17,7 @@ namespace Babylon {
 	typedef shared_ptr<ShadowGenerator> ShadowGeneratorPtr;
 
 	// TODO: add animations
-	class Light : public Node, public enable_shared_from_this<Light> {
+	class Light : public Node, public IDisposable, public enable_shared_from_this<Light> {
 
 	public:
 
@@ -37,8 +37,13 @@ namespace Babylon {
 		vector<shared_ptr<void>> animations;
 		ShadowGeneratorPtr _shadowGenerator;
 
+		// base properties for
+		Vector3::Ptr position;
+		Vector3::Ptr direction;
+		Vector3::Ptr _transformedPosition;
+
 	private:
-		////void renderSubMesh(SubMesh::Ptr subMesh);
+		void renderSubMesh(SubMesh::Ptr subMesh);
 
 	public: 
 		Light(string name, ScenePtr scene);
@@ -48,10 +53,11 @@ namespace Babylon {
 		// Methods
 		virtual void transferToEffect();
 		virtual Matrix::Ptr getWorldMatrix();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 
 		// for Lights
-		virtual Matrix::Ptr _getWorldMatrix() = 0;
+		virtual Matrix::Ptr _getWorldMatrix();
+		virtual bool _computeTransformedPosition();
 	};
 
 };

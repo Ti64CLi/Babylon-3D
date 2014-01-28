@@ -8,7 +8,7 @@ Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size,
 	_autoLaunch(false)
 {
 	this->_scene = scene;
-	////this->_scene->getTextures().push_back(enable_shared_from_this<VideoTexture>::shared_from_this());
+	this->_scene->textures.push_back(enable_shared_from_this<VideoTexture>::shared_from_this());
 
 	this->name = name;
 

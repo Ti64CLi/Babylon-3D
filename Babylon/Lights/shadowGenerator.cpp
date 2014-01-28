@@ -1,6 +1,7 @@
 #include "shadowGenerator.h"
 #include <string>
 #include <numeric>
+#include "engine.h"
 #include "light.h"
 
 using namespace Babylon;
@@ -9,17 +10,15 @@ using namespace Babylon;
 bool Babylon::ShadowGenerator::useVarianceShadowMap = true;
 
 // TODO: finish it
-Babylon::ShadowGenerator::ShadowGenerator(int width, int height, Light::Ptr light)
+Babylon::ShadowGenerator::ShadowGenerator(Size size, Light::Ptr light)
 {
-	/*
 	this->_light = light;
 	this->_scene = light->getScene();
 
-	// TODO: resolve the issue of cercular reference
-	////light->_shadowGenerator = this;
+	light->_shadowGenerator = shared_from_this();
 
 	// Render target
-	this->_shadowMap = make_shared<RenderTargetTexture>(light->name + "_shadowMap", width, height, this->_scene, false);
+	this->_shadowMap = make_shared<RenderTargetTexture>(light->name + "_shadowMap", size, this->_scene, false);
 	this->_shadowMap->wrapU = CLAMP_ADDRESSMODE;
 	this->_shadowMap->wrapV = CLAMP_ADDRESSMODE;
 	this->_shadowMap->renderParticles = false;
@@ -27,13 +26,13 @@ Babylon::ShadowGenerator::ShadowGenerator(int width, int height, Light::Ptr ligh
 	// Custom render function
 	auto that = this;
 
-	this->_shadowMap->customRenderFunction = [](SubMesh::Array& opaqueSubMeshes, SubMesh::Array& alphaTestSubMeshes) {
-		for (auto index = 0; index < opaqueSubMeshes.length; index++) {
-			renderSubMesh(opaqueSubMeshes.data[index]);
+	this->_shadowMap->customRenderFunction = [&that](SubMesh::Array& opaqueSubMeshes, SubMesh::Array& alphaTestSubMeshes, SubMesh::Array& transparentSubMeshes, BeforeTransparentsFunc beforeTransparents) {
+		for (auto opaqueSubMesh : opaqueSubMeshes) {
+			that->renderSubMesh(opaqueSubMesh);
 		}
 
-		for (auto index = 0; index < alphaTestSubMeshes.length; index++) {
-			renderSubMesh(alphaTestSubMeshes.data[index]);
+		for (auto alphaTestSubMesh : alphaTestSubMeshes) {
+			that->renderSubMesh(alphaTestSubMesh);
 		}
 	};
 
@@ -42,27 +41,26 @@ Babylon::ShadowGenerator::ShadowGenerator(int width, int height, Light::Ptr ligh
 	this->_projectionMatrix = Matrix::Zero();
 	this->_transformMatrix = Matrix::Zero();
 	this->_worldViewProjection = Matrix::Zero();
-	*/
 };
 
-/*
 void Babylon::ShadowGenerator::renderSubMesh(SubMesh::Ptr subMesh) {
+	auto that = this;
+
 	auto mesh = subMesh->getMesh();
 	auto world = mesh->getWorldMatrix();
 	auto engine = that->_scene->getEngine();
 
-	auto that = this;
 	if (that->isReady(mesh)) {
 		engine->enableEffect(that->_effect);
 
 		// Bones
-		if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBuffer::MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBuffer::MatricesWeightsKind)) {
+		if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
 			that->_effect->setMatrix("world", world);
 			that->_effect->setMatrix("viewProjection", that->getTransformMatrix());
 
 			that->_effect->setMatrices("mBones", mesh->skeleton->getTransformMatrices());
 		} else {
-			world.multiplyToRef(that->getTransformMatrix(), that->_worldViewProjection);
+			world->multiplyToRef(that->getTransformMatrix(), that->_worldViewProjection);
 			that->_effect->setMatrix("worldViewProjection", that->_worldViewProjection);
 		}
 
@@ -81,7 +79,7 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 
 	vector<string> attribs;
 	attribs.push_back("position");
-	if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBuffer_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBuffer_MatricesWeightsKind)) {
+	if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
 		attribs.push_back("matricesIndices");
 		attribs.push_back("matricesWeights");
 		defines.push_back("#define BONES");
@@ -97,7 +95,7 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 	uniformNames.push_back("viewProjection");
 	uniformNames.push_back("worldViewProjection");
 
-	vector<int> samples; 
+	vector<string> samples; 
 
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
@@ -106,7 +104,7 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 				attribs,
 				uniformNames,
 				samples, 
-				join);
+				join, "");
 	}
 
 	return this->_effect->isReady();
@@ -116,7 +114,7 @@ RenderTargetTexture::Ptr Babylon::ShadowGenerator::getShadowMap() {
 	return this->_shadowMap;
 };
 
-ILight::Ptr Babylon::ShadowGenerator::getLight() {
+Light::Ptr Babylon::ShadowGenerator::getLight() {
 	return this->_light;
 };
 
@@ -146,7 +144,6 @@ Matrix::Ptr Babylon::ShadowGenerator::getTransformMatrix() {
 	return this->_transformMatrix;
 };
 
-void Babylon::ShadowGenerator::dispose() {
+void Babylon::ShadowGenerator::dispose(bool doNotRecurse) {
 	this->_shadowMap->dispose();
 };
-*/

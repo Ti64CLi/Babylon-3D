@@ -28,7 +28,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Scene: public enable_shared_from_this<Scene> {
+	class Scene : public IDisposable, public enable_shared_from_this<Scene> {
 
 	public:
 
@@ -74,7 +74,7 @@ namespace Babylon {
 		Mesh::Array _activeMeshes;
 		Material::Array _processedMaterials;
 		IRenderable::Array _renderTargets;
-		vector<shared_ptr<void>> _activeParticleSystems;
+		ParticleSystem::Array _activeParticleSystems;
 		Skeleton::Array _activeSkeletons;
 		Octree::Ptr _selectionOctree;
 		RenderingManager::Ptr _renderingManager;
@@ -162,7 +162,7 @@ namespace Babylon {
 		virtual void _evaluateActiveMeshes();
 		virtual void _renderForCamera(Camera::Ptr camera);
 		virtual void render();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 		// Collisions
 		////virtual void _getNewPosition(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);
 		////virtual void _collideWithWorld(Vector3::Ptr position, velocity, Collider::Ptr collider, int maximumRetry, Vector3::Ptr finalPosition);

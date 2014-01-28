@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include <algorithm>
 #include "engine.h"
 #include "camera.h"
 #include "tools.h"
@@ -79,6 +80,10 @@ Scene::Ptr Babylon::Mesh::getScene() {
 	return this->_scene;
 };
 
+bool Babylon::Mesh::hasWorldMatrix() {
+	return true;
+};
+
 Matrix::Ptr Babylon::Mesh::getWorldMatrix() {
 	if (this->_currentRenderId != this->_scene->getRenderId()) {
 		this->computeWorldMatrix();
@@ -100,7 +105,9 @@ Float32Array& Babylon::Mesh::getVerticesData(VertexBufferKind kind) {
 
 bool Babylon::Mesh::isVerticesDataPresent(VertexBufferKind kind) {
 	if (this->_delayInfo.size() > 0) {
-		return find(begin(this->_delayInfo), end(this->_delayInfo), kind) != end(this->_delayInfo);
+		return find_if(begin(this->_delayInfo), end(this->_delayInfo), [=](VertexBuffer::Ptr& item) {
+			return item->_kind == kind;
+		}) != end(this->_delayInfo);
 	}
 
 	return this->_vertexBuffers[kind] != nullptr;
@@ -491,19 +498,17 @@ bool Babylon::Mesh::isInFrustum(Plane::Array frustumPlanes) {
 };
 
 void Babylon::Mesh::setMaterialByID(string id) {
-	auto materials = this->_scene->materials;
-	for (auto _material : materials) {
+	for (auto _material : this->_scene->materials) {
 		if (_material->id == id) {
-			this->material = _material;
+			this->material = const_pointer_cast<Material>(_material);
 			return;
 		}
 	}
 
 	// Multi
-	auto multiMaterials = this->_scene->multiMaterials;
-	for (auto multiMaterial : multiMaterials) {
+	for (auto multiMaterial : this->_scene->multiMaterials) {
 		if (multiMaterial->id == id) {
-			this->material = multiMaterial;
+			this->material = dynamic_pointer_cast<Material>(multiMaterial);
 			return;
 		}
 	}

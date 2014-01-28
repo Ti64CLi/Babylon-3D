@@ -26,7 +26,7 @@ namespace Babylon {
 		BoundingSphere::Ptr boundingSphere;
 
 	public: 
-		BoundingInfo(BoundingBox::Ptr boundingBox, BoundingSphere::Ptr boundingSphere);
+		BoundingInfo(Vector3::Ptr minimum, Vector3::Ptr maximum);
 
 		// Methods
 		virtual void _update(Matrix::Ptr world, float scale);

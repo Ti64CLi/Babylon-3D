@@ -4,12 +4,8 @@
 
 using namespace Babylon;
 
-Babylon::MultiMaterial::MultiMaterial(string name, Scene::Ptr scene) {
-	this->name = name;
-	this->id = name;
-
-	this->_scene = scene;
-	scene->multiMaterials.push_back(shared_from_this());
+Babylon::MultiMaterial::MultiMaterial(string name, Scene::Ptr scene) : Material(name, scene) {
+	scene->multiMaterials.push_back(enable_shared_from_this<MultiMaterial>::shared_from_this());
 	subMaterials.clear();
 };
 

@@ -1,6 +1,7 @@
 #include "scene.h"
 #include <string>
 #include <limits>
+#include <algorithm>
 #include "engine.h"
 #include "tools.h"
 #include "frustum.h"
@@ -471,8 +472,12 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 					this->_processedMaterials.push_back(material);
 
 					// concat
-					this->_renderTargets.insert(end ( this->_renderTargets ), begin ( material->getRenderTargetTextures() ), end (material->getRenderTargetTextures()) );
-				}
+					////this->_renderTargets.insert(end(this->_renderTargets), begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()));
+					auto that = this;
+					for_each(begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()), [&that](const Texture::Ptr& texture) {
+						that->_renderTargets.push_back(dynamic_pointer_cast<IRenderable>(texture));
+					});
+				}                                 
 			}
 
 			// Dispatch
@@ -655,7 +660,8 @@ void Babylon::Scene::_renderForCamera(Camera::Ptr camera) {
 	}
 
 	// Render
-	this->_renderingManager->render(nullptr, nullptr, true, true);
+	Mesh::Array dummy;
+	this->_renderingManager->render(nullptr, dummy, true, true);
 
 	// Lens flares
 	for (auto lensFlareSystem : this->lensFlareSystems) {
@@ -760,7 +766,7 @@ void Babylon::Scene::render() {
 	this->_lastFrameDuration = now - startDate;
 };
 
-void Babylon::Scene::dispose() {
+void Babylon::Scene::dispose(bool doNotRecurse) {
 	// TODO: is it used?
 	////this->beforeRender = nullptr;
 	////this->afterRender = nullptr;

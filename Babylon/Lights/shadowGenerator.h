@@ -1,5 +1,5 @@
-#ifndef BABYLON_ShadowGenerator_H
-#define BABYLON_ShadowGenerator_H
+#ifndef BABYLON_SHADOWGENERATOR_H
+#define BABYLON_SHADOWGENERATOR_H
 
 #include <memory>
 #include <vector>
@@ -10,6 +10,7 @@
 #include "matrix.h"
 #include "mesh.h"
 #include "vertexBuffer.h"
+#include "renderTargetTexture.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ namespace Babylon {
 	typedef shared_ptr<Light> LightPtr;
 
 	// TODO: add animations
-	class ShadowGenerator : public enable_shared_from_this<ShadowGenerator> {
+	class ShadowGenerator : public IDisposable, public enable_shared_from_this<ShadowGenerator> {
 
 	public:
 
@@ -39,18 +40,24 @@ namespace Babylon {
 		Vector3::Ptr _cachedDirection;
 		string _cachedDefines;
 
+		RenderTargetTexture::Ptr _shadowMap;
+		Effect::Ptr _effect;
+
 	public: 
 		static bool useVarianceShadowMap;
 
 	public: 
-		ShadowGenerator(int width, int height, LightPtr light);
+		ShadowGenerator(Size size, LightPtr light);
 		virtual bool isReady(Mesh::Ptr mesh);
-		virtual Texture::Ptr getShadowMap();
+		virtual RenderTargetTexture::Ptr getShadowMap();
 		virtual LightPtr getLight();
-		virtual bool dispose();
+		virtual void dispose(bool doNotRecurse = false);
 		virtual Matrix::Ptr getTransformMatrix();
+
+	protected:
+		virtual void renderSubMesh(SubMesh::Ptr subMesh);
 	};
 
 };
 
-#endif // BABYLON_ShadowGenerator_H
+#endif // BABYLON_SHADOWGENERATOR_H

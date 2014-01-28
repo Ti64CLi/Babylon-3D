@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class SpriteManager : public enable_shared_from_this<SpriteManager> {
+	class SpriteManager : public IDisposable, public enable_shared_from_this<SpriteManager> {
 
 	public:
 
@@ -50,7 +50,7 @@ namespace Babylon {
 
 		virtual void _appendSpriteVertex(int index, Sprite::Ptr sprite, int offsetX, int offsetY, size_t rowSize);
 		virtual bool render();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 };
 

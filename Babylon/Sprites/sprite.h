@@ -16,7 +16,7 @@ namespace Babylon {
 	class SpriteManager;
 	typedef shared_ptr<SpriteManager> SpriteManagerPtr;
 
-	class Sprite : public enable_shared_from_this<Sprite> {
+	class Sprite : public IDisposable, public enable_shared_from_this<Sprite> {
 
 	public:
 
@@ -51,7 +51,7 @@ namespace Babylon {
 		virtual void playAnimation(int from, int to, bool loop, bool delay);
 		virtual void stopAnimation();
 		virtual void _animate(int deltaTime);
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

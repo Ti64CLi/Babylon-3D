@@ -88,7 +88,7 @@ void Babylon::BaseTexture::releaseInternalTexture () {
 	}
 };
 
-void Babylon::BaseTexture::dispose () {
+void Babylon::BaseTexture::dispose (bool doNotRecurse) {
 	// Remove from scene
 	auto it = find ( begin( this->_scene->textures ), end( this->_scene->textures ), shared_from_this());
 

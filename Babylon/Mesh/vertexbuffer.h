@@ -23,7 +23,7 @@ namespace Babylon {
 	class Mesh;
 	typedef shared_ptr<Mesh> MeshPtr;
 
-	class VertexBuffer: public enable_shared_from_this<VertexBuffer> {
+	class VertexBuffer: public IDisposable, public enable_shared_from_this<VertexBuffer> {
 
 	public:
 		typedef shared_ptr<VertexBuffer> Ptr;
@@ -46,7 +46,7 @@ namespace Babylon {
 		virtual size_t getStrideSize();
 		// Methods
 		virtual void update(Float32Array data);
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

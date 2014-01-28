@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Layer : public enable_shared_from_this<Layer> {
+	class Layer : public IDisposable, public enable_shared_from_this<Layer> {
 
 	public:
 
@@ -42,7 +42,7 @@ namespace Babylon {
 
 		// Methods
 		virtual void render();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

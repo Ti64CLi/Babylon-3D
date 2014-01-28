@@ -749,7 +749,7 @@ void Babylon::Engine::updateVideoTexture(IGLTexture::Ptr texture, IVideo::Ptr vi
 	texture->isReady = true;
 };
 
-IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height, bool generateMipMaps, bool generateDepthBuffer, SAMPLINGMODES samplingMode) {
+IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(Size size, bool generateMipMaps, bool generateDepthBuffer, SAMPLINGMODES samplingMode) {
 	// old version had a "generateMipMaps" arg instead of options->
 	// if options->generateMipMaps is undefined, consider that options itself if the generateMipmaps value
 	// in the same way, generateDepthBuffer is defaulted to true
@@ -779,14 +779,14 @@ IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height
 	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_MIN_FILTER, minFilter);
 	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_S, gl->CLAMP_TO_EDGE);
 	gl->texParameteri(gl->TEXTURE_2D, gl->TEXTURE_WRAP_T, gl->CLAMP_TO_EDGE);
-	gl->texImage2D(gl->TEXTURE_2D, 0, gl->RGBA, width, height, 0, gl->RGBA, gl->UNSIGNED_BYTE, nullptr);
+	gl->texImage2D(gl->TEXTURE_2D, 0, gl->RGBA, size.width, size.height, 0, gl->RGBA, gl->UNSIGNED_BYTE, nullptr);
 
 	IGLRenderbuffer::Ptr depthBuffer;
 	// Create the depth buffer
 	if (generateDepthBuffer) {
 		depthBuffer = gl->createRenderbuffer();
 		gl->bindRenderbuffer(gl->RENDERBUFFER, depthBuffer);
-		gl->renderbufferStorage(gl->RENDERBUFFER, gl->DEPTH_COMPONENT16, width, height);
+		gl->renderbufferStorage(gl->RENDERBUFFER, gl->DEPTH_COMPONENT16, size.width, size.height);
 	}
 
 	// Create the framebuffer
@@ -807,8 +807,8 @@ IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height
 		texture->_depthBuffer = depthBuffer;
 	}
 
-	texture->_width = width;
-	texture->_height = height;
+	texture->_width = size.width;
+	texture->_height = size.height;
 	texture->isReady = true;
 	texture->generateMipMaps = generateMipMaps;
 	texture->references = 1;
@@ -820,7 +820,7 @@ IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(int width, int height
 };
 
 //TODO: finish it
-//auto extensions = ["_px->jpg", "_py->jpg", "_pz->jpg", "_nx->jpg", "_ny->jpg", "_nz->jpg"];
+//auto extensions = ["_px.jpg", "_py.jpg", "_pz.jpg", "_nx.jpg", "_ny.jpg", "_nz.jpg"];
 vector<string> Babylon::Engine::extensions;
 
 void Babylon::Engine::cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, Scene::Ptr scene) {
@@ -1050,7 +1050,7 @@ void Babylon::Engine::_setAnisotropicLevel(GLenum key, Texture::Ptr texture) {
 };
 
 // Dispose
-void Babylon::Engine::dispose() {
+void Babylon::Engine::dispose(bool doNotRecurse) {
 	// Release scenes
 	for (auto scene : this->scenes) {
 		scene->dispose();

@@ -13,7 +13,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Camera : public Node, public enable_shared_from_this<Camera> {
+	class Camera : public Node, public IDisposable, public enable_shared_from_this<Camera> {
 
 	public:
 
@@ -68,7 +68,7 @@ namespace Babylon {
 		virtual Matrix::Ptr getViewMatrix();
 		virtual Matrix::Ptr _computeViewMatrix(bool force = false);
 		virtual Matrix::Ptr getProjectionMatrix(bool force = false);
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 
 		virtual bool hasWorldMatrix();
 	};

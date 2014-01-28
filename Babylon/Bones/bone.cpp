@@ -71,6 +71,13 @@ void Babylon::Bone::_updateDifferenceMatrix() {
 	}
 };
 
-void Babylon::Bone::markAsDirty() {
+// TODO: return property object to read/write AnimatedValue
+AnimationValue Babylon::Bone::operator[](string key)
+{
+	// TODO: finish it. it is better to return PropertyAnimationValue with object and value to be update to update it
+	return AnimationValue();
+}
+
+void Babylon::Bone::markAsDirty(string property) {
 	this->_skeleton->_markAsDirty();
 };

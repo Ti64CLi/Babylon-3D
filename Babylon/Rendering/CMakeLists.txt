@@ -21,4 +21,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (Rendering renderingManager.cpp renderingGroups.cpp)
+add_library (Rendering renderingManager.cpp renderingGroup.cpp)

@@ -164,10 +164,7 @@ bool Babylon::Animation::animate(Animatable::Ptr target, float delay, int from, 
 	auto currentValue = this->_interpolate(currentFrame, repeatCount, this->loopMode, offsetValue, highLimitValue);
 
 	// Set value
-	////target[this->targetPropertyPath[0]] = currentValue;
-	//// TODO: of property has . inside pass it to nested objects
-	target->setValue(this->targetProperty, currentValue);
-
+	(*target)[this->targetProperty] = currentValue;
 	target->markAsDirty(this->targetProperty);
 
 	return returnValue;

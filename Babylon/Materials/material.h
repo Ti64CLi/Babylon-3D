@@ -20,7 +20,7 @@ namespace Babylon {
 	typedef shared_ptr<Mesh> MeshPtr;
 
 	// TODO: finish it
-	class Material: public Animatable, public enable_shared_from_this<Material> {
+	class Material: public Animatable, public IDisposable, public enable_shared_from_this<Material> {
 
 	public:
 		typedef shared_ptr<Material> Ptr;
@@ -53,7 +53,7 @@ namespace Babylon {
 		virtual void bind(Matrix::Ptr world, MeshPtr mesh);
 		virtual void unbind();
 		virtual void baseDispose();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 
 		// my addon 
 		virtual Texture::Array getRenderTargetTextures();

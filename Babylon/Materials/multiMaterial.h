@@ -21,16 +21,12 @@ namespace Babylon {
 	typedef shared_ptr<Mesh> MeshPtr;
 
 	// TODO: finish it
-	class MultiMaterial: public Animatable, public enable_shared_from_this<MultiMaterial> {
+	class MultiMaterial: public Material, public Animatable, public enable_shared_from_this<MultiMaterial> {
 
 	public:
 		typedef shared_ptr<MultiMaterial> Ptr;
 		typedef vector<Ptr> Array;
 
-		string id;
-		string name;
-		ScenePtr _scene;
-		
 		Material::Array subMaterials;
 
 	public: 

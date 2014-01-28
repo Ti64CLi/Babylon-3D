@@ -16,7 +16,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class LensFlareSystem : public enable_shared_from_this<LensFlareSystem> {
+	class LensFlareSystem : public IDisposable, public enable_shared_from_this<LensFlareSystem> {
 
 	public:
 
@@ -54,7 +54,7 @@ namespace Babylon {
 		virtual bool computeEffectivePosition(Viewport::Ptr globalViewport);
 		virtual bool _isVisible();
 		virtual bool render();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

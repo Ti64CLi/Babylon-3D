@@ -211,7 +211,7 @@ bool Babylon::LensFlareSystem::render () {
 	return true;
 };
 
-void Babylon::LensFlareSystem::dispose () {
+void Babylon::LensFlareSystem::dispose (bool doNotRecurse) {
 	if (this->_vertexBuffer) {
 		this->_scene->getEngine()->_releaseBuffer(this->_vertexBuffer);
 		this->_vertexBuffer = nullptr;

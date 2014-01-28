@@ -111,8 +111,8 @@ namespace Babylon {
 		virtual void _update(size_t newParticles);
 		virtual Effect::Ptr _getEffect();
 		virtual void animate();
-		virtual int render(Plane::Ptr clipPlane);
-		virtual void dispose();
+		virtual int render();
+		virtual void dispose(bool doNotRecurse = false);
 		// Clone
 		virtual ParticleSystem::Ptr clone(string name, Mesh::Ptr newEmitter);
 	};

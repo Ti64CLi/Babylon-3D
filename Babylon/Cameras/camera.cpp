@@ -219,7 +219,7 @@ Matrix::Ptr Babylon::Camera::getProjectionMatrix(bool force) {
 	return this->_projectionMatrix;
 };
 
-void Babylon::Camera::dispose() {
+void Babylon::Camera::dispose(bool doNotRecurse) {
 	// Remove from scene
 	auto it = find (begin(this->_scene->cameras), end(this->_scene->cameras), enable_shared_from_this<Camera>::shared_from_this());
 	if (it != end(this->_scene->cameras))

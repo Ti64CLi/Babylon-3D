@@ -179,7 +179,7 @@ bool Babylon::SpriteManager::render() {
 	engine->setAlphaMode(ALPHA_DISABLE);
 };
 
-void Babylon::SpriteManager::dispose() {
+void Babylon::SpriteManager::dispose(bool doNotRecurse) {
 	if (this->_vertexBuffer) {
 		this->_scene->getEngine()->_releaseBuffer(this->_vertexBuffer);
 		this->_vertexBuffer = nullptr;

@@ -45,7 +45,7 @@ void Babylon::PostProcess::activate () {
 		this->height = desiredHeight;
 		
 		bool found = find(begin(this->_camera->postProcesses), end(this->_camera->postProcesses), shared_from_this()) != end(this->_camera->postProcesses);
-		this->_texture = this->_engine->createRenderTargetTexture(this->width, this->height, false, found, this->renderTargetSamplingMode);
+		this->_texture = this->_engine->createRenderTargetTexture(Size(this->width, this->height), false, found, this->renderTargetSamplingMode);
 		if (this->onSizeChanged) {
 			this->onSizeChanged();
 		}
@@ -79,7 +79,7 @@ Effect::Ptr Babylon::PostProcess::apply () {
 	return this->_effect;
 };
 
-void Babylon::PostProcess::dispose () {
+void Babylon::PostProcess::dispose (bool doNotRecurse) {
 	if (this->_onDispose) {
 		this->_onDispose();
 	}

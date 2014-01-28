@@ -11,7 +11,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class PostProcessManager : public enable_shared_from_this<PostProcessManager> {
+	class PostProcessManager : public IDisposable, public enable_shared_from_this<PostProcessManager> {
 
 	public:
 
@@ -32,7 +32,7 @@ namespace Babylon {
 		// Methods
 		virtual void _prepareFrame();
 		virtual void _finalizeFrame();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

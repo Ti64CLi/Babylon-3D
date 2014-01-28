@@ -17,7 +17,7 @@ namespace Babylon {
 	class LensFlareSystem;
 	typedef shared_ptr<LensFlareSystem> LensFlareSystemPtr;
 
-	class LensFlare : public enable_shared_from_this<LensFlare> {
+	class LensFlare : public IDisposable, public enable_shared_from_this<LensFlare> {
 
 	public:
 
@@ -34,7 +34,7 @@ namespace Babylon {
 		LensFlare(float size, Vector3::Ptr position, Color3::Ptr color, string imgUrl, LensFlareSystemPtr system);
 
 		// Methods
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };

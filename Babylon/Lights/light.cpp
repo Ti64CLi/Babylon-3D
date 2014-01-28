@@ -36,6 +36,11 @@ ShadowGenerator::Ptr Babylon::Light::getShadowGenerator() {
 void Babylon::Light::transferToEffect() {
 };
 
+// TODO: my addon
+bool Babylon::Light::_computeTransformedPosition() {
+	return false;
+}
+
 Matrix::Ptr Babylon::Light::getWorldMatrix() {
 	this->_syncChildFlag();
 
@@ -55,7 +60,7 @@ Matrix::Ptr Babylon::Light::getWorldMatrix() {
 	return worldMatrix;
 };
 
-void Babylon::Light::dispose() {
+void Babylon::Light::dispose(bool doNotRecurse) {
 	if (this->_shadowGenerator) {
 		this->_shadowGenerator->dispose();
 		this->_shadowGenerator = nullptr;
