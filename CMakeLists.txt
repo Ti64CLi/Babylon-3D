@@ -13,3 +13,4 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_COMPILER_FLAGS}")
 
 add_subdirectory (Babylon) 
+add_subdirectory (PlayGround) 
