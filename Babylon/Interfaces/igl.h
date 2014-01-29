@@ -30,7 +30,6 @@ namespace Babylon {
 
 	typedef void*				any;
 
-	typedef GLubyte* ArrayBuffer;
 	typedef vector<GLfloat> Float32Array;
 	typedef vector<int32_t> Int32Array;
 	typedef vector<uint16_t> Uint16Array;
@@ -60,6 +59,8 @@ namespace Babylon {
 	class IGLObject {
 	public:
 		typedef shared_ptr<IGLObject> Ptr;
+		GLuint value;
+		IGLObject(GLuint _value) : value(_value) {};
 	};
 
 	class IGLBuffer : public IGLObject {
@@ -70,26 +71,31 @@ namespace Babylon {
 		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
 		// TODO: get rid of it
 		int references;
+		IGLBuffer(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLFramebuffer : public IGLObject {
 	public:
 		typedef shared_ptr<IGLFramebuffer> Ptr;
+		IGLFramebuffer(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLProgram : public IGLObject {
 	public:
 		typedef shared_ptr<IGLProgram> Ptr;
+		IGLProgram(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLRenderbuffer : public IGLObject {
 	public:
 		typedef shared_ptr<IGLRenderbuffer> Ptr;
+		IGLRenderbuffer(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLShader : public IGLObject {
 	public:
 		typedef shared_ptr<IGLShader> Ptr;
+		IGLShader(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLTexture : public IGLObject {
@@ -119,29 +125,36 @@ namespace Babylon {
 		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
 		// TODO: get rid of it
 		int references;
+
+		IGLTexture(GLuint value) : IGLObject(value) {};
 	};
 
-	class IGLUniformLocation {
+	class IGLUniformLocation : public IGLObject {
 	public:
 		typedef shared_ptr<IGLUniformLocation> Ptr;
+		IGLUniformLocation(GLuint value) : IGLObject(value) {};
 	};
 
-	class IGLActiveInfo {
+	class IGLActiveInfo : public IGLObject {
 	public:
 		typedef shared_ptr<IGLActiveInfo> Ptr;
 
 		virtual GLint getSize() = 0;
 		virtual GLenum getType() = 0;
 		virtual string getName() = 0;
+
+		IGLActiveInfo(GLuint value) : IGLObject(value) {};
 	};
 
-	class IGLShaderPrecisionFormat {
+	class IGLShaderPrecisionFormat : public IGLObject {
 	public:
 		typedef shared_ptr<IGLShaderPrecisionFormat> Ptr;
 
 		virtual GLint getRangeMin() = 0;
 		virtual GLint getRangeMax() = 0;
 		virtual GLint getPrecision() = 0;
+
+		IGLShaderPrecisionFormat(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGL {
@@ -593,11 +606,9 @@ namespace Babylon {
 			GLenum srcAlpha, GLenum dstAlpha) = 0;
 
 		virtual void bufferData(GLenum target, GLsizeiptr size, GLenum usage) = 0;
-		virtual void bufferData(GLenum target, ArrayBuffer data, GLenum usage) = 0;
 		virtual void bufferData(GLenum target, Float32Array data, GLenum usage) = 0;
 		virtual void bufferData(GLenum target, Int32Array data, GLenum usage) = 0;
 		virtual void bufferData(GLenum target, Uint16Array data, GLenum usage) = 0;
-		virtual void bufferSubData(GLenum target, GLintptr offset, ArrayBuffer data) = 0;
 		virtual void bufferSubData(GLenum target, GLintptr offset, Float32Array data) = 0;
 		virtual void bufferSubData(GLenum target, GLintptr offset, Int32Array data) = 0;
 
@@ -612,7 +623,7 @@ namespace Babylon {
 		virtual void compressedTexSubImage2D(GLenum target, GLint level,
 			GLint xoffset, GLint yoffset,
 			GLsizei width, GLsizei height, GLenum format,
-			ArrayBuffer data) = 0;
+			GLsizeiptr size) = 0;
 
 		virtual void copyTexImage2D(GLenum target, GLint level, GLenum internalformat, 
 			GLint x, GLint y, GLsizei width, GLsizei height, 
@@ -704,7 +715,7 @@ namespace Babylon {
 		virtual void polygonOffset(GLfloat factor, GLfloat units) = 0;
 
 		virtual void readPixels(GLint x, GLint y, GLsizei width, GLsizei height, 
-			GLenum format, GLenum type, ArrayBuffer pixels) = 0;
+			GLenum format, GLenum type, any pixels) = 0;
 
 		virtual void renderbufferStorage(GLenum target, GLenum internalformat, 
 			GLsizei width, GLsizei height) = 0;
@@ -722,7 +733,7 @@ namespace Babylon {
 
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat, 
 			GLsizei width, GLsizei height, GLint border, GLenum format, 
-			GLenum type, ArrayBuffer pixels) = 0;
+			GLenum type, any pixels) = 0;
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
 			GLenum format, GLenum type, any pixels) = 0;
 		virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
@@ -737,7 +748,7 @@ namespace Babylon {
 
 		virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
 			GLsizei width, GLsizei height, 
-			GLenum format, GLenum type, ArrayBuffer pixels) = 0;
+			GLenum format, GLenum type, any pixels) = 0;
 		virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 
 			GLenum format, GLenum type, any pixels) = 0;
 		//virtual void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, 

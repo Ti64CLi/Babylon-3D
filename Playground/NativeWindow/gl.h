@@ -44,12 +44,12 @@ public:
 	virtual void blendFuncSeparate(Babylon::GLenum srcRGB, Babylon::GLenum dstRGB, 
 		Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha);
 
-	virtual void bufferData(Babylon::GLenum target, Babylon::GLsizeiptr size, Babylon::GLenum usage);
-	virtual void bufferData(Babylon::GLenum target, Babylon::ArrayBuffer data, Babylon::GLenum usage);
+	virtual void bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylon::GLenum usage);
+	virtual void bufferData(Babylon::GLenum target, Babylon::any data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Float32Array data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Int32Array data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Uint16Array data, Babylon::GLenum usage);
-	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::ArrayBuffer data);
+	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::any data);
 	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array data);
 	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array data);
 
@@ -64,7 +64,7 @@ public:
 	virtual void compressedTexSubImage2D(Babylon::GLenum target, Babylon::GLint level,
 		Babylon::GLint xoffset, Babylon::GLint yoffset,
 		Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLenum format,
-		Babylon::ArrayBuffer data);
+		Babylon::GLsizeiptr sizeiptr);
 
 	virtual void copyTexImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 		Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
@@ -156,7 +156,7 @@ public:
 	virtual void polygonOffset(Babylon::GLfloat factor, Babylon::GLfloat units);
 
 	virtual void readPixels(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
-		Babylon::GLenum format, Babylon::GLenum type, Babylon::ArrayBuffer pixels);
+		Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels);
 
 	virtual void renderbufferStorage(Babylon::GLenum target, Babylon::GLenum internalformat, 
 		Babylon::GLsizei width, Babylon::GLsizei height);
@@ -174,7 +174,7 @@ public:
 
 	virtual void texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 		Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLint border, Babylon::GLenum format, 
-		Babylon::GLenum type, Babylon::ArrayBuffer pixels);
+		Babylon::GLenum type, Babylon::any pixels);
 	virtual void texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 		Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels);
 	virtual void texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
@@ -189,7 +189,7 @@ public:
 
 	virtual void texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 		Babylon::GLsizei width, Babylon::GLsizei height, 
-		Babylon::GLenum format, Babylon::GLenum type, Babylon::ArrayBuffer pixels);
+		Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels);
 	virtual void texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 		Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels);
 	//virtual void texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
