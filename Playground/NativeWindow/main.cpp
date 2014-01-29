@@ -1,231 +1,165 @@
-#include <EGL/egl.h>
-#include <GLES2/gl2.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
 
-#include "nativewin.h"
+#include <GL/glew.h>
+#include <GL/glut.h>
 
-#include <iostream>
-#include <cassert>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
+#include <nvGlutManipulators.h>
 
-class RenderState 
-{
-public:
-    RenderState() : po(0), vertLoc(0), mvpLoc(0), normalLoc(0), texcoordLoc(0), texUnitLoc(0)
-    {}
-    ~RenderState() {}
+#include "iengine.h"
 
-    GLint po;
-    GLint vertLoc;
-    GLint mvpLoc;
-    GLint lightLoc;
-    GLint normalLoc;
-    GLint texcoordLoc;
-    GLint texUnitLoc;
+////////////////////////////////////////////////////////////////////////////////
+//
+// Globals
+//
+////////////////////////////////////////////////////////////////////////////////
+nv::GlutExamine manipulator;
 
-    GLfloat yaw;
-    GLfloat pitch;
+//
+//
+//////////////////////////////////////////////////////////////////////
+void init_opengl() {
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.2, 0.2, 0.2, 1.0);
 
-    SBObject            ninja;
-    GLuint              ninjaTex[1];
+	glewInit();
 
-};
-
-class esContext
-{
-public:
-    esContext() :
-        nativeDisplay(0), nativeWin(0),
-        eglDisplay(0), eglSurface(0), eglContext(0), 
-        nWindowWidth(0), nWindowHeight(0), nMouseX(0), nMouseY(0)
-    {}
-
-    ~esContext() {}
-
-    EGLNativeDisplayType nativeDisplay;
-    EGLNativeWindowType nativeWin;
-    EGLDisplay eglDisplay;
-    EGLSurface eglSurface;
-    EGLContext eglContext;
-
-    int         nWindowWidth;
-    int         nWindowHeight;
-    int         nMouseX;
-    int         nMouseY;
-
-    RenderState rs;
-};
-
-#pragma pack(8)
-
-esContext ctx;
-
-using namespace std;
-
-void OnNativeWinResize(int width, int height)
-{
-    ctx.nWindowWidth = width;
-    ctx.nWindowHeight = height;
-    glViewport(0, 0, width, height);
+	if (!glewIsSupported(
+		"GL_VERSION_2_0 "
+		"GL_EXT_framebuffer_object "
+		"GL_ARB_vertex_program "
+		"GL_ARB_fragment_program "
+		))
+	{
+		printf("Unable to load extensions\n\nExiting...\n");
+		exit(-1);
+	}
 }
 
-void OnNativeWinMouseMove(int mousex, int mousey, bool lbutton)
-{
-    if(lbutton)
-    {
-        int oldx = ctx.nMouseX;
-        int oldy = ctx.nMouseY;
-	//....
-    }
-    ctx.nMouseX = mousex;
-    ctx.nMouseY = mousey;
+//
+//
+//////////////////////////////////////////////////////////////////////
+void draw_quad() {
+	// r texture coordinate is used to select layer
+	glBegin(GL_QUADS);
+	glTexCoord3f(0.0, 0.0, 0.0);
+	glVertex2f(-1.0, -1.0);
+	glTexCoord3f(1.0, 0.0, 4.0);
+	glVertex2f(1.0, -1.0);
+	glTexCoord3f(1.0, 1.0, 4.0);
+	glVertex2f(1.0, 1.0);
+	glTexCoord3f(0.0, 1.0, 0.0);
+	glVertex2f(-1.0, 1.0);
+	glEnd();
 }
 
-EGLBoolean Setup(esContext &ctx)
-{
-    EGLBoolean bsuccess;
+//
+//
+//////////////////////////////////////////////////////////////////////
+void display() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	//
+	// This part is the basic rendering with no postprocessing
+	//
+	manipulator.applyTransform();
 
-    // create native window
-    EGLNativeDisplayType nativeDisplay;
-    if(!OpenNativeDisplay(&nativeDisplay))
-    {
-        printf("Could not get open native display\n");
-        return GL_FALSE;
-    }
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
 
-    // get egl display handle
-    EGLDisplay eglDisplay;
-    eglDisplay = eglGetDisplay(nativeDisplay);
-    if(eglDisplay == EGL_NO_DISPLAY)
-    {
-        printf("Could not get EGL display\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-    ctx.eglDisplay = eglDisplay;
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_DEPTH_TEST);
+	glColor3f(1.0, 0.0, 0.5);
+	glutSolidTorus(0.2, 1.0, 20, 30);
+	glColor3f(0.3, 0.5, 1.0);
+	glutSolidTeapot(0.5f);
+	glRotatef(90.0, 1.0, 0,0);
+	glColor3f(1.0, 1.0, 0.5);
+	glutWireTorus(0.2, 1.0, 20, 30);
+	glDisable(GL_LIGHTING);
 
-    // Initialize the display
-    EGLint major = 0;
-    EGLint minor = 0;
-    bsuccess = eglInitialize(eglDisplay, &major, &minor);
-    if (!bsuccess)
-    {
-        printf("Could not initialize EGL display\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-    if (major < 1 || minor < 4)
-    {
-        // Does not support EGL 1.4
-        printf("System does not support at least EGL 1.4\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
+	glDisable(GL_FRAGMENT_PROGRAM_ARB);
 
-    // Obtain the first configuration with a depth buffer
-    EGLint attrs[] = { EGL_DEPTH_SIZE, 16, EGL_NONE };
-    EGLint numConfig =0;
-    EGLConfig eglConfig = 0;
-    bsuccess = eglChooseConfig(eglDisplay, attrs, &eglConfig, 1, &numConfig);
-    if (!bsuccess)
-    {
-        printf("Could not find valid EGL config\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-
-    // Get the native visual id
-    int nativeVid;
-    if (!eglGetConfigAttrib(eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &nativeVid))
-    {
-        printf("Could not get native visual id\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-
-    EGLNativeWindowType nativeWin;
-    if(!CreateNativeWin(nativeDisplay, 640, 480, nativeVid, &nativeWin))
-    {
-        printf("Could not create window\n");
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-
-    // Create a surface for the main window
-    EGLSurface eglSurface;
-    eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, nativeWin, NULL);
-    if (eglSurface == EGL_NO_SURFACE)
-    {
-        printf("Could not create EGL surface\n");
-        DestroyNativeWin(nativeDisplay, nativeWin);
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-    ctx.eglSurface = eglSurface;
-
-    // Create an OpenGL ES context
-    EGLContext eglContext;
-    eglContext = eglCreateContext(eglDisplay, eglConfig, EGL_NO_CONTEXT, NULL);
-    if (eglContext == EGL_NO_CONTEXT)
-    {
-        printf("Could not create EGL context\n");
-        DestroyNativeWin(nativeDisplay, nativeWin);
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-
-    // Make the context and surface current
-    bsuccess = eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
-    if(!bsuccess)
-    {
-        printf("Could not activate EGL context\n");
-        DestroyNativeWin(nativeDisplay, nativeWin);
-        CloseNativeDisplay(nativeDisplay);
-        return GL_FALSE;
-    }
-
-    ctx.nativeDisplay = nativeDisplay;
-    ctx.nativeWin = nativeWin;
-    return GL_TRUE;
+	glutSwapBuffers();
 }
 
-void Render(esContext &ctx)
-{
-    // render
-
-    // flip the visible buffer
-    eglSwapBuffers(ctx.eglDisplay, ctx.eglSurface);
+//
+//
+//////////////////////////////////////////////////////////////////////
+void idle() {
+	manipulator.idle();
+	glutPostRedisplay();
 }
 
-int main(int argc, char** argv)
-{
-    ctx.nWindowWidth  = 640;
-    ctx.nWindowHeight = 480;
-    int lRet = 0;
+//
+//
+//////////////////////////////////////////////////////////////////////
+void key(unsigned char k, int x, int y) {
+	glutPostRedisplay();
+}
 
-    // create window and setup egl
-    if(Setup(ctx) == GL_FALSE)
-    {
-        return lRet;
-    }
+//
+//
+//////////////////////////////////////////////////////////////////////
+void resize(int w, int h) {
+	glViewport(0, 0, w, h);
 
-    // load Engine
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
-    // main loop
-    while (UpdateNativeWin(ctx.nativeDisplay, ctx.nativeWin))
-    {
-        // render the model
-        Render(ctx);
-    }
+	gluPerspective(60.0, (GLfloat)w/(GLfloat)h, 0.1, 100.0);
 
-    eglMakeCurrent(EGL_NO_DISPLAY, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-    eglDestroyContext(ctx.eglDisplay, ctx.eglContext);
-    eglDestroySurface(ctx.eglDisplay, ctx.eglSurface);
-    eglTerminate(ctx.eglDisplay);
-    DestroyNativeWin(ctx.nativeDisplay, ctx.nativeWin);
-    CloseNativeDisplay(ctx.nativeDisplay);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
-    return lRet;
+	manipulator.reshape(w, h);
+}
+
+//
+//
+//////////////////////////////////////////////////////////////////////
+void mouse(int button, int state, int x, int y) {
+	manipulator.mouse(button, state, x, y);
+	glutPostRedisplay();
+}
+
+void passiveMotion(int x, int y) {
+	glutPostRedisplay();
+}
+//
+//
+//////////////////////////////////////////////////////////////////////
+void motion(int x, int y) {
+	manipulator.motion(x, y);
+}
+
+//
+//
+//////////////////////////////////////////////////////////////////////
+int main(int argc, char **argv) {
+	glutInit(&argc, argv);
+	glutInitWindowSize(512, 512);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
+	glutCreateWindow("Babylon Native");
+
+	init_opengl();
+
+	manipulator.setDollyActivate( GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT);
+	manipulator.setPanActivate( GLUT_LEFT_BUTTON, GLUT_ACTIVE_CTRL);
+	manipulator.setDollyPosition( -2.0f);
+
+	glutDisplayFunc(display);
+	glutPassiveMotionFunc(passiveMotion);
+	glutMouseFunc(mouse);
+	glutMotionFunc(motion);
+	glutIdleFunc(idle);
+	glutKeyboardFunc(key);
+	glutReshapeFunc(resize);
+
+	glutMainLoop();
+
+	return 0;
 }
