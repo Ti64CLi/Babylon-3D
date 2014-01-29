@@ -33,11 +33,12 @@ include_directories(
 link_directories(
 	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLUT/lib
 	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLEW/lib
-	${Babylon_BINARY_DIR}/Babylon/Engine)
+	${Babylon_BINARY_DIR}/Babylon/Engine 
+	${Babylon_BINARY_DIR}/Babylon/Materials)
 
 
-add_executable (NativeWindow main.cpp)
+add_executable (NativeWindow main.cpp canvas.cpp gl.cpp)
 
-target_link_libraries(NativeWindow glut32.lib glew32.lib Engine.lib)
+target_link_libraries(NativeWindow glut32.lib glew32.lib Engine.lib Materials.lib)
 
 

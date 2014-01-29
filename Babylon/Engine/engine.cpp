@@ -4,14 +4,14 @@
 
 using namespace Babylon;
 
+float Babylon::Engine::epsilon = 0.001f;
+float Babylon::Engine::collisionsEpsilon = 0.001f;
+
 Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 {
-	epsilon = 0.001f;
-	collisionsEpsilon = 0.001f;
-
 	this->_renderingCanvas = canvas;
 
-	//this->_gl = ;
+	this->_gl = canvas->getContext3d(antialias);
 
 	if (!this->_gl) {
 		throw "GL not supported";

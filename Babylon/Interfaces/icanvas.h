@@ -8,6 +8,9 @@ using namespace std;
 
 namespace Babylon {
 
+	class IGL;
+	typedef shared_ptr<IGL> IGLPtr;
+
 	class IImage {
 	public:
 		typedef shared_ptr<IImage> Ptr;
@@ -55,6 +58,9 @@ namespace Babylon {
 		typedef shared_ptr<ICanvas> Ptr;
 
 	public: 
+
+		virtual IGLPtr getContext3d(bool) = 0; 
+
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
 		virtual void setWidth(int) = 0;

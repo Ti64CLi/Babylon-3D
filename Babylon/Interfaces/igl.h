@@ -561,9 +561,9 @@ namespace Babylon {
 		const static GLenum UNPACK_COLORSPACE_CONVERSION_WEBGL = 0x9243;
 		const static GLenum BROWSER_DEFAULT_WEBGL          = 0x9244;
 
-		typedef shared_ptr<IGL> Ptr;
-
 	public: 
+
+		typedef shared_ptr<IGL> Ptr;
 
 		virtual ICanvas::Ptr getCanvas() = 0;
 		virtual GLsizei getDrawingBufferWidth() = 0;

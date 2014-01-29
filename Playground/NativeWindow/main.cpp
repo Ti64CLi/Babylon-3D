@@ -1,3 +1,5 @@
+#include <memory>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -7,18 +9,13 @@
 
 #include <nvGlutManipulators.h>
 
-#include "iengine.h"
+#include "engine.h"
+#include "canvas.h"
 
-////////////////////////////////////////////////////////////////////////////////
-//
-// Globals
-//
-////////////////////////////////////////////////////////////////////////////////
+using namespace std;
+
 nv::GlutExamine manipulator;
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void init_opengl() {
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2, 0.2, 0.2, 1.0);
@@ -37,11 +34,7 @@ void init_opengl() {
 	}
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void draw_quad() {
-	// r texture coordinate is used to select layer
 	glBegin(GL_QUADS);
 	glTexCoord3f(0.0, 0.0, 0.0);
 	glVertex2f(-1.0, -1.0);
@@ -54,9 +47,6 @@ void draw_quad() {
 	glEnd();
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -86,24 +76,15 @@ void display() {
 	glutSwapBuffers();
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void idle() {
 	manipulator.idle();
 	glutPostRedisplay();
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void key(unsigned char k, int x, int y) {
 	glutPostRedisplay();
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void resize(int w, int h) {
 	glViewport(0, 0, w, h);
 
@@ -118,9 +99,6 @@ void resize(int w, int h) {
 	manipulator.reshape(w, h);
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 void mouse(int button, int state, int x, int y) {
 	manipulator.mouse(button, state, x, y);
 	glutPostRedisplay();
@@ -129,16 +107,11 @@ void mouse(int button, int state, int x, int y) {
 void passiveMotion(int x, int y) {
 	glutPostRedisplay();
 }
-//
-//
-//////////////////////////////////////////////////////////////////////
+
 void motion(int x, int y) {
 	manipulator.motion(x, y);
 }
 
-//
-//
-//////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitWindowSize(512, 512);
@@ -159,6 +132,11 @@ int main(int argc, char **argv) {
 	glutKeyboardFunc(key);
 	glutReshapeFunc(resize);
 
+	// engine
+	auto canvas = dynamic_pointer_cast<Babylon::ICanvas>( make_shared<Canvas>() );
+	auto engine = make_shared<Babylon::Engine>(canvas, true);
+
+	// main loop
 	glutMainLoop();
 
 	return 0;
