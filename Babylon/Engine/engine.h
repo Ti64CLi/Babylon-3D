@@ -25,7 +25,6 @@ namespace Babylon {
 		typedef shared_ptr<Engine> Ptr;
 		typedef void (*RenderFunction)();
 
-	public:
 		// Statics
 		const static char* ShadersRepository;
 
@@ -59,12 +58,12 @@ namespace Babylon {
 		IGLBuffer::Ptr _cachedIndexBuffer;
 		map<string, Effect::Ptr> _compiledEffects;
 		bool cullBackFaces;
-
-	public:
 		vector<ScenePtr> scenes;
 
-	public: 
+	protected:
 		Engine(ICanvas::Ptr canvas, bool antialias);
+	public: 
+		static EnginePtr New(ICanvas::Ptr canvas, bool antialias);
 
 		virtual float getAspectRatio();
 		virtual int getRenderWidth();

@@ -1,5 +1,5 @@
-#ifndef BABYLON_Camera_H
-#define BABYLON_Camera_H
+#ifndef BABYLON_CAMERA_H
+#define BABYLON_CAMERA_H
 
 #include <memory>
 #include <vector>
@@ -50,8 +50,10 @@ namespace Babylon {
 		float inertia;
 		CAMERAS mode;
 
-	public: 
+	protected: 
 		Camera(string name, Vector3::Ptr position, ScenePtr scene);
+	public: 
+		static Camera::Ptr New(string name, Vector3::Ptr position, ScenePtr scene);
 
 		virtual ScenePtr getScene();
 		virtual void _initCache();
@@ -75,4 +77,4 @@ namespace Babylon {
 
 };
 
-#endif // BABYLON_Camera_H
+#endif // BABYLON_CAMERA_H

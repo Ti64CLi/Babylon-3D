@@ -39,8 +39,10 @@ namespace Babylon {
 		BoundingInfo::Ptr _boundingInfo;
 		float _distanceToCamera;
 
-	public: 
+	protected: 
 		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, MeshPtr mesh);		
+	public: 
+		static SubMesh::Ptr New(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, MeshPtr mesh);		
 
 		virtual BoundingInfo::Ptr getBoundingInfo();
 		virtual MeshPtr getMesh();

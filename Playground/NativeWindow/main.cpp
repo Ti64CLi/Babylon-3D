@@ -9,12 +9,51 @@
 
 #include <nvGlutManipulators.h>
 
+#include "iengine.h"
 #include "engine.h"
 #include "canvas.h"
 
 using namespace std;
+using namespace Babylon;
 
 nv::GlutExamine manipulator;
+
+class Main {
+
+	// engine
+	ICanvas::Ptr canvas;
+	Engine::Ptr engine;
+	Scene::Ptr scene;
+
+public:
+
+	Main()
+	{
+	}
+
+	void init()
+	{
+		// engine
+		this->canvas = dynamic_pointer_cast<ICanvas>( make_shared<Canvas>() );
+		this->engine = Engine::New(this->canvas, true);
+	}
+
+	void loadSimpleScene() {
+		// scene
+		this->scene = Scene::New(engine);
+
+		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+		auto camera = Camera::New("DummyCamera", make_shared<Vector3>(0, 0, 0), scene);
+		//auto light0 = make_shared<PointLight>("Omni", make_shared<Vector3>(0, 0, 10), scene);
+		auto origin = Mesh::CreateSphere("origin", 10, 1.0, scene);
+	}
+
+	void render() {
+		this->scene->render();
+	}
+};
+
+Main _main;
 
 void init_opengl() {
 	glEnable(GL_DEPTH_TEST);
@@ -34,20 +73,12 @@ void init_opengl() {
 	}
 }
 
-void draw_quad() {
-	glBegin(GL_QUADS);
-	glTexCoord3f(0.0, 0.0, 0.0);
-	glVertex2f(-1.0, -1.0);
-	glTexCoord3f(1.0, 0.0, 4.0);
-	glVertex2f(1.0, -1.0);
-	glTexCoord3f(1.0, 1.0, 4.0);
-	glVertex2f(1.0, 1.0);
-	glTexCoord3f(0.0, 1.0, 0.0);
-	glVertex2f(-1.0, 1.0);
-	glEnd();
+void display() {
+	_main.render();
+	glutSwapBuffers();
 }
 
-void display() {
+void _display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -91,7 +122,7 @@ void resize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(60.0, (GLfloat)w/(GLfloat)h, 0.1, 100.0);
+	gluPerspective(60.0, (::GLfloat)w/(::GLfloat)h, 0.1, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -122,7 +153,7 @@ int main(int argc, char **argv) {
 
 	manipulator.setDollyActivate( GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT);
 	manipulator.setPanActivate( GLUT_LEFT_BUTTON, GLUT_ACTIVE_CTRL);
-	manipulator.setDollyPosition( -2.0f);
+	manipulator.setDollyPosition(-2.0f);
 
 	glutDisplayFunc(display);
 	glutPassiveMotionFunc(passiveMotion);
@@ -132,9 +163,8 @@ int main(int argc, char **argv) {
 	glutKeyboardFunc(key);
 	glutReshapeFunc(resize);
 
-	// engine
-	auto canvas = dynamic_pointer_cast<Babylon::ICanvas>( make_shared<Canvas>() );
-	auto engine = make_shared<Babylon::Engine>(canvas, true);
+	_main.init();
+	_main.loadSimpleScene();
 
 	// main loop
 	glutMainLoop();

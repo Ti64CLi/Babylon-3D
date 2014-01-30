@@ -109,8 +109,10 @@ namespace Babylon {
 
 		bool useDelayedTextureLoading;
 
-	public: 
+	protected: 
 		Scene(EnginePtr engine);
+	public: 
+		static ScenePtr New(EnginePtr engine);
 
 		virtual EnginePtr getEngine();
 		virtual int getTotalVertices();

@@ -5,7 +5,7 @@
 using namespace Babylon;
 
 Babylon::BaseTexture::BaseTexture(string url, Scene::Ptr scene) 
-	: delayLoadState(DELAYLOADSTATE_NONE), hasAlpha(false), level(1), _texture(nullptr), onDispose(nullptr) {
+	: delayLoadState(DELAYLOADSTATE_NONE), hasAlpha(false), level(1), _texture(nullptr), isCube(false), onDispose(nullptr) {
 		this->_scene = scene;
 		this->_scene->textures.push_back(shared_from_this());
 };

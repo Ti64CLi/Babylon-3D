@@ -20,7 +20,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Mesh: public Node, public IDisposable, public enable_shared_from_this<Mesh> {
+	class Mesh: public Node, public IDisposable {
 
 	public:
 		typedef shared_ptr<Mesh> Ptr;
@@ -95,8 +95,10 @@ namespace Babylon {
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 
-	public: 
+	protected: 
 		Mesh(string name, ScenePtr scene);	
+	public: 
+		static MeshPtr New(string name, ScenePtr scene);	
 
 		virtual ScenePtr getScene();
 		
@@ -105,7 +107,7 @@ namespace Babylon {
 		virtual Matrix::Ptr getWorldMatrix();
 		virtual Vector3::Ptr getAbsolutePosition();
 		virtual int getTotalVertices();
-		virtual Float32Array& getVerticesData(VertexBufferKind kind);
+		virtual Float32Array getVerticesData(VertexBufferKind kind);
 		virtual bool isVerticesDataPresent(VertexBufferKind kind);
 		virtual size_t getTotalIndices();
 		virtual Uint16Array getIndices();
@@ -155,7 +157,7 @@ namespace Babylon {
 		virtual Mesh::Ptr clone(string name, Node::Ptr newParent, bool doNotCloneChildren = false);
 		virtual void dispose(bool doNotRecurse = false);
 		static Mesh::Ptr CreateBox(string name, float size, ScenePtr scene, bool updatable);
-		static Mesh::Ptr CreateSphere(string name, size_t segments, float diameter, ScenePtr scene, bool updatable);
+		static Mesh::Ptr CreateSphere(string name, size_t segments, float diameter, ScenePtr scene, bool updatable = false);
 	};
 
 };

@@ -13,11 +13,11 @@ IGL::Ptr Canvas::getContext3d(bool antialias) {
 }
 
 int Canvas::getWidth() {
-	return glutGet(GLUT_SCREEN_WIDTH);
+	return glutGet(GLUT_WINDOW_WIDTH);
 }
 
 int Canvas::getHeight() {
-	return glutGet(GLUT_SCREEN_HEIGHT);
+	return glutGet(GLUT_WINDOW_HEIGHT);
 }
 
 void Canvas::setWidth(int width) {
@@ -29,11 +29,11 @@ void Canvas::setHeight(int height) {
 }
 
 int Canvas::getClientWidth() {
-	return glutGet(GLUT_WINDOW_WIDTH);
+	return glutGet(GLUT_WINDOW_WIDTH); // GLUT_SCREEN_WIDTH?
 }
 
 int Canvas::getClientHeight() {
-	return glutGet(GLUT_WINDOW_WIDTH);
+	return glutGet(GLUT_WINDOW_HEIGHT);// GLUT_SCREEN_HEIGHT?
 }
 
 I2D::Ptr Canvas::getContext2d() {

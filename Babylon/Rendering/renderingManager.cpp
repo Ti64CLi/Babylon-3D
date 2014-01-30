@@ -75,15 +75,15 @@ void Babylon::RenderingManager::render(CustomRenderFunctionFunc customRenderFunc
 
 	for (auto index = 0 ; index < MAX_RENDERINGGROUPS; index++) {
 		this->_depthBufferAlreadyCleaned = index == 0;
-		auto renderingGroup = this->_renderingGroups[index];
-
+		auto renderingGroup = index < this->_renderingGroups.size() ? this->_renderingGroups[index] : nullptr;
 		if (renderingGroup) {
 			this->_clearDepthBuffer();
-			if (!renderingGroup->render(customRenderFunction, [&] () {
+			auto renderLambda = [&] () {
 				if (renderSprites) {
 					that->_renderSprites(index);
 				}
-			})) {
+			};
+			if (renderingGroup && !renderingGroup->render(customRenderFunction, renderLambda)) {
 				this->_renderingGroups.erase(begin(this->_renderingGroups) + index, begin(this->_renderingGroups) + index);
 			}
 		} else if (renderSprites) {

@@ -14,7 +14,8 @@ Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	this->_totalVertices = 0;
 	this->_worldMatrix = Matrix::Identity();
 
-	scene->meshes.push_back(enable_shared_from_this<Mesh>::shared_from_this());
+	// moved to new
+	////scene->meshes.push_back(enable_shared_from_this<Mesh>::shared_from_this());
 
 	this->position = make_shared<Vector3>(0, 0, 0);
 	this->rotation = make_shared<Vector3>(0, 0, 0);
@@ -71,6 +72,12 @@ Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	infiniteDistance = false;
 };
 
+Mesh::Ptr Babylon::Mesh::New(string name, ScenePtr scene) {
+	auto mesh = make_shared<Mesh>(Mesh(name, scene));
+	scene->meshes.push_back(mesh);
+	return mesh;
+};
+
 // Properties
 BoundingInfo::Ptr Babylon::Mesh::getBoundingInfo() {
 	return this->_boundingInfo;
@@ -99,7 +106,7 @@ int Babylon::Mesh::getTotalVertices() {
 	return this->_totalVertices;
 };
 
-Float32Array& Babylon::Mesh::getVerticesData(VertexBufferKind kind) {
+Float32Array Babylon::Mesh::getVerticesData(VertexBufferKind kind) {
 	return this->_vertexBuffers[kind]->getData();
 };
 
@@ -316,7 +323,7 @@ SubMesh::Ptr Babylon::Mesh::_createGlobalSubMesh() {
 	}
 
 	this->subMeshes.clear();
-	return make_shared<SubMesh>(SubMesh(0, 0, this->_totalVertices, 0, this->_indices.size(), enable_shared_from_this<Mesh>::shared_from_this()));
+	return SubMesh::New(0, 0, this->_totalVertices, 0, this->_indices.size(), dynamic_pointer_cast<Mesh>(shared_from_this()));
 };
 
 void Babylon::Mesh::subdivide(int count) {
@@ -329,20 +336,18 @@ void Babylon::Mesh::subdivide(int count) {
 
 	this->subMeshes.clear();
 	for (auto index = 0; index < count; index++) {
-		SubMesh::CreateFromIndices(0, offset, min(subdivisionSize, this->_indices.size() - offset), enable_shared_from_this<Mesh>::shared_from_this());
+		SubMesh::CreateFromIndices(0, offset, min(subdivisionSize, this->_indices.size() - offset), dynamic_pointer_cast<Mesh>(shared_from_this()));
 
 		offset += subdivisionSize;
 	}
 };
 
 void Babylon::Mesh::setVerticesData(Float32Array data, VertexBufferKind kind, bool updatable) {
-	this->_vertexBuffers.clear();
-
 	if (this->_vertexBuffers[kind]) {
 		this->_vertexBuffers[kind]->dispose();
 	}
 
-	this->_vertexBuffers[kind] = make_shared<VertexBuffer>(enable_shared_from_this<Mesh>::shared_from_this(), data, kind, updatable);
+	this->_vertexBuffers[kind] = make_shared<VertexBuffer>(dynamic_pointer_cast<Mesh>(shared_from_this()), data, kind, updatable);
 
 	if (kind == VertexBufferKind_PositionKind) {
 		auto stride = this->_vertexBuffers[kind]->getStrideSize();
@@ -422,12 +427,12 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 	// Material
 	auto effectiveMaterial = subMesh->getMaterial();
 
-	if (!effectiveMaterial || !effectiveMaterial->isReady(enable_shared_from_this<Mesh>::shared_from_this())) {
+	if (!effectiveMaterial || !effectiveMaterial->isReady(dynamic_pointer_cast<Mesh>(shared_from_this()))) {
 		return;
 	}
 
 	effectiveMaterial->_preBind();
-	effectiveMaterial->bind(world, enable_shared_from_this<Mesh>::shared_from_this());
+	effectiveMaterial->bind(world, dynamic_pointer_cast<Mesh>(shared_from_this()));
 
 	// Bind and draw
 	auto engine = this->_scene->getEngine();
@@ -440,7 +445,7 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 vector<shared_ptr<void>> Babylon::Mesh::getEmittedParticleSystems() {
 	vector<shared_ptr<void>> results;
 	for (auto particleSystem : this->_scene->particleSystems) {
-		if (particleSystem->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+		if (particleSystem->emitter == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 			results.push_back(particleSystem);
 		}
 	}
@@ -451,7 +456,7 @@ vector<shared_ptr<void>> Babylon::Mesh::getEmittedParticleSystems() {
 vector<shared_ptr<void>> Babylon::Mesh::getHierarchyEmittedParticleSystems() {
 	vector<shared_ptr<void>> results;
 	auto descendants = this->getDescendants();
-	descendants.push_back(enable_shared_from_this<Mesh>::shared_from_this());
+	descendants.push_back(dynamic_pointer_cast<Mesh>(shared_from_this()));
 
 	for (auto particleSystem : this->_scene->particleSystems) {
 		if (find(begin(descendants), end(descendants), particleSystem->emitter) != end(descendants)) {
@@ -465,7 +470,7 @@ vector<shared_ptr<void>> Babylon::Mesh::getHierarchyEmittedParticleSystems() {
 Mesh::Array Babylon::Mesh::getChildren() {
 	Mesh::Array results;
 	for (auto mesh : this->_scene->meshes) {
-		if (mesh->parent == enable_shared_from_this<Mesh>::shared_from_this()) {
+		if (mesh->parent ==dynamic_pointer_cast<Mesh>(shared_from_this())) {
 			results.push_back(mesh);
 		}
 	}
@@ -484,7 +489,7 @@ bool Babylon::Mesh::isInFrustum(Plane::Array frustumPlanes) {
 		this->delayLoadState = DELAYLOADSTATE_LOADING;
 		auto that = this;
 
-		this->_scene->_addPendingData(enable_shared_from_this<Mesh>::shared_from_this());
+		this->_scene->_addPendingData(dynamic_pointer_cast<Mesh>(shared_from_this()));
 
 		// TODO: finish it when finish LoadFile
 		////Tools::LoadFile(this->delayLoadingFile, [] (data) {
@@ -731,7 +736,7 @@ PickingInfo::Ptr Babylon::Mesh::intersects(Ray::Ptr ray, bool fastCheck) {
 		pickingInfo->hit = true;
 		pickingInfo->distance = Vector3::Distance(worldOrigin, pickedPoint);
 		pickingInfo->pickedPoint = pickedPoint;
-		pickingInfo->pickedMesh = enable_shared_from_this<Mesh>::shared_from_this();
+		pickingInfo->pickedMesh = dynamic_pointer_cast<Mesh>(shared_from_this());
 		return pickingInfo;
 	}
 
@@ -740,7 +745,7 @@ PickingInfo::Ptr Babylon::Mesh::intersects(Ray::Ptr ray, bool fastCheck) {
 
 // Clone
 Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotCloneChildren) {
-	auto result = make_shared<Mesh>(name, this->_scene);
+	auto result = Mesh::New(name, this->_scene);
 
 	// Buffers
 	result->_vertexBuffers = this->_vertexBuffers;
@@ -771,7 +776,7 @@ Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotClone
 	if (!doNotCloneChildren) {
 		// Children
 		for (auto mesh : this->_scene->meshes) {
-			if (mesh->parent == enable_shared_from_this<Mesh>::shared_from_this()) {
+			if (mesh->parent == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 				mesh->clone(mesh->name, result);
 			}
 		}
@@ -779,7 +784,7 @@ Mesh::Ptr Babylon::Mesh::clone(string name, Node::Ptr newParent, bool doNotClone
 
 	// Particles
 	for (auto system : this->_scene->particleSystems) {
-		if (system->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+		if (system->emitter == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 			system->clone(system->name, result);
 		}
 	}
@@ -802,7 +807,7 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 	}
 
 	// Remove from scene
-	auto it = find(begin(this->_scene->meshes), end(this->_scene->meshes), enable_shared_from_this<Mesh>::shared_from_this());
+	auto it = find(begin(this->_scene->meshes), end(this->_scene->meshes), dynamic_pointer_cast<Mesh>(shared_from_this()));
 	if (it != end(this->_scene->meshes))
 	{
 		this->_scene->meshes.erase(it);
@@ -814,7 +819,7 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 
 		// Particles
 		for (auto particleSystem : this->_scene->particleSystems) {
-			if (particleSystem->emitter == enable_shared_from_this<Mesh>::shared_from_this()) {
+			if (particleSystem->emitter == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 				particleSystem->dispose();
 			}
 		}
@@ -824,13 +829,13 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 		// Children
 		auto objects = this->_scene->meshes;
 		for (auto object : objects) {
-			if (object->parent == enable_shared_from_this<Mesh>::shared_from_this()) {
+			if (object->parent == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 				object->dispose();
 			}
 		}
 	} else {
 		for (auto obj : this->_scene->meshes) {
-			if (obj->parent == enable_shared_from_this<Mesh>::shared_from_this()) {
+			if (obj->parent == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 				obj->parent = nullptr;
 				obj->computeWorldMatrix(true);
 			}
@@ -921,7 +926,7 @@ Babylon::Mesh::setPhysicsLinkWith(otherMesh, pivot1, pivot2) {
 
 // Statics
 Mesh::Ptr Babylon::Mesh::CreateBox(string name, float size, Scene::Ptr scene, bool updatable) {
-	auto box = make_shared<Mesh>(name, scene);
+	auto box = Mesh::New(name, scene);
 
 	Vector3::Array normalsSource;
 	normalsSource.push_back(make_shared<Vector3>(0, 0, 1));
@@ -1003,7 +1008,7 @@ Mesh::Ptr Babylon::Mesh::CreateBox(string name, float size, Scene::Ptr scene, bo
 };
 
 Mesh::Ptr Babylon::Mesh::CreateSphere(string name, size_t segments, float diameter, Scene::Ptr scene, bool updatable) {
-	auto sphere = make_shared<Mesh>(name, scene);
+	auto sphere = Mesh::New(name, scene);
 
 	auto radius = diameter / 2;
 
@@ -1076,7 +1081,7 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 	auto positions = [];
 	auto normals = [];
 	auto uvs = [];
-	auto cylinder = make_shared<Mesh>(name, scene);
+	auto cylinder = Mesh::New(name, scene);
 
 	auto getCircleVector(i) {
 		auto angle = (i * 2.0 * PI / tessellation);
@@ -1179,7 +1184,7 @@ BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellat
 
 // Torus  (Code from SharpDX.org)
 BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatable) {
-	auto torus = make_shared<Mesh>(name, scene);
+	auto torus = Mesh::New(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1238,7 +1243,7 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 
 // Plane
 BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
-	auto plane = make_shared<Mesh>(name, scene);
+	auto plane = Mesh::New(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1281,7 +1286,7 @@ BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
 };
 
 BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
-	auto ground = make_shared<Mesh>(name, scene);
+	auto ground = Mesh::New(name, scene);
 
 	auto indices = [];
 	auto positions = [];
@@ -1321,7 +1326,7 @@ BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
 };
 
 BABYLON.Mesh.CreateGroundFromHeightMap(name, url, width, height, subdivisions, minHeight, maxHeight, scene, updatable) {
-	auto ground = make_shared<Mesh>(name, scene);
+	auto ground = Mesh::New(name, scene);
 
 	auto onload(img) {
 		auto indices = [];

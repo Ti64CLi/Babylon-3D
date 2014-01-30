@@ -44,4 +44,4 @@ link_directories (
 
 add_library (Engine node.cpp engine.cpp scene.cpp)
 
-target_link_libraries (Engine Animations.lib Bones.lib Cameras.lib Collisions.lib Context.lib Culling.lib Layer.lib LensFlare.lib Lights.lib Materials.lib Mesh.lib Particles.lib PhysicsEngine.lib PostProcess.lib Rendering.lib Sprites.lib Textures.lib Tools.lib)
+add_dependencies (Engine Animations Bones Cameras Collisions Context Culling Interfaces Layer LensFlare Lights Materials Mesh Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools) 

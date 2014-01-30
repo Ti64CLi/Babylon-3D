@@ -14,11 +14,12 @@ Babylon::Camera::Camera(string name, Vector3::Ptr position, Scene::Ptr scene) : 
 	this->upVector = Vector3::Up();
 	this->_childrenFlag = true;
 
-	scene->cameras.push_back(enable_shared_from_this<Camera>::shared_from_this());
+	// moved to new
+	////scene->cameras.push_back(enable_shared_from_this<Camera>::shared_from_this());
 
-	if (!scene->activeCamera) {
-		scene->activeCamera = enable_shared_from_this<Camera>::shared_from_this();
-	}
+	////if (!scene->activeCamera) {
+	////	scene->activeCamera = enable_shared_from_this<Camera>::shared_from_this();
+	////}
 
 	this->_computedViewMatrix = Matrix::Identity();
 	this->_projectionMatrix = make_shared<Matrix>();
@@ -44,6 +45,18 @@ Babylon::Camera::Camera(string name, Vector3::Ptr position, Scene::Ptr scene) : 
 	maxZ = 1000.0;
 	inertia = 0.9;
 	mode = PERSPECTIVE_CAMERA;
+}
+
+Camera::Ptr Babylon::Camera::New(string name, Vector3::Ptr position, Scene::Ptr scene)
+{
+	auto camera = make_shared<Camera>(Camera(name, position, scene));
+	scene->cameras.push_back(camera);
+
+	if (!scene->activeCamera) {
+		scene->activeCamera = camera;
+	}
+
+	return camera;
 }
 
 // Members
@@ -229,8 +242,7 @@ void Babylon::Camera::dispose(bool doNotRecurse) {
 
 	// Postprocesses
 	for (auto postProcess : this->postProcesses) {
-		// TODO: finish it
-		////postProcess->dispose();
+		postProcess->dispose();
 	}
 
 	this->postProcesses.clear();

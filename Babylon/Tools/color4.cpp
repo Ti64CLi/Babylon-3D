@@ -19,6 +19,17 @@ string Babylon::Color4::toString() {
 };
 
 // Operators
+void Babylon::Color4::addInPlace(Color4::Ptr right) {
+	this->r += right->r;
+	this->g += right->g;
+	this->b += right->b;
+	this->a += right->a;
+};
+
+Color4::Ptr Babylon::Color4::add(Color4::Ptr otherColor) {
+	return make_shared<Color4>(this->r + otherColor->r, this->g + otherColor->g, this->b + otherColor->b, this->a + otherColor->a);
+};
+
 Color4::Ptr Babylon::Color4::subtract(Color4::Ptr otherColor) {
 	return make_shared<Color4>(this->r - otherColor->r, this->g - otherColor->g, this->b - otherColor->b, this->a - otherColor->a);
 };
@@ -42,9 +53,9 @@ void Babylon::Color4::scaleToRef(float scale, Color4::Ptr result) {
 };
 
 Babylon::Color4::Ptr Babylon::Color4::Lerp(Color4::Ptr left, Color4::Ptr right, float amount) {
-    auto result = make_shared<Color4>(0, 0, 0, 0);
-    Babylon::Color4::LerpToRef(left, right, amount, result);
-    return result;
+	auto result = make_shared<Color4>(0, 0, 0, 0);
+	Babylon::Color4::LerpToRef(left, right, amount, result);
+	return result;
 };
 
 void Babylon::Color4::LerpToRef(Color4::Ptr left, Color4::Ptr right, float amount, Color4::Ptr result) {

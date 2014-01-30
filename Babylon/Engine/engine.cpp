@@ -30,7 +30,7 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	this->_workingContext = this->_workingCanvas->getContext2d();
 
 	// Viewport
-	this->_hardwareScalingLevel;
+	this->_hardwareScalingLevel = 1.0;
 	this->resize();
 
 	// Caps
@@ -58,6 +58,9 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 
 	// Fullscreen
 	this->isFullscreen = false;
+
+	this->_renderFunction = nullptr;
+	this->_runningLoop = false;
 
 	////auto that = this;
 
@@ -107,6 +110,12 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	////document.addEventListener("webkitpointerlockchange", onPointerLockChange, false);
 
 };
+
+Engine::Ptr Babylon::Engine::New(ICanvas::Ptr canvas, bool antialias)
+{
+	auto engine = make_shared<Engine>(Engine(canvas, antialias));
+	return engine;
+}
 
 // Properties
 float Babylon::Engine::getAspectRatio() {

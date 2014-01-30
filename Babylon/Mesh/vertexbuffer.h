@@ -42,7 +42,7 @@ namespace Babylon {
 		VertexBuffer(MeshPtr mesh, Float32Array data, VertexBufferKind kind, bool updatable);		
 
 		virtual bool isUpdatable();
-		virtual Float32Array& getData();
+		virtual Float32Array getData();
 		virtual size_t getStrideSize();
 		// Methods
 		virtual void update(Float32Array data);

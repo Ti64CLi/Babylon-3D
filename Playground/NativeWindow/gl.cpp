@@ -68,7 +68,7 @@ void GL::bindAttribLocation(Babylon::IGLProgram::Ptr program, Babylon::GLuint in
 }
 
 void GL::bindBuffer(Babylon::GLenum target, Babylon::IGLBuffer::Ptr buffer) { 
-	glBindBuffer(target, buffer->value);
+	glBindBuffer(target, buffer ? buffer->value : 0);
 }
 
 void GL::bindFramebuffer(Babylon::GLenum target, Babylon::IGLFramebuffer::Ptr framebuffer) { 
@@ -128,7 +128,7 @@ void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon
 	glBufferSubData(target, offset, data.size() * sizeof(int32_t), data.data());
 }
 
-Babylon::GLenum checkFramebufferStatus(Babylon::GLenum target) { 
+Babylon::GLenum GL::checkFramebufferStatus(Babylon::GLenum target) { 
 	return glCheckFramebufferStatusEXT(target);
 }
 
@@ -174,33 +174,33 @@ void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon
 	glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
 
-Babylon::IGLBuffer::Ptr createBuffer() { 
+Babylon::IGLBuffer::Ptr GL::createBuffer() { 
 	::GLuint val;
 	glGenBuffers(1, &val);
 	return make_shared<IGLBuffer>(val);
 }
 
-Babylon::IGLFramebuffer::Ptr createFramebuffer() { 
+Babylon::IGLFramebuffer::Ptr GL::createFramebuffer() { 
 	::GLuint val;
 	glGenFramebuffersEXT(1, &val);
 	return make_shared<IGLFramebuffer>(val);
 }
 
-Babylon::IGLProgram::Ptr createProgram() { 
+Babylon::IGLProgram::Ptr GL::createProgram() { 
 	return make_shared<IGLProgram>(glCreateProgram());
 }
 
-Babylon::IGLRenderbuffer::Ptr createRenderbuffer() { 
+Babylon::IGLRenderbuffer::Ptr GL::createRenderbuffer() { 
 	::GLuint val;
 	glGenRenderbuffersEXT(1, &val);
 	return make_shared<IGLRenderbuffer>(val);
 }
 
-Babylon::IGLShader::Ptr createShader(Babylon::GLenum type) { 
+Babylon::IGLShader::Ptr GL::createShader(Babylon::GLenum type) { 
 	return make_shared<IGLShader>(glCreateShader(type));
 }
 
-Babylon::IGLTexture::Ptr createTexture() { 
+Babylon::IGLTexture::Ptr GL::createTexture() { 
 	::GLuint val;
 	glGenTextures(1, &val);
 	return make_shared<IGLTexture>(val);
@@ -301,98 +301,100 @@ void GL::generateMipmap(Babylon::GLenum target) {
 	glGenerateMipmapEXT(target);
 }
 
-Babylon::IGLActiveInfo::Ptr getActiveAttrib(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
+Babylon::IGLActiveInfo::Ptr GL::getActiveAttrib(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
 	////return make_shared<IGLActiveInfo>(glGetActiveAttrib(program->value, index));
 	throw "not supported";
 }
 
-Babylon::IGLActiveInfo::Ptr getActiveUniform(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
+Babylon::IGLActiveInfo::Ptr GL::getActiveUniform(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
 	////return make_shared<IGLActiveInfo>(glGetActiveUniform(program->value, index));
 	throw "not supported";
 }
 
-vector<Babylon::IGLShader::Ptr> getAttachedShaders(Babylon::IGLProgram::Ptr program) { 
+vector<Babylon::IGLShader::Ptr> GL::getAttachedShaders(Babylon::IGLProgram::Ptr program) { 
 	////return make_shared<IGLShader>(glGetAttachedShaders(program->value));
 	throw "not supported";
 }
 
-Babylon::GLint getAttribLocation(Babylon::IGLProgram::Ptr program, string name) { 
+Babylon::GLint GL::getAttribLocation(Babylon::IGLProgram::Ptr program, string name) { 
 	return glGetAttribLocation(program->value, name.c_str());
 }
 
-Babylon::any getBufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
+Babylon::any GL::getBufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
 	////return (Babylon::any) glGetBufferParameteriv(target, pname);
 	throw "not supported";
 }
 
-Babylon::any getParameter(Babylon::GLenum pname) { 
-	throw "not supported";
+Babylon::any GL::getParameter(Babylon::GLenum pname) { 
+	::GLint params;
+	glGetIntegerv(pname, &params);
+	return (Babylon::any)params;
 }
 
-Babylon::GLenum getError() { 
+Babylon::GLenum GL::getError() { 
 	return glGetError();
 }
 
-Babylon::any getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
+Babylon::any GL::getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
 											   Babylon::GLenum pname) {
 	//return (Babylon::any) glGetFramebufferAttachmentParameterivEXT(target, attachment, pname);
 	throw "not supported";
 }
 
-Babylon::any getProgramParameter(Babylon::IGLProgram::Ptr program, Babylon::GLenum pname) { 
+Babylon::any GL::getProgramParameter(Babylon::IGLProgram::Ptr program, Babylon::GLenum pname) { 
 	////return (Babylon::any)glGetProgramParameterdvNV(program->value, pname);
 	throw "not supported";
 }
 
-string getProgramInfoLog(Babylon::IGLProgram::Ptr program) { 
+string GL::getProgramInfoLog(Babylon::IGLProgram::Ptr program) { 
 	//return glGetProgramInfoLog(program->value);
 	throw "not supported";
 }
 
-Babylon::any getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
+Babylon::any GL::getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
 	::GLint params;
 	glGetRenderbufferParameterivEXT(target, pname, &params);
 	return &params;
 }
 
-Babylon::any getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLenum pname) { 
+Babylon::any GL::getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLenum pname) { 
 	throw "not supported";
 }
 
-Babylon::IGLShaderPrecisionFormat::Ptr getShaderPrecisionFormat(Babylon::GLenum shadertype, Babylon::GLenum precisiontype) { 
+Babylon::IGLShaderPrecisionFormat::Ptr GL::getShaderPrecisionFormat(Babylon::GLenum shadertype, Babylon::GLenum precisiontype) { 
 	throw "not supported";
 }
 
-string getShaderInfoLog(Babylon::IGLShader::Ptr shader) { 
+string GL::getShaderInfoLog(Babylon::IGLShader::Ptr shader) { 
 	//return glGetShaderInfoLog(shader->value);
 	throw "not supported";
 }
 
-string getShaderSource(Babylon::IGLShader::Ptr shader) { 
+string GL::getShaderSource(Babylon::IGLShader::Ptr shader) { 
 	//return glGetShaderSource(shader->value);
 	throw "not supported";
 }
 
-Babylon::any getTexParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
+Babylon::any GL::getTexParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
 	////return (Babylon::any) glGetTexParameterfv(target, pname);
 	throw "not supported";
 }
 
-Babylon::any getUniform(Babylon::IGLProgram::Ptr program, Babylon::IGLUniformLocation::Ptr location) { 
+Babylon::any GL::getUniform(Babylon::IGLProgram::Ptr program, Babylon::IGLUniformLocation::Ptr location) { 
 	////return (Babylon::any) glGetUniformfv(program->value, location->value);
 	throw "not supported";
 }
 
-Babylon::IGLUniformLocation::Ptr getUniformLocation(Babylon::IGLProgram::Ptr program, string name) { 
+Babylon::IGLUniformLocation::Ptr GL::getUniformLocation(Babylon::IGLProgram::Ptr program, string name) { 
 	return make_shared<IGLUniformLocation>(glGetUniformLocation(program->value, name.c_str()));
 }
 
-Babylon::any getVertexAttrib(Babylon::GLuint index, Babylon::GLenum pname) { 
+Babylon::any GL::getVertexAttrib(Babylon::GLuint index, Babylon::GLenum pname) { 
 	////return (Babylon::any) glGetVertexAttribdv(index, pname);
 	throw "not supported";
 }
 
-Babylon::GLsizeiptr getVertexAttribOffset(Babylon::GLuint index, Babylon::GLenum pname) { 
+Babylon::GLsizeiptr GL::getVertexAttribOffset(Babylon::GLuint index, Babylon::GLenum pname) { 
 	throw "not supported";
 }
 
@@ -400,31 +402,31 @@ void GL::hint(Babylon::GLenum target, Babylon::GLenum mode) {
 	glHint(target, mode);
 }
 
-Babylon::GLboolean isBuffer(Babylon::IGLBuffer::Ptr buffer) { 
+Babylon::GLboolean GL::isBuffer(Babylon::IGLBuffer::Ptr buffer) { 
 	return glIsBuffer(buffer->value);
 }
 
-Babylon::GLboolean isEnabled(Babylon::GLenum cap) { 
+Babylon::GLboolean GL::isEnabled(Babylon::GLenum cap) { 
 	return glIsEnabled(cap);
 }
 
-Babylon::GLboolean isFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
+Babylon::GLboolean GL::isFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
 	return glIsFramebufferEXT(framebuffer->value);
 }
 
-Babylon::GLboolean isProgram(Babylon::IGLProgram::Ptr program) { 
+Babylon::GLboolean GL::isProgram(Babylon::IGLProgram::Ptr program) { 
 	return glIsProgram(program->value);
 }
 
-Babylon::GLboolean isRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
+Babylon::GLboolean GL::isRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
 	return glIsRenderbufferEXT(renderbuffer->value);
 }
 
-Babylon::GLboolean isShader(Babylon::IGLShader::Ptr shader) { 
+Babylon::GLboolean GL::isShader(Babylon::IGLShader::Ptr shader) { 
 	return glIsShader(shader->value);
 }
 
-Babylon::GLboolean isTexture(Babylon::IGLTexture::Ptr texture) { 
+Babylon::GLboolean GL::isTexture(Babylon::IGLTexture::Ptr texture) { 
 	return glIsTexture(texture->value);
 }
 

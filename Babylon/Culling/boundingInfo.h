@@ -36,9 +36,6 @@ namespace Babylon {
 		virtual bool isInFrustum(Plane::Array& frustumPlanes);
 		virtual bool intersectsPoint(Vector3::Ptr point);
 		virtual bool intersects(BoundingInfo::Ptr boundingInfo, float precise);
-
-		// Statics
-		virtual bool intersects(BoundingInfo::Ptr box0, BoundingInfo::Ptr box1);
 	};
 
 };

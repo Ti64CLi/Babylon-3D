@@ -50,7 +50,7 @@ bool Babylon::VertexBuffer::isUpdatable() {
 	return this->_updatable;
 };
 
-Float32Array& Babylon::VertexBuffer::getData() {
+Float32Array Babylon::VertexBuffer::getData() {
 	return this->_data;
 };
 

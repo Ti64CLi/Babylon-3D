@@ -20,13 +20,16 @@ namespace Babylon {
 	protected:
 		string url;
 		ScenePtr _scene;
-		bool hasAlpha;
-		int level;
 		IGLTexture::Ptr _texture;
 		OnDisposeFunc onDispose;
 
 	public:
+		bool hasAlpha;
+		int level;
 		DELAYLOADSTATE delayLoadState;
+
+		// base property
+		bool isCube;
 
 	public: 
 		BaseTexture(string url, ScenePtr scene);		

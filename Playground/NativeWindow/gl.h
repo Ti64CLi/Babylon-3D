@@ -45,11 +45,9 @@ public:
 		Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha);
 
 	virtual void bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylon::GLenum usage);
-	virtual void bufferData(Babylon::GLenum target, Babylon::any data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Float32Array data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Int32Array data, Babylon::GLenum usage);
 	virtual void bufferData(Babylon::GLenum target, Babylon::Uint16Array data, Babylon::GLenum usage);
-	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::any data);
 	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array data);
 	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array data);
 

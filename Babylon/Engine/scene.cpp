@@ -17,7 +17,8 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	this->clearColor = make_shared<Color4>(0.2, 0.2, 0.3, 1.0);
 	this->ambientColor = make_shared<Color3>(0, 0, 0);
 
-	engine->scenes.push_back(shared_from_this());
+	// moved to new
+	////engine->scenes.push_back(shared_from_this());
 
 	this->_totalVertices = 0;
 	this->_activeVertices = 0;
@@ -66,12 +67,13 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	this->_activeSkeletons.reserve(32);
 
 	// Rendering groups
-	this->_renderingManager = make_shared<RenderingManager>(shared_from_this());
+	// moved to new
+	////this->_renderingManager = make_shared<RenderingManager>(shared_from_this());
 
 	// Materials
 	this->materials.clear();
 	this->multiMaterials.clear();
-	// TODO: finish it when added StandartMaterial
+	// moved to new
 	////this->defaultMaterial = make_shared<StandardMaterial>("default material", shared_from_this());
 
 	// Textures
@@ -110,7 +112,8 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 
 	// Postprocesses
 	this->postProcessesEnabled = true;
-	this->postProcessManager = make_shared<PostProcessManager>(shared_from_this());
+	// moved to new
+	////this->postProcessManager = make_shared<PostProcessManager>(shared_from_this());
 
 	// Customs render targets
 	this->renderTargetsEnabled = true;
@@ -120,6 +123,16 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	this->activeCameras.clear();
 
 	_animationStartDate = 0;
+}
+
+Scene::Ptr Babylon::Scene::New(Engine::Ptr engine) {
+	auto scene = make_shared<Scene>(Scene(engine));
+	engine->scenes.push_back(scene);
+	scene->_renderingManager = make_shared<RenderingManager>(scene);
+	scene->postProcessManager = make_shared<PostProcessManager>(scene);
+	// TODO: finish it
+	////scene->defaultMaterial = make_shared<StandardMaterial>("default material", scene);
+	return scene;
 }
 
 Engine::Ptr Babylon::Scene::getEngine() {
@@ -489,7 +502,7 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 
 void Babylon::Scene::_evaluateActiveMeshes() {
 	this->_activeMeshes.clear();
-	this->_renderingManager.reset();
+	this->_renderingManager->reset();
 	this->_processedMaterials.clear();
 	this->_activeParticleSystems.clear();
 	this->_activeSkeletons.clear();
@@ -749,7 +762,7 @@ void Babylon::Scene::render() {
 	}
 
 	// After render
-	// TODO: is ity used?
+	// TODO: is it used?
 	////if (this->afterRender) {
 	////	this->afterRender();
 	////}

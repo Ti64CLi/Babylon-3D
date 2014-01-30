@@ -21,7 +21,7 @@ namespace Babylon {
 	typedef shared_ptr<Mesh> MeshPtr;
 
 	// TODO: finish it
-	class MultiMaterial: public Material, public enable_shared_from_this<MultiMaterial> {
+	class MultiMaterial: public Material {
 
 	public:
 		typedef shared_ptr<MultiMaterial> Ptr;

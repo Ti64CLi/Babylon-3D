@@ -103,6 +103,7 @@ namespace Babylon {
 		typedef shared_ptr<IGLTexture> Ptr;
 		typedef vector<Ptr> Array;
 
+		// TODO: finish it, I think Tag should not be here
 		// Tag properties
 		GLint _baseWidth;
 		GLint _baseHeight;

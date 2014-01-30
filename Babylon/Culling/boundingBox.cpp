@@ -41,8 +41,9 @@ Babylon::BoundingBox::BoundingBox(Vector3::Ptr minimum, Vector3::Ptr maximum)
 
 	// World
 	this->vectorsWorld.clear();
+	this->vectorsWorld.reserve(this->vectors.size());
 	for (auto index = 0; index < this->vectors.size(); index++) {
-		this->vectorsWorld[index] = Vector3::Zero();
+		this->vectorsWorld.push_back(Vector3::Zero());
 	}
 
 	this->minimumWorld = Vector3::Zero();

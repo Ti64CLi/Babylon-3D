@@ -9,7 +9,8 @@ using namespace Babylon;
 
 Babylon::SubMesh::SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, Mesh::Ptr mesh) {
 	this->_mesh = mesh;
-	mesh->subMeshes.push_back(shared_from_this());
+	// moved to new
+	////mesh->subMeshes.push_back(shared_from_this());
 	this->materialIndex = materialIndex;
 	this->verticesStart = verticesStart;
 	this->verticesCount = verticesCount;
@@ -18,6 +19,13 @@ Babylon::SubMesh::SubMesh(int materialIndex, int verticesStart, size_t verticesC
 
 	this->refreshBoundingInfo();
 };
+
+SubMesh::Ptr SubMesh::New(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, Mesh::Ptr mesh)
+{
+	auto subMesh = make_shared<SubMesh>(SubMesh(materialIndex, verticesStart, verticesCount, indexStart, indexCount, mesh));
+	mesh->subMeshes.push_back(subMesh);
+	return subMesh;
+}
 
 //Properties
 BoundingInfo::Ptr Babylon::SubMesh::getBoundingInfo() {
@@ -31,11 +39,10 @@ Mesh::Ptr Babylon::SubMesh::getMesh() {
 Material::Ptr Babylon::SubMesh::getMaterial() {
 	auto rootMaterial = this->_mesh->material;
 
-	// TODO: finish it when MultiMaterial is added
-	////MultiMaterial::Ptr multiMaterial = dynamic_pointer_cast<MultiMaterial>(rootMaterial);
-	////if (multiMaterial) {
-	////	return multiMaterial->getSubMaterial(this->materialIndex);
-	////}
+	MultiMaterial::Ptr multiMaterial = dynamic_pointer_cast<MultiMaterial>(rootMaterial);
+	if (multiMaterial) {
+		return multiMaterial->getSubMaterial(this->materialIndex);
+	}
 
 	if (!rootMaterial) {
 		return this->_mesh->_scene->defaultMaterial;
