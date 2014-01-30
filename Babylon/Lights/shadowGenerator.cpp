@@ -1,6 +1,7 @@
 #include "shadowGenerator.h"
 #include <string>
-#include <numeric>
+#include <algorithm>
+#include <sstream>
 #include "engine.h"
 #include "light.h"
 
@@ -87,7 +88,9 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 	}
 
 	// Get correct effect      
-	auto join = accumulate( defines.begin(), defines.end(), string("\n") );
+	stringstream ss;
+	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
+	auto join = ss.str();
 
 	vector<string> uniformNames; 
 	uniformNames.push_back("world");

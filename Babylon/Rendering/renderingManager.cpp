@@ -10,7 +10,7 @@ int Babylon::RenderingManager::MAX_RENDERINGGROUPS = 4;
 Babylon::RenderingManager::RenderingManager(Scene::Ptr scene)
 {
 	this->_scene = scene;
-	this->_renderingGroups.clear();
+	this->_renderingGroups.reserve(MAX_RENDERINGGROUPS);
 	
 	_depthBufferAlreadyCleaned = false;
 }
@@ -84,7 +84,7 @@ void Babylon::RenderingManager::render(CustomRenderFunctionFunc customRenderFunc
 				}
 			};
 			if (renderingGroup && !renderingGroup->render(customRenderFunction, renderLambda)) {
-				this->_renderingGroups.erase(begin(this->_renderingGroups) + index, begin(this->_renderingGroups) + index);
+				this->_renderingGroups[index]  = nullptr;
 			}
 		} else if (renderSprites) {
 			this->_renderSprites(index);
@@ -106,7 +106,12 @@ void Babylon::RenderingManager::dispatch(SubMesh::Ptr subMesh) {
 	auto mesh = subMesh->getMesh();
 	auto renderingGroupId = mesh->renderingGroupId;
 
-	if (!this->_renderingGroups[renderingGroupId]) {
+	if (this->_renderingGroups.size() <= renderingGroupId || !this->_renderingGroups[renderingGroupId]) {
+		while (this->_renderingGroups.size() <= renderingGroupId)
+		{
+			this->_renderingGroups.push_back(nullptr);
+		}
+
 		this->_renderingGroups[renderingGroupId] = make_shared<RenderingGroup>(renderingGroupId, this->_scene);
 	}
 

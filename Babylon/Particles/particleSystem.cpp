@@ -1,6 +1,7 @@
 #include "particleSystem.h"
 #include <string>
-#include <numeric>
+#include <algorithm>
+#include <sstream>
 #include "engine.h"
 
 using namespace Babylon;
@@ -232,7 +233,10 @@ Effect::Ptr Babylon::ParticleSystem::_getEffect() {
 	samplers.push_back("diffuseSampler");
 	
 	// Effect
-	auto join = accumulate( defines.begin(), defines.end(), string("\n") );
+	stringstream ss;
+	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
+	auto join = ss.str();
+
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
 		this->_effect = this->_scene->getEngine()->createEffect("particles",

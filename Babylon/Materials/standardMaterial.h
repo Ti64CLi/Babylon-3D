@@ -12,6 +12,7 @@
 #include "effect.h"
 #include "animatable.h"
 #include "material.h"
+#include "renderTargetTexture.h"
 
 using namespace std;
 
@@ -58,13 +59,15 @@ namespace Babylon {
 
 		string _cachedDefines;
 
-	public: 
+	protected: 
 		StandardMaterial(string name, ScenePtr scene);
+	public: 
+		static StandardMaterial::Ptr New(string name, ScenePtr scene);
 
 		virtual bool needAlphaBlending();
 		virtual bool needAlphaTesting();
 		// Methods   
-		virtual bool isReady(Mesh::Ptr mesh);
+		virtual bool isReady(MeshPtr mesh);
 		virtual IRenderable::Array getRenderTargetTextures();
 		virtual void unbind();
 		virtual void bind(Matrix::Ptr world, MeshPtr mesh);

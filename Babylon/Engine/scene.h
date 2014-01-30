@@ -11,7 +11,7 @@
 #include "ray.h"
 #include "baseTexture.h"
 #include "light.h"
-#include "material.h"
+#include "standardMaterial.h"
 #include "multiMaterial.h"
 #include "camera.h"
 #include "pickingInfo.h"

@@ -26,14 +26,12 @@ void Babylon::Effect::_init(string baseName, string vertex, string fragment, vec
 	this->_attributesNames = attributesNames;
 
 	// TODO: finish it
-	/*
 	auto that = this;
-	this->_loadVertexShader(vertex, function (vertexCode) {
-		that._loadFragmentShader(fragment, function (fragmentCode) {
-			that._prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
+	this->_loadVertexShader(vertex, [&] (string vertexCode) {
+		that->_loadFragmentShader(fragment, [&] (string fragmentCode) {
+			that->_prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
 		});
 	});   
-	*/
 
 	// Cache
 	this->_valueCache.clear();
@@ -127,9 +125,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	//BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
 };
 
-// TODO: finish it
-/*
-void Babylon::Effect::_prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, useFallback) {
+void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, string optionalDefines, bool useFallback) {
 	try {
 		auto engine = this->_engine;
 		this->_program = engine->createShaderProgram(vertexSourceCode, fragmentSourceCode, defines);
@@ -137,33 +133,31 @@ void Babylon::Effect::_prepareEffect(vertexSourceCode, fragmentSourceCode, attri
 		this->_uniforms = engine->getUniforms(this->_program, this->_uniformsNames);
 		this->_attributes = engine->getAttributes(this->_program, attributesNames);
 
-		for (auto index = 0; index < this->_samplers.length; index++) {
+		for (auto index = 0; index < this->_samplers.size(); index++) {
 			auto sampler = this->getUniform(this->_samplers[index]);
-
-			if (sampler == null) {
-				this->_samplers.splice(index, 1);
+			if (!sampler) {
+				this->_samplers.erase(begin(this->_samplers) + index, begin(this->_samplers) + index);
 				index--;
 			}
 		}
 
-		engine->bindSamplers(this);
+		engine->bindSamplers(shared_from_this());
 
 		this->_isReady = true;
-	} catch (e) {
-		if (!useFallback && optionalDefines) {
-			for (auto index = 0; index < optionalDefines.length; index++) {
+	} catch (string message) {
+		if (!useFallback && !optionalDefines.empty()) {
+			for (auto index = 0; index < optionalDefines.length(); index++) {
 				defines = defines.replace(optionalDefines[index], "");
 			}
 			this->_prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, true);
 		} else {
-			console.error("Unable to compile effect: " + this->name);
-			console.error("Defines: " + defines);
-			console.error("Optional defines: " + optionalDefines);
-			this->_compilationError = e.message;
+			////console.error("Unable to compile effect: " + this->name);
+			////console.error("Defines: " + defines);
+			////console.error("Optional defines: " + optionalDefines);
+			this->_compilationError = message;
 		}
 	}
 };
-*/
 
 void Babylon::Effect::_bindTexture(string channel, IGLTexture::Ptr texture) {
 	this->_engine->_bindTexture(find(begin(this->_samplers), end(this->_samplers), channel) - begin(this->_samplers), texture);
@@ -173,12 +167,9 @@ void Babylon::Effect::setTexture(string channel, Texture::Ptr texture) {
 	this->_engine->setTexture(find(begin(this->_samplers), end(this->_samplers), channel) - begin(this->_samplers), texture);
 };
 
-// TODO: finish it
-/*
-void Babylon::Effect::setTextureFromPostProcess(channel, postProcess) {
-	this->_engine->setTextureFromPostProcess(this->_samplers.indexOf(channel), postProcess);
+void Babylon::Effect::setTextureFromPostProcess(string channel, PostProcess::Ptr postProcess) {
+	this->_engine->setTextureFromPostProcess(find(begin(this->_samplers), end(this->_samplers), channel) - begin(this->_samplers), postProcess);
 };
-*/
 
 void Babylon::Effect::_cacheFloat2(string uniformName, float x, float y) {
 	if (!this->_valueCache.count(uniformName)) {

@@ -130,8 +130,7 @@ Scene::Ptr Babylon::Scene::New(Engine::Ptr engine) {
 	engine->scenes.push_back(scene);
 	scene->_renderingManager = make_shared<RenderingManager>(scene);
 	scene->postProcessManager = make_shared<PostProcessManager>(scene);
-	// TODO: finish it
-	////scene->defaultMaterial = make_shared<StandardMaterial>("default material", scene);
+	scene->defaultMaterial = StandardMaterial::New("default material", scene);
 	return scene;
 }
 
@@ -487,8 +486,8 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 					// concat
 					////this->_renderTargets.insert(end(this->_renderTargets), begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()));
 					auto that = this;
-					for_each(begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()), [&that](const Texture::Ptr& texture) {
-						that->_renderTargets.push_back(dynamic_pointer_cast<IRenderable>(texture));
+					for_each(begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()), [&that](const IRenderable::Ptr renderable) {
+						that->_renderTargets.push_back(dynamic_pointer_cast<IRenderable>(renderable));
 					});
 				}                                 
 			}

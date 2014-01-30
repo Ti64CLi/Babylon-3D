@@ -6,7 +6,6 @@
 #include <map>
 
 #include "iengine.h"
-#include "effect.h"
 
 using namespace std;
 
@@ -15,6 +14,9 @@ namespace Babylon {
 	class Camera;
 	typedef shared_ptr<Camera> CameraPtr;
 
+	class Effect;
+	typedef shared_ptr<Effect> EffectPtr;
+
 	class PostProcess : public IDisposable, public enable_shared_from_this<PostProcess> {
 
 	public:
@@ -22,7 +24,7 @@ namespace Babylon {
 		typedef shared_ptr<PostProcess> Ptr;
 		typedef vector<Ptr> Array;
 
-		typedef void (*OnApplyFunc)(Effect::Ptr);
+		typedef void (*OnApplyFunc)(EffectPtr);
 		typedef void (*OnDisposeFunc)();
 		typedef void (*OnSizeChangedFunc)();
 
@@ -34,7 +36,7 @@ namespace Babylon {
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 
-		Effect::Ptr _effect;
+		EffectPtr _effect;
 		IGLTexture::Ptr _texture;
 
 		float _renderRatio;
@@ -54,7 +56,7 @@ namespace Babylon {
 
 		// Methods
 		virtual void activate();
-		virtual Effect::Ptr apply();
+		virtual EffectPtr apply();
 		virtual void dispose(bool doNotRecurse = false);
 	};
 

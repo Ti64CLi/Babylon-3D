@@ -960,11 +960,9 @@ void Babylon::Engine::_bindTexture(int channel, IGLTexture::Ptr texture) {
 	this->_activeTexturesCache[channel] = nullptr;
 };
 
-/*
-void Babylon::Engine::setTextureFromPostProcess(int channel, postProcess) {
-this->_bindTexture(channel, postProcess->_texture);
+void Babylon::Engine::setTextureFromPostProcess(int channel, PostProcess::Ptr postProcess) {
+	this->_bindTexture(channel, postProcess->_texture);
 };
-*/
 
 void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {
 	if (channel < 0) {

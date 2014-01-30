@@ -33,7 +33,7 @@ ShadowGenerator::Ptr Babylon::Light::getShadowGenerator() {
 };
 
 // Methods
-void Babylon::Light::transferToEffect() {
+void Babylon::Light::transferToEffect(Effect::Ptr effect, string directionUniformName, string groundColorUniformName) {
 };
 
 // TODO: my addon

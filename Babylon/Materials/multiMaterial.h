@@ -29,8 +29,10 @@ namespace Babylon {
 
 		Material::Array subMaterials;
 
-	public: 
+	protected: 
 		MultiMaterial(string name, ScenePtr scene);
+	public: 
+		static MultiMaterial::Ptr New(string name, ScenePtr scene);
 
 		virtual bool isReady(MeshPtr mesh);
 		virtual Material::Ptr getSubMaterial(int index);

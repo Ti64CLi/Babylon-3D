@@ -20,12 +20,8 @@ Babylon::Material::Material(string name, Scene::Ptr scene) {
 	this->id = name;
 
 	this->_scene = scene;
-	scene->materials.push_back(shared_from_this());
-};
-
-// Properties
-bool Babylon::Material::isReady(Mesh::Ptr mesh) {
-	return true;
+	// TODO: do not forget to add all derived materials to the scene
+	////scene->materials.push_back(shared_from_this());
 };
 
 Effect::Ptr Babylon::Material::getEffect() {
@@ -73,7 +69,17 @@ void Babylon::Material::dispose(bool doNotRecurse) {
 };
 
 // my addon to support getRenderTargetTextures
-Texture::Array Babylon::Material::getRenderTargetTextures() {
-	Texture::Array _renderTargets;
+IRenderable::Array Babylon::Material::getRenderTargetTextures() {
+	IRenderable::Array _renderTargets;
 	return _renderTargets;
+};
+
+// TODO: return property object to read/write AnimatedValue
+AnimationValue Babylon::Material::operator[](string key)
+{
+	// TODO: finish it. it is better to return PropertyAnimationValue with object and value to be update to update it
+	return AnimationValue();
+}
+
+void Babylon::Material::markAsDirty(string property) {
 };

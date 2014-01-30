@@ -1,8 +1,9 @@
 #include "standardMaterial.h"
 #include <string>
-#include <numeric>
+#include <algorithm>
+#include <sstream>
 #include "engine.h"
-#include "mesh->h"
+#include "mesh.h"
 #include "shadowGenerator.h"
 
 using namespace Babylon;
@@ -22,7 +23,8 @@ Babylon::StandardMaterial::StandardMaterial(string name, Scene::Ptr scene) : Mat
 	this->specularPower = 64;
 	this->emissiveColor = make_shared<Color3>(0, 0, 0);
 
-	this->_cachedDefines = nullptr;
+	// no need to initialize a string
+	//this->_cachedDefines = "";
 
 	this->_renderTargets.reserve(16);
 
@@ -30,10 +32,16 @@ Babylon::StandardMaterial::StandardMaterial(string name, Scene::Ptr scene) : Mat
 	this->_worldViewProjectionMatrix = Matrix::Zero();
 	this->_lightMatrix = Matrix::Zero();
 	this->_globalAmbientColor = make_shared<Color3>(0, 0, 0);
-	this->_baseColor = make_shared<Color3>();
-	this->_scaledDiffuse = make_shared<Color3>();
-	this->_scaledSpecular = make_shared<Color3>();
+	this->_baseColor = make_shared<Color3>(0, 0, 0);
+	this->_scaledDiffuse = make_shared<Color3>(0, 0, 0);
+	this->_scaledSpecular = make_shared<Color3>(0, 0, 0);
+};
 
+StandardMaterial::Ptr Babylon::StandardMaterial::New(string name, Scene::Ptr scene)
+{
+	auto standardMaterial = make_shared<StandardMaterial>(StandardMaterial(name, scene));
+	scene->materials.push_back(standardMaterial);
+	return standardMaterial;
 };
 
 // Properties   
@@ -125,9 +133,10 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 	}
 
 	// Effect
-	if (BABYLON.clipPlane) {
-		defines.push_back("#define CLIPPLANE");
-	}
+	// TODO: what todo with clipPlane
+	////if (BABYLON.clipPlane) {
+	////	defines.push_back("#define CLIPPLANE");
+	////}
 
 	if (engine->getAlphaTesting()) {
 		defines.push_back("#define ALPHATEST");
@@ -227,7 +236,14 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 	}
 
 	// Get correct effect      
-	auto join = accumulate( defines.begin(), defines.end(), string("\n") );
+	stringstream ss;
+	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
+	auto join = ss.str();
+
+	//auto optionalJoin = accumulate( optionalDefines.begin(), optionalDefines.end(), string("\n") );
+	stringstream ss2;
+	for_each(begin(defines), end(defines), [&](string& item) { ss2 << item << endl; });
+	auto optionalJoin = ss2.str();
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
 
@@ -304,7 +320,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			attribs,
 			uniformNames,
 			samplers,
-			join, optionalDefines);
+			join, optionalJoin);
 	}
 	if (!this->_effect->isReady()) {
 		return false;
@@ -415,23 +431,24 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 				continue;
 			}
 
-			if (mesh && light->excludedMeshes.indexOf(mesh) != -1) {
+			if (mesh && find(begin(light->excludedMeshes), end(light->excludedMeshes), mesh) != end(light->excludedMeshes)) {
 				continue;
 			}
 
-			if (light instanceof BABYLON.PointLight) {
-				// Point Light
-				light->transferToEffect(this->_effect, "vLightData" + lightIndex);
-			} else if (light instanceof BABYLON.DirectionalLight) {
-				// Directional Light
-				light->transferToEffect(this->_effect, "vLightData" + lightIndex);
-			} else if (light instanceof BABYLON.SpotLight) {
-				// Spot Light
-				light->transferToEffect(this->_effect, "vLightData" + lightIndex, "vLightDirection" + lightIndex);
-			} else if (light instanceof BABYLON.HemisphericLight) {
+			// TODO: finish when added all lights
+			////if (light instanceof BABYLON.PointLight) {
+			////	// Point Light
+			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex);
+			////} else if (light instanceof BABYLON.DirectionalLight) {
+			////	// Directional Light
+			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex);
+			////} else if (light instanceof BABYLON.SpotLight) {
+			////	// Spot Light
+			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex, "vLightDirection" + lightIndex);
+			////} else if (light instanceof BABYLON.HemisphericLight) {
 				// Hemispheric Light
 				light->transferToEffect(this->_effect, "vLightData" + lightIndex, "vLightGround" + lightIndex);
-			}
+			////}
 
 			light->diffuse->scaleToRef(light->intensity, this->_scaledDiffuse);
 			light->specular->scaleToRef(light->intensity, this->_scaledSpecular);
@@ -453,9 +470,10 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 		}
 	}
 
-	if (BABYLON.clipPlane) {
-		this->_effect->setFloat4("vClipPlane", BABYLON.clipPlane.normal.x, BABYLON.clipPlane.normal.y, BABYLON.clipPlane.normal.z, BABYLON.clipPlane.d);
-	}
+	// TODO: finish when clipPlane added
+	////if (BABYLON.clipPlane) {
+	////	this->_effect->setFloat4("vClipPlane", BABYLON.clipPlane->normal->x, BABYLON->clipPlane->normal->y, BABYLON->clipPlane->normal->z, BABYLON->clipPlane->d);
+	////}
 
 	// View
 	if (this->_scene->fogMode != FOGMODE_NONE || this->reflectionTexture) {
@@ -472,31 +490,31 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 Texture::Array Babylon::StandardMaterial::getAnimatables () {
 	Texture::Array results;
 
-	if (this->diffuseTexture && this->diffuseTexture->animations && this->diffuseTexture->animations.size() > 0) {
+	if (this->diffuseTexture && this->diffuseTexture->animations.size() > 0) {
 		results.push_back(this->diffuseTexture);
 	}
 
-	if (this->ambientTexture && this->ambientTexture->animations && this->ambientTexture->animations.size() > 0) {
+	if (this->ambientTexture && this->ambientTexture->animations.size() > 0) {
 		results.push_back(this->ambientTexture);
 	}
 
-	if (this->opacityTexture && this->opacityTexture->animations && this->opacityTexture->animations.size() > 0) {
+	if (this->opacityTexture && this->opacityTexture->animations.size() > 0) {
 		results.push_back(this->opacityTexture);
 	}
 
-	if (this->reflectionTexture && this->reflectionTexture->animations && this->reflectionTexture->animations.size() > 0) {
+	if (this->reflectionTexture && this->reflectionTexture->animations.size() > 0) {
 		results.push_back(this->reflectionTexture);
 	}
 
-	if (this->emissiveTexture && this->emissiveTexture->animations && this->emissiveTexture->animations.size() > 0) {
+	if (this->emissiveTexture && this->emissiveTexture->animations.size() > 0) {
 		results.push_back(this->emissiveTexture);
 	}
 
-	if (this->specularTexture && this->specularTexture->animations && this->specularTexture->animations.size() > 0) {
+	if (this->specularTexture && this->specularTexture->animations.size() > 0) {
 		results.push_back(this->specularTexture);
 	}
 
-	if (this->bumpTexture && this->bumpTexture->animations && this->bumpTexture->animations.size() > 0) {
+	if (this->bumpTexture && this->bumpTexture->animations.size() > 0) {
 		results.push_back(this->bumpTexture);
 	}
 
@@ -536,7 +554,7 @@ void Babylon::StandardMaterial::dispose () {
 };
 
 StandardMaterial::Ptr Babylon::StandardMaterial::clone (string name) {
-	auto newStandardMaterial = make_shared<StandardMaterial>(name, this->_scene);
+	auto newStandardMaterial = StandardMaterial::New(name, this->_scene);
 
 	// Base material
 	newStandardMaterial->checkReadyOnEveryCall = this->checkReadyOnEveryCall;
@@ -555,7 +573,7 @@ StandardMaterial::Ptr Babylon::StandardMaterial::clone (string name) {
 		newStandardMaterial->opacityTexture = this->opacityTexture->clone();
 	}
 	if (this->reflectionTexture) {
-		newStandardMaterial->reflectionTexture = this->reflectionTexture->clone();
+		newStandardMaterial->reflectionTexture = dynamic_pointer_cast<RenderTargetTexture>(this->reflectionTexture->clone());
 	}
 	if (this->emissiveTexture) {
 		newStandardMaterial->emissiveTexture = this->emissiveTexture->clone();

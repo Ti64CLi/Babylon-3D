@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <set>
 #include <functional>
 
 #include "iengine.h"
@@ -23,6 +24,7 @@ namespace Babylon {
 
 		typedef shared_ptr<RenderingGroup> Ptr;
 		typedef vector<Ptr> Array;
+		typedef set<int, Ptr> Map;
 
 		int index;
 

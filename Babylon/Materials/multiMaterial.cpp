@@ -5,8 +5,16 @@
 using namespace Babylon;
 
 Babylon::MultiMaterial::MultiMaterial(string name, Scene::Ptr scene) : Material(name, scene) {
-	scene->multiMaterials.push_back(enable_shared_from_this<MultiMaterial>::shared_from_this());
+	// moved to new
+	/////scene->multiMaterials.push_back(enable_shared_from_this<MultiMaterial>::shared_from_this());
 	subMaterials.clear();
+};
+
+MultiMaterial::Ptr Babylon::MultiMaterial::New(string name, Scene::Ptr scene)
+{
+	auto multiMaterial = make_shared<MultiMaterial>(MultiMaterial(name, scene));
+	scene->multiMaterials.push_back(multiMaterial);
+	return multiMaterial;
 };
 
 // Properties

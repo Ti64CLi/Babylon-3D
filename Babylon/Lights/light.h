@@ -40,6 +40,9 @@ namespace Babylon {
 		// base properties for
 		Vector3::Ptr position;
 		Vector3::Ptr direction;
+		Color3::Ptr diffuse;
+        Color3::Ptr specular;
+
 		Vector3::Ptr _transformedPosition;
 
 	private:
@@ -51,12 +54,12 @@ namespace Babylon {
 		virtual ScenePtr getScene();
 		virtual ShadowGeneratorPtr getShadowGenerator();
 		// Methods
-		virtual void transferToEffect();
+		virtual void transferToEffect(Effect::Ptr effect, string directionUniformName, string groundColorUniformName);
 		virtual Matrix::Ptr getWorldMatrix();
 		virtual void dispose(bool doNotRecurse = false);
 
 		// for Lights
-		virtual Matrix::Ptr _getWorldMatrix();
+		virtual Matrix::Ptr _getWorldMatrix() = 0;
 		virtual bool _computeTransformedPosition();
 	};
 

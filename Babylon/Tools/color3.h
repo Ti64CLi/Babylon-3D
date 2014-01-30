@@ -13,7 +13,6 @@ namespace Babylon {
 	public:
 		typedef shared_ptr<Color3> Ptr;
 
-	public:
 		int r;
 		int g;
 		int b;

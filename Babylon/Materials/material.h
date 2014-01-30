@@ -19,7 +19,7 @@ namespace Babylon {
 	class Mesh;
 	typedef shared_ptr<Mesh> MeshPtr;
 
-	// TODO: finish it
+	// TODO: finish it (finish Animatable)
 	class Material: public Animatable, public IDisposable, public enable_shared_from_this<Material> {
 
 	public:
@@ -45,7 +45,7 @@ namespace Babylon {
 	public: 
 		Material(string name, ScenePtr scene);
 
-		virtual bool isReady(MeshPtr mesh);
+		virtual bool isReady(MeshPtr mesh) = 0;
 		virtual Effect::Ptr getEffect();
 		virtual bool needAlphaBlending();
 		virtual bool needAlphaTesting();
@@ -56,7 +56,10 @@ namespace Babylon {
 		virtual void dispose(bool doNotRecurse = false);
 
 		// my addon 
-		virtual Texture::Array getRenderTargetTextures();
+		virtual IRenderable::Array getRenderTargetTextures();
+		// Animatable
+		virtual void markAsDirty(string property = "");
+		virtual AnimationValue operator[](string key);
 	};
 
 };

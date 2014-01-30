@@ -133,6 +133,7 @@ namespace Babylon {
 	class IGLUniformLocation : public IGLObject {
 	public:
 		typedef shared_ptr<IGLUniformLocation> Ptr;
+		typedef vector<Ptr> Array;
 		IGLUniformLocation(GLuint value) : IGLObject(value) {};
 	};
 

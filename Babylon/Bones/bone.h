@@ -42,6 +42,7 @@ namespace Babylon {
 		virtual Matrix::Ptr getAbsoluteMatrix();
 		virtual void updateMatrix(Matrix::Ptr matrix);
 		virtual void _updateDifferenceMatrix();
+		// Animatable
 		virtual void markAsDirty(string property = "");
 		virtual AnimationValue operator[](string key);
 	};

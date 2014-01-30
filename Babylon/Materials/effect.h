@@ -5,11 +5,14 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <functional>
 
 #include "igl.h"
 #include "iengine.h"
 #include "tools_math.h"
 #include "texture.h"
+#include "postProcess.h"
+
 
 using namespace std;
 
@@ -22,7 +25,7 @@ namespace Babylon {
 		typedef shared_ptr<Effect> Ptr;
 		typedef vector<Ptr> Array;
 		typedef Ptr ShaderPtr;
-		typedef void (*CallbackFunc)(ShaderPtr);
+		typedef function<void (ShaderPtr)> CallbackFunc;
 
 	public:
 
@@ -34,12 +37,12 @@ namespace Babylon {
 		bool _isReady;
 		string _compilationError;
 		vector<string> _attributesNames;
-		vector<GLuint> _attributes;
+		vector<GLint> _attributes;
 
 		map<string, Float32Array> _valueCache;
 
 		IGLProgram::Ptr _program;
-		map<int, IGLUniformLocation::Ptr> _uniforms;
+		IGLUniformLocation::Array _uniforms;
 
 	public:
 		static map<string, ShaderPtr> ShadersStore;
@@ -64,14 +67,10 @@ namespace Babylon {
 		// Methods
 		virtual void _loadVertexShader(string vertex, CallbackFunc callback);
 		virtual void _loadFragmentShader(string fragment, CallbackFunc callback);
-		/*
-		virtual void _prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, useFallback);
-		*/
+		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, string optionalDefines, bool useFallback = false);
 		virtual void _bindTexture(string channel, IGLTexture::Ptr texture);
 		virtual void setTexture(string channel, Texture::Ptr texture);
-		/*
-		virtual void setTextureFromPostProcess(channel, postProcess);
-		*/
+		virtual void setTextureFromPostProcess(string channel, PostProcess::Ptr postProcess);
 		virtual void _cacheFloat2(string uniformName, float x, float y);
 		virtual void _cacheFloat3(string uniformName, float x, float y, float z);
 		virtual void _cacheFloat4(string uniformName, float x, float y, float z, float w);

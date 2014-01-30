@@ -133,9 +133,7 @@ namespace Babylon {
 		virtual void _releaseTexture(IGLTexture::Ptr texture);
 		virtual void bindSamplers(Effect::Ptr effect);
 		virtual void _bindTexture(int channel, IGLTexture::Ptr texture);
-		/*
-		virtual void setTextureFromPostProcess(channel, postProcess);
-		*/
+		virtual void setTextureFromPostProcess(int channel, PostProcess::Ptr postProcess);
 		virtual void setTexture(int channel, Texture::Ptr texture);
 		virtual void _setAnisotropicLevel(GLenum key, Texture::Ptr texture);
 		// Dispose
