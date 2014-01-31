@@ -25,7 +25,7 @@ namespace Babylon {
 		typedef shared_ptr<Effect> Ptr;
 		typedef vector<Ptr> Array;
 		typedef Ptr ShaderPtr;
-		typedef function<void (ShaderPtr)> CallbackFunc;
+		typedef function<void (string)> CallbackFunc;
 
 	public:
 
@@ -37,7 +37,7 @@ namespace Babylon {
 		bool _isReady;
 		string _compilationError;
 		vector<string> _attributesNames;
-		vector<GLint> _attributes;
+		vector<int> _attributes;
 
 		map<string, Float32Array> _valueCache;
 
@@ -45,19 +45,21 @@ namespace Babylon {
 		IGLUniformLocation::Array _uniforms;
 
 	public:
-		static map<string, ShaderPtr> ShadersStore;
+		static map<string, string> ShadersStore;
 
 	private:
-		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
+		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
 	public: 
-		Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
-		Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, string optionalDefines);		
+		Effect();		
+	public: 
+		static Effect::Ptr New(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		static Effect::Ptr New(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
 
 		// Properties
 		virtual bool isReady();
 		virtual IGLProgram::Ptr getProgram();
 		virtual vector<string>& getAttributesNames();
-		virtual GLuint getAttribute(int index);
+		virtual int getAttribute(int index);
 		virtual size_t getAttributesCount();
 		virtual int getUniformIndex(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(string uniformName);
@@ -67,7 +69,7 @@ namespace Babylon {
 		// Methods
 		virtual void _loadVertexShader(string vertex, CallbackFunc callback);
 		virtual void _loadFragmentShader(string fragment, CallbackFunc callback);
-		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, string optionalDefines, bool useFallback = false);
+		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, vector<string> optionalDefines, bool useFallback = false);
 		virtual void _bindTexture(string channel, IGLTexture::Ptr texture);
 		virtual void setTexture(string channel, Texture::Ptr texture);
 		virtual void setTextureFromPostProcess(string channel, PostProcess::Ptr postProcess);

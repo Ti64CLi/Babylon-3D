@@ -237,12 +237,16 @@ Effect::Ptr Babylon::ParticleSystem::_getEffect() {
 	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
 	auto join = ss.str();
 
+	vector<string> optionalDefines;
+
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
 		this->_effect = this->_scene->getEngine()->createEffect("particles",
 			attributes,
 			uniformNames,
-			samplers, join, "");
+			samplers, 
+			join, 
+			optionalDefines);
 	}
 
 	return this->_effect;

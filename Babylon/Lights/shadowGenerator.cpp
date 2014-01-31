@@ -99,6 +99,7 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 	uniformNames.push_back("worldViewProjection");
 
 	vector<string> samples; 
+	vector<string> optionalDefines;
 
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
@@ -107,7 +108,8 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 				attribs,
 				uniformNames,
 				samples, 
-				join, "");
+				join, 
+				optionalDefines);
 	}
 
 	return this->_effect->isReady();

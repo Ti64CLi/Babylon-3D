@@ -95,12 +95,12 @@ namespace Babylon {
 		virtual void bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
 		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
 		virtual void draw(bool useTriangles, int indexStart, int indexCount);
-		virtual Effect::Ptr createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines);
-		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines);
 		static IGLShader::Ptr compileShader(IGL::Ptr gl, string source, string type, string defines);
 		virtual IGLProgram::Ptr createShaderProgram(string vertexCode, string fragmentCode, string defines);
 		virtual vector<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames);
-		virtual vector<GLint> getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames);
+		virtual vector<int> getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames);
 		virtual void enableEffect(Effect::Ptr effect);
 		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices);
 		virtual void setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr matrix);

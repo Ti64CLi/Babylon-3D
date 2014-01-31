@@ -23,10 +23,14 @@ Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector<strin
 	_samplers.insert(end(_samplers), begin(samplers), end(samplers));
 	samplers.push_back("textureSampler");
 
+	vector<string> optionalDefines;
+
 	this->_effect = this->_engine->createEffect("postprocess", "postprocess", fragmentUrl,
 		attributes,
 		parameters,
-		_samplers, "", "");
+		_samplers, 
+		"", 
+		optionalDefines);
 
 	onApply = nullptr;
 	_onDispose = nullptr;

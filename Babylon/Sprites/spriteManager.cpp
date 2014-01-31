@@ -60,12 +60,14 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	vector<string> samplers;
 	samplers.push_back("diffuseSampler");
 
+	vector<string> optionalDefines;
 
 	// Effects
 	this->_effectBase = this->_scene->getEngine()->createEffect("sprites",
 		attributes,
 		uniformsNames,
-		samplers, "", "");
+		samplers, "", 
+		optionalDefines);
 
 	uniformsNames.push_back("vFogInfos");	
 	uniformsNames.push_back("vFogColor");
@@ -73,7 +75,9 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	this->_effectFog = this->_scene->getEngine()->createEffect("sprites",
 		attributes,
 		uniformsNames,
-		samplers, "#define FOG", "");
+		samplers, 
+		"#define FOG", 
+		optionalDefines);
 
 // Members
 	renderingGroupId = 0;

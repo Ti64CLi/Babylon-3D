@@ -55,8 +55,6 @@ namespace Babylon {
 		Color3::Ptr _scaledDiffuse;
 		Color3::Ptr _scaledSpecular;
 
-		Effect::Ptr _effect;
-
 		string _cachedDefines;
 
 	protected: 

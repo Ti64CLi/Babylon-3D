@@ -4,17 +4,24 @@
 using namespace Babylon;
 
 // Statics
-map<string, Effect::ShaderPtr> Babylon::Effect::ShadersStore;
+map<string, string> Babylon::Effect::ShadersStore;
 
-Babylon::Effect::Effect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
-	_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
+Babylon::Effect::Effect() {
 }
 
-Babylon::Effect::Effect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
-	_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
+Effect::Ptr Babylon::Effect::New(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+	auto effect = make_shared<Effect>(Effect());
+	effect->_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
+	return effect;
 }
 
-void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Effect::New(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+	auto effect = make_shared<Effect>(Effect());
+	effect->_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
+	return effect;
+}
+
+void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
@@ -50,7 +57,7 @@ vector<string>& Babylon::Effect::getAttributesNames() {
 	return this->_attributesNames;
 };
 
-GLuint Babylon::Effect::getAttribute(int index) {
+int Babylon::Effect::getAttribute(int index) {
 	return this->_attributes[index];
 };
 
@@ -84,7 +91,7 @@ void Babylon::Effect::_loadVertexShader(string vertex, CallbackFunc callback) {
 	string key;
 	key.append(vertex).append("VertexShader");
 	auto value = Effect::ShadersStore[key];
-	if (value) {
+	if (!value.empty()) {
 		callback(value);
 		return;
 	}
@@ -107,7 +114,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	string key;
 	key.append(fragment).append("PixelShader");
 	auto value = ShadersStore[key];
-	if (value) {
+	if (!value.empty()) {
 		callback(value);
 		return;
 	}
@@ -125,7 +132,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	//BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
 };
 
-void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, string optionalDefines, bool useFallback) {
+void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, vector<string> optionalDefines, bool useFallback) {
 	try {
 		auto engine = this->_engine;
 		this->_program = engine->createShaderProgram(vertexSourceCode, fragmentSourceCode, defines);
@@ -144,17 +151,20 @@ void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSou
 		engine->bindSamplers(shared_from_this());
 
 		this->_isReady = true;
-	} catch (string message) {
+	} catch (exception ex) {
 		if (!useFallback && !optionalDefines.empty()) {
-			for (auto index = 0; index < optionalDefines.length(); index++) {
-				defines = defines.replace(optionalDefines[index], "");
+			for (auto optionalDefine : optionalDefines) {
+				while (size_t pos = defines.find(optionalDefine) != string::npos)
+				{
+					defines.replace(pos, optionalDefine.length(), "");
+				}
 			}
 			this->_prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, true);
 		} else {
 			////console.error("Unable to compile effect: " + this->name);
 			////console.error("Defines: " + defines);
 			////console.error("Optional defines: " + optionalDefines);
-			this->_compilationError = message;
+			this->_compilationError = ex.what();
 		}
 	}
 };
@@ -210,7 +220,7 @@ void Babylon::Effect::setMatrix(string uniformName, Matrix::Ptr matrix) {
 };
 
 void Babylon::Effect::setFloat(string uniformName, float value) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == value)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == value)
 		return;
 
 	this->_valueCache[uniformName] = Float32Array(1);
@@ -220,7 +230,7 @@ void Babylon::Effect::setFloat(string uniformName, float value) {
 };
 
 void Babylon::Effect::setBool(string uniformName, GLboolean _bool) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == _bool)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == _bool)
 		return;
 
 	this->_valueCache[uniformName] = Float32Array(1);
@@ -232,7 +242,7 @@ void Babylon::Effect::setBool(string uniformName, GLboolean _bool) {
 // TODO: Finish it
 /*
 void Babylon::Effect::setVector2(string uniformName, vector2) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == vector2->x && this->_valueCache[uniformName][1] == vector2->y)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == vector2->x && this->_valueCache[uniformName][1] == vector2->y)
 		return;
 
 	this->_cacheFloat2(string uniformName, vector2.x, vector2.y);
@@ -241,7 +251,7 @@ void Babylon::Effect::setVector2(string uniformName, vector2) {
 */
 
 void Babylon::Effect::setFloat2(string uniformName, float x, float y) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y)
 		return;
 
 	this->_cacheFloat2(uniformName, x, y);
@@ -249,7 +259,7 @@ void Babylon::Effect::setFloat2(string uniformName, float x, float y) {
 };
 
 void Babylon::Effect::setVector3(string uniformName, Vector3::Ptr vector3) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == vector3->x && this->_valueCache[uniformName][1] == vector3->y && this->_valueCache[uniformName][2] == vector3->z)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == vector3->x && this->_valueCache[uniformName][1] == vector3->y && this->_valueCache[uniformName][2] == vector3->z)
 		return;
 
 	this->_cacheFloat3(uniformName, vector3->x, vector3->y, vector3->z);
@@ -258,7 +268,7 @@ void Babylon::Effect::setVector3(string uniformName, Vector3::Ptr vector3) {
 };
 
 void Babylon::Effect::setFloat3(string uniformName, float x, float y, float z) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y && this->_valueCache[uniformName][2] == z)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y && this->_valueCache[uniformName][2] == z)
 		return;
 
 	this->_cacheFloat3(uniformName, x, y, z);
@@ -266,7 +276,7 @@ void Babylon::Effect::setFloat3(string uniformName, float x, float y, float z) {
 };
 
 void Babylon::Effect::setFloat4(string uniformName, float x, float y, float z, float w) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y && this->_valueCache[uniformName][2] == z && this->_valueCache[uniformName][3] == w)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y && this->_valueCache[uniformName][2] == z && this->_valueCache[uniformName][3] == w)
 		return;
 
 	this->_cacheFloat4(uniformName, x, y, z, w);
@@ -274,7 +284,7 @@ void Babylon::Effect::setFloat4(string uniformName, float x, float y, float z, f
 };
 
 void Babylon::Effect::setColor3(string uniformName, Color3::Ptr color3) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == color3->r && this->_valueCache[uniformName][1] == color3->g && this->_valueCache[uniformName][2] == color3->b)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == color3->r && this->_valueCache[uniformName][1] == color3->g && this->_valueCache[uniformName][2] == color3->b)
 		return;
 
 	this->_cacheFloat3(uniformName, color3->r, color3->g, color3->b);
@@ -282,7 +292,7 @@ void Babylon::Effect::setColor3(string uniformName, Color3::Ptr color3) {
 };
 
 void Babylon::Effect::setColor4(string uniformName, Color3::Ptr color3, float alpha) {
-	if (!this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == color3->r && this->_valueCache[uniformName][1] == color3->g && this->_valueCache[uniformName][2] == color3->b && this->_valueCache[uniformName][3] == alpha)
+	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == color3->r && this->_valueCache[uniformName][1] == color3->g && this->_valueCache[uniformName][2] == color3->b && this->_valueCache[uniformName][3] == alpha)
 		return;
 
 	this->_cacheFloat4(uniformName, color3->r, color3->g, color3->b, alpha);

@@ -240,10 +240,6 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
 	auto join = ss.str();
 
-	//auto optionalJoin = accumulate( optionalDefines.begin(), optionalDefines.end(), string("\n") );
-	stringstream ss2;
-	for_each(begin(defines), end(defines), [&](string& item) { ss2 << item << endl; });
-	auto optionalJoin = ss2.str();
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;
 
@@ -320,7 +316,8 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			attribs,
 			uniformNames,
 			samplers,
-			join, optionalJoin);
+			join, 
+			optionalDefines);
 	}
 	if (!this->_effect->isReady()) {
 		return false;

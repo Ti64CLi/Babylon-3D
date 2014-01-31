@@ -12,6 +12,7 @@
 #include "iengine.h"
 #include "engine.h"
 #include "canvas.h"
+#include "strings.h"
 
 using namespace std;
 using namespace Babylon;
@@ -36,6 +37,10 @@ public:
 		// engine
 		this->canvas = dynamic_pointer_cast<ICanvas>( make_shared<Canvas>() );
 		this->engine = Engine::New(this->canvas, true);
+
+		// for testing loading shaders manually
+		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader;
+		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
 	}
 
 	void loadSimpleScene() {

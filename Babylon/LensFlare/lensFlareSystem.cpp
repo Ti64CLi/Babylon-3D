@@ -57,11 +57,15 @@ Babylon::LensFlareSystem::LensFlareSystem(string name, Mesh::Ptr emitter, Scene:
 	vector<string> samplers;
 	samplers.push_back("textureSampler");   
 
+	vector<string> optionalDefines;
+
 	// Effects
 	this->_effect = this->_scene->getEngine()->createEffect("layer",
 		attributes,
 		uniformsNames,
-		samplers, "", "");
+		samplers, 
+		"", 
+		optionalDefines);
 
 	// Members
 	borderLimit = 300;

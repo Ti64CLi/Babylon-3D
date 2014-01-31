@@ -357,7 +357,7 @@ void Babylon::Engine::bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuf
 
 			if (order >= 0) {
 				// TODO: double check if vertexBuffers[attributes[index]] can be replaced with vertexBuffers[order]
-				auto vertexBuffer = vertexBuffers.at(order);
+				auto vertexBuffer = vertexBuffers[order];
 				auto stride = vertexBuffer->getStrideSize();
 				this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer->_buffer);
 				this->_gl->vertexAttribPointer(order, stride, this->_gl->FLOAT, false, stride * 4, 0);
@@ -384,18 +384,18 @@ void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 };
 
 // Shaders
-Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
 	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 }
 
-Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, string optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
 	string name; 
 	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {
 		return this->_compiledEffects[name];
 	}
 
-	auto effect = make_shared<Effect>(Effect(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, shared_from_this(), defines, optionalDefines));
+	auto effect = Effect::New(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, shared_from_this(), defines, optionalDefines);
 	this->_compiledEffects[name] = effect;
 
 	return effect;
@@ -408,7 +408,8 @@ IGLShader::Ptr Babylon::Engine::compileShader(IGL::Ptr gl, string source, string
 	gl->compileShader(shader);
 
 	if (!gl->getShaderParameter(shader, gl->COMPILE_STATUS)) {
-		throw gl->getShaderInfoLog(shader);
+		string result = gl->getShaderInfoLog(shader);
+		throw exception(result.c_str());
 	}
 
 	return shader;
@@ -426,7 +427,7 @@ IGLProgram::Ptr Babylon::Engine::createShaderProgram(string vertexCode, string f
 
 	auto error = this->_gl->getProgramInfoLog(shaderProgram);
 	if (!error.empty()) {
-		throw error;
+		throw exception(error.c_str());
 	}
 
 	this->_gl->deleteShader(vertexShader);
@@ -445,8 +446,8 @@ vector<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr sha
 	return results;
 };
 
-vector<GLint> Babylon::Engine::getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames) {
-	vector<GLint> results;
+vector<int> Babylon::Engine::getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames) {
+	vector<int> results;
 
 	for (auto attributesName : attributesNames) {
 		try {

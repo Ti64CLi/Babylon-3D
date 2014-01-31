@@ -101,7 +101,7 @@ void GL::blendFunc(Babylon::GLenum sfactor, Babylon::GLenum dfactor) {
 
 void GL::blendFuncSeparate(Babylon::GLenum srcRGB, Babylon::GLenum dstRGB, 
 						   Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha) { 
-	glBlendFuncSeparateEXT(srcRGB, dstRGB, srcAlpha, dstAlpha);
+							   glBlendFuncSeparateEXT(srcRGB, dstRGB, srcAlpha, dstAlpha);
 }
 
 void GL::bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylon::GLenum usage) { 
@@ -160,18 +160,18 @@ void GL::compressedTexSubImage2D(Babylon::GLenum target, Babylon::GLint level,
 								 Babylon::GLint xoffset, Babylon::GLint yoffset,
 								 Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLenum format,
 								 Babylon::GLsizeiptr sizeiptr) { 
-	glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, sizeiptr >> 32, (const ::GLint*) (sizeiptr & 0x0000ffff));
+									 glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, sizeiptr >> 32, (const ::GLint*) (sizeiptr & 0x0000ffff));
 }
 
 void GL::copyTexImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 						Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
 						Babylon::GLint border) { 
-	glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
+							glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
 }
 
 void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 						   Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
-	glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
+							   glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
 
 Babylon::IGLBuffer::Ptr GL::createBuffer() { 
@@ -285,12 +285,12 @@ void GL::flush() {
 void GL::framebufferRenderbuffer(Babylon::GLenum target, Babylon::GLenum attachment, 
 								 Babylon::GLenum renderbuffertarget, 
 								 Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-	glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
+									 glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
 }
 
 void GL::framebufferTexture2D(Babylon::GLenum target, Babylon::GLenum attachment, Babylon::GLenum textarget, 
 							  Babylon::IGLTexture::Ptr texture, Babylon::GLint level) { 
-	glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
+								  glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
 }
 
 void GL::frontFace(Babylon::GLenum mode) { 
@@ -336,9 +336,9 @@ Babylon::GLenum GL::getError() {
 }
 
 Babylon::any GL::getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
-											   Babylon::GLenum pname) {
-	//return (Babylon::any) glGetFramebufferAttachmentParameterivEXT(target, attachment, pname);
-	throw "not supported";
+												   Babylon::GLenum pname) {
+													   //return (Babylon::any) glGetFramebufferAttachmentParameterivEXT(target, attachment, pname);
+													   throw "not supported";
 }
 
 Babylon::any GL::getProgramParameter(Babylon::IGLProgram::Ptr program, Babylon::GLenum pname) { 
@@ -348,7 +348,21 @@ Babylon::any GL::getProgramParameter(Babylon::IGLProgram::Ptr program, Babylon::
 
 string GL::getProgramInfoLog(Babylon::IGLProgram::Ptr program) { 
 	//return glGetProgramInfoLog(program->value);
-	throw "not supported";
+	::GLint k = -1;
+	glGetProgramiv(program->value, GL_INFO_LOG_LENGTH, &k);
+	if (k == -1) {
+		// XXX GL Error? should never happen.
+		return "";
+	}
+
+	if (k == 0) {
+		return "";
+	}
+
+	string result;
+	result.reserve(k + 1);
+	glGetProgramInfoLog(program->value, k, &k, (char *) result.c_str());
+	return result;
 }
 
 Babylon::any GL::getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
@@ -358,7 +372,25 @@ Babylon::any GL::getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenu
 }
 
 Babylon::any GL::getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLenum pname) { 
-	throw "not supported";
+	switch (pname) {
+	case IGL::SHADER_TYPE:
+		{
+			::GLint i = 0;
+			glGetShaderiv(shader->value, GL_SHADER_TYPE, &i);
+			return (any) i;
+		}
+		break;
+	case IGL::COMPILE_STATUS:
+		{
+			::GLint i = 0;
+			glGetShaderiv(shader->value, GL_COMPILE_STATUS, &i);
+			return (any) i;
+		}
+		break;
+	default:
+		throw "not supported getShaderParameter: parameter" + pname;
+	}
+
 }
 
 Babylon::IGLShaderPrecisionFormat::Ptr GL::getShaderPrecisionFormat(Babylon::GLenum shadertype, Babylon::GLenum precisiontype) { 
@@ -367,7 +399,21 @@ Babylon::IGLShaderPrecisionFormat::Ptr GL::getShaderPrecisionFormat(Babylon::GLe
 
 string GL::getShaderInfoLog(Babylon::IGLShader::Ptr shader) { 
 	//return glGetShaderInfoLog(shader->value);
-	throw "not supported";
+	::GLint k = -1;
+	glGetShaderiv(shader->value, GL_INFO_LOG_LENGTH, &k);
+	if (k == -1) {
+		// XXX GL Error? should never happen.
+		return "";
+	}
+
+	if (k == 0) {
+		return "";
+	}
+
+	string result;
+	result.reserve(k + 1);
+	glGetShaderInfoLog(shader->value, k, &k, (char *) result.c_str());
+	return result;
 }
 
 string GL::getShaderSource(Babylon::IGLShader::Ptr shader) { 
@@ -448,12 +494,12 @@ void GL::polygonOffset(Babylon::GLfloat factor, Babylon::GLfloat units) {
 
 void GL::readPixels(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-	glReadPixels(x, y, width, height, format, type, pixels);
+						glReadPixels(x, y, width, height, format, type, pixels);
 }
 
 void GL::renderbufferStorage(Babylon::GLenum target, Babylon::GLenum internalformat, 
 							 Babylon::GLsizei width, Babylon::GLsizei height) { 
-	glRenderbufferStorageEXT(target, internalformat, width, height);
+								 glRenderbufferStorageEXT(target, internalformat, width, height);
 }
 
 void GL::sampleCoverage(Babylon::GLclampf value, Babylon::GLboolean invert) { 
@@ -465,8 +511,9 @@ void GL::scissor(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Bab
 }
 
 void GL::shaderSource(Babylon::IGLShader::Ptr shader, string source) { 
-	////glShaderSource(shader->value, source.c_str());
-	throw "not supported";
+	::GLint length = source.length();
+	const ::GLchar* line = (::GLchar*) source.c_str();
+	glShaderSource(shader->value, 1, &line, &length);
 }
 
 void GL::stencilFunc(Babylon::GLenum func, Babylon::GLint ref, Babylon::GLuint mask) { 
@@ -496,25 +543,25 @@ void GL::stencilOpSeparate(Babylon::GLenum face, Babylon::GLenum fail, Babylon::
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 					Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLint border, Babylon::GLenum format, 
 					Babylon::GLenum type, Babylon::any pixels) { 
-	glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+						glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-	////glTexImage2D(target, level, internalformat, format, type, pixels);
-	throw "not supported";
+						////glTexImage2D(target, level, internalformat, format, type, pixels);
+						throw "not supported";
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::IImage::Ptr image) { 
-	////glTexImage2D(target, level, internalformat, format, type, image);
-	throw "not supported";
+						////glTexImage2D(target, level, internalformat, format, type, image);
+						throw "not supported";
 }
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::ICanvas::Ptr canvas) { 
-	////glTexImage2D(target, level, internalformat, format, type, canvas);
-	throw "not supported";
+						////glTexImage2D(target, level, internalformat, format, type, canvas);
+						throw "not supported";
 }
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
@@ -533,19 +580,19 @@ void GL::texParameteri(Babylon::GLenum target, Babylon::GLenum pname, Babylon::G
 void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 					   Babylon::GLsizei width, Babylon::GLsizei height, 
 					   Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-	glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+						   glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 
 void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 					   Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-	////glTexSubImage2D(target, level, xoffset, yoffset, format, type, pixels);
-	throw "not supported";
+						   ////glTexSubImage2D(target, level, xoffset, yoffset, format, type, pixels);
+						   throw "not supported";
 }
 
 void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 					   Babylon::GLenum format, Babylon::GLenum type, Babylon::ICanvas::Ptr canvas) { 
-	////glTexSubImage2D(target, level, xoffset, yoffset, format, type, canvas);
-	throw "not supported";
+						   ////glTexSubImage2D(target, level, xoffset, yoffset, format, type, canvas);
+						   throw "not supported";
 }
 
 void GL::uniform1f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x) { 
@@ -614,17 +661,17 @@ void GL::uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Arr
 
 void GL::uniformMatrix2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
 						  Babylon::Float32Array value) { 
-	glUniformMatrix2fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+							  glUniformMatrix2fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
 }
 
 void GL::uniformMatrix3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
 						  Babylon::Float32Array value) { 
-	glUniformMatrix3fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+							  glUniformMatrix3fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
 }
 
 void GL::uniformMatrix4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
 						  Babylon::Float32Array value) {
-	glUniformMatrix4fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+							  glUniformMatrix4fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
 }
 
 void GL::useProgram(Babylon::IGLProgram::Ptr program) {
@@ -669,7 +716,7 @@ void GL::vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array values) {
 
 void GL::vertexAttribPointer(Babylon::GLuint indx, Babylon::GLint size, Babylon::GLenum type, 
 							 Babylon::GLboolean normalized, Babylon::GLsizei stride, Babylon::GLintptr offset) { 
-	glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
+								 glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
 }
 
 void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
