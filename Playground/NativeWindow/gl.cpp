@@ -432,7 +432,13 @@ Babylon::any GL::getUniform(Babylon::IGLProgram::Ptr program, Babylon::IGLUnifor
 }
 
 Babylon::IGLUniformLocation::Ptr GL::getUniformLocation(Babylon::IGLProgram::Ptr program, string name) { 
-	return make_shared<IGLUniformLocation>(glGetUniformLocation(program->value, name.c_str()));
+	auto value = glGetUniformLocation(program->value, name.c_str());
+	if (value != -1)
+	{
+		return make_shared<IGLUniformLocation>(value);
+	}
+
+	return nullptr;
 }
 
 Babylon::any GL::getVertexAttrib(Babylon::GLuint index, Babylon::GLenum pname) { 
@@ -716,7 +722,7 @@ void GL::vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array values) {
 
 void GL::vertexAttribPointer(Babylon::GLuint indx, Babylon::GLint size, Babylon::GLenum type, 
 							 Babylon::GLboolean normalized, Babylon::GLsizei stride, Babylon::GLintptr offset) { 
-								 glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
+	glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
 }
 
 void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 

@@ -59,9 +59,9 @@ Babylon::ParticleSystem::ParticleSystem(string name, int capacity, Scene::Ptr sc
 	this->_newPartsExcess = 0;
 
 	// VBO
-	this->_vertexDeclaration.push_back(3);
-	this->_vertexDeclaration.push_back(4);
-	this->_vertexDeclaration.push_back(4);
+	this->_vertexDeclarations.push_back(VertexBufferKind_UVKind);
+	this->_vertexDeclarations.push_back(VertexBufferKind_UV2Kind);
+	this->_vertexDeclarations.push_back(VertexBufferKind_UV2Kind);
 	this->_vertexStrideSize = 11 * 4; // 11 floats per particle (x, y, z, r, g, b, a, angle, size, offsetX, offsetY)
 	this->_vertexBuffer = scene->getEngine()->createDynamicVertexBuffer(capacity * this->_vertexStrideSize * 4);
 
@@ -217,10 +217,10 @@ Effect::Ptr Babylon::ParticleSystem::_getEffect() {
 	////	defines.push_back("#define CLIPPLANE");
 	////}
 
-	vector<string> attributes;
-	attributes.push_back("position");
-	attributes.push_back("color"); 
-	attributes.push_back("options");
+	vector<VertexBufferKind> attributes;
+	attributes.push_back(VertexBufferKind_PositionKind);
+	attributes.push_back(VertexBufferKind_ColorKind); 
+	attributes.push_back(Attribute_Options);
 
 	vector<string> uniformNames;
 	uniformNames.push_back("invView");
@@ -354,7 +354,7 @@ int Babylon::ParticleSystem::render() {
 	}        
 
 	// VBOs
-	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclaration, this->_vertexStrideSize, effect);
+	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclarations, this->_vertexStrideSize, effect);
 
 	// Draw order
 	if (this->blendMode == BLENDMODE_ONEONE) {
@@ -402,7 +402,7 @@ ParticleSystem::Ptr Babylon::ParticleSystem::clone(string name, Mesh::Ptr newEmi
 	auto  result = make_shared<ParticleSystem>(name, this->_capacity, this->_scene);
 
 	// TODO: finish it DeepCopy
-	////Tools::DeepCopy(this, result, ["particles"], ["_vertexDeclaration", "_vertexStrideSize"]);
+	////Tools::DeepCopy(this, result, ["particles"], ["_vertexDeclarations", "_vertexStrideSize"]);
 
 	if (!newEmitter) {
 		newEmitter = this->emitter;

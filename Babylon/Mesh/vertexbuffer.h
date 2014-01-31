@@ -3,22 +3,13 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
 #include "iengine.h"
 
 using namespace std;
 
 namespace Babylon {
-
-	enum VertexBufferKind {
-		VertexBufferKind_PositionKind = 1,
-		VertexBufferKind_NormalKind,
-		VertexBufferKind_UVKind,
-		VertexBufferKind_UV2Kind,
-		VertexBufferKind_ColorKind,
-		VertexBufferKind_MatricesIndicesKind,
-		VertexBufferKind_MatricesWeightsKind
-	};
 
 	class Mesh;
 	typedef shared_ptr<Mesh> MeshPtr;
@@ -28,6 +19,7 @@ namespace Babylon {
 	public:
 		typedef shared_ptr<VertexBuffer> Ptr;
 		typedef vector<Ptr> Array;
+		typedef map<VertexBufferKind, Ptr> Map;
 
 	public:
 		EnginePtr _engine;
@@ -47,6 +39,9 @@ namespace Babylon {
 		// Methods
 		virtual void update(Float32Array data);
 		virtual void dispose(bool doNotRecurse = false);
+
+		// helper
+		static const char* toString(VertexBufferKind kind);
 	};
 
 };

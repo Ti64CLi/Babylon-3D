@@ -209,25 +209,25 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 		}
 	}
 
-	vector<string> attribs;
-	attribs.push_back("position");
-	attribs.push_back("normal");
+	vector<VertexBufferKind> attribs;
+	attribs.push_back(VertexBufferKind_PositionKind);
+	attribs.push_back(VertexBufferKind_NormalKind);
 	if (mesh) {
 		if (mesh->isVerticesDataPresent(VertexBufferKind_UVKind)) {
-			attribs.push_back("uv");
+			attribs.push_back(VertexBufferKind_UVKind);
 			defines.push_back("#define UV1");
 		}
 		if (mesh->isVerticesDataPresent(VertexBufferKind_UV2Kind)) {
-			attribs.push_back("uv2");
+			attribs.push_back(VertexBufferKind_UV2Kind);
 			defines.push_back("#define UV2");
 		}
 		if (mesh->isVerticesDataPresent(VertexBufferKind_ColorKind)) {
-			attribs.push_back("color");
+			attribs.push_back(VertexBufferKind_ColorKind);
 			defines.push_back("#define VERTEXCOLOR");
 		}
 		if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
-			attribs.push_back("matricesIndices");
-			attribs.push_back("matricesWeights");
+			attribs.push_back(VertexBufferKind_MatricesIndicesKind);
+			attribs.push_back(VertexBufferKind_MatricesWeightsKind);
 			defines.push_back("#define BONES");
 			defines.push_back("#define BonesPerMesh " + mesh->skeleton->bones.size());
 			defines.push_back("#define BONES4");

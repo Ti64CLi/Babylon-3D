@@ -20,7 +20,7 @@ string Babylon::Vector3::toString() {
 };
 
 // Operators
-void Babylon::Vector3::toArray(Float32Array array, int index) {
+void Babylon::Vector3::toArray(Float32Array& array, int index) {
 	array[index] = this->x;
 	array[index + 1] = this->y;
 	array[index + 2] = this->z;

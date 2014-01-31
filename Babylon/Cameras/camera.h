@@ -13,7 +13,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Camera : public Node, public IDisposable, public enable_shared_from_this<Camera> {
+	class Camera : public Node, public IDisposable {
 
 	public:
 

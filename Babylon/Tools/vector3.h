@@ -30,7 +30,7 @@ namespace Babylon {
 
 		virtual string toString();
 		// Operators
-		virtual void toArray(Float32Array array, int index);
+		virtual void toArray(Float32Array& array, int index);
 		virtual void addInPlace(Vector3::Ptr otherVector);
 		virtual Vector3::Ptr add(Vector3::Ptr otherVector);
 		virtual void addToRef(Vector3::Ptr otherVector, Vector3::Ptr result);

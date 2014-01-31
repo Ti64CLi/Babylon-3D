@@ -506,7 +506,14 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 	this->_activeParticleSystems.clear();
 	this->_activeSkeletons.clear();
 
-	Frustum::GetPlanesToRef(this->_transformMatrix, this->_frustumPlanes);
+	if (this->_frustumPlanes.size() == 0) 
+	{
+		this->_frustumPlanes = Frustum::GetPlanes(this->_transformMatrix);
+	}
+	else 
+	{
+		Frustum::GetPlanesToRef(this->_transformMatrix, this->_frustumPlanes);
+	}
 
 	// Meshes
 	if (this->_selectionOctree) { // Octree

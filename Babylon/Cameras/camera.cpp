@@ -228,13 +228,20 @@ Matrix::Ptr Babylon::Camera::getProjectionMatrix(bool force) {
 
 	auto halfWidth = engine->getRenderWidth() / 2.0;
 	auto halfHeight = engine->getRenderHeight() / 2.0;
-	Matrix::OrthoOffCenterLHToRef(this->orthoLeft || -halfWidth, this->orthoRight || halfWidth, this->orthoBottom || -halfHeight, this->orthoTop || halfHeight, this->minZ, this->maxZ, this->_projectionMatrix);
+	Matrix::OrthoOffCenterLHToRef(
+		this->orthoLeft != 0. ? this->orthoLeft : -halfWidth, 
+		this->orthoRight != 0. ? this->orthoRight : halfWidth, 
+		this->orthoBottom != 0. ? this->orthoBottom : -halfHeight, 
+		this->orthoTop != 0. ? this->orthoTop : halfHeight, 
+		this->minZ, 
+		this->maxZ, 
+		this->_projectionMatrix);
 	return this->_projectionMatrix;
 };
 
 void Babylon::Camera::dispose(bool doNotRecurse) {
 	// Remove from scene
-	auto it = find (begin(this->_scene->cameras), end(this->_scene->cameras), enable_shared_from_this<Camera>::shared_from_this());
+	auto it = find (begin(this->_scene->cameras), end(this->_scene->cameras), dynamic_pointer_cast<Camera>(shared_from_this()));
 	if (it != end(this->_scene->cameras))
 	{
 		this->_scene->cameras.erase(it);

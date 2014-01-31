@@ -29,6 +29,12 @@ namespace Babylon {
 		int renderHeight;
 		Vector3::Ptr upVector;
 
+		// ArcCamera
+		Vector3::Ptr target;
+		float alpha;
+		float beta;
+		float radius;
+
 		// Mesh
 		bool localMatrixUpdated;
 		Vector3::Ptr position;

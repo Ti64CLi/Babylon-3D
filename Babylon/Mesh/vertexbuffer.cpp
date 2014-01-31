@@ -71,3 +71,17 @@ void Babylon::VertexBuffer::update(Float32Array data) {
 void Babylon::VertexBuffer::dispose(bool doNotRecurse) {
 	this->_engine->_releaseBuffer(this->_buffer);
 }; 
+
+const char* Babylon::VertexBuffer::toString(VertexBufferKind kind) {
+	switch (kind) {
+	case VertexBufferKind_PositionKind: return "position";
+	case VertexBufferKind_NormalKind: return "normal";
+	case VertexBufferKind_UVKind: return "uv";
+	case VertexBufferKind_UV2Kind: return "uv2";
+	case VertexBufferKind_ColorKind: return "color";
+	case VertexBufferKind_MatricesIndicesKind: return "matricesIndices";
+	case VertexBufferKind_MatricesWeightsKind: return "matricesWeights";
+	case Attribute_Options: return "options";
+	case Attribute_CellInfo: return "cellInfo";
+	};
+};  

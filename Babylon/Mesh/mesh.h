@@ -46,6 +46,7 @@ namespace Babylon {
 
 		Matrix::Ptr _pivotMatrix;
 
+		bool hasIndices;
 		Uint16Array _indices;
 		SubMesh::Array subMeshes;
 
@@ -89,7 +90,7 @@ namespace Babylon {
 		bool infiniteDistance;
 
 		BoundingInfo::Ptr _boundingInfo;
-		map<VertexBufferKind, VertexBuffer::Ptr> _vertexBuffers;
+		VertexBuffer::Map _vertexBuffers;
 		VertexBuffer::Array _delayInfo;
 		float _scaleFactor;
 		size_t _vertexStrideSize;

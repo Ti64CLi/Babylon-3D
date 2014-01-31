@@ -10,8 +10,9 @@
 #include <nvGlutManipulators.h>
 
 #include "iengine.h"
-#include "engine.h"
 #include "canvas.h"
+#include "engine.h"
+#include "arcRotateCamera.h"
 #include "strings.h"
 
 using namespace std;
@@ -48,7 +49,7 @@ public:
 		this->scene = Scene::New(engine);
 
 		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-		auto camera = Camera::New("DummyCamera", make_shared<Vector3>(0, 0, 0), scene);
+		auto camera = ArcRotateCamera::New("Camera", 1, 0.8, 10, make_shared<Vector3>(0, 0, 0), scene);
 		//auto light0 = make_shared<PointLight>("Omni", make_shared<Vector3>(0, 0, 10), scene);
 		auto origin = Mesh::CreateSphere("origin", 10, 1.0, scene);
 	}

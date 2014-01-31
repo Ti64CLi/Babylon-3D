@@ -88,6 +88,18 @@ namespace Babylon {
 		BLENDMODE_STANDARD = 1
 	};
 
+	enum VertexBufferKind {
+		VertexBufferKind_PositionKind = 1,
+		VertexBufferKind_NormalKind,
+		VertexBufferKind_UVKind,
+		VertexBufferKind_UV2Kind,
+		VertexBufferKind_ColorKind,
+		VertexBufferKind_MatricesIndicesKind,
+		VertexBufferKind_MatricesWeightsKind,
+		Attribute_Options,
+		Attribute_CellInfo,
+	};
+
 	class Matrix;
 	typedef shared_ptr<Matrix> MatrixPtr;
 	struct Vector3;

@@ -19,7 +19,7 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 		IGLBuffer::Ptr _vertexBuffer;
-		Int32Array _vertexDeclaration;
+		vector<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 

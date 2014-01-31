@@ -85,7 +85,7 @@ namespace Babylon {
 		size_t _newPartsExcess;
 
 		// VBO
-		Int32Array _vertexDeclaration;
+		vector<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize; // 11 floats per particle (x, y, z, r, g, b, a, angle, size, offsetX, offsetY)
 		IGLBuffer::Ptr _vertexBuffer;
 		IGLBuffer::Ptr _indexBuffer;

@@ -25,6 +25,7 @@ Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	this->_pivotMatrix = Matrix::Identity();
 
 	this->_indices.clear();
+	this->hasIndices = false;
 	this->subMeshes.clear();
 
 	this->_renderId = 0;
@@ -318,7 +319,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 };
 
 SubMesh::Ptr Babylon::Mesh::_createGlobalSubMesh() {
-	if (!this->_totalVertices || this->_indices.size() == 0) {
+	if (!this->_totalVertices || !this->hasIndices) { // TODO: you need to check if _indices are not created then leave
 		return nullptr;
 	}
 
@@ -373,6 +374,7 @@ void Babylon::Mesh::setIndices(Uint16Array indices) {
 
 	this->_indexBuffer = this->_scene->getEngine()->createIndexBuffer(indices);
 	this->_indices = indices;
+	this->hasIndices = true;
 
 	this->_createGlobalSubMesh();
 };
@@ -390,11 +392,7 @@ void Babylon::Mesh::bindAndDraw(SubMesh::Ptr subMesh, Effect::Ptr effect, bool w
 	}
 
 	// VBOs
-	VertexBuffer::Array _vertexBuffersValues;
-	for(auto _vertexBuffer: this->_vertexBuffers)
-		_vertexBuffersValues.push_back(_vertexBuffer.second);
-
-	engine->bindMultiBuffers(_vertexBuffersValues, indexToBind, effect);
+	engine->bindMultiBuffers(this->_vertexBuffers, indexToBind, effect);
 
 	// Draw order
 	engine->draw(useTriangles, useTriangles ? subMesh->indexStart : 0, useTriangles ? subMesh->indexCount : subMesh->linesIndexCount);
@@ -1023,11 +1021,11 @@ Mesh::Ptr Babylon::Mesh::CreateSphere(string name, size_t segments, float diamet
 	auto PI = 4. * atan(1.);
 
 	for (auto zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++) {
-		auto normalizedZ = zRotationStep / totalZRotationSteps;
+		auto normalizedZ = (float)zRotationStep / (float)totalZRotationSteps;
 		auto angleZ = (normalizedZ * PI);
 
 		for (auto yRotationStep = 0; yRotationStep <= totalYRotationSteps; yRotationStep++) {
-			auto normalizedY = yRotationStep / totalYRotationSteps;
+			auto normalizedY = (float)yRotationStep / (float)totalYRotationSteps;
 
 			auto angleY = normalizedY * PI * 2;
 

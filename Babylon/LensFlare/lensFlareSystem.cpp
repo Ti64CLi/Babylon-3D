@@ -29,8 +29,8 @@ Babylon::LensFlareSystem::LensFlareSystem(string name, Mesh::Ptr emitter, Scene:
 	vertices.push_back(1);
 	vertices.push_back(-1);
 
-	this->_vertexDeclaration.clear();
-	_vertexDeclaration.push_back(2);
+	this->_vertexDeclarations.clear();
+	this->_vertexDeclarations.push_back(VertexBufferKind_NormalKind);
 
 	this->_vertexStrideSize = 2 * 4;
 	this->_vertexBuffer = scene->getEngine()->createVertexBuffer(vertices);
@@ -47,8 +47,8 @@ Babylon::LensFlareSystem::LensFlareSystem(string name, Mesh::Ptr emitter, Scene:
 
 	this->_indexBuffer = scene->getEngine()->createIndexBuffer(indices);
 
-	vector<string> attributes;
-	attributes.push_back("position");
+	vector<VertexBufferKind> attributes;
+	attributes.push_back(VertexBufferKind_PositionKind);
 
 	vector<string> uniformsNames;
 	uniformsNames.push_back("color");
@@ -179,7 +179,7 @@ bool Babylon::LensFlareSystem::render () {
 	engine->setAlphaMode(ALPHA_ADD);
 
 	// VBOs
-	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclaration, this->_vertexStrideSize, this->_effect);
+	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclarations, this->_vertexStrideSize, this->_effect);
 
 	// Flares
 	for (auto flare : this->lensFlares) {

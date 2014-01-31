@@ -9,19 +9,19 @@ map<string, string> Babylon::Effect::ShadersStore;
 Babylon::Effect::Effect() {
 }
 
-Effect::Ptr Babylon::Effect::New(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Effect::New(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
 	auto effect = make_shared<Effect>(Effect());
 	effect->_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 	return effect;
 }
 
-Effect::Ptr Babylon::Effect::New(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Effect::New(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
 	auto effect = make_shared<Effect>(Effect());
 	effect->_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 	return effect;
 }
 
-void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
@@ -30,7 +30,7 @@ void Babylon::Effect::_init(string baseName, string vertex, string fragment, vec
 	this->_samplers = samplers;
 	this->_isReady = false;
 	this->_compilationError = "";
-	this->_attributesNames = attributesNames;
+	this->_attributes = attributesNames;
 
 	// TODO: finish it
 	auto that = this;
@@ -53,16 +53,12 @@ IGLProgram::Ptr Babylon::Effect::getProgram() {
 	return this->_program;
 };
 
-vector<string>& Babylon::Effect::getAttributesNames() {
-	return this->_attributesNames;
+vector<VertexBufferKind>& Babylon::Effect::getAttributes() {
+	return this->_attributes;
 };
 
-int Babylon::Effect::getAttribute(int index) {
-	return this->_attributes[index];
-};
-
-size_t Babylon::Effect::getAttributesCount() {
-	return this->_attributes.size();
+int Babylon::Effect::getAttributeLocation(VertexBufferKind kind) {
+	return this->_attributeLocations[kind];
 };
 
 int Babylon::Effect::getUniformIndex(string uniformName) {
@@ -132,18 +128,18 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	//BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
 };
 
-void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, vector<string> optionalDefines, bool useFallback) {
+void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<VertexBufferKind> attributesNames, string defines, vector<string> optionalDefines, bool useFallback) {
 	try {
 		auto engine = this->_engine;
 		this->_program = engine->createShaderProgram(vertexSourceCode, fragmentSourceCode, defines);
 
 		this->_uniforms = engine->getUniforms(this->_program, this->_uniformsNames);
-		this->_attributes = engine->getAttributes(this->_program, attributesNames);
+		this->_attributeLocations = engine->getAttributeLocations(this->_program, attributesNames);
 
 		for (auto index = 0; index < this->_samplers.size(); index++) {
 			auto sampler = this->getUniform(this->_samplers[index]);
 			if (!sampler) {
-				this->_samplers.erase(begin(this->_samplers) + index, begin(this->_samplers) + index);
+				this->_samplers.erase(begin(this->_samplers) + index, begin(this->_samplers) + index + 1);
 				index--;
 			}
 		}

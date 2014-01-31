@@ -26,8 +26,8 @@ Babylon::Layer::Layer(string name, string imgUrl, Scene::Ptr scene, bool isBackg
 	vertices.push_back(1);
 	vertices.push_back(-1);
 
-	this->_vertexDeclaration.clear();
-	_vertexDeclaration.push_back(2);
+	this->_vertexDeclarations.clear();
+	_vertexDeclarations.push_back(VertexBufferKind_NormalKind);
 
 	this->_vertexStrideSize = 2 * 4;
 	this->_vertexBuffer = scene->getEngine()->createVertexBuffer(vertices);
@@ -44,8 +44,8 @@ Babylon::Layer::Layer(string name, string imgUrl, Scene::Ptr scene, bool isBackg
 
 	this->_indexBuffer = scene->getEngine()->createIndexBuffer(indices);
 
-	vector<string> attributes;
-	attributes.push_back("position");
+	vector<VertexBufferKind> attributes;
+	attributes.push_back(VertexBufferKind_PositionKind);
 
 	vector<string> uniformsNames;
 	uniformsNames.push_back("textureMatrix");
@@ -86,7 +86,7 @@ void Babylon::Layer::render() {
 	this->_effect->setFloat4("color", this->color->r, this->color->g, this->color->b, this->color->a);
 
 	// VBOs
-	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclaration, this->_vertexStrideSize, this->_effect);
+	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclarations, this->_vertexStrideSize, this->_effect);
 
 	// Draw order
 	engine->setAlphaMode(ALPHA_COMBINE);

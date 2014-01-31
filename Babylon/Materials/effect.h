@@ -10,6 +10,7 @@
 #include "igl.h"
 #include "iengine.h"
 #include "tools_math.h"
+#include "vertexbuffer.h"
 #include "texture.h"
 #include "postProcess.h"
 
@@ -36,8 +37,8 @@ namespace Babylon {
 		vector<string> _samplers;
 		bool _isReady;
 		string _compilationError;
-		vector<string> _attributesNames;
-		vector<int> _attributes;
+		vector<VertexBufferKind> _attributes;
+		map<VertexBufferKind, int> _attributeLocations;
 
 		map<string, Float32Array> _valueCache;
 
@@ -48,19 +49,18 @@ namespace Babylon {
 		static map<string, string> ShadersStore;
 
 	private:
-		void _init(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		void _init(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
 	public: 
 		Effect();		
 	public: 
-		static Effect::Ptr New(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
-		static Effect::Ptr New(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		static Effect::Ptr New(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		static Effect::Ptr New(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
 
 		// Properties
 		virtual bool isReady();
 		virtual IGLProgram::Ptr getProgram();
-		virtual vector<string>& getAttributesNames();
-		virtual int getAttribute(int index);
-		virtual size_t getAttributesCount();
+		virtual vector<VertexBufferKind>& getAttributes();
+		virtual int getAttributeLocation(VertexBufferKind kind);
 		virtual int getUniformIndex(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(int sample);
@@ -69,7 +69,7 @@ namespace Babylon {
 		// Methods
 		virtual void _loadVertexShader(string vertex, CallbackFunc callback);
 		virtual void _loadFragmentShader(string fragment, CallbackFunc callback);
-		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<string> attributesNames, string defines, vector<string> optionalDefines, bool useFallback = false);
+		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<VertexBufferKind> attributesNames, string defines, vector<string> optionalDefines, bool useFallback = false);
 		virtual void _bindTexture(string channel, IGLTexture::Ptr texture);
 		virtual void setTexture(string channel, Texture::Ptr texture);
 		virtual void setTextureFromPostProcess(string channel, PostProcess::Ptr postProcess);

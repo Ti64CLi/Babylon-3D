@@ -59,6 +59,6 @@ void Babylon::Color3::copyFromFloats(float r, float g, float b) {
 };
 
 // Statics
-Color3::Ptr Babylon::Color3::FromArray(vector<float> vals) {
+Color3::Ptr Babylon::Color3::FromArray(Float32Array vals) {
 	return make_shared<Color3>(vals[0], vals[1], vals[2]);
 };

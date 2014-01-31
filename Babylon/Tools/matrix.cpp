@@ -129,7 +129,7 @@ void Babylon::Matrix::multiplyToRef(Matrix::Ptr other, Matrix::Ptr result) {
 	this->multiplyToArray(other, result->m, 0);
 };
 
-void Babylon::Matrix::multiplyToArray(Matrix::Ptr other, Float32Array result, int offset) {
+void Babylon::Matrix::multiplyToArray(Matrix::Ptr other, Float32Array& result, int offset) {
 	result[offset] = this->m[0] * other->m[0] + this->m[1] * other->m[4] + this->m[2] * other->m[8] + this->m[3] * other->m[12];
 	result[offset + 1] = this->m[0] * other->m[1] + this->m[1] * other->m[5] + this->m[2] * other->m[9] + this->m[3] * other->m[13];
 	result[offset + 2] = this->m[0] * other->m[2] + this->m[1] * other->m[6] + this->m[2] * other->m[10] + this->m[3] * other->m[14];

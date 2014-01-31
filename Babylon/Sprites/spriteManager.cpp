@@ -19,11 +19,11 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	this->_scene->spriteManagers.push_back(shared_from_this());
 
 	// VBO
-	this->_vertexDeclaration.clear();
-	this->_vertexDeclaration.push_back(3); 
-	this->_vertexDeclaration.push_back(4); 
-	this->_vertexDeclaration.push_back(4);
-	this->_vertexDeclaration.push_back(4);
+	this->_vertexDeclarations.clear();
+	this->_vertexDeclarations.push_back(VertexBufferKind_UVKind); 
+	this->_vertexDeclarations.push_back(VertexBufferKind_UV2Kind); 
+	this->_vertexDeclarations.push_back(VertexBufferKind_UV2Kind);
+	this->_vertexDeclarations.push_back(VertexBufferKind_UV2Kind);
 	this->_vertexStrideSize = 15 * 4; // 15 floats per sprite (x, y, z, angle, size, offsetX, offsetY, invertU, invertV, cellIndexX, cellIndexY, color)
 	this->_vertexBuffer = scene->getEngine()->createDynamicVertexBuffer(capacity * this->_vertexStrideSize * 4);
 
@@ -45,11 +45,11 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	// Sprites
 	this->sprites.clear();
 
-	vector<string> attributes;
-	attributes.push_back("position");
-	attributes.push_back("options");
-	attributes.push_back("cellInfo");
-	attributes.push_back("color");
+	vector<VertexBufferKind> attributes;
+	attributes.push_back(VertexBufferKind_PositionKind);
+	attributes.push_back(Attribute_Options);
+	attributes.push_back(Attribute_CellInfo);
+	attributes.push_back(VertexBufferKind_ColorKind);
 
 	vector<string> uniformsNames;
 	uniformsNames.push_back("view");
@@ -169,7 +169,7 @@ bool Babylon::SpriteManager::render() {
 	}
 
 	// VBOs
-	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclaration, this->_vertexStrideSize, effect);
+	engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclarations, this->_vertexStrideSize, effect);
 
 	// Draw order
 	effect->setBool("alphaTest", true);

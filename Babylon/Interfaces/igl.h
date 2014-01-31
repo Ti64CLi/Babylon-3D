@@ -130,11 +130,13 @@ namespace Babylon {
 		IGLTexture(GLuint value) : IGLObject(value) {};
 	};
 
-	class IGLUniformLocation : public IGLObject {
+	class IGLUniformLocation {
 	public:
 		typedef shared_ptr<IGLUniformLocation> Ptr;
 		typedef vector<Ptr> Array;
-		IGLUniformLocation(GLuint value) : IGLObject(value) {};
+
+		GLint value;
+		IGLUniformLocation(GLint _value) : value(_value) {};
 	};
 
 	class IGLActiveInfo : public IGLObject {

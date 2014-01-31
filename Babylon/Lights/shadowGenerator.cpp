@@ -78,11 +78,11 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 		defines.push_back("#define VSM");
 	}
 
-	vector<string> attribs;
-	attribs.push_back("position");
+	vector<VertexBufferKind> attribs;
+	attribs.push_back(VertexBufferKind_PositionKind);
 	if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
-		attribs.push_back("matricesIndices");
-		attribs.push_back("matricesWeights");
+		attribs.push_back(VertexBufferKind_MatricesIndicesKind);
+		attribs.push_back(VertexBufferKind_MatricesWeightsKind);
 		defines.push_back("#define BONES");
 		defines.push_back("#define BonesPerMesh " + mesh->skeleton->bones.size());
 	}

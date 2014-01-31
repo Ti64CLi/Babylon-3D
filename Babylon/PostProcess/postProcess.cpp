@@ -16,8 +16,8 @@ Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector<strin
 	this->height = -1;
 	this->renderTargetSamplingMode = samplingMode ? samplingMode : NEAREST_SAMPLINGMODE;
 
-	vector<string> attributes;
-	attributes.push_back("position");
+	vector<VertexBufferKind> attributes;
+	attributes.push_back(VertexBufferKind_PositionKind);
 
 	vector<string> _samplers;
 	_samplers.insert(end(_samplers), begin(samplers), end(samplers));

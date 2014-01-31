@@ -7,7 +7,8 @@ using namespace Babylon;
 float Babylon::Engine::epsilon = 0.001f;
 float Babylon::Engine::collisionsEpsilon = 0.001f;
 
-Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
+Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias) 
+	: _alphaTest(false)
 {
 	this->_renderingCanvas = canvas;
 
@@ -107,8 +108,7 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	////document.addEventListener("pointerlockchange", onPointerLockChange, false);
 	////document.addEventListener("mspointerlockchange", onPointerLockChange, false);
 	////document.addEventListener("mozpointerlockchange", onPointerLockChange, false);
-	////document.addEventListener("webkitpointerlockchange", onPointerLockChange, false);
-
+	////document.addEventListener("webkitpointerlockchange", onPointerLockChange, false);	
 };
 
 Engine::Ptr Babylon::Engine::New(ICanvas::Ptr canvas, bool antialias)
@@ -320,7 +320,7 @@ IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array indices) {
 	return vbo;
 };
 
-void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, Int32Array vertexDeclaration, int vertexStrideSize, Effect::Ptr effect) {
+void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect) {
 	if (this->_cachedVertexBuffer != vertexBuffer || this->_cachedEffectForVertexBuffer != effect) {
 		this->_cachedVertexBuffer = vertexBuffer;
 		this->_cachedEffectForVertexBuffer = effect;
@@ -329,13 +329,12 @@ void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr in
 
 		auto offset = 0;
 
-		for (auto index = 0; index < vertexDeclaration.size(); index++) {
-			auto order = effect->getAttribute(index);
-
+		for (auto vertexDeclaration : vertexDeclarations) {
+			auto order = effect->getAttributeLocation(vertexDeclaration);
 			if (order >= 0) {
-				this->_gl->vertexAttribPointer(order, vertexDeclaration[index], this->_gl->FLOAT, false, vertexStrideSize, offset);
+				this->_gl->vertexAttribPointer(order, vertexDeclaration, this->_gl->FLOAT, false, vertexStrideSize, offset);
 			}
-			offset += vertexDeclaration[index] * 4;
+			offset += vertexDeclaration * 4;
 		}
 	}
 
@@ -345,19 +344,17 @@ void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr in
 	}
 };
 
-void Babylon::Engine::bindMultiBuffers(VertexBuffer::Array vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect) {
+void Babylon::Engine::bindMultiBuffers(VertexBuffer::Map vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect) {
 	if (this->_cachedVertexBuffers != vertexBuffers || this->_cachedEffectForVertexBuffers != effect) {
 		this->_cachedVertexBuffers = vertexBuffers;
 		this->_cachedEffectForVertexBuffers = effect;
 
-		auto attributes = effect->getAttributesNames();
+		auto attributes = effect->getAttributes();
 
-		for (auto index = 0; index < attributes.size(); index++) {
-			auto order = effect->getAttribute(index);
-
+		for (auto attribute : attributes) {
+			auto order = effect->getAttributeLocation(attribute);
 			if (order >= 0) {
-				// TODO: double check if vertexBuffers[attributes[index]] can be replaced with vertexBuffers[order]
-				auto vertexBuffer = vertexBuffers[order];
+				auto vertexBuffer = vertexBuffers[attribute];
 				auto stride = vertexBuffer->getStrideSize();
 				this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer->_buffer);
 				this->_gl->vertexAttribPointer(order, stride, this->_gl->FLOAT, false, stride * 4, 0);
@@ -384,11 +381,11 @@ void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 };
 
 // Shaders
-Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
 	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 }
 
-Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<string> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
 	string name; 
 	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {
@@ -446,14 +443,14 @@ vector<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr sha
 	return results;
 };
 
-vector<int> Babylon::Engine::getAttributes(IGLProgram::Ptr shaderProgram, vector<string> attributesNames) {
-	vector<int> results;
+map<VertexBufferKind, int> Babylon::Engine::getAttributeLocations(IGLProgram::Ptr shaderProgram, vector<VertexBufferKind> attributesNames) {
+	map<VertexBufferKind, int> results;
 
 	for (auto attributesName : attributesNames) {
 		try {
-			results.push_back(this->_gl->getAttribLocation(shaderProgram, attributesName));
+			results[attributesName] = this->_gl->getAttribLocation(shaderProgram, VertexBuffer::toString(attributesName));
 		} catch (...) {
-			results.push_back(-1);
+			results[attributesName] = -1;
 		}
 	}
 
@@ -461,16 +458,15 @@ vector<int> Babylon::Engine::getAttributes(IGLProgram::Ptr shaderProgram, vector
 };
 
 void Babylon::Engine::enableEffect(Effect::Ptr effect) {
-	if (!effect || !effect->getAttributesCount() || this->_currentEffect == effect) {
+	if (!effect || !effect->getAttributes().size() || this->_currentEffect == effect) {
 		return;
 	}
 	// Use program
 	this->_gl->useProgram(effect->getProgram());
 
-	for (auto index = 0; index < effect->getAttributesCount() ; index++) {
+	for (auto attribute : effect->getAttributes()) {
 		// Attributes
-		auto order = effect->getAttribute(index);
-
+		auto order = effect->getAttributeLocation(attribute);
 		if (order >= 0) {
 			this->_gl->enableVertexAttribArray(order);
 		}

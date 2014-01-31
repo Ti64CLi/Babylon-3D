@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include "iengine.h"
 
 using namespace std;
 
@@ -30,7 +31,7 @@ namespace Babylon {
 		virtual Color3::Ptr clone();
 		virtual void copyFrom(Color3::Ptr source);
 		virtual void copyFromFloats(float, float, float);
-		static Color3::Ptr FromArray(vector<float>);
+		static Color3::Ptr FromArray(Float32Array);
 	};
 
 };

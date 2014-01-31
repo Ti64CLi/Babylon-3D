@@ -16,11 +16,6 @@ Plane::Array Babylon::Frustum::GetPlanes(Matrix::Ptr transform) {
 };
 
 void Babylon::Frustum::GetPlanesToRef(Matrix::Ptr transform, Plane::Array& frustumPlanes) {
-	while (frustumPlanes.size() <= 5)
-	{
-		frustumPlanes.push_back(make_shared<Plane>(0.,0.,0.,0.));
-	}
-
 	// Near
 	frustumPlanes[0]->normal->x = transform->m[3] + transform->m[2];
 	frustumPlanes[0]->normal->y = transform->m[7] + transform->m[6];

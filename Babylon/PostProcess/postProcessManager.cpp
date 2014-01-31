@@ -18,8 +18,8 @@ Babylon::PostProcessManager::PostProcessManager(Scene::Ptr scene)
 	vertices.push_back(1);
 	vertices.push_back(-1);
 
-	this->_vertexDeclaration.clear();
-	_vertexDeclaration.push_back(2);
+	this->_vertexDeclarations.clear();
+	this->_vertexDeclarations.push_back(VertexBufferKind_NormalKind);
 
 	this->_vertexStrideSize = 2 * 4;
 	this->_vertexBuffer = scene->getEngine()->createVertexBuffer(vertices);
@@ -68,7 +68,7 @@ void Babylon::PostProcessManager::_finalizeFrame() {
 
 		if (effect) {
 			// VBOs
-			engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclaration, this->_vertexStrideSize, effect);
+			engine->bindBuffers(this->_vertexBuffer, this->_indexBuffer, this->_vertexDeclarations, this->_vertexStrideSize, effect);
 
 			// Draw order
 			engine->draw(true, 0, 6);

@@ -40,7 +40,7 @@ namespace Babylon {
 		virtual Matrix::Ptr multiply(Matrix::Ptr other);
 		virtual void copyFrom(Matrix::Ptr other);
 		virtual void multiplyToRef(Matrix::Ptr other, Matrix::Ptr result);
-		virtual void multiplyToArray(Matrix::Ptr other, Float32Array result, int offset);
+		virtual void multiplyToArray(Matrix::Ptr other, Float32Array& result, int offset);
 		virtual bool equals(Matrix::Ptr value);
 		virtual Matrix::Ptr clone();
 		// Statics

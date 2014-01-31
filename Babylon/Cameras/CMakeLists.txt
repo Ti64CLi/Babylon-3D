@@ -21,4 +21,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (Cameras camera.cpp)
+add_library (Cameras camera.cpp arcRotateCamera.cpp)
