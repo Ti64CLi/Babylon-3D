@@ -149,7 +149,7 @@ public:
 	virtual Babylon::GLboolean isShader(Babylon::IGLShader::Ptr shader);
 	virtual Babylon::GLboolean isTexture(Babylon::IGLTexture::Ptr texture);
 	virtual void lineWidth(Babylon::GLfloat width);
-	virtual void linkProgram(Babylon::IGLProgram::Ptr program);
+	virtual bool linkProgram(Babylon::IGLProgram::Ptr program);
 	virtual void pixelStorei(Babylon::GLenum pname, Babylon::GLint param);
 	virtual void polygonOffset(Babylon::GLfloat factor, Babylon::GLfloat units);
 

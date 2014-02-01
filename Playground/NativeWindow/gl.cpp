@@ -486,8 +486,14 @@ void GL::lineWidth(Babylon::GLfloat width) {
 	glLineWidth(width);
 }
 
-void GL::linkProgram(Babylon::IGLProgram::Ptr program) { 
+bool GL::linkProgram(Babylon::IGLProgram::Ptr program) { 
 	glLinkProgram(program->value);
+
+    // Test linker result.
+    ::GLint linkSucceed = GL_FALSE;
+    glGetProgramiv(program->value, GL_LINK_STATUS, &linkSucceed);
+
+	return linkSucceed != GL_FALSE;
 }
 
 void GL::pixelStorei(Babylon::GLenum pname, Babylon::GLint param) { 

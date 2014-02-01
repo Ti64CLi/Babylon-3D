@@ -234,7 +234,7 @@ void Babylon::Engine::setDirectViewport(int x, int y, int width, int height) {
 	this->_cachedViewport = nullptr;
 
 	this->_gl->viewport(x, y, width, height);
-	this->_aspectRatio = width / height;
+	this->_aspectRatio = (float)width / (float)height;
 };
 
 void Babylon::Engine::beginFrame() {
@@ -420,11 +420,16 @@ IGLProgram::Ptr Babylon::Engine::createShaderProgram(string vertexCode, string f
 	this->_gl->attachShader(shaderProgram, vertexShader);
 	this->_gl->attachShader(shaderProgram, fragmentShader);
 
-	this->_gl->linkProgram(shaderProgram);
+	auto result = this->_gl->linkProgram(shaderProgram);
 
 	auto error = this->_gl->getProgramInfoLog(shaderProgram);
 	if (!error.empty()) {
 		throw exception(error.c_str());
+	}
+
+	if (!result)
+	{
+		throw exception("link failed.");
 	}
 
 	this->_gl->deleteShader(vertexShader);

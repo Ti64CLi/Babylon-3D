@@ -714,7 +714,7 @@ namespace Babylon {
 		virtual GLboolean isShader(IGLShader::Ptr shader) = 0;
 		virtual GLboolean isTexture(IGLTexture::Ptr texture) = 0;
 		virtual void lineWidth(GLfloat width) = 0;
-		virtual void linkProgram(IGLProgram::Ptr program) = 0;
+		virtual bool linkProgram(IGLProgram::Ptr program) = 0;
 		virtual void pixelStorei(GLenum pname, GLint param) = 0;
 		virtual void polygonOffset(GLfloat factor, GLfloat units) = 0;
 

@@ -424,7 +424,6 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 
 	// Material
 	auto effectiveMaterial = subMesh->getMaterial();
-
 	if (!effectiveMaterial || !effectiveMaterial->isReady(dynamic_pointer_cast<Mesh>(shared_from_this()))) {
 		return;
 	}

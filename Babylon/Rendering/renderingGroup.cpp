@@ -34,7 +34,7 @@ bool Babylon::RenderingGroup::render (CustomRenderFunctionFunc customRenderFunct
 
 	// Alpha test
 	engine->setAlphaTesting(true);
-	for (auto submesh : this->_opaqueSubMeshes) {
+	for (auto submesh : this->_alphaTestSubMeshes) {
 		this->_activeVertices += submesh->verticesCount;
 
 		submesh->render();

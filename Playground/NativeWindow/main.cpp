@@ -40,8 +40,8 @@ public:
 		this->engine = Engine::New(this->canvas, true);
 
 		// for testing loading shaders manually
-		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader;
-		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
+		Effect::ShadersStore["defaultVertexShader"] = regularVertexShader;
+		Effect::ShadersStore["defaultPixelShader"] = regularPixelShader;
 	}
 
 	void loadSimpleScene() {

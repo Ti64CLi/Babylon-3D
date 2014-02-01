@@ -129,6 +129,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 };
 
 void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<VertexBufferKind> attributesNames, string defines, vector<string> optionalDefines, bool useFallback) {
+	
 	try {
 		auto engine = this->_engine;
 		this->_program = engine->createShaderProgram(vertexSourceCode, fragmentSourceCode, defines);

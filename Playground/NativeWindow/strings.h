@@ -834,4 +834,59 @@ const char* defaultPixelShader = "#ifdef GL_ES\n" \
 	"	gl_FragColor = color;\n" \
 	"}" ;
 
+
+const char* regularVertexShader = "#version 120   \n" \
+"//#extension EXT_gpu_shader4 : require    \n" \
+"" \
+"attribute vec4 position;\n" \
+"attribute vec3 normal;\n" \
+"" \
+"varying vec3 eyeNormal;\n" \
+"varying vec3 eyePosition;\n" \
+"\n" \
+"void main() {  \n" \
+"    vec4 vertex;    \n" \
+"    //vec3 normal;    \n" \
+"\n" \
+"    //vertex = gl_Vertex;  \n" \
+"    //normal = gl_Normal;  \n" \
+"\n" \
+"    // Transform the position \n" \
+"    //gl_Position = gl_ModelViewProjectionMatrix * vertex;    \n" \
+"	gl_Position = position;\n" \
+"\n" \
+"    // Transform the normal for per-pixel lighting\n" \
+"    eyeNormal = gl_NormalMatrix * normal;\n" \
+"    \n" \
+"    // Transform the position to eye-space\n" \
+"    eyePosition = (gl_ModelViewMatrix * gl_Vertex).xyz;  \n" \
+"}\n";
+
+
+const char* regularPixelShader = "#version 120   \n" \
+"//#extension EXT_gpu_shader4 : require    \n" \
+"\n" \
+"\n" \
+"varying vec3 eyeNormal;\n" \
+"varying vec3 eyePosition;\n" \
+"\n" \
+"void main() {  \n" \
+"    vec3 normal = normalize(eyeNormal); \n" \
+"    vec3 light = normalize( vec3(1,1,1));\n" \
+"    vec3 eye = normalize( eyePosition);\n" \
+"    vec3 r = reflect( eye, normal);\n" \
+"    const vec3 red = vec3( 1, 0, 0);\n" \
+"    const vec3 white = vec3( 1, 1, 1);\n" \
+"\n" \
+"    // Compute a simple phong illumination with a directional light\n" \
+"    float ndotl = dot( normal, light);    \n" \
+"    ndotl = min( max( ndotl, 0.0) + 0.2, 1.0);\n" \
+"    float spec = pow( max( 0.0, dot( r, light)), 32.0);\n" \
+"    \n" \
+"    vec3 color = clamp( ndotl*red + spec*white, 0.0, 1.0); \n" \
+"\n" \
+"    // Output the fragment color   \n" \
+"    gl_FragColor = vec4( color, 1.0); \n" \
+"}\n";
+
 #endif // STRINGS_H

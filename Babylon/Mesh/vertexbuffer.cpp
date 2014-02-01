@@ -74,8 +74,9 @@ void Babylon::VertexBuffer::dispose(bool doNotRecurse) {
 
 const char* Babylon::VertexBuffer::toString(VertexBufferKind kind) {
 	switch (kind) {
+	// TODO: remove gl after testing
 	case VertexBufferKind_PositionKind: return "position";
-	case VertexBufferKind_NormalKind: return "normal";
+	case VertexBufferKind_NormalKind: return  "normal";
 	case VertexBufferKind_UVKind: return "uv";
 	case VertexBufferKind_UV2Kind: return "uv2";
 	case VertexBufferKind_ColorKind: return "color";
