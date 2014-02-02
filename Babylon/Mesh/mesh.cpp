@@ -15,6 +15,7 @@ Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	this->_worldMatrix = Matrix::Identity();
 
 	// moved to new
+	// TODO: add to all derived classes
 	////scene->meshes.push_back(enable_shared_from_this<Mesh>::shared_from_this());
 
 	this->position = make_shared<Vector3>(0, 0, 0);
@@ -25,7 +26,6 @@ Babylon::Mesh::Mesh(string name, Scene::Ptr scene) : Node(scene) {
 	this->_pivotMatrix = Matrix::Identity();
 
 	this->_indices.clear();
-	this->hasIndices = false;
 	this->subMeshes.clear();
 
 	this->_renderId = 0;
@@ -319,7 +319,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 };
 
 SubMesh::Ptr Babylon::Mesh::_createGlobalSubMesh() {
-	if (!this->_totalVertices || !this->hasIndices) { // TODO: you need to check if _indices are not created then leave
+	if (!this->_totalVertices || !this->_indices.size()) {
 		return nullptr;
 	}
 
@@ -374,7 +374,6 @@ void Babylon::Mesh::setIndices(Uint16Array indices) {
 
 	this->_indexBuffer = this->_scene->getEngine()->createIndexBuffer(indices);
 	this->_indices = indices;
-	this->hasIndices = true;
 
 	this->_createGlobalSubMesh();
 };

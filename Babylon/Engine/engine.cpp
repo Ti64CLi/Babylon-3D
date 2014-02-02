@@ -1,5 +1,4 @@
 #include "engine.h"
-#include <sstream>
 #include "videoTexture.h"
 
 using namespace Babylon;
@@ -282,7 +281,7 @@ void Babylon::Engine::restoreDefaultFramebuffer() {
 };
 
 // VBOs
-IGLBuffer::Ptr Babylon::Engine::createVertexBuffer(Float32Array vertices) {
+IGLBuffer::Ptr Babylon::Engine::createVertexBuffer(Float32Array& vertices) {
 	auto vbo = this->_gl->createBuffer();
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vbo);
 	this->_gl->bufferData(this->_gl->ARRAY_BUFFER, vertices, this->_gl->STATIC_DRAW);
@@ -300,9 +299,10 @@ IGLBuffer::Ptr Babylon::Engine::createDynamicVertexBuffer(GLsizeiptr capacity) {
 	return vbo;
 };
 
-void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length) {
+void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array& vertices, size_t length) {
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
 	if (length) {
+		// TODO: May have issue with array constucot destructor
 		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, Float32Array(vertices.begin(), vertices.begin() + length));
 	} else {
 		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, vertices);
@@ -311,7 +311,7 @@ void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Flo
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, nullptr);
 };
 
-IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array indices) {
+IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array& indices) {
 	auto vbo = this->_gl->createBuffer();
 	this->_gl->bindBuffer(this->_gl->ELEMENT_ARRAY_BUFFER, vbo);
 	this->_gl->bufferData(this->_gl->ELEMENT_ARRAY_BUFFER, indices, this->_gl->STATIC_DRAW);
@@ -480,7 +480,7 @@ void Babylon::Engine::enableEffect(Effect::Ptr effect) {
 	this->_currentEffect = effect;
 };
 
-void Babylon::Engine::setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices) {
+void Babylon::Engine::setMatrices(IGLUniformLocation::Ptr uniform, Float32Array& matrices) {
 	if (!uniform)
 		return;
 

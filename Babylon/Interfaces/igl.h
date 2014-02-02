@@ -610,11 +610,11 @@ namespace Babylon {
 			GLenum srcAlpha, GLenum dstAlpha) = 0;
 
 		virtual void bufferData(GLenum target, GLsizeiptr size, GLenum usage) = 0;
-		virtual void bufferData(GLenum target, Float32Array data, GLenum usage) = 0;
-		virtual void bufferData(GLenum target, Int32Array data, GLenum usage) = 0;
-		virtual void bufferData(GLenum target, Uint16Array data, GLenum usage) = 0;
-		virtual void bufferSubData(GLenum target, GLintptr offset, Float32Array data) = 0;
-		virtual void bufferSubData(GLenum target, GLintptr offset, Int32Array data) = 0;
+		virtual void bufferData(GLenum target, Float32Array& data, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, Int32Array& data, GLenum usage) = 0;
+		virtual void bufferData(GLenum target, Uint16Array& data, GLenum usage) = 0;
+		virtual void bufferSubData(GLenum target, GLintptr offset, Float32Array& data) = 0;
+		virtual void bufferSubData(GLenum target, GLintptr offset, Int32Array& data) = 0;
 
 		virtual GLenum checkFramebufferStatus(GLenum target) = 0;
 		virtual void clear(GLbitfield mask) = 0;
@@ -763,40 +763,40 @@ namespace Babylon {
 		//	GLenum format, GLenum type, HTMLVideoElement video) = 0; // May throw DOMException
 
 		virtual void uniform1f(IGLUniformLocation::Ptr location, GLfloat x) = 0;
-		virtual void uniform1fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform1fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
 		virtual void uniform1i(IGLUniformLocation::Ptr location, GLint x) = 0;
-		virtual void uniform1iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform1iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
 		virtual void uniform2f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y) = 0;
-		virtual void uniform2fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform2fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
 		virtual void uniform2i(IGLUniformLocation::Ptr location, GLint x, GLint y) = 0;
-		virtual void uniform2iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform2iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
 		virtual void uniform3f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z) = 0;
-		virtual void uniform3fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform3fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
 		virtual void uniform3i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z) = 0;
-		virtual void uniform3iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform3iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
 		virtual void uniform4f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
-		virtual void uniform4fv(IGLUniformLocation::Ptr location, Float32Array v) = 0;
+		virtual void uniform4fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
 		virtual void uniform4i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z, GLint w) = 0;
-		virtual void uniform4iv(IGLUniformLocation::Ptr location, Int32Array v) = 0;
+		virtual void uniform4iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
 
 		virtual void uniformMatrix2fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value) = 0;
+			Float32Array& value) = 0;
 		virtual void uniformMatrix3fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value) = 0;
+			Float32Array& value) = 0;
 		virtual void uniformMatrix4fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
-			Float32Array value) = 0;
+			Float32Array& value) = 0;
 
 		virtual void useProgram(IGLProgram::Ptr program) = 0;
 		virtual void validateProgram(IGLProgram::Ptr program) = 0;
 
 		virtual void vertexAttrib1f(GLuint indx, GLfloat x) = 0;
-		virtual void vertexAttrib1fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib1fv(GLuint indx, Float32Array& values) = 0;
 		virtual void vertexAttrib2f(GLuint indx, GLfloat x, GLfloat y) = 0;
-		virtual void vertexAttrib2fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib2fv(GLuint indx, Float32Array& values) = 0;
 		virtual void vertexAttrib3f(GLuint indx, GLfloat x, GLfloat y, GLfloat z) = 0;
-		virtual void vertexAttrib3fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib3fv(GLuint indx, Float32Array& values) = 0;
 		virtual void vertexAttrib4f(GLuint indx, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
-		virtual void vertexAttrib4fv(GLuint indx, Float32Array values) = 0;
+		virtual void vertexAttrib4fv(GLuint indx, Float32Array& values) = 0;
 		virtual void vertexAttribPointer(GLuint indx, GLint size, GLenum type, 
 			GLboolean normalized, GLsizei stride, GLintptr offset) = 0;
 

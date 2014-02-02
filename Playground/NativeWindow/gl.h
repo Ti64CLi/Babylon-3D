@@ -45,11 +45,11 @@ public:
 		Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha);
 
 	virtual void bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylon::GLenum usage);
-	virtual void bufferData(Babylon::GLenum target, Babylon::Float32Array data, Babylon::GLenum usage);
-	virtual void bufferData(Babylon::GLenum target, Babylon::Int32Array data, Babylon::GLenum usage);
-	virtual void bufferData(Babylon::GLenum target, Babylon::Uint16Array data, Babylon::GLenum usage);
-	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array data);
-	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array data);
+	virtual void bufferData(Babylon::GLenum target, Babylon::Float32Array& data, Babylon::GLenum usage);
+	virtual void bufferData(Babylon::GLenum target, Babylon::Int32Array& data, Babylon::GLenum usage);
+	virtual void bufferData(Babylon::GLenum target, Babylon::Uint16Array& data, Babylon::GLenum usage);
+	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array& data);
+	virtual void bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array& data);
 
 	virtual Babylon::GLenum checkFramebufferStatus(Babylon::GLenum target);
 	virtual void clear(Babylon::GLbitfield mask);
@@ -198,44 +198,47 @@ public:
 	//	Babylon::GLenum format, Babylon::GLenum type, HTMLVideoElement video); // May throw DOMException
 
 	virtual void uniform1f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x);
-	virtual void uniform1fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v);
+	virtual void uniform1fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v);
 	virtual void uniform1i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x);
-	virtual void uniform1iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v);
+	virtual void uniform1iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v);
 	virtual void uniform2f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y);
-	virtual void uniform2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v);
+	virtual void uniform2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v);
 	virtual void uniform2i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y);
-	virtual void uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v);
+	virtual void uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v);
 	virtual void uniform3f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z);
-	virtual void uniform3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v);
+	virtual void uniform3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v);
 	virtual void uniform3i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y, Babylon::GLint z);
-	virtual void uniform3iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v);
+	virtual void uniform3iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v);
 	virtual void uniform4f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z, Babylon::GLfloat w);
-	virtual void uniform4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v);
+	virtual void uniform4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v);
 	virtual void uniform4i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y, Babylon::GLint z, Babylon::GLint w);
-	virtual void uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v);
+	virtual void uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v);
 
 	virtual void uniformMatrix2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-		Babylon::Float32Array value);
+		Babylon::Float32Array& value);
 	virtual void uniformMatrix3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-		Babylon::Float32Array value);
+		Babylon::Float32Array& value);
 	virtual void uniformMatrix4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-		Babylon::Float32Array value);
+		Babylon::Float32Array& value);
 
 	virtual void useProgram(Babylon::IGLProgram::Ptr program);
 	virtual void validateProgram(Babylon::IGLProgram::Ptr program);
 
 	virtual void vertexAttrib1f(Babylon::GLuint indx, Babylon::GLfloat x);
-	virtual void vertexAttrib1fv(Babylon::GLuint indx, Babylon::Float32Array values);
+	virtual void vertexAttrib1fv(Babylon::GLuint indx, Babylon::Float32Array& values);
 	virtual void vertexAttrib2f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y);
-	virtual void vertexAttrib2fv(Babylon::GLuint indx, Babylon::Float32Array values);
+	virtual void vertexAttrib2fv(Babylon::GLuint indx, Babylon::Float32Array& values);
 	virtual void vertexAttrib3f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z);
-	virtual void vertexAttrib3fv(Babylon::GLuint indx, Babylon::Float32Array values);
+	virtual void vertexAttrib3fv(Babylon::GLuint indx, Babylon::Float32Array& values);
 	virtual void vertexAttrib4f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z, Babylon::GLfloat w);
-	virtual void vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array values);
+	virtual void vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array& values);
 	virtual void vertexAttribPointer(Babylon::GLuint indx, Babylon::GLint size, Babylon::GLenum type, 
 		Babylon::GLboolean normalized, Babylon::GLsizei stride, Babylon::GLintptr offset);
 
 	virtual void viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height);
+
+	// Extra
+	virtual void GL::errorCheck();
 };
 
 #endif // GL_H

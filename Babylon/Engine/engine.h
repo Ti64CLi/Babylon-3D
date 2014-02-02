@@ -87,10 +87,10 @@ namespace Babylon {
 		virtual void unBindFramebuffer(IGLTexture::Ptr texture);
 		virtual void flushFramebuffer();
 		virtual void restoreDefaultFramebuffer();
-		virtual IGLBuffer::Ptr createVertexBuffer(vector<float> vertices);
+		virtual IGLBuffer::Ptr createVertexBuffer(Float32Array& vertices);
 		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
-		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array vertices, size_t length = 0);
-		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array indices);
+		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array& vertices, size_t length = 0);
+		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array& indices);
 		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect);
 		virtual void bindMultiBuffers(VertexBuffer::Map vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
 		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
@@ -102,7 +102,7 @@ namespace Babylon {
 		virtual vector<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames);
 		virtual map<VertexBufferKind, int> getAttributeLocations(IGLProgram::Ptr shaderProgram, vector<VertexBufferKind> attributesNames);
 		virtual void enableEffect(Effect::Ptr effect);
-		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array matrices);
+		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array& matrices);
 		virtual void setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr matrix);
 		virtual void setFloat(IGLUniformLocation::Ptr uniform, GLfloat value);
 		virtual void setFloat2(IGLUniformLocation::Ptr uniform, GLfloat x, GLfloat y);

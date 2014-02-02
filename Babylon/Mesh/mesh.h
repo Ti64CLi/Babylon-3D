@@ -46,7 +46,6 @@ namespace Babylon {
 
 		Matrix::Ptr _pivotMatrix;
 
-		bool hasIndices;
 		Uint16Array _indices;
 		SubMesh::Array subMeshes;
 

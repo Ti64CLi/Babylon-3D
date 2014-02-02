@@ -84,7 +84,7 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 		attribs.push_back(VertexBufferKind_MatricesIndicesKind);
 		attribs.push_back(VertexBufferKind_MatricesWeightsKind);
 		defines.push_back("#define BONES");
-		defines.push_back("#define BonesPerMesh " + mesh->skeleton->bones.size());
+		defines.push_back("#define BonesPerMesh " + to_string(mesh->skeleton->bones.size()));
 	}
 
 	// Get correct effect      

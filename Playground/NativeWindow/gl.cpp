@@ -57,75 +57,93 @@ Babylon::GLenum GL::getEnumByNameIndex (string name, int index) {
 
 void GL::activeTexture(Babylon::GLenum texture) { 
 	glActiveTexture(texture);
+	errorCheck();
 }
 
 void GL::attachShader(Babylon::IGLProgram::Ptr program, Babylon::IGLShader::Ptr shader) { 
 	glAttachShader(program->value, shader->value);
+	errorCheck();
 }
 
 void GL::bindAttribLocation(Babylon::IGLProgram::Ptr program, Babylon::GLuint index, string name) { 
 	glBindAttribLocation(program->value, index, name.c_str());
+	errorCheck();
 }
 
 void GL::bindBuffer(Babylon::GLenum target, Babylon::IGLBuffer::Ptr buffer) { 
 	glBindBuffer(target, buffer ? buffer->value : 0);
+	errorCheck();
 }
 
 void GL::bindFramebuffer(Babylon::GLenum target, Babylon::IGLFramebuffer::Ptr framebuffer) { 
 	glBindFramebufferEXT(target, framebuffer->value);
+	errorCheck();
 }
 
 void GL::bindRenderbuffer(Babylon::GLenum target, Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
 	glBindRenderbufferEXT(target, renderbuffer->value);
+	errorCheck();
 }
 
 void GL::bindTexture(Babylon::GLenum target, Babylon::IGLTexture::Ptr texture) { 
 	glBindTextureEXT(target, texture->value);
+	errorCheck();
 }
 
 void GL::blendColor(Babylon::GLclampf red, Babylon::GLclampf green, Babylon::GLclampf blue, Babylon::GLclampf alpha) { 
 	glBlendColor(red, green, blue, alpha);
+	errorCheck();
 }
 
 void GL::blendEquation(Babylon::GLenum mode) { 
 	glBlendEquation(mode);
+	errorCheck();
 }
 
 void GL::blendEquationSeparate(Babylon::GLenum modeRGB, Babylon::GLenum modeAlpha) { 
 	glBlendEquationSeparate(modeRGB, modeAlpha);
+	errorCheck();
 }
 
 void GL::blendFunc(Babylon::GLenum sfactor, Babylon::GLenum dfactor) { 
 	glBlendFunc(sfactor, dfactor);
+	errorCheck();
 }
 
 void GL::blendFuncSeparate(Babylon::GLenum srcRGB, Babylon::GLenum dstRGB, 
 						   Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha) { 
 							   glBlendFuncSeparateEXT(srcRGB, dstRGB, srcAlpha, dstAlpha);
+							   errorCheck();
 }
 
 void GL::bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylon::GLenum usage) { 
 	glBufferData(target, sizeiptr >> 32, (Babylon::any)(sizeiptr & 0x0000ffff), usage);
+	errorCheck();
 }
 
-void GL::bufferData(Babylon::GLenum target, Babylon::Float32Array data, Babylon::GLenum usage) { 
+void GL::bufferData(Babylon::GLenum target, Babylon::Float32Array& data, Babylon::GLenum usage) { 
 	glBufferData(target, data.size() * sizeof(Babylon::GLfloat), data.data(), usage);
+	errorCheck();
 }
 
-void GL::bufferData(Babylon::GLenum target, Babylon::Int32Array data, Babylon::GLenum usage) { 
+void GL::bufferData(Babylon::GLenum target, Babylon::Int32Array& data, Babylon::GLenum usage) { 
 	glBufferData(target, data.size() * sizeof(int32_t), data.data(), usage);
+	errorCheck();
 }
 
-void GL::bufferData(Babylon::GLenum target, Babylon::Uint16Array data, Babylon::GLenum usage) { 
+void GL::bufferData(Babylon::GLenum target, Babylon::Uint16Array& data, Babylon::GLenum usage) { 
 	glBufferData(target, data.size() * sizeof(char16_t), data.data(), usage);
+	errorCheck();
 }
 
-void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array data) { 
+void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Float32Array& data) { 
 	glBufferSubData(target, offset, data.size() * sizeof(Babylon::GLfloat), data.data());
+	errorCheck();
 }
 
-void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array data) { 
+void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon::Int32Array& data) { 
 	glBufferSubData(target, offset, data.size() * sizeof(int32_t), data.data());
+	errorCheck();
 }
 
 Babylon::GLenum GL::checkFramebufferStatus(Babylon::GLenum target) { 
@@ -134,26 +152,32 @@ Babylon::GLenum GL::checkFramebufferStatus(Babylon::GLenum target) {
 
 void GL::clear(Babylon::GLbitfield mask) { 
 	glClear(mask);
+	errorCheck();
 }
 
 void GL::clearColor(Babylon::GLclampf red, Babylon::GLclampf green, Babylon::GLclampf blue, Babylon::GLclampf alpha) { 
 	glClearColor(red, green, blue, alpha);
+	errorCheck();
 }
 
 void GL::clearDepth(Babylon::GLclampf depth) { 
 	glClearDepth(depth);
+	errorCheck();
 }
 
 void GL::clearStencil(Babylon::GLint s) { 
 	glClearStencil(s);
+	errorCheck();
 }
 
 void GL::colorMask(Babylon::GLboolean red, Babylon::GLboolean green, Babylon::GLboolean blue, Babylon::GLboolean alpha) { 
 	glColorMask(red, green, blue, alpha);
+	errorCheck();
 }
 
 void GL::compileShader(Babylon::IGLShader::Ptr shader) { 
 	glCompileShader(shader->value);
+	errorCheck();
 }
 
 void GL::compressedTexSubImage2D(Babylon::GLenum target, Babylon::GLint level,
@@ -161,17 +185,20 @@ void GL::compressedTexSubImage2D(Babylon::GLenum target, Babylon::GLint level,
 								 Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLenum format,
 								 Babylon::GLsizeiptr sizeiptr) { 
 									 glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, sizeiptr >> 32, (const ::GLint*) (sizeiptr & 0x0000ffff));
+									 errorCheck();
 }
 
 void GL::copyTexImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 						Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
 						Babylon::GLint border) { 
 							glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
+							errorCheck();
 }
 
 void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 						   Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
 							   glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
+							   errorCheck();
 }
 
 Babylon::IGLBuffer::Ptr GL::createBuffer() { 
@@ -208,46 +235,57 @@ Babylon::IGLTexture::Ptr GL::createTexture() {
 
 void GL::cullFace(Babylon::GLenum mode) { 
 	glCullFace(mode);
+	errorCheck();
 }
 
 void GL::deleteBuffer(Babylon::IGLBuffer::Ptr buffer) { 
 	glDeleteBuffers(1, (const ::GLuint*) &buffer->value);
+	errorCheck();
 }
 
 void GL::deleteFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
 	glDeleteFramebuffersEXT(1, (const ::GLuint*) &framebuffer->value);
+	errorCheck();
 }
 
 void GL::deleteProgram(Babylon::IGLProgram::Ptr program) { 
 	glDeleteProgram(program->value);
+	errorCheck();
 }
 
 void GL::deleteRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
 	glDeleteRenderbuffersEXT(1, (const ::GLuint*) &renderbuffer->value);
+	errorCheck();
 }
 
 void GL::deleteShader(Babylon::IGLShader::Ptr shader) { 
 	glDeleteShader(shader->value);
+	errorCheck();
 }
 
 void GL::deleteTexture(Babylon::IGLTexture::Ptr texture) { 
 	glDeleteTextures(1, (const ::GLuint*) &texture->value);
+	errorCheck();
 }
 
 void GL::depthFunc(Babylon::GLenum func) { 
 	glDepthFunc(func);
+	errorCheck();
 }
 
 void GL::depthMask(Babylon::GLboolean flag) { 
 	glDepthMask(flag);
+	errorCheck();
 }
 
 void GL::depthRange(Babylon::GLclampf zNear, Babylon::GLclampf zFar) { 
 	glDepthRange(zNear, zFar);
+	errorCheck();
 }
 
 void GL::detachShader(Babylon::IGLProgram::Ptr program, Babylon::IGLShader::Ptr shader) { 
 	glDetachShader(program->value, shader->value);
+	errorCheck();
 }
 
 void GL::disable(Babylon::GLenum cap) { 
@@ -256,14 +294,17 @@ void GL::disable(Babylon::GLenum cap) {
 
 void GL::disableVertexAttribArray(Babylon::GLuint index) { 
 	glDisableVertexAttribArray(index);
+	errorCheck();
 }
 
 void GL::drawArrays(Babylon::GLenum mode, Babylon::GLint first, Babylon::GLsizei count) { 
 	glDrawArrays(mode, first, count);
+	errorCheck();
 }
 
 void GL::drawElements(Babylon::GLenum mode, Babylon::GLsizei count, Babylon::GLenum type, Babylon::GLintptr offset) { 
 	glDrawElements(mode, count, type, (Babylon::any)offset);
+	errorCheck();
 }
 
 void GL::enable(Babylon::GLenum cap) { 
@@ -272,6 +313,7 @@ void GL::enable(Babylon::GLenum cap) {
 
 void GL::enableVertexAttribArray(Babylon::GLuint index) { 
 	glEnableVertexAttribArray(index);
+	errorCheck();
 }
 
 void GL::finish() { 
@@ -286,19 +328,23 @@ void GL::framebufferRenderbuffer(Babylon::GLenum target, Babylon::GLenum attachm
 								 Babylon::GLenum renderbuffertarget, 
 								 Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
 									 glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
+									 errorCheck();
 }
 
 void GL::framebufferTexture2D(Babylon::GLenum target, Babylon::GLenum attachment, Babylon::GLenum textarget, 
 							  Babylon::IGLTexture::Ptr texture, Babylon::GLint level) { 
 								  glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
+								  errorCheck();
 }
 
 void GL::frontFace(Babylon::GLenum mode) { 
 	glFrontFace(mode);
+	errorCheck();
 }
 
 void GL::generateMipmap(Babylon::GLenum target) { 
 	glGenerateMipmapEXT(target);
+	errorCheck();
 }
 
 Babylon::IGLActiveInfo::Ptr GL::getActiveAttrib(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
@@ -452,6 +498,7 @@ Babylon::GLsizeiptr GL::getVertexAttribOffset(Babylon::GLuint index, Babylon::GL
 
 void GL::hint(Babylon::GLenum target, Babylon::GLenum mode) { 
 	glHint(target, mode);
+	errorCheck();
 }
 
 Babylon::GLboolean GL::isBuffer(Babylon::IGLBuffer::Ptr buffer) { 
@@ -484,72 +531,84 @@ Babylon::GLboolean GL::isTexture(Babylon::IGLTexture::Ptr texture) {
 
 void GL::lineWidth(Babylon::GLfloat width) { 
 	glLineWidth(width);
+	errorCheck();
 }
 
 bool GL::linkProgram(Babylon::IGLProgram::Ptr program) { 
 	glLinkProgram(program->value);
 
-    // Test linker result.
-    ::GLint linkSucceed = GL_FALSE;
-    glGetProgramiv(program->value, GL_LINK_STATUS, &linkSucceed);
+	// Test linker result.
+	::GLint linkSucceed = GL_FALSE;
+	glGetProgramiv(program->value, GL_LINK_STATUS, &linkSucceed);
 
 	return linkSucceed != GL_FALSE;
 }
 
 void GL::pixelStorei(Babylon::GLenum pname, Babylon::GLint param) { 
 	glPixelStorei(pname, param);
+	errorCheck();
 }
 
 void GL::polygonOffset(Babylon::GLfloat factor, Babylon::GLfloat units) { 
 	glPolygonOffset(factor, units);
+	errorCheck();
 }
 
-void GL::readPixels(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
-					Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-						glReadPixels(x, y, width, height, format, type, pixels);
+void GL::readPixels(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
+	glReadPixels(x, y, width, height, format, type, pixels);
+	errorCheck();
 }
 
-void GL::renderbufferStorage(Babylon::GLenum target, Babylon::GLenum internalformat, 
-							 Babylon::GLsizei width, Babylon::GLsizei height) { 
-								 glRenderbufferStorageEXT(target, internalformat, width, height);
+void GL::renderbufferStorage(Babylon::GLenum target, Babylon::GLenum internalformat, Babylon::GLsizei width, Babylon::GLsizei height) { 
+	glRenderbufferStorageEXT(target, internalformat, width, height);
+	errorCheck();
 }
 
 void GL::sampleCoverage(Babylon::GLclampf value, Babylon::GLboolean invert) { 
 	glSampleCoverage(value, invert);
+	errorCheck();
 }
 
 void GL::scissor(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
 	glScissor(x, y, width, height);
+	errorCheck();
 }
 
 void GL::shaderSource(Babylon::IGLShader::Ptr shader, string source) { 
 	::GLint length = source.length();
 	const ::GLchar* line = (::GLchar*) source.c_str();
 	glShaderSource(shader->value, 1, &line, &length);
+	errorCheck();
 }
 
 void GL::stencilFunc(Babylon::GLenum func, Babylon::GLint ref, Babylon::GLuint mask) { 
 	glStencilFunc(func, ref, mask);
+	errorCheck();
 }
 
 void GL::stencilFuncSeparate(Babylon::GLenum face, Babylon::GLenum func, Babylon::GLint ref, Babylon::GLuint mask) { 
 	glStencilFuncSeparate(face, func, ref, mask);
+	errorCheck();
 }
 
 void GL::stencilMask(Babylon::GLuint mask) { 
 	glStencilMask(mask);
+	errorCheck();
 }
 
 void GL::stencilMaskSeparate(Babylon::GLenum face, Babylon::GLuint mask) { 
 	glStencilMaskSeparate(face, mask);
+	errorCheck();
 }
 
 void GL::stencilOp(Babylon::GLenum fail, Babylon::GLenum zfail, Babylon::GLenum zpass) { 
 	glStencilOp(fail, zfail, zpass);
+	errorCheck();
 }
 
 void GL::stencilOpSeparate(Babylon::GLenum face, Babylon::GLenum fail, Babylon::GLenum zfail, Babylon::GLenum zpass) { 
 	glStencilOpSeparate(face, fail, zfail, zpass);
+	errorCheck();
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
@@ -578,21 +637,25 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, IVideo::Ptr video) { 
+						throw "not supported";
 }
 // May throw DOMException
 
 void GL::texParameterf(Babylon::GLenum target, Babylon::GLenum pname, Babylon::GLfloat param) { 
 	glTexParameterf(target, pname, param);
+	errorCheck();
 }
 
 void GL::texParameteri(Babylon::GLenum target, Babylon::GLenum pname, Babylon::GLint param) { 
 	glTexParameteri(target, pname, param);
+	errorCheck();
 }
 
 void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 					   Babylon::GLsizei width, Babylon::GLsizei height, 
 					   Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
 						   glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+						   errorCheck();
 }
 
 void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
@@ -609,129 +672,181 @@ void GL::texSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GL
 
 void GL::uniform1f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x) { 
 	glUniform1f(location->value, x);
+	errorCheck();
 }
 
-void GL::uniform1fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v) { 
+void GL::uniform1fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v) { 
 	glUniform1fv(location->value,v.size() * sizeof(Babylon::GLfloat), v.data());
+	errorCheck();
 }
 
 void GL::uniform1i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x) { 
 	glUniform1i(location->value, x);
+	errorCheck();
 }
 
-void GL::uniform1iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v) {
+void GL::uniform1iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v) {
 	glUniform1iv(location->value, v.size() * sizeof(int32_t), v.data());
+	errorCheck();
 }
 
 void GL::uniform2f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y) { 
 	glUniform2f(location->value, x, y);
+	errorCheck();
 }
 
-void GL::uniform2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v) { 
+void GL::uniform2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v) { 
 	glUniform2fv(location->value, v.size() * sizeof(Babylon::GLfloat), v.data());
+	errorCheck();
 }
 
 void GL::uniform2i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y) { 
 	glUniform2i(location->value, x, y);
+	errorCheck();
 }
 
-void GL::uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v) { 
+void GL::uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v) { 
 	glUniform2iv(location->value, v.size() * sizeof(int32_t), v.data());
+	errorCheck();
 }
 
 void GL::uniform3f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z) { 
 	glUniform3f(location->value, x, y, z);
+	errorCheck();
 }
 
-void GL::uniform3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v) { 
+void GL::uniform3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v) { 
 	glUniform3fv(location->value, v.size() * sizeof(Babylon::GLfloat), v.data());
+	errorCheck();
 }
 
 void GL::uniform3i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y, Babylon::GLint z) { 
 	glUniform3i(location->value, x, y, z);
+	errorCheck();
 }
 
-void GL::uniform3iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v) { 
+void GL::uniform3iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v) { 
 	glUniform3iv(location->value, v.size() * sizeof(int32_t), v.data());
+	errorCheck();
 }
 
 void GL::uniform4f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z, Babylon::GLfloat w) {
 	glUniform4f(location->value, x, y, z, w);
+	errorCheck();
 }
 
-void GL::uniform4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array v) { 
+void GL::uniform4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::Float32Array& v) { 
 	glUniform4fv(location->value, v.size() * sizeof(Babylon::GLfloat), v.data());
+	errorCheck();
 }
 
 void GL::uniform4i(Babylon::IGLUniformLocation::Ptr location, Babylon::GLint x, Babylon::GLint y, Babylon::GLint z, Babylon::GLint w) { 
 	glUniform4i(location->value, x, y, z, w);
+	errorCheck();
 }
 
-void GL::uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array v) { 
+void GL::uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Array& v) { 
 	glUniform4iv(location->value, v.size() * sizeof(int32_t), v.data());
+	errorCheck();
 }
 
-void GL::uniformMatrix2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-						  Babylon::Float32Array value) { 
-							  glUniformMatrix2fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+void GL::uniformMatrix2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) { 
+	glUniformMatrix2fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+	errorCheck();
 }
 
-void GL::uniformMatrix3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-						  Babylon::Float32Array value) { 
-							  glUniformMatrix3fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+void GL::uniformMatrix3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) { 
+	glUniformMatrix3fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+	errorCheck();
 }
 
-void GL::uniformMatrix4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, 
-						  Babylon::Float32Array value) {
-							  glUniformMatrix4fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+void GL::uniformMatrix4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) {
+	glUniformMatrix4fv(location->value, 1, transpose, value.data());
+	errorCheck();
 }
 
 void GL::useProgram(Babylon::IGLProgram::Ptr program) {
 	glUseProgram(program->value);
+	errorCheck();
 }
 
 void GL::validateProgram(Babylon::IGLProgram::Ptr program) {
 	glValidateProgram(program->value);
+	errorCheck();
 }
 
 void GL::vertexAttrib1f(Babylon::GLuint indx, Babylon::GLfloat x) {
 	glVertexAttrib1f(indx, x);
+	errorCheck();
 }
 
-void GL::vertexAttrib1fv(Babylon::GLuint indx, Babylon::Float32Array values) { 
+void GL::vertexAttrib1fv(Babylon::GLuint indx, Babylon::Float32Array& values) { 
 	glVertexAttrib1fv(indx, values.data());
+	errorCheck();
 }
 
 void GL::vertexAttrib2f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y) { 
 	glVertexAttrib2f(indx, x, y);
+	errorCheck();
 }
 
-void GL::vertexAttrib2fv(Babylon::GLuint indx, Babylon::Float32Array values) { 
+void GL::vertexAttrib2fv(Babylon::GLuint indx, Babylon::Float32Array& values) { 
 	glVertexAttrib2fv(indx, values.data());
+	errorCheck();
 }
 
 void GL::vertexAttrib3f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z) { 
 	glVertexAttrib3f(indx, x, y, z);
+	errorCheck();
 }
 
-void GL::vertexAttrib3fv(Babylon::GLuint indx, Babylon::Float32Array values) { 
+void GL::vertexAttrib3fv(Babylon::GLuint indx, Babylon::Float32Array& values) { 
 	glVertexAttrib3fv(indx, values.data());
+	errorCheck();
 }
 
 void GL::vertexAttrib4f(Babylon::GLuint indx, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z, Babylon::GLfloat w) { 
 	glVertexAttrib4f(indx, x, y, z, w);
+	errorCheck();
 }
 
-void GL::vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array values) {
+void GL::vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array& values) {
 	glVertexAttrib4fv(indx, values.data());
+	errorCheck();
 }
 
 void GL::vertexAttribPointer(Babylon::GLuint indx, Babylon::GLint size, Babylon::GLenum type, 
 							 Babylon::GLboolean normalized, Babylon::GLsizei stride, Babylon::GLintptr offset) { 
-	glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
+								 glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
+								 errorCheck();
 }
 
 void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
 	glViewport(x, y, width, height);
 }
 
+void GL::errorCheck() {
+	::GLenum error = GL_NO_ERROR;
+	error = glGetError();
+	if (GL_NO_ERROR != error) {
+		switch (error)
+		{
+		case GL_INVALID_ENUM:
+			throw exception("GL error: enumeration parameter is not a legal enumeration for that function");
+		case GL_INVALID_VALUE:
+			throw exception("GL error: value parameter is not a legal value for that function");
+		case GL_INVALID_OPERATION:
+			throw exception("GL error: the set of state for a command is not legal for the parameters given to that command");
+		case GL_STACK_OVERFLOW:
+			throw exception("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
+		case GL_STACK_UNDERFLOW:
+			throw exception("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
+		case GL_OUT_OF_MEMORY:
+			throw exception("GL error: performing an operation that can allocate memory, and the memory cannot be allocated");
+		case GL_INVALID_FRAMEBUFFER_OPERATION_EXT:
+			throw exception("GL error: doing anything that would attempt to read from or write/render to a framebuffer that is not complete");
+		case GL_TABLE_TOO_LARGE:
+			throw exception("GL error: Table is too large");
+		}
+	}
+}

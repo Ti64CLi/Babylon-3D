@@ -1,10 +1,12 @@
 #include "standardMaterial.h"
+#include <sstream>
 #include <string>
 #include <algorithm>
 #include <sstream>
 #include "engine.h"
 #include "mesh.h"
 #include "shadowGenerator.h"
+#include "pointLight.h"
 
 using namespace Babylon;
 
@@ -160,7 +162,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 				continue;
 			}
 
-			defines.push_back("#define LIGHT" + lightIndex);
+			defines.push_back("#define LIGHT" + to_string(lightIndex));
 
 			if (lightIndex > 0) {
 				optionalDefines.push_back(defines[defines.size() - 1]);
@@ -169,11 +171,11 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			string type;
 			// TODO: finish it when added others lights
 			////if (light instanceof BABYLON.SpotLight) {
-			////	type = "#define SPOTLIGHT" + lightIndex;
+			////	type = "#define SPOTLIGHT" + to_string(lightIndex);
 			////} else if (light instanceof BABYLON.HemisphericLight) {
-			////	type = "#define HEMILIGHT" + lightIndex;
+			////	type = "#define HEMILIGHT" + to_string(lightIndex);
 			////} else {
-			type = "#define POINTDIRLIGHT" + lightIndex;
+			type = "#define POINTDIRLIGHT" + to_string(lightIndex);
 			////}
 
 			defines.push_back(type);
@@ -184,7 +186,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			// Shadows
 			auto shadowGenerator = light->getShadowGenerator();
 			if (mesh && mesh->receiveShadows && shadowGenerator) {
-				defines.push_back("#define SHADOW" + lightIndex);
+				defines.push_back("#define SHADOW" + to_string(lightIndex));
 
 				if (lightIndex > 0) {
 					optionalDefines.push_back(defines[defines.size() - 1]);
@@ -196,7 +198,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 				}
 
 				if (shadowGenerator->useVarianceShadowMap) {
-					defines.push_back("#define SHADOWVSM" + lightIndex);
+					defines.push_back("#define SHADOWVSM" + to_string(lightIndex));
 					if (lightIndex > 0) {
 						optionalDefines.push_back(defines[defines.size() - 1]);
 					}
@@ -229,7 +231,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			attribs.push_back(VertexBufferKind_MatricesIndicesKind);
 			attribs.push_back(VertexBufferKind_MatricesWeightsKind);
 			defines.push_back("#define BONES");
-			defines.push_back("#define BonesPerMesh " + mesh->skeleton->bones.size());
+			defines.push_back("#define BonesPerMesh " + to_string(mesh->skeleton->bones.size()));
 			defines.push_back("#define BONES4");
 			optionalDefines.push_back(defines[defines.size() - 1]);
 		}
@@ -433,31 +435,32 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 			}
 
 			// TODO: finish when added all lights
-			////if (light instanceof BABYLON.PointLight) {
-			////	// Point Light
-			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex);
-			////} else if (light instanceof BABYLON.DirectionalLight) {
+			if (dynamic_pointer_cast<PointLight>(light)) {
+				// Point Light
+				light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex));
+			} 
+			////else if (light instanceof BABYLON.DirectionalLight) {
 			////	// Directional Light
-			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex);
+			////	light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex));
 			////} else if (light instanceof BABYLON.SpotLight) {
 			////	// Spot Light
-			////	light->transferToEffect(this->_effect, "vLightData" + lightIndex, "vLightDirection" + lightIndex);
+			////	light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightDirection" + to_string(lightIndex));
 			////} else if (light instanceof BABYLON.HemisphericLight) {
-				// Hemispheric Light
-				light->transferToEffect(this->_effect, "vLightData" + lightIndex, "vLightGround" + lightIndex);
+			////	// Hemispheric Light
+			////light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightGround" + to_string(lightIndex));
 			////}
 
 			light->diffuse->scaleToRef(light->intensity, this->_scaledDiffuse);
 			light->specular->scaleToRef(light->intensity, this->_scaledSpecular);
-			this->_effect->setColor3("vLightDiffuse" + lightIndex, this->_scaledDiffuse);
-			this->_effect->setColor3("vLightSpecular" + lightIndex, this->_scaledSpecular);
+			this->_effect->setColor3("vLightDiffuse" + to_string(lightIndex), this->_scaledDiffuse);
+			this->_effect->setColor3("vLightSpecular" + to_string(lightIndex), this->_scaledSpecular);
 
 			// Shadows
 			auto shadowGenerator = light->getShadowGenerator();
 			if (mesh->receiveShadows && shadowGenerator) {
 				world->multiplyToRef(shadowGenerator->getTransformMatrix(), this->_lightMatrix);
-				this->_effect->setMatrix("lightMatrix" + lightIndex, this->_lightMatrix);
-				this->_effect->setTexture("shadowSampler" + lightIndex, shadowGenerator->getShadowMap());
+				this->_effect->setMatrix("lightMatrix" + to_string(lightIndex), this->_lightMatrix);
+				this->_effect->setTexture("shadowSampler" + to_string(lightIndex), shadowGenerator->getShadowMap());
 			}
 
 			lightIndex++;

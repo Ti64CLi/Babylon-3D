@@ -13,6 +13,7 @@
 #include "canvas.h"
 #include "engine.h"
 #include "arcRotateCamera.h"
+#include "pointLight.h"
 #include "strings.h"
 
 using namespace std;
@@ -40,8 +41,8 @@ public:
 		this->engine = Engine::New(this->canvas, true);
 
 		// for testing loading shaders manually
-		Effect::ShadersStore["defaultVertexShader"] = regularVertexShader;
-		Effect::ShadersStore["defaultPixelShader"] = regularPixelShader;
+		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader;
+		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
 	}
 
 	void loadSimpleScene() {
@@ -50,7 +51,7 @@ public:
 
 		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
 		auto camera = ArcRotateCamera::New("Camera", 1, 0.8, 10, make_shared<Vector3>(0, 0, 0), scene);
-		//auto light0 = make_shared<PointLight>("Omni", make_shared<Vector3>(0, 0, 10), scene);
+		auto light0 = PointLight::New("Omni", make_shared<Vector3>(0, 0, 10), scene);
 		auto origin = Mesh::CreateSphere("origin", 10, 1.0, scene);
 	}
 
@@ -77,6 +78,8 @@ void init_opengl() {
 		printf("Unable to load extensions\n\nExiting...\n");
 		exit(-1);
 	}
+
+	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 }
 
 void display() {
@@ -151,6 +154,7 @@ void motion(int x, int y) {
 
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
+
 	glutInitWindowSize(512, 512);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
 	glutCreateWindow("Babylon Native");

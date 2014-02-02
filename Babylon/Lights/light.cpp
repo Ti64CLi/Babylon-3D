@@ -14,7 +14,9 @@ Babylon::Light::Light(string name, Scene::Ptr scene) : Node(scene)
 
 	this->_scene = scene;
 
-	scene->lights.push_back(enable_shared_from_this<Light>::shared_from_this());
+	// moved to New
+	// TODO: add it to all derived classes
+	////scene->lights.push_back(enable_shared_from_this<Light>::shared_from_this());
 
 	// Animations
 	this->animations.clear();
@@ -67,7 +69,7 @@ void Babylon::Light::dispose(bool doNotRecurse) {
 	}
 
 	// Remove from scene
-	auto it = find( begin(this->_scene->lights), end(this->_scene->lights), enable_shared_from_this<Light>::shared_from_this());
+	auto it = find( begin(this->_scene->lights), end(this->_scene->lights), dynamic_pointer_cast<Light>(shared_from_this()));
 	if (it != end(this->_scene->lights))
 	{
 		this->_scene->lights.erase(it);
