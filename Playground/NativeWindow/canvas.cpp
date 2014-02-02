@@ -39,3 +39,14 @@ int Canvas::getClientHeight() {
 I2D::Ptr Canvas::getContext2d() {
 	return nullptr;
 }
+
+void Canvas::raiseEvent_Move(int x, int y) {
+	for (auto moveHandler : this->moveHandlers)
+	{
+		moveHandler(x, y);
+	}
+}
+
+void Canvas::addEventListener_OnMoveEvent(MoveFunc moveFunc) {
+	this->moveHandlers.push_back(moveFunc);
+}

@@ -61,8 +61,8 @@ namespace Babylon {
 		virtual bool _isSynchronized();
 		virtual bool _isSynchronizedViewMatrix();
 		virtual bool _isSynchronizedProjectionMatrix();
+		virtual void attachControl(ICanvas::Ptr canvas, bool noPreventDefault = false);
 		virtual void detachControl(ICanvas::Ptr canvas);
-		virtual void attachControl(ICanvas::Ptr canvas);
 		virtual void _update();
 		virtual void _updateFromScene();
 		virtual Matrix::Ptr getWorldMatrix();

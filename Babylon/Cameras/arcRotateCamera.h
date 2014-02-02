@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <functional>
 
 #include "icanvas.h"
 #include "iengine.h"
@@ -23,6 +24,7 @@ namespace Babylon {
 
 	private:
 		ICanvas::Ptr _attachedCanvas;
+		ICanvas::MoveFunc _onMove;
 
 	public:
 		float alpha; 
@@ -62,7 +64,7 @@ namespace Babylon {
 		// Synchronized
 		virtual bool _isSynchronizedViewMatrix ();
 		// Methods
-		virtual void attachControl (ICanvas::Ptr canvas, bool noPreventDefault);
+		virtual void attachControl (ICanvas::Ptr canvas, bool noPreventDefault = false);
 		virtual void detachControl (ICanvas::Ptr canvas);
 		virtual void _update ();
 		virtual void setPosition (Vector3::Ptr position);

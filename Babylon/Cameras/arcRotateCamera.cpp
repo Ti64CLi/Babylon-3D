@@ -95,7 +95,6 @@ bool Babylon::ArcRotateCamera::_isSynchronizedViewMatrix () {
 // Methods
 void Babylon::ArcRotateCamera::attachControl (ICanvas::Ptr canvas, bool noPreventDefault) {
 	////auto previousPosition;
-	auto that = this;
 	////auto pointerId;
 
 	if (this->_attachedCanvas) {
@@ -153,23 +152,17 @@ void Babylon::ArcRotateCamera::attachControl (ICanvas::Ptr canvas, bool noPreven
 				evt.preventDefault();
 			}
 		};
+		*/
 
-		this->_onMouseMove (evt) {
-			if (!engine.isPointerLock) {
-				return;
-			}
+		this->_onMove = [&] (int x, int y) {
+			auto offsetX = x;
+			auto offsetY = y;
 
-			auto offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
-			auto offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
-
-			that.inertialAlphaOffset -= offsetX / that.angularSensibility;
-			that.inertialBetaOffset -= offsetY / that.angularSensibility;
-
-			if (!noPreventDefault) {
-				evt.preventDefault();
-			}
+			this->inertialAlphaOffset -= offsetX / this->angularSensibility;
+			this->inertialBetaOffset -= offsetY / this->angularSensibility;
 		};
 
+		/*
 		this->_wheel (event) {
 			auto delta = 0;
 			if (event.wheelDelta) {
@@ -277,6 +270,8 @@ void Babylon::ArcRotateCamera::attachControl (ICanvas::Ptr canvas, bool noPreven
 	window.addEventListener('mousewheel', this->_wheel, false);
 	window.addEventListener("blur", this->_onLostFocus, false);
 	*/
+
+	canvas->addEventListener_OnMoveEvent(this->_onMove);
 };
 
 void Babylon::ArcRotateCamera::detachControl (ICanvas::Ptr canvas) {

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 
 using namespace std;
 
@@ -57,6 +58,9 @@ namespace Babylon {
 	public:
 		typedef shared_ptr<ICanvas> Ptr;
 
+		typedef function<void (int x, int y)> MoveFunc;
+		typedef vector<MoveFunc> MoveFuncArray;
+
 	public: 
 
 		virtual IGLPtr getContext3d(bool) = 0; 
@@ -69,6 +73,8 @@ namespace Babylon {
 		virtual int getClientWidth() = 0;
 		virtual int getClientHeight() = 0;
 		virtual I2D::Ptr getContext2d() = 0;
+
+		virtual void addEventListener_OnMoveEvent(MoveFunc moveFunc) = 0;
 	};
 
 };

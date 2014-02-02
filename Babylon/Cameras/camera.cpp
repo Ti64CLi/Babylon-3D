@@ -150,7 +150,7 @@ bool Babylon::Camera::_isSynchronizedProjectionMatrix() {
 };
 
 // Methods
-void Babylon::Camera::attachControl(ICanvas::Ptr canvas) {
+void Babylon::Camera::attachControl(ICanvas::Ptr canvas, bool noPreventDefault) {
 };
 
 void Babylon::Camera::detachControl(ICanvas::Ptr canvas) {
