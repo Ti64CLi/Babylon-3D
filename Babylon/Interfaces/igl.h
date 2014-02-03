@@ -10,29 +10,29 @@ using namespace std;
 
 namespace Babylon {
 
-	typedef unsigned long		GLenum;
-	typedef bool				GLboolean;
+	typedef unsigned long	GLenum;
+	typedef bool			GLboolean;
 	typedef unsigned long		GLbitfield;
-	typedef char				GLbyte;         /* 'byte' should be a signed 8 bit type. */
-	typedef short				GLshort;
-	typedef long				GLint;
-	typedef long				GLsizei;
-	typedef long long			GLintptr;
-	typedef long long			GLsizeiptr;
+	typedef char			GLbyte;         /* 'byte' should be a signed 8 bit type. */
+	typedef short			GLshort;
+	typedef long			GLint;
+	typedef long			GLsizei;
+	typedef long long		GLintptr;
+	typedef long long		GLsizeiptr;
 	typedef unsigned char		GLubyte;        /* 'unsigned byte' should be an unsigned 8 bit type. */
 	typedef unsigned short		GLushort;
 	typedef unsigned long		GLuint;
-	typedef float				GLfloat;
-	typedef float				GLclampf;  
+	typedef float			GLfloat;
+	typedef float			GLclampf;  
 
-	typedef long long			GLint64;
+	typedef long long		GLint64;
 	typedef unsigned long long	GLuint64;
 
-	typedef void*				any;
+	typedef void*			any;
 
-	typedef vector<GLfloat> Float32Array;
-	typedef vector<int32_t> Int32Array;
-	typedef vector<uint16_t> Uint16Array;
+	typedef vector<GLfloat> 	Float32Array;
+	typedef vector<int32_t> 	Int32Array;
+	typedef vector<uint16_t> 	Uint16Array;
 
 	struct GLContextAttributes {
 	public:

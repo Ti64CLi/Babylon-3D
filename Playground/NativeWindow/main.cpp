@@ -205,9 +205,6 @@ public:
 Main _main;
 
 void init_opengl() {
-	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.2, 0.2, 0.2, 1.0);
-
 	glewInit();
 
 	if (!glewIsSupported(

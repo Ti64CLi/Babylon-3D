@@ -4,8 +4,6 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 
-using namespace Babylon;
-
 GL::GL(Babylon::ICanvas::Ptr canvas, bool antialias) {
 	this->canvas = canvas;
 	this->antialias = antialias;
@@ -235,33 +233,33 @@ void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon
 Babylon::IGLBuffer::Ptr GL::createBuffer() { 
 	::GLuint val;
 	glGenBuffers(1, &val);
-	return make_shared<IGLBuffer>(val);
+	return make_shared<Babylon::IGLBuffer>(val);
 }
 
 Babylon::IGLFramebuffer::Ptr GL::createFramebuffer() { 
 	::GLuint val;
 	glGenFramebuffersEXT(1, &val);
-	return make_shared<IGLFramebuffer>(val);
+	return make_shared<Babylon::IGLFramebuffer>(val);
 }
 
 Babylon::IGLProgram::Ptr GL::createProgram() { 
-	return make_shared<IGLProgram>(glCreateProgram());
+	return make_shared<Babylon::IGLProgram>(glCreateProgram());
 }
 
 Babylon::IGLRenderbuffer::Ptr GL::createRenderbuffer() { 
 	::GLuint val;
 	glGenRenderbuffersEXT(1, &val);
-	return make_shared<IGLRenderbuffer>(val);
+	return make_shared<Babylon::IGLRenderbuffer>(val);
 }
 
 Babylon::IGLShader::Ptr GL::createShader(Babylon::GLenum type) { 
-	return make_shared<IGLShader>(glCreateShader(type));
+	return make_shared<Babylon::IGLShader>(glCreateShader(type));
 }
 
 Babylon::IGLTexture::Ptr GL::createTexture() { 
 	::GLuint val;
 	glGenTextures(1, &val);
-	return make_shared<IGLTexture>(val);
+	return make_shared<Babylon::IGLTexture>(val);
 }
 
 void GL::cullFace(Babylon::GLenum mode) { 
@@ -379,17 +377,17 @@ void GL::generateMipmap(Babylon::GLenum target) {
 }
 
 Babylon::IGLActiveInfo::Ptr GL::getActiveAttrib(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
-	////return make_shared<IGLActiveInfo>(glGetActiveAttrib(program->value, index));
+	////return make_shared<Babylon::IGLActiveInfo>(glGetActiveAttrib(program->value, index));
 	throw "not supported";
 }
 
 Babylon::IGLActiveInfo::Ptr GL::getActiveUniform(Babylon::IGLProgram::Ptr program, Babylon::GLuint index) { 
-	////return make_shared<IGLActiveInfo>(glGetActiveUniform(program->value, index));
+	////return make_shared<Babylon::IGLActiveInfo>(glGetActiveUniform(program->value, index));
 	throw "not supported";
 }
 
 vector<Babylon::IGLShader::Ptr> GL::getAttachedShaders(Babylon::IGLProgram::Ptr program) { 
-	////return make_shared<IGLShader>(glGetAttachedShaders(program->value));
+	////return make_shared<Babylon::IGLShader>(glGetAttachedShaders(program->value));
 	throw "not supported";
 }
 
@@ -454,14 +452,14 @@ Babylon::any GL::getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLe
 		{
 			::GLint i = 0;
 			glGetShaderiv(shader->value, GL_SHADER_TYPE, &i);
-			return (any) i;
+			return (Babylon::any) i;
 		}
 		break;
 	case IGL::COMPILE_STATUS:
 		{
 			::GLint i = 0;
 			glGetShaderiv(shader->value, GL_COMPILE_STATUS, &i);
-			return (any) i;
+			return (Babylon::any) i;
 		}
 		break;
 	default:
@@ -512,7 +510,7 @@ Babylon::IGLUniformLocation::Ptr GL::getUniformLocation(Babylon::IGLProgram::Ptr
 	auto value = glGetUniformLocation(program->value, name.c_str());
 	if (value != -1)
 	{
-		return make_shared<IGLUniformLocation>(value);
+		return make_shared<Babylon::IGLUniformLocation>(value);
 	}
 
 	return nullptr;
@@ -667,7 +665,7 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 }
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
-					Babylon::GLenum format, Babylon::GLenum type, IVideo::Ptr video) { 
+					Babylon::GLenum format, Babylon::GLenum type, Babylon::IVideo::Ptr video) { 
 						throw "not supported";
 }
 // May throw DOMException

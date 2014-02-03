@@ -864,7 +864,6 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	IGLTexture::Ptr texture;
 
 	auto gl = this->_gl;
-	
 
 	auto width = getExponantOfTwo(imgs[0]->getWidth(), this->_caps.maxCubemapTextureSize);
 	auto height = width;

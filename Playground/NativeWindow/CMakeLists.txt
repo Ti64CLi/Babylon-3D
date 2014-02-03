@@ -58,7 +58,7 @@ add_executable (NativeWindow main.cpp canvas.cpp gl.cpp)
 
 add_dependencies (NativeWindow Engine)
 
-target_link_libraries (NativeWindow glut32.lib glew32.lib Engine.lib Animations.lib Bones.lib Cameras.lib Collisions.lib Context.lib Culling.lib Layer.lib LensFlare.lib Lights.lib Materials.lib Mesh.lib Particles.lib PhysicsEngine.lib PostProcess.lib Rendering.lib Sprites.lib Textures.lib Tools.lib)
+target_link_libraries (NativeWindow ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} glut32.lib glew32.lib Engine Animations Bones Cameras Collisions Context Culling Layer LensFlare Lights Materials Mesh Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
 
 if(WIN32)
 add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${GLUT_LIBRARY}/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  

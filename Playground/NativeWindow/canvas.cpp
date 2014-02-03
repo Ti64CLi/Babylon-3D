@@ -6,9 +6,7 @@
 
 #include "gl.h"
 
-using namespace Babylon;
-
-IGL::Ptr Canvas::getContext3d(bool antialias) {
+Babylon::IGL::Ptr Canvas::getContext3d(bool antialias) {
 	return make_shared<GL>(shared_from_this(), antialias);
 }
 
@@ -36,7 +34,7 @@ int Canvas::getClientHeight() {
 	return glutGet(GLUT_WINDOW_HEIGHT);// GLUT_SCREEN_HEIGHT?
 }
 
-I2D::Ptr Canvas::getContext2d() {
+Babylon::I2D::Ptr Canvas::getContext2d() {
 	return nullptr;
 }
 

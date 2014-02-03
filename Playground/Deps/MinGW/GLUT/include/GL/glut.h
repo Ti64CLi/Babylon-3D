@@ -9,12 +9,6 @@
 
 #if defined(_WIN32)
 
-/* Minor modification for MinGW.
-   (see http://www.transmissionzero.co.uk/computing/using-glut-with-mingw/ ) */
-#ifdef __MINGW32__
-#  define _STDCALL_SUPPORTED
-#endif
-
 /* GLUT 3.7 now tries to avoid including <windows.h>
    to avoid name space pollution, but Win32's <GL/gl.h> 
    needs APIENTRY and WINGDIAPI defined properly. */
