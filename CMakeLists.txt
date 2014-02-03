@@ -49,7 +49,7 @@ endif()
 # Configure C++0x
 
 if(NOT MSVC)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x -Xlinker -libstdc++")
 endif()
 
 #-----------------------------------------------------------------------------
