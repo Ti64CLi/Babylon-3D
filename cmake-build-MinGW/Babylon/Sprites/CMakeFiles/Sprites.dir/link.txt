@@ -1,2 +1,0 @@
-C:\Dev\Utils\MinGW\bin\ar.exe cr libSprites.a  CMakeFiles/Sprites.dir/sprite.cpp.obj CMakeFiles/Sprites.dir/spriteManager.cpp.obj
-C:\Dev\Utils\MinGW\bin\ranlib.exe libSprites.a

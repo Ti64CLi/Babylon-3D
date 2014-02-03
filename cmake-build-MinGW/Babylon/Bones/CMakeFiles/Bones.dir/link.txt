@@ -1,2 +1,0 @@
-C:\Dev\Utils\MinGW\bin\ar.exe cr libBones.a  CMakeFiles/Bones.dir/bone.cpp.obj CMakeFiles/Bones.dir/skeleton.cpp.obj
-C:\Dev\Utils\MinGW\bin\ranlib.exe libBones.a

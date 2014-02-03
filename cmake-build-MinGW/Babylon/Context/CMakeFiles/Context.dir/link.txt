@@ -1,2 +1,0 @@
-C:\Dev\Utils\MinGW\bin\ar.exe cr libContext.a  CMakeFiles/Context.dir/dummy.cpp.obj
-C:\Dev\Utils\MinGW\bin\ranlib.exe libContext.a

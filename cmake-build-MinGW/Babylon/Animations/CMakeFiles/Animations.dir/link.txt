@@ -1,2 +1,0 @@
-C:\Dev\Utils\MinGW\bin\ar.exe cr libAnimations.a  CMakeFiles/Animations.dir/animation.cpp.obj CMakeFiles/Animations.dir/animatable.cpp.obj
-C:\Dev\Utils\MinGW\bin\ranlib.exe libAnimations.a

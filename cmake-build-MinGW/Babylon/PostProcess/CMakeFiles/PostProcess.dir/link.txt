@@ -1,2 +1,0 @@
-C:\Dev\Utils\MinGW\bin\ar.exe cr libPostProcess.a  CMakeFiles/PostProcess.dir/postProcess.cpp.obj CMakeFiles/PostProcess.dir/postProcessManager.cpp.obj
-C:\Dev\Utils\MinGW\bin\ranlib.exe libPostProcess.a
