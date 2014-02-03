@@ -1,4 +1,5 @@
 #include "material.h"
+#include <algorithm>
 #include "engine.h"
 #include "mesh.h"
 

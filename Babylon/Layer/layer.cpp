@@ -1,4 +1,5 @@
 #include "layer.h"
+#include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;

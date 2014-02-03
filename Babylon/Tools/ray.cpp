@@ -14,7 +14,7 @@ bool Babylon::Ray::intersectsBox(BoundingBox::Ptr box) {
 	auto d = 0.0;
 	auto maxValue = numeric_limits<double>::max();
 
-	if (abs(this->direction->x) < 0.0000001) {
+	if (fabs(this->direction->x) < 0.0000001) {
 		if (this->origin->x < box->minimum->x || this->origin->x > box->maximum->x) {
 			return false;
 		}
@@ -38,7 +38,7 @@ bool Babylon::Ray::intersectsBox(BoundingBox::Ptr box) {
 		}
 	}
 
-	if (abs(this->direction->y) < 0.0000001) {
+	if (fabs(this->direction->y) < 0.0000001) {
 		if (this->origin->y < box->minimum->y || this->origin->y > box->maximum->y) {
 			return false;
 		}
@@ -62,7 +62,7 @@ bool Babylon::Ray::intersectsBox(BoundingBox::Ptr box) {
 		}
 	}
 
-	if (abs(this->direction->z) < 0.0000001) {
+	if (fabs(this->direction->z) < 0.0000001) {
 		if (this->origin->z < box->minimum->z || this->origin->z > box->maximum->z) {
 			return false;
 		}

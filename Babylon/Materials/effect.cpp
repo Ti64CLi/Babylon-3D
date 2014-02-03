@@ -1,4 +1,5 @@
 #include "effect.h"
+#include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;
@@ -236,16 +237,13 @@ void Babylon::Effect::setBool(string uniformName, GLboolean _bool) {
 	this->_engine->setBool(this->getUniform(uniformName), _bool);
 };
 
-// TODO: Finish it
-/*
-void Babylon::Effect::setVector2(string uniformName, vector2) {
+void Babylon::Effect::setVector2(string uniformName, Vector2::Ptr vector2) {
 	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == vector2->x && this->_valueCache[uniformName][1] == vector2->y)
 		return;
 
-	this->_cacheFloat2(string uniformName, vector2.x, vector2.y);
-	this->_engine->setFloat2(this->getUniform(uniformName), vector2.x, vector2.y);
+	this->_cacheFloat2(uniformName, vector2->x, vector2->y);
+	this->_engine->setFloat2(this->getUniform(uniformName), vector2->x, vector2->y);
 };
-*/
 
 void Babylon::Effect::setFloat2(string uniformName, float x, float y) {
 	if (this->_valueCache.count(uniformName) && this->_valueCache[uniformName][0] == x && this->_valueCache[uniformName][1] == y)

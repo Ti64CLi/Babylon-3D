@@ -1,0 +1,2 @@
+C:\Dev\Utils\MinGW\bin\ar.exe cr libCollisions.a  CMakeFiles/Collisions.dir/pickingInfo.cpp.obj
+C:\Dev\Utils\MinGW\bin\ranlib.exe libCollisions.a

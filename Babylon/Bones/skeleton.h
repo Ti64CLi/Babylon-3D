@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class Skeleton : public _Animatable, public enable_shared_from_this<Skeleton> {
+	class Skeleton : public _Animatable {
 
 	public:
 
@@ -32,13 +32,15 @@ namespace Babylon {
 		string name;
 		Bone::Array bones;
 
-	public: 
+	protected: 
 		Skeleton(string name, string id, ScenePtr scene);
+	public: 
+		static Skeleton::Ptr New(string name, string id, ScenePtr scene);
 
 		virtual Float32Array getTransformMatrices();
 		virtual void _markAsDirty();
 		virtual void prepare();
-		Animatable::Array Babylon::Skeleton::getAnimatables();
+		Animatable::Array getAnimatables();
 		virtual Skeleton::Ptr clone(string name, string id);
 	};
 

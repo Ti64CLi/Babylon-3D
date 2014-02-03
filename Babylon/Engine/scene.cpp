@@ -1052,7 +1052,7 @@ void Babylon::Scene::disablePhysicsEngine() {
 };
 
 bool Babylon::Scene::isPhysicsEnabled() {
-	return this->_physicsEngine;
+	return this->_physicsEngine != nullptr;
 };
 
 void Babylon::Scene::setGravity(Vector3::Ptr gravity) {

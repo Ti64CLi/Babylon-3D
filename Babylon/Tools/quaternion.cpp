@@ -1,5 +1,6 @@
 #include "quaternion.h"
 #include <sstream>
+#include <cmath>
 
 using namespace Babylon;
 

@@ -1,5 +1,6 @@
 #include "renderingManager.h"
 #include <time.h>
+#include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;

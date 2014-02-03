@@ -80,7 +80,7 @@ namespace Babylon {
 		virtual void setMatrix(string uniformName, Matrix::Ptr matrix);
 		virtual void setFloat(string uniformName, float value);
 		virtual void setBool(string uniformName, GLboolean _bool);
-		//virtual void setVector2(string uniformName, vector2);
+		virtual void setVector2(string uniformName, Vector2::Ptr vector2);
 		virtual void setFloat2(string uniformName, float x, float y);
 		virtual void setVector3(string uniformName, Vector3::Ptr vector3);
 		virtual void setFloat3(string uniformName, float x, float y, float z);

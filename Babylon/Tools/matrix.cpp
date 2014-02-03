@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include <cmath>
 #include "quaternion.h"
 #include "plane.h"
 

@@ -1,4 +1,5 @@
 #include "spriteManager.h"
+#include <algorithm>
 #include "engine.h"
 #include "tools.h"
 

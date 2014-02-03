@@ -3,8 +3,8 @@ if(MSVC)
 endif()
 
 include_directories(SYSTEM 
-	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLUT/include
-	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLEW/include
+	${GLEW_INCLUDE_PATH}
+	${GLUT_INCLUDE_PATH}
 	${Babylon_SOURCE_DIR}/PlayGround/Deps/NV/include)
 
 include_directories(
@@ -31,8 +31,8 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
 link_directories(
-	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLUT/lib
-	${Babylon_SOURCE_DIR}/PlayGround/Deps/GLEW/lib
+	${GLEW_LIBRARY}
+	${GLUT_LIBRARY}
 	${Babylon_BINARY_DIR}/Babylon/Animations 
 	${Babylon_BINARY_DIR}/Babylon/Bones 
 	${Babylon_BINARY_DIR}/Babylon/Cameras 
@@ -60,5 +60,7 @@ add_dependencies (NativeWindow Engine)
 
 target_link_libraries (NativeWindow glut32.lib glew32.lib Engine.lib Animations.lib Bones.lib Cameras.lib Collisions.lib Context.lib Culling.lib Layer.lib LensFlare.lib Lights.lib Materials.lib Mesh.lib Particles.lib PhysicsEngine.lib PostProcess.lib Rendering.lib Sprites.lib Textures.lib Tools.lib)
 
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/PlayGround/Deps/GLUT/lib/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/PlayGround/Deps/GLEW/lib/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
+if(WIN32)
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${GLUT_LIBRARY}/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${GLEW_LIBRARY}/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
+endif()

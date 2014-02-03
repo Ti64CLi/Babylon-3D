@@ -1,5 +1,6 @@
 #include "skeleton.h"
 #include "engine.h"
+#include <algorithm>
 
 using namespace Babylon;
 
@@ -13,9 +14,16 @@ Babylon::Skeleton::Skeleton(string name, string id, Scene::Ptr scene)
 
 	this->_scene = scene;
 
-	scene->skeletons.push_back(enable_shared_from_this<Skeleton>::shared_from_this());
+	// moved to new
+	////scene->skeletons.push_back(shared_from_this());
 
 	this->_isDirty = true;
+}
+
+Skeleton::Ptr Babylon::Skeleton::New(string name, string id, Scene::Ptr scene) {
+	auto skeleton = make_shared<Skeleton>(Skeleton(name, id, scene));
+	scene->skeletons.push_back(skeleton);
+	return skeleton;
 }
 
 // Members
@@ -37,8 +45,8 @@ void Babylon::Skeleton::prepare() {
 		this->_transformMatrices = Float32Array(16 * this->bones.size());
 	}
 
-	for (auto index = 0; index < this->bones.size(); index++) {
-		auto bone = this->bones[index];
+	auto index = 0;
+	for (auto bone : this->bones) {
 		auto parentBone = bone->getParent();
 
 		if (parentBone) {
@@ -47,7 +55,7 @@ void Babylon::Skeleton::prepare() {
 			bone->_worldTransform->copyFrom(bone->_matrix);
 		}
 
-		bone->_invertedAbsoluteTransform->multiplyToArray(bone->_worldTransform, this->_transformMatrices, index * 16);
+		bone->_invertedAbsoluteTransform->multiplyToArray(bone->_worldTransform, this->_transformMatrices, index++ * 16);
 	}
 
 	this->_isDirty = false;
@@ -66,10 +74,9 @@ Animatable::Array Babylon::Skeleton::getAnimatables() {
 };
 
 Skeleton::Ptr Babylon::Skeleton::clone(string name, string id) {
-	auto result = make_shared<Skeleton>(name, id, this->_scene);
+	auto result = Skeleton::New(name, id, this->_scene);
 
-	for (auto index = 0; index < this->bones.size(); index++) {
-		auto source = this->bones[index];
+	for (auto source : this->bones) {
 		Bone::Ptr parentBone = nullptr;
 
 		if (source->getParent()) {

@@ -1,5 +1,6 @@
 #include "boundingInfo.h"
 #include <limits>
+#include <cmath>
 
 using namespace Babylon;
 
@@ -22,9 +23,9 @@ bool Babylon::BoundingInfo::extentsOverlap(float min0, float max0, float min1, f
 Range Babylon::BoundingInfo::computeBoxExtents(Vector3::Ptr axis, BoundingBox::Ptr box) {
 	auto p = Vector3::Dot(box->center, axis);
 
-	auto r0 = abs(Vector3::Dot(box->directions[0], axis)) * box->extends->x;
-	auto r1 = abs(Vector3::Dot(box->directions[1], axis)) * box->extends->y;
-	auto r2 = abs(Vector3::Dot(box->directions[2], axis)) * box->extends->z;
+	auto r0 = fabs(Vector3::Dot(box->directions[0], axis)) * box->extends->x;
+	auto r1 = fabs(Vector3::Dot(box->directions[1], axis)) * box->extends->y;
+	auto r2 = fabs(Vector3::Dot(box->directions[2], axis)) * box->extends->z;
 
 	auto r = r0 + r1 + r2;
 	return Range(p - r, p + r);

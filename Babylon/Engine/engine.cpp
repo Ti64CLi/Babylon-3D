@@ -1,4 +1,5 @@
 #include "engine.h"
+#include <algorithm>
 #include "videoTexture.h"
 
 using namespace Babylon;
@@ -43,7 +44,7 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	this->_caps.standardDerivatives = this->_gl->getExtension("OES_standard_derivatives") != nullptr;
 	this->_caps.textureFloat = this->_gl->getExtension("OES_texture_float") != nullptr;    
 	this->_caps.textureAnisotropicFilterExtension = this->_gl->getExtension("EXT_texture_filter_anisotropic") != nullptr || this->_gl->getExtension("WEBKIT_EXT_texture_filter_anisotropic") != nullptr || this->_gl->getExtension("MOZ_EXT_texture_filter_anisotropic") != nullptr;
-	this->_caps.maxAnisotropy = this->_caps.textureAnisotropicFilterExtension ? (int)this->_gl->getParameter(IGL_EXT_texture_filter_anisotropic::MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
+	this->_caps.maxAnisotropy = this->_caps.textureAnisotropicFilterExtension ? (intptr_t)this->_gl->getParameter(IGL_EXT_texture_filter_anisotropic::MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
 
 	// Cache
 	this->_loadedTexturesCache.clear();
@@ -303,7 +304,8 @@ void Babylon::Engine::updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Flo
 	this->_gl->bindBuffer(this->_gl->ARRAY_BUFFER, vertexBuffer);
 	if (length) {
 		// TODO: May have issue with array constucot destructor
-		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, Float32Array(vertices.begin(), vertices.begin() + length));
+		Float32Array subArray(vertices.begin(), vertices.begin() + length);
+		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, subArray);
 	} else {
 		this->_gl->bufferSubData(this->_gl->ARRAY_BUFFER, 0, vertices);
 	}
@@ -406,7 +408,7 @@ IGLShader::Ptr Babylon::Engine::compileShader(IGL::Ptr gl, string source, string
 
 	if (!gl->getShaderParameter(shader, gl->COMPILE_STATUS)) {
 		string result = gl->getShaderInfoLog(shader);
-		throw exception(result.c_str());
+		throw runtime_error(result);
 	}
 
 	return shader;
@@ -424,12 +426,12 @@ IGLProgram::Ptr Babylon::Engine::createShaderProgram(string vertexCode, string f
 
 	auto error = this->_gl->getProgramInfoLog(shaderProgram);
 	if (!error.empty()) {
-		throw exception(error.c_str());
+		throw runtime_error(error);
 	}
 
 	if (!result)
 	{
-		throw exception("link failed.");
+		throw runtime_error(string("link failed."));
 	}
 
 	this->_gl->deleteShader(vertexShader);
@@ -491,7 +493,7 @@ void Babylon::Engine::setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr mat
 	if (!uniform)
 		return;
 
-	this->_gl->uniformMatrix4fv(uniform, false, matrix->toArray());
+	this->_gl->uniformMatrix4fv(uniform, false, matrix->m);
 };
 
 void Babylon::Engine::setFloat(IGLUniformLocation::Ptr uniform, GLfloat value) {

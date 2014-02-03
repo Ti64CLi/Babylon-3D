@@ -1,0 +1,2 @@
+C:\Dev\Utils\MinGW\bin\ar.exe cr libMaterials.a  CMakeFiles/Materials.dir/effect.cpp.obj CMakeFiles/Materials.dir/material.cpp.obj CMakeFiles/Materials.dir/multiMaterial.cpp.obj CMakeFiles/Materials.dir/standardMaterial.cpp.obj
+C:\Dev\Utils\MinGW\bin\ranlib.exe libMaterials.a

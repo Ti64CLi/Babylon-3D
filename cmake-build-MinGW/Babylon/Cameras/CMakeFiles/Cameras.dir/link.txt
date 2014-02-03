@@ -1,0 +1,2 @@
+C:\Dev\Utils\MinGW\bin\ar.exe cr libCameras.a  CMakeFiles/Cameras.dir/camera.cpp.obj CMakeFiles/Cameras.dir/arcRotateCamera.cpp.obj
+C:\Dev\Utils\MinGW\bin\ranlib.exe libCameras.a

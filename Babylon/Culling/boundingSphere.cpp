@@ -1,4 +1,5 @@
 #include "boundingSphere.h"
+#include <cmath>
 
 using namespace Babylon;
 

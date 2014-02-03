@@ -1,4 +1,5 @@
 #include "light.h"
+#include <algorithm>
 #include "engine.h"
 #include "shadowGenerator.h"
 

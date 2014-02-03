@@ -55,7 +55,7 @@ bool Babylon::RenderingGroup::render (CustomRenderFunctionFunc customRenderFunct
 		auto sortedArray = this->_transparentSubMeshes;
 		sortedArray.shrink_to_fit();
 
-		sort(begin(sortedArray), end(sortedArray), [&] (SubMesh::Ptr& a, SubMesh::Ptr& b) {
+		sort(begin(sortedArray), end(sortedArray), [] (const SubMesh::Ptr& a, const SubMesh::Ptr& b) {
 			if (a->_distanceToCamera < b->_distanceToCamera) {
 				return 1;
 			}

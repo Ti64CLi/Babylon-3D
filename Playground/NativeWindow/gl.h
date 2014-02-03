@@ -239,7 +239,7 @@ public:
 	virtual void viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height);
 
 	// Extra
-	virtual void GL::errorCheck();
+	virtual void errorCheck();
 
 	map<string, Babylon::GLenum> EnumMap;
 };

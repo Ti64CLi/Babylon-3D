@@ -1,5 +1,6 @@
 #include "arcRotateCamera.h"
 #include <limits>
+#include <cmath>
 #include "engine.h"
 
 using namespace Babylon;
@@ -339,13 +340,13 @@ void Babylon::ArcRotateCamera::_update () {
 		this->inertialBetaOffset *= this->inertia;
 		this->inertialRadiusOffset *= this->inertia;
 
-		if (abs(this->inertialAlphaOffset) < Engine::epsilon)
+		if (fabs(this->inertialAlphaOffset) < Engine::epsilon)
 			this->inertialAlphaOffset = 0;
 
-		if (abs(this->inertialBetaOffset) < Engine::epsilon)
+		if (fabs(this->inertialBetaOffset) < Engine::epsilon)
 			this->inertialBetaOffset = 0;
 
-		if (abs(this->inertialRadiusOffset) < Engine::epsilon)
+		if (fabs(this->inertialRadiusOffset) < Engine::epsilon)
 			this->inertialRadiusOffset = 0;
 	}
 

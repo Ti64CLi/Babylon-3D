@@ -863,21 +863,21 @@ void GL::errorCheck() {
 		switch (error)
 		{
 		case GL_INVALID_ENUM:
-			throw exception("GL error: enumeration parameter is not a legal enumeration for that function");
+			throw runtime_error("GL error: enumeration parameter is not a legal enumeration for that function");
 		case GL_INVALID_VALUE:
-			throw exception("GL error: value parameter is not a legal value for that function");
+			throw runtime_error("GL error: value parameter is not a legal value for that function");
 		case GL_INVALID_OPERATION:
-			throw exception("GL error: the set of state for a command is not legal for the parameters given to that command");
+			throw runtime_error("GL error: the set of state for a command is not legal for the parameters given to that command");
 		case GL_STACK_OVERFLOW:
-			throw exception("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
+			throw runtime_error("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
 		case GL_STACK_UNDERFLOW:
-			throw exception("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
+			throw runtime_error("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
 		case GL_OUT_OF_MEMORY:
-			throw exception("GL error: performing an operation that can allocate memory, and the memory cannot be allocated");
+			throw runtime_error("GL error: performing an operation that can allocate memory, and the memory cannot be allocated");
 		case GL_INVALID_FRAMEBUFFER_OPERATION_EXT:
-			throw exception("GL error: doing anything that would attempt to read from or write/render to a framebuffer that is not complete");
+			throw runtime_error("GL error: doing anything that would attempt to read from or write/render to a framebuffer that is not complete");
 		case GL_TABLE_TOO_LARGE:
-			throw exception("GL error: Table is too large");
+			throw runtime_error("GL error: Table is too large");
 		}
 	}
 }

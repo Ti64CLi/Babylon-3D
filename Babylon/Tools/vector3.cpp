@@ -1,5 +1,6 @@
 #include "vector3.h"
 #include <sstream>
+#include <cmath>
 #include "matrix.h"
 #include "tools.h"
 

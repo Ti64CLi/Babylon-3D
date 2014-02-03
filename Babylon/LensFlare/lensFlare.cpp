@@ -1,4 +1,5 @@
 #include "lensFlare.h"
+#include <algorithm>
 #include "lensFlareSystem.h"
 
 using namespace Babylon;

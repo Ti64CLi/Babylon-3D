@@ -1,5 +1,6 @@
 #include "baseTexture.h"
 #include <string>
+#include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;

@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class RenderTargetTexture: public Texture, public IRenderable, public enable_shared_from_this<RenderTargetTexture> {
+	class RenderTargetTexture: public Texture, public IRenderable {
 
 	public:
 		typedef shared_ptr<RenderTargetTexture> Ptr;
