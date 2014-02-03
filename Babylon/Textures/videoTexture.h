@@ -12,7 +12,7 @@ using namespace std;
 
 namespace Babylon {
 
-	class VideoTexture: public Texture, public enable_shared_from_this<VideoTexture> {
+	class VideoTexture: public Texture {
 
 	public:
 		typedef shared_ptr<VideoTexture> Ptr;
@@ -23,8 +23,10 @@ namespace Babylon {
 		bool _autoLaunch;
 		time_t _lastUpdate;
 
-	public: 
+	protected: 
 		VideoTexture(string name, vector<string> urls, Size size, ScenePtr scene, bool generateMipMaps);		
+	public: 
+		static VideoTexture::Ptr New(string name, vector<string> urls, Size size, ScenePtr scene, bool generateMipMaps);
 
 		virtual bool _update();
 	};

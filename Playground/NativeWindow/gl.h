@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <vector>
+#include <map>
+#include <string>
 
 #include "igl.h"
 #include "icanvas.h"
@@ -27,8 +29,7 @@ public:
 	virtual vector<string> getSupportedExtensions();
 	virtual Babylon::any getExtension(string name);
 
-	virtual Babylon::GLenum getEnumByName (string name);
-	virtual Babylon::GLenum getEnumByNameIndex (string name, int index);
+	virtual Babylon::GLenum operator[] (string name);
 
 	virtual void activeTexture(Babylon::GLenum texture);
 	virtual void attachShader(Babylon::IGLProgram::Ptr program, Babylon::IGLShader::Ptr shader);
@@ -239,6 +240,8 @@ public:
 
 	// Extra
 	virtual void GL::errorCheck();
+
+	map<string, Babylon::GLenum> EnumMap;
 };
 
 #endif // GL_H

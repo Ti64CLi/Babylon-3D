@@ -8,7 +8,7 @@ Babylon::LensFlare::LensFlare(float size, Vector3::Ptr position, Color3::Ptr col
 	this->color = color != nullptr ? color : make_shared<Color3>(1, 1, 1);
 	this->position = position;
 	this->size = size;
-	this->texture = !imgUrl.empty() ? make_shared<Texture>(imgUrl, system->getScene(), true) : nullptr;
+	this->texture = !imgUrl.empty() ? Texture::New(imgUrl, system->getScene(), true) : nullptr;
 	this->_system = system;
 
 	system->lensFlares.push_back(shared_from_this());

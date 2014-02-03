@@ -7,6 +7,7 @@
 #include "igl.h"
 #include "iengine.h"
 #include "node.h"
+#include "vector2.h"
 #include "vector3.h"
 #include "matrix.h"
 #include "material.h"
@@ -156,8 +157,11 @@ namespace Babylon {
 		virtual PickingInfo::Ptr intersects(Ray::Ptr ray, bool fastCheck);
 		virtual Mesh::Ptr clone(string name, Node::Ptr newParent, bool doNotCloneChildren = false);
 		virtual void dispose(bool doNotRecurse = false);
-		static Mesh::Ptr CreateBox(string name, float size, ScenePtr scene, bool updatable);
+		static Mesh::Ptr CreateBox(string name, float size, ScenePtr scene, bool updatable = false);
 		static Mesh::Ptr CreateSphere(string name, size_t segments, float diameter, ScenePtr scene, bool updatable = false);
+		static Mesh::Ptr CreateTorus(string name, float diameter, float thickness, int tessellation, ScenePtr scene, bool updatable = false);
+		static Mesh::Ptr CreatePlane(string name, float size, ScenePtr scene, bool updatable = false);
+		static Mesh::Ptr CreateGround(string name, int width, int height, int subdivisions, ScenePtr scene, bool updatable = false);
 	};
 
 };

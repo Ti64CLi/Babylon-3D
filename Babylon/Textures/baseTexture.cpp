@@ -7,7 +7,9 @@ using namespace Babylon;
 Babylon::BaseTexture::BaseTexture(string url, Scene::Ptr scene) 
 	: delayLoadState(DELAYLOADSTATE_NONE), hasAlpha(false), level(1), _texture(nullptr), isCube(false), onDispose(nullptr) {
 		this->_scene = scene;
-		this->_scene->textures.push_back(shared_from_this());
+		// moved to New operator
+		// TODO: do not forget to add it to all derived classes
+		////this->_scene->textures.push_back(shared_from_this());
 };
 
 IGLTexture::Ptr Babylon::BaseTexture::getInternalTexture () {

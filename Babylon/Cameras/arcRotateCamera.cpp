@@ -6,7 +6,7 @@ using namespace Babylon;
 
 // TODO: add functionality to rotate
 Babylon::ArcRotateCamera::ArcRotateCamera(string name, float alpha, float beta, float radius, Vector3::Ptr target, Scene::Ptr scene) 
-	: Camera(name, Vector3::Zero(), scene)
+	: Camera(name, Vector3::Zero(), scene), previousPosition_x(0.), previousPosition_y(0.)
 {
 	this->alpha = alpha;
 	this->beta = beta;
@@ -155,11 +155,18 @@ void Babylon::ArcRotateCamera::attachControl (ICanvas::Ptr canvas, bool noPreven
 		*/
 
 		this->_onMove = [&] (int x, int y) {
-			auto offsetX = x;
-			auto offsetY = y;
 
-			this->inertialAlphaOffset -= offsetX / this->angularSensibility;
-			this->inertialBetaOffset -= offsetY / this->angularSensibility;
+			if (previousPosition_x != 0. && previousPosition_y != 0.)
+			{
+				auto offsetX = x - previousPosition_x;
+				auto offsetY = y - previousPosition_y;
+
+				this->inertialAlphaOffset -= offsetX / this->angularSensibility;
+				this->inertialBetaOffset -= offsetY / this->angularSensibility;
+			}
+
+			previousPosition_x = x;
+			previousPosition_y = y;
 		};
 
 		/*

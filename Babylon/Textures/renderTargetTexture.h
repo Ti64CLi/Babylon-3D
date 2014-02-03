@@ -45,8 +45,10 @@ namespace Babylon {
 	private:
 		vector<string> _waitingRenderList;
 
-	public: 
+	protected: 
 		RenderTargetTexture(string name, Size size, ScenePtr scene, bool generateMipMaps);		
+	public: 
+		static RenderTargetTexture::Ptr New(string name, Size size, ScenePtr scene, bool generateMipMaps);		
 
 		// Methods  
 		virtual void resize(Size size, bool generateMipMaps);

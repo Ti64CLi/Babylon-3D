@@ -410,7 +410,7 @@ ParticleSystem::Ptr Babylon::ParticleSystem::clone(string name, Mesh::Ptr newEmi
 
 	result->emitter = newEmitter;
 	if (this->particleTexture) {
-		result->particleTexture = make_shared<Texture>(this->particleTexture->name, this->_scene);
+		result->particleTexture = Texture::New(this->particleTexture->name, this->_scene);
 	}
 
 	result->start();

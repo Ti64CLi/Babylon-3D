@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
 #include "iengine.h"
 #include "baseTexture.h"
@@ -13,11 +14,12 @@ using namespace std;
 namespace Babylon {
 
 	// TODO: add animation type
-	class Texture: public BaseTexture, public enable_shared_from_this<Texture> {
+	class Texture: public BaseTexture {
 
 	public:
 		typedef shared_ptr<Texture> Ptr;
 		typedef vector<Ptr> Array;
+		typedef map<int, Ptr> Map;
 
 	protected:
 		float _cachedUOffset;
@@ -59,9 +61,10 @@ namespace Babylon {
 		// TAGS
 		int _cachedAnisotropicFilteringLevel;
 
-
-	public: 
+	protected: 
 		Texture(string url, ScenePtr scene, bool noMipmap = false, bool invertY = false);		
+	public: 
+		static Texture::Ptr New(string url, ScenePtr scene, bool noMipmap = false, bool invertY = false);		
 		
 		// Methods    
 		virtual void delayLoad ();

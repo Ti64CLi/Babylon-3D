@@ -60,6 +60,8 @@ namespace Babylon {
 		Node::Ptr _cache_parent;
 		_Cache _cache;
 		ScenePtr _scene;
+
+	public:
 		Node::Ptr parent;
 
 	public: 

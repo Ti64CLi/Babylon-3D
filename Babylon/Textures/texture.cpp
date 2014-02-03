@@ -19,9 +19,8 @@ Babylon::Texture::Texture(string url, Scene::Ptr scene,  bool noMipmap, bool inv
 	coordinatesMode (EXPLICIT_MODE),
 	anisotropicFilteringLevel (4)
 {
-	// TODO: is it is base class?
-	//this->_scene = scene;
-	//this->_scene->getTextures().push_back(enable_shared_from_this<Texture>::shared_from_this());
+	// moved to new
+	////this->_scene->getTextures().push_back(enable_shared_from_this<Texture>::shared_from_this());
 
 	this->name = url;
 	this->url = url;
@@ -41,6 +40,12 @@ Babylon::Texture::Texture(string url, Scene::Ptr scene,  bool noMipmap, bool inv
 	// Animations
 	this->animations.clear();
 };
+
+Texture::Ptr Babylon::Texture::New(string url, Scene::Ptr scene,  bool noMipmap, bool invertY) {
+	auto texture = make_shared<Texture>(Texture(url, scene, noMipmap, invertY));
+	texture->_scene->textures.push_back(texture);
+	return texture;
+}
 
 // Methods    
 void Babylon::Texture::delayLoad() {
@@ -167,7 +172,7 @@ Matrix::Ptr Babylon::Texture::_computeReflectionTextureMatrix() {
 };
 
 Texture::Ptr Babylon::Texture::clone() {
-	auto newTexture = make_shared<Texture>(this->_texture->url, this->_scene, this->_noMipmap, this->_invertY);
+	auto newTexture = Texture::New(this->_texture->url, this->_scene, this->_noMipmap, this->_invertY);
 
 	// Base texture
 	newTexture->hasAlpha = this->hasAlpha;

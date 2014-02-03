@@ -845,10 +845,17 @@ var onload = function () {
 	BABYLON.Effect.ShadersStore["defaultVertexShader"] = defaultVertexShader;
 	BABYLON.Effect.ShadersStore["defaultPixelShader"] = defaultPixelShader;
 
-  // Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-    var camera = new BABYLON.ArcRotateCamera("Camera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    var light0 = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 0, 10), scene);
-    var origin = BABYLON.Mesh.CreateSphere("origin", 10, 1.0, scene);
+    // Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+    //Adding of the light on the scene
+    var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 100, 100), scene);
+    //Adding of the Arc Rotate Camera
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, new BABYLON.Vector3.Zero(), scene);
+
+    var box = BABYLON.Mesh.CreateBox("Box", 6.0, scene);
+    var sphere = BABYLON.Mesh.CreateSphere("Sphere", 10.0, 3.0, scene);
+    var plan = BABYLON.Mesh.CreatePlane("Plane", 50.0, scene);
+
+    box.position = new BABYLON.Vector3(-10,0,0);
 
     // Attach the camera to the scene
     scene.activeCamera.attachControl(canvas);

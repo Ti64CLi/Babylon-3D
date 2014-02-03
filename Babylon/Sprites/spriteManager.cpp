@@ -10,7 +10,7 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	this->name = name;
 	this->_capacity = capacity;
 	this->cellSize = cellSize;
-	this->_spriteTexture = make_shared<Texture>(imgUrl, scene, true, false);
+	this->_spriteTexture = Texture::New(imgUrl, scene, true, false);
 	this->_spriteTexture->wrapU = CLAMP_ADDRESSMODE;
 	this->_spriteTexture->wrapV = CLAMP_ADDRESSMODE;
 	this->_epsilon = epsilon;

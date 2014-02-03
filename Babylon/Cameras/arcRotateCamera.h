@@ -25,6 +25,9 @@ namespace Babylon {
 	private:
 		ICanvas::Ptr _attachedCanvas;
 		ICanvas::MoveFunc _onMove;
+		
+		float previousPosition_x;
+		float previousPosition_y;
 
 	public:
 		float alpha; 

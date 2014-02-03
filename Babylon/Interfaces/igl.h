@@ -127,7 +127,20 @@ namespace Babylon {
 		// TODO: get rid of it
 		int references;
 
-		IGLTexture(GLuint value) : IGLObject(value) {};
+		IGLTexture(GLuint value) : IGLObject(value) {
+			_baseWidth = 0;
+			_baseHeight = 0;
+			_width = 0;
+			_height = 0;
+			_size = 0;
+			isReady = false;
+			noMipmap = false;
+			generateMipMaps = false;
+			isCube = false;
+			_cachedCoordinatesMode = 0;
+			_cachedWrapU = 0;
+			_cachedWrapV = 0;
+		};
 	};
 
 	class IGLUniformLocation {
@@ -592,8 +605,7 @@ namespace Babylon {
 		virtual vector<string> getSupportedExtensions() = 0;
 		virtual any getExtension(string name) = 0;
 
-		virtual GLenum getEnumByName (string name) = 0;
-		virtual GLenum getEnumByNameIndex (string name, int index) = 0;
+		virtual GLenum operator[](string name) = 0;
 
 		virtual void activeTexture(GLenum texture) = 0;
 		virtual void attachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;

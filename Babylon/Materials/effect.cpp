@@ -33,10 +33,10 @@ void Babylon::Effect::_init(string baseName, string vertex, string fragment, vec
 	this->_attributes = attributesNames;
 
 	// TODO: finish it
-	auto that = this;
+	
 	this->_loadVertexShader(vertex, [&] (string vertexCode) {
-		that->_loadFragmentShader(fragment, [&] (string fragmentCode) {
-			that->_prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
+		this->_loadFragmentShader(fragment, [&] (string fragmentCode) {
+			this->_prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
 		});
 	});   
 

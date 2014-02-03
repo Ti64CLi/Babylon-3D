@@ -483,15 +483,15 @@ bool Babylon::Mesh::isInFrustum(Plane::Array frustumPlanes) {
 
 	if (result && this->delayLoadState == DELAYLOADSTATE_NOTLOADED) {
 		this->delayLoadState = DELAYLOADSTATE_LOADING;
-		auto that = this;
+
 
 		this->_scene->_addPendingData(dynamic_pointer_cast<Mesh>(shared_from_this()));
 
 		// TODO: finish it when finish LoadFile
 		////Tools::LoadFile(this->delayLoadingFile, [] (data) {
 		////	BABYLON.SceneLoader._ImportGeometry(JSON.parse(data), that);
-		////	that->delayLoadState = DELAYLOADSTATE_LOADED;
-		////	that->_scene->_removePendingData(that);
+		////	this->delayLoadState = DELAYLOADSTATE_LOADED;
+		////	this->_scene->_removePendingData(that);
 		////}, [] () { }, this->_scene->database);
 	}
 
@@ -633,41 +633,41 @@ void Babylon::Mesh::_generatePointsArray() {
 // TODO: finish it when Collider is done
 /*
 void Babylon::Mesh::_collideForSubMesh(SubMesh::Ptr subMesh, Matrix::Ptr transformMatrix, Collider::Ptr collider) {
-	this->_generatePointsArray();
-	// Transformation
-	if (!subMesh->_lastColliderWorldVertices || !subMesh->_lastColliderTransformMatrix.equals(transformMatrix)) {
-		subMesh->_lastColliderTransformMatrix = transformMatrix;
-		subMesh->_lastColliderWorldVertices.clear();
-		auto start = subMesh->verticesStart;
-		auto end = (subMesh->verticesStart + subMesh->verticesCount);
-		for (auto i = start; i < end; i++) {
-			subMesh->_lastColliderWorldVertices.push_back(Vector3::TransformCoordinates(this->_positions[i], transformMatrix));
-		}
-	}
-	// Collide
-	collider._collide(subMesh, subMesh->_lastColliderWorldVertices, this->_indices, subMesh->indexStart, subMesh->indexStart + subMesh->indexCount, subMesh->verticesStart);
+this->_generatePointsArray();
+// Transformation
+if (!subMesh->_lastColliderWorldVertices || !subMesh->_lastColliderTransformMatrix.equals(transformMatrix)) {
+subMesh->_lastColliderTransformMatrix = transformMatrix;
+subMesh->_lastColliderWorldVertices.clear();
+auto start = subMesh->verticesStart;
+auto end = (subMesh->verticesStart + subMesh->verticesCount);
+for (auto i = start; i < end; i++) {
+subMesh->_lastColliderWorldVertices.push_back(Vector3::TransformCoordinates(this->_positions[i], transformMatrix));
+}
+}
+// Collide
+collider._collide(subMesh, subMesh->_lastColliderWorldVertices, this->_indices, subMesh->indexStart, subMesh->indexStart + subMesh->indexCount, subMesh->verticesStart);
 };
 
 void Babylon::Mesh::_processCollisionsForSubModels(Collider::Ptr collider, Matrix::Ptr transformMatrix) {
-	for (auto subMesh : this->subMeshes) {
-		// Bounding test
-		if (this->subMeshes.size() > 1 && !subMesh->_checkCollision(collider))
-			continue;
+for (auto subMesh : this->subMeshes) {
+// Bounding test
+if (this->subMeshes.size() > 1 && !subMesh->_checkCollision(collider))
+continue;
 
-		this->_collideForSubMesh(subMesh, transformMatrix, collider);
-	}
+this->_collideForSubMesh(subMesh, transformMatrix, collider);
+}
 };
 
 void Babylon::Mesh::_checkCollision(Collider::Ptr collider) {
-	// Bounding box test
-	if (!this->_boundingInfo->_checkCollision(collider))
-		return;
+// Bounding box test
+if (!this->_boundingInfo->_checkCollision(collider))
+return;
 
-	// Transformation matrix
-	Matrix::ScalingToRef(1.0 / collider.radius->x, 1.0 / collider.radius->y, 1.0 / collider.radius->z, this->_collisionsScalingMatrix);
-	this->_worldMatrix->multiplyToRef(this->_collisionsScalingMatrix, this->_collisionsTransformMatrix);
+// Transformation matrix
+Matrix::ScalingToRef(1.0 / collider.radius->x, 1.0 / collider.radius->y, 1.0 / collider.radius->z, this->_collisionsScalingMatrix);
+this->_worldMatrix->multiplyToRef(this->_collisionsScalingMatrix, this->_collisionsTransformMatrix);
 
-	this->_processCollisionsForSubModels(collider, this->_collisionsTransformMatrix);
+this->_processCollisionsForSubModels(collider, this->_collisionsTransformMatrix);
 };
 */
 
@@ -849,74 +849,74 @@ void Babylon::Mesh::dispose(bool doNotRecurse) {
 // Physics
 /*
 Babylon::Mesh::setPhysicsState(options) {
-	if (!this->_scene->_physicsEngine) {
-		return;
-	}
+if (!this->_scene->_physicsEngine) {
+return;
+}
 
-	options.impostor = options.impostor || BABYLON.PhysicsEngine.NoImpostor;
-	options.mass = options.mass || 0;
-	options.friction = options.friction || 0.2;
-	options.restitution = options.restitution || 0.9;
+options.impostor = options.impostor || BABYLON.PhysicsEngine.NoImpostor;
+options.mass = options.mass || 0;
+options.friction = options.friction || 0.2;
+options.restitution = options.restitution || 0.9;
 
-	this->_physicImpostor = options.impostor;
-	this->_physicsMass = options.mass;
-	this->_physicsFriction = options.friction;
-	this->_physicRestitution = options.restitution;
+this->_physicImpostor = options.impostor;
+this->_physicsMass = options.mass;
+this->_physicsFriction = options.friction;
+this->_physicRestitution = options.restitution;
 
-	if (options.impostor == BABYLON.PhysicsEngine.NoImpostor) {
-		this->_scene->_physicsEngine._unregisterMesh(this);
-		return;
-	}
+if (options.impostor == BABYLON.PhysicsEngine.NoImpostor) {
+this->_scene->_physicsEngine._unregisterMesh(this);
+return;
+}
 
-	this->_scene->_physicsEngine._registerMesh(this, options);
+this->_scene->_physicsEngine._registerMesh(this, options);
 };
 
 Babylon::Mesh::getPhysicsImpostor() {
-	if (!this->_physicImpostor) {
-		return BABYLON.PhysicsEngine.NoImpostor;
-	}
+if (!this->_physicImpostor) {
+return BABYLON.PhysicsEngine.NoImpostor;
+}
 
-	return this->_physicImpostor;
+return this->_physicImpostor;
 };
 
 Babylon::Mesh::getPhysicsMass() {
-	if (!this->_physicsMass) {
-		return 0;
-	}
+if (!this->_physicsMass) {
+return 0;
+}
 
-	return this->_physicsMass;
+return this->_physicsMass;
 };
 
 Babylon::Mesh::getPhysicsFriction() {
-	if (!this->_physicsFriction) {
-		return 0;
-	}
+if (!this->_physicsFriction) {
+return 0;
+}
 
-	return this->_physicsFriction;
+return this->_physicsFriction;
 };
 
 Babylon::Mesh::getPhysicsRestitution() {
-	if (!this->_physicRestitution) {
-		return 0;
-	}
+if (!this->_physicRestitution) {
+return 0;
+}
 
-	return this->_physicRestitution;
+return this->_physicRestitution;
 };
 
 Babylon::Mesh::applyImpulse(force, contactPoint) {
-	if (!this->_physicImpostor) {
-		return;
-	}
+if (!this->_physicImpostor) {
+return;
+}
 
-	this->_scene->_physicsEngine._applyImpulse(this, force, contactPoint);
+this->_scene->_physicsEngine._applyImpulse(this, force, contactPoint);
 };
 
 Babylon::Mesh::setPhysicsLinkWith(otherMesh, pivot1, pivot2) {
-	if (!this->_physicImpostor) {
-		return;
-	}
+if (!this->_physicImpostor) {
+return;
+}
 
-	this->_scene->_physicsEngine._createLink(this, otherMesh, pivot1, pivot2);
+this->_scene->_physicsEngine._createLink(this, otherMesh, pivot1, pivot2);
 };
 */
 
@@ -961,7 +961,7 @@ Mesh::Ptr Babylon::Mesh::CreateBox(string name, float size, Scene::Ptr scene, bo
 		normals.push_back(normal->x);
 		normals.push_back(normal->y);
 		normals.push_back(normal->z);
-		uvs.push_back(1.0), 
+		uvs.push_back(1.0);
 		uvs.push_back(1.0);
 
 		vertex = normal->subtract(side1)->add(side2)->scale(size / 2.);
@@ -1071,121 +1071,124 @@ Mesh::Ptr Babylon::Mesh::CreateSphere(string name, size_t segments, float diamet
 /*
 // Cylinder and cone (Code inspired by SharpDX.org)
 BABYLON.Mesh.CreateCylinder(name, height, diameterTop, diameterBottom, tessellation, scene, updatable) {
-	auto radiusTop = diameterTop / 2;
-	auto radiusBottom = diameterBottom / 2;
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
-	auto cylinder = Mesh::New(name, scene);
+auto radiusTop = diameterTop / 2;
+auto radiusBottom = diameterBottom / 2;
+auto indices = [];
+auto positions = [];
+auto normals = [];
+auto uvs = [];
+auto cylinder = Mesh::New(name, scene);
 
-	auto getCircleVector(i) {
-		auto angle = (i * 2.0 * PI / tessellation);
-		auto dx = sin(angle);
-		auto dz = cos(angle);
+auto getCircleVector(i) {
+auto angle = (i * 2.0 * PI / tessellation);
+auto dx = sin(angle);
+auto dz = cos(angle);
 
-		return make_shared<Vector3>(dx, 0, dz);
-	};
-
-	auto createCylinderCap(isTop) {
-		auto radius = isTop ? radiusTop : radiusBottom;
-
-		if (radius == 0) {
-			return
-		}
-
-		// Create cap indices.
-		for (auto i = 0; i < tessellation - 2; i++) {
-			auto i1 = (i + 1) % tessellation;
-			auto i2 = (i + 2) % tessellation;
-
-			if (!isTop) {
-				auto tmp = i1;
-				auto i1 = i2;
-				i2 = tmp;
-			}
-
-			auto vbase = positions.size() / 3;
-			indices.push_back(vbase);
-			indices.push_back(vbase + i1);
-			indices.push_back(vbase + i2);
-		}
-
-
-		// Which end of the cylinder is this?
-		auto normal = make_shared<Vector3>(0, -1, 0);
-		auto textureScale = make_shared<Vector2>(-0.5, -0.5);
-
-		if (!isTop) {
-			normal = normal->scale(-1);
-			textureScale->x = -textureScale->x;
-		}
-
-		// Create cap vertices.
-		for (auto i = 0; i < tessellation; i++) {
-			auto circleVector = getCircleVector(i);
-			auto position = circleVector->scale(radius).add(normal->scale(height));
-			auto textureCoordinate = make_shared<Vector2>(circleVector->x * textureScale->x + 0.5, circleVector->z * textureScale->y + 0.5);
-
-			positions.push_back(position->x, position->y, position->z);
-			normals.push_back(normal->x, normal->y, normal->z);
-			uvs.push_back(textureCoordinate->x, textureCoordinate->y);
-		}
-	};
-
-	height /= 2;
-
-	auto topOffset = make_shared<Vector3>(0, 1, 0)->scale(height);
-
-	auto stride = tessellation + 1;
-
-	// Create a ring of triangles around the outside of the cylinder->
-	for (auto i = 0; i <= tessellation; i++) {
-		auto normal = getCircleVector(i);
-		auto sideOffsetBottom = normal->scale(radiusBottom);
-		auto sideOffsetTop = normal->scale(radiusTop);
-		auto textureCoordinate = make_shared<Vector2>(i / tessellation, 0);
-
-		auto position = sideOffsetBottom.add(topOffset);
-		positions.push_back(position->x, position->y, position->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(textureCoordinate->x, textureCoordinate->y);
-
-		position = sideOffsetTop->subtract(topOffset);
-		textureCoordinate->y += 1;
-		positions.push_back(position->x, position->y, position->z);
-		normals.push_back(normal->x, normal->y, normal->z);
-		uvs.push_back(textureCoordinate->x, textureCoordinate->y);
-
-		indices.push_back(i * 2);
-		indices.push_back((i * 2 + 2) % (stride * 2));
-		indices.push_back(i * 2 + 1);
-
-		indices.push_back(i * 2 + 1);
-		indices.push_back((i * 2 + 2) % (stride * 2));
-		indices.push_back((i * 2 + 3) % (stride * 2));
-	}
-
-	// Create flat triangle fan caps to seal the top and bottom.
-	createCylinderCap(true);
-	createCylinderCap(false);
-
-	cylinder->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	cylinder->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	cylinder->setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	cylinder->setIndices(indices);
-
-	return cylinder;
+return make_shared<Vector3>(dx, 0, dz);
 };
 
+auto createCylinderCap(isTop) {
+auto radius = isTop ? radiusTop : radiusBottom;
+
+if (radius == 0) {
+return
+}
+
+// Create cap indices.
+for (auto i = 0; i < tessellation - 2; i++) {
+auto i1 = (i + 1) % tessellation;
+auto i2 = (i + 2) % tessellation;
+
+if (!isTop) {
+auto tmp = i1;
+auto i1 = i2;
+i2 = tmp;
+}
+
+auto vbase = positions.size() / 3;
+indices.push_back(vbase);
+indices.push_back(vbase + i1);
+indices.push_back(vbase + i2);
+}
+
+
+// Which end of the cylinder is this?
+auto normal = make_shared<Vector3>(0, -1, 0);
+auto textureScale = make_shared<Vector2>(-0.5, -0.5);
+
+if (!isTop) {
+normal = normal->scale(-1);
+textureScale->x = -textureScale->x;
+}
+
+// Create cap vertices.
+for (auto i = 0; i < tessellation; i++) {
+auto circleVector = getCircleVector(i);
+auto position = circleVector->scale(radius).add(normal->scale(height));
+auto textureCoordinate = make_shared<Vector2>(circleVector->x * textureScale->x + 0.5, circleVector->z * textureScale->y + 0.5);
+
+positions.push_back(position->x, position->y, position->z);
+normals.push_back(normal->x, normal->y, normal->z);
+uvs.push_back(textureCoordinate->x, textureCoordinate->y);
+}
+};
+
+height /= 2;
+
+auto topOffset = make_shared<Vector3>(0, 1, 0)->scale(height);
+
+auto stride = tessellation + 1;
+
+// Create a ring of triangles around the outside of the cylinder->
+for (auto i = 0; i <= tessellation; i++) {
+auto normal = getCircleVector(i);
+auto sideOffsetBottom = normal->scale(radiusBottom);
+auto sideOffsetTop = normal->scale(radiusTop);
+auto textureCoordinate = make_shared<Vector2>(i / tessellation, 0);
+
+auto position = sideOffsetBottom.add(topOffset);
+positions.push_back(position->x, position->y, position->z);
+normals.push_back(normal->x, normal->y, normal->z);
+uvs.push_back(textureCoordinate->x, textureCoordinate->y);
+
+position = sideOffsetTop->subtract(topOffset);
+textureCoordinate->y += 1;
+positions.push_back(position->x, position->y, position->z);
+normals.push_back(normal->x, normal->y, normal->z);
+uvs.push_back(textureCoordinate->x, textureCoordinate->y);
+
+indices.push_back(i * 2);
+indices.push_back((i * 2 + 2) % (stride * 2));
+indices.push_back(i * 2 + 1);
+
+indices.push_back(i * 2 + 1);
+indices.push_back((i * 2 + 2) % (stride * 2));
+indices.push_back((i * 2 + 3) % (stride * 2));
+}
+
+// Create flat triangle fan caps to seal the top and bottom.
+createCylinderCap(true);
+createCylinderCap(false);
+
+cylinder->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+cylinder->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+cylinder->setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
+cylinder->setIndices(indices);
+
+return cylinder;
+};
+*/
+
 // Torus  (Code from SharpDX.org)
-BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatable) {
+Mesh::Ptr Babylon::Mesh::CreateTorus(string name, float diameter, float thickness, int tessellation, Scene::Ptr scene, bool updatable) {
 	auto torus = Mesh::New(name, scene);
 
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
+	Uint16Array indices;
+	Float32Array positions;
+	Float32Array normals;
+	Float32Array uvs;
+
+	auto PI = 4. * atan(1.);
 
 	auto stride = tessellation + 1;
 
@@ -1194,7 +1197,7 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 
 		auto outerAngle = i * PI * 2.0 / tessellation - PI / 2.0;
 
-		auto transform = Matrix::Translation(diameter / 2.0, 0, 0).multiply(Matrix::RotationY(outerAngle));
+		auto transform = Matrix::Translation(diameter / 2.0, 0, 0)->multiply(Matrix::RotationY(outerAngle));
 
 		for (auto j = 0; j <= tessellation; j++) {
 			auto v = 1 - j / tessellation;
@@ -1211,9 +1214,14 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 			position = Vector3::TransformCoordinates(position, transform);
 			normal = Vector3::TransformNormal(normal, transform);
 
-			positions.push_back(position->x, position->y, position->z);
-			normals.push_back(normal->x, normal->y, normal->z);
-			uvs.push_back(textureCoordinate->x, textureCoordinate->y);
+			positions.push_back(position->x);
+			positions.push_back(position->y);
+			positions.push_back(position->z);
+			normals.push_back(normal->x);
+			normals.push_back(normal->y);
+			normals.push_back(normal->z);
+			uvs.push_back(textureCoordinate->x); 
+			uvs.push_back(textureCoordinate->y);
 
 			// And create indices for two triangles.
 			auto nextI = (i + 1) % stride;
@@ -1229,40 +1237,60 @@ BABYLON.Mesh.CreateTorus(name, diameter, thickness, tessellation, scene, updatab
 		}
 	}
 
-	torus.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	torus.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	torus.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	torus.setIndices(indices);
+	torus->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+	torus->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+	torus->setVerticesData(uvs, VertexBufferKind_UVKind, updatable);
+	torus->setIndices(indices);
 
 	return torus;
 };
 
 // Plane
-BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
+Mesh::Ptr Babylon::Mesh::CreatePlane(string name, float size, Scene::Ptr scene, bool updatable) {
 	auto plane = Mesh::New(name, scene);
 
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
+	Uint16Array indices;
+	Float32Array positions;
+	Float32Array normals;
+	Float32Array uvs;
 
 	// Vertices
 	auto halfSize = size / 2.0;
-	positions.push_back(-halfSize, -halfSize, 0);
-	normals.push_back(0, 0, -1.0);
-	uvs.push_back(0.0, 0.0);
+	positions.push_back(-halfSize);
+	positions.push_back(-halfSize); 
+	positions.push_back(0);
+	normals.push_back(0); 
+	normals.push_back(0);
+	normals.push_back(-1.0);
+	uvs.push_back(0.0); 
+	uvs.push_back(0.0);
 
-	positions.push_back(halfSize, -halfSize, 0);
-	normals.push_back(0, 0, -1.0);
-	uvs.push_back(1.0, 0.0);
+	positions.push_back(halfSize); 
+	positions.push_back(-halfSize);
+	positions.push_back(0);
+	normals.push_back(0); 
+	normals.push_back(0); 
+	normals.push_back(-1.0);
+	uvs.push_back(1.0); 
+	uvs.push_back(0.0);
 
-	positions.push_back(halfSize, halfSize, 0);
-	normals.push_back(0, 0, -1.0);
-	uvs.push_back(1.0, 1.0);
+	positions.push_back(halfSize);
+	positions.push_back(halfSize);
+	positions.push_back(0);
+	normals.push_back(0);
+	normals.push_back(0);
+	normals.push_back(-1.0);
+	uvs.push_back(1.0);
+	uvs.push_back(1.0);
 
-	positions.push_back(-halfSize, halfSize, 0);
-	normals.push_back(0, 0, -1.0);
-	uvs.push_back(0.0, 1.0);
+	positions.push_back(-halfSize);
+	positions.push_back(halfSize);
+	positions.push_back(0);
+	normals.push_back(0);
+	normals.push_back(0);
+	normals.push_back(-1.0);
+	uvs.push_back(0.0);
+	uvs.push_back(1.0);
 
 	// Indices
 	indices.push_back(0);
@@ -1273,36 +1301,39 @@ BABYLON.Mesh.CreatePlane(name, size, scene, updatable) {
 	indices.push_back(2);
 	indices.push_back(3);
 
-	plane.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	plane.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	plane.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	plane.setIndices(indices);
+	plane->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+	plane->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+	plane->setVerticesData(uvs, VertexBufferKind_UVKind, updatable);
+	plane->setIndices(indices);
 
 	return plane;
 };
 
-BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
+Mesh::Ptr Babylon::Mesh::CreateGround(string name, int width, int height, int subdivisions, Scene::Ptr scene, bool updatable) {
 	auto ground = Mesh::New(name, scene);
 
-	auto indices = [];
-	auto positions = [];
-	auto normals = [];
-	auto uvs = [];
-	auto row, col;
-
-	for (row = 0; row <= subdivisions; row++) {
-		for (col = 0; col <= subdivisions; col++) {
+	Uint16Array indices;
+	Float32Array positions;
+	Float32Array normals;
+	Float32Array uvs;
+	for (auto row = 0; row <= subdivisions; row++) {
+		for (auto col = 0; col <= subdivisions; col++) {
 			auto position = make_shared<Vector3>((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
 			auto normal = make_shared<Vector3>(0, 1.0, 0);
 
-			positions.push_back(position->x, position->y, position->z);
-			normals.push_back(normal->x, normal->y, normal->z);
-			uvs.push_back(col / subdivisions, 1.0 - row / subdivisions);
+			positions.push_back(position->x);
+			positions.push_back(position->y);
+			positions.push_back(position->z);
+			normals.push_back(normal->x);
+			normals.push_back(normal->y);
+			normals.push_back(normal->z);
+			uvs.push_back(col / subdivisions); 
+			uvs.push_back(1.0 - row / subdivisions);
 		}
 	}
 
-	for (row = 0; row < subdivisions; row++) {
-		for (col = 0; col < subdivisions; col++) {
+	for (auto row = 0; row < subdivisions; row++) {
+		for (auto col = 0; col < subdivisions; col++) {
 			indices.push_back(col + 1 + (row + 1) * (subdivisions + 1));
 			indices.push_back(col + 1 + row * (subdivisions + 1));
 			indices.push_back(col + row * (subdivisions + 1));
@@ -1313,137 +1344,138 @@ BABYLON.Mesh.CreateGround(name, width, height, subdivisions, scene, updatable) {
 		}
 	}
 
-	ground.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-	ground.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-	ground.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-	ground.setIndices(indices);
+	ground->setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+	ground->setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+	ground->setVerticesData(uvs, VertexBufferKind_UVKind, updatable);
+	ground->setIndices(indices);
 
 	return ground;
 };
 
+/*
 BABYLON.Mesh.CreateGroundFromHeightMap(name, url, width, height, subdivisions, minHeight, maxHeight, scene, updatable) {
-	auto ground = Mesh::New(name, scene);
+auto ground = Mesh::New(name, scene);
 
-	auto onload(img) {
-		auto indices = [];
-		auto positions = [];
-		auto normals = [];
-		auto uvs = [];
-		auto row, col;
+auto onload(img) {
+auto indices = [];
+auto positions = [];
+auto normals = [];
+auto uvs = [];
+auto row, col;
 
-		// Getting height map data
-		auto canvas = document.createElement("canvas");
-		auto context = canvas.getContext("2d");
-		auto heightMapWidth = img.width;
-		auto heightMapHeight = img.height;
-		canvas.width = heightMapWidth;
-		canvas.height = heightMapHeight;
+// Getting height map data
+auto canvas = document.createElement("canvas");
+auto context = canvas.getContext("2d");
+auto heightMapWidth = img.width;
+auto heightMapHeight = img.height;
+canvas.width = heightMapWidth;
+canvas.height = heightMapHeight;
 
-		context.drawImage(img, 0, 0);
+context.drawImage(img, 0, 0);
 
-		auto buffer = context.getImageData(0, 0, heightMapWidth, heightMapHeight).data;
+auto buffer = context.getImageData(0, 0, heightMapWidth, heightMapHeight).data;
 
-		// Vertices
-		for (row = 0; row <= subdivisions; row++) {
-			for (col = 0; col <= subdivisions; col++) {
-				auto position = make_shared<Vector3>((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
+// Vertices
+for (row = 0; row <= subdivisions; row++) {
+for (col = 0; col <= subdivisions; col++) {
+auto position = make_shared<Vector3>((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
 
-				// Compute height
-				auto heightMapX = (((position->x + width / 2) / width) * (heightMapWidth - 1)) | 0;
-				auto heightMapY = ((1.0 - (position->z + height / 2) / height) * (heightMapHeight - 1)) | 0;
+// Compute height
+auto heightMapX = (((position->x + width / 2) / width) * (heightMapWidth - 1)) | 0;
+auto heightMapY = ((1.0 - (position->z + height / 2) / height) * (heightMapHeight - 1)) | 0;
 
-				auto pos = (heightMapX + heightMapY * heightMapWidth) * 4;
-				auto r = buffer[pos] / 255.0;
-				auto g = buffer[pos + 1] / 255.0;
-				auto b = buffer[pos + 2] / 255.0;
+auto pos = (heightMapX + heightMapY * heightMapWidth) * 4;
+auto r = buffer[pos] / 255.0;
+auto g = buffer[pos + 1] / 255.0;
+auto b = buffer[pos + 2] / 255.0;
 
-				auto gradient = r * 0.3 + g * 0.59 + b * 0.11;
+auto gradient = r * 0.3 + g * 0.59 + b * 0.11;
 
-				position->y = minHeight + (maxHeight - minHeight) * gradient;
+position->y = minHeight + (maxHeight - minHeight) * gradient;
 
-				// Add  vertex
-				positions.push_back(position->x, position->y, position->z);
-				normals.push_back(0, 0, 0);
-				uvs.push_back(col / subdivisions, 1.0 - row / subdivisions);
-			}
-		}
+// Add  vertex
+positions.push_back(position->x, position->y, position->z);
+normals.push_back(0, 0, 0);
+uvs.push_back(col / subdivisions, 1.0 - row / subdivisions);
+}
+}
 
-		// Indices
-		for (row = 0; row < subdivisions; row++) {
-			for (col = 0; col < subdivisions; col++) {
-				indices.push_back(col + 1 + (row + 1) * (subdivisions + 1));
-				indices.push_back(col + 1 + row * (subdivisions + 1));
-				indices.push_back(col + row * (subdivisions + 1));
+// Indices
+for (row = 0; row < subdivisions; row++) {
+for (col = 0; col < subdivisions; col++) {
+indices.push_back(col + 1 + (row + 1) * (subdivisions + 1));
+indices.push_back(col + 1 + row * (subdivisions + 1));
+indices.push_back(col + row * (subdivisions + 1));
 
-				indices.push_back(col + (row + 1) * (subdivisions + 1));
-				indices.push_back(col + 1 + (row + 1) * (subdivisions + 1));
-				indices.push_back(col + row * (subdivisions + 1));
-			}
-		}
+indices.push_back(col + (row + 1) * (subdivisions + 1));
+indices.push_back(col + 1 + (row + 1) * (subdivisions + 1));
+indices.push_back(col + row * (subdivisions + 1));
+}
+}
 
-		// Normals
-		BABYLON.Mesh.ComputeNormal(positions, normals, indices);
+// Normals
+BABYLON.Mesh.ComputeNormal(positions, normals, indices);
 
-		// Transfer
-		ground.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
-		ground.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
-		ground.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
-		ground.setIndices(indices);
+// Transfer
+ground.setVerticesData(positions, VertexBufferKind_PositionKind, updatable);
+ground.setVerticesData(normals, VertexBufferKind_NormalKind, updatable);
+ground.setVerticesData(uvs, BABYLON.VertexBuffer.UVKind, updatable);
+ground.setIndices(indices);
 
-		ground._isReady = true;
-	};
+ground._isReady = true;
+};
 
-	BABYLON.Tools.LoadImage(url, onload, scene.database);
+BABYLON.Tools.LoadImage(url, onload, scene.database);
 
-	ground._isReady = false;
+ground._isReady = false;
 
-	return ground;
+return ground;
 };
 
 // Tools
 BABYLON.Mesh.ComputeNormal(positions, normals, indices) {
-	auto positionVectors = [];
-	auto facesOfVertices = [];
-	auto index;
+auto positionVectors = [];
+auto facesOfVertices = [];
+auto index;
 
-	for (index = 0; index < positions.size(); index += 3) {
-		auto vector3 = make_shared<Vector3>(positions[index], positions[index + 1], positions[index + 2]);
-		positionVectors.push_back(vector3);
-		facesOfVertices.push_back([]);
-	}
-	// Compute normals
-	auto facesNormals = [];
-	for (index = 0; index < indices.size() / 3; index++) {
-		auto i1 = indices[index * 3];
-		auto i2 = indices[index * 3 + 1];
-		auto i3 = indices[index * 3 + 2];
+for (index = 0; index < positions.size(); index += 3) {
+auto vector3 = make_shared<Vector3>(positions[index], positions[index + 1], positions[index + 2]);
+positionVectors.push_back(vector3);
+facesOfVertices.push_back([]);
+}
+// Compute normals
+auto facesNormals = [];
+for (index = 0; index < indices.size() / 3; index++) {
+auto i1 = indices[index * 3];
+auto i2 = indices[index * 3 + 1];
+auto i3 = indices[index * 3 + 2];
 
-		auto p1 = positionVectors[i1];
-		auto p2 = positionVectors[i2];
-		auto p3 = positionVectors[i3];
+auto p1 = positionVectors[i1];
+auto p2 = positionVectors[i2];
+auto p3 = positionVectors[i3];
 
-		auto p1p2 = p1->subtract(p2);
-		auto p3p2 = p3->subtract(p2);
+auto p1p2 = p1->subtract(p2);
+auto p3p2 = p3->subtract(p2);
 
-		facesNormals[index] = Vector3::Normalize(Vector3::Cross(p1p2, p3p2));
-		facesOfVertices[i1].push_back(index);
-		facesOfVertices[i2].push_back(index);
-		facesOfVertices[i3].push_back(index);
-	}
+facesNormals[index] = Vector3::Normalize(Vector3::Cross(p1p2, p3p2));
+facesOfVertices[i1].push_back(index);
+facesOfVertices[i2].push_back(index);
+facesOfVertices[i3].push_back(index);
+}
 
-	for (index = 0; index < positionVectors.size(); index++) {
-		auto faces = facesOfVertices[index];
+for (index = 0; index < positionVectors.size(); index++) {
+auto faces = facesOfVertices[index];
 
-		auto normal = Vector3::Zero();
-		for (auto faceIndex = 0; faceIndex < faces.size(); faceIndex++) {
-			normal->addInPlace(facesNormals[faces[faceIndex]]);
-		}
+auto normal = Vector3::Zero();
+for (auto faceIndex = 0; faceIndex < faces.size(); faceIndex++) {
+normal->addInPlace(facesNormals[faces[faceIndex]]);
+}
 
-		normal = Vector3::Normalize(normal->scale(1.0 / faces.size()));
+normal = Vector3::Normalize(normal->scale(1.0 / faces.size()));
 
-		normals[index * 3] = normal->x;
-		normals[index * 3 + 1] = normal->y;
-		normals[index * 3 + 2] = normal->z;
-	}
+normals[index * 3] = normal->x;
+normals[index * 3 + 1] = normal->y;
+normals[index * 3 + 2] = normal->z;
+}
 };
 */

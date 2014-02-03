@@ -21,4 +21,4 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Textures 
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
-add_library (Tools tools.cpp ray.cpp color3.cpp color4.cpp viewport.cpp vector3.cpp quaternion.cpp matrix.cpp plane.cpp frustum.cpp)
+add_library (Tools tools.cpp ray.cpp color3.cpp color4.cpp viewport.cpp vector2.cpp vector3.cpp quaternion.cpp matrix.cpp plane.cpp frustum.cpp)

@@ -7,7 +7,8 @@ Babylon::RenderTargetTexture::RenderTargetTexture(string name, Size size, Scene:
 	: Texture(nullptr, scene, false, false)
 {
 	this->_scene = scene;
-	this->_scene->textures.push_back(enable_shared_from_this<RenderTargetTexture>::shared_from_this());
+	// moved to new
+	////this->_scene->textures.push_back(enable_shared_from_this<RenderTargetTexture>::shared_from_this());
 
 	this->name = name;
 	this->_generateMipMaps = generateMipMaps;
@@ -33,6 +34,12 @@ Babylon::RenderTargetTexture::RenderTargetTexture(string name, Size size, Scene:
 	this->onAfterRender = nullptr;
 
 };
+
+RenderTargetTexture::Ptr Babylon::RenderTargetTexture::New(string name, Size size, Scene::Ptr scene, bool generateMipMaps) {
+	auto renderTargetTexture = make_shared<RenderTargetTexture>(RenderTargetTexture(name, size, scene, generateMipMaps));
+	renderTargetTexture->_scene->textures.push_back(renderTargetTexture);
+	return renderTargetTexture;
+}
 
 // Methods  
 void Babylon::RenderTargetTexture::resize(Size size, bool generateMipMaps) {
@@ -96,7 +103,7 @@ void Babylon::RenderTargetTexture::render() {
 
 Texture::Ptr Babylon::RenderTargetTexture::clone() {
 	auto textureSize = this->getSize();
-	auto newTexture = make_shared<RenderTargetTexture>(this->name, textureSize, this->_scene, this->_generateMipMaps);
+	auto newTexture = RenderTargetTexture::New(this->name, textureSize, this->_scene, this->_generateMipMaps);
 
 	// Base texture
 	newTexture->hasAlpha = this->hasAlpha;

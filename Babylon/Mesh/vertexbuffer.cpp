@@ -85,4 +85,6 @@ const char* Babylon::VertexBuffer::toString(VertexBufferKind kind) {
 	case Attribute_Options: return "options";
 	case Attribute_CellInfo: return "cellInfo";
 	};
+
+	return nullptr;
 };  

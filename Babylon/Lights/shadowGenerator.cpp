@@ -19,21 +19,21 @@ Babylon::ShadowGenerator::ShadowGenerator(Size size, Light::Ptr light)
 	light->_shadowGenerator = shared_from_this();
 
 	// Render target
-	this->_shadowMap = make_shared<RenderTargetTexture>(light->name + "_shadowMap", size, this->_scene, false);
+	this->_shadowMap = RenderTargetTexture::New(light->name + "_shadowMap", size, this->_scene, false);
 	this->_shadowMap->wrapU = CLAMP_ADDRESSMODE;
 	this->_shadowMap->wrapV = CLAMP_ADDRESSMODE;
 	this->_shadowMap->renderParticles = false;
 
 	// Custom render function
-	auto that = this;
+	
 
-	this->_shadowMap->customRenderFunction = [&that](SubMesh::Array& opaqueSubMeshes, SubMesh::Array& alphaTestSubMeshes, SubMesh::Array& transparentSubMeshes, BeforeTransparentsFunc beforeTransparents) {
+	this->_shadowMap->customRenderFunction = [&](SubMesh::Array& opaqueSubMeshes, SubMesh::Array& alphaTestSubMeshes, SubMesh::Array& transparentSubMeshes, BeforeTransparentsFunc beforeTransparents) {
 		for (auto opaqueSubMesh : opaqueSubMeshes) {
-			that->renderSubMesh(opaqueSubMesh);
+			this->renderSubMesh(opaqueSubMesh);
 		}
 
 		for (auto alphaTestSubMesh : alphaTestSubMeshes) {
-			that->renderSubMesh(alphaTestSubMesh);
+			this->renderSubMesh(alphaTestSubMesh);
 		}
 	};
 
@@ -45,28 +45,28 @@ Babylon::ShadowGenerator::ShadowGenerator(Size size, Light::Ptr light)
 };
 
 void Babylon::ShadowGenerator::renderSubMesh(SubMesh::Ptr subMesh) {
-	auto that = this;
+	
 
 	auto mesh = subMesh->getMesh();
 	auto world = mesh->getWorldMatrix();
-	auto engine = that->_scene->getEngine();
+	auto engine = this->_scene->getEngine();
 
-	if (that->isReady(mesh)) {
-		engine->enableEffect(that->_effect);
+	if (this->isReady(mesh)) {
+		engine->enableEffect(this->_effect);
 
 		// Bones
 		if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
-			that->_effect->setMatrix("world", world);
-			that->_effect->setMatrix("viewProjection", that->getTransformMatrix());
+			this->_effect->setMatrix("world", world);
+			this->_effect->setMatrix("viewProjection", this->getTransformMatrix());
 
-			that->_effect->setMatrices("mBones", mesh->skeleton->getTransformMatrices());
+			this->_effect->setMatrices("mBones", mesh->skeleton->getTransformMatrices());
 		} else {
-			world->multiplyToRef(that->getTransformMatrix(), that->_worldViewProjection);
-			that->_effect->setMatrix("worldViewProjection", that->_worldViewProjection);
+			world->multiplyToRef(this->getTransformMatrix(), this->_worldViewProjection);
+			this->_effect->setMatrix("worldViewProjection", this->_worldViewProjection);
 		}
 
 		// Bind and draw
-		mesh->bindAndDraw(subMesh, that->_effect, false);
+		mesh->bindAndDraw(subMesh, this->_effect, false);
 	}
 };
 

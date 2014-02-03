@@ -244,10 +244,10 @@ void Babylon::Scene::executeWhenReady(ExecuteWhenReadyFunc func) {
 		return;
 	}
 
-	auto that = this;
+	
 	// TODO: finish it
 	////this->_executeWhenReadyTimeoutId = setTimeout([&] () {
-	////	that->_checkIsReady();
+	////	this->_checkIsReady();
 	////}, 150);
 };
 
@@ -262,10 +262,10 @@ void Babylon::Scene::_checkIsReady() {
 		return;
 	}
 
-	auto that = this;
+	
 	// TODO: finish it
 	////this->_executeWhenReadyTimeoutId = setTimeout([] () {
-	////	that->_checkIsReady();
+	////	this->_checkIsReady();
 	////}, 150);
 };
 
@@ -485,9 +485,9 @@ void Babylon::Scene::_evaluateSubMesh(SubMesh::Ptr subMesh, Mesh::Ptr mesh) {
 
 					// concat
 					////this->_renderTargets.insert(end(this->_renderTargets), begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()));
-					auto that = this;
-					for_each(begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()), [&that](const IRenderable::Ptr renderable) {
-						that->_renderTargets.push_back(dynamic_pointer_cast<IRenderable>(renderable));
+					
+					for_each(begin(material->getRenderTargetTextures()), end(material->getRenderTargetTextures()), [&](const IRenderable::Ptr renderable) {
+						this->_renderTargets.push_back(dynamic_pointer_cast<IRenderable>(renderable));
 					});
 				}                                 
 			}
@@ -1010,20 +1010,20 @@ PickingInfo::Ptr Babylon::Scene::_internalPick(RayFunctionFunc rayFunction, Pred
 };
 
 PickingInfo::Ptr Babylon::Scene::pick(float x, float y, PredicateFunc predicate, bool fastCheck) {
-	auto that = this;
+	
 	return this->_internalPick([=](Matrix::Ptr world) {
-		return that->createPickingRay(x, y, world);
+		return this->createPickingRay(x, y, world);
 	}, predicate, fastCheck);
 };
 
 PickingInfo::Ptr Babylon::Scene::pickWithRay(Ray::Ptr ray, PredicateFunc predicate, bool fastCheck) {
-	auto that = this;
+	
 	return this->_internalPick([=](Matrix::Ptr world) {
-		if (!that->_pickWithRayInverseMatrix) {
-			that->_pickWithRayInverseMatrix = Matrix::Identity();
+		if (!this->_pickWithRayInverseMatrix) {
+			this->_pickWithRayInverseMatrix = Matrix::Identity();
 		}
-		world->invertToRef(that->_pickWithRayInverseMatrix);
-		return Ray::Transform(ray, that->_pickWithRayInverseMatrix);
+		world->invertToRef(this->_pickWithRayInverseMatrix);
+		return Ray::Transform(ray, this->_pickWithRayInverseMatrix);
 	}, predicate, fastCheck);
 };
 

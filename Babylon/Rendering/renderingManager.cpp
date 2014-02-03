@@ -71,7 +71,7 @@ void Babylon::RenderingManager::_clearDepthBuffer() {
 };
 
 void Babylon::RenderingManager::render(CustomRenderFunctionFunc customRenderFunction, Mesh::Array activeMeshes, bool renderParticles, bool renderSprites) {
-	auto that = this;
+	
 
 	for (auto index = 0 ; index < MAX_RENDERINGGROUPS; index++) {
 		this->_depthBufferAlreadyCleaned = index == 0;
@@ -80,7 +80,7 @@ void Babylon::RenderingManager::render(CustomRenderFunctionFunc customRenderFunc
 			this->_clearDepthBuffer();
 			auto renderLambda = [&] () {
 				if (renderSprites) {
-					that->_renderSprites(index);
+					this->_renderSprites(index);
 				}
 			};
 			if (renderingGroup && !renderingGroup->render(customRenderFunction, renderLambda)) {

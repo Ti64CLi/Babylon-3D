@@ -62,21 +62,21 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	this->_renderFunction = nullptr;
 	this->_runningLoop = false;
 
-	////auto that = this;
+	////
 
 	////auto onFullscreenChange = []() {
 	////	if (document.fullscreen != nullptr) {
-	////		that->isFullscreen = document.fullscreen;
+	////		this->isFullscreen = document.fullscreen;
 	////	} else if (document.mozFullScreen != undefined) {
-	////		that->isFullscreen = document.mozFullScreen;
+	////		this->isFullscreen = document.mozFullScreen;
 	////	} else if (document.webkitIsFullScreen != undefined) {
-	////		that->isFullscreen = document.webkitIsFullScreen;
+	////		this->isFullscreen = document.webkitIsFullScreen;
 	////	} else if (document.msIsFullScreen != undefined) {
-	////		that->isFullscreen = document.msIsFullScreen;
+	////		this->isFullscreen = document.msIsFullScreen;
 	////	}
 
 	////	// Pointer lock
-	////	if (that->isFullscreen && that->_pointerLockRequested) {
+	////	if (this->isFullscreen && this->_pointerLockRequested) {
 	////		canvas->requestPointerLock = canvas->requestPointerLock ||
 	////			canvas->msRequestPointerLock ||
 	////			canvas->mozRequestPointerLock ||
@@ -97,7 +97,7 @@ Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias)
 	this->isPointerLock = false;
 
 	////auto onPointerLockChange = []() {
-	////	that->isPointerLock = (document.mozPointerLockElement == canvas ||
+	////	this->isPointerLock = (document.mozPointerLockElement == canvas ||
 	////		document.webkitPointerLockElement == canvas ||
 	////		document.msPointerLockElement == canvas ||
 	////		document.pointerLockElement == canvas
@@ -171,9 +171,9 @@ void Babylon::Engine::_renderLoop() {
 		// Register new frame
 		// TODO: finish with lambda
 		/*
-		auto that = this;
+		
 		BABYLON->Tools->QueueNewFrame(function () {
-		that->_renderLoop();
+		this->_renderLoop();
 		});
 		*/
 	}
@@ -185,9 +185,9 @@ void Babylon::Engine::runRenderLoop(RenderFunction renderFunction) {
 	this->_renderFunction = renderFunction;
 	// TODO: finish with lambda
 	/*
-	auto that = this;
+	
 	BABYLON->Tools->QueueNewFrame(function () {
-	that->_renderLoop();
+	this->_renderLoop();
 	});
 	*/
 };
@@ -628,42 +628,42 @@ int Babylon::Engine::getExponantOfTwo(int value, int max) {
 
 IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool invertY, Scene::Ptr scene) {
 	auto texture = this->_gl->createTexture();
-	auto that = this;
+	
 
 	auto onload = [=](IImage::Ptr img) {
-		auto potWidth = getExponantOfTwo(img->getWidth(), that->_caps.maxTextureSize);
-		auto potHeight = getExponantOfTwo(img->getHeight(), that->_caps.maxTextureSize);
+		auto potWidth = getExponantOfTwo(img->getWidth(), this->_caps.maxTextureSize);
+		auto potHeight = getExponantOfTwo(img->getHeight(), this->_caps.maxTextureSize);
 		auto isPot = (img->getWidth() == potWidth && img->getHeight() == potHeight);
 
 		if (!isPot) {
-			that->_workingCanvas->setWidth(potWidth);
-			that->_workingCanvas->setHeight(potHeight);
+			this->_workingCanvas->setWidth(potWidth);
+			this->_workingCanvas->setHeight(potHeight);
 
-			that->_workingContext->drawImage(img, 0, 0, img->getWidth(), img->getHeight(), 0, 0, potWidth, potHeight);
+			this->_workingContext->drawImage(img, 0, 0, img->getWidth(), img->getHeight(), 0, 0, potWidth, potHeight);
 		};
 
-		that->_gl->bindTexture(that->_gl->TEXTURE_2D, texture);
-		that->_gl->pixelStorei(that->_gl->UNPACK_FLIP_Y_WEBGL, invertY);
+		this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
+		this->_gl->pixelStorei(this->_gl->UNPACK_FLIP_Y_WEBGL, invertY);
 		if (isPot)
 		{
-			that->_gl->texImage2D(that->_gl->TEXTURE_2D, 0, that->_gl->RGBA, that->_gl->RGBA, that->_gl->UNSIGNED_BYTE, img);
+			this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, img);
 		}
 		else
 		{
-			that->_gl->texImage2D(that->_gl->TEXTURE_2D, 0, that->_gl->RGBA, that->_gl->RGBA, that->_gl->UNSIGNED_BYTE, that->_workingCanvas);
+			this->_gl->texImage2D(this->_gl->TEXTURE_2D, 0, this->_gl->RGBA, this->_gl->RGBA, this->_gl->UNSIGNED_BYTE, this->_workingCanvas);
 		}
 
-		that->_gl->texParameteri(that->_gl->TEXTURE_2D, that->_gl->TEXTURE_MAG_FILTER, that->_gl->LINEAR);
+		this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MAG_FILTER, this->_gl->LINEAR);
 
 		if (noMipmap) {
-			that->_gl->texParameteri(that->_gl->TEXTURE_2D, that->_gl->TEXTURE_MIN_FILTER, that->_gl->LINEAR);
+			this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR);
 		} else {
-			that->_gl->texParameteri(that->_gl->TEXTURE_2D, that->_gl->TEXTURE_MIN_FILTER, that->_gl->LINEAR_MIPMAP_LINEAR);
-			that->_gl->generateMipmap(that->_gl->TEXTURE_2D);
+			this->_gl->texParameteri(this->_gl->TEXTURE_2D, this->_gl->TEXTURE_MIN_FILTER, this->_gl->LINEAR_MIPMAP_LINEAR);
+			this->_gl->generateMipmap(this->_gl->TEXTURE_2D);
 		}
-		that->_gl->bindTexture(that->_gl->TEXTURE_2D, nullptr);
+		this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
 
-		that->_activeTexturesCache.clear();
+		this->_activeTexturesCache.clear();
 		texture->_baseWidth = img->getWidth();
 		texture->_baseHeight = img->getHeight();
 		texture->_width = potWidth;
@@ -862,13 +862,13 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	IGLTexture::Ptr texture;
 
 	auto gl = this->_gl;
-	auto that = this;
+	
 
-	auto width = getExponantOfTwo(imgs[0]->getWidth(), that->_caps.maxCubemapTextureSize);
+	auto width = getExponantOfTwo(imgs[0]->getWidth(), this->_caps.maxCubemapTextureSize);
 	auto height = width;
 
-	that->_workingCanvas->setWidth(width);
-	that->_workingCanvas->setHeight(height);
+	this->_workingCanvas->setWidth(width);
+	this->_workingCanvas->setHeight(height);
 
 	vector<GLenum> faces;
 	faces.push_back(IGL::TEXTURE_CUBE_MAP_POSITIVE_X);
@@ -882,8 +882,8 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	gl->pixelStorei(gl->UNPACK_FLIP_Y_WEBGL, false);
 
 	for (auto index = 0; index < faces.size(); index++) {
-		that->_workingContext->drawImage(imgs[index], 0, 0, imgs[index]->getWidth(), imgs[index]->getHeight(), 0, 0, width, height);
-		gl->texImage2D(faces[index], 0, gl->RGBA, gl->RGBA, gl->UNSIGNED_BYTE, that->_workingCanvas);
+		this->_workingContext->drawImage(imgs[index], 0, 0, imgs[index]->getWidth(), imgs[index]->getHeight(), 0, 0, width, height);
+		gl->texImage2D(faces[index], 0, gl->RGBA, gl->RGBA, gl->UNSIGNED_BYTE, this->_workingCanvas);
 	}
 
 	gl->generateMipmap(gl->TEXTURE_CUBE_MAP);
@@ -894,7 +894,7 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 
 	gl->bindTexture(gl->TEXTURE_CUBE_MAP, nullptr);
 
-	that->_activeTexturesCache.clear();
+	this->_activeTexturesCache.clear();
 
 	texture->_width = width;
 	texture->_height = height;
@@ -910,7 +910,7 @@ IGLTexture::Ptr Babylon::Engine::createCubeTexture(string rootUrl, Scene::Ptr sc
 	texture->references = 1;
 	this->_loadedTexturesCache.push_back(texture);
 
-	auto that = this;
+	
 	IImage::Array loadedImages;
 	cascadeLoad(rootUrl, 0, loadedImages, scene);
 
@@ -932,7 +932,7 @@ void Babylon::Engine::_releaseTexture(IGLTexture::Ptr texture) {
 
 	// Unbind channels
 	for (auto channel = 0; channel < this->_caps.maxTexturesImageUnits; channel++) {
-		this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+		this->_gl->activeTexture((*this->_gl)["TEXTURE" + to_string(channel)]);
 		this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
 		this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, nullptr);
 		this->_activeTexturesCache[channel] = nullptr;
@@ -956,7 +956,7 @@ void Babylon::Engine::bindSamplers(Effect::Ptr effect) {
 
 
 void Babylon::Engine::_bindTexture(int channel, IGLTexture::Ptr texture) {
-	this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+	this->_gl->activeTexture((*this->_gl)["TEXTURE" + to_string(channel)]);
 	this->_gl->bindTexture(this->_gl->TEXTURE_2D, texture);
 
 	this->_activeTexturesCache[channel] = nullptr;
@@ -973,7 +973,7 @@ void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {
 	// Not ready?
 	if (!texture || !texture->isReady()) {
 		if (this->_activeTexturesCache[channel] != nullptr) {
-			this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+			this->_gl->activeTexture((*this->_gl)["TEXTURE" + to_string(channel)]);
 			this->_gl->bindTexture(this->_gl->TEXTURE_2D, nullptr);
 			this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, nullptr);
 			this->_activeTexturesCache[channel] = nullptr;
@@ -998,7 +998,7 @@ void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {
 	this->_activeTexturesCache[channel] = texture;
 
 	auto internalTexture = texture->getInternalTexture();
-	this->_gl->activeTexture(this->_gl->getEnumByNameIndex("TEXTURE", channel));
+	this->_gl->activeTexture((*this->_gl)["TEXTURE" + to_string(channel)]);
 
 	if (internalTexture->isCube) {
 		this->_gl->bindTexture(this->_gl->TEXTURE_CUBE_MAP, internalTexture);

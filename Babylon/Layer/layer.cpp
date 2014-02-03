@@ -8,7 +8,7 @@ Babylon::Layer::Layer(string name, string imgUrl, Scene::Ptr scene, bool isBackg
 	this->_scene = scene;
 
 	this->name = name;
-	this->texture = !imgUrl.empty() ? make_shared<Texture>(imgUrl, scene, true) : nullptr;
+	this->texture = !imgUrl.empty() ? Texture::New(imgUrl, scene, true) : nullptr;
 	this->isBackground = isBackground;
 	this->color = !color ? make_shared<Color4>(1, 1, 1, 1) : color;
 

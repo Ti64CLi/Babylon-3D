@@ -7,8 +7,10 @@ Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size,
 	: Texture(nullptr, scene, false, false),
 	_autoLaunch(false)
 {
-	this->_scene = scene;
-	this->_scene->textures.push_back(enable_shared_from_this<VideoTexture>::shared_from_this());
+	// this is in base class
+	//this->_scene = scene;
+	// moved to new
+	////this->_scene->textures.push_back(enable_shared_from_this<VideoTexture>::shared_from_this());
 
 	this->name = name;
 
@@ -27,12 +29,10 @@ Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size,
 	this->video->setPreload(true);
 	this->_autoLaunch = true;
 
-	auto that = this;
-
 	// TODO: finish it
-	////this->video.addEventListener("canplaythrough", [&that]() {
-	////	if (that->_texture) {
-	////		that->_texture->isReady = true;
+	////this->video.addEventListener("canplaythrough", [&]() {
+	////	if (this->_texture) {
+	////		this->_texture->isReady = true;
 	////	}
 	////});
 
@@ -42,6 +42,12 @@ Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size,
 
 	localtime(&this->_lastUpdate);
 };
+
+VideoTexture::Ptr Babylon::VideoTexture::New(string name, vector<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps) {
+	auto videoTexture = make_shared<VideoTexture>(VideoTexture(name, urls, size, scene, generateMipMaps));
+	videoTexture->_scene->textures.push_back(videoTexture);
+	return videoTexture;
+}
 
 bool Babylon::VideoTexture::_update() {
 	if (this->_autoLaunch) {
