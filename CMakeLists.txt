@@ -97,4 +97,4 @@ else()
 endif()
 
 add_subdirectory (Babylon) 
-add_subdirectory (PlayGround) 
+add_subdirectory (Playground) 
