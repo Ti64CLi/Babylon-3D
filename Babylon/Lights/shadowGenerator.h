@@ -9,7 +9,7 @@
 #include "node.h"
 #include "matrix.h"
 #include "mesh.h"
-#include "vertexBuffer.h"
+#include "vertexbuffer.h"
 #include "renderTargetTexture.h"
 
 using namespace std;

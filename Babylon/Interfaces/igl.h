@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <memory>
 #include <vector>
+#include <string>
 #include "icanvas.h"
 
 using namespace std;

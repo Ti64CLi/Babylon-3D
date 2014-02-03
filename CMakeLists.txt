@@ -18,7 +18,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 	endif()
 endif()
 
-cmake_minimum_required (VERSION 2.8.11 FATAL_ERROR) 
+cmake_minimum_required (VERSION 2.8.10 FATAL_ERROR) 
 
 if(NOT EXECUTABLE_OUTPUT_PATH)
 	set(FIRST_RUN "TRUE")
