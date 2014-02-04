@@ -8,6 +8,18 @@
 
 using namespace std;
 
+#if ANDROID
+#include <sstream>
+// TODO: hack for Android
+template < typename T > std::string to_string( const T& n )
+{
+   std::ostringstream stm ;
+   stm << n ;
+   return stm.str() ;
+}
+
+#endif
+
 namespace Babylon {
 
 	const string ShadersRepository = "Babylon/Shaders/";
