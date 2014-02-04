@@ -1,2 +1,0 @@
-F:\Dev\MinGW\mingw64\bin\ar.exe cr libLights.a  CMakeFiles/Lights.dir/light.cpp.obj CMakeFiles/Lights.dir/shadowGenerator.cpp.obj CMakeFiles/Lights.dir/pointLight.cpp.obj
-F:\Dev\MinGW\mingw64\bin\ranlib.exe libLights.a

@@ -1,2 +1,0 @@
-F:\Dev\MinGW\mingw64\bin\ar.exe cr libPhysicsEngine.a  CMakeFiles/PhysicsEngine.dir/physicsEngine.cpp.obj
-F:\Dev\MinGW\mingw64\bin\ranlib.exe libPhysicsEngine.a

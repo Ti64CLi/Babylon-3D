@@ -1,2 +1,0 @@
-F:\Dev\MinGW\mingw64\bin\ar.exe cr libLensFlare.a  CMakeFiles/LensFlare.dir/lensFlare.cpp.obj CMakeFiles/LensFlare.dir/lensFlareSystem.cpp.obj
-F:\Dev\MinGW\mingw64\bin\ranlib.exe libLensFlare.a

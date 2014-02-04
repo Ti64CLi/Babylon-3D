@@ -1,2 +1,0 @@
-F:\Dev\MinGW\mingw64\bin\ar.exe cr libTextures.a  CMakeFiles/Textures.dir/baseTexture.cpp.obj CMakeFiles/Textures.dir/texture.cpp.obj CMakeFiles/Textures.dir/videoTexture.cpp.obj CMakeFiles/Textures.dir/renderTargetTexture.cpp.obj
-F:\Dev\MinGW\mingw64\bin\ranlib.exe libTextures.a

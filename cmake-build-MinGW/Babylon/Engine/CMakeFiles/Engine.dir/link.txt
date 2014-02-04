@@ -1,2 +1,0 @@
-F:\Dev\MinGW\mingw64\bin\ar.exe cr libEngine.a  CMakeFiles/Engine.dir/node.cpp.obj CMakeFiles/Engine.dir/engine.cpp.obj CMakeFiles/Engine.dir/scene.cpp.obj
-F:\Dev\MinGW\mingw64\bin\ranlib.exe libEngine.a

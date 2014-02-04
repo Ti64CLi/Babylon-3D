@@ -14,10 +14,13 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+_INC := $(LOCAL_PATH)/../../../Babylon
+_SRC := $(LOCAL_PATH)/../../../Babylon
+_INCS := $(_INC)/Animations $(_INC)/Bones $(_INC)/Cameras $(_INC)/Collisions $(_INC)/Context $(_INC)/Culling $(_INC)/Engine $(_INC)/Interfaces $(_INC)/Layer $(_INC)/LensFlare $(_INC)/Lights $(_INC)/Materials $(_INC)/Mesh $(_INC)/Particles $(_INC)/PhysicsEngine $(_INC)/PostProcess $(_INC)/Rendering $(_INC)/Sprites $(_INC)/Textures $(_INC)/Tools
+
 include $(CLEAR_VARS)
 
-_INC := $(LOCAL_PATH)/../../../Babylon
-LOCAL_C_INCLUDES += $(_INC)/Animations $(_INC)/Bones $(_INC)/Cameras $(_INC)/Collisions $(_INC)/Context $(_INC)/Culling $(_INC)/Engine $(_INC)/Interfaces $(_INC)/Layer $(_INC)/LensFlare $(_INC)/Lights $(_INC)/Materials $(_INC)/Mesh $(_INC)/Particles $(_INC)/PhysicsEngine $(_INC)/PostProcess $(_INC)/Rendering $(_INC)/Sprites $(_INC)/Textures $(_INC)/Tools
+LOCAL_C_INCLUDES += $(_INCS)
 LOCAL_LDFLAGS += -Lobj/local/armeabi/ -L$(LOCAL_PATH)/../../../libs/armeabi-v7a/
 
 LOCAL_MODULE    := native-activity

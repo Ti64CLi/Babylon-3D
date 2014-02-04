@@ -51,60 +51,8 @@ endif()
 # Configure C++0x
 
 if(NOT MSVC)
-<<<<<<< .mine
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x -stdlib=libstdc++")
-=======
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++11")
->>>>>>> .theirs
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 endif()
 
-add_subdirectory (Babylon) 
-endif()
-
-#-----------------------------------------------------------------------------
-# Configure OpenGL
-
-find_package(OpenGL)
-
-#-----------------------------------------------------------------------------
-# Configure GLEW
-
-if(WITH_SYSTEM_GLEW)
-	find_package(GLEW)
-
-	mark_as_advanced(
-		GLEW_LIBRARY
-		GLEW_INCLUDE_PATH
-	)
-else()
-	if(WIN32 AND NOT MINGW)
-		set(GLEW_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/include")
-		set(GLEW_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/lib")
-	else()
-		set(GLEW_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/MinGW/GLEW/include")
-		set(GLEW_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/MinGW/GLEW/lib")
-	endif()
-endif()
-#-----------------------------------------------------------------------------
-# Configure GLUT
-
-if(WITH_SYSTEM_GLUT)
-	find_package(GLUT)
-
-	mark_as_advanced(
-		GLUT_LIBRARY
-		GLUT_INCLUDE_PATH
-	)
-else()
-	if(WIN32 AND NOT MINGW)
-		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/include")
-		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/lib")
-	else()
-		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/MinGW/GLUT/include")
-		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/MinGW/GLUT/lib")
-	endif()
-endif()
-
-add_subdirectory (Babylon) 
-add_subdirectory (Playground) 
+add_subdirectory (Babylon)
 add_subdirectory (Playground)
