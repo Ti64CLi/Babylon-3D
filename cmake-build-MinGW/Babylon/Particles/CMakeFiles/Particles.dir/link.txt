@@ -1,0 +1,2 @@
+F:\Dev\MinGW\mingw64\bin\ar.exe cr libParticles.a  CMakeFiles/Particles.dir/particle.cpp.obj CMakeFiles/Particles.dir/particleSystem.cpp.obj
+F:\Dev\MinGW\mingw64\bin\ranlib.exe libParticles.a

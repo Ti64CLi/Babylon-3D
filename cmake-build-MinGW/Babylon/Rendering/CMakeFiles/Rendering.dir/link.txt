@@ -1,0 +1,2 @@
+F:\Dev\MinGW\mingw64\bin\ar.exe cr libRendering.a  CMakeFiles/Rendering.dir/renderingManager.cpp.obj CMakeFiles/Rendering.dir/renderingGroup.cpp.obj
+F:\Dev\MinGW\mingw64\bin\ranlib.exe libRendering.a

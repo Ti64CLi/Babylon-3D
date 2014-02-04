@@ -1,0 +1,2 @@
+F:\Dev\MinGW\mingw64\bin\ar.exe cr libMesh.a  CMakeFiles/Mesh.dir/mesh.cpp.obj CMakeFiles/Mesh.dir/subMesh.cpp.obj CMakeFiles/Mesh.dir/vertexbuffer.cpp.obj
+F:\Dev\MinGW\mingw64\bin\ranlib.exe libMesh.a

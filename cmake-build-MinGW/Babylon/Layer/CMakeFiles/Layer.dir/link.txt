@@ -1,0 +1,2 @@
+F:\Dev\MinGW\mingw64\bin\ar.exe cr libLayer.a  CMakeFiles/Layer.dir/layer.cpp.obj
+F:\Dev\MinGW\mingw64\bin\ranlib.exe libLayer.a

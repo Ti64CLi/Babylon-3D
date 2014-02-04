@@ -1,0 +1,2 @@
+F:\Dev\MinGW\mingw64\bin\ar.exe cr libCulling.a  CMakeFiles/Culling.dir/boundingBox.cpp.obj CMakeFiles/Culling.dir/boundingSphere.cpp.obj CMakeFiles/Culling.dir/boundingInfo.cpp.obj CMakeFiles/Culling.dir/octree.cpp.obj CMakeFiles/Culling.dir/octreeBlock.cpp.obj
+F:\Dev\MinGW\mingw64\bin\ranlib.exe libCulling.a
