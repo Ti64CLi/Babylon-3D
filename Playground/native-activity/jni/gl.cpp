@@ -2,8 +2,9 @@
 #include <memory>
 #include <stdexcept>
 
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <EGL/egl.h>
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 
 GL::GL(Babylon::ICanvas::Ptr canvas, bool antialias) {
 	this->canvas = canvas;
@@ -71,10 +72,10 @@ vector<string> GL::getSupportedExtensions() {
 }
 
 Babylon::any GL::getExtension(string name) {
-	bool result;
-	if (glewGetExtension(name.c_str()))
+	const string exts(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
+       	bool result = (exts.find(name))  != std::string::npos;
+	if (result)
 	{
-		result = true;
 		return &result;
 	}
 
@@ -106,17 +107,17 @@ void GL::bindBuffer(Babylon::GLenum target, Babylon::IGLBuffer::Ptr buffer) {
 }
 
 void GL::bindFramebuffer(Babylon::GLenum target, Babylon::IGLFramebuffer::Ptr framebuffer) { 
-	glBindFramebufferEXT(target, framebuffer->value);
+	glBindFramebuffer(target, framebuffer->value);
 	errorCheck();
 }
 
 void GL::bindRenderbuffer(Babylon::GLenum target, Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-	glBindRenderbufferEXT(target, renderbuffer->value);
+	glBindRenderbuffer(target, renderbuffer->value);
 	errorCheck();
 }
 
 void GL::bindTexture(Babylon::GLenum target, Babylon::IGLTexture::Ptr texture) { 
-	glBindTextureEXT(target, texture->value);
+	glBindTexture(target, texture->value);
 	errorCheck();
 }
 
@@ -142,7 +143,7 @@ void GL::blendFunc(Babylon::GLenum sfactor, Babylon::GLenum dfactor) {
 
 void GL::blendFuncSeparate(Babylon::GLenum srcRGB, Babylon::GLenum dstRGB, 
 						   Babylon::GLenum srcAlpha, Babylon::GLenum dstAlpha) { 
-							   glBlendFuncSeparateEXT(srcRGB, dstRGB, srcAlpha, dstAlpha);
+							   glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
 							   errorCheck();
 }
 
@@ -177,7 +178,7 @@ void GL::bufferSubData(Babylon::GLenum target, Babylon::GLintptr offset, Babylon
 }
 
 Babylon::GLenum GL::checkFramebufferStatus(Babylon::GLenum target) { 
-	return glCheckFramebufferStatusEXT(target);
+	return glCheckFramebufferStatus(target);
 }
 
 void GL::clear(Babylon::GLbitfield mask) { 
@@ -191,7 +192,7 @@ void GL::clearColor(Babylon::GLclampf red, Babylon::GLclampf green, Babylon::GLc
 }
 
 void GL::clearDepth(Babylon::GLclampf depth) { 
-	glClearDepth(depth);
+	glClearDepthf(depth);
 	errorCheck();
 }
 
@@ -239,7 +240,7 @@ Babylon::IGLBuffer::Ptr GL::createBuffer() {
 
 Babylon::IGLFramebuffer::Ptr GL::createFramebuffer() { 
 	::GLuint val;
-	glGenFramebuffersEXT(1, &val);
+	glGenFramebuffers(1, &val);
 	return make_shared<Babylon::IGLFramebuffer>(val);
 }
 
@@ -249,7 +250,7 @@ Babylon::IGLProgram::Ptr GL::createProgram() {
 
 Babylon::IGLRenderbuffer::Ptr GL::createRenderbuffer() { 
 	::GLuint val;
-	glGenRenderbuffersEXT(1, &val);
+	glGenRenderbuffers(1, &val);
 	return make_shared<Babylon::IGLRenderbuffer>(val);
 }
 
@@ -274,7 +275,7 @@ void GL::deleteBuffer(Babylon::IGLBuffer::Ptr buffer) {
 }
 
 void GL::deleteFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
-	glDeleteFramebuffersEXT(1, (const ::GLuint*) &framebuffer->value);
+	glDeleteFramebuffers(1, (const ::GLuint*) &framebuffer->value);
 	errorCheck();
 }
 
@@ -284,7 +285,7 @@ void GL::deleteProgram(Babylon::IGLProgram::Ptr program) {
 }
 
 void GL::deleteRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-	glDeleteRenderbuffersEXT(1, (const ::GLuint*) &renderbuffer->value);
+	glDeleteRenderbuffers(1, (const ::GLuint*) &renderbuffer->value);
 	errorCheck();
 }
 
@@ -309,7 +310,7 @@ void GL::depthMask(Babylon::GLboolean flag) {
 }
 
 void GL::depthRange(Babylon::GLclampf zNear, Babylon::GLclampf zFar) { 
-	glDepthRange(zNear, zFar);
+	glDepthRangef(zNear, zFar);
 	errorCheck();
 }
 
@@ -357,13 +358,13 @@ void GL::flush() {
 void GL::framebufferRenderbuffer(Babylon::GLenum target, Babylon::GLenum attachment, 
 								 Babylon::GLenum renderbuffertarget, 
 								 Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-									 glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
+									 glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer->value);
 									 errorCheck();
 }
 
 void GL::framebufferTexture2D(Babylon::GLenum target, Babylon::GLenum attachment, Babylon::GLenum textarget, 
 							  Babylon::IGLTexture::Ptr texture, Babylon::GLint level) { 
-								  glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
+								  glFramebufferTexture2D(target, attachment, textarget, texture->value, level);
 								  errorCheck();
 }
 
@@ -373,7 +374,7 @@ void GL::frontFace(Babylon::GLenum mode) {
 }
 
 void GL::generateMipmap(Babylon::GLenum target) { 
-	glGenerateMipmapEXT(target);
+	glGenerateMipmap(target);
 	errorCheck();
 }
 
@@ -413,7 +414,7 @@ Babylon::GLenum GL::getError() {
 
 Babylon::any GL::getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
 												   Babylon::GLenum pname) {
-													   //return (Babylon::any) glGetFramebufferAttachmentParameterivEXT(target, attachment, pname);
+													   //return (Babylon::any) glGetFramebufferAttachmentParameteriv(target, attachment, pname);
 													   throw "not supported";
 }
 
@@ -443,7 +444,7 @@ string GL::getProgramInfoLog(Babylon::IGLProgram::Ptr program) {
 
 Babylon::any GL::getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenum pname) { 
 	::GLint params;
-	glGetRenderbufferParameterivEXT(target, pname, &params);
+	glGetRenderbufferParameteriv(target, pname, &params);
 	return &params;
 }
 
@@ -540,7 +541,7 @@ Babylon::GLboolean GL::isEnabled(Babylon::GLenum cap) {
 }
 
 Babylon::GLboolean GL::isFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
-	return glIsFramebufferEXT(framebuffer->value);
+	return glIsFramebuffer(framebuffer->value);
 }
 
 Babylon::GLboolean GL::isProgram(Babylon::IGLProgram::Ptr program) { 
@@ -548,7 +549,7 @@ Babylon::GLboolean GL::isProgram(Babylon::IGLProgram::Ptr program) {
 }
 
 Babylon::GLboolean GL::isRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-	return glIsRenderbufferEXT(renderbuffer->value);
+	return glIsRenderbuffer(renderbuffer->value);
 }
 
 Babylon::GLboolean GL::isShader(Babylon::IGLShader::Ptr shader) { 
@@ -590,7 +591,7 @@ void GL::readPixels(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, 
 }
 
 void GL::renderbufferStorage(Babylon::GLenum target, Babylon::GLenum internalformat, Babylon::GLsizei width, Babylon::GLsizei height) { 
-	glRenderbufferStorageEXT(target, internalformat, width, height);
+	glRenderbufferStorage(target, internalformat, width, height);
 	errorCheck();
 }
 
@@ -867,16 +868,16 @@ void GL::errorCheck() {
 			throw runtime_error("GL error: value parameter is not a legal value for that function");
 		case GL_INVALID_OPERATION:
 			throw runtime_error("GL error: the set of state for a command is not legal for the parameters given to that command");
-		case GL_STACK_OVERFLOW:
-			throw runtime_error("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
-		case GL_STACK_UNDERFLOW:
-			throw runtime_error("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
+		//case GL_STACK_OVERFLOW:
+		//	throw runtime_error("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
+		//case GL_STACK_UNDERFLOW:
+		//	throw runtime_error("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
 		case GL_OUT_OF_MEMORY:
 			throw runtime_error("GL error: performing an operation that can allocate memory, and the memory cannot be allocated");
-		case GL_INVALID_FRAMEBUFFER_OPERATION_EXT:
+		case GL_INVALID_FRAMEBUFFER_OPERATION:
 			throw runtime_error("GL error: doing anything that would attempt to read from or write/render to a framebuffer that is not complete");
-		case GL_TABLE_TOO_LARGE:
-			throw runtime_error("GL error: Table is too large");
+		//case GL_TABLE_TOO_LARGE:
+		//	throw runtime_error("GL error: Table is too large");
 		}
 	}
 }

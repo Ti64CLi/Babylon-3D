@@ -18,7 +18,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 	endif()
 endif()
 
-cmake_minimum_required (VERSION 2.8.11 FATAL_ERROR) 
+cmake_minimum_required (VERSION 2.8.10 FATAL_ERROR) 
 
 if(NOT EXECUTABLE_OUTPUT_PATH)
 	set(FIRST_RUN "TRUE")
@@ -31,6 +31,8 @@ project (Babylon)
 
 #-----------------------------------------------------------------------------
 # Set default config options
+option(WITH_NATIVE_CLIENT "Compile Native Client" ON)
+
 if(UNIX AND NOT APPLE)
 	option(WITH_SYSTEM_GLEW "Use GLEW OpenGL wrapper library provided by the operating system" ON)
 else()
@@ -49,7 +51,14 @@ endif()
 # Configure C++0x
 
 if(NOT MSVC)
+<<<<<<< .mine
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x -stdlib=libstdc++")
+=======
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++11")
+>>>>>>> .theirs
+endif()
+
+add_subdirectory (Babylon) 
 endif()
 
 #-----------------------------------------------------------------------------
@@ -98,3 +107,4 @@ endif()
 
 add_subdirectory (Babylon) 
 add_subdirectory (Playground) 
+add_subdirectory (Playground)

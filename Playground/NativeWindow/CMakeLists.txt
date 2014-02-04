@@ -1,3 +1,45 @@
+#-----------------------------------------------------------------------------
+# Configure OpenGL
+
+find_package(OpenGL)
+
+#-----------------------------------------------------------------------------
+# Configure GLEW
+
+if(WITH_SYSTEM_GLEW)
+	find_package(GLEW)
+
+	mark_as_advanced(
+		GLEW_LIBRARY
+		GLEW_INCLUDE_PATH
+	)
+else()
+	if(WIN32)
+		set(GLEW_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/include")
+		set(GLEW_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/lib/glew32.lib")
+	endif()
+endif()
+
+#-----------------------------------------------------------------------------
+# Configure GLUT
+
+if(WITH_SYSTEM_GLUT)
+	find_package(GLUT)
+
+	mark_as_advanced(
+		GLUT_LIBRARY
+		GLUT_INCLUDE_PATH
+	)
+else()
+	if(WIN32)
+		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/include")
+		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/lib/glut32.lib")
+	endif()
+endif()
+
+#-----------------------------------------------------------------------------
+# Configure Build
+
 if(MSVC)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")
 endif()
@@ -31,8 +73,6 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
 link_directories(
-	${GLEW_LIBRARY}
-	${GLUT_LIBRARY}
 	${Babylon_BINARY_DIR}/Babylon/Animations 
 	${Babylon_BINARY_DIR}/Babylon/Bones 
 	${Babylon_BINARY_DIR}/Babylon/Cameras 
@@ -58,9 +98,9 @@ add_executable (NativeWindow main.cpp canvas.cpp gl.cpp)
 
 add_dependencies (NativeWindow Engine)
 
-target_link_libraries (NativeWindow ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} glut32.lib glew32.lib Engine Animations Bones Cameras Collisions Context Culling Layer LensFlare Lights Materials Mesh Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
+target_link_libraries (NativeWindow ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} Engine Animations Bones Cameras Collisions Context Culling Layer LensFlare Lights Materials Mesh Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
 
 if(WIN32)
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${GLUT_LIBRARY}/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${GLEW_LIBRARY}/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/Win32/GLUT/lib/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/Win32/GLEW/lib/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
 endif()
