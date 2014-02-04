@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <algorithm>
+#include <stdexcept>
 #include "videoTexture.h"
 
 using namespace Babylon;
