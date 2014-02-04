@@ -22,7 +22,7 @@ LOCAL_LDFLAGS += -Lobj/local/armeabi/ -L$(LOCAL_PATH)/../../../libs/armeabi-v7a/
 
 LOCAL_MODULE    := native-activity
 LOCAL_SRC_FILES := main.cpp canvas.cpp gl.cpp
-LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lstdlibc++ -lEngine -lAnimations -lBones -lCameras -lCollisions -lContext -lCulling -lLayer -lLensFlare -lLights -lMaterials -lMesh -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools
+LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lEngine -lAnimations -lBones -lCameras -lCollisions -lContext -lCulling -lLayer -lLensFlare -lLights -lMaterials -lMesh -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools
 LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
 include $(BUILD_SHARED_LIBRARY)
