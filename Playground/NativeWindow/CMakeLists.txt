@@ -43,6 +43,23 @@ endif()
 if(WIN32)
 	set(FREEIMAGE_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/FreeImage/include")
 	set(FREEIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/FreeImage/lib/Win/x86/FreeImage.lib")
+else()
+    FIND_PATH( FREEIMAGE_INCLUDE_PATH FreeImage.h
+        /usr/include
+        /usr/local/include
+        /sw/include
+        /opt/local/include
+        DOC "The directory where FreeImage.h resides")
+    FIND_LIBRARY( FREEIMAGE_LIBRARY
+        NAMES FreeImage freeimage libfreeimage libfreeimage-3.15.2
+        PATHS
+        /usr/lib64
+        /usr/lib
+        /usr/local/lib64
+        /usr/local/lib
+        /sw/lib
+        /opt/local/lib
+        DOC "The FreeImage library")
 endif()
 
 #-----------------------------------------------------------------------------
