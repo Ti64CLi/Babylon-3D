@@ -30,7 +30,7 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
 # has no effect
 LOCAL_NDK_STL_VARIANT := gnustl_static
-LOCAL_SDK_VERSION := 14
+LOCAL_SDK_VERSION := 18
 
 include $(BUILD_SHARED_LIBRARY)
 

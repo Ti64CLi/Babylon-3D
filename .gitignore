@@ -2,3 +2,5 @@
 /cmake-build-linux
 /cmake-build-android
 /libs
+bin
+obj
