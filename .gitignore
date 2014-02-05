@@ -4,3 +4,6 @@
 /libs
 bin
 obj
+Tegra-Android
+/Playground/native-activity/native-activity/native-activity.sdf
+libs

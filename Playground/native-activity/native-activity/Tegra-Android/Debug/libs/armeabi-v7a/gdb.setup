@@ -1,5 +1,0 @@
-# GENERATED FILE
-set solib-search-path D:/Developing/BabylonNative/Playground/native-activity/native-activity/Tegra-Android/Debug;F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/lib
-directory "D:/Developing/BabylonNative/Playground/jni" "F:/Dev/NVPACK/android-ndk-r9b/sources/cxx-stl/system" "F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/include"
-# BEGIN USER COMMANDS
-# END USER COMMANDS
