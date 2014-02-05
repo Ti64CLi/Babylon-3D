@@ -1,0 +1,128 @@
+﻿Build started 05/02/2014 22:22:04.
+     1>Project "D:\Developing\BabylonNative\Playground\native-activity\native-activity\native-activity.vcxproj" on node 2 (Rebuild target(s)).
+     1>AntClean:
+         F:\Dev\NVPACK\apache-ant-1.8.2\bin\ant.bat clean -f D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\nsight_tegra_build.xml 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(343,5): warning MSB8003: Could not find VCInstallDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number.
+       ClCompile:
+         F:\Dev\NVPACK\android-ndk-r9b\toolchains\arm-linux-androideabi-4.8\prebuilt\windows\bin\arm-linux-androideabi-g++.exe 
+         android_native_app_glue.c
+         main.cpp
+         canvas.cpp
+         gl.cpp
+     1>cc1.exe : warning : command line option '-std=gnu++11' is valid for C++/ObjC++ but not for C [enabled by default]
+     1>cc1.exe : warning : command line option '-frtti' is valid for C++/ObjC++ but not for C [enabled by default]
+         NativeActivity.c
+     1>cc1.exe : warning : command line option '-std=gnu++11' is valid for C++/ObjC++ but not for C [enabled by default]
+     1>cc1.exe : warning : command line option '-frtti' is valid for C++/ObjC++ but not for C [enabled by default]
+         ../jni/gl.cpp: In member function 'virtual void* GL::getExtension(std::string)':
+     1>D:\Developing\BabylonNative\Playground\native-activity\jni\gl.cpp(76,14): warning : address of local variable 'result' returned [-Wreturn-local-addr]
+                  bool result = (exts.find(name))  != std::string::npos;
+                       ^
+         ../jni/gl.cpp: In member function 'virtual void* GL::getRenderbufferParameter(Babylon::GLenum, Babylon::GLenum)':
+     1>D:\Developing\BabylonNative\Playground\native-activity\jni\gl.cpp(446,10): warning : address of local variable 'params' returned [-Wreturn-local-addr]
+           ::GLint params;
+                   ^
+       Link:
+         F:\Dev\NVPACK\android-ndk-r9b\toolchains\arm-linux-androideabi-4.8\prebuilt\windows\bin\arm-linux-androideabi-g++.exe Tegra-Android/Debug/android_native_app_glue.o Tegra-Android/Debug/canvas.o Tegra-Android/Debug/gl.o Tegra-Android/Debug/main.o Tegra-Android/Debug/NativeActivity.o  -oD:/Developing/BabylonNative/Playground/native-activity/native-activity/Tegra-Android/Debug/libnative-activity.so -L"D:/Developing/BabylonNative/Playground/native-activity/native-activity/../../../libs/armeabi-v7a/" -L"F:/Dev/NVPACK/android-ndk-r9b/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a" -L"D:/Developing/BabylonNative/Playground/native-activity/native-activity/../obj/local/armeabi/" "-landroid_native_app_glue" -lc -lm -llog -lgcc -Wl,-soname,libnative-activity.so -Wl,--no-undefined -fuse-ld=bfd -L"F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/lib" -L"F:/Dev/NVPACK/android-ndk-r9b/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a" -L"F:/Dev/NVPACK/android-ndk-r9b/toolchains/arm-linux-androideabi-4.8/prebuilt/windows/lib/gcc/arm-linux-androideabi/4.8/armv7-a" -L"F:/Dev/NVPACK/android-ndk-r9b/toolchains/arm-linux-androideabi-4.8/prebuilt/windows/lib/gcc/arm-linux-androideabi/4.8/armv7-a" -shared -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now -Wl,-rpath-link=F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/lib --sysroot=F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm "-lsupc++" "-lgnustl_static" "-lgcc" -lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc 
+         F:\Dev\NVPACK\android-ndk-r9b\toolchains\arm-linux-androideabi-4.8\prebuilt\windows\bin\arm-linux-androideabi-g++.exe Tegra-Android/Debug/android_native_app_glue.o Tegra-Android/Debug/canvas.o Tegra-Android/Debug/gl.o Tegra-Android/Debug/main.o Tegra-Android/Debug/NativeActivity.o  -oD:/Developing/BabylonNative/Playground/native-activity/native-activity/Tegra-Android/Debug/libnative-activity.so -L"D:/Developing/BabylonNative/Playground/native-activity/native-activity/../../../libs/armeabi-v7a/" -L"F:/Dev/NVPACK/android-ndk-r9b/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a" -L"D:/Developing/BabylonNative/Playground/native-activity/native-activity/../obj/local/armeabi/" "-landroid_native_app_glue" -lc -lm -llog -lgcc -Wl,-soname,libnative-activity.so -Wl,--no-undefined -fuse-ld=bfd -L"F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/lib" -L"F:/Dev/NVPACK/android-ndk-r9b/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a" -L"F:/Dev/NVPACK/android-ndk-r9b/toolchains/arm-linux-androideabi-4.8/prebuilt/windows/lib/gcc/arm-linux-androideabi/4.8/armv7-a" -L"F:/Dev/NVPACK/android-ndk-r9b/toolchains/arm-linux-androideabi-4.8/prebuilt/windows/lib/gcc/arm-linux-androideabi/4.8/armv7-a" -shared -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now -Wl,-rpath-link=F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm/usr/lib --sysroot=F:/Dev/NVPACK/android-ndk-r9b/platforms/android-18/arch-arm "-lsupc++" "-lgnustl_static" "-lgcc" -lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc 
+         native-activity.vcxproj -> D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\libnative-activity.so
+       StripLibrary:
+         F:\Dev\NVPACK\android-ndk-r9b\toolchains\arm-linux-androideabi-4.8\prebuilt\windows\bin\arm-linux-androideabi-strip.exe --strip-unneeded -o"D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\stripped_libnative-activity.so" "D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\libnative-activity.so"
+       AntBuild:
+         F:\Dev\NVPACK\apache-ant-1.8.2\bin\ant.bat debug -f D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\nsight_tegra_build.xml  
+         Building using the JDK located here: 'F:\Dev\NVPACK\jdk1.6.0_45 (Native32Bit)'...
+         Building using _JAVA_OPTIONS: '-Xmx512m'...
+         Building using ANT_OPTS: '-Dtarget=android-18 -Xmx512m'...
+         Executing "F:\Dev\NVPACK\apache-ant-1.8.2\bin\ant.bat debug -f D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\nsight_tegra_build.xml "
+         Buildfile: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\nsight_tegra_build.xml
+         Duplicated project name in import. Project NativeActivity defined first in D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\nsight_tegra_build.xml and again in D:\Developing\BabylonNative\Playground\native-activity\build.xml
+         
+         -set-mode-check:
+         
+         -set-debug-files:
+         
+         -check-env:
+          [checkenv] Android SDK Tools Revision 22.3.0
+          [checkenv] Installed at F:\Dev\NVPACK\android-sdk-windows
+         
+         -setup:
+              [echo] Project Name: NativeActivity
+           [gettype] Project Type: Application
+         
+         -set-debug-mode:
+         
+         -debug-obfuscation-check:
+         
+         -pre-build:
+         
+         -build-setup:
+         [getbuildtools] Using latest Build Tools: 18.0.1
+              [echo] Resolving Build Target for NativeActivity...
+         [gettarget] Project Target:   Android 4.3
+         [gettarget] API level:        18
+              [echo] ----------
+              [echo] Creating output directories if needed...
+             [mkdir] Created dir: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin
+             [mkdir] Created dir: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\res
+             [mkdir] Created dir: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\rsObj
+             [mkdir] Created dir: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\rsLibs
+              [echo] ----------
+              [echo] Resolving Dependencies for NativeActivity...
+         [dependency] Library dependencies:
+         [dependency] No Libraries
+         [dependency] 
+         [dependency] ------------------
+              [echo] ----------
+              [echo] Building Libraries with 'debug'...
+            [subant] No sub-builds to iterate on
+         
+         -code-gen:
+         [mergemanifest] Merging AndroidManifest files into one.
+         [mergemanifest] Manifest merger disabled. Using project manifest only.
+              [echo] hasCode = false. Skipping aidl/renderscript/R.java
+         
+         -pre-compile:
+         
+         -compile:
+              [echo] hasCode = false. Skipping...
+         
+         -post-compile:
+         
+         -obfuscate:
+         
+         -dex:
+              [echo] hasCode = false. Skipping...
+         
+         -crunch:
+            [crunch] Crunching PNG Files in source dir: D:\Developing\BabylonNative\Playground\native-activity\res
+            [crunch] To destination dir: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\res
+            [crunch] Crunched 0 PNG files to update cache
+         
+         -package-resources:
+              [aapt] Creating full resource package...
+         
+         -package:
+         [apkbuilder] Current build type is different than previous build: forced apkbuilder run.
+         [apkbuilder] Creating NativeActivity-debug-unaligned.apk and signing it with a debug key...
+         
+         -post-package:
+         
+         -do-debug:
+          [zipalign] Running zip align on final apk...
+              [echo] Debug Package: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\NativeActivity-debug.apk
+         [propertyfile] Creating new property file: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\build.prop
+         [propertyfile] Updating property file: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\build.prop
+         [propertyfile] Updating property file: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\build.prop
+         [propertyfile] Updating property file: D:\Developing\BabylonNative\Playground\native-activity\native-activity\Tegra-Android\Debug\bin\build.prop
+         
+         -post-build:
+         
+         debug:
+         
+         BUILD SUCCESSFUL
+         Total time: 2 seconds
+     1>Done Building Project "D:\Developing\BabylonNative\Playground\native-activity\native-activity\native-activity.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.22

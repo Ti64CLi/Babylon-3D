@@ -21,11 +21,11 @@ _INCS := $(_INC)/Animations $(_INC)/Bones $(_INC)/Cameras $(_INC)/Collisions $(_
 include $(CLEAR_VARS)
 
 LOCAL_C_INCLUDES += $(_INCS)
-LOCAL_LDFLAGS += -Lobj/local/armeabi/ -L$(LOCAL_PATH)/../../../libs/armeabi-v7a/
+LOCAL_LDFLAGS += -Lobj/local/armeabi/ -L$(LOCAL_PATH)/../../../libs/armeabi-v7a/ -L$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a/
 
 LOCAL_MODULE    := native-activity
 LOCAL_SRC_FILES := main.cpp canvas.cpp gl.cpp
-LOCAL_LDLIBS    := -lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2
+LOCAL_LDLIBS    := -lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc
 LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
 # has no effect

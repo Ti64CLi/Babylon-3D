@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\local.properties" />
+    <None Include="..\project.properties" />
+    <None Include="..\jni\Android.mk">
+      <Filter>jni</Filter>
+    </None>
+    <None Include="..\jni\Application.mk">
+      <Filter>jni</Filter>
+    </None>
+    <None Include="..\libs\armeabi-v7a\libnative-activity.so">
+      <Filter>libs\armeabi-v7a</Filter>
+    </None>
+    <None Include="..\src\com\example\native_activity\NativeActivity.java">
+      <Filter>src\com\example\native_activity</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\jni\android_native_app_glue.c">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\canvas.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\gl.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\main.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\NativeActivity.c">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\AndroidManifest.xml" />
+    <Xml Include="..\build.xml" />
+    <Xml Include="..\res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="jni">
+      <UniqueIdentifier>{bdb77cab-6885-4089-884a-0c5c393a9fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{75a7229f-05dc-4b7b-9ec6-ff63d02aeb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\armeabi-v7a">
+      <UniqueIdentifier>{24695507-56db-4ea3-879a-b76004575cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{4cd64b51-6514-45ac-ba17-822b4af41d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>{69465caa-3ad1-4062-ad78-d80feb05617b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2843607d-718f-4d78-bb52-4e520f75a04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com">
+      <UniqueIdentifier>{b53ba230-7806-4f45-af9a-eb5c1e89aba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\example">
+      <UniqueIdentifier>{c8785239-3e01-47a5-9e15-8aa4de338915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\example\native_activity">
+      <UniqueIdentifier>{f02971ad-4ad0-49c9-b73d-539ef1553ee8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\jni\android_native_app_glue.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\canvas.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\gl.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\strings.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+    <Text Include="..\proguard-project.txt" />
+  </ItemGroup>
+</Project>
