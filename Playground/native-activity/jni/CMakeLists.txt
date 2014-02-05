@@ -30,4 +30,4 @@ link_directories(${ANDROID_SYSTEM_LIB_DIRS})
         
 add_library(native-activity SHARED main.cpp android_native_app_glue.c canvas.cpp gl.cpp)
 
-target_link_libraries(native-activity log android EGL GLESv2 Engine Animations Bones Cameras Collisions Context Culling Layer LensFlare Lights Materials Mesh Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
+target_link_libraries(native-activity log android EGL GLESv2 Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
