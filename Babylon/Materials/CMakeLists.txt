@@ -22,3 +22,5 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
 add_library (Materials effect.cpp material.cpp multiMaterial.cpp standardMaterial.cpp)
+
+add_dependencies (Materials Engine) 

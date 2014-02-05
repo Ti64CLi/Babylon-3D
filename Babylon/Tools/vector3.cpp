@@ -1,5 +1,4 @@
 #include "vector3.h"
-#include <sstream>
 #include <cmath>
 #include "matrix.h"
 #include "tools.h"
@@ -10,14 +9,6 @@ Babylon::Vector3::Vector3(float initialX, float initialY, float initialZ) {
 	this->x = initialX;
 	this->y = initialY;
 	this->z = initialZ;
-};
-
-string Babylon::Vector3::toString() {
-	string r;
-	stringstream ss;
-	ss << "{X: " << this->x << " Y:" << this->y << " Z:" << this->z << "}";
-	r.append(ss.str());
-	return r;
 };
 
 // Operators

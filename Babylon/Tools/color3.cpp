@@ -1,5 +1,4 @@
 #include "color3.h"
-#include <sstream>
 
 using namespace Babylon;
 
@@ -7,14 +6,6 @@ Babylon::Color3::Color3(int initialR, int initialG, int initialB) {
 	this->r = initialR;
 	this->g = initialG;
 	this->b = initialB;
-};
-
-string Babylon::Color3::toString() {
-	string r;
-	stringstream ss;
-	ss << "{R: " << this->r << " G:" << this->g << " B:" << this->b << "}";
-	r.append(ss.str());
-	return r;
 };
 
 // Operators

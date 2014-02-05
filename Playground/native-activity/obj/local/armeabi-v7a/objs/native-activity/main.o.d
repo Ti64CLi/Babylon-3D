@@ -1,4 +1,4 @@
-D:/Developing/BabylonNative/Playground/native-activity//obj/local/armeabi/objs/native-activity/main.o: \
+D:/Developing/BabylonNative/Playground/native-activity//obj/local/armeabi-v7a/objs/native-activity/main.o: \
  D:/Developing/BabylonNative/Playground/native-activity//jni/main.cpp \
  F:/Dev/NVPACK/android-ndk-r9b/platforms/android-14/arch-arm/usr/include/jni.h \
  F:/Dev/NVPACK/android-ndk-r9b/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \

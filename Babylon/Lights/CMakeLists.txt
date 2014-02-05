@@ -22,3 +22,5 @@ include_directories(
 	${Babylon_SOURCE_DIR}/Babylon/Tools)
 
 add_library (Lights light.cpp shadowGenerator.cpp pointLight.cpp)
+
+add_dependencies (Lights Engine) 

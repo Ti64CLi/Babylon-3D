@@ -175,21 +175,21 @@ namespace Babylon {
 		IGLShaderPrecisionFormat(GLuint value) : IGLObject(value) {};
 	};
 
-	class IGL {
-	public:
+	enum IGLEnums : GLenum
+	{
 		/* ClearBufferMask */
-		const static GLenum DEPTH_BUFFER_BIT               = 0x00000100;
-		const static GLenum STENCIL_BUFFER_BIT             = 0x00000400;
-		const static GLenum COLOR_BUFFER_BIT               = 0x00004000;
+		DEPTH_BUFFER_BIT               = 0x00000100,
+		STENCIL_BUFFER_BIT             = 0x00000400,
+		COLOR_BUFFER_BIT               = 0x00004000,
 
 		/* BeginMode */
-		const static GLenum POINTS                         = 0x0000;
-		const static GLenum LINES                          = 0x0001;
-		const static GLenum LINE_LOOP                      = 0x0002;
-		const static GLenum LINE_STRIP                     = 0x0003;
-		const static GLenum TRIANGLES                      = 0x0004;
-		const static GLenum TRIANGLE_STRIP                 = 0x0005;
-		const static GLenum TRIANGLE_FAN                   = 0x0006;
+		POINTS                         = 0x0000,
+		LINES                          = 0x0001,
+		LINE_LOOP                      = 0x0002,
+		LINE_STRIP                     = 0x0003,
+		TRIANGLES                      = 0x0004,
+		TRIANGLE_STRIP                 = 0x0005,
+		TRIANGLE_FAN                   = 0x0006,
 
 		/* AlphaFunction (not supported in ES20) */
 		/*      NEVER */
@@ -202,66 +202,66 @@ namespace Babylon {
 		/*      ALWAYS */
 
 		/* BlendingFactorDest */
-		const static GLenum ZERO                           = 0;
-		const static GLenum ONE                            = 1;
-		const static GLenum SRC_COLOR                      = 0x0300;
-		const static GLenum ONE_MINUS_SRC_COLOR            = 0x0301;
-		const static GLenum SRC_ALPHA                      = 0x0302;
-		const static GLenum ONE_MINUS_SRC_ALPHA            = 0x0303;
-		const static GLenum DST_ALPHA                      = 0x0304;
-		const static GLenum ONE_MINUS_DST_ALPHA            = 0x0305;
+		ZERO                           = 0,
+		ONE                            = 1,
+		SRC_COLOR                      = 0x0300,
+		ONE_MINUS_SRC_COLOR            = 0x0301,
+		SRC_ALPHA                      = 0x0302,
+		ONE_MINUS_SRC_ALPHA            = 0x0303,
+		DST_ALPHA                      = 0x0304,
+		ONE_MINUS_DST_ALPHA            = 0x0305,
 
 		/* BlendingFactorSrc */
 		/*      ZERO */
 		/*      ONE */
-		const static GLenum DST_COLOR                      = 0x0306;
-		const static GLenum ONE_MINUS_DST_COLOR            = 0x0307;
-		const static GLenum SRC_ALPHA_SATURATE             = 0x0308;
+		DST_COLOR                      = 0x0306,
+		ONE_MINUS_DST_COLOR            = 0x0307,
+		SRC_ALPHA_SATURATE             = 0x0308,
 		/*      SRC_ALPHA */
 		/*      ONE_MINUS_SRC_ALPHA */
 		/*      DST_ALPHA */
 		/*      ONE_MINUS_DST_ALPHA */
 
 		/* BlendEquationSeparate */
-		const static GLenum FUNC_ADD                       = 0x8006;
-		const static GLenum BLEND_EQUATION                 = 0x8009;
-		const static GLenum BLEND_EQUATION_RGB             = 0x8009;   /* same as BLEND_EQUATION */
-		const static GLenum BLEND_EQUATION_ALPHA           = 0x883D;
+		FUNC_ADD                       = 0x8006,
+		BLEND_EQUATION                 = 0x8009,
+		BLEND_EQUATION_RGB             = 0x8009,   /* same as BLEND_EQUATION */
+		BLEND_EQUATION_ALPHA           = 0x883D,
 
 		/* BlendSubtract */
-		const static GLenum FUNC_SUBTRACT                  = 0x800A;
-		const static GLenum FUNC_REVERSE_SUBTRACT          = 0x800B;
+		FUNC_SUBTRACT                  = 0x800A,
+		FUNC_REVERSE_SUBTRACT          = 0x800B,
 
 		/* Separate Blend Functions */
-		const static GLenum BLEND_DST_RGB                  = 0x80C8;
-		const static GLenum BLEND_SRC_RGB                  = 0x80C9;
-		const static GLenum BLEND_DST_ALPHA                = 0x80CA;
-		const static GLenum BLEND_SRC_ALPHA                = 0x80CB;
-		const static GLenum CONSTANT_COLOR                 = 0x8001;
-		const static GLenum ONE_MINUS_CONSTANT_COLOR       = 0x8002;
-		const static GLenum CONSTANT_ALPHA                 = 0x8003;
-		const static GLenum ONE_MINUS_CONSTANT_ALPHA       = 0x8004;
-		const static GLenum BLEND_COLOR                    = 0x8005;
+		BLEND_DST_RGB                  = 0x80C8,
+		BLEND_SRC_RGB                  = 0x80C9,
+		BLEND_DST_ALPHA                = 0x80CA,
+		BLEND_SRC_ALPHA                = 0x80CB,
+		CONSTANT_COLOR                 = 0x8001,
+		ONE_MINUS_CONSTANT_COLOR       = 0x8002,
+		CONSTANT_ALPHA                 = 0x8003,
+		ONE_MINUS_CONSTANT_ALPHA       = 0x8004,
+		BLEND_COLOR                    = 0x8005,
 
 		/* Buffer Objects */
-		const static GLenum ARRAY_BUFFER                   = 0x8892;
-		const static GLenum ELEMENT_ARRAY_BUFFER           = 0x8893;
-		const static GLenum ARRAY_BUFFER_BINDING           = 0x8894;
-		const static GLenum ELEMENT_ARRAY_BUFFER_BINDING   = 0x8895;
+		ARRAY_BUFFER                   = 0x8892,
+		ELEMENT_ARRAY_BUFFER           = 0x8893,
+		ARRAY_BUFFER_BINDING           = 0x8894,
+		ELEMENT_ARRAY_BUFFER_BINDING   = 0x8895,
 
-		const static GLenum STREAM_DRAW                    = 0x88E0;
-		const static GLenum STATIC_DRAW                    = 0x88E4;
-		const static GLenum DYNAMIC_DRAW                   = 0x88E8;
+		STREAM_DRAW                    = 0x88E0,
+		STATIC_DRAW                    = 0x88E4,
+		DYNAMIC_DRAW                   = 0x88E8,
 
-		const static GLenum BUFFER_SIZE                    = 0x8764;
-		const static GLenum BUFFER_USAGE                   = 0x8765;
+		BUFFER_SIZE                    = 0x8764,
+		BUFFER_USAGE                   = 0x8765,
 
-		const static GLenum CURRENT_VERTEX_ATTRIB          = 0x8626;
+		CURRENT_VERTEX_ATTRIB          = 0x8626,
 
 		/* CullFaceMode */
-		const static GLenum FRONT                          = 0x0404;
-		const static GLenum BACK                           = 0x0405;
-		const static GLenum FRONT_AND_BACK                 = 0x0408;
+		FRONT                          = 0x0404,
+		BACK                           = 0x0405,
+		FRONT_AND_BACK                 = 0x0408,
 
 		/* DepthFunction */
 		/*      NEVER */
@@ -275,76 +275,76 @@ namespace Babylon {
 
 		/* EnableCap */
 		/* TEXTURE_2D */
-		const static GLenum CULL_FACE                      = 0x0B44;
-		const static GLenum BLEND                          = 0x0BE2;
-		const static GLenum DITHER                         = 0x0BD0;
-		const static GLenum STENCIL_TEST                   = 0x0B90;
-		const static GLenum DEPTH_TEST                     = 0x0B71;
-		const static GLenum SCISSOR_TEST                   = 0x0C11;
-		const static GLenum POLYGON_OFFSET_FILL            = 0x8037;
-		const static GLenum SAMPLE_ALPHA_TO_COVERAGE       = 0x809E;
-		const static GLenum SAMPLE_COVERAGE                = 0x80A0;
+		CULL_FACE                      = 0x0B44,
+		BLEND                          = 0x0BE2,
+		DITHER                         = 0x0BD0,
+		STENCIL_TEST                   = 0x0B90,
+		DEPTH_TEST                     = 0x0B71,
+		SCISSOR_TEST                   = 0x0C11,
+		POLYGON_OFFSET_FILL            = 0x8037,
+		SAMPLE_ALPHA_TO_COVERAGE       = 0x809E,
+		SAMPLE_COVERAGE                = 0x80A0,
 
 		/* ErrorCode */
-		const static GLenum NO_ERROR                       = 0;
-		const static GLenum INVALID_ENUM                   = 0x0500;
-		const static GLenum INVALID_VALUE                  = 0x0501;
-		const static GLenum INVALID_OPERATION              = 0x0502;
-		const static GLenum OUT_OF_MEMORY                  = 0x0505;
+		NO_ERROR                       = 0,
+		INVALID_ENUM                   = 0x0500,
+		INVALID_VALUE                  = 0x0501,
+		INVALID_OPERATION              = 0x0502,
+		OUT_OF_MEMORY                  = 0x0505,
 
 		/* FrontFaceDirection */
-		const static GLenum CW                             = 0x0900;
-		const static GLenum CCW                            = 0x0901;
+		CW                             = 0x0900,
+		CCW                            = 0x0901,
 
 		/* GetPName */
-		const static GLenum LINE_WIDTH                     = 0x0B21;
-		const static GLenum ALIASED_POINT_SIZE_RANGE       = 0x846D;
-		const static GLenum ALIASED_LINE_WIDTH_RANGE       = 0x846E;
-		const static GLenum CULL_FACE_MODE                 = 0x0B45;
-		const static GLenum FRONT_FACE                     = 0x0B46;
-		const static GLenum DEPTH_RANGE                    = 0x0B70;
-		const static GLenum DEPTH_WRITEMASK                = 0x0B72;
-		const static GLenum DEPTH_CLEAR_VALUE              = 0x0B73;
-		const static GLenum DEPTH_FUNC                     = 0x0B74;
-		const static GLenum STENCIL_CLEAR_VALUE            = 0x0B91;
-		const static GLenum STENCIL_FUNC                   = 0x0B92;
-		const static GLenum STENCIL_FAIL                   = 0x0B94;
-		const static GLenum STENCIL_PASS_DEPTH_FAIL        = 0x0B95;
-		const static GLenum STENCIL_PASS_DEPTH_PASS        = 0x0B96;
-		const static GLenum STENCIL_REF                    = 0x0B97;
-		const static GLenum STENCIL_VALUE_MASK             = 0x0B93;
-		const static GLenum STENCIL_WRITEMASK              = 0x0B98;
-		const static GLenum STENCIL_BACK_FUNC              = 0x8800;
-		const static GLenum STENCIL_BACK_FAIL              = 0x8801;
-		const static GLenum STENCIL_BACK_PASS_DEPTH_FAIL   = 0x8802;
-		const static GLenum STENCIL_BACK_PASS_DEPTH_PASS   = 0x8803;
-		const static GLenum STENCIL_BACK_REF               = 0x8CA3;
-		const static GLenum STENCIL_BACK_VALUE_MASK        = 0x8CA4;
-		const static GLenum STENCIL_BACK_WRITEMASK         = 0x8CA5;
-		const static GLenum VIEWPORT                       = 0x0BA2;
-		const static GLenum SCISSOR_BOX                    = 0x0C10;
+		LINE_WIDTH                     = 0x0B21,
+		ALIASED_POINT_SIZE_RANGE       = 0x846D,
+		ALIASED_LINE_WIDTH_RANGE       = 0x846E,
+		CULL_FACE_MODE                 = 0x0B45,
+		FRONT_FACE                     = 0x0B46,
+		DEPTH_RANGE                    = 0x0B70,
+		DEPTH_WRITEMASK                = 0x0B72,
+		DEPTH_CLEAR_VALUE              = 0x0B73,
+		DEPTH_FUNC                     = 0x0B74,
+		STENCIL_CLEAR_VALUE            = 0x0B91,
+		STENCIL_FUNC                   = 0x0B92,
+		STENCIL_FAIL                   = 0x0B94,
+		STENCIL_PASS_DEPTH_FAIL        = 0x0B95,
+		STENCIL_PASS_DEPTH_PASS        = 0x0B96,
+		STENCIL_REF                    = 0x0B97,
+		STENCIL_VALUE_MASK             = 0x0B93,
+		STENCIL_WRITEMASK              = 0x0B98,
+		STENCIL_BACK_FUNC              = 0x8800,
+		STENCIL_BACK_FAIL              = 0x8801,
+		STENCIL_BACK_PASS_DEPTH_FAIL   = 0x8802,
+		STENCIL_BACK_PASS_DEPTH_PASS   = 0x8803,
+		STENCIL_BACK_REF               = 0x8CA3,
+		STENCIL_BACK_VALUE_MASK        = 0x8CA4,
+		STENCIL_BACK_WRITEMASK         = 0x8CA5,
+		VIEWPORT                       = 0x0BA2,
+		SCISSOR_BOX                    = 0x0C10,
 		/*      SCISSOR_TEST */
-		const static GLenum COLOR_CLEAR_VALUE              = 0x0C22;
-		const static GLenum COLOR_WRITEMASK                = 0x0C23;
-		const static GLenum UNPACK_ALIGNMENT               = 0x0CF5;
-		const static GLenum PACK_ALIGNMENT                 = 0x0D05;
-		const static GLenum MAX_TEXTURE_SIZE               = 0x0D33;
-		const static GLenum MAX_VIEWPORT_DIMS              = 0x0D3A;
-		const static GLenum SUBPIXEL_BITS                  = 0x0D50;
-		const static GLenum RED_BITS                       = 0x0D52;
-		const static GLenum GREEN_BITS                     = 0x0D53;
-		const static GLenum BLUE_BITS                      = 0x0D54;
-		const static GLenum ALPHA_BITS                     = 0x0D55;
-		const static GLenum DEPTH_BITS                     = 0x0D56;
-		const static GLenum STENCIL_BITS                   = 0x0D57;
-		const static GLenum POLYGON_OFFSET_UNITS           = 0x2A00;
+		COLOR_CLEAR_VALUE              = 0x0C22,
+		COLOR_WRITEMASK                = 0x0C23,
+		UNPACK_ALIGNMENT               = 0x0CF5,
+		PACK_ALIGNMENT                 = 0x0D05,
+		MAX_TEXTURE_SIZE               = 0x0D33,
+		MAX_VIEWPORT_DIMS              = 0x0D3A,
+		SUBPIXEL_BITS                  = 0x0D50,
+		RED_BITS                       = 0x0D52,
+		GREEN_BITS                     = 0x0D53,
+		BLUE_BITS                      = 0x0D54,
+		ALPHA_BITS                     = 0x0D55,
+		DEPTH_BITS                     = 0x0D56,
+		STENCIL_BITS                   = 0x0D57,
+		POLYGON_OFFSET_UNITS           = 0x2A00,
 		/*      POLYGON_OFFSET_FILL */
-		const static GLenum POLYGON_OFFSET_FACTOR          = 0x8038;
-		const static GLenum TEXTURE_BINDING_2D             = 0x8069;
-		const static GLenum SAMPLE_BUFFERS                 = 0x80A8;
-		const static GLenum SAMPLES                        = 0x80A9;
-		const static GLenum SAMPLE_COVERAGE_VALUE          = 0x80AA;
-		const static GLenum SAMPLE_COVERAGE_INVERT         = 0x80AB;
+		POLYGON_OFFSET_FACTOR          = 0x8038,
+		TEXTURE_BINDING_2D             = 0x8069,
+		SAMPLE_BUFFERS                 = 0x80A8,
+		SAMPLES                        = 0x80A9,
+		SAMPLE_COVERAGE_VALUE          = 0x80AA,
+		SAMPLE_COVERAGE_INVERT         = 0x80AB,
 
 		/* GetTextureParameter */
 		/*      TEXTURE_MAG_FILTER */
@@ -352,246 +352,252 @@ namespace Babylon {
 		/*      TEXTURE_WRAP_S */
 		/*      TEXTURE_WRAP_T */
 
-		const static GLenum COMPRESSED_TEXTURE_FORMATS     = 0x86A3;
+		COMPRESSED_TEXTURE_FORMATS     = 0x86A3,
 
 		/* HintMode */
-		const static GLenum DONT_CARE                      = 0x1100;
-		const static GLenum FASTEST                        = 0x1101;
-		const static GLenum NICEST                         = 0x1102;
+		DONT_CARE                      = 0x1100,
+		FASTEST                        = 0x1101,
+		NICEST                         = 0x1102,
 
 		/* HintTarget */
-		const static GLenum GENERATE_MIPMAP_HINT            = 0x8192;
+		GENERATE_MIPMAP_HINT            = 0x8192,
 
 		/* DataType */
-		const static GLenum BYTE                           = 0x1400;
-		const static GLenum UNSIGNED_BYTE                  = 0x1401;
-		const static GLenum SHORT                          = 0x1402;
-		const static GLenum UNSIGNED_SHORT                 = 0x1403;
-		const static GLenum INT                            = 0x1404;
-		const static GLenum UNSIGNED_INT                   = 0x1405;
-		const static GLenum FLOAT                          = 0x1406;
+		BYTE                           = 0x1400,
+		UNSIGNED_BYTE                  = 0x1401,
+		SHORT                          = 0x1402,
+		UNSIGNED_SHORT                 = 0x1403,
+		INT                            = 0x1404,
+		UNSIGNED_INT                   = 0x1405,
+		FLOAT                          = 0x1406,
 
 		/* PixelFormat */
-		const static GLenum DEPTH_COMPONENT                = 0x1902;
-		const static GLenum ALPHA                          = 0x1906;
-		const static GLenum RGB                            = 0x1907;
-		const static GLenum RGBA                           = 0x1908;
-		const static GLenum LUMINANCE                      = 0x1909;
-		const static GLenum LUMINANCE_ALPHA                = 0x190A;
+		DEPTH_COMPONENT                = 0x1902,
+		ALPHA                          = 0x1906,
+		RGB                            = 0x1907,
+		RGBA                           = 0x1908,
+		LUMINANCE                      = 0x1909,
+		LUMINANCE_ALPHA                = 0x190A,
 
 		/* PixelType */
 		/*      UNSIGNED_BYTE */
-		const static GLenum UNSIGNED_SHORT_4_4_4_4         = 0x8033;
-		const static GLenum UNSIGNED_SHORT_5_5_5_1         = 0x8034;
-		const static GLenum UNSIGNED_SHORT_5_6_5           = 0x8363;
+		UNSIGNED_SHORT_4_4_4_4         = 0x8033,
+		UNSIGNED_SHORT_5_5_5_1         = 0x8034,
+		UNSIGNED_SHORT_5_6_5           = 0x8363,
 
 		/* Shaders */
-		const static GLenum FRAGMENT_SHADER                  = 0x8B30;
-		const static GLenum VERTEX_SHADER                    = 0x8B31;
-		const static GLenum MAX_VERTEX_ATTRIBS               = 0x8869;
-		const static GLenum MAX_VERTEX_UNIFORM_VECTORS       = 0x8DFB;
-		const static GLenum MAX_VARYING_VECTORS              = 0x8DFC;
-		const static GLenum MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D;
-		const static GLenum MAX_VERTEX_TEXTURE_IMAGE_UNITS   = 0x8B4C;
-		const static GLenum MAX_TEXTURE_IMAGE_UNITS          = 0x8872;
-		const static GLenum MAX_FRAGMENT_UNIFORM_VECTORS     = 0x8DFD;
-		const static GLenum SHADER_TYPE                      = 0x8B4F;
-		const static GLenum DELETE_STATUS                    = 0x8B80;
-		const static GLenum LINK_STATUS                      = 0x8B82;
-		const static GLenum VALIDATE_STATUS                  = 0x8B83;
-		const static GLenum ATTACHED_SHADERS                 = 0x8B85;
-		const static GLenum ACTIVE_UNIFORMS                  = 0x8B86;
-		const static GLenum ACTIVE_ATTRIBUTES                = 0x8B89;
-		const static GLenum SHADING_LANGUAGE_VERSION         = 0x8B8C;
-		const static GLenum CURRENT_PROGRAM                  = 0x8B8D;
+		FRAGMENT_SHADER                  = 0x8B30,
+		VERTEX_SHADER                    = 0x8B31,
+		MAX_VERTEX_ATTRIBS               = 0x8869,
+		MAX_VERTEX_UNIFORM_VECTORS       = 0x8DFB,
+		MAX_VARYING_VECTORS              = 0x8DFC,
+		MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D,
+		MAX_VERTEX_TEXTURE_IMAGE_UNITS   = 0x8B4C,
+		MAX_TEXTURE_IMAGE_UNITS          = 0x8872,
+		MAX_FRAGMENT_UNIFORM_VECTORS     = 0x8DFD,
+		SHADER_TYPE                      = 0x8B4F,
+		DELETE_STATUS                    = 0x8B80,
+		LINK_STATUS                      = 0x8B82,
+		VALIDATE_STATUS                  = 0x8B83,
+		ATTACHED_SHADERS                 = 0x8B85,
+		ACTIVE_UNIFORMS                  = 0x8B86,
+		ACTIVE_ATTRIBUTES                = 0x8B89,
+		SHADING_LANGUAGE_VERSION         = 0x8B8C,
+		CURRENT_PROGRAM                  = 0x8B8D,
 
 		/* StencilFunction */
-		const static GLenum NEVER                          = 0x0200;
-		const static GLenum LESS                           = 0x0201;
-		const static GLenum EQUAL                          = 0x0202;
-		const static GLenum LEQUAL                         = 0x0203;
-		const static GLenum GREATER                        = 0x0204;
-		const static GLenum NOTEQUAL                       = 0x0205;
-		const static GLenum GEQUAL                         = 0x0206;
-		const static GLenum ALWAYS                         = 0x0207;
+		NEVER                          = 0x0200,
+		LESS                           = 0x0201,
+		EQUAL                          = 0x0202,
+		LEQUAL                         = 0x0203,
+		GREATER                        = 0x0204,
+		NOTEQUAL                       = 0x0205,
+		GEQUAL                         = 0x0206,
+		ALWAYS                         = 0x0207,
 
 		/* StencilOp */
 		/*      ZERO */
-		const static GLenum KEEP                           = 0x1E00;
-		const static GLenum REPLACE                        = 0x1E01;
-		const static GLenum INCR                           = 0x1E02;
-		const static GLenum DECR                           = 0x1E03;
-		const static GLenum INVERT                         = 0x150A;
-		const static GLenum INCR_WRAP                      = 0x8507;
-		const static GLenum DECR_WRAP                      = 0x8508;
+		KEEP                           = 0x1E00,
+		REPLACE                        = 0x1E01,
+		INCR                           = 0x1E02,
+		DECR                           = 0x1E03,
+		INVERT                         = 0x150A,
+		INCR_WRAP                      = 0x8507,
+		DECR_WRAP                      = 0x8508,
 
 		/* StringName */
-		const static GLenum VENDOR                         = 0x1F00;
-		const static GLenum RENDERER                       = 0x1F01;
-		const static GLenum VERSION                        = 0x1F02;
+		VENDOR                         = 0x1F00,
+		RENDERER                       = 0x1F01,
+		VERSION                        = 0x1F02,
 
 		/* TextureMagFilter */
-		const static GLenum NEAREST                        = 0x2600;
-		const static GLenum LINEAR                         = 0x2601;
+		NEAREST                        = 0x2600,
+		LINEAR                         = 0x2601,
 
 		/* TextureMinFilter */
 		/*      NEAREST */
 		/*      LINEAR */
-		const static GLenum NEAREST_MIPMAP_NEAREST         = 0x2700;
-		const static GLenum LINEAR_MIPMAP_NEAREST          = 0x2701;
-		const static GLenum NEAREST_MIPMAP_LINEAR          = 0x2702;
-		const static GLenum LINEAR_MIPMAP_LINEAR           = 0x2703;
+		NEAREST_MIPMAP_NEAREST         = 0x2700,
+		LINEAR_MIPMAP_NEAREST          = 0x2701,
+		NEAREST_MIPMAP_LINEAR          = 0x2702,
+		LINEAR_MIPMAP_LINEAR           = 0x2703,
 
 		/* TextureParameterName */
-		const static GLenum TEXTURE_MAG_FILTER             = 0x2800;
-		const static GLenum TEXTURE_MIN_FILTER             = 0x2801;
-		const static GLenum TEXTURE_WRAP_S                 = 0x2802;
-		const static GLenum TEXTURE_WRAP_T                 = 0x2803;
+		TEXTURE_MAG_FILTER             = 0x2800,
+		TEXTURE_MIN_FILTER             = 0x2801,
+		TEXTURE_WRAP_S                 = 0x2802,
+		TEXTURE_WRAP_T                 = 0x2803,
 
 		/* TextureTarget */
-		const static GLenum TEXTURE_2D                     = 0x0DE1;
-		const static GLenum TEXTURE                        = 0x1702;
+		TEXTURE_2D                     = 0x0DE1,
+		TEXTURE                        = 0x1702,
 
-		const static GLenum TEXTURE_CUBE_MAP               = 0x8513;
-		const static GLenum TEXTURE_BINDING_CUBE_MAP       = 0x8514;
-		const static GLenum TEXTURE_CUBE_MAP_POSITIVE_X    = 0x8515;
-		const static GLenum TEXTURE_CUBE_MAP_NEGATIVE_X    = 0x8516;
-		const static GLenum TEXTURE_CUBE_MAP_POSITIVE_Y    = 0x8517;
-		const static GLenum TEXTURE_CUBE_MAP_NEGATIVE_Y    = 0x8518;
-		const static GLenum TEXTURE_CUBE_MAP_POSITIVE_Z    = 0x8519;
-		const static GLenum TEXTURE_CUBE_MAP_NEGATIVE_Z    = 0x851A;
-		const static GLenum MAX_CUBE_MAP_TEXTURE_SIZE      = 0x851C;
+		TEXTURE_CUBE_MAP               = 0x8513,
+		TEXTURE_BINDING_CUBE_MAP       = 0x8514,
+		TEXTURE_CUBE_MAP_POSITIVE_X    = 0x8515,
+		TEXTURE_CUBE_MAP_NEGATIVE_X    = 0x8516,
+		TEXTURE_CUBE_MAP_POSITIVE_Y    = 0x8517,
+		TEXTURE_CUBE_MAP_NEGATIVE_Y    = 0x8518,
+		TEXTURE_CUBE_MAP_POSITIVE_Z    = 0x8519,
+		TEXTURE_CUBE_MAP_NEGATIVE_Z    = 0x851A,
+		MAX_CUBE_MAP_TEXTURE_SIZE      = 0x851C,
 
 		/* TextureUnit */
-		const static GLenum TEXTURE0                       = 0x84C0;
-		const static GLenum TEXTURE1                       = 0x84C1;
-		const static GLenum TEXTURE2                       = 0x84C2;
-		const static GLenum TEXTURE3                       = 0x84C3;
-		const static GLenum TEXTURE4                       = 0x84C4;
-		const static GLenum TEXTURE5                       = 0x84C5;
-		const static GLenum TEXTURE6                       = 0x84C6;
-		const static GLenum TEXTURE7                       = 0x84C7;
-		const static GLenum TEXTURE8                       = 0x84C8;
-		const static GLenum TEXTURE9                       = 0x84C9;
-		const static GLenum TEXTURE10                      = 0x84CA;
-		const static GLenum TEXTURE11                      = 0x84CB;
-		const static GLenum TEXTURE12                      = 0x84CC;
-		const static GLenum TEXTURE13                      = 0x84CD;
-		const static GLenum TEXTURE14                      = 0x84CE;
-		const static GLenum TEXTURE15                      = 0x84CF;
-		const static GLenum TEXTURE16                      = 0x84D0;
-		const static GLenum TEXTURE17                      = 0x84D1;
-		const static GLenum TEXTURE18                      = 0x84D2;
-		const static GLenum TEXTURE19                      = 0x84D3;
-		const static GLenum TEXTURE20                      = 0x84D4;
-		const static GLenum TEXTURE21                      = 0x84D5;
-		const static GLenum TEXTURE22                      = 0x84D6;
-		const static GLenum TEXTURE23                      = 0x84D7;
-		const static GLenum TEXTURE24                      = 0x84D8;
-		const static GLenum TEXTURE25                      = 0x84D9;
-		const static GLenum TEXTURE26                      = 0x84DA;
-		const static GLenum TEXTURE27                      = 0x84DB;
-		const static GLenum TEXTURE28                      = 0x84DC;
-		const static GLenum TEXTURE29                      = 0x84DD;
-		const static GLenum TEXTURE30                      = 0x84DE;
-		const static GLenum TEXTURE31                      = 0x84DF;
-		const static GLenum ACTIVE_TEXTURE                 = 0x84E0;
+		TEXTURE0                       = 0x84C0,
+		TEXTURE1                       = 0x84C1,
+		TEXTURE2                       = 0x84C2,
+		TEXTURE3                       = 0x84C3,
+		TEXTURE4                       = 0x84C4,
+		TEXTURE5                       = 0x84C5,
+		TEXTURE6                       = 0x84C6,
+		TEXTURE7                       = 0x84C7,
+		TEXTURE8                       = 0x84C8,
+		TEXTURE9                       = 0x84C9,
+		TEXTURE10                      = 0x84CA,
+		TEXTURE11                      = 0x84CB,
+		TEXTURE12                      = 0x84CC,
+		TEXTURE13                      = 0x84CD,
+		TEXTURE14                      = 0x84CE,
+		TEXTURE15                      = 0x84CF,
+		TEXTURE16                      = 0x84D0,
+		TEXTURE17                      = 0x84D1,
+		TEXTURE18                      = 0x84D2,
+		TEXTURE19                      = 0x84D3,
+		TEXTURE20                      = 0x84D4,
+		TEXTURE21                      = 0x84D5,
+		TEXTURE22                      = 0x84D6,
+		TEXTURE23                      = 0x84D7,
+		TEXTURE24                      = 0x84D8,
+		TEXTURE25                      = 0x84D9,
+		TEXTURE26                      = 0x84DA,
+		TEXTURE27                      = 0x84DB,
+		TEXTURE28                      = 0x84DC,
+		TEXTURE29                      = 0x84DD,
+		TEXTURE30                      = 0x84DE,
+		TEXTURE31                      = 0x84DF,
+		ACTIVE_TEXTURE                 = 0x84E0,
 
 		/* TextureWrapMode */
-		const static GLenum REPEAT                         = 0x2901;
-		const static GLenum CLAMP_TO_EDGE                  = 0x812F;
-		const static GLenum MIRRORED_REPEAT                = 0x8370;
+		REPEAT                         = 0x2901,
+		CLAMP_TO_EDGE                  = 0x812F,
+		MIRRORED_REPEAT                = 0x8370,
 
 		/* Uniform Types */
-		const static GLenum FLOAT_VEC2                     = 0x8B50;
-		const static GLenum FLOAT_VEC3                     = 0x8B51;
-		const static GLenum FLOAT_VEC4                     = 0x8B52;
-		const static GLenum INT_VEC2                       = 0x8B53;
-		const static GLenum INT_VEC3                       = 0x8B54;
-		const static GLenum INT_VEC4                       = 0x8B55;
-		const static GLenum BOOL                           = 0x8B56;
-		const static GLenum BOOL_VEC2                      = 0x8B57;
-		const static GLenum BOOL_VEC3                      = 0x8B58;
-		const static GLenum BOOL_VEC4                      = 0x8B59;
-		const static GLenum FLOAT_MAT2                     = 0x8B5A;
-		const static GLenum FLOAT_MAT3                     = 0x8B5B;
-		const static GLenum FLOAT_MAT4                     = 0x8B5C;
-		const static GLenum SAMPLER_2D                     = 0x8B5E;
-		const static GLenum SAMPLER_CUBE                   = 0x8B60;
+		FLOAT_VEC2                     = 0x8B50,
+		FLOAT_VEC3                     = 0x8B51,
+		FLOAT_VEC4                     = 0x8B52,
+		INT_VEC2                       = 0x8B53,
+		INT_VEC3                       = 0x8B54,
+		INT_VEC4                       = 0x8B55,
+		BOOL                           = 0x8B56,
+		BOOL_VEC2                      = 0x8B57,
+		BOOL_VEC3                      = 0x8B58,
+		BOOL_VEC4                      = 0x8B59,
+		FLOAT_MAT2                     = 0x8B5A,
+		FLOAT_MAT3                     = 0x8B5B,
+		FLOAT_MAT4                     = 0x8B5C,
+		SAMPLER_2D                     = 0x8B5E,
+		SAMPLER_CUBE                   = 0x8B60,
 
 		/* Vertex Arrays */
-		const static GLenum VERTEX_ATTRIB_ARRAY_ENABLED        = 0x8622;
-		const static GLenum VERTEX_ATTRIB_ARRAY_SIZE           = 0x8623;
-		const static GLenum VERTEX_ATTRIB_ARRAY_STRIDE         = 0x8624;
-		const static GLenum VERTEX_ATTRIB_ARRAY_TYPE           = 0x8625;
-		const static GLenum VERTEX_ATTRIB_ARRAY_NORMALIZED     = 0x886A;
-		const static GLenum VERTEX_ATTRIB_ARRAY_POINTER        = 0x8645;
-		const static GLenum VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F;
+		VERTEX_ATTRIB_ARRAY_ENABLED        = 0x8622,
+		VERTEX_ATTRIB_ARRAY_SIZE           = 0x8623,
+		VERTEX_ATTRIB_ARRAY_STRIDE         = 0x8624,
+		VERTEX_ATTRIB_ARRAY_TYPE           = 0x8625,
+		VERTEX_ATTRIB_ARRAY_NORMALIZED     = 0x886A,
+		VERTEX_ATTRIB_ARRAY_POINTER        = 0x8645,
+		VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F,
 
 		/* Shader Source */
-		const static GLenum COMPILE_STATUS                 = 0x8B81;
+		COMPILE_STATUS                 = 0x8B81,
 
 		/* Shader Precision-Specified Types */
-		const static GLenum LOW_FLOAT                      = 0x8DF0;
-		const static GLenum MEDIUM_FLOAT                   = 0x8DF1;
-		const static GLenum HIGH_FLOAT                     = 0x8DF2;
-		const static GLenum LOW_INT                        = 0x8DF3;
-		const static GLenum MEDIUM_INT                     = 0x8DF4;
-		const static GLenum HIGH_INT                       = 0x8DF5;
+		LOW_FLOAT                      = 0x8DF0,
+		MEDIUM_FLOAT                   = 0x8DF1,
+		HIGH_FLOAT                     = 0x8DF2,
+		LOW_INT                        = 0x8DF3,
+		MEDIUM_INT                     = 0x8DF4,
+		HIGH_INT                       = 0x8DF5,
 
 		/* Framebuffer Object. */
-		const static GLenum FRAMEBUFFER                    = 0x8D40;
-		const static GLenum RENDERBUFFER                   = 0x8D41;
+		FRAMEBUFFER                    = 0x8D40,
+		RENDERBUFFER                   = 0x8D41,
 
-		const static GLenum RGBA4                          = 0x8056;
-		const static GLenum RGB5_A1                        = 0x8057;
-		const static GLenum RGB565                         = 0x8D62;
-		const static GLenum DEPTH_COMPONENT16              = 0x81A5;
-		const static GLenum STENCIL_INDEX                  = 0x1901;
-		const static GLenum STENCIL_INDEX8                 = 0x8D48;
-		const static GLenum DEPTH_STENCIL                  = 0x84F9;
+		RGBA4                          = 0x8056,
+		RGB5_A1                        = 0x8057,
+		RGB565                         = 0x8D62,
+		DEPTH_COMPONENT16              = 0x81A5,
+		STENCIL_INDEX                  = 0x1901,
+		STENCIL_INDEX8                 = 0x8D48,
+		DEPTH_STENCIL                  = 0x84F9,
 
-		const static GLenum RENDERBUFFER_WIDTH             = 0x8D42;
-		const static GLenum RENDERBUFFER_HEIGHT            = 0x8D43;
-		const static GLenum RENDERBUFFER_INTERNAL_FORMAT   = 0x8D44;
-		const static GLenum RENDERBUFFER_RED_SIZE          = 0x8D50;
-		const static GLenum RENDERBUFFER_GREEN_SIZE        = 0x8D51;
-		const static GLenum RENDERBUFFER_BLUE_SIZE         = 0x8D52;
-		const static GLenum RENDERBUFFER_ALPHA_SIZE        = 0x8D53;
-		const static GLenum RENDERBUFFER_DEPTH_SIZE        = 0x8D54;
-		const static GLenum RENDERBUFFER_STENCIL_SIZE      = 0x8D55;
+		RENDERBUFFER_WIDTH             = 0x8D42,
+		RENDERBUFFER_HEIGHT            = 0x8D43,
+		RENDERBUFFER_INTERNAL_FORMAT   = 0x8D44,
+		RENDERBUFFER_RED_SIZE          = 0x8D50,
+		RENDERBUFFER_GREEN_SIZE        = 0x8D51,
+		RENDERBUFFER_BLUE_SIZE         = 0x8D52,
+		RENDERBUFFER_ALPHA_SIZE        = 0x8D53,
+		RENDERBUFFER_DEPTH_SIZE        = 0x8D54,
+		RENDERBUFFER_STENCIL_SIZE      = 0x8D55,
 
-		const static GLenum FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE           = 0x8CD0;
-		const static GLenum FRAMEBUFFER_ATTACHMENT_OBJECT_NAME           = 0x8CD1;
-		const static GLenum FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL         = 0x8CD2;
-		const static GLenum FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 0x8CD3;
+		FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE           = 0x8CD0,
+		FRAMEBUFFER_ATTACHMENT_OBJECT_NAME           = 0x8CD1,
+		FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL         = 0x8CD2,
+		FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 0x8CD3,
 
-		const static GLenum COLOR_ATTACHMENT0              = 0x8CE0;
-		const static GLenum DEPTH_ATTACHMENT               = 0x8D00;
-		const static GLenum STENCIL_ATTACHMENT             = 0x8D20;
-		const static GLenum DEPTH_STENCIL_ATTACHMENT       = 0x821A;
+		COLOR_ATTACHMENT0              = 0x8CE0,
+		DEPTH_ATTACHMENT               = 0x8D00,
+		STENCIL_ATTACHMENT             = 0x8D20,
+		DEPTH_STENCIL_ATTACHMENT       = 0x821A,
 
-		const static GLenum NONE                           = 0;
+		NONE                           = 0,
 
-		const static GLenum FRAMEBUFFER_COMPLETE                      = 0x8CD5;
-		const static GLenum FRAMEBUFFER_INCOMPLETE_ATTACHMENT         = 0x8CD6;
-		const static GLenum FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = 0x8CD7;
-		const static GLenum FRAMEBUFFER_INCOMPLETE_DIMENSIONS         = 0x8CD9;
-		const static GLenum FRAMEBUFFER_UNSUPPORTED                   = 0x8CDD;
+		FRAMEBUFFER_COMPLETE                      = 0x8CD5,
+		FRAMEBUFFER_INCOMPLETE_ATTACHMENT         = 0x8CD6,
+		FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = 0x8CD7,
+		FRAMEBUFFER_INCOMPLETE_DIMENSIONS         = 0x8CD9,
+		FRAMEBUFFER_UNSUPPORTED                   = 0x8CDD,
 
-		const static GLenum FRAMEBUFFER_BINDING            = 0x8CA6;
-		const static GLenum RENDERBUFFER_BINDING           = 0x8CA7;
-		const static GLenum MAX_RENDERBUFFER_SIZE          = 0x84E8;
+		FRAMEBUFFER_BINDING            = 0x8CA6,
+		RENDERBUFFER_BINDING           = 0x8CA7,
+		MAX_RENDERBUFFER_SIZE          = 0x84E8,
 
-		const static GLenum INVALID_FRAMEBUFFER_OPERATION  = 0x0506;
+		INVALID_FRAMEBUFFER_OPERATION  = 0x0506,
 
 		/* WebGL-specific enums */
-		const static GLenum UNPACK_FLIP_Y_WEBGL            = 0x9240;
-		const static GLenum UNPACK_PREMULTIPLY_ALPHA_WEBGL = 0x9241;
-		const static GLenum CONTEXT_LOST_WEBGL             = 0x9242;
-		const static GLenum UNPACK_COLORSPACE_CONVERSION_WEBGL = 0x9243;
-		const static GLenum BROWSER_DEFAULT_WEBGL          = 0x9244;
+		UNPACK_FLIP_Y_WEBGL            = 0x9240,
+		UNPACK_PREMULTIPLY_ALPHA_WEBGL = 0x9241,
+		CONTEXT_LOST_WEBGL             = 0x9242,
+		UNPACK_COLORSPACE_CONVERSION_WEBGL = 0x9243,
+		BROWSER_DEFAULT_WEBGL          = 0x9244,
 
+		// IGL_EXT_texture_filter_anisotropic
+		TEXTURE_MAX_ANISOTROPY_EXT       = 0x84FE,
+		MAX_TEXTURE_MAX_ANISOTROPY_EXT   = 0x84FF
+	};
+
+	class IGL {
 	public: 
 
 		typedef shared_ptr<IGL> Ptr;
@@ -814,14 +820,6 @@ namespace Babylon {
 			GLboolean normalized, GLsizei stride, GLintptr offset) = 0;
 
 		virtual void viewport(GLint x, GLint y, GLsizei width, GLsizei height) = 0;
-	};
-
-	class IGL_EXT_texture_filter_anisotropic {
-	public:
-		const static GLenum TEXTURE_MAX_ANISOTROPY_EXT       = 0x84FE;
-		const static GLenum MAX_TEXTURE_MAX_ANISOTROPY_EXT   = 0x84FF;
-
-		typedef shared_ptr<IGL_EXT_texture_filter_anisotropic> Ptr;
 	};
 };
 

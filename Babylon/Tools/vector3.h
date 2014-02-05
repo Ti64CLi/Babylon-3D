@@ -28,7 +28,6 @@ namespace Babylon {
 	public: 
 		Vector3(float initialX, float initialY, float initialZ);		
 
-		virtual string toString();
 		// Operators
 		virtual void toArray(Float32Array& array, int index);
 		virtual void addInPlace(Vector3::Ptr otherVector);

@@ -1,0 +1,406 @@
+In file included from D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:8:0,
+                 from D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:7,
+                 from D:/Developing/BabylonNative/Playground/native-activity//jni/main.cpp:30:
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:13:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<IGL> IGLPtr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:17:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IImage> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:18:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:18:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:18:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:27:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IVideo> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:49:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<I2D> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:52:33: error: 'Babylon::IImage::Ptr' has not been declared
+   virtual int drawImage(IImage::Ptr image, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:53:33: error: 'Babylon::IVideo::Ptr' has not been declared
+   virtual int drawImage(IVideo::Ptr video, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:53:15: error: 'virtual int Babylon::I2D::drawImage(int, int, int, int, int, int, int, int, int)' cannot be overloaded
+   virtual int drawImage(IVideo::Ptr video, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:52:15: error: with 'virtual int Babylon::I2D::drawImage(int, int, int, int, int, int, int, int, int)'
+   virtual int drawImage(IImage::Ptr image, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
+               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:59:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<ICanvas> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:61:11: error: 'function' does not name a type
+   typedef function<void (int x, int y)> MoveFunc;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:62:18: error: 'MoveFunc' was not declared in this scope
+   typedef vector<MoveFunc> MoveFuncArray;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:62:26: error: template argument 1 is invalid
+   typedef vector<MoveFunc> MoveFuncArray;
+                          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:62:26: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:66:11: error: 'IGLPtr' does not name a type
+   virtual IGLPtr getContext3d(bool) = 0; 
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:75:11: error: 'Ptr' in 'class Babylon::I2D' does not name a type
+   virtual I2D::Ptr getContext2d() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/icanvas.h:77:45: error: 'MoveFunc' has not been declared
+   virtual void addEventListener_OnMoveEvent(MoveFunc moveFunc) = 0;
+                                             ^
+In file included from D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:7:0,
+                 from D:/Developing/BabylonNative/Playground/native-activity//jni/main.cpp:30:
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:62:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLObject> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:69:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLBuffer> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:70:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:70:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:70:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:80:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLFramebuffer> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:86:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLProgram> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:92:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLRenderbuffer> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:98:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLShader> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:104:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLTexture> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:105:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:105:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:105:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:119:3: error: 'Ptr' in 'class Babylon::IGLFramebuffer' does not name a type
+   IGLFramebuffer::Ptr _framebuffer;
+   ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:120:3: error: 'Ptr' in 'class Babylon::IGLRenderbuffer' does not name a type
+   IGLRenderbuffer::Ptr _depthBuffer;
+   ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:121:3: error: 'Ptr' in 'class Babylon::ICanvas' does not name a type
+   ICanvas::Ptr _workingCanvas;
+   ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:122:3: error: 'Ptr' in 'class Babylon::I2D' does not name a type
+   I2D::Ptr _workingContext;
+   ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:149:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLUniformLocation> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:150:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:150:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:150:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:158:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLActiveInfo> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:169:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGLShaderPrecisionFormat> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:603:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IGL> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:605:11: error: 'Ptr' in 'class Babylon::ICanvas' does not name a type
+   virtual ICanvas::Ptr getCanvas() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:618:41: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void attachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:618:65: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual void attachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+                                                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:619:47: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void bindAttribLocation(IGLProgram::Ptr program, GLuint index, string name) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:620:53: error: 'Babylon::IGLBuffer::Ptr' has not been declared
+   virtual void bindBuffer(GLenum target, IGLBuffer::Ptr buffer) = 0;
+                                                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:621:63: error: 'Babylon::IGLFramebuffer::Ptr' has not been declared
+   virtual void bindFramebuffer(GLenum target, IGLFramebuffer::Ptr framebuffer) = 0;
+                                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:622:65: error: 'Babylon::IGLRenderbuffer::Ptr' has not been declared
+   virtual void bindRenderbuffer(GLenum target, IGLRenderbuffer::Ptr renderbuffer) = 0;
+                                                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:623:55: error: 'Babylon::IGLTexture::Ptr' has not been declared
+   virtual void bindTexture(GLenum target, IGLTexture::Ptr texture) = 0;
+                                                       ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:644:41: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual void compileShader(IGLShader::Ptr shader) = 0;
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:657:11: error: 'Ptr' in 'class Babylon::IGLBuffer' does not name a type
+   virtual IGLBuffer::Ptr createBuffer() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:658:11: error: 'Ptr' in 'class Babylon::IGLFramebuffer' does not name a type
+   virtual IGLFramebuffer::Ptr createFramebuffer() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:659:11: error: 'Ptr' in 'class Babylon::IGLProgram' does not name a type
+   virtual IGLProgram::Ptr createProgram() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:660:11: error: 'Ptr' in 'class Babylon::IGLRenderbuffer' does not name a type
+   virtual IGLRenderbuffer::Ptr createRenderbuffer() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:661:11: error: 'Ptr' in 'class Babylon::IGLShader' does not name a type
+   virtual IGLShader::Ptr createShader(GLenum type) = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:662:11: error: 'Ptr' in 'class Babylon::IGLTexture' does not name a type
+   virtual IGLTexture::Ptr createTexture() = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:666:40: error: 'Babylon::IGLBuffer::Ptr' has not been declared
+   virtual void deleteBuffer(IGLBuffer::Ptr buffer) = 0;
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:667:50: error: 'Babylon::IGLFramebuffer::Ptr' has not been declared
+   virtual void deleteFramebuffer(IGLFramebuffer::Ptr framebuffer) = 0;
+                                                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:668:42: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void deleteProgram(IGLProgram::Ptr program) = 0;
+                                          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:669:52: error: 'Babylon::IGLRenderbuffer::Ptr' has not been declared
+   virtual void deleteRenderbuffer(IGLRenderbuffer::Ptr renderbuffer) = 0;
+                                                    ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:670:40: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual void deleteShader(IGLShader::Ptr shader) = 0;
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:671:42: error: 'Babylon::IGLTexture::Ptr' has not been declared
+   virtual void deleteTexture(IGLTexture::Ptr texture) = 0;
+                                          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:676:41: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void detachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:676:65: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual void detachShader(IGLProgram::Ptr program, IGLShader::Ptr shader) = 0;
+                                                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:688:21: error: 'Babylon::IGLRenderbuffer::Ptr' has not been declared
+    IGLRenderbuffer::Ptr renderbuffer) = 0;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:690:16: error: 'Babylon::IGLTexture::Ptr' has not been declared
+    IGLTexture::Ptr texture, GLint level) = 0;
+                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:695:11: error: 'Ptr' in 'class Babylon::IGLActiveInfo' does not name a type
+   virtual IGLActiveInfo::Ptr getActiveAttrib(IGLProgram::Ptr program, GLuint index) = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:696:11: error: 'Ptr' in 'class Babylon::IGLActiveInfo' does not name a type
+   virtual IGLActiveInfo::Ptr getActiveUniform(IGLProgram::Ptr program, GLuint index) = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:697:18: error: 'Ptr' is not a member of 'Babylon::IGLShader'
+   virtual vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:697:18: error: 'Ptr' is not a member of 'Babylon::IGLShader'
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:697:32: error: template argument 1 is invalid
+   virtual vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
+                                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:697:32: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:697:65: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
+                                                                 ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:699:47: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual GLint getAttribLocation(IGLProgram::Ptr program, string name) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:708:47: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual any getProgramParameter(IGLProgram::Ptr program, GLenum pname) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:709:48: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual string getProgramInfoLog(IGLProgram::Ptr program) = 0;
+                                                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:711:45: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual any getShaderParameter(IGLShader::Ptr shader, GLenum pname) = 0;
+                                             ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:712:11: error: 'Ptr' in 'class Babylon::IGLShaderPrecisionFormat' does not name a type
+   virtual IGLShaderPrecisionFormat::Ptr getShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype) = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:713:46: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual string getShaderInfoLog(IGLShader::Ptr shader) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:715:45: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual string getShaderSource(IGLShader::Ptr shader) = 0;
+                                             ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:719:38: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual any getUniform(IGLProgram::Ptr program, IGLUniformLocation::Ptr location) = 0;
+                                      ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:719:71: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual any getUniform(IGLProgram::Ptr program, IGLUniformLocation::Ptr location) = 0;
+                                                                       ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:721:11: error: 'Ptr' in 'class Babylon::IGLUniformLocation' does not name a type
+   virtual IGLUniformLocation::Ptr getUniformLocation(IGLProgram::Ptr program, string name) = 0;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:728:41: error: 'Babylon::IGLBuffer::Ptr' has not been declared
+   virtual GLboolean isBuffer(IGLBuffer::Ptr buffer) = 0;
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:730:51: error: 'Babylon::IGLFramebuffer::Ptr' has not been declared
+   virtual GLboolean isFramebuffer(IGLFramebuffer::Ptr framebuffer) = 0;
+                                                   ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:731:43: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual GLboolean isProgram(IGLProgram::Ptr program) = 0;
+                                           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:732:53: error: 'Babylon::IGLRenderbuffer::Ptr' has not been declared
+   virtual GLboolean isRenderbuffer(IGLRenderbuffer::Ptr renderbuffer) = 0;
+                                                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:733:41: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual GLboolean isShader(IGLShader::Ptr shader) = 0;
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:734:43: error: 'Babylon::IGLTexture::Ptr' has not been declared
+   virtual GLboolean isTexture(IGLTexture::Ptr texture) = 0;
+                                           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:736:40: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual bool linkProgram(IGLProgram::Ptr program) = 0;
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:748:40: error: 'Babylon::IGLShader::Ptr' has not been declared
+   virtual void shaderSource(IGLShader::Ptr shader, string source) = 0;
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:763:40: error: 'Babylon::IImage::Ptr' has not been declared
+    GLenum format, GLenum type, IImage::Ptr image) = 0; // May throw DOMException
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:765:41: error: 'Babylon::ICanvas::Ptr' has not been declared
+    GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:764:16: error: 'virtual void Babylon::IGL::texImage2D(Babylon::GLenum, Babylon::GLint, Babylon::GLenum, Babylon::GLenum, Babylon::GLenum, int)' cannot be overloaded
+   virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:762:16: error: with 'virtual void Babylon::IGL::texImage2D(Babylon::GLenum, Babylon::GLint, Babylon::GLenum, Babylon::GLenum, Babylon::GLenum, int)'
+   virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:767:40: error: 'Babylon::IVideo::Ptr' has not been declared
+    GLenum format, GLenum type, IVideo::Ptr video) = 0; // May throw DOMException
+                                        ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:766:16: error: 'virtual void Babylon::IGL::texImage2D(Babylon::GLenum, Babylon::GLint, Babylon::GLenum, Babylon::GLenum, Babylon::GLenum, int)' cannot be overloaded
+   virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:762:16: error: with 'virtual void Babylon::IGL::texImage2D(Babylon::GLenum, Babylon::GLint, Babylon::GLenum, Babylon::GLenum, Babylon::GLenum, int)'
+   virtual void texImage2D(GLenum target, GLint level, GLenum internalformat,
+                ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:780:41: error: 'Babylon::ICanvas::Ptr' has not been declared
+    GLenum format, GLenum type, ICanvas::Ptr canvas) = 0; // May throw DOMException
+                                         ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:784:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform1f(IGLUniformLocation::Ptr location, GLfloat x) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:785:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform1fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:786:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform1i(IGLUniformLocation::Ptr location, GLint x) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:787:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform1iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:788:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform2f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:789:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform2fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:790:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform2i(IGLUniformLocation::Ptr location, GLint x, GLint y) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:791:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform2iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:792:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform3f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:793:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform3fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:794:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform3i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:795:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform3iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:796:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform4f(IGLUniformLocation::Ptr location, GLfloat x, GLfloat y, GLfloat z, GLfloat w) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:797:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform4fv(IGLUniformLocation::Ptr location, Float32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:798:46: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform4i(IGLUniformLocation::Ptr location, GLint x, GLint y, GLint z, GLint w) = 0;
+                                              ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:799:47: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniform4iv(IGLUniformLocation::Ptr location, Int32Array& v) = 0;
+                                               ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:801:53: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniformMatrix2fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+                                                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:803:53: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniformMatrix3fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+                                                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:805:53: error: 'Babylon::IGLUniformLocation::Ptr' has not been declared
+   virtual void uniformMatrix4fv(IGLUniformLocation::Ptr location, GLboolean transpose, 
+                                                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:808:39: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void useProgram(IGLProgram::Ptr program) = 0;
+                                       ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/igl.h:809:44: error: 'Babylon::IGLProgram::Ptr' has not been declared
+   virtual void validateProgram(IGLProgram::Ptr program) = 0;
+                                            ^
+In file included from D:/Developing/BabylonNative/Playground/native-activity//jni/main.cpp:30:0:
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:116:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Matrix> MatrixPtr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:118:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Vector3> Vector3Ptr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:120:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Color3> Color3Ptr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:122:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<IScene> IScenePtr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:124:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Effect> EffectPtr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:168:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IDisposable> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:169:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:169:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:169:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:176:11: error: 'shared_ptr' does not name a type
+   typedef shared_ptr<IRenderable> Ptr;
+           ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:177:18: error: 'Ptr' was not declared in this scope
+   typedef vector<Ptr> Array;
+                  ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:177:21: error: template argument 1 is invalid
+   typedef vector<Ptr> Array;
+                     ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:177:21: error: template argument 2 is invalid
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:183:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Scene> ScenePtr;
+          ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/../../../Babylon/Interfaces/iengine.h:186:10: error: 'shared_ptr' does not name a type
+  typedef shared_ptr<Engine> EnginePtr;
+          ^
+In file included from D:/Developing/BabylonNative/Playground/native-activity//jni/main.cpp:31:0:
+D:/Developing/BabylonNative/Playground/native-activity//jni/canvas.h:9:71: error: expected template-name before '<' token
+ class Canvas : public Babylon::ICanvas, public enable_shared_from_this<Canvas> {
+                                                                       ^
+D:/Developing/BabylonNative/Playground/native-activity//jni/canvas.h:9:71: error: expected '{' before '<' token
+D:/Developing/BabylonNative/Playground/native-activity//jni/canvas.h:9:71: error: expected unqualified-id before '<' token
+make.exe: *** [D:/Developing/BabylonNative/Playground/native-activity//obj/local/armeabi-v7a/objs/native-activity/main.o] Error 1

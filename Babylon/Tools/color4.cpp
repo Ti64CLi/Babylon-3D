@@ -1,5 +1,4 @@
 #include "color4.h"
-#include <sstream>
 
 using namespace Babylon;
 
@@ -8,14 +7,6 @@ Babylon::Color4::Color4(float initialR, float initialG, float initialB, float in
 	this->g = initialG;
 	this->b = initialB;
 	this->a = initialA;
-};
-
-string Babylon::Color4::toString() {
-	string r;
-	stringstream ss;
-	ss << "{R: " << this->r << " G:" << this->g << " B:" << this->b << " A:" << this->a << "}";
-	r.append(ss.str());
-	return r;
 };
 
 // Operators

@@ -27,7 +27,6 @@ namespace Babylon {
 	public: 
 		Vector2(float initialX, float initialY);		
 
-		virtual string toString();
 		// Operators
 		virtual Float32Array asArray();
 		virtual void toArray(Float32Array& array, int index);

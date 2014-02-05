@@ -1,4 +1,4 @@
-D:/Developing/BabylonNative/Playground/native-activity//obj/local/armeabi/objs/android_native_app_glue/android_native_app_glue.o: \
+D:/Developing/BabylonNative/Playground/native-activity//obj/local/armeabi-v7a/objs/android_native_app_glue/android_native_app_glue.o: \
  F:/Dev/NVPACK/android-ndk-r9b/sources/android/native_app_glue/android_native_app_glue.c \
  F:/Dev/NVPACK/android-ndk-r9b/platforms/android-14/arch-arm/usr/include/jni.h \
  F:/Dev/NVPACK/android-ndk-r9b/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \

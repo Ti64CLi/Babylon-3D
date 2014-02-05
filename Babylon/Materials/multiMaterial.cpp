@@ -30,7 +30,7 @@ bool Babylon::MultiMaterial::isReady(Mesh::Ptr mesh) {
 };
 
 Material::Ptr Babylon::MultiMaterial::getSubMaterial(int index) {
-	if (index < 0 || index >= this->subMaterials.size()) {
+	if (index < 0 || index >= (int)this->subMaterials.size()) {
 		return this->_scene->defaultMaterial;
 	}
 

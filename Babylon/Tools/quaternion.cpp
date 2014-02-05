@@ -1,5 +1,4 @@
 #include "quaternion.h"
-#include <sstream>
 #include <cmath>
 
 using namespace Babylon;
@@ -9,14 +8,6 @@ Babylon::Quaternion::Quaternion(float initialX, float initialY, float initialZ, 
 	this->y = initialY;
 	this->z = initialZ;
 	this->w = initialW;
-};
-
-string Babylon::Quaternion::toString() {
-	string r;
-	stringstream ss;
-	ss << "{X: " << this->x << " Y:" << this->y << " Z:" << this->z << " W:" << this->w << "}";
-	r.append(ss.str());
-	return r;
 };
 
 bool Babylon::Quaternion::equals(Quaternion::Ptr otherQuaternion) {

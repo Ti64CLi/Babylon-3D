@@ -53,7 +53,7 @@ AnimationValue Babylon::Animation::_interpolate(int currentFrame, int repeatCoun
 
 	this->currentFrame = currentFrame;
 
-	for (auto key = 0; key < this->_keys.size(); key++) {
+	for (size_t key = 0; key < this->_keys.size(); key++) {
 		if (this->_keys[key + 1].frame >= currentFrame) {
 			auto gradient = (currentFrame - this->_keys[key].frame) / (this->_keys[key + 1].frame - this->_keys[key].frame);
 			auto newVale = this->_keys[key].value.clone();

@@ -64,9 +64,10 @@ namespace Babylon {
 				// Vector3
 			case ANIMATIONTYPE_VECTOR3:
 				return AnimationValue(this->vector3Data->subtract(fromValue.vector3Data));
+			case ANIMATIONTYPE_MATRIX:
+			default:
+				return *this;
 			}
-
-			return *this;
 		};
 
 		AnimationValue clone() {

@@ -22,7 +22,6 @@ namespace Babylon {
 	public: 
 		Color4(float initialR, float initialG, float initialB, float initialA);		
 
-		virtual string toString();
 		virtual void addInPlace(Color4::Ptr right);
 		virtual Color4::Ptr add(Color4::Ptr otherColor);
 		virtual Color4::Ptr subtract(Color4::Ptr otherColor);

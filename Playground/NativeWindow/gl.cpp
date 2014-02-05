@@ -10,39 +10,39 @@ GL::GL(Babylon::ICanvas::Ptr canvas, bool antialias) {
 	this->antialias = antialias;
 
 	// build map of string vs enums
-	EnumMap["TEXTURE"] = IGL::TEXTURE;
-	EnumMap["TEXTURE0"] = IGL::TEXTURE0;
-	EnumMap["TEXTURE1"] = IGL::TEXTURE1;
-	EnumMap["TEXTURE2"] = IGL::TEXTURE2;
-	EnumMap["TEXTURE3"] = IGL::TEXTURE3;
-	EnumMap["TEXTURE4"] = IGL::TEXTURE4;
-	EnumMap["TEXTURE5"] = IGL::TEXTURE5;
-	EnumMap["TEXTURE6"] = IGL::TEXTURE6;
-	EnumMap["TEXTURE7"] = IGL::TEXTURE7;
-	EnumMap["TEXTURE8"] = IGL::TEXTURE8;
-	EnumMap["TEXTURE9"] = IGL::TEXTURE9;
-	EnumMap["TEXTURE10"] = IGL::TEXTURE10;
-	EnumMap["TEXTURE11"] = IGL::TEXTURE11;
-	EnumMap["TEXTURE12"] = IGL::TEXTURE12;
-	EnumMap["TEXTURE13"] = IGL::TEXTURE13;
-	EnumMap["TEXTURE14"] = IGL::TEXTURE14;
-	EnumMap["TEXTURE15"] = IGL::TEXTURE15;
-	EnumMap["TEXTURE16"] = IGL::TEXTURE16;
-	EnumMap["TEXTURE17"] = IGL::TEXTURE17;
-	EnumMap["TEXTURE18"] = IGL::TEXTURE18;
-	EnumMap["TEXTURE19"] = IGL::TEXTURE19;
-	EnumMap["TEXTURE20"] = IGL::TEXTURE20;
-	EnumMap["TEXTURE21"] = IGL::TEXTURE21;
-	EnumMap["TEXTURE22"] = IGL::TEXTURE22;
-	EnumMap["TEXTURE23"] = IGL::TEXTURE23;
-	EnumMap["TEXTURE24"] = IGL::TEXTURE24;
-	EnumMap["TEXTURE25"] = IGL::TEXTURE25;
-	EnumMap["TEXTURE26"] = IGL::TEXTURE26;
-	EnumMap["TEXTURE27"] = IGL::TEXTURE27;
-	EnumMap["TEXTURE28"] = IGL::TEXTURE28;
-	EnumMap["TEXTURE29"] = IGL::TEXTURE29;
-	EnumMap["TEXTURE30"] = IGL::TEXTURE30;
-	EnumMap["TEXTURE31"] = IGL::TEXTURE31;
+	EnumMap["TEXTURE"] = Babylon::TEXTURE;
+	EnumMap["TEXTURE0"] = Babylon::TEXTURE0;
+	EnumMap["TEXTURE1"] = Babylon::TEXTURE1;
+	EnumMap["TEXTURE2"] = Babylon::TEXTURE2;
+	EnumMap["TEXTURE3"] = Babylon::TEXTURE3;
+	EnumMap["TEXTURE4"] = Babylon::TEXTURE4;
+	EnumMap["TEXTURE5"] = Babylon::TEXTURE5;
+	EnumMap["TEXTURE6"] = Babylon::TEXTURE6;
+	EnumMap["TEXTURE7"] = Babylon::TEXTURE7;
+	EnumMap["TEXTURE8"] = Babylon::TEXTURE8;
+	EnumMap["TEXTURE9"] = Babylon::TEXTURE9;
+	EnumMap["TEXTURE10"] = Babylon::TEXTURE10;
+	EnumMap["TEXTURE11"] = Babylon::TEXTURE11;
+	EnumMap["TEXTURE12"] = Babylon::TEXTURE12;
+	EnumMap["TEXTURE13"] = Babylon::TEXTURE13;
+	EnumMap["TEXTURE14"] = Babylon::TEXTURE14;
+	EnumMap["TEXTURE15"] = Babylon::TEXTURE15;
+	EnumMap["TEXTURE16"] = Babylon::TEXTURE16;
+	EnumMap["TEXTURE17"] = Babylon::TEXTURE17;
+	EnumMap["TEXTURE18"] = Babylon::TEXTURE18;
+	EnumMap["TEXTURE19"] = Babylon::TEXTURE19;
+	EnumMap["TEXTURE20"] = Babylon::TEXTURE20;
+	EnumMap["TEXTURE21"] = Babylon::TEXTURE21;
+	EnumMap["TEXTURE22"] = Babylon::TEXTURE22;
+	EnumMap["TEXTURE23"] = Babylon::TEXTURE23;
+	EnumMap["TEXTURE24"] = Babylon::TEXTURE24;
+	EnumMap["TEXTURE25"] = Babylon::TEXTURE25;
+	EnumMap["TEXTURE26"] = Babylon::TEXTURE26;
+	EnumMap["TEXTURE27"] = Babylon::TEXTURE27;
+	EnumMap["TEXTURE28"] = Babylon::TEXTURE28;
+	EnumMap["TEXTURE29"] = Babylon::TEXTURE29;
+	EnumMap["TEXTURE30"] = Babylon::TEXTURE30;
+	EnumMap["TEXTURE31"] = Babylon::TEXTURE31;
 }
 
 Babylon::ICanvas::Ptr GL::getCanvas() { 
@@ -449,14 +449,14 @@ Babylon::any GL::getRenderbufferParameter(Babylon::GLenum target, Babylon::GLenu
 
 Babylon::any GL::getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLenum pname) { 
 	switch (pname) {
-	case IGL::SHADER_TYPE:
+	case Babylon::SHADER_TYPE:
 		{
 			::GLint i = 0;
 			glGetShaderiv(shader->value, GL_SHADER_TYPE, &i);
 			return (Babylon::any) i;
 		}
 		break;
-	case IGL::COMPILE_STATUS:
+	case Babylon::COMPILE_STATUS:
 		{
 			::GLint i = 0;
 			glGetShaderiv(shader->value, GL_COMPILE_STATUS, &i);

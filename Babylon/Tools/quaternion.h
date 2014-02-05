@@ -25,7 +25,6 @@ namespace Babylon {
 	public: 
 		Quaternion(float x, float y, float z, float w);		
 
-		virtual string toString();
 		virtual bool equals(Quaternion::Ptr otherQuaternion);
 		virtual Quaternion::Ptr clone();
 		virtual void copyFrom(Quaternion::Ptr other);

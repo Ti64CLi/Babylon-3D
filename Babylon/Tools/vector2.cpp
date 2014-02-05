@@ -1,5 +1,4 @@
 #include "vector2.h"
-#include <sstream>
 #include <cmath>
 #include "matrix.h"
 #include "tools.h"
@@ -9,14 +8,6 @@ using namespace Babylon;
 Babylon::Vector2::Vector2(float initialX, float initialY) {
 	this->x = initialX;
 	this->y = initialY;
-};
-
-string Babylon::Vector2::toString() {
-	string r;
-	stringstream ss;
-	ss << "{X: " << this->x << " Y:" << this->y << "}";
-	r.append(ss.str());
-	return r;
 };
 
 // Operators

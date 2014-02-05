@@ -21,7 +21,6 @@ namespace Babylon {
 	public: 
 		Color3(int initialR, int initialG, int initialB);		
 
-		virtual string toString();
 		virtual Color3::Ptr multiply(Color3::Ptr otherColor);
 		virtual void multiplyToRef(Color3::Ptr otherColor, Color3::Ptr result);
 		virtual bool equals(Color3::Ptr otherColor);
