@@ -844,7 +844,7 @@ const char* basicVertexShader =
 	"\n" \
 	"void main() {  \n" \
 	"	//gl_Position = position * world;\n" \
-	"	gl_Position = world * position;\n" \
+	"	gl_Position = viewProjection * world * position;\n" \
 	"}\n";
 
 const char* basicPixelShader = 
