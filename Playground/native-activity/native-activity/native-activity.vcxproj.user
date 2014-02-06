@@ -7,6 +7,6 @@
     <NdkRootPath>$(ANDROID_NDK)</NdkRootPath>
     <AndroidDebugMode>native</AndroidDebugMode>
     <DebuggerFlavor>AndroidDebugger</DebuggerFlavor>
-    <AndroidLaunchSuspended>false</AndroidLaunchSuspended>
+    <AndroidLaunchSuspended>true</AndroidLaunchSuspended>
   </PropertyGroup>
 </Project>

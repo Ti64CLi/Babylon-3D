@@ -839,9 +839,12 @@ const char* basicVertexShader =
 	"attribute vec4 position;\n" \
 	"// Uniforms\n" \
 	"uniform mat4 world;\n" \
+	"uniform mat4 view;\n" \
+	"uniform mat4 viewProjection;\n" \
 	"\n" \
 	"void main() {  \n" \
-	"	gl_Position = position * world;\n" \
+	"	//gl_Position = position * world;\n" \
+	"	gl_Position = world * position;\n" \
 	"}\n";
 
 const char* basicPixelShader = 

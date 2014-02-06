@@ -60,8 +60,8 @@ public:
 		this->engine = Engine::New(dynamic_pointer_cast<ICanvas>(this->canvas), true);
 
 		// for testing loading shaders manually
-		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader;
-		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
+		Effect::ShadersStore["defaultVertexShader"] = basicVertexShader; ////defaultVertexShader;
+		Effect::ShadersStore["defaultPixelShader"] = basicPixelShader; ////defaultPixelShader;
 	}
 
 	void loadSceneTutorial1() {
@@ -225,8 +225,7 @@ public:
 	}
 };
 
-Main _main;
-
+//Main _main;
 
 /**
  * Our saved state data.
@@ -254,6 +253,8 @@ struct engine {
     int32_t width;
     int32_t height;
     struct saved_state state;
+
+	shared_ptr<Main> main;
 };
 
 /**
@@ -298,7 +299,9 @@ static int engine_init_display(struct engine* engine) {
     ANativeWindow_setBuffersGeometry(engine->app->window, 0, 0, format);
 
     surface = eglCreateWindowSurface(display, config, engine->app->window, NULL);
-    context = eglCreateContext(display, config, NULL, NULL);
+
+	int attrib_list[3] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+    context = eglCreateContext(display, config, EGL_NO_CONTEXT, attrib_list);
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
         LOGW("Unable to eglMakeCurrent");
@@ -316,10 +319,13 @@ static int engine_init_display(struct engine* engine) {
     engine->state.angle = 0;
 
     // Initialize GL state.
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    ////glEnable(GL_DEPTH_TEST);
+    ////glEnable(GL_CULL_FACE);
+    ////glCullFace(GL_BACK);
+    ////glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	engine->main->init(engine->width, engine->height);
+	engine->main->loadSceneTutorial1();
 
     return 0;
 }
@@ -334,13 +340,12 @@ static void engine_draw_frame(struct engine* engine) {
     }
 
     // Just fill the screen with a color.
-	/*
-    glClearColor(((float)engine->state.x)/engine->width, engine->state.angle,
-            ((float)engine->state.y)/engine->height, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-	*/
+    ////glClearColor(((float)engine->state.x)/engine->width, engine->state.angle,
+    ////        ((float)engine->state.y)/engine->height, 1);
+    ////glClear(GL_COLOR_BUFFER_BIT);
 
-    _main.render();
+    engine->main->render();
+
     eglSwapBuffers(engine->display, engine->surface);
 }
 
@@ -373,6 +378,9 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
         engine->animating = 1;
         engine->state.x = AMotionEvent_getX(event, 0);
         engine->state.y = AMotionEvent_getY(event, 0);
+
+		engine->main->onMotion(engine->state.x, engine->state.y);
+
         return 1;
     }
     return 0;
@@ -454,8 +462,7 @@ void android_main(struct android_app* state) {
         engine.state = *(struct saved_state*)state->savedState;
     }
 
-    _main.init(engine.width, engine.height);
-    _main.loadSceneTutorial4();
+	engine.main = make_shared<Main>();
 
     // loop waiting for stuff to do.
 

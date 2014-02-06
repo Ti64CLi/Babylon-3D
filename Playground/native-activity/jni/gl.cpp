@@ -1,10 +1,17 @@
 #include "gl.h"
 #include <memory>
+#include <string>
 #include <stdexcept>
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+
+#include <android/log.h>
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+
+using namespace std;
 
 GL::GL(Babylon::ICanvas::Ptr canvas, bool antialias) {
 	this->canvas = canvas;
@@ -73,11 +80,13 @@ vector<string> GL::getSupportedExtensions() {
 
 Babylon::any GL::getExtension(string name) {
 	const string exts(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
-       	bool result = (exts.find(name))  != std::string::npos;
+	bool result = (exts.find(name))  != string::npos;
 	if (result)
 	{
 		return &result;
 	}
+
+	errorCheck();
 
 	return nullptr;
 }
@@ -405,6 +414,7 @@ Babylon::any GL::getBufferParameter(Babylon::GLenum target, Babylon::GLenum pnam
 Babylon::any GL::getParameter(Babylon::GLenum pname) { 
 	::GLint params;
 	glGetIntegerv(pname, &params);
+	errorCheck();
 	return (Babylon::any)params;
 }
 
@@ -414,7 +424,7 @@ Babylon::GLenum GL::getError() {
 
 Babylon::any GL::getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
 												   Babylon::GLenum pname) {
-													   //return (Babylon::any) glGetFramebufferAttachmentParameteriv(target, attachment, pname);
+	//return (Babylon::any) glGetFramebufferAttachmentParameteriv(target, attachment, pname);
 													   throw "not supported";
 }
 
@@ -868,16 +878,16 @@ void GL::errorCheck() {
 			throw runtime_error("GL error: value parameter is not a legal value for that function");
 		case GL_INVALID_OPERATION:
 			throw runtime_error("GL error: the set of state for a command is not legal for the parameters given to that command");
-		//case GL_STACK_OVERFLOW:
-		//	throw runtime_error("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
-		//case GL_STACK_UNDERFLOW:
-		//	throw runtime_error("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
+			//case GL_STACK_OVERFLOW:
+			//	throw runtime_error("GL error: stack pushing operation cannot be done because it would overflow the limit of that stack's size");
+			//case GL_STACK_UNDERFLOW:
+			//	throw runtime_error("GL error: stack popping operation cannot be done because the stack is already at its lowest point");
 		case GL_OUT_OF_MEMORY:
 			throw runtime_error("GL error: performing an operation that can allocate memory, and the memory cannot be allocated");
 		case GL_INVALID_FRAMEBUFFER_OPERATION:
 			throw runtime_error("GL error: doing anything that would attempt to read from or write/render to a framebuffer that is not complete");
-		//case GL_TABLE_TOO_LARGE:
-		//	throw runtime_error("GL error: Table is too large");
+			//case GL_TABLE_TOO_LARGE:
+			//	throw runtime_error("GL error: Table is too large");
 		}
 	}
 }

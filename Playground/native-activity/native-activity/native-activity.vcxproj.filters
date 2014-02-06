@@ -12,9 +12,6 @@
     <None Include="..\libs\armeabi-v7a\libnative-activity.so">
       <Filter>libs\armeabi-v7a</Filter>
     </None>
-    <None Include="..\src\com\example\native_activity\NativeActivity.java">
-      <Filter>src\com\example\native_activity</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\jni\android_native_app_glue.c">
@@ -27,9 +24,6 @@
       <Filter>jni</Filter>
     </ClCompile>
     <ClCompile Include="..\jni\main.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
-    <ClCompile Include="..\jni\NativeActivity.c">
       <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,15 +52,6 @@
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2843607d-718f-4d78-bb52-4e520f75a04c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\com">
-      <UniqueIdentifier>{b53ba230-7806-4f45-af9a-eb5c1e89aba0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\com\example">
-      <UniqueIdentifier>{c8785239-3e01-47a5-9e15-8aa4de338915}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\com\example\native_activity">
-      <UniqueIdentifier>{f02971ad-4ad0-49c9-b73d-539ef1553ee8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
