@@ -252,7 +252,7 @@ void motion(int x, int y) {
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(400, 640);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
 	glutCreateWindow("Babylon Native");
 

@@ -781,17 +781,17 @@ void GL::uniform4iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Arr
 }
 
 void GL::uniformMatrix2fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) { 
-	glUniformMatrix2fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+	glUniformMatrix2fv(location->value, value.size() / 16, transpose, value.data());
 	errorCheck();
 }
 
 void GL::uniformMatrix3fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) { 
-	glUniformMatrix3fv(location->value, transpose, value.size() * sizeof(Babylon::GLfloat), value.data());
+	glUniformMatrix3fv(location->value, value.size() / 16, transpose, value.data());
 	errorCheck();
 }
 
 void GL::uniformMatrix4fv(Babylon::IGLUniformLocation::Ptr location, Babylon::GLboolean transpose, Babylon::Float32Array& value) {
-	glUniformMatrix4fv(location->value, 1, transpose, value.data());
+	glUniformMatrix4fv(location->value, value.size() / 16, transpose, value.data());
 	errorCheck();
 }
 

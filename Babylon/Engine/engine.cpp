@@ -228,7 +228,7 @@ void Babylon::Engine::setViewport(Viewport::Ptr viewport, int requiredWidth, int
 	this->_cachedViewport = viewport;
 
 	this->_gl->viewport(x * width, y * height, width * viewport->width, height * viewport->height);
-	this->_aspectRatio = (width * viewport->width) / (height * viewport->height);
+	this->_aspectRatio = (float)(width * viewport->width) / (float)(height * viewport->height);
 };
 
 void Babylon::Engine::setDirectViewport(int x, int y, int width, int height) {
