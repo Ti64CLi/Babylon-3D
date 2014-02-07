@@ -60,8 +60,8 @@ public:
 		this->engine = Engine::New(dynamic_pointer_cast<ICanvas>(this->canvas), true);
 
 		// for testing loading shaders manually
-		Effect::ShadersStore["defaultVertexShader"] = basicVertexShader; ////defaultVertexShader;
-		Effect::ShadersStore["defaultPixelShader"] = basicPixelShader; ////defaultPixelShader;
+		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader; 
+		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
 	}
 
 	void loadSceneTutorial1() {

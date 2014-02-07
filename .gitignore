@@ -7,3 +7,4 @@ obj
 Tegra-Android
 /Playground/native-activity/native-activity/native-activity.sdf
 libs
+/Playground/native-activity/native-activity/*.suo

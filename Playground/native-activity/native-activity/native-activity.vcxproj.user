@@ -8,5 +8,9 @@
     <AndroidDebugMode>native</AndroidDebugMode>
     <DebuggerFlavor>AndroidDebugger</DebuggerFlavor>
     <AndroidLaunchSuspended>false</AndroidLaunchSuspended>
+    <AdditionalGdbDirectories>$(AdditionalGdbDirectories)</AdditionalGdbDirectories>
+    <AdditionalLibraryDirectories>$(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    <GdbSetupPath>
+    </GdbSetupPath>
   </PropertyGroup>
 </Project>
