@@ -11,7 +11,7 @@ namespace Babylon {
 	struct Quaternion: public enable_shared_from_this<Quaternion> {
 
 	public:
-		typedef shared_ptr<Quaternion> Ptr;
+		typedef shared_ptr_t<Quaternion> Ptr;
 
 	public:
 		float x;

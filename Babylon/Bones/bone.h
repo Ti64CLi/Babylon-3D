@@ -10,14 +10,14 @@
 namespace Babylon {
 
 	class Skeleton;
-	typedef shared_ptr<Skeleton> SkeletonPtr;
+	typedef shared_ptr_t<Skeleton> SkeletonPtr;
 
 	class Bone : public Animatable, public enable_shared_from_this<Bone> {
 
 	public:
 
-		typedef shared_ptr<Bone> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Bone> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		string name;
 		SkeletonPtr _skeleton;

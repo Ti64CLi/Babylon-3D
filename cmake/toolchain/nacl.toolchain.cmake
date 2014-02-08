@@ -1,53 +1,137 @@
+cmake_minimum_required( VERSION 2.6.3 )
+
+if( DEFINED CMAKE_CROSSCOMPILING )
+ # subsequent toolchain loading is not really needed
+ return()
+endif()
+
 if( NOT EXISTS "${NACL_SDK_ROOT}" )
    SET (NACL_SDK_ROOT $ENV{NACL_SDK_ROOT})
    if( NOT EXISTS "${NACL_SDK_ROOT}" )
       message( FATAL_ERROR "please define a cmake or environment variable: NACL_SDK_ROOT" )
    endif()
-
 endif()
 
-#- set compiler (Nacl or Pnacl)
-set(COMPILER_TYPE "clang")
-#set(COMPILER_TYPE "gcc")
+# this one is important
+set( CMAKE_SYSTEM_NAME Linux )
+# this one not so much
+set( CMAKE_SYSTEM_VERSION 1 )
 
-set(HOST win)
-if(COMPILER_TYPE STREQUAL "gcc")
-set(ARCH x86_glibc)
-set(HOST_C_COMPILER x86_64-nacl-gcc.exe)
-set(HOST_CPP_COMPILER x86_64-nacl-g++.exe)
+set( NACL_TOOLCHAIN_NAME "pnacl" )
+set( PEPPER_API 32 )
+set( NACL_SDK_HOST_SYSTEM_NAME "win" )
+
+if( NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
+set( NACL_TOOLCHAIN_MACHINE_NAME "pnacl" )
+set( NACL_TOOLCHAIN_C "clang" )
+set( NACL_TOOLCHAIN_CXX "clang++" )
+set( TOOL_OS_SUFFIX ".bat" )
 else()
-set(ARCH pnacl)
-set(HOST_C_COMPILER pnacl-clang.bat)
-set(HOST_CPP_COMPILER pnacl-clang++.bat)
+set( NACL_TOOLCHAIN_MACHINE_NAME "i686-nacl" )
+set( NACL_TOOLCHAIN_C "gcc" )
+set( NACL_TOOLCHAIN_CXX "g++" )
+set( TOOL_OS_SUFFIX ".exe" )
 endif()
 
-string( REPLACE "\\" "/" NACL_SDK_ROOT "${NACL_SDK_ROOT}" )
+# setup paths
+set( NACL_TOOLCHAIN_ROOT "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/" )
+set( NACL_SYSROOT "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/sysroot/" )
 
-add_definitions(-DNACL=1)
+# specify the cross compiler
+set( CMAKE_C_COMPILER   "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_C}${TOOL_OS_SUFFIX}"     CACHE PATH "${NACL_TOOLCHAIN_C}" )
+set( CMAKE_CXX_COMPILER "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_CXX}${TOOL_OS_SUFFIX}"   CACHE PATH "${NACL_TOOLCHAIN_CPP}" )
+set( CMAKE_ASM_COMPILER "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_C}${TOOL_OS_SUFFIX}"     CACHE PATH "Assembler" )
+if( CMAKE_VERSION VERSION_LESS 2.8.5 )
+ set( CMAKE_ASM_COMPILER_ARG1 "-c" )
+endif()
+# there may be a way to make cmake deduce these TODO deduce the rest of the tools
+set( CMAKE_STRIP        "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-strip${TOOL_OS_SUFFIX}"   CACHE PATH "strip" )
+set( CMAKE_AR           "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-ar${TOOL_OS_SUFFIX}"      CACHE PATH "archive" )
+set( CMAKE_LINKER       "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-ld${TOOL_OS_SUFFIX}"      CACHE PATH "linker" )
+set( CMAKE_NM           "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-nm${TOOL_OS_SUFFIX}"      CACHE PATH "nm" )
+set( CMAKE_OBJCOPY      "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-objcopy${TOOL_OS_SUFFIX}" CACHE PATH "objcopy" )
+set( CMAKE_OBJDUMP      "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-objdump${TOOL_OS_SUFFIX}" CACHE PATH "objdump" )
+set( CMAKE_RANLIB       "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-ranlib${TOOL_OS_SUFFIX}"  CACHE PATH "ranlib" )
+set( _CMAKE_TOOLCHAIN_PREFIX "${NACL_TOOLCHAIN_MACHINE_NAME}-" )
+if( APPLE )
+ find_program( CMAKE_INSTALL_NAME_TOOL NAMES install_name_tool )
+ if( NOT CMAKE_INSTALL_NAME_TOOL )
+  message( FATAL_ERROR "Could not find install_name_tool, please check your installation." )
+ endif()
+ mark_as_advanced( CMAKE_INSTALL_NAME_TOOL )
+endif()
 
-# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# export directories
+set( NACL_SYSTEM_INCLUDE_DIRS "" )
+set( NACL_SYSTEM_LIB_DIRS "" )
 
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_VERSION 1)
+# includes
+list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_SYSROOT}/include" )
 
-set(CMAKE_C_COMPILER    "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}_${ARCH}/bin/${HOST_C_COMPILER}")
-set(CMAKE_CXX_COMPILER  "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}_${ARCH}/bin/${HOST_CPP_COMPILER}")
-set(NACL_SYSROOT        "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}_${ARCH}/sysroot" CACHE PATH "NACL cross compilation system root")
+# flags and definitions
+if( NOT NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
+  set( NACL_CXX_FLAGS "--sysroot=${NACL_SYSROOT}" )
+endif()
 
-set(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS}"		CACHE STRING "c++ flags")
-set(CMAKE_C_FLAGS             "${CMAKE_C_FLAGS}"             	CACHE STRING "c flags")
-set(CMAKE_LD_FLAGS            "${CMAKE_LD_FLAGS}"      		CACHE STRING "ld flags")
+remove_definitions( -DNACL )
+add_definitions( -DNACL )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${NACL_SDK_ROOT}/include")
-set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -I${NACL_SDK_ROOT}/include")
-set(CMAKE_LD_FLAGS  "${CMAKE_LD_FLAGS}  -L${NACL_SDK_ROOT}/lib/pnacl/Release -lppapi_cpp -lppapi")
+# SDK flags
+if( X86 )
+ set( _CMAKE_CXX_FLAGS "-funwind-tables" )
+ set( _CMAKE_C_FLAGS "-funwind-tables" )
+else()
+ set( _CMAKE_CXX_FLAGS "" )
+ set( _CMAKE_C_FLAGS "" )
+endif()
 
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
-set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
+# release and debug flags
+if( X86 )
+ set( _CMAKE_CXX_FLAGS_RELEASE "-O3 -fstrict-aliasing" )
+ set( _CMAKE_C_FLAGS_RELEASE   "-O3 -fstrict-aliasing" )
+ set( _CMAKE_CXX_FLAGS_DEBUG "-O0 -finline-limit=300" )
+ set( _CMAKE_C_FLAGS_DEBUG   "-O0 -finline-limit=300" )
+endif()
+set( _CMAKE_CXX_FLAGS_RELEASE "${_CMAKE_CXX_FLAGS_RELEASE} -fomit-frame-pointer -DNDEBUG" )
+set( _CMAKE_C_FLAGS_RELEASE   "${_CMAKE_C_FLAGS_RELEASE}   -fomit-frame-pointer -DNDEBUG" )
+set( _CMAKE_CXX_FLAGS_DEBUG "${_CMAKE_CXX_FLAGS_DEBUG} -fno-strict-aliasing -fno-omit-frame-pointer -DDEBUG -D_DEBUG" )
+set( _CMAKE_C_FLAGS_DEBUG   "${_CMAKE_C_FLAGS_DEBUG}   -fno-strict-aliasing -fno-omit-frame-pointer -DDEBUG -D_DEBUG" )
 
-set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${NACL_SYSROOT})
+# linker flags
+#list( APPEND NACL_SYSTEM_LIB_DIRS "" )
+set( NACL_LINKER_FLAGS "" )
 
-set( CMAKE_SKIP_RPATH TRUE CACHE BOOL "If set, runtime paths are not added when using shared libraries." )
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)
+# cache flags
+set( CMAKE_CXX_FLAGS "${_CMAKE_CXX_FLAGS}" CACHE STRING "c++ flags" )
+set( CMAKE_C_FLAGS "${_CMAKE_C_FLAGS}" CACHE STRING "c flags" )
+set( CMAKE_CXX_FLAGS_RELEASE "${_CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "c++ Release flags" )
+set( CMAKE_C_FLAGS_RELEASE "${_CMAKE_C_FLAGS_RELEASE}" CACHE STRING "c Release flags" )
+set( CMAKE_CXX_FLAGS_DEBUG "${_CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "c++ Debug flags" )
+set( CMAKE_C_FLAGS_DEBUG "${_CMAKE_C_FLAGS_DEBUG}" CACHE STRING "c Debug flags" )
+set( CMAKE_SHARED_LINKER_FLAGS "" CACHE STRING "linker flags" )
+set( CMAKE_MODULE_LINKER_FLAGS "" CACHE STRING "linker flags" )
+set( CMAKE_EXE_LINKER_FLAGS "-Wl,-z,nocopyreloc" CACHE STRING "linker flags" )
+
+include_directories( SYSTEM ${NACL_SYSTEM_INCLUDE_DIRS} )
+link_directories( ${NACL_SYSTEM_LIB_DIRS} )
+
+# finish flags
+set( NACL_CXX_FLAGS            "${NACL_CXX_FLAGS}"    CACHE INTERNAL "Extra NaCl compiler flags")
+set( NACL_LINKER_FLAGS         "${NACL_LINKER_FLAGS}" CACHE INTERNAL "Extra NaCl linker flags")
+set( CMAKE_CXX_FLAGS           "${NACL_CXX_FLAGS} ${CMAKE_CXX_FLAGS}" )
+set( CMAKE_C_FLAGS             "${NACL_CXX_FLAGS} ${CMAKE_C_FLAGS}" )
+set( CMAKE_SHARED_LINKER_FLAGS "${NACL_LINKER_FLAGS} ${CMAKE_SHARED_LINKER_FLAGS}" )
+set( CMAKE_MODULE_LINKER_FLAGS "${NACL_LINKER_FLAGS} ${CMAKE_MODULE_LINKER_FLAGS}" )
+set( CMAKE_EXE_LINKER_FLAGS    "${NACL_LINKER_FLAGS} ${CMAKE_EXE_LINKER_FLAGS}" )
+
+# set these global flags for cmake client scripts to change behavior
+set( NACL True )
+set( BUILD_NACL True )
+
+# where is the target environment
+set( CMAKE_FIND_ROOT_PATH "${NACL_TOOLCHAIN_ROOT}/bin" "${NACL_TOOLCHAIN_ROOT}/${NACL_TOOLCHAIN_MACHINE_NAME}" "${NACL_SYSROOT}" )
+
+# only search for libraries and includes in the nacl_sdk toolchain
+set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )
+set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )
+set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )

@@ -10,7 +10,7 @@ namespace Babylon {
 	struct Viewport: public enable_shared_from_this<Viewport> {
 
 	public:
-		typedef shared_ptr<Viewport> Ptr;
+		typedef shared_ptr_t<Viewport> Ptr;
 
 	public:
 		int x;

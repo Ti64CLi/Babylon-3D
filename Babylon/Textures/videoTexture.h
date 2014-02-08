@@ -12,8 +12,8 @@ namespace Babylon {
 	class VideoTexture: public Texture {
 
 	public:
-		typedef shared_ptr<VideoTexture> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<VideoTexture> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	protected:
 		IVideo::Ptr video;
@@ -21,9 +21,9 @@ namespace Babylon {
 		time_t _lastUpdate;
 
 	protected: 
-		VideoTexture(string name, vector<string> urls, Size size, ScenePtr scene, bool generateMipMaps);		
+		VideoTexture(string name, vector_t<string> urls, Size size, ScenePtr scene, bool generateMipMaps);		
 	public: 
-		static VideoTexture::Ptr New(string name, vector<string> urls, Size size, ScenePtr scene, bool generateMipMaps);
+		static VideoTexture::Ptr New(string name, vector_t<string> urls, Size size, ScenePtr scene, bool generateMipMaps);
 
 		virtual bool _update();
 	};

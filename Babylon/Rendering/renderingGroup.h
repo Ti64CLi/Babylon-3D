@@ -18,8 +18,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<RenderingGroup> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<RenderingGroup> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef set<int, Ptr> Map;
 
 		int index;

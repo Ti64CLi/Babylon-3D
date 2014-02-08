@@ -1,10 +1,7 @@
 #ifndef GL_H
 #define GL_H
 
-#include <memory>
-#include <vector>
-#include <map>
-#include <string>
+#include "decls.h"
 
 #include "igl.h"
 #include "icanvas.h"

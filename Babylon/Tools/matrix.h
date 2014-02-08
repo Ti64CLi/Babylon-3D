@@ -9,13 +9,13 @@
 namespace Babylon {
 
 	class Plane;
-	typedef shared_ptr<Plane> PlanePtr;
+	typedef shared_ptr_t<Plane> PlanePtr;
 
 	class Matrix: public enable_shared_from_this<Matrix> {
 
 	public:
-		typedef shared_ptr<Matrix> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Matrix> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		Float32Array m;

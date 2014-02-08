@@ -67,8 +67,8 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 	}       
 
 	auto engine = this->_scene->getEngine();
-	vector<string> defines;
-	vector<string> optionalDefines;
+	vector_t<string> defines;
+	vector_t<string> optionalDefines;
 
 	// Textures
 	if (this->_scene->texturesEnabled) {
@@ -208,7 +208,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 		}
 	}
 
-	vector<VertexBufferKind> attribs;
+	vector_t<VertexBufferKind> attribs;
 	attribs.push_back(VertexBufferKind_PositionKind);
 	attribs.push_back(VertexBufferKind_NormalKind);
 	if (mesh) {
@@ -244,7 +244,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 
 		auto shaderName = "default";
 
-		vector<string> uniformNames;
+		vector_t<string> uniformNames;
 		uniformNames.push_back("world");
 		uniformNames.push_back("view");
 		uniformNames.push_back("viewProjection");
@@ -297,7 +297,7 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 		uniformNames.push_back("specularMatrix");
 		uniformNames.push_back("bumpMatrix");
 
-		vector<string> samplers;
+		vector_t<string> samplers;
 		samplers.push_back("diffuseSampler");
 		samplers.push_back("ambientSampler");
 		samplers.push_back("opacitySampler");
@@ -518,7 +518,7 @@ Texture::Array Babylon::StandardMaterial::getAnimatables () {
 	return results;
 };
 
-void Babylon::StandardMaterial::dispose () {
+void Babylon::StandardMaterial::dispose (bool doNotRecurse) {
 	if (this->diffuseTexture) {
 		this->diffuseTexture->dispose();
 	}

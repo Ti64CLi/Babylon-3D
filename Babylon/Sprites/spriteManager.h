@@ -16,8 +16,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<SpriteManager> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<SpriteManager> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef void (*OnDisposeFunc) ();
 
 		string name;
@@ -28,7 +28,7 @@ namespace Babylon {
 
 		Float32Array _vertices;
 		IGLBuffer::Ptr _vertexBuffer;
-		vector<VertexBufferKind> _vertexDeclarations;
+		vector_t<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 

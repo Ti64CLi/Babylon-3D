@@ -62,6 +62,6 @@ Color4::Ptr Babylon::Color4::clone() {
 };
 
 // Statics
-Color4::Ptr Babylon::Color4::FromArray(vector<float> vals) {
+Color4::Ptr Babylon::Color4::FromArray(vector_t<float> vals) {
 	return make_shared<Color4>(vals[0], vals[1], vals[2], vals[3]);
 };

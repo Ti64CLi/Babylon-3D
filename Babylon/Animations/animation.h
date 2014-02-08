@@ -93,19 +93,19 @@ namespace Babylon {
 	};
 
 	class Animatable;
-	typedef shared_ptr<Animatable> AnimatablePtr;
+	typedef shared_ptr_t<Animatable> AnimatablePtr;
 
 	class Animation : public enable_shared_from_this<Animation> {
 
 	public:
 
-		typedef shared_ptr<Animation> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Animation> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		// Cache
-		map<string, AnimationValue> _offsetsCache;
-		map<string, AnimationValue> _highLimitsCache;
+		map_t<string, AnimationValue> _offsetsCache;
+		map_t<string, AnimationValue> _highLimitsCache;
 		int currentFrame;
 
 	public:
@@ -115,7 +115,7 @@ namespace Babylon {
 		ANIMATIONTYPES dataType;
 		ANIMATIONLOOPMODES loopMode;
 
-		vector<AnimationKey> _keys;
+		vector_t<AnimationKey> _keys;
 
 	public: 
 		Animation(string name, string targetProperty, float framePerSecond, ANIMATIONTYPES dataType, ANIMATIONLOOPMODES loopMode = ANIMATIONLOOPMODE_CYCLE);
@@ -125,7 +125,7 @@ namespace Babylon {
 		virtual Vector3::Ptr vector3InterpolateFunction(Vector3::Ptr startValue, Vector3::Ptr endValue, float gradient);
 		virtual Animation::Ptr clone();
 
-		virtual void setKeys(vector<AnimationKey> values);
+		virtual void setKeys(vector_t<AnimationKey> values);
 		virtual AnimationValue _interpolate(int currentFrame, int repeatCount, ANIMATIONLOOPMODES loopMode, AnimationValue offsetValue = AnimationValue(), AnimationValue highLimitValue = AnimationValue());
 		virtual bool animate(AnimatablePtr target, float delay, int from, int to, ANIMATIONLOOPMODES loop, float speedRatio);
 	};

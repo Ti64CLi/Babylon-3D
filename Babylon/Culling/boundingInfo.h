@@ -14,8 +14,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<BoundingInfo> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<BoundingInfo> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		BoundingBox::Ptr boundingBox;

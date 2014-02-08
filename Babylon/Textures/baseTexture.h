@@ -10,8 +10,8 @@ namespace Babylon {
 	class BaseTexture: public IDisposable, public enable_shared_from_this<BaseTexture> {
 
 	public:
-		typedef shared_ptr<BaseTexture> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<BaseTexture> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef void (*OnDisposeFunc) ();
 
 	protected:

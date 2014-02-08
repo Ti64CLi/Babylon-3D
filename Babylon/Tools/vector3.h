@@ -9,13 +9,13 @@
 namespace Babylon {
 
 	class Matrix;
-	typedef shared_ptr<Matrix> MatrixPtr;
+	typedef shared_ptr_t<Matrix> MatrixPtr;
 
 	struct Vector3: public enable_shared_from_this<Vector3> {
 
 	public:
-		typedef shared_ptr<Vector3> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Vector3> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		float x;

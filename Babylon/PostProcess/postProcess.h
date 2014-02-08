@@ -10,17 +10,17 @@ using namespace std;
 namespace Babylon {
 
 	class Camera;
-	typedef shared_ptr<Camera> CameraPtr;
+	typedef shared_ptr_t<Camera> CameraPtr;
 
 	class Effect;
-	typedef shared_ptr<Effect> EffectPtr;
+	typedef shared_ptr_t<Effect> EffectPtr;
 
 	class PostProcess : public IDisposable, public enable_shared_from_this<PostProcess> {
 
 	public:
 
-		typedef shared_ptr<PostProcess> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<PostProcess> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		typedef void (*OnApplyFunc)(EffectPtr);
 		typedef void (*OnDisposeFunc)();
@@ -50,7 +50,7 @@ namespace Babylon {
 		OnSizeChangedFunc onSizeChanged;
 
 	public: 
-		PostProcess(string name, string fragmentUrl,  vector<string> parameters, vector<string> samplers, float ratio, CameraPtr camera, SAMPLINGMODES samplingMode);
+		PostProcess(string name, string fragmentUrl,  vector_t<string> parameters, vector_t<string> samplers, float ratio, CameraPtr camera, SAMPLINGMODES samplingMode);
 
 		// Methods
 		virtual void activate();

@@ -15,14 +15,14 @@ using namespace std;
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	// TODO: finish it (finish Animatable)
 	class Material: public Animatable, public IDisposable, public enable_shared_from_this<Material> {
 
 	public:
-		typedef shared_ptr<Material> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Material> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef void (*OnDisposeFunc)();
 
 		string id;

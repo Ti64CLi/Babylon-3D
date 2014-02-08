@@ -38,7 +38,7 @@ Animation::Ptr Babylon::Animation::clone() {
 	return clone;
 };
 
-void Babylon::Animation::setKeys(vector<AnimationKey> values) {
+void Babylon::Animation::setKeys(vector_t<AnimationKey> values) {
 	this->_keys = values;//.slice(0);
 	values.clear();
 

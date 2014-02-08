@@ -6,7 +6,8 @@
 #include <sstream>
 #include <stdexcept>
 
-using namespace std;
+namespace Babylon {
+}
 
 #else
 
@@ -18,10 +19,16 @@ using namespace std;
 #include <sstream>
 #include <boost/tr1/tr1/stdexcept>
 
-using namespace boost;
-using namespace boost::range::for_each;
-using namespace boost::units;
-using namespace boost::tr1::tr1;
-using namespace std;
+namespace Babylon {
+	using boost::shared_ptr;
+	using boost::make_shared;
+	using boost::enable_shared_from_this;
+	using boost::container::map;
+	using boost::container::vector;
+	using boost::units::to_string;
+
+	using std::function;
+	using std::string;
+}
 
 #endif

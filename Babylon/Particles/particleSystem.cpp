@@ -208,26 +208,26 @@ void Babylon::ParticleSystem::_update(size_t newParticles) {
 };
 
 Effect::Ptr Babylon::ParticleSystem::_getEffect() {
-	vector<string> defines;
+	vector_t<string> defines;
 
 	// TODO: what todo with clipPlane
 	////if (BABYLON.clipPlane) {
 	////	defines.push_back("#define CLIPPLANE");
 	////}
 
-	vector<VertexBufferKind> attributes;
+	vector_t<VertexBufferKind> attributes;
 	attributes.push_back(VertexBufferKind_PositionKind);
 	attributes.push_back(VertexBufferKind_ColorKind); 
 	attributes.push_back(Attribute_Options);
 
-	vector<string> uniformNames;
+	vector_t<string> uniformNames;
 	uniformNames.push_back("invView");
 	uniformNames.push_back("view"); 
 	uniformNames.push_back("projection");
 	uniformNames.push_back("vClipPlane");
 	uniformNames.push_back("textureMask");
 
-	vector<string> samplers;
+	vector_t<string> samplers;
 	samplers.push_back("diffuseSampler");
 	
 	// Effect
@@ -235,7 +235,7 @@ Effect::Ptr Babylon::ParticleSystem::_getEffect() {
 	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
 	auto join = ss.str();
 
-	vector<string> optionalDefines;
+	vector_t<string> optionalDefines;
 
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;

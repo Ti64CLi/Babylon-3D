@@ -70,13 +70,13 @@ void Babylon::ShadowGenerator::renderSubMesh(SubMesh::Ptr subMesh) {
 
 // Properties
 bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
-	vector<string> defines;
+	vector_t<string> defines;
 
 	if (this->useVarianceShadowMap) {
 		defines.push_back("#define VSM");
 	}
 
-	vector<VertexBufferKind> attribs;
+	vector_t<VertexBufferKind> attribs;
 	attribs.push_back(VertexBufferKind_PositionKind);
 	if (mesh->skeleton && mesh->isVerticesDataPresent(VertexBufferKind_MatricesIndicesKind) && mesh->isVerticesDataPresent(VertexBufferKind_MatricesWeightsKind)) {
 		attribs.push_back(VertexBufferKind_MatricesIndicesKind);
@@ -90,14 +90,14 @@ bool Babylon::ShadowGenerator::isReady(Mesh::Ptr mesh) {
 	for_each(begin(defines), end(defines), [&](string& item) { ss << item << endl; });
 	auto join = ss.str();
 
-	vector<string> uniformNames; 
+	vector_t<string> uniformNames; 
 	uniformNames.push_back("world");
 	uniformNames.push_back("mBones");
 	uniformNames.push_back("viewProjection");
 	uniformNames.push_back("worldViewProjection");
 
-	vector<string> samples; 
-	vector<string> optionalDefines;
+	vector_t<string> samples; 
+	vector_t<string> optionalDefines;
 
 	if (this->_cachedDefines != join) {
 		this->_cachedDefines = join;

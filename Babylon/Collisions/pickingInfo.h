@@ -8,14 +8,14 @@
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	class PickingInfo : public enable_shared_from_this<PickingInfo> {
 
 	public:
 
-		typedef shared_ptr<PickingInfo> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<PickingInfo> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		bool hit;
 		float distance;

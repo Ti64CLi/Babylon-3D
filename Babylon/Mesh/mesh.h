@@ -22,8 +22,8 @@ namespace Babylon {
 	class Mesh: public Node, public IDisposable {
 
 	public:
-		typedef shared_ptr<Mesh> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Mesh> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		typedef void (*OnDisposeFunc)();
 		typedef void (*OnBeforeRenderFunc)();
@@ -50,7 +50,7 @@ namespace Babylon {
 
 		int _renderId;
 
-		vector<OnBeforeRenderFunc> _onBeforeRenderCallbacks;
+		vector_t<OnBeforeRenderFunc> _onBeforeRenderCallbacks;
 
 		// Animations
 		Int32Array animations;
@@ -131,8 +131,8 @@ namespace Babylon {
 		virtual void registerBeforeRender(OnBeforeRenderFunc func);
 		virtual void unregisterBeforeRender(OnBeforeRenderFunc func);
 		virtual void render(SubMesh::Ptr subMesh);
-		virtual vector<shared_ptr<void>> getEmittedParticleSystems();
-		virtual vector<shared_ptr<void>> getHierarchyEmittedParticleSystems();
+		virtual vector_t<shared_ptr_t<void>> getEmittedParticleSystems();
+		virtual vector_t<shared_ptr_t<void>> getHierarchyEmittedParticleSystems();
 		virtual Mesh::Array getChildren();
 		virtual bool isInFrustum(Plane::Array frustumPlanes);
 		virtual void setMaterialByID(string id);

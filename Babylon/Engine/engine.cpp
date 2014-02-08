@@ -322,7 +322,7 @@ IGLBuffer::Ptr Babylon::Engine::createIndexBuffer(Uint16Array& indices) {
 	return vbo;
 };
 
-void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect) {
+void Babylon::Engine::bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector_t<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect) {
 	if (this->_cachedVertexBuffer != vertexBuffer || this->_cachedEffectForVertexBuffer != effect) {
 		this->_cachedVertexBuffer = vertexBuffer;
 		this->_cachedEffectForVertexBuffer = effect;
@@ -383,11 +383,11 @@ void Babylon::Engine::draw(bool useTriangles, int indexStart, int indexCount) {
 };
 
 // Shaders
-Effect::Ptr Babylon::Engine::createEffect(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, string defines, vector_t<string> optionalDefines) {
 	return createEffect(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, defines, optionalDefines);
 }
 
-Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Engine::createEffect(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, string defines, vector_t<string> optionalDefines) {
 	string name; 
 	name.append(vertex).append("+").append(fragment).append("@").append(defines);
 	if (this->_compiledEffects[name]) {
@@ -440,8 +440,8 @@ IGLProgram::Ptr Babylon::Engine::createShaderProgram(string vertexCode, string f
 	return shaderProgram;
 };
 
-vector<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames) {
-	vector<IGLUniformLocation::Ptr> results;
+vector_t<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr shaderProgram, vector_t<string> uniformsNames) {
+	vector_t<IGLUniformLocation::Ptr> results;
 
 	for (auto uniformsName : uniformsNames) {
 		results.push_back(this->_gl->getUniformLocation(shaderProgram, uniformsName));
@@ -450,8 +450,8 @@ vector<IGLUniformLocation::Ptr> Babylon::Engine::getUniforms(IGLProgram::Ptr sha
 	return results;
 };
 
-map<VertexBufferKind, int> Babylon::Engine::getAttributeLocations(IGLProgram::Ptr shaderProgram, vector<VertexBufferKind> attributesNames) {
-	map<VertexBufferKind, int> results;
+map_t<VertexBufferKind, int> Babylon::Engine::getAttributeLocations(IGLProgram::Ptr shaderProgram, vector_t<VertexBufferKind> attributesNames) {
+	map_t<VertexBufferKind, int> results;
 
 	for (auto attributesName : attributesNames) {
 		try {
@@ -834,7 +834,7 @@ IGLTexture::Ptr Babylon::Engine::createRenderTargetTexture(Size size, bool gener
 
 //TODO: finish it
 //auto extensions = ["_px.jpg", "_py.jpg", "_pz.jpg", "_nx.jpg", "_ny.jpg", "_nz.jpg"];
-vector<string> Babylon::Engine::extensions;
+vector_t<string> Babylon::Engine::extensions;
 
 void Babylon::Engine::cascadeLoad(string rootUrl, int index, IImage::Array loadedImages, Scene::Ptr scene) {
 	IImage::Ptr img;
@@ -871,7 +871,7 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	this->_workingCanvas->setWidth(width);
 	this->_workingCanvas->setHeight(height);
 
-	vector<GLenum> faces;
+	vector_t<GLenum> faces;
 	faces.push_back(TEXTURE_CUBE_MAP_POSITIVE_X);
 	faces.push_back(TEXTURE_CUBE_MAP_POSITIVE_Y);
 	faces.push_back(TEXTURE_CUBE_MAP_POSITIVE_Z);

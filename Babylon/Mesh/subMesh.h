@@ -15,13 +15,13 @@ using namespace std;
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	class SubMesh: public enable_shared_from_this<SubMesh> {
 
 	public:
-		typedef shared_ptr<SubMesh> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<SubMesh> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		IGLBuffer::Ptr _linesIndexBuffer;
 		size_t linesIndexCount;

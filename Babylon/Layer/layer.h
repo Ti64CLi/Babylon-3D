@@ -14,8 +14,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Layer> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Layer> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef void (*OnDisposeFunc)();
 
 		OnDisposeFunc onDispose;
@@ -27,7 +27,7 @@ namespace Babylon {
 
 		ScenePtr _scene;
 		IGLBuffer::Ptr _vertexBuffer;
-		vector<VertexBufferKind> _vertexDeclarations;
+		vector_t<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 

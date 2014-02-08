@@ -13,8 +13,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Skeleton> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Skeleton> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		bool _isDirty;

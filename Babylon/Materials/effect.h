@@ -19,8 +19,8 @@ namespace Babylon {
 	class Effect: public enable_shared_from_this<Effect> {
 
 	public:
-		typedef shared_ptr<Effect> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Effect> Ptr;
+		typedef vector_t<Ptr> Array;
 		typedef Ptr ShaderPtr;
 		typedef function<void (string)> CallbackFunc;
 
@@ -29,43 +29,43 @@ namespace Babylon {
 		EnginePtr _engine;
 		string name;
 		string defines;
-		vector<string> _uniformsNames;
-		vector<string> _samplers;
+		vector_t<string> _uniformsNames;
+		vector_t<string> _samplers;
 		bool _isReady;
 		string _compilationError;
-		vector<VertexBufferKind> _attributes;
-		map<VertexBufferKind, int> _attributeLocations;
+		vector_t<VertexBufferKind> _attributes;
+		map_t<VertexBufferKind, int> _attributeLocations;
 
-		map<string, Float32Array> _valueCache;
+		map_t<string, Float32Array> _valueCache;
 
 		IGLProgram::Ptr _program;
 		IGLUniformLocation::Array _uniforms;
 
 	public:
-		static map<string, string> ShadersStore;
+		static map_t<string, string> ShadersStore;
 
 	private:
-		void _init(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		void _init(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, EnginePtr engine, string defines, vector_t<string> optionalDefines);		
 	public: 
 		Effect();		
 	public: 
-		static Effect::Ptr New(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
-		static Effect::Ptr New(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, EnginePtr engine, string defines, vector<string> optionalDefines);		
+		static Effect::Ptr New(string baseName, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, EnginePtr engine, string defines, vector_t<string> optionalDefines);		
+		static Effect::Ptr New(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, EnginePtr engine, string defines, vector_t<string> optionalDefines);		
 
 		// Properties
 		virtual bool isReady();
 		virtual IGLProgram::Ptr getProgram();
-		virtual vector<VertexBufferKind>& getAttributes();
+		virtual vector_t<VertexBufferKind>& getAttributes();
 		virtual int getAttributeLocation(VertexBufferKind kind);
 		virtual int getUniformIndex(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(string uniformName);
 		virtual IGLUniformLocation::Ptr getUniform(int sample);
-		virtual vector<string>& getSamplers();
+		virtual vector_t<string>& getSamplers();
 		virtual string getCompilationError();
 		// Methods
 		virtual void _loadVertexShader(string vertex, CallbackFunc callback);
 		virtual void _loadFragmentShader(string fragment, CallbackFunc callback);
-		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<VertexBufferKind> attributesNames, string defines, vector<string> optionalDefines, bool useFallback = false);
+		virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector_t<VertexBufferKind> attributesNames, string defines, vector_t<string> optionalDefines, bool useFallback = false);
 		virtual void _bindTexture(string channel, IGLTexture::Ptr texture);
 		virtual void setTexture(string channel, Texture::Ptr texture);
 		virtual void setTextureFromPostProcess(string channel, PostProcess::Ptr postProcess);

@@ -8,7 +8,7 @@ namespace Babylon {
 	struct Color4: public enable_shared_from_this<Color4> {
 
 	public:
-		typedef shared_ptr<Color4> Ptr;
+		typedef shared_ptr_t<Color4> Ptr;
 
 	public:
 		float r;
@@ -29,7 +29,7 @@ namespace Babylon {
 		virtual Color4::Ptr Lerp(Color4::Ptr left, Color4::Ptr right, float amount);
 		static void LerpToRef(Color4::Ptr left, Color4::Ptr right, float amount, Color4::Ptr result);
 		virtual Color4::Ptr clone();
-		static Color4::Ptr FromArray(vector<float>);
+		static Color4::Ptr FromArray(vector_t<float>);
 	};
 
 };

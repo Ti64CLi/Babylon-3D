@@ -5,24 +5,24 @@
 using namespace Babylon;
 
 // Statics
-map<string, string> Babylon::Effect::ShadersStore;
+map_t<string, string> Babylon::Effect::ShadersStore;
 
 Babylon::Effect::Effect() {
 }
 
-Effect::Ptr Babylon::Effect::New(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Effect::New(string baseName, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, Engine::Ptr engine, string defines, vector_t<string> optionalDefines) {
 	auto effect = make_shared<Effect>(Effect());
 	effect->_init(baseName, baseName, baseName, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 	return effect;
 }
 
-Effect::Ptr Babylon::Effect::New(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+Effect::Ptr Babylon::Effect::New(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, Engine::Ptr engine, string defines, vector_t<string> optionalDefines) {
 	auto effect = make_shared<Effect>(Effect());
 	effect->_init(baseName, vertex, fragment, attributesNames, uniformsNames, samplers, engine, defines, optionalDefines);
 	return effect;
 }
 
-void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, Engine::Ptr engine, string defines, vector<string> optionalDefines) {
+void Babylon::Effect::_init(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, Engine::Ptr engine, string defines, vector_t<string> optionalDefines) {
 	this->_engine = engine;
 	this->name = baseName;
 	this->defines = defines;
@@ -54,7 +54,7 @@ IGLProgram::Ptr Babylon::Effect::getProgram() {
 	return this->_program;
 };
 
-vector<VertexBufferKind>& Babylon::Effect::getAttributes() {
+vector_t<VertexBufferKind>& Babylon::Effect::getAttributes() {
 	return this->_attributes;
 };
 
@@ -74,7 +74,7 @@ IGLUniformLocation::Ptr Babylon::Effect::getUniform(int sample) {
 	return this->_uniforms[sample];
 };
 
-vector<string>& Babylon::Effect::getSamplers() {
+vector_t<string>& Babylon::Effect::getSamplers() {
 	return this->_samplers;
 };
 
@@ -129,7 +129,7 @@ void Babylon::Effect::_loadFragmentShader(string fragment, CallbackFunc callback
 	//BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
 };
 
-void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector<VertexBufferKind> attributesNames, string defines, vector<string> optionalDefines, bool useFallback) {
+void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSourceCode, vector_t<VertexBufferKind> attributesNames, string defines, vector_t<string> optionalDefines, bool useFallback) {
 	
 	try {
 		auto engine = this->_engine;

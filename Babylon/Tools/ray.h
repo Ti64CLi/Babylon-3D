@@ -14,7 +14,7 @@ namespace Babylon {
 	struct Ray: public enable_shared_from_this<Ray> {
 
 	public:
-		typedef shared_ptr<Ray> Ptr;
+		typedef shared_ptr_t<Ray> Ptr;
 
 	public:
 		Vector3::Ptr origin;

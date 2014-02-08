@@ -28,7 +28,7 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Scene> Ptr;
+		typedef shared_ptr_t<Scene> Ptr;
 		typedef void (*BeforeRenderFunc)();
 		typedef void (*ExecuteWhenReadyFunc)();
 		//typedef Ray::Ptr (*RayFunctionFunc)(Matrix::Ptr);
@@ -54,9 +54,9 @@ namespace Babylon {
 		int _executeWhenReadyTimeoutId;
 		Matrix::Ptr _pickWithRayInverseMatrix;
 		IDisposable::Array _toBeDisposed;
-		vector<ExecuteWhenReadyFunc> _onReadyCallbacks;
-		vector<shared_ptr<void>> _pendingData;
-		vector<BeforeRenderFunc> _onBeforeRenderCallbacks;
+		vector_t<ExecuteWhenReadyFunc> _onReadyCallbacks;
+		vector_t<shared_ptr_t<void>> _pendingData;
+		vector_t<BeforeRenderFunc> _onBeforeRenderCallbacks;
 		FOGMODES fogMode;
 		Color3::Ptr fogColor;
 		float fogDensity;
@@ -87,7 +87,7 @@ namespace Babylon {
 		LensFlareSystem::Array lensFlareSystems;
 		bool collisionsEnabled;
 		Vector3::Ptr gravity;
-		vector<shared_ptr<void>> _activeAnimatables;
+		vector_t<shared_ptr_t<void>> _activeAnimatables;
 		Matrix::Ptr _transformMatrix;
 		Vector3::Ptr _scaledPosition;
 		Vector3::Ptr _scaledVelocity;
@@ -128,8 +128,8 @@ namespace Babylon {
 		virtual bool isReady();
 		virtual void registerBeforeRender(BeforeRenderFunc func);
 		virtual void unregisterBeforeRender(BeforeRenderFunc func);
-		virtual void _addPendingData(shared_ptr<void> data);
-		virtual void _removePendingData(shared_ptr<void> data);
+		virtual void _addPendingData(shared_ptr_t<void> data);
+		virtual void _removePendingData(shared_ptr_t<void> data);
 		virtual int getWaitingItemsCount();
 		virtual void executeWhenReady(ExecuteWhenReadyFunc func);
 		virtual void _checkIsReady();

@@ -14,15 +14,15 @@ using namespace std;
 namespace Babylon {
 
 	class ShadowGenerator;
-	typedef shared_ptr<ShadowGenerator> ShadowGeneratorPtr;
+	typedef shared_ptr_t<ShadowGenerator> ShadowGeneratorPtr;
 
 	// TODO: add animations
 	class PointLight : public Light {
 
 	public:
 
-		typedef shared_ptr<PointLight> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<PointLight> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		 Matrix::Ptr _worldMatrix;

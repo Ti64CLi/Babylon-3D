@@ -9,7 +9,7 @@ namespace Babylon {
 	struct Color3: public enable_shared_from_this<Color3> {
 
 	public:
-		typedef shared_ptr<Color3> Ptr;
+		typedef shared_ptr_t<Color3> Ptr;
 
 		int r;
 		int g;

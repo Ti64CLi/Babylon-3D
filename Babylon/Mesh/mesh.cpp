@@ -438,8 +438,8 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 	effectiveMaterial->unbind();
 };
 
-vector<shared_ptr<void>> Babylon::Mesh::getEmittedParticleSystems() {
-	vector<shared_ptr<void>> results;
+vector_t<shared_ptr_t<void>> Babylon::Mesh::getEmittedParticleSystems() {
+	vector_t<shared_ptr_t<void>> results;
 	for (auto particleSystem : this->_scene->particleSystems) {
 		if (particleSystem->emitter == dynamic_pointer_cast<Mesh>(shared_from_this())) {
 			results.push_back(particleSystem);
@@ -449,8 +449,8 @@ vector<shared_ptr<void>> Babylon::Mesh::getEmittedParticleSystems() {
 	return results;
 };
 
-vector<shared_ptr<void>> Babylon::Mesh::getHierarchyEmittedParticleSystems() {
-	vector<shared_ptr<void>> results;
+vector_t<shared_ptr_t<void>> Babylon::Mesh::getHierarchyEmittedParticleSystems() {
+	vector_t<shared_ptr_t<void>> results;
 	auto descendants = this->getDescendants();
 	descendants.push_back(dynamic_pointer_cast<Mesh>(shared_from_this()));
 

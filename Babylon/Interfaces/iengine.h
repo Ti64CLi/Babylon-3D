@@ -6,7 +6,7 @@
 
 #include "igl.h"
 
-#if defined(ANDROID) || defined(NACL)
+#ifdef ANDROID
 
 // TODO: hack for Android
 template < typename T > std::string to_string( const T& n )
@@ -19,7 +19,7 @@ template < typename T > std::string to_string( const T& n )
 #endif
 
 #ifdef NACL
-	#define nullptr ((void*)0)
+	#define nullptr 0
 #endif
 
 namespace Babylon {
@@ -115,15 +115,15 @@ namespace Babylon {
 	};
 
 	class Matrix;
-	typedef shared_ptr<Matrix> MatrixPtr;
+	typedef shared_ptr_t<Matrix> MatrixPtr;
 	struct Vector3;
-	typedef shared_ptr<Vector3> Vector3Ptr;
+	typedef shared_ptr_t<Vector3> Vector3Ptr;
 	struct Color3;
-	typedef shared_ptr<Color3> Color3Ptr;
+	typedef shared_ptr_t<Color3> Color3Ptr;
 	class IScene;
-	typedef shared_ptr<IScene> IScenePtr;
+	typedef shared_ptr_t<IScene> IScenePtr;
 	class Effect;
-	typedef shared_ptr<Effect> EffectPtr;
+	typedef shared_ptr_t<Effect> EffectPtr;
 
 	struct Size {
 	public:
@@ -167,25 +167,25 @@ namespace Babylon {
 
 	class IDisposable {
 	public:
-		typedef shared_ptr<IDisposable> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IDisposable> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		virtual void dispose(bool doNotRecurse = false) = 0;
 	};
 
 	class IRenderable {
 	public:
-		typedef shared_ptr<IRenderable> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IRenderable> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		virtual void render() = 0;
 	};
 
 	class Scene;
-	typedef shared_ptr<Scene> ScenePtr;
+	typedef shared_ptr_t<Scene> ScenePtr;
 
 	class Engine;
-	typedef shared_ptr<Engine> EnginePtr;
+	typedef shared_ptr_t<Engine> EnginePtr;
 };
 
 #endif // BABYLON_IENGINE_H

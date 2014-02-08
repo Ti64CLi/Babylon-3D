@@ -13,9 +13,9 @@ namespace Babylon {
 	class Texture: public BaseTexture {
 
 	public:
-		typedef shared_ptr<Texture> Ptr;
-		typedef vector<Ptr> Array;
-		typedef map<int, Ptr> Map;
+		typedef shared_ptr_t<Texture> Ptr;
+		typedef vector_t<Ptr> Array;
+		typedef map_t<int, Ptr> Map;
 
 	protected:
 		float _cachedUOffset;
@@ -52,7 +52,7 @@ namespace Babylon {
 		float coordinatesIndex;
 		MODES coordinatesMode;
 		int anisotropicFilteringLevel;
-		vector<shared_ptr<void>> animations;
+		vector_t<shared_ptr_t<void>> animations;
 
 		// TAGS
 		int _cachedAnisotropicFilteringLevel;

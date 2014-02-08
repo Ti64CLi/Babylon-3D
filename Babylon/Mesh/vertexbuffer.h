@@ -10,14 +10,14 @@ using namespace std;
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	class VertexBuffer: public IDisposable, public enable_shared_from_this<VertexBuffer> {
 
 	public:
-		typedef shared_ptr<VertexBuffer> Ptr;
-		typedef vector<Ptr> Array;
-		typedef map<VertexBufferKind, Ptr> Map;
+		typedef shared_ptr_t<VertexBuffer> Ptr;
+		typedef vector_t<Ptr> Array;
+		typedef map_t<VertexBufferKind, Ptr> Map;
 
 	public:
 		EnginePtr _engine;

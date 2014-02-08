@@ -46,22 +46,22 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 	// Sprites
 	this->sprites.clear();
 
-	vector<VertexBufferKind> attributes;
+	vector_t<VertexBufferKind> attributes;
 	attributes.push_back(VertexBufferKind_PositionKind);
 	attributes.push_back(Attribute_Options);
 	attributes.push_back(Attribute_CellInfo);
 	attributes.push_back(VertexBufferKind_ColorKind);
 
-	vector<string> uniformsNames;
+	vector_t<string> uniformsNames;
 	uniformsNames.push_back("view");
 	uniformsNames.push_back("projection");
 	uniformsNames.push_back("textureInfos");
 	uniformsNames.push_back("alphaTest");
 
-	vector<string> samplers;
+	vector_t<string> samplers;
 	samplers.push_back("diffuseSampler");
 
-	vector<string> optionalDefines;
+	vector_t<string> optionalDefines;
 
 	// Effects
 	this->_effectBase = this->_scene->getEngine()->createEffect("sprites",

@@ -17,7 +17,7 @@ namespace Babylon {
 	class Engine : public IDisposable, public enable_shared_from_this<Engine> {
 
 	public:
-		typedef shared_ptr<Engine> Ptr;
+		typedef shared_ptr_t<Engine> Ptr;
 		typedef void (*RenderFunction)();
 
 		// Statics
@@ -26,7 +26,7 @@ namespace Babylon {
 		static float epsilon;
 		static float collisionsEpsilon;
 
-		static vector<string> extensions;
+		static vector_t<string> extensions;
 		bool forceWireframe;
 		bool isPointerLock;
 		ICanvas::Ptr _workingCanvas;
@@ -51,9 +51,9 @@ namespace Babylon {
 		VertexBuffer::Map _cachedVertexBuffers;
 		Effect::Ptr _cachedEffectForVertexBuffers;
 		IGLBuffer::Ptr _cachedIndexBuffer;
-		map<string, Effect::Ptr> _compiledEffects;
+		map_t<string, Effect::Ptr> _compiledEffects;
 		bool cullBackFaces;
-		vector<ScenePtr> scenes;
+		vector_t<ScenePtr> scenes;
 
 	protected:
 		Engine(ICanvas::Ptr canvas, bool antialias);
@@ -86,16 +86,16 @@ namespace Babylon {
 		virtual IGLBuffer::Ptr createDynamicVertexBuffer(GLsizeiptr capacity);
 		virtual void updateDynamicVertexBuffer(IGLBuffer::Ptr vertexBuffer, Float32Array& vertices, size_t length = 0);
 		virtual IGLBuffer::Ptr createIndexBuffer(Uint16Array& indices);
-		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect);
+		virtual void bindBuffers(IGLBuffer::Ptr vertexBuffer, IGLBuffer::Ptr indexBuffer, vector_t<VertexBufferKind> vertexDeclarations, int vertexStrideSize, Effect::Ptr effect);
 		virtual void bindMultiBuffers(VertexBuffer::Map vertexBuffers, IGLBuffer::Ptr indexBuffer, Effect::Ptr effect);
 		virtual void _releaseBuffer(IGLBuffer::Ptr buffer);
 		virtual void draw(bool useTriangles, int indexStart, int indexCount);
-		virtual Effect::Ptr createEffect(string baseName, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines);
-		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector<VertexBufferKind> attributesNames, vector<string> uniformsNames, vector<string> samplers, string defines, vector<string> optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, string defines, vector_t<string> optionalDefines);
+		virtual Effect::Ptr createEffect(string baseName, string vertex, string fragment, vector_t<VertexBufferKind> attributesNames, vector_t<string> uniformsNames, vector_t<string> samplers, string defines, vector_t<string> optionalDefines);
 		static IGLShader::Ptr compileShader(IGL::Ptr gl, string source, string type, string defines);
 		virtual IGLProgram::Ptr createShaderProgram(string vertexCode, string fragmentCode, string defines);
-		virtual vector<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector<string> uniformsNames);
-		virtual map<VertexBufferKind, int> getAttributeLocations(IGLProgram::Ptr shaderProgram, vector<VertexBufferKind> attributesNames);
+		virtual vector_t<IGLUniformLocation::Ptr> getUniforms(IGLProgram::Ptr shaderProgram, vector_t<string> uniformsNames);
+		virtual map_t<VertexBufferKind, int> getAttributeLocations(IGLProgram::Ptr shaderProgram, vector_t<VertexBufferKind> attributesNames);
 		virtual void enableEffect(Effect::Ptr effect);
 		virtual void setMatrices(IGLUniformLocation::Ptr uniform, Float32Array& matrices);
 		virtual void setMatrix(IGLUniformLocation::Ptr uniform, Matrix::Ptr matrix);

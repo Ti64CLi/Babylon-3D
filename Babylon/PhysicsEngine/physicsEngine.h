@@ -13,8 +13,8 @@ namespace Babylon {
 	class PhysicsEngine : public IDisposable, public enable_shared_from_this<PhysicsEngine> {
 	
 	public:
-		typedef shared_ptr<PhysicsEngine> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<PhysicsEngine> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private: 
 

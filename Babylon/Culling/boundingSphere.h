@@ -13,8 +13,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<BoundingSphere> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<BoundingSphere> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		Vector3::Ptr minimum;

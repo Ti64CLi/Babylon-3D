@@ -3,7 +3,7 @@
 
 using namespace Babylon;
 
-Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps)
+Babylon::VideoTexture::VideoTexture(string name, vector_t<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps)
 	: Texture(nullptr, scene, false, false),
 	_autoLaunch(false)
 {
@@ -43,7 +43,7 @@ Babylon::VideoTexture::VideoTexture(string name, vector<string> urls, Size size,
 	localtime(&this->_lastUpdate);
 };
 
-VideoTexture::Ptr Babylon::VideoTexture::New(string name, vector<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps) {
+VideoTexture::Ptr Babylon::VideoTexture::New(string name, vector_t<string> urls, Size size, Scene::Ptr scene, bool generateMipMaps) {
 	auto videoTexture = make_shared<VideoTexture>(VideoTexture(name, urls, size, scene, generateMipMaps));
 	videoTexture->_scene->textures.push_back(videoTexture);
 	return videoTexture;

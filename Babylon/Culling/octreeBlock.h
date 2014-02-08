@@ -13,10 +13,10 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<OctreeBlock> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<OctreeBlock> Ptr;
+		typedef vector_t<Ptr> Array;
 
-		vector<SubMesh::Array> subMeshes;
+		vector_t<SubMesh::Array> subMeshes;
 		Mesh::Array meshes;
 		size_t _capacity;
 

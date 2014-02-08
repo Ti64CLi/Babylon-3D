@@ -16,8 +16,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<RenderingManager> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<RenderingManager> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		static size_t MAX_RENDERINGGROUPS;
 

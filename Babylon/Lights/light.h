@@ -12,15 +12,15 @@ using namespace std;
 namespace Babylon {
 
 	class ShadowGenerator;
-	typedef shared_ptr<ShadowGenerator> ShadowGeneratorPtr;
+	typedef shared_ptr_t<ShadowGenerator> ShadowGeneratorPtr;
 
 	// TODO: add animations
 	class Light : public Node, public IDisposable {
 
 	public:
 
-		typedef shared_ptr<Light> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Light> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		Matrix::Ptr _parentedWorldMatrix;
@@ -32,7 +32,7 @@ namespace Babylon {
 		string name;
 		ScenePtr _scene;
 		Mesh::Array excludedMeshes;
-		vector<shared_ptr<void>> animations;
+		vector_t<shared_ptr_t<void>> animations;
 		ShadowGeneratorPtr _shadowGenerator;
 
 		// base properties for

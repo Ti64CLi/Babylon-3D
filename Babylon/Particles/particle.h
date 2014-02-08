@@ -15,8 +15,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Particle> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Particle> Ptr;
+		typedef vector_t<Ptr> Array;
 
         Vector3::Ptr position;
         Vector3::Ptr direction;

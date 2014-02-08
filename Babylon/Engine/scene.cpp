@@ -219,11 +219,11 @@ void Babylon::Scene::unregisterBeforeRender(BeforeRenderFunc func) {
 	}
 };
 
-void Babylon::Scene::_addPendingData(shared_ptr<void> data) {
+void Babylon::Scene::_addPendingData(shared_ptr_t<void> data) {
 	this->_pendingData.push_back(data);
 };
 
-void Babylon::Scene::_removePendingData(shared_ptr<void> data) {
+void Babylon::Scene::_removePendingData(shared_ptr_t<void> data) {
 	auto it = find ( begin( this->_pendingData ), end (this->_pendingData), data);
 
 	if (it != end (this->_pendingData)) {

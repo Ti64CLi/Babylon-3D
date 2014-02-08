@@ -15,14 +15,14 @@ using namespace std;
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	// TODO: finish it
 	class MultiMaterial: public Material {
 
 	public:
-		typedef shared_ptr<MultiMaterial> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<MultiMaterial> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		Material::Array subMaterials;
 

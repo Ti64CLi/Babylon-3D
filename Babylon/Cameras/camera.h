@@ -13,8 +13,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Camera> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Camera> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		ScenePtr _scene;
@@ -27,7 +27,7 @@ namespace Babylon {
 		Matrix::Ptr _projectionMatrix;
 
 		// Animations
-		vector<shared_ptr<void>> animations;
+		vector_t<shared_ptr_t<void>> animations;
 		// Postprocesses
 		PostProcess::Array postProcesses;
 

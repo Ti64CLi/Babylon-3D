@@ -12,8 +12,8 @@ namespace Babylon {
 	{
 	public:
 
-		typedef shared_ptr<Animatable> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Animatable> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		Animation::Array animations;
 
@@ -26,8 +26,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<_Animatable> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<_Animatable> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		float _localDelayOffset;

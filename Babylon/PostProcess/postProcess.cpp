@@ -5,7 +5,7 @@
 
 using namespace Babylon;
 
-Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector<string> parameters, vector<string> samplers, float ratio, Camera::Ptr camera, SAMPLINGMODES samplingMode)
+Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector_t<string> parameters, vector_t<string> samplers, float ratio, Camera::Ptr camera, SAMPLINGMODES samplingMode)
 {
 	this->name = name;
 	this->_camera = camera;
@@ -17,14 +17,14 @@ Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector<strin
 	this->height = -1;
 	this->renderTargetSamplingMode = samplingMode ? samplingMode : NEAREST_SAMPLINGMODE;
 
-	vector<VertexBufferKind> attributes;
+	vector_t<VertexBufferKind> attributes;
 	attributes.push_back(VertexBufferKind_PositionKind);
 
-	vector<string> _samplers;
+	vector_t<string> _samplers;
 	_samplers.insert(end(_samplers), begin(samplers), end(samplers));
 	samplers.push_back("textureSampler");
 
-	vector<string> optionalDefines;
+	vector_t<string> optionalDefines;
 
 	this->_effect = this->_engine->createEffect("postprocess", "postprocess", fragmentUrl,
 		attributes,

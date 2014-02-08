@@ -13,11 +13,11 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<PostProcessManager> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<PostProcessManager> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		IGLBuffer::Ptr _vertexBuffer;
-		vector<VertexBufferKind> _vertexDeclarations;
+		vector_t<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 

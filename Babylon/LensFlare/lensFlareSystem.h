@@ -15,15 +15,15 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<LensFlareSystem> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<LensFlareSystem> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		string name;
 		LensFlare::Array lensFlares;
 		Mesh::Ptr _emitter;
 
 		IGLBuffer::Ptr _vertexBuffer;
-		vector<VertexBufferKind> _vertexDeclarations;
+		vector_t<VertexBufferKind> _vertexDeclarations;
 		size_t _vertexStrideSize;
 		IGLBuffer::Ptr _indexBuffer;
 

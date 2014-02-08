@@ -6,12 +6,12 @@
 namespace Babylon {
 
 	class IGL;
-	typedef shared_ptr<IGL> IGLPtr;
+	typedef shared_ptr_t<IGL> IGLPtr;
 
 	class IImage {
 	public:
-		typedef shared_ptr<IImage> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IImage> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public: 
 		virtual int getWidth() = 0;
@@ -20,7 +20,7 @@ namespace Babylon {
 
 	class IVideo {
 	public:
-		typedef shared_ptr<IVideo> Ptr;
+		typedef shared_ptr_t<IVideo> Ptr;
 
 	public: 
 		virtual int getVideoWidth() = 0;
@@ -42,7 +42,7 @@ namespace Babylon {
 	class I2D {
 
 	public:
-		typedef shared_ptr<I2D> Ptr;
+		typedef shared_ptr_t<I2D> Ptr;
 
 	public: 
 		virtual int drawImage(IImage::Ptr image, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh) = 0;
@@ -52,10 +52,10 @@ namespace Babylon {
 	class ICanvas {
 
 	public:
-		typedef shared_ptr<ICanvas> Ptr;
+		typedef shared_ptr_t<ICanvas> Ptr;
 
 		typedef function<void (int x, int y)> MoveFunc;
-		typedef vector<MoveFunc> MoveFuncArray;
+		typedef vector_t<MoveFunc> MoveFuncArray;
 
 	public: 
 

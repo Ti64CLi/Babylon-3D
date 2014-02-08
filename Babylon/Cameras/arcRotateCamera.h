@@ -15,8 +15,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<ArcRotateCamera> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<ArcRotateCamera> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		ICanvas::Ptr _attachedCanvas;

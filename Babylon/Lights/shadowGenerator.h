@@ -15,15 +15,15 @@ using namespace std;
 namespace Babylon {
 
 	class Light;
-	typedef shared_ptr<Light> LightPtr;
+	typedef shared_ptr_t<Light> LightPtr;
 
 	// TODO: add animations
 	class ShadowGenerator : public IDisposable, public enable_shared_from_this<ShadowGenerator> {
 
 	public:
 
-		typedef shared_ptr<ShadowGenerator> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<ShadowGenerator> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		LightPtr _light;

@@ -13,8 +13,8 @@ namespace Babylon {
 	class RenderTargetTexture: public Texture, public IRenderable {
 
 	public:
-		typedef shared_ptr<RenderTargetTexture> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<RenderTargetTexture> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		typedef void (*OnBeforeRenderFunc)();
 		typedef void (*OnAfterRenderFunc)();
@@ -39,7 +39,7 @@ namespace Babylon {
 		ScenePtr scene;
 
 	private:
-		vector<string> _waitingRenderList;
+		vector_t<string> _waitingRenderList;
 
 	protected: 
 		RenderTargetTexture(string name, Size size, ScenePtr scene, bool generateMipMaps);		

@@ -29,9 +29,9 @@ namespace Babylon {
 
 	typedef void*			any;
 
-	typedef vector<GLfloat> 	Float32Array;
-	typedef vector<int32_t> 	Int32Array;
-	typedef vector<uint16_t> 	Uint16Array;
+	typedef vector_t<GLfloat> 	Float32Array;
+	typedef vector_t<int32_t> 	Int32Array;
+	typedef vector_t<uint16_t> 	Uint16Array;
 
 	struct GLContextAttributes {
 	public:
@@ -57,15 +57,15 @@ namespace Babylon {
 
 	class IGLObject {
 	public:
-		typedef shared_ptr<IGLObject> Ptr;
+		typedef shared_ptr_t<IGLObject> Ptr;
 		GLuint value;
 		IGLObject(GLuint _value) : value(_value) {};
 	};
 
 	class IGLBuffer : public IGLObject {
 	public:
-		typedef shared_ptr<IGLBuffer> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IGLBuffer> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		// TODO: custom referense count for Babylon - do we need it if we use shared_object?
 		// TODO: get rid of it
@@ -75,32 +75,32 @@ namespace Babylon {
 
 	class IGLFramebuffer : public IGLObject {
 	public:
-		typedef shared_ptr<IGLFramebuffer> Ptr;
+		typedef shared_ptr_t<IGLFramebuffer> Ptr;
 		IGLFramebuffer(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLProgram : public IGLObject {
 	public:
-		typedef shared_ptr<IGLProgram> Ptr;
+		typedef shared_ptr_t<IGLProgram> Ptr;
 		IGLProgram(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLRenderbuffer : public IGLObject {
 	public:
-		typedef shared_ptr<IGLRenderbuffer> Ptr;
+		typedef shared_ptr_t<IGLRenderbuffer> Ptr;
 		IGLRenderbuffer(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLShader : public IGLObject {
 	public:
-		typedef shared_ptr<IGLShader> Ptr;
+		typedef shared_ptr_t<IGLShader> Ptr;
 		IGLShader(GLuint value) : IGLObject(value) {};
 	};
 
 	class IGLTexture : public IGLObject {
 	public:
-		typedef shared_ptr<IGLTexture> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IGLTexture> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		// TODO: finish it, I think Tag should not be here
 		// Tag properties
@@ -144,8 +144,8 @@ namespace Babylon {
 
 	class IGLUniformLocation {
 	public:
-		typedef shared_ptr<IGLUniformLocation> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<IGLUniformLocation> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		GLint value;
 		IGLUniformLocation(GLint _value) : value(_value) {};
@@ -153,7 +153,7 @@ namespace Babylon {
 
 	class IGLActiveInfo : public IGLObject {
 	public:
-		typedef shared_ptr<IGLActiveInfo> Ptr;
+		typedef shared_ptr_t<IGLActiveInfo> Ptr;
 
 		virtual GLint getSize() = 0;
 		virtual GLenum getType() = 0;
@@ -164,7 +164,7 @@ namespace Babylon {
 
 	class IGLShaderPrecisionFormat : public IGLObject {
 	public:
-		typedef shared_ptr<IGLShaderPrecisionFormat> Ptr;
+		typedef shared_ptr_t<IGLShaderPrecisionFormat> Ptr;
 
 		virtual GLint getRangeMin() = 0;
 		virtual GLint getRangeMax() = 0;
@@ -598,7 +598,7 @@ namespace Babylon {
 	class IGL {
 	public: 
 
-		typedef shared_ptr<IGL> Ptr;
+		typedef shared_ptr_t<IGL> Ptr;
 
 		virtual ICanvas::Ptr getCanvas() = 0;
 		virtual GLsizei getDrawingBufferWidth() = 0;
@@ -607,7 +607,7 @@ namespace Babylon {
 		virtual GLContextAttributes getContextAttributes() = 0;
 		virtual bool isContextLost() = 0;
 
-		virtual vector<string> getSupportedExtensions() = 0;
+		virtual vector_t<string> getSupportedExtensions() = 0;
 		virtual any getExtension(string name) = 0;
 
 		virtual GLenum operator[](string name) = 0;
@@ -692,7 +692,7 @@ namespace Babylon {
 
 		virtual IGLActiveInfo::Ptr getActiveAttrib(IGLProgram::Ptr program, GLuint index) = 0;
 		virtual IGLActiveInfo::Ptr getActiveUniform(IGLProgram::Ptr program, GLuint index) = 0;
-		virtual vector<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
+		virtual vector_t<IGLShader::Ptr> getAttachedShaders(IGLProgram::Ptr program) = 0;
 
 		virtual GLint getAttribLocation(IGLProgram::Ptr program, string name) = 0;
 

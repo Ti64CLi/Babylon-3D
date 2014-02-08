@@ -1,6 +1,5 @@
 #include "gl.h"
-#include <memory>
-#include <stdexcept>
+#include "defs.h"
 
 #include <GL/glew.h>
 #include <GL/glut.h>

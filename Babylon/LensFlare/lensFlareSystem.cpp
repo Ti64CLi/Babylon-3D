@@ -48,17 +48,17 @@ Babylon::LensFlareSystem::LensFlareSystem(string name, Mesh::Ptr emitter, Scene:
 
 	this->_indexBuffer = scene->getEngine()->createIndexBuffer(indices);
 
-	vector<VertexBufferKind> attributes;
+	vector_t<VertexBufferKind> attributes;
 	attributes.push_back(VertexBufferKind_PositionKind);
 
-	vector<string> uniformsNames;
+	vector_t<string> uniformsNames;
 	uniformsNames.push_back("color");
 	uniformsNames.push_back("viewportMatrix");
 
-	vector<string> samplers;
+	vector_t<string> samplers;
 	samplers.push_back("textureSampler");   
 
-	vector<string> optionalDefines;
+	vector_t<string> optionalDefines;
 
 	// Effects
 	this->_effect = this->_scene->getEngine()->createEffect("layer",

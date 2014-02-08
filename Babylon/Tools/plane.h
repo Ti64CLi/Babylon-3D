@@ -11,8 +11,8 @@ namespace Babylon {
 	class Plane: public enable_shared_from_this<Plane> {
 
 	public:
-		typedef shared_ptr<Plane> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Plane> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	public:
 		Vector3::Ptr normal;

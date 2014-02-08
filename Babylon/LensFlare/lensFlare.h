@@ -11,14 +11,14 @@
 namespace Babylon {
 
 	class LensFlareSystem;
-	typedef shared_ptr<LensFlareSystem> LensFlareSystemPtr;
+	typedef shared_ptr_t<LensFlareSystem> LensFlareSystemPtr;
 
 	class LensFlare : public IDisposable, public enable_shared_from_this<LensFlare> {
 
 	public:
 
-		typedef shared_ptr<LensFlare> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<LensFlare> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		Color3::Ptr color;
 		Vector3::Ptr position;

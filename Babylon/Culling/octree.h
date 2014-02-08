@@ -12,8 +12,8 @@ namespace Babylon {
 
 	public:
 
-		typedef shared_ptr<Octree> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Octree> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		OctreeBlock::Array blocks;
 		int _maxBlockCapacity;

@@ -16,13 +16,13 @@ using namespace std;
 namespace Babylon {
 
 	class Mesh;
-	typedef shared_ptr<Mesh> MeshPtr;
+	typedef shared_ptr_t<Mesh> MeshPtr;
 
 	class StandardMaterial: public Material {
 
 	public:
-		typedef shared_ptr<StandardMaterial> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<StandardMaterial> Ptr;
+		typedef vector_t<Ptr> Array;
 
 	private:
 		int _renderId;
@@ -67,7 +67,7 @@ namespace Babylon {
 		virtual void unbind();
 		virtual void bind(Matrix::Ptr world, MeshPtr mesh);
 		virtual Texture::Array getAnimatables();
-		virtual void dispose();
+		virtual void dispose(bool doNotRecurse = false);
 		virtual StandardMaterial::Ptr clone(string name);
 	};
 

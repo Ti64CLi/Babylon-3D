@@ -11,14 +11,14 @@ using namespace std;
 namespace Babylon {
 
 	class SpriteManager;
-	typedef shared_ptr<SpriteManager> SpriteManagerPtr;
+	typedef shared_ptr_t<SpriteManager> SpriteManagerPtr;
 
 	class Sprite : public IDisposable, public enable_shared_from_this<Sprite> {
 
 	public:
 
-		typedef shared_ptr<Sprite> Ptr;
-		typedef vector<Ptr> Array;
+		typedef shared_ptr_t<Sprite> Ptr;
+		typedef vector_t<Ptr> Array;
 
 		string name;
 		SpriteManagerPtr _manager;
