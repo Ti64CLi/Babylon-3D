@@ -1,5 +1,5 @@
 #include "octreeBlock.h"
-#include <limits>
+#include "defs.h"
 #include "octree.h"
 
 using namespace Babylon;

@@ -1,5 +1,5 @@
 #include "spriteManager.h"
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 #include "tools.h"
 
@@ -30,7 +30,7 @@ Babylon::SpriteManager::SpriteManager(string name, string imgUrl, size_t capacit
 
 	Uint16Array indices;
 	auto index = 0;
-	for (auto count = 0; count < capacity; count++) {
+	for (size_t count = 0; count < capacity; count++) {
 		indices.push_back(index);
 		indices.push_back(index + 1);
 		indices.push_back(index + 2);
@@ -109,7 +109,7 @@ void Babylon::SpriteManager::_appendSpriteVertex(int index, Sprite::Ptr sprite, 
 	this->_vertices[arrayOffset + 7] = sprite->invertU ? 1 : 0;
 	this->_vertices[arrayOffset + 8] = sprite->invertV ? 1 : 0;
 	auto offset = (sprite->cellIndex / rowSize) >> 0;
-	this->_vertices[arrayOffset + 9] = sprite->cellIndex - offset * rowSize;
+	this->_vertices[arrayOffset + 9] = sprite->cellIndex - (size_t)offset * rowSize;
 	this->_vertices[arrayOffset + 10] = offset;
 	// Color
 	this->_vertices[arrayOffset + 11] = sprite->color->r;
@@ -132,8 +132,7 @@ bool Babylon::SpriteManager::render() {
 	auto rowSize = baseSize.width / this->cellSize;
 
 	auto offset = 0;
-	for (auto index = 0; index < max; index++) {
-		auto sprite = this->sprites[index];
+	for (auto sprite : this->sprites) {
 		if (!sprite) {
 			continue;
 		}

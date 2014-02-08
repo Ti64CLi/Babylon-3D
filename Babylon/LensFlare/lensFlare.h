@@ -1,16 +1,12 @@
 #ifndef BABYLON_LENSFLARE_H
 #define BABYLON_LENSFLARE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "vector3.h"
 #include "color3.h"
 #include "texture.h"
-
-using namespace std;
 
 namespace Babylon {
 

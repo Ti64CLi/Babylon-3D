@@ -1,12 +1,12 @@
 #include "renderingManager.h"
+#include "defs.h"
 #include <time.h>
-#include <algorithm>
 #include "engine.h"
 
 using namespace Babylon;
 
 // Statics
-int Babylon::RenderingManager::MAX_RENDERINGGROUPS = 4;
+size_t Babylon::RenderingManager::MAX_RENDERINGGROUPS = 4;
 
 Babylon::RenderingManager::RenderingManager(Scene::Ptr scene)
 {
@@ -74,7 +74,7 @@ void Babylon::RenderingManager::_clearDepthBuffer() {
 void Babylon::RenderingManager::render(CustomRenderFunctionFunc customRenderFunction, Mesh::Array activeMeshes, bool renderParticles, bool renderSprites) {
 	
 
-	for (auto index = 0 ; index < MAX_RENDERINGGROUPS; index++) {
+	for (size_t index = 0 ; index < MAX_RENDERINGGROUPS; index++) {
 		this->_depthBufferAlreadyCleaned = index == 0;
 		auto renderingGroup = index < this->_renderingGroups.size() ? this->_renderingGroups[index] : nullptr;
 		if (renderingGroup) {

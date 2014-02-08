@@ -3,17 +3,27 @@ if( NOT EXISTS "${NACL_SDK_ROOT}" )
    if( NOT EXISTS "${NACL_SDK_ROOT}" )
       message( FATAL_ERROR "please define a cmake or environment variable: NACL_SDK_ROOT" )
    endif()
+
 endif()
 
+#- set compiler (Nacl or Pnacl)
+set(COMPILER_TYPE "clang")
+#set(COMPILER_TYPE "gcc")
+
 set(HOST win)
-#set(ARCH pnacl)
+if(COMPILER_TYPE STREQUAL "gcc")
 set(ARCH x86_glibc)
-#set(HOST_C_COMPILER pnacl-clang.bat)
-#set(HOST_CPP_COMPILER pnacl-clang++.bat)
 set(HOST_C_COMPILER x86_64-nacl-gcc.exe)
 set(HOST_CPP_COMPILER x86_64-nacl-g++.exe)
+else()
+set(ARCH pnacl)
+set(HOST_C_COMPILER pnacl-clang.bat)
+set(HOST_CPP_COMPILER pnacl-clang++.bat)
+endif()
 
 string( REPLACE "\\" "/" NACL_SDK_ROOT "${NACL_SDK_ROOT}" )
+
+add_definitions(-DNACL=1)
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -24,9 +34,9 @@ set(CMAKE_C_COMPILER    "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}
 set(CMAKE_CXX_COMPILER  "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}_${ARCH}/bin/${HOST_CPP_COMPILER}")
 set(NACL_SYSROOT        "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${HOST}_${ARCH}/sysroot" CACHE PATH "NACL cross compilation system root")
 
-set(CMAKE_CXX_FLAGS           "" 				CACHE STRING "c++ flags")
-set(CMAKE_C_FLAGS             ""                    		CACHE STRING "c flags")
-set(CMAKE_LD_FLAGS            ""                    		CACHE STRING "ld flags")
+set(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS}"		CACHE STRING "c++ flags")
+set(CMAKE_C_FLAGS             "${CMAKE_C_FLAGS}"             	CACHE STRING "c flags")
+set(CMAKE_LD_FLAGS            "${CMAKE_LD_FLAGS}"      		CACHE STRING "ld flags")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${NACL_SDK_ROOT}/include")
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -I${NACL_SDK_ROOT}/include")

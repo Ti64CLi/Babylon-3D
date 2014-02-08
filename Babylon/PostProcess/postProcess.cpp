@@ -1,5 +1,5 @@
 #include "postProcess.h"
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 #include "camera.h"
 

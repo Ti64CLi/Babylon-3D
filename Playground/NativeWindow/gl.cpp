@@ -532,31 +532,31 @@ void GL::hint(Babylon::GLenum target, Babylon::GLenum mode) {
 }
 
 Babylon::GLboolean GL::isBuffer(Babylon::IGLBuffer::Ptr buffer) { 
-	return glIsBuffer(buffer->value);
+	return glIsBuffer(buffer->value) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isEnabled(Babylon::GLenum cap) { 
-	return glIsEnabled(cap);
+	return glIsEnabled(cap) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isFramebuffer(Babylon::IGLFramebuffer::Ptr framebuffer) { 
-	return glIsFramebufferEXT(framebuffer->value);
+	return glIsFramebufferEXT(framebuffer->value) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isProgram(Babylon::IGLProgram::Ptr program) { 
-	return glIsProgram(program->value);
+	return glIsProgram(program->value) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isRenderbuffer(Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-	return glIsRenderbufferEXT(renderbuffer->value);
+	return glIsRenderbufferEXT(renderbuffer->value) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isShader(Babylon::IGLShader::Ptr shader) { 
-	return glIsShader(shader->value);
+	return glIsShader(shader->value) == GL_TRUE;
 }
 
 Babylon::GLboolean GL::isTexture(Babylon::IGLTexture::Ptr texture) { 
-	return glIsTexture(texture->value);
+	return glIsTexture(texture->value) == GL_TRUE;
 }
 
 void GL::lineWidth(Babylon::GLfloat width) { 

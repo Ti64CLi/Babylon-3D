@@ -1,5 +1,5 @@
 #include "mesh.h"
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 #include "camera.h"
 #include "tools.h"
@@ -279,7 +279,7 @@ Matrix::Ptr Babylon::Mesh::computeWorldMatrix(bool force) {
 			Matrix::TranslationToRef(localPosition->x, localPosition->y, localPosition->z, this->_localTranslation);
 		}
 
-		if (this->billboardMode & BILLBOARDMODE_ALL == BILLBOARDMODE_ALL) {
+		if ((this->billboardMode & BILLBOARDMODE_ALL) == BILLBOARDMODE_ALL) {
 			zero = this->_scene->activeCamera->position;
 		} else {
 			if (this->billboardMode & BILLBOARDMODE_X)
@@ -414,8 +414,8 @@ void Babylon::Mesh::render(SubMesh::Ptr subMesh) {
 		return;
 	}
 
-	for (auto callbackIndex = 0; callbackIndex < this->_onBeforeRenderCallbacks.size(); callbackIndex++) {
-		this->_onBeforeRenderCallbacks[callbackIndex]();
+	for (auto _onBeforeRenderCallback : this->_onBeforeRenderCallbacks) {
+		_onBeforeRenderCallback();
 	}
 
 	// World
@@ -577,7 +577,7 @@ void Babylon::Mesh::bakeTransformIntoVertices(Matrix::Ptr transform) {
 
 	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind]->getData();
 	auto temp = Float32Array(data.size());
-	for (auto index = 0; index < data.size(); index += 3) {
+	for (size_t index = 0; index < data.size(); index += 3) {
 		Vector3::TransformCoordinates(Vector3::FromArray(data, index), transform)->toArray(temp, index);
 	}
 
@@ -589,7 +589,7 @@ void Babylon::Mesh::bakeTransformIntoVertices(Matrix::Ptr transform) {
 	}
 
 	data = this->_vertexBuffers[VertexBufferKind_NormalKind]->getData();
-	for (auto index = 0; index < data.size(); index += 3) {
+	for (size_t index = 0; index < data.size(); index += 3) {
 		Vector3::TransformNormal(Vector3::FromArray(data, index), transform)->toArray(temp, index);
 	}
 
@@ -624,7 +624,7 @@ void Babylon::Mesh::_generatePointsArray() {
 	this->_positions.clear();
 
 	auto data = this->_vertexBuffers[VertexBufferKind_PositionKind]->getData();
-	for (auto index = 0; index < data.size(); index += 3) {
+	for (size_t index = 0; index < data.size(); index += 3) {
 		this->_positions.push_back(Vector3::FromArray(data, index));
 	}
 };
@@ -1018,11 +1018,11 @@ Mesh::Ptr Babylon::Mesh::CreateSphere(string name, size_t segments, float diamet
 
 	auto PI = 4. * atan(1.);
 
-	for (auto zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++) {
+	for (size_t zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++) {
 		auto normalizedZ = (float)zRotationStep / (float)totalZRotationSteps;
 		auto angleZ = (normalizedZ * PI);
 
-		for (auto yRotationStep = 0; yRotationStep <= totalYRotationSteps; yRotationStep++) {
+		for (size_t yRotationStep = 0; yRotationStep <= totalYRotationSteps; yRotationStep++) {
 			auto normalizedY = (float)yRotationStep / (float)totalYRotationSteps;
 
 			auto angleY = normalizedY * PI * 2;
@@ -1255,7 +1255,7 @@ Mesh::Ptr Babylon::Mesh::CreatePlane(string name, float size, Scene::Ptr scene, 
 	Float32Array uvs;
 
 	// Vertices
-	auto halfSize = size / 2.0;
+	auto halfSize = size / 2.0f;
 	positions.push_back(-halfSize);
 	positions.push_back(-halfSize); 
 	positions.push_back(0);

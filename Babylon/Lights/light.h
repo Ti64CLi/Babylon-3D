@@ -1,9 +1,7 @@
 #ifndef BABYLON_LIGHT_H
 #define BABYLON_LIGHT_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "node.h"

@@ -1,12 +1,8 @@
 #ifndef BABYLON_ANIMATABLE_H
 #define BABYLON_ANIMATABLE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 #include "animation.h"
-
-using namespace std;
 
 namespace Babylon {
 

@@ -1,15 +1,9 @@
 #ifndef BABYLON_ANIMATION_H
 #define BABYLON_ANIMATION_H
 
-#include <memory>
-#include <vector>
-#include <map>
-
+#include "decls.h"
 #include "iengine.h"
-#include "vector3.h"
-#include "quaternion.h"
-
-using namespace std;
+#include "tools_math.h"
 
 namespace Babylon {
 

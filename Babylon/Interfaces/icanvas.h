@@ -1,11 +1,7 @@
 #ifndef BABYLON_CANVAS_H
 #define BABYLON_CANVAS_H
 
-#include <memory>
-#include <vector>
-#include <functional>
-
-using namespace std;
+#include "decls.h"
 
 namespace Babylon {
 

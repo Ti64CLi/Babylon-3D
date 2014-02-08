@@ -6,9 +6,7 @@
 
 #include "igl.h"
 
-using namespace std;
-
-#if ANDROID
+#if defined(ANDROID) || defined(NACL)
 
 // TODO: hack for Android
 template < typename T > std::string to_string( const T& n )
@@ -18,6 +16,10 @@ template < typename T > std::string to_string( const T& n )
 	return string (buff, ret);
 }
 
+#endif
+
+#ifdef NACL
+	#define nullptr ((void*)0)
 #endif
 
 namespace Babylon {

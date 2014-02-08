@@ -1,16 +1,12 @@
 #ifndef BABYLON_Layer_H
 #define BABYLON_Layer_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "texture.h"
 #include "color4.h"
 #include "effect.h"
-
-using namespace std;
 
 namespace Babylon {
 

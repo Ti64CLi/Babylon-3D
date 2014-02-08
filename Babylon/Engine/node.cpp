@@ -35,7 +35,7 @@ void Babylon::Node::_updateCache (bool ignoreParentClass) {
 };
 
 void Babylon::Node::_syncChildFlag() {
-	this->_childrenFlag = this->parent ? this->parent->_childrenFlag : this->_scene->getRenderId();
+	this->_childrenFlag = this->parent ? this->parent->_childrenFlag : this->_scene->getRenderId() > 0;
 };
 
 bool Babylon::Node::isSynchronizedWithParent() {

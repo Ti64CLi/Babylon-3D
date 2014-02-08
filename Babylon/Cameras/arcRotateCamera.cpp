@@ -1,6 +1,5 @@
 #include "arcRotateCamera.h"
-#include <limits>
-#include <cmath>
+#include "defs.h"
 #include "engine.h"
 
 using namespace Babylon;

@@ -1,11 +1,8 @@
 #ifndef BABYLON_COLOR3_H
 #define BABYLON_COLOR3_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 #include "iengine.h"
-
-using namespace std;
 
 namespace Babylon {
 

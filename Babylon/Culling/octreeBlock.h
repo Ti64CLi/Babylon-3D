@@ -1,15 +1,11 @@
 #ifndef BABYLON_OCTREEBLOCK_H
 #define BABYLON_OCTREEBLOCK_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "vector3.h"
 #include "plane.h"
 #include "mesh.h"
-
-using namespace std;
 
 namespace Babylon {
 

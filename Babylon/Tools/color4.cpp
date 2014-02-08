@@ -1,4 +1,5 @@
 #include "color4.h"
+#include "defs.h"
 
 using namespace Babylon;
 

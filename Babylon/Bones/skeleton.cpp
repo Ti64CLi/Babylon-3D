@@ -1,6 +1,6 @@
 #include "skeleton.h"
+#include "defs.h"
 #include "engine.h"
-#include <algorithm>
 
 using namespace Babylon;
 

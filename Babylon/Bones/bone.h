@@ -1,15 +1,11 @@
 #ifndef BABYLON_BONE_H
 #define BABYLON_BONE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
+#include "tools_math.h"
 
-#include "matrix.h"
 #include "animation.h"
 #include "animatable.h"
-
-using namespace std;
 
 namespace Babylon {
 

@@ -1,6 +1,5 @@
 #include "camera.h"
-#include <limits>
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 
 using namespace Babylon;

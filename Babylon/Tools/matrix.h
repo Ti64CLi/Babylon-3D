@@ -1,13 +1,10 @@
 #ifndef BABYLON_MATRIX_H
 #define BABYLON_MATRIX_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "igl.h"
 #include "vector3.h"
-
-using namespace std;
 
 namespace Babylon {
 

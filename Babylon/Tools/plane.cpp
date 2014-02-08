@@ -1,5 +1,5 @@
 #include "plane.h"
-#include <cmath>
+#include "defs.h"
 
 using namespace Babylon;
 

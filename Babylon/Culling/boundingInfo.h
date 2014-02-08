@@ -1,16 +1,12 @@
 #ifndef BABYLON_BOUNDINGINFO_H
 #define BABYLON_BOUNDINGINFO_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "vector3.h"
 #include "plane.h"
 #include "boundingBox.h"
 #include "boundingSphere.h"
-
-using namespace std;
 
 namespace Babylon {
 

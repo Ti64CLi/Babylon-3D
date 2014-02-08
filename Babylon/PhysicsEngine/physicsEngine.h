@@ -1,9 +1,7 @@
 #ifndef BABYLON_PHYSICSENGINE_H
 #define BABYLON_PHYSICSENGINE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "vector3.h"
 

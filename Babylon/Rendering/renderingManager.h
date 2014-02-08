@@ -1,10 +1,7 @@
 #ifndef BABYLON_RENDERINGMANAGER_H
 #define BABYLON_RENDERINGMANAGER_H
 
-#include <memory>
-#include <vector>
-#include <map>
-#include <functional>
+#include "decls.h"
 
 #include "iengine.h"
 #include "renderingGroup.h"
@@ -22,7 +19,7 @@ namespace Babylon {
 		typedef shared_ptr<RenderingManager> Ptr;
 		typedef vector<Ptr> Array;
 
-		static int MAX_RENDERINGGROUPS;
+		static size_t MAX_RENDERINGGROUPS;
 
 		RenderingGroup::Array _renderingGroups;
 		bool _depthBufferAlreadyCleaned;

@@ -1,9 +1,7 @@
 #ifndef BABYLON_VERTEXBUFFER_H
 #define BABYLON_VERTEXBUFFER_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 

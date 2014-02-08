@@ -1,15 +1,11 @@
 #ifndef BABYLON_TEXTURE_H
 #define BABYLON_TEXTURE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "baseTexture.h"
 #include "matrix.h"
-
-using namespace std;
 
 namespace Babylon {
 

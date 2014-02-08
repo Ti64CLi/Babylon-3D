@@ -1,9 +1,7 @@
 #ifndef BABYLON_SHADOWGENERATOR_H
 #define BABYLON_SHADOWGENERATOR_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "node.h"

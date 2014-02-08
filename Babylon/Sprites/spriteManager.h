@@ -1,9 +1,7 @@
 #ifndef BABYLON_SpriteManager_H
 #define BABYLON_SpriteManager_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "sprite.h"

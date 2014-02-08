@@ -1,14 +1,10 @@
 #ifndef BABYLON_Octree_H
 #define BABYLON_Octree_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "octreeBlock.h"
 #include "mesh.h"
-
-using namespace std;
 
 namespace Babylon {
 

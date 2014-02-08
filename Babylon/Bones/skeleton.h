@@ -1,16 +1,11 @@
 #ifndef BABYLON_SKELETON_H
 #define BABYLON_SKELETON_H
 
-#include <memory>
-#include <vector>
-#include <map>
-
+#include "decls.h"
 #include "iengine.h"
 
 #include "bone.h"
 #include "animatable.h"
-
-using namespace std;
 
 namespace Babylon {
 

@@ -1,15 +1,11 @@
 #ifndef BABYLON_NODE_H
 #define BABYLON_NODE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "matrix.h"
 #include "quaternion.h"
-
-using namespace std;
 
 namespace Babylon {
 
@@ -52,7 +48,7 @@ namespace Babylon {
 		typedef vector<Ptr> Array;
 
 	protected:
-		int _childrenFlag;
+		bool _childrenFlag;
 		bool _isReady;
 		bool _animationStarted;
 		bool _isEnabled;

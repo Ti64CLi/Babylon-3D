@@ -1,13 +1,10 @@
 #ifndef BABYLON_VECTOR2_H
 #define BABYLON_VECTOR2_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "igl.h"
 #include "viewport.h"
-
-using namespace std;
 
 namespace Babylon {
 

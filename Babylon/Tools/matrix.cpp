@@ -1,5 +1,5 @@
 #include "matrix.h"
-#include <cmath>
+#include "defs.h"
 #include "quaternion.h"
 #include "plane.h"
 

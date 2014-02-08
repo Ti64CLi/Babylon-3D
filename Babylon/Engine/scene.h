@@ -1,9 +1,7 @@
 #ifndef BABYLON_SCENE_H
 #define BABYLON_SCENE_H
 
-#include <memory>
-#include <vector>
-#include <functional>
+#include "decls.h"
 #include <time.h>
 
 #include "iengine.h"
@@ -23,8 +21,6 @@
 #include "layer.h"
 #include "lensFlareSystem.h"
 #include "spriteManager.h"
-
-using namespace std;
 
 namespace Babylon {
 
@@ -47,13 +43,13 @@ namespace Babylon {
 		int _totalVertices;
 		int _activeVertices;
 		int _activeParticles;
-		int _lastFrameDuration;
-		int _evaluateActiveMeshesDuration;
-		int _renderTargetsDuration;
-		int _renderDuration;
-		int _particlesDuration;
-		int _spritesDuration;
-		int _animationRatio;
+		time_t _lastFrameDuration;
+		time_t _evaluateActiveMeshesDuration;
+		time_t _renderTargetsDuration;
+		time_t _renderDuration;
+		time_t _particlesDuration;
+		time_t _spritesDuration;
+		time_t _animationRatio;
 		int _renderId;
 		int _executeWhenReadyTimeoutId;
 		Matrix::Ptr _pickWithRayInverseMatrix;

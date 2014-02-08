@@ -1,11 +1,7 @@
 #ifndef BABYLON_RENDERINGGROUP_H
 #define BABYLON_RENDERINGGROUP_H
 
-#include <memory>
-#include <vector>
-#include <map>
-#include <set>
-#include <functional>
+#include "decls.h"
 
 #include "iengine.h"
 #include "subMesh.h"

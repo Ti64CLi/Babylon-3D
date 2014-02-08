@@ -1,9 +1,7 @@
 #ifndef BABYLON_PARTICLESYSTEM_H
 #define BABYLON_PARTICLESYSTEM_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "vector3.h"
@@ -33,7 +31,7 @@ namespace Babylon {
 		bool _started;
 		bool _stopped;
 		int _actualFrame;
-		float _scaledUpdateSpeed;
+		int _scaledUpdateSpeed;
 		size_t _capacity;
 		string _cachedDefines;
 		Effect::Ptr _effect;

@@ -1,7 +1,7 @@
 #include "frustum.h"
+#include "defs.h"
 
 using namespace Babylon;
-
 // Statics
 Plane::Array Babylon::Frustum::GetPlanes(Matrix::Ptr transform) {
 	Plane::Array frustumPlanes;

@@ -1,8 +1,7 @@
 #ifndef BABYLON_SubMesh_H
 #define BABYLON_SubMesh_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "iengine.h"
 #include "boundingInfo.h"

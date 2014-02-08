@@ -1,15 +1,11 @@
 #ifndef BABYLON_BOUNDINGSPHERE_H
 #define BABYLON_BOUNDINGSPHERE_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "vector3.h"
 #include "matrix.h"
 #include "plane.h"
-
-using namespace std;
 
 namespace Babylon {
 

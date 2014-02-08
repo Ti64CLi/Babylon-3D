@@ -1,16 +1,12 @@
 #ifndef BABYLON_RENDERTARGETTEXTURE_H
 #define BABYLON_RENDERTARGETTEXTURE_H
 
-#include <memory>
-#include <vector>
-#include <time.h>
+#include "decls.h"
 
 #include "iengine.h"
 #include "texture.h"
 #include "mesh.h"
 #include "renderingManager.h"
-
-using namespace std;
 
 namespace Babylon {
 

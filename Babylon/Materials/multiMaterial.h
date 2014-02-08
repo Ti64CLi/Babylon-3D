@@ -1,10 +1,7 @@
 #ifndef BABYLON_MULTIMATERIAL_H
 #define BABYLON_MULTIMATERIAL_H
 
-#include <memory>
-#include <vector>
-#include <string>
-#include <map>
+#include "decls.h"
 
 #include "igl.h"
 #include "iengine.h"

@@ -1,17 +1,13 @@
-#ifndef BABYLON_ArcRotateCamera_H
-#define BABYLON_ArcRotateCamera_H
+#ifndef BABYLON_ARCROTATECAMERA_H
+#define BABYLON_ARCROTATECAMERA_H
 
-#include <memory>
-#include <vector>
-#include <map>
-#include <functional>
+#include "decls.h"
 
 #include "icanvas.h"
 #include "iengine.h"
+
 #include "camera.h"
 #include "matrix.h"
-
-using namespace std;
 
 namespace Babylon {
 
@@ -76,4 +72,4 @@ namespace Babylon {
 
 };
 
-#endif // BABYLON_ArcRotateCamera_H
+#endif // BABYLON_ARCROTATECAMERA_H

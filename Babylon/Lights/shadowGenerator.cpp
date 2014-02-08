@@ -1,7 +1,5 @@
 #include "shadowGenerator.h"
-#include <string>
-#include <algorithm>
-#include <sstream>
+#include "defs.h"
 #include "engine.h"
 #include "light.h"
 

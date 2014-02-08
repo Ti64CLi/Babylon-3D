@@ -57,7 +57,7 @@ void Babylon::PostProcessManager::_finalizeFrame() {
 
 	auto engine = this->_scene->getEngine();
 
-	for (auto index = 0; index < postProcesses.size(); index++) {            
+	for (size_t index = 0; index < postProcesses.size(); index++) {            
 		if (index < postProcesses.size() - 1) {
 			postProcesses[index + 1]->activate();
 		} else {

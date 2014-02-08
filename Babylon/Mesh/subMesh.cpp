@@ -1,5 +1,5 @@
 #include "subMesh.h"
-#include <limits>
+#include "defs.h"
 #include "engine.h"
 #include "tools.h"
 #include "mesh.h"
@@ -86,7 +86,7 @@ IGLBuffer::Ptr Babylon::SubMesh::getLinesIndexBuffer(Uint16Array indices, Engine
 	if (!this->_linesIndexBuffer) {
 		Uint16Array linesIndices;
 
-		for (auto index = this->indexStart; index < this->indexStart + this->indexCount; index += 3) {
+		for (size_t index = this->indexStart; index < this->indexStart + this->indexCount; index += 3) {
 			linesIndices.push_back(indices[index]);
 			linesIndices.push_back(indices[index + 1]);
 			linesIndices.push_back(indices[index + 1]);
@@ -109,7 +109,7 @@ float Babylon::SubMesh::intersects(Ray::Ptr ray, Vector3::Array positions, Uint1
 	auto distance = numeric_limits<float>::max();
 
 	// Triangles test
-	for (auto index = this->indexStart; index < this->indexStart + this->indexCount; index += 3) {
+	for (size_t index = this->indexStart; index < this->indexStart + this->indexCount; index += 3) {
 		auto p0 = positions[indices[index]];
 		auto p1 = positions[indices[index + 1]];
 		auto p2 = positions[indices[index + 2]];
@@ -145,7 +145,7 @@ SubMesh::Ptr Babylon::SubMesh::CreateFromIndices(int materialIndex, int startInd
 
 	auto indices = mesh->getIndices();
 
-	for (auto index = startIndex; index < startIndex + indexCount; index++) {
+	for (size_t index = startIndex; index < startIndex + indexCount; index++) {
 		auto vertexIndex = indices[index];
 
 		if (vertexIndex < minVertexIndex)

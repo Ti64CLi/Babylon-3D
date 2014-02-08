@@ -1,10 +1,7 @@
 #ifndef BABYLON_ENGINE_H
 #define BABYLON_ENGINE_H
 
-#include <memory>
-#include <vector>
-#include <string>
-#include <map>
+#include "decls.h"
 
 #include "icanvas.h"
 #include "iengine.h"
@@ -14,8 +11,6 @@
 #include "effect.h"
 #include "vertexbuffer.h"
 #include "texture.h"
-
-using namespace std;
 
 namespace Babylon {
 

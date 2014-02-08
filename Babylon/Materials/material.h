@@ -1,14 +1,12 @@
 #ifndef BABYLON_MATERIAL_H
 #define BABYLON_MATERIAL_H
 
-#include <memory>
-#include <vector>
-#include <string>
-#include <map>
+#include "decls.h"
 
 #include "igl.h"
 #include "iengine.h"
 #include "tools_math.h"
+
 #include "effect.h"
 #include "animatable.h"
 

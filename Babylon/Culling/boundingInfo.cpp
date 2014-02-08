@@ -1,6 +1,5 @@
 #include "boundingInfo.h"
-#include <limits>
-#include <cmath>
+#include "defs.h"
 
 using namespace Babylon;
 

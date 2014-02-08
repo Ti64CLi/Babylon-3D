@@ -1,7 +1,5 @@
 #include "particleSystem.h"
-#include <string>
-#include <algorithm>
-#include <sstream>
+#include "defs.h"
 #include "engine.h"
 
 using namespace Babylon;
@@ -166,7 +164,7 @@ void Babylon::ParticleSystem::_update(size_t newParticles) {
 		worldMatrix = Matrix::Translation(this->emitter->position->x, this->emitter->position->y, this->emitter->position->z);
 	}
 
-	for (auto  index = 0; index < newParticles; index++) {
+	for (size_t index = 0; index < newParticles; index++) {
 		if (this->particles.size() == this->_capacity) {
 			break;
 		}
@@ -313,8 +311,7 @@ void Babylon::ParticleSystem::animate() {
 
 	// Update VBO
 	auto  offset = 0;
-	for (auto  index = 0; index < this->particles.size(); index++) {
-		auto  particle = this->particles[index];
+	for (auto particle : this->particles) {
 
 		this->_appendParticleVertex(offset++, particle, 0, 0);
 		this->_appendParticleVertex(offset++, particle, 1, 0);

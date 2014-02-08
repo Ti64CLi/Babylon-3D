@@ -1,13 +1,10 @@
 #ifndef BABYLON_QUATERNION_H
 #define BABYLON_QUATERNION_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "vector3.h"
 #include "matrix.h"
-
-using namespace std;
 
 namespace Babylon {
 

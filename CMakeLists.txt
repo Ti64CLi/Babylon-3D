@@ -51,11 +51,22 @@ endif()
 # Configure C++0x
 
 if(NOT MSVC)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x")
     if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g2 -gdwarf-2")
     endif()
 endif()
+
+#-----------------------------------------------------------------------------
+# Configure Boost
+
+find_package(Boost 1.55)
+if(Boost_FOUND)
+   include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+#-----------------------------------------------------------------------------
+# add sub directories
 
 add_subdirectory (Babylon)
 add_subdirectory (Playground)

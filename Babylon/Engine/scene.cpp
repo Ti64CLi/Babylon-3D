@@ -1,7 +1,5 @@
 #include "scene.h"
-#include <string>
-#include <limits>
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 #include "tools.h"
 #include "frustum.h"
@@ -44,9 +42,9 @@ Babylon::Scene::Scene(Engine::Ptr engine)
 	// Fog
 	this->fogMode = FOGMODE_NONE;
 	this->fogColor = make_shared<Color3>(0.2, 0.2, 0.3);
-	this->fogDensity = 0.1;
-	this->fogStart = 0;
-	this->fogEnd = 1000.0;
+	this->fogDensity = 0.1f;
+	this->fogStart = 0.f;
+	this->fogEnd = 1000.0f;
 
 	// Lights
 	this->lightsEnabled = true;
@@ -520,8 +518,8 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 		auto selection = this->_selectionOctree->select(this->_frustumPlanes);
 
 		for (auto block : selection) {
-			for (auto meshIndex = 0; meshIndex < block->meshes.size(); meshIndex++) {
-				auto mesh = block->meshes[meshIndex];
+			size_t meshIndex = 0;
+			for (auto mesh : block->meshes) {
 
 				if (abs(mesh->_renderId) != this->_renderId) {
 					this->_totalVertices += mesh->getTotalVertices();
@@ -561,6 +559,8 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 				} else {
 					mesh->_renderId = -this->_renderId;
 				}
+
+				meshIndex++;
 			}
 		}
 	} else { // Full scene traversal
@@ -596,8 +596,7 @@ void Babylon::Scene::_evaluateActiveMeshes() {
 	time_t beforeParticlesDate;
 	localtime(&beforeParticlesDate);
 	if (this->particlesEnabled) {
-		for (auto particleIndex = 0; particleIndex < this->particleSystems.size(); particleIndex++) {
-			auto particleSystem = this->particleSystems[particleIndex];
+		for (auto particleSystem : this->particleSystems) {
 
 			if (!particleSystem->emitter->position || (particleSystem->emitter && particleSystem->emitter->isEnabled())) {
 				this->_activeParticleSystems.push_back(particleSystem);
@@ -729,19 +728,19 @@ void Babylon::Scene::render() {
 	////	this->beforeRender();
 	////}
 
-	for (auto callbackIndex = 0; callbackIndex < this->_onBeforeRenderCallbacks.size(); callbackIndex++) {
-		this->_onBeforeRenderCallbacks[callbackIndex]();
+	for (auto _onBeforeRenderCallback : this->_onBeforeRenderCallbacks) {
+		_onBeforeRenderCallback();
 	}
 
 	// Animations
 	auto deltaTime = Tools::GetDeltaTime();
-	this->_animationRatio = deltaTime * (60.0 / 1000.0);
+	this->_animationRatio = deltaTime * (60.0f / 1000.0f);
 	// TODO: finish animation
 	////this->_animate();
 
 	// Physics
 	if (this->_physicsEngine) {
-		this->_physicsEngine->_runOneStep(deltaTime / 1000.0);
+		this->_physicsEngine->_runOneStep(deltaTime / 1000.0f);
 	}
 
 	// Clear
@@ -759,9 +758,9 @@ void Babylon::Scene::render() {
 	// Multi-cameras?
 	if (this->activeCameras.size() > 0) {
 		auto currentRenderId = this->_renderId;
-		for (auto cameraIndex = 0; cameraIndex < this->activeCameras.size(); cameraIndex++) {
+		for (auto activeCamera : this->activeCameras) {
 			this->_renderId = currentRenderId;
-			this->_renderForCamera(this->activeCameras[cameraIndex]);
+			this->_renderForCamera(activeCamera);
 		}
 	} else {
 		this->_renderForCamera(this->activeCamera);

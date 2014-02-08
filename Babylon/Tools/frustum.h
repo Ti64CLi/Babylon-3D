@@ -1,12 +1,9 @@
 #ifndef BABYLON_FRUSTUM_H
 #define BABYLON_FRUSTUM_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "plane.h"
-
-using namespace std;
 
 namespace Babylon {
 

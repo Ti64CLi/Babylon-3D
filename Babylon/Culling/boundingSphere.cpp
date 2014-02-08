@@ -1,5 +1,5 @@
 #include "boundingSphere.h"
-#include <cmath>
+#include "defs.h"
 
 using namespace Babylon;
 

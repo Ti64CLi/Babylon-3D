@@ -1,6 +1,5 @@
 #include "ray.h"
-#include <limits>
-#include <algorithm>
+#include "defs.h"
 
 using namespace Babylon;
 
@@ -109,7 +108,7 @@ bool Babylon::Ray::intersectsSphere(BoundingSphere::Ptr sphere) {
 	return temp <= rr;
 };
 
-bool Babylon::Ray::intersectsTriangle(Vector3::Ptr vertex0, Vector3::Ptr vertex1, Vector3::Ptr vertex2) {
+float Babylon::Ray::intersectsTriangle(Vector3::Ptr vertex0, Vector3::Ptr vertex1, Vector3::Ptr vertex2) {
 	if (!this->_edge1) {
 		this->_edge1 = Vector3::Zero();
 		this->_edge2 = Vector3::Zero();

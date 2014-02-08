@@ -1,15 +1,11 @@
 #ifndef BABYLON_CAMERA_H
 #define BABYLON_CAMERA_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "node.h"
 #include "postProcess.h"
-
-using namespace std;
 
 namespace Babylon {
 

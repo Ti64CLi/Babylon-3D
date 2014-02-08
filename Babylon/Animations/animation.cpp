@@ -1,5 +1,5 @@
 #include "animation.h"
-#include <string>
+#include "defs.h"
 #include "animatable.h"
 
 using namespace Babylon;

@@ -1,11 +1,7 @@
 #ifndef BABYLON_EFFECT_H
 #define BABYLON_EFFECT_H
 
-#include <memory>
-#include <vector>
-#include <string>
-#include <map>
-#include <functional>
+#include "decls.h"
 
 #include "igl.h"
 #include "iengine.h"

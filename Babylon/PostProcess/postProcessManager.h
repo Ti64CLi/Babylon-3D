@@ -1,9 +1,7 @@
 #ifndef BABYLON_POSTPROCESSMANAGER_H
 #define BABYLON_POSTPROCESSMANAGER_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 

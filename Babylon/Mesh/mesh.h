@@ -1,15 +1,13 @@
 #ifndef BABYLON_MESH_H
 #define BABYLON_MESH_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "igl.h"
 #include "iengine.h"
 #include "node.h"
-#include "vector2.h"
-#include "vector3.h"
-#include "matrix.h"
+#include "tools_math.h"
+
 #include "material.h"
 #include "skeleton.h"
 #include "boundingInfo.h"
@@ -86,7 +84,7 @@ namespace Babylon {
 		bool _isDisposed;
 		OnDisposeFunc onDispose;
 		Skeleton::Ptr skeleton;
-		int renderingGroupId;
+		size_t renderingGroupId;
 		bool infiniteDistance;
 
 		BoundingInfo::Ptr _boundingInfo;

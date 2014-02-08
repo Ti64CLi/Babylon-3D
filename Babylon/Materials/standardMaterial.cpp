@@ -1,8 +1,5 @@
 #include "standardMaterial.h"
-#include <sstream>
-#include <string>
-#include <algorithm>
-#include <sstream>
+#include "defs.h"
 #include "engine.h"
 #include "mesh.h"
 #include "shadowGenerator.h"

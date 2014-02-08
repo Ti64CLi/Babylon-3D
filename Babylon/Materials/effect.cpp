@@ -1,5 +1,5 @@
 #include "effect.h"
-#include <algorithm>
+#include "defs.h"
 #include "engine.h"
 
 using namespace Babylon;
@@ -138,7 +138,7 @@ void Babylon::Effect::_prepareEffect(string vertexSourceCode, string fragmentSou
 		this->_uniforms = engine->getUniforms(this->_program, this->_uniformsNames);
 		this->_attributeLocations = engine->getAttributeLocations(this->_program, attributesNames);
 
-		for (auto index = 0; index < this->_samplers.size(); index++) {
+		for (size_t index = 0; index < this->_samplers.size(); index++) {
 			auto sampler = this->getUniform(this->_samplers[index]);
 			if (!sampler) {
 				this->_samplers.erase(begin(this->_samplers) + index, begin(this->_samplers) + index + 1);

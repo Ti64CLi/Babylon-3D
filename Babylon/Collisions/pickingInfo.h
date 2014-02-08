@@ -1,13 +1,9 @@
 #ifndef BABYLON_PICKINGINFO_H
 #define BABYLON_PICKINGINFO_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "vector3.h"
-
-using namespace std;
 
 namespace Babylon {
 

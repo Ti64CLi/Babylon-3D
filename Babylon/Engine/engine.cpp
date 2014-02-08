@@ -1,6 +1,5 @@
 #include "engine.h"
-#include <algorithm>
-#include <stdexcept>
+#include "defs.h"
 #include "videoTexture.h"
 
 using namespace Babylon;
@@ -883,7 +882,7 @@ void Babylon::Engine::onFinish(IImage::Array imgs)
 	gl->bindTexture(TEXTURE_CUBE_MAP, texture);
 	gl->pixelStorei(UNPACK_FLIP_Y_WEBGL, false);
 
-	for (auto index = 0; index < faces.size(); index++) {
+	for (size_t index = 0; index < faces.size(); index++) {
 		this->_workingContext->drawImage(imgs[index], 0, 0, imgs[index]->getWidth(), imgs[index]->getHeight(), 0, 0, width, height);
 		gl->texImage2D(faces[index], 0, RGBA, RGBA, UNSIGNED_BYTE, this->_workingCanvas);
 	}
@@ -933,7 +932,7 @@ void Babylon::Engine::_releaseTexture(IGLTexture::Ptr texture) {
 	gl->deleteTexture(texture);
 
 	// Unbind channels
-	for (auto channel = 0; channel < this->_caps.maxTexturesImageUnits; channel++) {
+	for (size_t channel = 0; channel < this->_caps.maxTexturesImageUnits; channel++) {
 		this->_gl->activeTexture((*this->_gl)["TEXTURE" + to_string(channel)]);
 		this->_gl->bindTexture(TEXTURE_2D, nullptr);
 		this->_gl->bindTexture(TEXTURE_CUBE_MAP, nullptr);
@@ -949,7 +948,7 @@ void Babylon::Engine::_releaseTexture(IGLTexture::Ptr texture) {
 void Babylon::Engine::bindSamplers(Effect::Ptr effect) {
 	this->_gl->useProgram(effect->getProgram());
 	auto samplers = effect->getSamplers();
-	for (auto index = 0; index < samplers.size(); index++) {
+	for (size_t index = 0; index < samplers.size(); index++) {
 		auto uniform = effect->getUniform(samplers[index]);
 		this->_gl->uniform1i(uniform, index);
 	}

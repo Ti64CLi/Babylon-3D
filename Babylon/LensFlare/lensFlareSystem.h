@@ -1,18 +1,13 @@
 #ifndef BABYLON_LENSFLARESYSTEM_H
 #define BABYLON_LENSFLARESYSTEM_H
 
-#include <memory>
-#include <vector>
-#include <map>
-#include <functional>
+#include "decls.h"
 
 #include "iengine.h"
 #include "lensFlare.h"
 #include "mesh.h"
 #include "texture.h"
 #include "effect.h"
-
-using namespace std;
 
 namespace Babylon {
 

@@ -1,6 +1,6 @@
 #include "sprite.h"
+#include "defs.h"
 #include "spriteManager.h"
-#include <algorithm>
 
 using namespace Babylon;
 

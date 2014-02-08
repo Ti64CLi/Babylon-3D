@@ -7,8 +7,6 @@
 #include <string>
 #include "icanvas.h"
 
-using namespace std;
-
 namespace Babylon {
 
 	typedef unsigned long	GLenum;

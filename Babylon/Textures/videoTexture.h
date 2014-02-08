@@ -1,14 +1,11 @@
 #ifndef BABYLON_VIDEOTEXTURE_H
 #define BABYLON_VIDEOTEXTURE_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 #include <time.h>
 
 #include "iengine.h"
 #include "texture.h"
-
-using namespace std;
 
 namespace Babylon {
 

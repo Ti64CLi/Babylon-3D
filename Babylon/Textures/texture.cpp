@@ -1,6 +1,6 @@
 #include "texture.h"
-#include "vector3.h"
 #include "engine.h"
+#include "vector3.h"
 
 using namespace Babylon;
 
@@ -62,8 +62,8 @@ void Babylon::Texture::delayLoad() {
 };
 
 void Babylon::Texture::_prepareRowForTextureGeneration(float x, float y, float z, Vector3::Ptr t) {
-	x -= this->uOffset + 0.5;
-	y -= this->vOffset + 0.5;
+	x -= this->uOffset + 0.5f;
+	y -= this->vOffset + 0.5f;
 	z -= 0.5;
 
 	Vector3::TransformCoordinatesFromFloatsToRef(x, y, z, this->_rowGenerationMatrix, t);

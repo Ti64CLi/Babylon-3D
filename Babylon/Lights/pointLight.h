@@ -1,9 +1,7 @@
-#ifndef BABYLON_PointLight_H
-#define BABYLON_PointLight_H
+#ifndef BABYLON_POINTLIGHT_H
+#define BABYLON_POINTLIGHT_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 #include "node.h"
@@ -43,4 +41,4 @@ namespace Babylon {
 
 };
 
-#endif // BABYLON_PointLight_H
+#endif // BABYLON_POINTLIGHT_H

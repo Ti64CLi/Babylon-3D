@@ -1,13 +1,10 @@
 #ifndef BABYLON_Sprite_H
 #define BABYLON_Sprite_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
-#include "vector3.h"
-#include "color4.h"
+#include "tools_math.h"
 
 using namespace std;
 

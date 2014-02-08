@@ -1,9 +1,7 @@
 #ifndef BABYLON_PostProcess_H
 #define BABYLON_PostProcess_H
 
-#include <memory>
-#include <vector>
-#include <map>
+#include "decls.h"
 
 #include "iengine.h"
 

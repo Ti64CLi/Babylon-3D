@@ -1,10 +1,7 @@
 #ifndef BABYLON_COLOR4_H
 #define BABYLON_COLOR4_H
 
-#include <memory>
-#include <vector>
-
-using namespace std;
+#include "decls.h"
 
 namespace Babylon {
 

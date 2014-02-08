@@ -1,5 +1,5 @@
 #include "vector2.h"
-#include <cmath>
+#include "defs.h"
 #include "matrix.h"
 #include "tools.h"
 

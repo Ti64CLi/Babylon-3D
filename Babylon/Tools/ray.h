@@ -1,16 +1,13 @@
 #ifndef BABYLON_RAY_H
 #define BABYLON_RAY_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "iengine.h"
 #include "vector3.h"
 #include "matrix.h"
 #include "boundingSphere.h"
 #include "boundingBox.h"
-
-using namespace std;
 
 namespace Babylon {
 
@@ -36,7 +33,7 @@ namespace Babylon {
 		// Methods
 		virtual bool intersectsBox(BoundingBox::Ptr box);
 		virtual bool intersectsSphere(BoundingSphere::Ptr sphere);
-		virtual bool intersectsTriangle(Vector3::Ptr vertex0, Vector3::Ptr vertex1, Vector3::Ptr vertex2);
+		virtual float intersectsTriangle(Vector3::Ptr vertex0, Vector3::Ptr vertex1, Vector3::Ptr vertex2);
 		// Statics
 		static Ray::Ptr CreateNew(float x, float y, int viewportWidth, int viewportHeight, Matrix::Ptr world, Matrix::Ptr view, Matrix::Ptr projection);
 		static Ray::Ptr Transform(Ray::Ptr ray, Matrix::Ptr matrix);

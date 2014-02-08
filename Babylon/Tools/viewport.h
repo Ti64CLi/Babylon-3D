@@ -1,12 +1,9 @@
 #ifndef BABYLON_VIEWPORT_H
 #define BABYLON_VIEWPORT_H
 
-#include <memory>
-#include <vector>
+#include "decls.h"
 
 #include "iengine.h"
-
-using namespace std;
 
 namespace Babylon {
 
