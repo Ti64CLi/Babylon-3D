@@ -47,4 +47,4 @@ add_executable (NativeClient main.cc canvas.cc gl.cc)
 
 add_dependencies (NativeClient Engine)
 
-target_link_libraries (NativeClient Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
+target_link_libraries (NativeClient ppapi_gles2 ppapi_cpp ppapi pthread Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
