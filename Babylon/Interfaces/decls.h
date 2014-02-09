@@ -36,13 +36,13 @@ namespace Babylon {
 	using boost::make_shared;
 	using boost::enable_shared_from_this;
 	using boost::container::map;
-	using boost::container::vector;
 	using boost::units::to_string;
 
 	using std::string;
+	using std::vector;
 
 	#define shared_ptr_t boost::shared_ptr
-	#define vector_t boost::container::stable_vector
+	#define vector_t std::vector
 	#define map_t boost::container::map
 	#define function_t boost::function
 }

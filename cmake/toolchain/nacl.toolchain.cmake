@@ -106,7 +106,7 @@ set( CMAKE_CXX_FLAGS_DEBUG "${_CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "c++ Debug f
 set( CMAKE_C_FLAGS_DEBUG "${_CMAKE_C_FLAGS_DEBUG}" CACHE STRING "c Debug flags" )
 set( CMAKE_SHARED_LINKER_FLAGS "" CACHE STRING "linker flags" )
 set( CMAKE_MODULE_LINKER_FLAGS "" CACHE STRING "linker flags" )
-set( CMAKE_EXE_LINKER_FLAGS "-Wl,-z,nocopyreloc" CACHE STRING "linker flags" )
+set( CMAKE_EXE_LINKER_FLAGS "-Wl" CACHE STRING "linker flags" )
 
 include_directories( SYSTEM ${NACL_SYSTEM_INCLUDE_DIRS} )
 link_directories( ${NACL_SYSTEM_LIB_DIRS} )

@@ -5,6 +5,8 @@
 #include "icanvas.h"
 #include "igl.h"
 
+namespace Babylon {
+
 class Canvas : public Babylon::ICanvas, public enable_shared_from_this<Canvas> {
 
 public: 
@@ -36,5 +38,7 @@ public:
 	virtual void raiseEvent_Move(int x, int y);
 	virtual void addEventListener_OnMoveEvent(MoveFunc moveFunc);
 };
+
+} // namespace
 
 #endif // CANVAS_H

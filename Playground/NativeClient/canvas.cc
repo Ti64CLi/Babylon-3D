@@ -6,43 +6,43 @@
 
 #include "gl.h"
 
-Babylon::IGL::Ptr Canvas::getContext3d(bool antialias) {
+Babylon::IGL::Ptr Babylon::Canvas::getContext3d(bool antialias) {
 	return make_shared<GL>(shared_from_this(), antialias);
 }
 
-int Canvas::getWidth() {
+int Babylon::Canvas::getWidth() {
 	return this->width;
 }
 
-int Canvas::getHeight() {
+int Babylon::Canvas::getHeight() {
 	return this->height;
 }
 
-void Canvas::setWidth(int width) {
+void Babylon::Canvas::setWidth(int width) {
 }
 
-void Canvas::setHeight(int height) {
+void Babylon::Canvas::setHeight(int height) {
 }
 
-int Canvas::getClientWidth() {
+int Babylon::Canvas::getClientWidth() {
 	return this->width;
 }
 
-int Canvas::getClientHeight() {
+int Babylon::Canvas::getClientHeight() {
 	return this->height;
 }
 
-Babylon::I2D::Ptr Canvas::getContext2d() {
+Babylon::I2D::Ptr Babylon::Canvas::getContext2d() {
 	return nullptr;
 }
 
-void Canvas::raiseEvent_Move(int x, int y) {
+void Babylon::Canvas::raiseEvent_Move(int x, int y) {
 	for (auto moveHandler : this->moveHandlers)
 	{
 		moveHandler(x, y);
 	}
 }
 
-void Canvas::addEventListener_OnMoveEvent(MoveFunc moveFunc) {
+void Babylon::Canvas::addEventListener_OnMoveEvent(MoveFunc moveFunc) {
 	this->moveHandlers.push_back(moveFunc);
 }

@@ -24,11 +24,11 @@ namespace Babylon {
 	using boost::make_shared;
 	using boost::enable_shared_from_this;
 	using boost::container::map;
-	using boost::container::vector;
 	using boost::units::to_string;
 
 	using std::function;
 	using std::string;
+	using std::vector;
 }
 
 #endif

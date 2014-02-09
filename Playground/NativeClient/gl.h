@@ -6,6 +6,8 @@
 #include "igl.h"
 #include "icanvas.h"
 
+namespace Babylon {
+
 class GL : public Babylon::IGL, public enable_shared_from_this<GL> {
 
 private:
@@ -23,7 +25,7 @@ public:
 	virtual Babylon::GLContextAttributes getContextAttributes();
 	virtual bool isContextLost();
 
-	virtual vector<string> getSupportedExtensions();
+	virtual vector_t<string> getSupportedExtensions();
 	virtual Babylon::any getExtension(string name);
 
 	virtual Babylon::GLenum operator[] (string name);
@@ -108,7 +110,7 @@ public:
 
 	virtual Babylon::IGLActiveInfo::Ptr getActiveAttrib(Babylon::IGLProgram::Ptr program, Babylon::GLuint index);
 	virtual Babylon::IGLActiveInfo::Ptr getActiveUniform(Babylon::IGLProgram::Ptr program, Babylon::GLuint index);
-	virtual vector<Babylon::IGLShader::Ptr> getAttachedShaders(Babylon::IGLProgram::Ptr program);
+	virtual vector_t<Babylon::IGLShader::Ptr> getAttachedShaders(Babylon::IGLProgram::Ptr program);
 
 	virtual Babylon::GLint getAttribLocation(Babylon::IGLProgram::Ptr program, string name);
 
@@ -238,7 +240,9 @@ public:
 	// Extra
 	virtual void errorCheck();
 
-	map<string, Babylon::GLenum> EnumMap;
+	map_t<string, Babylon::GLenum> EnumMap;
 };
+
+} // namespace
 
 #endif // GL_H
