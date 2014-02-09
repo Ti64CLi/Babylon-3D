@@ -29,7 +29,7 @@ namespace Babylon {
 
 		Effect::Ptr _effect;
 
-		std::function<bool (Mesh::Ptr)> meshesSelectionPredicate;
+		function_t<bool (Mesh::Ptr)> meshesSelectionPredicate;
 
 		float _positionX;
 		float _positionY;

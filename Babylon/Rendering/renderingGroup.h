@@ -11,8 +11,8 @@ using namespace std;
 
 namespace Babylon {
 
-	typedef function<void ()> BeforeTransparentsFunc;
-	typedef function<void (SubMesh::Array&, SubMesh::Array&, SubMesh::Array&, BeforeTransparentsFunc)> CustomRenderFunctionFunc;
+	typedef function_t<void ()> BeforeTransparentsFunc;
+	typedef function_t<void (SubMesh::Array&, SubMesh::Array&, SubMesh::Array&, BeforeTransparentsFunc)> CustomRenderFunctionFunc;
 
 	class RenderingGroup : public enable_shared_from_this<RenderingGroup> {
 

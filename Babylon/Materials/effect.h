@@ -22,7 +22,7 @@ namespace Babylon {
 		typedef shared_ptr_t<Effect> Ptr;
 		typedef vector_t<Ptr> Array;
 		typedef Ptr ShaderPtr;
-		typedef function<void (string)> CallbackFunc;
+		typedef function_t<void (string)> CallbackFunc;
 
 	public:
 

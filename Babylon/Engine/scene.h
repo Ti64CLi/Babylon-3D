@@ -32,8 +32,8 @@ namespace Babylon {
 		typedef void (*BeforeRenderFunc)();
 		typedef void (*ExecuteWhenReadyFunc)();
 		//typedef Ray::Ptr (*RayFunctionFunc)(Matrix::Ptr);
-		typedef function<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
-		typedef function<bool (Mesh::Ptr)> PredicateFunc;
+		typedef function_t<Ray::Ptr (Matrix::Ptr)> RayFunctionFunc;
+		typedef function_t<bool (Mesh::Ptr)> PredicateFunc;
 
 		EnginePtr _engine;
 		bool autoClear;

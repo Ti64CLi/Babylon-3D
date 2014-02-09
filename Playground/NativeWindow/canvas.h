@@ -1,8 +1,7 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <memory>
-#include <functional>
+#include "decls.h"
 #include "icanvas.h"
 #include "igl.h"
 
@@ -10,7 +9,7 @@ class Canvas : public Babylon::ICanvas, public enable_shared_from_this<Canvas> {
 
 public: 
 
-	typedef shared_ptr<Canvas> Ptr;
+	typedef shared_ptr_t<Canvas> Ptr;
 
 	Canvas()
 	{

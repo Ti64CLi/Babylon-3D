@@ -1,13 +1,8 @@
 #include "gl.h"
 #include "defs.h"
 
-#include <EGL/egl.h>
 #include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-
-#include <android/log.h>
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+#include "ppapi/lib/gl/gles2/gl2ext_ppapi.h"
 
 using namespace std;
 

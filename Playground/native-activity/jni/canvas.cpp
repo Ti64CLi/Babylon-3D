@@ -1,5 +1,5 @@
 #include "canvas.h"
-#include <memory>
+#include "defs.h"
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>

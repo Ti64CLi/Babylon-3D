@@ -60,7 +60,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Configure Boost
 
-find_package(Boost 1.55)
+find_package(Boost 1.55 )
 if(Boost_FOUND)
    include_directories(${Boost_INCLUDE_DIRS})
 endif()

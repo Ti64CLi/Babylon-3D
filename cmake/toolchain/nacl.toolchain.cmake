@@ -5,10 +5,10 @@ if( DEFINED CMAKE_CROSSCOMPILING )
  return()
 endif()
 
-if( NOT EXISTS "${NACL_SDK_ROOT}" )
-   SET (NACL_SDK_ROOT $ENV{NACL_SDK_ROOT})
-   if( NOT EXISTS "${NACL_SDK_ROOT}" )
-      message( FATAL_ERROR "please define a cmake or environment variable: NACL_SDK_ROOT" )
+if( NOT EXISTS "${NACL_SDK_PATH}" )
+   SET (NACL_SDK_PATH $ENV{NACL_SDK_PATH})
+   if( NOT EXISTS "${NACL_SDK_PATH}" )
+      message( FATAL_ERROR "please define a cmake or environment variable: NACL_SDK_PATH" )
    endif()
 endif()
 
@@ -34,8 +34,9 @@ set( TOOL_OS_SUFFIX ".exe" )
 endif()
 
 # setup paths
-set( NACL_TOOLCHAIN_ROOT "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/" )
-set( NACL_SYSROOT "${NACL_SDK_ROOT}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/sysroot/" )
+set( NACL_SDK_ROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}/" )
+set( NACL_TOOLCHAIN_ROOT "${NACL_SDK_ROOT}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/" )
+set( NACL_SYSROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/sysroot/" )
 
 # specify the cross compiler
 set( CMAKE_C_COMPILER   "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_C}${TOOL_OS_SUFFIX}"     CACHE PATH "${NACL_TOOLCHAIN_C}" )
@@ -65,8 +66,14 @@ endif()
 set( NACL_SYSTEM_INCLUDE_DIRS "" )
 set( NACL_SYSTEM_LIB_DIRS "" )
 
+# setup output directories
+set( LIBRARY_OUTPUT_PATH_ROOT ${CMAKE_SOURCE_DIR} CACHE PATH "root for library output, set this to change where nacl libs are installed to" )
+if(NOT _CMAKE_IN_TRY_COMPILE)
+ set( LIBRARY_OUTPUT_PATH "${LIBRARY_OUTPUT_PATH_ROOT}/libs/${NACL_TOOLCHAIN_NAME}" CACHE PATH "path for nacl libs" )
+endif()
+
 # includes
-list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_SYSROOT}/include" )
+list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_SYSROOT}/include" "${NACL_SDK_ROOT}/include" )
 
 # flags and definitions
 if( NOT NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
@@ -77,25 +84,14 @@ remove_definitions( -DNACL )
 add_definitions( -DNACL )
 
 # SDK flags
-if( X86 )
- set( _CMAKE_CXX_FLAGS "-funwind-tables" )
- set( _CMAKE_C_FLAGS "-funwind-tables" )
-else()
- set( _CMAKE_CXX_FLAGS "" )
- set( _CMAKE_C_FLAGS "" )
-endif()
+set( _CMAKE_CXX_FLAGS "" )
+set( _CMAKE_C_FLAGS "" )
 
 # release and debug flags
-if( X86 )
- set( _CMAKE_CXX_FLAGS_RELEASE "-O3 -fstrict-aliasing" )
- set( _CMAKE_C_FLAGS_RELEASE   "-O3 -fstrict-aliasing" )
- set( _CMAKE_CXX_FLAGS_DEBUG "-O0 -finline-limit=300" )
- set( _CMAKE_C_FLAGS_DEBUG   "-O0 -finline-limit=300" )
-endif()
-set( _CMAKE_CXX_FLAGS_RELEASE "${_CMAKE_CXX_FLAGS_RELEASE} -fomit-frame-pointer -DNDEBUG" )
-set( _CMAKE_C_FLAGS_RELEASE   "${_CMAKE_C_FLAGS_RELEASE}   -fomit-frame-pointer -DNDEBUG" )
-set( _CMAKE_CXX_FLAGS_DEBUG "${_CMAKE_CXX_FLAGS_DEBUG} -fno-strict-aliasing -fno-omit-frame-pointer -DDEBUG -D_DEBUG" )
-set( _CMAKE_C_FLAGS_DEBUG   "${_CMAKE_C_FLAGS_DEBUG}   -fno-strict-aliasing -fno-omit-frame-pointer -DDEBUG -D_DEBUG" )
+set( _CMAKE_CXX_FLAGS_RELEASE "${_CMAKE_CXX_FLAGS_RELEASE}" )
+set( _CMAKE_C_FLAGS_RELEASE   "${_CMAKE_C_FLAGS_RELEASE}" )
+set( _CMAKE_CXX_FLAGS_DEBUG "${_CMAKE_CXX_FLAGS_DEBUG}" )
+set( _CMAKE_C_FLAGS_DEBUG   "${_CMAKE_C_FLAGS_DEBUG}" )
 
 # linker flags
 #list( APPEND NACL_SYSTEM_LIB_DIRS "" )
@@ -134,4 +130,4 @@ set( CMAKE_FIND_ROOT_PATH "${NACL_TOOLCHAIN_ROOT}/bin" "${NACL_TOOLCHAIN_ROOT}/$
 # only search for libraries and includes in the nacl_sdk toolchain
 set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )
 set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )
-set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )
+set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH )

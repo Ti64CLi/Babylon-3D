@@ -54,7 +54,7 @@ namespace Babylon {
 	public:
 		typedef shared_ptr_t<ICanvas> Ptr;
 
-		typedef function<void (int x, int y)> MoveFunc;
+		typedef function_t<void (int x, int y)> MoveFunc;
 		typedef vector_t<MoveFunc> MoveFuncArray;
 
 	public: 
