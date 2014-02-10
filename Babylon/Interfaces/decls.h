@@ -14,8 +14,6 @@ namespace Babylon {
 	#define function_t std::function
 }
 
-using namespace std;
-
 #else
 
 #include <functional>
@@ -47,6 +45,6 @@ namespace Babylon {
 	#define function_t boost::function
 }
 
-using namespace std;
-
 #endif
+
+using namespace std;

@@ -18,7 +18,8 @@ set( CMAKE_SYSTEM_NAME Linux )
 set( CMAKE_SYSTEM_VERSION 1 )
 
 set( NACL_TOOLCHAIN_NAME "pnacl" )
-set( PEPPER_API 32 )
+#set( NACL_TOOLCHAIN_NAME "x86_glibc" )
+set( PEPPER_API 33 )
 set( NACL_SDK_HOST_SYSTEM_NAME "win" )
 
 if( NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
@@ -36,7 +37,7 @@ endif()
 # setup paths
 set( NACL_SDK_ROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}" )
 set( NACL_TOOLCHAIN_ROOT "${NACL_SDK_ROOT}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}" )
-set( NACL_SYSROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/sysroot" )
+set( NACL_USR_ROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/usr" )
 
 # specify the cross compiler
 set( CMAKE_C_COMPILER   "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_C}${TOOL_OS_SUFFIX}"     CACHE PATH "${NACL_TOOLCHAIN_C}" )
@@ -73,25 +74,20 @@ if(NOT _CMAKE_IN_TRY_COMPILE)
 endif()
 
 # includes
-list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_SYSROOT}/include" "${NACL_SDK_ROOT}/include" )
-
-# flags and definitions
-if( NOT NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
-  set( NACL_CXX_FLAGS "--sysroot=${NACL_SYSROOT}" )
-endif()
+list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_USR_ROOT}/include" "${NACL_SDK_ROOT}/include" )
 
 remove_definitions( -DNACL )
 add_definitions( -DNACL )
 
 # linker flags
-list( APPEND NACL_SYSTEM_LIB_DIRS "${NACL_SDK_ROOT}/lib/${NACL_TOOLCHAIN_NAME}/${CMAKE_BUILD_TYPE}" )
+list( APPEND NACL_SYSTEM_LIB_DIRS "${NACL_SDK_ROOT}/lib/${NACL_TOOLCHAIN_NAME}/${CMAKE_BUILD_TYPE}" "${NACL_USR_ROOT}/lib")
 set( NACL_LINKER_FLAGS "" )
 
 include_directories( SYSTEM ${NACL_SYSTEM_INCLUDE_DIRS} )
 link_directories( ${NACL_SYSTEM_LIB_DIRS} )
 
 # finish flags
-set( CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS}" )
+set( CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -Wno-long-long -Wall -Wswitch-enum -pedantic -Werror -std=c++11 -stdlib=libc++ -pthread" )
 set( CMAKE_C_FLAGS             "${CMAKE_C_FLAGS}" )
 set( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}" )
 set( CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}" )
@@ -102,7 +98,7 @@ set( NACL True )
 set( BUILD_NACL True )
 
 # where is the target environment
-set( CMAKE_FIND_ROOT_PATH "${NACL_TOOLCHAIN_ROOT}/bin" "${NACL_TOOLCHAIN_ROOT}/${NACL_TOOLCHAIN_MACHINE_NAME}" "${NACL_SYSROOT}" )
+set( CMAKE_FIND_ROOT_PATH "${NACL_TOOLCHAIN_ROOT}/bin" "${NACL_TOOLCHAIN_ROOT}/${NACL_TOOLCHAIN_MACHINE_NAME}" "${NACL_USR_ROOT}" )
 
 # only search for libraries and includes in the nacl_sdk toolchain
 set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )

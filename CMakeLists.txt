@@ -31,7 +31,9 @@ project (Babylon)
 
 #-----------------------------------------------------------------------------
 # Set default config options
-option(WITH_NATIVE_CLIENT "Compile Native Client" ON)
+option(WITH_NATIVE_APP "Compile Native App" OFF)
+option(WITH_NATIVE_ACTIVITY "Compile Native Activity(Android)" OFF)
+option(WITH_NATIVE_CLIENT "Compile Native Client(Google)" OFF)
 
 if(UNIX AND NOT APPLE)
 	option(WITH_SYSTEM_GLEW "Use GLEW OpenGL wrapper library provided by the operating system" ON)
