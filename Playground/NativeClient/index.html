@@ -1,46 +1,75 @@
 <!DOCTYPE html>
 <html>
-<!--
-Copyright (c) 2012 The Chromium Authors. All rights reserved.
-Use of this source code is governed by a BSD-style license that can be
-found in the LICENSE file.
--->
 <head>
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="-1">
-  <title>Graphics 3D</title>
-  <script type="text/javascript" src="common.js"></script>
-  <script type="text/javascript" src="example.js"></script>
-  <style>
-    .label { display: inline-block; width: 100px; }
-  </style>
+
+  <title>Native Client</title>
+
+  <script type="text/javascript">
+    HelloTutorialModule = null;  // Global application object.
+    statusText = 'NO-STATUS';
+
+    // Indicate load success.
+    function moduleDidLoad() {
+      HelloTutorialModule = document.getElementById('native_client');
+      updateStatus('SUCCESS');
+    }
+
+    // The 'message' event handler.  This handler is fired when the NaCl module
+    // posts a message to the browser by calling PPB_Messaging.PostMessage()
+    // (in C) or pp::Instance.PostMessage() (in C++).  This implementation
+    // simply displays the content of the message in an alert panel.
+    function handleMessage(message_event) {
+      alert(message_event.data);
+    }
+
+    // If the page loads before the Native Client module loads, then set the
+    // status message indicating that the module is still loading.  Otherwise,
+    // do not change the status message.
+    function pageDidLoad() {
+      if (HelloTutorialModule == null) {
+        updateStatus('LOADING...');
+      } else {
+        // It's possible that the Native Client module onload event fired
+        // before the page's onload event.  In this case, the status message
+        // will reflect 'SUCCESS', but won't be displayed.  This call will
+        // display the current message.
+        updateStatus();
+      }
+    }
+
+    // Set the global status message.  If the element with id 'statusField'
+    // exists, then set its HTML to the status message as well.
+    // opt_message The message test.  If this is null or undefined, then
+    // attempt to set the element with id 'statusField' to the value of
+    // |statusText|.
+    function updateStatus(opt_message) {
+      if (opt_message)
+        statusText = opt_message;
+      var statusField = document.getElementById('statusField');
+      if (statusField) {
+        statusField.innerHTML = statusText;
+      }
+    }
+  </script>
 </head>
-<body data-width="640" data-height="480" data-name="graphics_3d" data-tools="newlib glibc pnacl win" data-configs="Debug Release" data-path="{tc}/{config}">
-  <h1>Graphics 3D</h1>
-  <h2>Status: <code id="statusField">NO-STATUS</code></h2>
-  <p>The Graphics3D example demonstrates how to create a 3D cube that
-      rotates.</p>
-  <div>
-    <span class="label">X Angle</span>
-    <input type="range" id="xAngle" min="0" max="360" step="1" value="0">
-  </div>
-  <div>
-    <span class="label">Y Angle</span>
-    <input type="range" id="yAngle" min="0" max="360" step="1" value="0">
-  </div>
-  <div>
-    <span class="label">Animating</span>
-    <label>
-      off
-      <input type="radio" id="animateOff" value="false">
-    </label>
-    <label>
-      on
-      <input type="radio" id="animateOn" value="true" checked="true">
-    </label>
-  </div>
-  <!-- The NaCl plugin will be embedded inside the element with id "listener".
-      See common.js.-->
-  <div id="listener"></div>
+<body onload="pageDidLoad()">
+
+  <h1>NaCl App</h1>
+  <p>
+    <div id="listener">
+      <script type="text/javascript">
+        var listener = document.getElementById('listener');
+        listener.addEventListener('load', moduleDidLoad, true);
+        listener.addEventListener('message', handleMessage, true);
+      </script>
+
+      <embed id="native_client"
+             width=512 height=512
+             src="NativeClient.nmf"
+             type="application/x-pnacl" />
+    </div>
+  </p>
+
+  <h2>Status <code id="statusField">NO-STATUS</code></h2>
 </body>
 </html>

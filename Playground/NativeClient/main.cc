@@ -255,6 +255,9 @@ public:
 			}
 
 			// init here
+			main.init(new_width, new_height);
+			main.loadSceneTutorial1();
+
 			MainLoop(0);
 		} else {
 			// Resize the buffers to the new size of the module.
@@ -302,14 +305,11 @@ private:
 
 		glSetCurrentContextPPAPI(context_.pp_resource());
 
-		// init main
-		main.init(new_width, new_height);
-		main.loadSceneTutorial1();
-
 		return true;
 	}
 
 	void Render() {
+		
 		/*
 		glClearColor(0.5, 0.5, 0.5, 1);
 		glClearDepthf(1.0f);
