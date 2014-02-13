@@ -19,7 +19,7 @@ set( CMAKE_SYSTEM_VERSION 1 )
 
 set( NACL_TOOLCHAIN_NAME "pnacl" )
 #set( NACL_TOOLCHAIN_NAME "x86_glibc" )
-set( PEPPER_API 32 )
+set( PEPPER_API 33 )
 set( NACL_SDK_HOST_SYSTEM_NAME "win" )
 
 if( NACL_TOOLCHAIN_NAME STREQUAL "pnacl" )
@@ -38,6 +38,7 @@ endif()
 set( NACL_SDK_ROOT "${NACL_SDK_PATH}/pepper_${PEPPER_API}" )
 set( NACL_USR_ROOT "${NACL_SDK_ROOT}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}/usr" )
 set( NACL_TOOLCHAIN_ROOT "${NACL_SDK_ROOT}/toolchain/${NACL_SDK_HOST_SYSTEM_NAME}_${NACL_TOOLCHAIN_NAME}" )
+set( NACL_TOOLCHAIN_SDK_ROOT "${NACL_TOOLCHAIN_ROOT}/sdk" )
 
 # specify the cross compiler
 set( CMAKE_C_COMPILER   "${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-${NACL_TOOLCHAIN_C}${TOOL_OS_SUFFIX}"     CACHE PATH "${NACL_TOOLCHAIN_C}" )
@@ -74,7 +75,7 @@ if(NOT _CMAKE_IN_TRY_COMPILE)
 endif()
 
 # includes
-list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_USR_ROOT}/include" "${NACL_SDK_ROOT}/include" )
+list( APPEND NACL_SYSTEM_INCLUDE_DIRS "${NACL_USR_ROOT}/include" "${NACL_SDK_ROOT}/include" ${NACL_TOOLCHAIN_SDK_ROOT}/include )
 
 remove_definitions( -DNACL )
 add_definitions( -DNACL )
@@ -87,7 +88,7 @@ include_directories( SYSTEM ${NACL_SYSTEM_INCLUDE_DIRS} )
 link_directories( ${NACL_SYSTEM_LIB_DIRS} )
 
 # finish flags
-set( CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -Wno-long-long -Wswitch-enum -pedantic -pthread" )
+set( CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -Wno-long-long -pedantic -pthread -U__STRICT_ANSI__" )
 set( CMAKE_C_FLAGS             "${CMAKE_C_FLAGS}" )
 set( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}" )
 set( CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}" )

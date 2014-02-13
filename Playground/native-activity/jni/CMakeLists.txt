@@ -1,5 +1,3 @@
-set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=format-security -fexceptions -std=gnu++11" )
-
 set( LIBRARY_OUTPUT_PATH ${LIBRARY_OUTPUT_PATH_ROOT} CACHE PATH "Single Directory for all Libraries")
 
 include_directories(

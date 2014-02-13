@@ -473,7 +473,7 @@ Babylon::any GL::getShaderParameter(Babylon::IGLShader::Ptr shader, Babylon::GLe
 		}
 		break;
 	default:
-		throw "not supported getShaderParameter: parameter" + to_string(pname);
+		throw "not supported getShaderParameter: parameter" + Babylon::to_string(pname);
 	}
 
 }

@@ -53,14 +53,14 @@ endif()
 # Configure C++0x
 
 if(NOT MSVC)
-    if (NACL)
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -stdlib=libstdc++")
-    else()
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+    if (ANDROID)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=format-security -fexceptions -frtti -std=gnu++11")
     endif()
-    if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g2 -gdwarf-2")
+    if (NACL AND NACL_TOOLCHAIN_NAME STREQUAL "pnacl")
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -U__STRICT_ANSI__")
     endif()
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g2 -gdwarf-2 -O0")
 endif()
 
 #-----------------------------------------------------------------------------

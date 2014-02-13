@@ -16,6 +16,7 @@ namespace Babylon {
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/units/cmath.hpp>
 #include <boost/units/limits.hpp>
+#include <boost/units/io.hpp>
 #include <sstream>
 #include <boost/tr1/tr1/stdexcept>
 
