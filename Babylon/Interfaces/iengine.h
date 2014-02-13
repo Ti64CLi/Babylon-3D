@@ -6,22 +6,6 @@
 
 #include "igl.h"
 
-#ifdef ANDROID
-
-// TODO: hack for Android
-template < typename T > std::string to_string( const T& n )
-{
-	char buff [128]; 
-	int ret = snprintf(buff, sizeof(buff), "%d", n); 
-	return string (buff, ret);
-}
-
-#endif
-
-#ifdef NACL
-	#define nullptr 0
-#endif
-
 namespace Babylon {
 
 	const string ShadersRepository = "Babylon/Shaders/";

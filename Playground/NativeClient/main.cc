@@ -276,6 +276,19 @@ public:
 		glViewport(0, 0, width_, height_);
 	}
 
+	virtual bool HandleInputEvent(const pp::InputEvent& event) {
+		switch (event.GetType()) {
+			case PP_INPUTEVENT_TYPE_MOUSEDOWN:
+			case PP_INPUTEVENT_TYPE_MOUSEUP:
+			case PP_INPUTEVENT_TYPE_MOUSEMOVE: {
+				pp::MouseInputEvent mouse_event(event);
+				if (PP_INPUTEVENT_MOUSEBUTTON_LEFT == mouse_event.GetButton()) {
+					main->onMove(mouse_event.GetPosition().x(), mouse_event.GetPosition().y());
+				}
+			}
+		}
+	}
+
 	virtual void HandleMessage(const pp::Var& message) {
 		// A bool message sets whether the cube is animating or not.
 	}
@@ -323,8 +336,7 @@ private:
 
 	void MainLoop(int32_t) {
 		Render();
-		context_.SwapBuffers(
-			callback_factory_.NewCallback(&Graphics3DInstance::MainLoop));
+		context_.SwapBuffers(callback_factory_.NewCallback(&Graphics3DInstance::MainLoop));
 	}
 
 	pp::CompletionCallbackFactory<Graphics3DInstance> callback_factory_;
