@@ -11,6 +11,7 @@
 
 #include "ppapi/cpp/graphics_3d.h"
 #include "ppapi/cpp/instance.h"
+#include "ppapi/cpp/input_event.h"
 #include "ppapi/cpp/module.h"
 #include "ppapi/cpp/var.h"
 #include "ppapi/cpp/var_array.h"
@@ -32,6 +33,13 @@
 // Allow 'this' in initializer list
 #pragma warning(disable : 4355)
 #endif
+
+void logmsg(const char* pMsg){
+  fprintf(stdout,"logmsg: %s\n",pMsg);
+}
+void errormsg(const char* pMsg){
+  fprintf(stderr,"logerr: %s\n",pMsg);
+}
 
 namespace {
 }  // namespace
@@ -238,7 +246,10 @@ public:
 		callback_factory_(this),
 		width_(0),
 		height_(0)
-	{}
+	{
+		RequestInputEvents(PP_INPUTEVENT_CLASS_MOUSE | PP_INPUTEVENT_CLASS_WHEEL | PP_INPUTEVENT_CLASS_TOUCH);
+		RequestFilteringInputEvents(PP_INPUTEVENT_CLASS_KEYBOARD);
+	}
 
 	virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
 		return true;
@@ -277,16 +288,19 @@ public:
 	}
 
 	virtual bool HandleInputEvent(const pp::InputEvent& event) {
+
 		switch (event.GetType()) {
 			case PP_INPUTEVENT_TYPE_MOUSEDOWN:
 			case PP_INPUTEVENT_TYPE_MOUSEUP:
 			case PP_INPUTEVENT_TYPE_MOUSEMOVE: {
 				pp::MouseInputEvent mouse_event(event);
 				if (PP_INPUTEVENT_MOUSEBUTTON_LEFT == mouse_event.GetButton()) {
-					main->onMove(mouse_event.GetPosition().x(), mouse_event.GetPosition().y());
+					main.onMotion(mouse_event.GetPosition().x(), mouse_event.GetPosition().y());
 				}
 			}
 		}
+
+	    return true;
 	}
 
 	virtual void HandleMessage(const pp::Var& message) {

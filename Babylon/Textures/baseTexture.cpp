@@ -5,7 +5,7 @@
 using namespace Babylon;
 
 Babylon::BaseTexture::BaseTexture(string url, Scene::Ptr scene) 
-	: delayLoadState(DELAYLOADSTATE_NONE), hasAlpha(false), level(1), _texture(nullptr), isCube(false), onDispose(nullptr) {
+	: onDispose(nullptr), _texture(nullptr), hasAlpha(false), level(1), delayLoadState(DELAYLOADSTATE_NONE), isCube(false) {
 		this->_scene = scene;
 		// moved to New operator
 		// TODO: do not forget to add it to all derived classes

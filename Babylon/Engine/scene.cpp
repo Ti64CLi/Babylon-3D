@@ -396,7 +396,7 @@ Mesh::Ptr Babylon::Scene::getMeshByID(string id) {
 };
 
 Mesh::Ptr Babylon::Scene::getLastMeshByID(string id) {
-	for (auto index = this->meshes.size() - 1; index >= 0 ; index--) {
+	for (intmax_t index = this->meshes.size() - 1; index >= 0 ; index--) {
 		if (this->meshes[index]->id == id) {
 			return this->meshes[index];
 		}
@@ -406,19 +406,19 @@ Mesh::Ptr Babylon::Scene::getLastMeshByID(string id) {
 };
 
 Node::Ptr Babylon::Scene::getLastEntryByID(string id) {
-	for (auto index = this->meshes.size() - 1; index >= 0 ; index--) {
+	for (intmax_t index = this->meshes.size() - 1; index >= 0 ; index--) {
 		if (this->meshes[index]->id == id) {
 			return this->meshes[index];
 		}
 	}
 
-	for (auto index = this->cameras.size() - 1; index >= 0 ; index--) {
+	for (intmax_t index = this->cameras.size() - 1; index >= 0 ; index--) {
 		if (this->cameras[index]->id == id) {
 			return this->cameras[index];
 		}
 	}
 
-	for (auto index = this->lights.size() - 1; index >= 0 ; index--) {
+	for (intmax_t index = this->lights.size() - 1; index >= 0 ; index--) {
 		if (this->lights[index]->id == id) {
 			return this->lights[index];
 		}
@@ -438,7 +438,7 @@ Mesh::Ptr Babylon::Scene::getMeshByName(string name) {
 };
 
 Skeleton::Ptr Babylon::Scene::getLastSkeletonByID(string id) {
-	for (auto index = this->skeletons.size() - 1; index >= 0 ; index--) {
+	for (intmax_t index = this->skeletons.size() - 1; index >= 0 ; index--) {
 		if (this->skeletons[index]->id == id) {
 			return this->skeletons[index];
 		}
