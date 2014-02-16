@@ -15,8 +15,8 @@ if(WITH_SYSTEM_GLEW)
 	)
 else()
 	if(WIN32)
-		set(GLEW_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/include")
-		set(GLEW_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLEW/lib/glew32.lib")
+		set(GLEW_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/GLEW/include")
+		set(GLEW_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/GLEW/lib/Win/x86/glew32.lib")
 	endif()
 endif()
 
@@ -32,9 +32,17 @@ if(WITH_SYSTEM_GLUT)
 	)
 else()
 	if(WIN32)
-		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/include")
-		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/Win32/GLUT/lib/glut32.lib")
+		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/GLUT/include")
+		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/GLUT/lib/Win/x86/glut32.lib")
 	endif()
+endif()
+
+#-----------------------------------------------------------------------------
+# Configure FreeImage
+
+if(WIN32)
+	set(FREEIMAGE_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/Playground/Deps/FreeImage/include")
+	set(FREEIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/Playground/Deps/FreeImage/lib/Win/x86/FreeImage.lib")
 endif()
 
 #-----------------------------------------------------------------------------
@@ -47,7 +55,7 @@ endif()
 include_directories(SYSTEM 
 	${GLEW_INCLUDE_PATH}
 	${GLUT_INCLUDE_PATH}
-	${Babylon_SOURCE_DIR}/PlayGround/Deps/NV/include)
+	${FREEIMAGE_INCLUDE_PATH})
 
 include_directories(
 	. 
@@ -98,9 +106,17 @@ add_executable (NativeWindow main.cpp canvas.cpp gl.cpp)
 
 add_dependencies (NativeWindow Engine)
 
-target_link_libraries (NativeWindow Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY})
+target_link_libraries (NativeWindow Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} ${FREEIMAGE_LIBRARY})
 
 if(WIN32)
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/Win32/GLUT/lib/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/Win32/GLEW/lib/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/GLUT/lib/Win/x86/glut32.dll" $<TARGET_FILE_DIR:NativeWindow>/glut32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/GLEW/lib/Win/x86/glew32.dll" $<TARGET_FILE_DIR:NativeWindow>/glew32.dll)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/Deps/FreeImage/lib/Win/x86/FreeImage.dll" $<TARGET_FILE_DIR:NativeWindow>/FreeImage.dll)  
 endif()
+
+#-----------------------------------------------------------------------------
+# Copy asset
+
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/text.jpg" $<TARGET_FILE_DIR:NativeWindow>/text.jpg)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/grass_texture.jpg" $<TARGET_FILE_DIR:NativeWindow>/grass_texture.jpg)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/Planet.png" $<TARGET_FILE_DIR:NativeWindow>/Planet.png)  

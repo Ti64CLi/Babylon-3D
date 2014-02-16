@@ -115,7 +115,7 @@ void GL::bindRenderbuffer(Babylon::GLenum target, Babylon::IGLRenderbuffer::Ptr 
 }
 
 void GL::bindTexture(Babylon::GLenum target, Babylon::IGLTexture::Ptr texture) { 
-	glBindTextureEXT(target, texture->value);
+	glBindTextureEXT(target, texture ? texture->value : 0);
 	errorCheck();
 }
 
@@ -643,7 +643,8 @@ void GL::stencilOpSeparate(Babylon::GLenum face, Babylon::GLenum fail, Babylon::
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 					Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLint border, Babylon::GLenum format, 
 					Babylon::GLenum type, Babylon::any pixels) { 
-						glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+	glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+	errorCheck();
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
@@ -654,8 +655,12 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::IImage::Ptr image) { 
-						////glTexImage2D(target, level, internalformat, format, type, image);
-						throw "not supported";
+	auto width = image->getWidth();
+	auto height = image->getHeight();
+	auto bits = image->getBits();
+
+	glTexImage2D(target, level, internalformat, width, height, 0, format, type, bits);
+	errorCheck();
 }
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,

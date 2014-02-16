@@ -27,6 +27,7 @@ public:
 	virtual int getClientWidth();
 	virtual int getClientHeight();
 	virtual Babylon::I2D::Ptr getContext2d();
+	virtual void loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onload, function_t<void (void)> onerror);
 
 	virtual void raiseEvent_Move(int x, int y);
 	virtual void addEventListener_OnMoveEvent(MoveFunc moveFunc);

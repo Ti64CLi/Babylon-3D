@@ -631,11 +631,13 @@ int Babylon::Engine::getExponantOfTwo(int value, int max) {
 IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool invertY, Scene::Ptr scene) {
 	auto texture = this->_gl->createTexture();
 
-
 	auto onload = [=](IImage::Ptr img) {
 		auto potWidth = getExponantOfTwo(img->getWidth(), this->_caps.maxTextureSize);
 		auto potHeight = getExponantOfTwo(img->getHeight(), this->_caps.maxTextureSize);
 		auto isPot = (img->getWidth() == potWidth && img->getHeight() == potHeight);
+
+		// TODO: my fix. why we need to use canvas to draw image?
+		isPot = true;
 
 		if (!isPot) {
 			this->_workingCanvas->setWidth(potWidth);
@@ -645,7 +647,8 @@ IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool i
 		};
 
 		this->_gl->bindTexture(TEXTURE_2D, texture);
-		this->_gl->pixelStorei(UNPACK_FLIP_Y_WEBGL, invertY);
+		// TODO: next line is commented. You need to turn your image upside-down if invertY is true
+		//this->_gl->pixelStorei(UNPACK_FLIP_Y_WEBGL, invertY);
 		if (isPot)
 		{
 			this->_gl->texImage2D(TEXTURE_2D, 0, RGBA, RGBA, UNSIGNED_BYTE, img);
@@ -679,8 +682,9 @@ IGLTexture::Ptr Babylon::Engine::createTexture(string url, bool noMipmap, bool i
 	};
 
 	scene->_addPendingData(texture);
-	//TODO: finish it
-	//BABYLON->Tools->LoadImage(url, onload, onerror, scene->database);
+
+	// Tools.LoadImage
+	this->_gl->getCanvas()->loadImage(url, onload, onerror);
 
 	texture->url = url;
 	texture->noMipmap = noMipmap;

@@ -16,6 +16,7 @@ namespace Babylon {
 	public: 
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
+		virtual void* getBits() = 0;
 	};
 
 	class IVideo {
@@ -69,6 +70,8 @@ namespace Babylon {
 		virtual int getClientWidth() = 0;
 		virtual int getClientHeight() = 0;
 		virtual I2D::Ptr getContext2d() = 0;
+		
+		virtual void loadImage(string url, function_t<void (IImage::Ptr)> onload, function_t<void (void)> onerror) = 0;
 
 		virtual void addEventListener_OnMoveEvent(MoveFunc moveFunc) = 0;
 	};

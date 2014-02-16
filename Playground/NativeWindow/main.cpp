@@ -267,7 +267,7 @@ int main(int argc, char **argv) {
 	glutReshapeFunc(resize);
 
 	_main.init();
-	_main.loadSceneTutorial1();
+	_main.loadSceneTutorial4();
 
 	// main loop
 	glutMainLoop();
