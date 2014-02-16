@@ -11,4 +11,4 @@ libs
 *.pexe
 Debug
 Tegra-Android
-Deps\FreeImage\lib
+/Playground/Deps/FreeImage/lib
