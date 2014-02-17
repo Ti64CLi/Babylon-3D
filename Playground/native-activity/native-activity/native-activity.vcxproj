@@ -18,6 +18,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\grass_texture.jpg" />
+    <None Include="..\assets\Planet.png" />
+    <None Include="..\assets\text.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\jni\Android.mk" />
     <None Include="..\jni\Application.mk" />
     <None Include="..\libs\armeabi-v7a\libnative-activity.so" />
@@ -63,16 +68,19 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <IncludePath>
+    </IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <ClCompile>
       <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../Babylon/Engine;$(SolutionDir)../../../Babylon/Interfaces;$(SolutionDir)../../../Babylon/Mesh;$(SolutionDir)../../../Babylon/Tools;$(SolutionDir)../../../Babylon/Materials;$(SolutionDir)../../../Babylon/Textures;$(SolutionDir)../../../Babylon/PostProcess;$(SolutionDir)../../../Babylon/Animations;$(SolutionDir)../../../Babylon/Bones;$(SolutionDir)../../../Babylon/Culling;$(SolutionDir)../../../Babylon/Collisions;$(SolutionDir)../../../Babylon/Lights;$(SolutionDir)../../../Babylon/Rendering;$(SolutionDir)../../../Babylon/Cameras;$(SolutionDir)../../../Babylon/PhysicsEngine;$(SolutionDir)../../../Babylon/Particles;$(SolutionDir)../../../Babylon/Layer;$(SolutionDir)../../../Babylon/LensFlare;$(SolutionDir)../../../Babylon/Sprites;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../Babylon/Engine;$(SolutionDir)../../../Babylon/Interfaces;$(SolutionDir)../../../Babylon/Mesh;$(SolutionDir)../../../Babylon/Tools;$(SolutionDir)../../../Babylon/Materials;$(SolutionDir)../../../Babylon/Textures;$(SolutionDir)../../../Babylon/PostProcess;$(SolutionDir)../../../Babylon/Animations;$(SolutionDir)../../../Babylon/Bones;$(SolutionDir)../../../Babylon/Culling;$(SolutionDir)../../../Babylon/Collisions;$(SolutionDir)../../../Babylon/Lights;$(SolutionDir)../../../Babylon/Rendering;$(SolutionDir)../../../Babylon/Cameras;$(SolutionDir)../../../Babylon/PhysicsEngine;$(SolutionDir)../../../Babylon/Particles;$(SolutionDir)../../../Babylon/Layer;$(SolutionDir)../../../Babylon/LensFlare;$(SolutionDir)../../../Babylon/Sprites;$(SolutionDir)../../../Playground/Deps/FreeImage/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Wno-error=format-security -fexceptions -frtti -std=gnu++11 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../../libs/armeabi-v7a/;$(StlLibraryPath);$(SolutionDir)../obj/local/armeabi/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -lFreeImage -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)../libs/armeabi-v7a/;$(StlLibraryPath);$(SolutionDir)../obj/local/armeabi/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EchoCommandLines>true</EchoCommandLines>
       <AdditionalDependencies>
       </AdditionalDependencies>

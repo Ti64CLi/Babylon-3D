@@ -13,11 +13,11 @@ GLOBAL_C_INCLUDES := \
     $(LOCAL_PATH)/../Source/LibMNG \
     $(LOCAL_PATH)/../Source/LibOpenJPEG \
     $(LOCAL_PATH)/../Source/LibPNG \
-#    $(LOCAL_PATH)/../Source/LibRawLite \
-#    $(LOCAL_PATH)/../Source/LibRawLite/dcraw \
-#    $(LOCAL_PATH)/../Source/LibRawLite/internal \
-#    $(LOCAL_PATH)/../Source/LibRawLite/libraw \
-#    $(LOCAL_PATH)/../Source/LibRawLite/src \
+    $(LOCAL_PATH)/../Source/LibRawLite \
+    $(LOCAL_PATH)/../Source/LibRawLite/dcraw \
+    $(LOCAL_PATH)/../Source/LibRawLite/internal \
+    $(LOCAL_PATH)/../Source/LibRawLite/libraw \
+    $(LOCAL_PATH)/../Source/LibRawLite/src \
     $(LOCAL_PATH)/../Source/LibTIFF \
     $(LOCAL_PATH)/../Source/Metadata \
     $(LOCAL_PATH)/../Source/OpenEXR \
@@ -33,7 +33,7 @@ LOCAL_SRC_FILES = ../Source/FreeImage/BitmapAccess.cpp ../Source/FreeImage/Color
 
 LOCAL_MODULE := FreeImage
 
-GLOBAL_CFLAGS   := -O3 -DHAVE_CONFIG_H=1 -DFREEIMAGE_LIB -isystem $(SYSROOT)/usr/include/ -UHAVE_SEARCH_H -Dswab=__arch__swab32
+GLOBAL_CFLAGS   := -O3 -DHAVE_CONFIG_H=1 -DFREEIMAGE_LIB -isystem $(SYSROOT)/usr/include/
 
 ifeq ($(TARGET_ARCH),x86)
     LOCAL_CFLAGS   := $(GLOBAL_CFLAGS)

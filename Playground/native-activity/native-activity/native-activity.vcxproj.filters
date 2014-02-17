@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <None Include="..\assets\grass_texture.jpg">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\assets\Planet.png">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\assets\text.jpg">
+      <Filter>assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\local.properties" />
     <None Include="..\project.properties" />
     <None Include="..\jni\Android.mk">
@@ -52,6 +63,9 @@
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2843607d-718f-4d78-bb52-4e520f75a04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{cb9acac6-74e2-480e-b205-ed2d39814e28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

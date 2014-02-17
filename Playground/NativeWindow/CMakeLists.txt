@@ -117,6 +117,6 @@ endif()
 #-----------------------------------------------------------------------------
 # Copy asset
 
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/text.jpg" $<TARGET_FILE_DIR:NativeWindow>/text.jpg)  
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/grass_texture.jpg" $<TARGET_FILE_DIR:NativeWindow>/grass_texture.jpg)  
-add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/asset/Planet.png" $<TARGET_FILE_DIR:NativeWindow>/Planet.png)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/assets/text.jpg" $<TARGET_FILE_DIR:NativeWindow>/text.jpg)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/assets/grass_texture.jpg" $<TARGET_FILE_DIR:NativeWindow>/grass_texture.jpg)  
+add_custom_command(TARGET NativeWindow POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Babylon_SOURCE_DIR}/Playground/NativeWindow/assets/Planet.png" $<TARGET_FILE_DIR:NativeWindow>/Planet.png)  
