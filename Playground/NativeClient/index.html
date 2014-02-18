@@ -19,6 +19,13 @@
     // (in C) or pp::Instance.PostMessage() (in C++).  This implementation
     // simply displays the content of the message in an alert panel.
     function handleMessage(message_event) {
+      if (message_event.data['message'] == 'request_textures') {
+        // NaCl module is requesting a set of textures.
+        var names = message_event.data['names'];
+        for (var i = 0; i < names.length; i++)
+          loadTexture(names[i]);
+      }
+
       console.log(message_event.data);
     }
 
@@ -49,7 +56,30 @@
       if (statusField) {
         statusField.innerHTML = statusText;
       }
+
+
     }
+
+    function loadTexture(name) {
+      // Load image from jpg, decompress into canvas.
+      var img = new Image();
+      img.onload = function() {
+        var graph = document.createElement('canvas');
+        graph.width = img.width;
+        graph.height = img.height;
+        var context = graph.getContext('2d');
+        context.drawImage(img, 0, 0);
+        var imageData = context.getImageData(0, 0, img.width, img.height);
+        // Send NaCl module the raw image data obtained from canvas.
+        common.naclModule.postMessage({'message' : 'texture',
+                                       'name' : name,
+                                       'width' : img.width,
+                                       'height' : img.height,
+                                       'data' : imageData.data.buffer});
+      }
+      img.src = name;
+    }
+
   </script>
 </head>
 <body onload="pageDidLoad()">

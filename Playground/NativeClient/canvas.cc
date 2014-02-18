@@ -36,6 +36,40 @@ Babylon::I2D::Ptr Babylon::Canvas::getContext2d() {
 	return nullptr;
 }
 
+class LoadedImage : public Babylon::IImage
+{
+private:
+	int _width;
+	int _height;
+	Babylon::any _bits;
+
+public:
+	LoadedImage(int width, int height, Babylon::any bits) : _width(width), _height(height), _bits(bits)
+	{
+	}
+
+	int getWidth() { return _width; }
+	int getHeight() { return _height; };
+	Babylon::any getBits() { return _bits; };
+};
+
+void Babylon::Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onload, function_t<void (void)> onerror) {
+	this->onImageLoaded[url] = onload;
+	this->onImageError[url] = onerror;
+}
+
+void Babylon::Canvas::raiseEvent_OnImageLoaded(string name, int width, int height, void* pixels) {
+	auto image = make_shared<LoadedImage>(width, height, pixels);
+
+ 	auto onload = this->onImageLoaded[name];
+	auto onerror = this->onImageError[name];
+
+	this->onImageLoaded.erase(name);
+	this->onImageError.erase(name);
+
+	onload(dynamic_pointer_cast<Babylon::IImage>(image));
+}
+ 
 void Babylon::Canvas::raiseEvent_Move(int x, int y) {
 	for (auto moveHandler : this->moveHandlers)
 	{

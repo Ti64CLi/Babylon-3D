@@ -35,10 +35,10 @@
 #endif
 
 void logmsg(const char* pMsg){
-  fprintf(stdout,"logmsg: %s\n",pMsg);
+	fprintf(stdout,"logmsg: %s\n",pMsg);
 }
 void errormsg(const char* pMsg){
-  fprintf(stderr,"logerr: %s\n",pMsg);
+	fprintf(stderr,"logerr: %s\n",pMsg);
 }
 
 namespace {
@@ -49,190 +49,195 @@ using namespace Babylon;
 
 namespace Babylon {
 
-class Main {
+	class Main {
 
-	// engine
-	Canvas::Ptr canvas;
-	Engine::Ptr engine;
-	Scene::Ptr scene;
-
-public:
-
-	Main()
-	{
-	}
-
-	void init(int32_t width, int32_t height)
-	{
 		// engine
-		this->canvas = make_shared<Canvas>(width, height);
-		this->engine = Engine::New(dynamic_pointer_cast<ICanvas>(this->canvas), true);
+		Canvas::Ptr canvas;
+		Engine::Ptr engine;
+		Scene::Ptr scene;
 
-		// for testing loading shaders manually
-		Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader; 
-		Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
-	}
+	public:
 
-	void loadSceneTutorial1() {
-		// scene
-		this->scene = Scene::New(engine);
+		Main()
+		{
+		}
 
-		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-		auto camera = ArcRotateCamera::New("Camera", 1, 0.8, 10, make_shared<Vector3>(0, 0, 0), scene);
-		auto light0 = PointLight::New("Omni", make_shared<Vector3>(0, 0, 10), scene);
-		auto origin = Mesh::CreateSphere("origin", 10, 1.0, scene);
+		void init(int32_t width, int32_t height, function_t<void (const char*)> fileLoader)
+		{
+			// engine
+			this->canvas = make_shared<Canvas>(width, height, fileLoader);
+			this->engine = Engine::New(dynamic_pointer_cast<ICanvas>(this->canvas), true);
 
-		// Attach the camera to the scene
-		scene->activeCamera->attachControl(canvas);
-	}
+			// for testing loading shaders manually
+			Effect::ShadersStore["defaultVertexShader"] = defaultVertexShader; 
+			Effect::ShadersStore["defaultPixelShader"] = defaultPixelShader;
+		}
 
-	void loadSceneTutorial2() {
-		// scene
-		this->scene = Scene::New(engine);
+		void loadSceneTutorial1() {
+			// scene
+			this->scene = Scene::New(engine);
 
-		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-		auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, make_shared<Vector3>(0, 0, 0), scene);
-		auto light0 = PointLight::New("Omni", make_shared<Vector3>(10, 10, -30), scene);
+			// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+			auto camera = ArcRotateCamera::New("Camera", 1, 0.8, 10, make_shared<Vector3>(0, 0, 0), scene);
+			auto light0 = PointLight::New("Omni", make_shared<Vector3>(0, 0, 10), scene);
+			auto origin = Mesh::CreateSphere("origin", 10, 1.0, scene);
 
-		auto box = Mesh::CreateBox("Box", 6.0, scene);
-		auto sphere = Mesh::CreateSphere("Sphere", 10.0, 10.0, scene);	
-		auto plan = Mesh::CreatePlane("Plane", 50.0, scene);
+			// Attach the camera to the scene
+			scene->activeCamera->attachControl(canvas);
+		}
 
-		// move object
-		box->position = make_shared<Vector3>(-10,0,0);
-		sphere->position = make_shared<Vector3>(0,10,0);
-		plan->position->z = 10;
+		void loadSceneTutorial2() {
+			// scene
+			this->scene = Scene::New(engine);
 
-		// Attach the camera to the scene
-		scene->activeCamera->attachControl(canvas);
-	}
+			// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+			auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, make_shared<Vector3>(0, 0, 0), scene);
+			auto light0 = PointLight::New("Omni", make_shared<Vector3>(10, 10, -30), scene);
 
-	void loadSceneTutorial3() {
-		// scene
-		this->scene = Scene::New(engine);
+			auto box = Mesh::CreateBox("Box", 6.0, scene);
+			auto sphere = Mesh::CreateSphere("Sphere", 10.0, 10.0, scene);	
+			auto plan = Mesh::CreatePlane("Plane", 50.0, scene);
 
-		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-		auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, Vector3::Zero(), scene);
-		auto light0 = PointLight::New("Omni", make_shared<Vector3>(0, 100, 100), scene);
+			// move object
+			box->position = make_shared<Vector3>(-10,0,0);
+			sphere->position = make_shared<Vector3>(0,10,0);
+			plan->position->z = 10;
 
-		auto box1 = Mesh::CreateBox("Box1", 6.0, scene);
-		auto box2 = Mesh::CreateBox("Box2", 6.0, scene);
-		auto box3 = Mesh::CreateBox("Box3", 6.0, scene);
+			// Attach the camera to the scene
+			scene->activeCamera->attachControl(canvas);
+		}
 
-		//Positioning the boxes
-		box1->position = make_shared<Vector3>(-20, 0, 0);
-		box2->position->x = -10;
-		box3->position->x = 0;
+		void loadSceneTutorial3() {
+			// scene
+			this->scene = Scene::New(engine);
 
-		//Rotate the box around the x axis
-		box1->rotation->x = 3.14/4;
+			// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+			auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, Vector3::Zero(), scene);
+			auto light0 = PointLight::New("Omni", make_shared<Vector3>(0, 100, 100), scene);
 
-		//Rotate the box around the y axis
-		box2->rotation->y = 3.14/6;
+			auto box1 = Mesh::CreateBox("Box1", 6.0, scene);
+			auto box2 = Mesh::CreateBox("Box2", 6.0, scene);
+			auto box3 = Mesh::CreateBox("Box3", 6.0, scene);
 
-		//Scaling of 2x on the x axis
-		box3->scaling->x = 2;
+			//Positioning the boxes
+			box1->position = make_shared<Vector3>(-20, 0, 0);
+			box2->position->x = -10;
+			box3->position->x = 0;
 
-		//Positioning the box3 relative to the box1
-		box3->parent = dynamic_pointer_cast<Node>(box1);
-		box3->position->z = -10;
+			//Rotate the box around the x axis
+			box1->rotation->x = 3.14/4;
 
-		// Attach the camera to the scene
-		scene->activeCamera->attachControl(canvas);
-	}
+			//Rotate the box around the y axis
+			box2->rotation->y = 3.14/6;
 
-	void loadSceneTutorial4() {
-		// scene
-		this->scene = Scene::New(engine);
+			//Scaling of 2x on the x axis
+			box3->scaling->x = 2;
 
-		// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
-		auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, Vector3::Zero(), scene);
-		auto light0 = PointLight::New("Omni", make_shared<Vector3>(20, 20, 100), scene);
+			//Positioning the box3 relative to the box1
+			box3->parent = dynamic_pointer_cast<Node>(box1);
+			box3->position->z = -10;
 
-		//Creation of 6 spheres
-		auto sphere1 = Mesh::CreateSphere("Sphere1", 10.0, 6.0, scene);
-		auto sphere2 = Mesh::CreateSphere("Sphere2", 2.0, 7.0, scene);//Only two segments
-		auto sphere3 = Mesh::CreateSphere("Sphere3", 10.0, 9.0, scene);
-		auto sphere4 = Mesh::CreateSphere("Sphere4", 10.0, 9.0, scene);
-		auto sphere5 = Mesh::CreateSphere("Sphere5", 10.0, 9.0, scene);
-		auto sphere6 = Mesh::CreateSphere("Sphere6", 10.0, 9.0, scene);
+			// Attach the camera to the scene
+			scene->activeCamera->attachControl(canvas);
+		}
 
-		//Positioning spheres
-		sphere1->position->x = 40;
-		sphere2->position->x = 30;
-		sphere3->position->x = 10;
-		sphere4->position->x = 0;
-		sphere5->position->x = -20;
-		sphere6->position->x = -30;
+		void loadSceneTutorial4() {
+			// scene
+			this->scene = Scene::New(engine);
 
-		//Creation of a plane
-		auto plan = Mesh::CreatePlane("plan", 120, scene);
-		plan->position->z = -10;
-		plan->rotation->y = 3.14;
+			// Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+			auto camera = ArcRotateCamera::New("Camera", 0, 0.8, 100, Vector3::Zero(), scene);
+			auto light0 = PointLight::New("Omni", make_shared<Vector3>(20, 20, 100), scene);
 
-		//Creation of a material in wireFrame
-		auto materialSphere1 = StandardMaterial::New("texture1", scene);
-		materialSphere1->wireframe = true;
+			//Creation of 6 spheres
+			auto sphere1 = Mesh::CreateSphere("Sphere1", 10.0, 6.0, scene);
+			auto sphere2 = Mesh::CreateSphere("Sphere2", 2.0, 7.0, scene);//Only two segments
+			auto sphere3 = Mesh::CreateSphere("Sphere3", 10.0, 9.0, scene);
+			auto sphere4 = Mesh::CreateSphere("Sphere4", 10.0, 9.0, scene);
+			auto sphere5 = Mesh::CreateSphere("Sphere5", 10.0, 9.0, scene);
+			auto sphere6 = Mesh::CreateSphere("Sphere6", 10.0, 9.0, scene);
 
-		//Creation of a red material with alpha
-		auto materialSphere2 = StandardMaterial::New("texture2", scene);
-		materialSphere2->diffuseColor = make_shared<Color3>(1, 0, 0); //Red
-		materialSphere2->alpha = 0.3;
+			//Positioning spheres
+			sphere1->position->x = 40;
+			sphere2->position->x = 30;
+			sphere3->position->x = 10;
+			sphere4->position->x = 0;
+			sphere5->position->x = -20;
+			sphere6->position->x = -30;
+
+			//Creation of a plane
+			auto plan = Mesh::CreatePlane("plan", 120, scene);
+			plan->position->z = -10;
+			plan->rotation->y = 3.14;
+
+			//Creation of a material in wireFrame
+			auto materialSphere1 = StandardMaterial::New("texture1", scene);
+			materialSphere1->wireframe = true;
+
+			//Creation of a red material with alpha
+			auto materialSphere2 = StandardMaterial::New("texture2", scene);
+			materialSphere2->diffuseColor = make_shared<Color3>(1, 0, 0); //Red
+			materialSphere2->alpha = 0.3;
 
 
-		//Creation of a material with an image
-		auto materialSphere3 = StandardMaterial::New("texture3", scene);
-		materialSphere3->diffuseTexture = Texture::New("text.jpg", scene);
+			//Creation of a material with an image
+			auto materialSphere3 = StandardMaterial::New("texture3", scene);
+			materialSphere3->diffuseTexture = Texture::New("text.jpg", scene);
 
-		//Creation of a material, with translated texture
-		auto materialSphere4 = StandardMaterial::New("texture4", scene);
-		materialSphere4->diffuseTexture = Texture::New("text.jpg", scene);
-		materialSphere4->diffuseTexture->vOffset = 0.1;//Offset of 10% vertical
-		materialSphere4->diffuseTexture->uOffset = 0.4;//Offset of 40% horizontal
+			//Creation of a material, with translated texture
+			auto materialSphere4 = StandardMaterial::New("texture4", scene);
+			materialSphere4->diffuseTexture = Texture::New("text.jpg", scene);
+			materialSphere4->diffuseTexture->vOffset = 0.1;//Offset of 10% vertical
+			materialSphere4->diffuseTexture->uOffset = 0.4;//Offset of 40% horizontal
 
-		//Creation of a material with alpha texture
-		auto materialSphere5 = StandardMaterial::New("texture5", scene);
-		materialSphere5->diffuseTexture = Texture::New("Planet.png", scene);//Planet
-		materialSphere5->diffuseTexture->hasAlpha = true;//Have an alpha
+			//Creation of a material with alpha texture
+			auto materialSphere5 = StandardMaterial::New("texture5", scene);
+			materialSphere5->diffuseTexture = Texture::New("Planet.png", scene);//Planet
+			materialSphere5->diffuseTexture->hasAlpha = true;//Have an alpha
 
-		//Creation of a material and allways show all the faces
-		auto materialSphere6 = StandardMaterial::New("texture6", scene);
-		materialSphere6->diffuseTexture =  Texture::New("Planet.png", scene);//Planet
-		materialSphere6->diffuseTexture->hasAlpha = true;//Have an alpha
-		materialSphere6->backFaceCulling = false;//Allways show all the faces of the element
+			//Creation of a material and allways show all the faces
+			auto materialSphere6 = StandardMaterial::New("texture6", scene);
+			materialSphere6->diffuseTexture =  Texture::New("Planet.png", scene);//Planet
+			materialSphere6->diffuseTexture->hasAlpha = true;//Have an alpha
+			materialSphere6->backFaceCulling = false;//Allways show all the faces of the element
 
-		//Creation of a repeated textured material
-		auto materialPlan = StandardMaterial::New("texturePlane", scene);
-		materialPlan->diffuseTexture =  Texture::New("grass_texture.jpg", scene);//Wood effect
-		materialPlan->diffuseTexture->uScale = 5.0;//Repeat 5 times on the Vertical Axes
-		materialPlan->diffuseTexture->vScale = 5.0;//Repeat 5 times on the Horizontal Axes
-		materialPlan->backFaceCulling = false;//Allways show the front and the back of an element
+			//Creation of a repeated textured material
+			auto materialPlan = StandardMaterial::New("texturePlane", scene);
+			materialPlan->diffuseTexture =  Texture::New("grass_texture.jpg", scene);//Wood effect
+			materialPlan->diffuseTexture->uScale = 5.0;//Repeat 5 times on the Vertical Axes
+			materialPlan->diffuseTexture->vScale = 5.0;//Repeat 5 times on the Horizontal Axes
+			materialPlan->backFaceCulling = false;//Allways show the front and the back of an element
 
-		//Applying the materials to the mesh
-		sphere1->material = materialSphere1;
-		sphere2->material = materialSphere2;
+			//Applying the materials to the mesh
+			sphere1->material = materialSphere1;
+			sphere2->material = materialSphere2;
 
-		sphere3->material = materialSphere3;
-		sphere4->material = materialSphere4;
+			sphere3->material = materialSphere3;
+			sphere4->material = materialSphere4;
 
-		sphere5->material = materialSphere5;
-		sphere6->material = materialSphere6;
+			sphere5->material = materialSphere5;
+			sphere6->material = materialSphere6;
 
-		plan->material = materialPlan;
+			plan->material = materialPlan;
 
-		// Attach the camera to the scene
-		scene->activeCamera->attachControl(canvas);
-	}
+			// Attach the camera to the scene
+			scene->activeCamera->attachControl(canvas);
+		}
 
-	void render() {
-		this->scene->render();
-	}
+		void render() {
+			this->scene->render();
+		}
 
-	void onMotion(int x, int y)
-	{
-		this->canvas->raiseEvent_Move(x, y);
-	}
-};
+		void onMotion(int x, int y)
+		{
+			this->canvas->raiseEvent_Move(x, y);
+		}
+
+		void onImageLoaded(string name, int width, int height, void* pixels)
+		{
+			this->canvas->raiseEvent_OnImageLoaded(name, width, height, pixels);
+		}
+	};
 
 } // namespace
 
@@ -266,8 +271,15 @@ public:
 			}
 
 			// init here
-			main.init(new_width, new_height);
-			main.loadSceneTutorial1();
+			main.init(new_width, new_height, [=](const char* file) {
+				pp::VarDictionary message;
+				message.Set("message", "request_textures");
+				pp::VarArray names;
+				names.Set(0, file);
+				message.Set("names", names);
+				PostMessage(message);
+			});
+			main.loadSceneTutorial4();
 
 			MainLoop(0);
 		} else {
@@ -290,21 +302,39 @@ public:
 	virtual bool HandleInputEvent(const pp::InputEvent& event) {
 
 		switch (event.GetType()) {
-			case PP_INPUTEVENT_TYPE_MOUSEDOWN:
-			case PP_INPUTEVENT_TYPE_MOUSEUP:
-			case PP_INPUTEVENT_TYPE_MOUSEMOVE: {
-				pp::MouseInputEvent mouse_event(event);
-				if (PP_INPUTEVENT_MOUSEBUTTON_LEFT == mouse_event.GetButton()) {
-					main.onMotion(mouse_event.GetPosition().x(), mouse_event.GetPosition().y());
-				}
+		case PP_INPUTEVENT_TYPE_MOUSEDOWN:
+		case PP_INPUTEVENT_TYPE_MOUSEUP:
+		case PP_INPUTEVENT_TYPE_MOUSEMOVE: {
+			pp::MouseInputEvent mouse_event(event);
+			if (PP_INPUTEVENT_MOUSEBUTTON_LEFT == mouse_event.GetButton()) {
+				main.onMotion(mouse_event.GetPosition().x(), mouse_event.GetPosition().y());
 			}
+										   }
 		}
 
-	    return true;
+		return true;
 	}
 
 	virtual void HandleMessage(const pp::Var& message) {
 		// A bool message sets whether the cube is animating or not.
+
+		if (message.is_dictionary()) {
+			pp::VarDictionary dictionary(message);
+			string message = dictionary.Get("message").AsString();
+			if (message == "texture") {
+				string name = dictionary.Get("name").AsString();
+				int width = dictionary.Get("width").AsInt();
+				int height = dictionary.Get("height").AsInt();
+				pp::VarArrayBuffer array_buffer(dictionary.Get("data"));
+				if (!name.empty() && !array_buffer.is_null()) {
+					if (width > 0 && height > 0) {
+						uint32_t* pixels = static_cast<uint32_t*>(array_buffer.Map());
+						main.onImageLoaded(name, width, height, pixels);
+						array_buffer.Unmap();
+					}
+				}
+			}
+		}
 	}
 
 private:
@@ -336,7 +366,7 @@ private:
 	}
 
 	void Render() {
-		
+
 		/*
 		glClearColor(0.5, 0.5, 0.5, 1);
 		glClearDepthf(1.0f);
