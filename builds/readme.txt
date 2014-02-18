@@ -4,6 +4,7 @@
 	b) add string.h for ImgAutoArray.h
 	c) add following to dcraw_common.cpp
 
+#ifdef ANDROID
 void swab (const void *bfrom, void *bto, ssize_t n)
 {
   const char *from = (const char *) bfrom;
@@ -17,5 +18,6 @@ void swab (const void *bfrom, void *bto, ssize_t n)
       to[n + 1] = b1;
     }
 }
+#endif
 
 	c) some files included with #include <...> but should be "..."

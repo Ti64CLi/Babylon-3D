@@ -115,7 +115,7 @@ void GL::bindRenderbuffer(Babylon::GLenum target, Babylon::IGLRenderbuffer::Ptr 
 }
 
 void GL::bindTexture(Babylon::GLenum target, Babylon::IGLTexture::Ptr texture) { 
-	glBindTextureEXT(target, texture ? texture->value : 0);
+	glBindTexture(target, texture ? texture->value : 0);
 	errorCheck();
 }
 
@@ -213,21 +213,21 @@ void GL::compressedTexSubImage2D(Babylon::GLenum target, Babylon::GLint level,
 								 Babylon::GLint xoffset, Babylon::GLint yoffset,
 								 Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLenum format,
 								 Babylon::GLsizeiptr sizeiptr) { 
-									 glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, sizeiptr >> 32, (const ::GLint*) (sizeiptr & 0x0000ffff));
-									 errorCheck();
+	glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, sizeiptr >> 32, (const ::GLint*) (sizeiptr & 0x0000ffff));
+	errorCheck();
 }
 
 void GL::copyTexImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 						Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height, 
 						Babylon::GLint border) { 
-							glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
-							errorCheck();
+	glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
+	errorCheck();
 }
 
 void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLint xoffset, Babylon::GLint yoffset, 
 						   Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
-							   glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
-							   errorCheck();
+	glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
+	errorCheck();
 }
 
 Babylon::IGLBuffer::Ptr GL::createBuffer() { 
@@ -356,14 +356,14 @@ void GL::flush() {
 void GL::framebufferRenderbuffer(Babylon::GLenum target, Babylon::GLenum attachment, 
 								 Babylon::GLenum renderbuffertarget, 
 								 Babylon::IGLRenderbuffer::Ptr renderbuffer) { 
-									 glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
-									 errorCheck();
+	glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer->value);
+	errorCheck();
 }
 
 void GL::framebufferTexture2D(Babylon::GLenum target, Babylon::GLenum attachment, Babylon::GLenum textarget, 
 							  Babylon::IGLTexture::Ptr texture, Babylon::GLint level) { 
-								  glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
-								  errorCheck();
+	glFramebufferTexture2DEXT(target, attachment, textarget, texture->value, level);
+	errorCheck();
 }
 
 void GL::frontFace(Babylon::GLenum mode) { 

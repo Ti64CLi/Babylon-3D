@@ -11,6 +11,7 @@
 using namespace std;
 
 Babylon::IGL::Ptr Canvas::getContext3d(bool antialias) {
+	FreeImage_Initialise(FALSE);
 	return make_shared<GL>(shared_from_this(), antialias);
 }
 
