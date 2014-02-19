@@ -272,6 +272,7 @@ public:
 
 			// init here
 			main.init(new_width, new_height, [=](const char* file) {
+				PostMessage(string("loading image:") + file);
 				pp::VarDictionary message;
 				message.Set("message", "request_textures");
 				pp::VarArray names;
@@ -328,6 +329,7 @@ public:
 				pp::VarArrayBuffer array_buffer(dictionary.Get("data"));
 				if (!name.empty() && !array_buffer.is_null()) {
 					if (width > 0 && height > 0) {
+						PostMessage(string("loaded image:") + name);
 						uint32_t* pixels = static_cast<uint32_t*>(array_buffer.Map());
 						main.onImageLoaded(name, width, height, pixels);
 						array_buffer.Unmap();

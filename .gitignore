@@ -13,3 +13,5 @@ libs
 Debug
 Tegra-Android
 /Playground/Deps/FreeImage/lib
+/Playground/NativeClient/NaCl32
+/Playground/NativeClient/PNaCl

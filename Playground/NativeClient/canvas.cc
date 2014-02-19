@@ -56,6 +56,7 @@ public:
 void Babylon::Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onload, function_t<void (void)> onerror) {
 	this->onImageLoaded[url] = onload;
 	this->onImageError[url] = onerror;
+	this->fileLoader(url.c_str());
 }
 
 void Babylon::Canvas::raiseEvent_OnImageLoaded(string name, int width, int height, void* pixels) {
@@ -64,10 +65,11 @@ void Babylon::Canvas::raiseEvent_OnImageLoaded(string name, int width, int heigh
  	auto onload = this->onImageLoaded[name];
 	auto onerror = this->onImageError[name];
 
+	auto imageInterface = dynamic_pointer_cast<Babylon::IImage>(image);
+	onload(imageInterface);
+
 	this->onImageLoaded.erase(name);
 	this->onImageError.erase(name);
-
-	onload(dynamic_pointer_cast<Babylon::IImage>(image));
 }
  
 void Babylon::Canvas::raiseEvent_Move(int x, int y) {

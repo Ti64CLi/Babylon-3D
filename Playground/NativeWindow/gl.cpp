@@ -649,8 +649,8 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::any pixels) { 
-						////glTexImage2D(target, level, internalformat, format, type, pixels);
-						throw "not supported";
+	glTexImage2D(target, level, internalformat, format, type, pixels);
+	errorCheck();
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,

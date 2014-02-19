@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|NaClARM">
+      <Configuration>Debug</Configuration>
+      <Platform>NaClARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|NaCl32">
+      <Configuration>Debug</Configuration>
+      <Platform>NaCl32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|NaCl64">
+      <Configuration>Debug</Configuration>
+      <Platform>NaCl64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|PNaCl">
+      <Configuration>Debug</Configuration>
+      <Platform>PNaCl</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|PPAPI">
+      <Configuration>Debug</Configuration>
+      <Platform>PPAPI</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|NaClARM">
+      <Configuration>Release</Configuration>
+      <Platform>NaClARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|NaCl32">
+      <Configuration>Release</Configuration>
+      <Platform>NaCl32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|NaCl64">
+      <Configuration>Release</Configuration>
+      <Platform>NaCl64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|PNaCl">
+      <Configuration>Release</Configuration>
+      <Platform>PNaCl</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|PPAPI">
+      <Configuration>Release</Configuration>
+      <Platform>PPAPI</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F82336A6-3A85-45E2-9A96-26DEA54280CC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>NativeClient</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|NaCl32'">
+    <NaClIndexHTML>index_newlib.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl32'">
+    <NaClIndexHTML>index_newlib.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|NaCl64'">
+    <NaClIndexHTML>index_newlib.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl64'">
+    <NaClIndexHTML>index_newlib.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|PNaCl'">
+    <NaClIndexHTML>index_pnacl.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|PNaCl'">
+    <NaClIndexHTML>index.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">
+    <NaClIndexHTML>index_win.html</NaClIndexHTML>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">
+    <NaClIndexHTML>index_win.html</NaClIndexHTML>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl64'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|NaCl64'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl32'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|NaCl32'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PNaCl'">
+    <OutDir>$(ProjectDir)pnacl\</OutDir>
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PNaCl'">
+    <NaClAddInVersion>1</NaClAddInVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl64'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NaCl32'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../Babylon/Engine;$(SolutionDir)../../Babylon/Interfaces;$(SolutionDir)../../Babylon/Mesh;$(SolutionDir)../../Babylon/Tools;$(SolutionDir)../../Babylon/Materials;$(SolutionDir)../../Babylon/Textures;$(SolutionDir)../../Babylon/PostProcess;$(SolutionDir)../../Babylon/Animations;$(SolutionDir)../../Babylon/Bones;$(SolutionDir)../../Babylon/Culling;$(SolutionDir)../../Babylon/Collisions;$(SolutionDir)../../Babylon/Lights;$(SolutionDir)../../Babylon/Rendering;$(SolutionDir)../../Babylon/Cameras;$(SolutionDir)../../Babylon/PhysicsEngine;$(SolutionDir)../../Babylon/Particles;$(SolutionDir)../../Babylon/Layer;$(SolutionDir)../../Babylon/LensFlare;$(SolutionDir)../../Babylon/Sprites;$(SolutionDir)../../Playground/Deps/FreeImage/include;$(BOOST_ROOT)\include\boost-1_55;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Wno-long-long -pedantic -pthread -U__STRICT_ANSI__ -std=gnu++0x %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|NaCl64'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|NaCl32'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">
+    <Link>
+      <AdditionalDependencies>ppapi.lib;ppapi_gles2.lib;</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">
+    <Link>
+      <AdditionalDependencies>ppapi.lib;ppapi_gles2.lib;</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PNaCl'">
+    <Link>
+      <AdditionalDependencies>ppapi_cpp;ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\libs\pnacl</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../Babylon/Engine;$(SolutionDir)../../Babylon/Interfaces;$(SolutionDir)../../Babylon/Mesh;$(SolutionDir)../../Babylon/Tools;$(SolutionDir)../../Babylon/Materials;$(SolutionDir)../../Babylon/Textures;$(SolutionDir)../../Babylon/PostProcess;$(SolutionDir)../../Babylon/Animations;$(SolutionDir)../../Babylon/Bones;$(SolutionDir)../../Babylon/Culling;$(SolutionDir)../../Babylon/Collisions;$(SolutionDir)../../Babylon/Lights;$(SolutionDir)../../Babylon/Rendering;$(SolutionDir)../../Babylon/Cameras;$(SolutionDir)../../Babylon/PhysicsEngine;$(SolutionDir)../../Babylon/Particles;$(SolutionDir)../../Babylon/Layer;$(SolutionDir)../../Babylon/LensFlare;$(SolutionDir)../../Babylon/Sprites;$(SolutionDir)../../Playground/Deps/FreeImage/include;$(BOOST_ROOT)\include\boost-1_55;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Wno-long-long -pedantic -pthread -U__STRICT_ANSI__  -std=c++11 -stdlib=libc++ %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PNaCl'">
+    <Link>
+      <AdditionalDependencies>ppapi_cpp;ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NaClARM'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|NaClARM'">
+    <Link>
+      <AdditionalDependencies>ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cc" />
+    <ClCompile Include="canvas.cc" />
+    <ClCompile Include="gl.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="canvas.h" />
+    <ClCompile Include="gl.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

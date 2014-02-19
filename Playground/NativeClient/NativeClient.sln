@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeClient", "NativeClient.vcxproj", "{F82336A6-3A85-45E2-9A96-26DEA54280CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|NaCl32 = Debug|NaCl32
+		Debug|NaCl64 = Debug|NaCl64
+		Debug|NaClARM = Debug|NaClARM
+		Debug|PNaCl = Debug|PNaCl
+		Debug|PPAPI = Debug|PPAPI
+		Release|NaCl32 = Release|NaCl32
+		Release|NaCl64 = Release|NaCl64
+		Release|NaClARM = Release|NaClARM
+		Release|PNaCl = Release|PNaCl
+		Release|PPAPI = Release|PPAPI
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaCl32.ActiveCfg = Debug|NaCl32
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaCl32.Build.0 = Debug|NaCl32
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaCl64.ActiveCfg = Debug|NaCl64
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaCl64.Build.0 = Debug|NaCl64
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaClARM.ActiveCfg = Debug|NaClARM
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|NaClARM.Build.0 = Debug|NaClARM
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|PNaCl.ActiveCfg = Debug|PNaCl
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|PNaCl.Build.0 = Debug|PNaCl
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|PPAPI.ActiveCfg = Debug|PPAPI
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Debug|PPAPI.Build.0 = Debug|PPAPI
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaCl32.ActiveCfg = Release|NaCl32
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaCl32.Build.0 = Release|NaCl32
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaCl64.ActiveCfg = Release|NaCl64
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaCl64.Build.0 = Release|NaCl64
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaClARM.ActiveCfg = Release|NaClARM
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|NaClARM.Build.0 = Release|NaClARM
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|PNaCl.ActiveCfg = Release|PNaCl
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|PNaCl.Build.0 = Release|PNaCl
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|PPAPI.ActiveCfg = Release|PPAPI
+		{F82336A6-3A85-45E2-9A96-26DEA54280CC}.Release|PPAPI.Build.0 = Release|PPAPI
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
