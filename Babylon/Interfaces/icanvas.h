@@ -57,6 +57,10 @@ namespace Babylon {
 
 		typedef function_t<void (int x, int y)> MoveFunc;
 		typedef vector_t<MoveFunc> MoveFuncArray;
+		typedef function_t<void (int keyCode)> KeyFunc;
+		typedef vector_t<KeyFunc> KeyFuncArray;
+		typedef function_t<void ()> EventFunc;
+		typedef vector_t<EventFunc> EventFuncArray;
 
 	public: 
 
