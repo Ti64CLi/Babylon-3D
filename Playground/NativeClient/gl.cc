@@ -119,7 +119,7 @@ void Babylon::GL::bindRenderbuffer(Babylon::GLenum target, Babylon::IGLRenderbuf
 }
 
 void Babylon::GL::bindTexture(Babylon::GLenum target, Babylon::IGLTexture::Ptr texture) { 
-	glBindTexture(target, texture->value);
+	glBindTexture(target, texture ? texture->value : 0);
 	errorCheck();
 }
 
