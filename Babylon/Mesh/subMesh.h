@@ -37,6 +37,8 @@ namespace Babylon {
 
 		BoundingInfo::Ptr _boundingInfo;
 		float _distanceToCamera;
+		
+		Plane::Array _trianglePlanes;
 
 	protected: 
 		SubMesh(int materialIndex, int verticesStart, size_t verticesCount, int indexStart, size_t indexCount, MeshPtr mesh);		

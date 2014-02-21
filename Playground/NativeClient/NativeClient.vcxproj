@@ -139,10 +139,15 @@
     <Link>
       <AdditionalDependencies>ppapi_cpp;ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\libs\pnacl</AdditionalLibraryDirectories>
+      <TranslateX86>true</TranslateX86>
+      <TranslateX64>true</TranslateX64>
+      <TranslateArm>true</TranslateArm>
+      <OutputCommandLine>true</OutputCommandLine>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)../../Babylon/Engine;$(SolutionDir)../../Babylon/Interfaces;$(SolutionDir)../../Babylon/Mesh;$(SolutionDir)../../Babylon/Tools;$(SolutionDir)../../Babylon/Materials;$(SolutionDir)../../Babylon/Textures;$(SolutionDir)../../Babylon/PostProcess;$(SolutionDir)../../Babylon/Animations;$(SolutionDir)../../Babylon/Bones;$(SolutionDir)../../Babylon/Culling;$(SolutionDir)../../Babylon/Collisions;$(SolutionDir)../../Babylon/Lights;$(SolutionDir)../../Babylon/Rendering;$(SolutionDir)../../Babylon/Cameras;$(SolutionDir)../../Babylon/PhysicsEngine;$(SolutionDir)../../Babylon/Particles;$(SolutionDir)../../Babylon/Layer;$(SolutionDir)../../Babylon/LensFlare;$(SolutionDir)../../Babylon/Sprites;$(SolutionDir)../../Playground/Deps/FreeImage/include;$(BOOST_ROOT)\include\boost-1_55;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Wno-long-long -pedantic -pthread -U__STRICT_ANSI__  -std=c++11 -stdlib=libc++ %(AdditionalOptions)</AdditionalOptions>
+      <OutputCommandLine>true</OutputCommandLine>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PNaCl'">
