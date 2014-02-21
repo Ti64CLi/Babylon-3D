@@ -659,6 +659,11 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 	auto height = image->getHeight();
 	auto bits = image->getBits();
 
+	if (format == Babylon::RGBA)
+	{
+		format = GL_BGRA;
+	}
+
 	glTexImage2D(target, level, internalformat, width, height, 0, format, type, bits);
 	errorCheck();
 }

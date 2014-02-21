@@ -36,7 +36,9 @@
     <ClCompile Include="..\jni\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\AndroidManifest.xml" />
+    <Xml Include="..\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\build.xml" />
     <Xml Include="..\res\values\strings.xml" />
   </ItemGroup>

@@ -95,6 +95,7 @@ void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onloa
 
 	auto width = FreeImage_GetWidth(dib32bit);
 	auto height = FreeImage_GetHeight(dib32bit);
+
 	auto bits = FreeImage_GetBits(dib32bit);
 
 	//if this somehow one of these failed (they shouldn't), return failure

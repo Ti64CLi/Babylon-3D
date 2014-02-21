@@ -58,13 +58,27 @@ public:
 	Babylon::any getBits() { return _bits; };
 };
 
+void FreeImage_SwapColorOrder32(BYTE *target, BYTE *source, int width_in_pixels) {
+	for (int cols = 0; cols < width_in_pixels; cols++) {
+		auto tmp = target[FI_RGBA_RED];
+		target[FI_RGBA_RED] = source[FI_RGBA_BLUE];
+		target[FI_RGBA_BLUE] = tmp;
+		////target[FI_RGBA_RED] = 255;
+		////target[FI_RGBA_GREEN] = 0;
+		////target[FI_RGBA_BLUE] = 0;
+		////target[FI_RGBA_ALPHA] = 255;
+		target += 4;
+		source += 4;
+	}
+}
+
 void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onload, function_t<void (void)> onerror) {
 	// load image
- 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 	//pointer to the image, once loaded
 	FIBITMAP *dib(0);
 	//pointer to the image data
-	
+
 	//copy file from Asset
 	string path = this->fileLoader(url.c_str());
 
@@ -99,6 +113,12 @@ void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onloa
 
 	auto width = FreeImage_GetWidth(dib32bit);
 	auto height = FreeImage_GetHeight(dib32bit);
+
+	// fix color order
+	////for (int rows = 0; rows < height; rows++) {
+	////	FreeImage_SwapColorOrder32(FreeImage_GetScanLine(dib32bit, rows), FreeImage_GetScanLine(dib32bit, rows), width);
+	////}
+
 	auto bits = FreeImage_GetBits(dib32bit);
 
 	//if this somehow one of these failed (they shouldn't), return failure

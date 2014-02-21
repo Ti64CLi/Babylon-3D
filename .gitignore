@@ -11,6 +11,7 @@ libs
 *.suo
 *.pexe
 Debug
+Release
 Tegra-Android
 /Playground/Deps/FreeImage/lib
 /Playground/NativeClient/NaCl32

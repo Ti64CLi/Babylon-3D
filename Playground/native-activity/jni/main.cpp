@@ -387,12 +387,6 @@ static int engine_init_display(struct engine* engine) {
 	engine->height = h;
 	engine->state.angle = 0;
 
-	// Initialize GL state.
-	////glEnable(GL_DEPTH_TEST);
-	////glEnable(GL_CULL_FACE);
-	////glCullFace(GL_BACK);
-	////glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
 	engine->main->init(engine->width, engine->height, [=](const char* file) {
 		return copyFileFromAsset(engine, file);
 	});
@@ -410,13 +404,7 @@ static void engine_draw_frame(struct engine* engine) {
 		return;
 	}
 
-	// Just fill the screen with a color.
-	////glClearColor(((float)engine->state.x)/engine->width, engine->state.angle,
-	////        ((float)engine->state.y)/engine->height, 1);
-	////glClear(GL_COLOR_BUFFER_BIT);
-
 	engine->main->render();
-
 	eglSwapBuffers(engine->display, engine->surface);
 }
 
@@ -434,6 +422,7 @@ static void engine_term_display(struct engine* engine) {
 		}
 		eglTerminate(engine->display);
 	}
+
 	engine->animating = 0;
 	engine->display = EGL_NO_DISPLAY;
 	engine->context = EGL_NO_CONTEXT;
@@ -454,6 +443,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 
 		return 1;
 	}
+
 	return 0;
 }
 
