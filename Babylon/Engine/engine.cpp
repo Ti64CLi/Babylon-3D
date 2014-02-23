@@ -6,6 +6,7 @@ using namespace Babylon;
 
 float Babylon::Engine::epsilon = 0.001f;
 float Babylon::Engine::collisionsEpsilon = 0.001f;
+Plane::Ptr Babylon::Engine::clipPlane = nullptr;
 
 Babylon::Engine::Engine(ICanvas::Ptr canvas, bool antialias) 
 	: _alphaTest(false)

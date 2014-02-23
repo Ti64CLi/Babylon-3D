@@ -18,10 +18,10 @@ namespace Babylon {
 		typedef shared_ptr_t<Particle> Ptr;
 		typedef vector_t<Ptr> Array;
 
-        Vector3::Ptr position;
-        Vector3::Ptr direction;
-        Color4::Ptr color;
-        Color4::Ptr colorStep;
+        	Vector3::Ptr position;
+	        Vector3::Ptr direction;
+        	Color4::Ptr color;
+	        Color4::Ptr colorStep;
 
 		float lifeTime;
 		float age;

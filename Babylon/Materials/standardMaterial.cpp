@@ -4,6 +4,9 @@
 #include "mesh.h"
 #include "shadowGenerator.h"
 #include "pointLight.h"
+#include "spotLight.h"
+#include "hemisphericLight.h"
+#include "directionalLight.h"
 
 using namespace Babylon;
 
@@ -132,10 +135,9 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 	}
 
 	// Effect
-	// TODO: what todo with clipPlane
-	////if (BABYLON.clipPlane) {
-	////	defines.push_back("#define CLIPPLANE");
-	////}
+	if (Engine::clipPlane) {
+		defines.push_back("#define CLIPPLANE");
+	}
 
 	if (engine->getAlphaTesting()) {
 		defines.push_back("#define ALPHATEST");
@@ -166,14 +168,13 @@ bool Babylon::StandardMaterial::isReady (Mesh::Ptr mesh) {
 			}
 
 			string type;
-			// TODO: finish it when added others lights
-			////if (light instanceof BABYLON.SpotLight) {
-			////	type = "#define SPOTLIGHT" + to_string(lightIndex);
-			////} else if (light instanceof BABYLON.HemisphericLight) {
-			////	type = "#define HEMILIGHT" + to_string(lightIndex);
-			////} else {
-			type = "#define POINTDIRLIGHT" + to_string(lightIndex);
-			////}
+			if (dynamic_pointer_cast<SpotLight>(light)) {
+				type = "#define SPOTLIGHT" + to_string(lightIndex);
+			} else if (dynamic_pointer_cast<HemisphericLight>(light)) {
+				type = "#define HEMILIGHT" + to_string(lightIndex);
+			} else {
+				type = "#define POINTDIRLIGHT" + to_string(lightIndex);
+			}
 
 			defines.push_back(type);
 			if (lightIndex > 0) {
@@ -431,21 +432,20 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 				continue;
 			}
 
-			// TODO: finish when added all lights
 			if (dynamic_pointer_cast<PointLight>(light)) {
 				// Point Light
 				light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex));
 			} 
-			////else if (light instanceof BABYLON.DirectionalLight) {
-			////	// Directional Light
-			////	light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex));
-			////} else if (light instanceof BABYLON.SpotLight) {
-			////	// Spot Light
-			////	light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightDirection" + to_string(lightIndex));
-			////} else if (light instanceof BABYLON.HemisphericLight) {
-			////	// Hemispheric Light
-			////light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightGround" + to_string(lightIndex));
-			////}
+			else if (dynamic_pointer_cast<DirectionalLight>(light)) {
+				// Directional Light
+				light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex));
+			} else if (dynamic_pointer_cast<SpotLight>(light)) {
+				// Spot Light
+				light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightDirection" + to_string(lightIndex));
+			} else if (dynamic_pointer_cast<HemisphericLight>(light)) {
+				// Hemispheric Light
+				light->transferToEffect(this->_effect, "vLightData" + to_string(lightIndex), "vLightGround" + to_string(lightIndex));
+			}
 
 			light->diffuse->scaleToRef(light->intensity, this->_scaledDiffuse);
 			light->specular->scaleToRef(light->intensity, this->_scaledSpecular);
@@ -467,10 +467,9 @@ void Babylon::StandardMaterial::bind (Matrix::Ptr world, Mesh::Ptr mesh) {
 		}
 	}
 
-	// TODO: finish when clipPlane added
-	////if (BABYLON.clipPlane) {
-	////	this->_effect->setFloat4("vClipPlane", BABYLON.clipPlane->normal->x, BABYLON->clipPlane->normal->y, BABYLON->clipPlane->normal->z, BABYLON->clipPlane->d);
-	////}
+	if (Engine::clipPlane) {
+		this->_effect->setFloat4("vClipPlane", Engine::clipPlane->normal->x, Engine::clipPlane->normal->y, Engine::clipPlane->normal->z, Engine::clipPlane->d);
+	}
 
 	// View
 	if (this->_scene->fogMode != FOGMODE_NONE || this->reflectionTexture) {

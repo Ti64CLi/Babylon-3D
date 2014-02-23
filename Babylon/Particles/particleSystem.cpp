@@ -210,10 +210,9 @@ void Babylon::ParticleSystem::_update(size_t newParticles) {
 Effect::Ptr Babylon::ParticleSystem::_getEffect() {
 	vector_t<string> defines;
 
-	// TODO: what todo with clipPlane
-	////if (BABYLON.clipPlane) {
-	////	defines.push_back("#define CLIPPLANE");
-	////}
+	if (Engine::clipPlane) {
+		defines.push_back("#define CLIPPLANE");
+	}
 
 	vector_t<VertexBufferKind> attributes;
 	attributes.push_back(VertexBufferKind_PositionKind);
@@ -322,7 +321,6 @@ void Babylon::ParticleSystem::animate() {
 	engine->updateDynamicVertexBuffer(this->_vertexBuffer, this->_vertices, this->particles.size() * this->_vertexStrideSize);
 };
 
-// TODO: find out where clipPlane is coming from. seems it is static somewhere
 int Babylon::ParticleSystem::render() {
 	auto effect = this->_getEffect();
 
@@ -341,13 +339,11 @@ int Babylon::ParticleSystem::render() {
 	effect->setMatrix("projection", this->_scene->getProjectionMatrix());
 	effect->setFloat4("textureMask", this->textureMask->r, this->textureMask->g, this->textureMask->b, this->textureMask->a);
 
-	// TODO: find out where clipPlane coming from 
-	Plane::Ptr clipPlane = nullptr;
-	if (clipPlane) {
+	if (Engine::clipPlane) {
 		auto  invView = viewMatrix->clone();
 		invView->invert();
 		effect->setMatrix("invView", invView);
-		effect->setFloat4("vClipPlane", clipPlane->normal->x, clipPlane->normal->y, clipPlane->normal->z, clipPlane->d);
+		effect->setFloat4("vClipPlane", Engine::clipPlane->normal->x, Engine::clipPlane->normal->y, Engine::clipPlane->normal->z, Engine::clipPlane->d);
 	}        
 
 	// VBOs

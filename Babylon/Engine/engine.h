@@ -25,6 +25,7 @@ namespace Babylon {
 
 		static float epsilon;
 		static float collisionsEpsilon;
+		static Plane::Ptr clipPlane;
 
 		static vector_t<string> extensions;
 		bool forceWireframe;
