@@ -16,3 +16,5 @@ Tegra-Android
 /Playground/Deps/FreeImage/lib
 /Playground/NativeClient/NaCl32
 /Playground/NativeClient/PNaCl
+/Playground/NativeClient/newlib
+/Playground/NativeClient/chrome_data

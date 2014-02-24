@@ -49,4 +49,4 @@ add_dependencies (NativeClient Engine)
 
 target_link_libraries (NativeClient ppapi_gles2 ppapi_cpp ppapi pthread Cameras Engine Animations Bones Collisions Context Layer LensFlare Mesh Materials Lights Culling Particles PhysicsEngine PostProcess Rendering Sprites Textures Tools)
 
-add_custom_command(TARGET NativeClient POST_BUILD COMMAND ${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-finalize${TOOL_OS_SUFFIX} -o ${Babylon_SOURCE_DIR}/Playground/NativeClient/NativeClient.pexe ${Babylon_BINARY_DIR}/Playground/NativeClient/NativeClient)
+add_custom_command(TARGET NativeClient POST_BUILD COMMAND ${NACL_TOOLCHAIN_ROOT}/bin/${NACL_TOOLCHAIN_MACHINE_NAME}-finalize${TOOL_OS_SUFFIX} -o ${Babylon_SOURCE_DIR}/Playground/NativeClient/PNaCl/NativeClient.pexe ${Babylon_BINARY_DIR}/Playground/NativeClient/NativeClient)

@@ -137,8 +137,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PNaCl'">
     <Link>
-      <AdditionalDependencies>ppapi_cpp;ppapi_gles2;ppapi_cpp;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\libs\pnacl</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ppapi_cpp;ppapi_gles2;ppapi;pthread;Cameras;Engine;Animations;Bones;Collisions;Context;Layer;LensFlare;Mesh;Materials;Lights;Culling;Particles;PhysicsEngine;PostProcess;Rendering;Sprites;Textures;Tools</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\libs\pnacl;$(NACL_SDK_ROOT)\toolchain\win_pnacl\sdk\lib;$(NACL_SDK_ROOT)\toolchain\win_pnacl\usr\lib</AdditionalLibraryDirectories>
       <TranslateX86>true</TranslateX86>
       <TranslateX64>true</TranslateX64>
       <TranslateArm>true</TranslateArm>
@@ -172,10 +172,6 @@
     <ClCompile Include="main.cc" />
     <ClCompile Include="canvas.cc" />
     <ClCompile Include="gl.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="canvas.h" />
-    <ClCompile Include="gl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
