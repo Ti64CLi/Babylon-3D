@@ -969,7 +969,7 @@ void Babylon::Engine::_bindTexture(int channel, IGLTexture::Ptr texture) {
 };
 
 void Babylon::Engine::setTextureFromPostProcess(int channel, PostProcess::Ptr postProcess) {
-	this->_bindTexture(channel, postProcess->_texture);
+	this->_bindTexture(channel, postProcess->_textures[postProcess->_currentRenderTextureInd]);
 };
 
 void Babylon::Engine::setTexture(int channel, Texture::Ptr texture) {

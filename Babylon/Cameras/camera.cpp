@@ -164,6 +164,19 @@ void Babylon::Camera::_updateFromScene() {
 	this->_update();
 };
 
+// My implementation
+void Babylon::Camera::attachPostProcess(PostProcess::Ptr postProcess) {
+	this->postProcesses.push_back(postProcess);
+};
+
+void Babylon::Camera::detachPostProcess(PostProcess::Ptr postProcess) {
+	auto it = find (begin(this->postProcesses), end(this->postProcesses), postProcess);
+	if (it != end(this->postProcesses))
+	{
+		this->postProcesses.erase(it);
+	}
+};
+
 bool Babylon::Camera::hasWorldMatrix() {
 	return true;
 }

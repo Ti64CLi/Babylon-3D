@@ -1,5 +1,5 @@
-#ifndef BABYLON_PostProcess_H
-#define BABYLON_PostProcess_H
+#ifndef BABYLON_POSTPROCESS_H
+#define BABYLON_POSTPROCESS_H
 
 #include "decls.h"
 
@@ -25,6 +25,7 @@ namespace Babylon {
 		typedef void (*OnApplyFunc)(EffectPtr);
 		typedef void (*OnDisposeFunc)();
 		typedef void (*OnSizeChangedFunc)();
+		typedef void (*OnActivateFunc)(CameraPtr);
 
 		string name;
 		CameraPtr _camera;
@@ -35,12 +36,14 @@ namespace Babylon {
 		IGLBuffer::Ptr _indexBuffer;
 
 		EffectPtr _effect;
-		IGLTexture::Ptr _texture;
 
 		float _renderRatio;
 		int width;
 		int height;
 		SAMPLINGMODES renderTargetSamplingMode;
+		bool _reusable;
+		IGLTexture::Array _textures;
+		int _currentRenderTextureInd;
 
 	protected:
 		EnginePtr _engine;
@@ -48,16 +51,19 @@ namespace Babylon {
 		OnApplyFunc onApply;
 		OnDisposeFunc _onDispose;
 		OnSizeChangedFunc onSizeChanged;
+		OnActivateFunc onActivate;
 
+	protected: 
+		PostProcess(string name, string fragmentUrl,  vector_t<string> parameters, vector_t<string> samplers, float ratio, CameraPtr camera, SAMPLINGMODES samplingMode, EnginePtr engine, bool reusable);
 	public: 
-		PostProcess(string name, string fragmentUrl,  vector_t<string> parameters, vector_t<string> samplers, float ratio, CameraPtr camera, SAMPLINGMODES samplingMode);
+		static PostProcess::Ptr New(string name, string fragmentUrl,  vector_t<string> parameters, vector_t<string> samplers, float ratio, CameraPtr camera, SAMPLINGMODES samplingMode, EnginePtr engine, bool reusable);
 
 		// Methods
-		virtual void activate();
+		virtual void activate(CameraPtr camera = nullptr);
 		virtual EffectPtr apply();
 		virtual void dispose(bool doNotRecurse = false);
 	};
 
 };
 
-#endif // BABYLON_PostProcess_H
+#endif // BABYLON_POSTPROCESS_H

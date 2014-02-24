@@ -61,6 +61,8 @@ namespace Babylon {
 		virtual void detachControl(ICanvas::Ptr canvas);
 		virtual void _update();
 		virtual void _updateFromScene();
+		virtual void attachPostProcess(PostProcess::Ptr postProcess);
+		virtual void detachPostProcess(PostProcess::Ptr postProcess);
 		virtual Matrix::Ptr getWorldMatrix();
 		virtual Matrix::Ptr _getViewMatrix();
 		virtual Matrix::Ptr getViewMatrix();
