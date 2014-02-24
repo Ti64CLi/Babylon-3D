@@ -22,10 +22,10 @@ namespace Babylon {
 		typedef shared_ptr_t<PostProcess> Ptr;
 		typedef vector_t<Ptr> Array;
 
-		typedef void (*OnApplyFunc)(EffectPtr);
-		typedef void (*OnDisposeFunc)();
-		typedef void (*OnSizeChangedFunc)();
-		typedef void (*OnActivateFunc)(CameraPtr);
+		typedef function_t<void (EffectPtr)> OnApplyFunc;
+		typedef function_t<void ()> OnDisposeFunc;
+		typedef function_t<void ()> OnSizeChangedFunc;
+		typedef function_t<void (CameraPtr)> OnActivateFunc;
 
 		string name;
 		CameraPtr _camera;

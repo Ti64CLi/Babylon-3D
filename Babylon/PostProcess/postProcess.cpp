@@ -35,7 +35,7 @@ Babylon::PostProcess::PostProcess(string name, string fragmentUrl,  vector_t<str
 
 	vector_t<string> _samplers;
 	_samplers.insert(end(_samplers), begin(samplers), end(samplers));
-	samplers.push_back("textureSampler");
+	_samplers.push_back("textureSampler");
 
 	vector_t<string> optionalDefines;
 
