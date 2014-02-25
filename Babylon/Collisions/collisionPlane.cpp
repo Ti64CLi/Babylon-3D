@@ -1,4 +1,5 @@
 #include "collisionPlane.h"
+#include "defs.h"
 
 using namespace Babylon;
 

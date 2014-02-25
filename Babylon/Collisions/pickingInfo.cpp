@@ -1,4 +1,5 @@
 #include "pickingInfo.h"
+#include "defs.h"
 
 using namespace Babylon;
 

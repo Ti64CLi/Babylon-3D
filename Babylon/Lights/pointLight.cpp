@@ -1,4 +1,5 @@
 #include "pointLight.h"
+#include "defs.h"
 #include "engine.h"
 #include "shadowGenerator.h"
 

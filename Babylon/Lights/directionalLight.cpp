@@ -1,4 +1,5 @@
 #include "directionalLight.h"
+#include "defs.h"
 #include "engine.h"
 #include "shadowGenerator.h"
 

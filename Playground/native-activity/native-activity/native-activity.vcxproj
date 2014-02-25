@@ -82,7 +82,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -lFreeImage -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(SolutionDir)../libs/armeabi-v7a/;$(StlLibraryPath);$(SolutionDir)../obj/local/armeabi/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../libs/armeabi-v7a/;$(SolutionDir)../libs/armeabi-v7a/;$(StlLibraryPath);$(SolutionDir)../obj/local/armeabi/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EchoCommandLines>true</EchoCommandLines>
       <AdditionalDependencies>
       </AdditionalDependencies>
