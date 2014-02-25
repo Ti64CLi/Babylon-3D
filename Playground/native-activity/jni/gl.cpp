@@ -870,6 +870,7 @@ void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Ba
 }
 
 void GL::errorCheck() {
+
 	::GLenum error = GL_NO_ERROR;
 	error = glGetError();
 	if (GL_NO_ERROR != error) {

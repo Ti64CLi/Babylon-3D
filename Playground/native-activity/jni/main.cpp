@@ -390,6 +390,7 @@ static int engine_init_display(struct engine* engine) {
 	engine->main->init(engine->width, engine->height, [=](const char* file) {
 		return copyFileFromAsset(engine, file);
 	});
+
 	engine->main->loadSceneTutorial4();
 
 	return 0;
@@ -405,6 +406,7 @@ static void engine_draw_frame(struct engine* engine) {
 	}
 
 	engine->main->render();
+
 	eglSwapBuffers(engine->display, engine->surface);
 }
 
