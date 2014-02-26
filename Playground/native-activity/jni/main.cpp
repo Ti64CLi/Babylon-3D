@@ -335,7 +335,7 @@ static int engine_init_display(struct engine* engine) {
 	/*
 	* Here specify the attributes of the desired configuration.
 	* Below, we select an EGLConfig with at least 8 bits per color
-	* component compatible with on-screen windows
+	* component compatible with on-screen windows0
 	*/
 	const EGLint attribs[] = {
 		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
@@ -444,7 +444,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 
 		engine->main->onMotion(engine->state.x, engine->state.y);
 
-		return 1;
+		return 1;	
 	}
 
 	return 0;
