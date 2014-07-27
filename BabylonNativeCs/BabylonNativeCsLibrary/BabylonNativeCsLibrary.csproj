@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCEAFFE9-1ADD-4332-8753-2B9B28C39EA6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BabylonNativeCsLibrary</RootNamespace>
+    <AssemblyName>BabylonNativeCsLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile131</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Content Include="Shaders\anaglyph.fragment.fx" />
+    <Content Include="Shaders\blackAndWhite.fragment.fx" />
+    <Content Include="Shaders\blur.fragment.fx" />
+    <Content Include="Shaders\color.fragment.fx" />
+    <Content Include="Shaders\color.vertex.fx" />
+    <Content Include="Shaders\convolution.fragment.fx" />
+    <Content Include="Shaders\default.fragment.fx" />
+    <Content Include="Shaders\default.vertex.fx" />
+    <Content Include="Shaders\displayPass.fragment.fx" />
+    <Content Include="Shaders\filter.fragment.fx" />
+    <Content Include="Shaders\fxaa.fragment.fx" />
+    <Content Include="Shaders\layer.fragment.fx" />
+    <Content Include="Shaders\layer.vertex.fx" />
+    <Content Include="Shaders\legacydefault.fragment.fx" />
+    <Content Include="Shaders\legacydefault.vertex.fx" />
+    <Content Include="Shaders\lensFlare.fragment.fx" />
+    <Content Include="Shaders\lensFlare.vertex.fx" />
+    <Content Include="Shaders\oculusDistortionCorrection.fragment.fx" />
+    <Content Include="Shaders\particles.fragment.fx" />
+    <Content Include="Shaders\particles.vertex.fx" />
+    <Content Include="Shaders\pass.fragment.fx" />
+    <Content Include="Shaders\postprocess.vertex.fx" />
+    <Content Include="Shaders\refraction.fragment.fx" />
+    <Content Include="Shaders\shadowMap.fragment.fx" />
+    <Content Include="Shaders\shadowMap.vertex.fx" />
+    <Content Include="Shaders\sprites.fragment.fx" />
+    <Content Include="Shaders\sprites.vertex.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\babylon.action.cs" />
+    <Compile Include="Actions\babylon.actionManager.cs" />
+    <Compile Include="Actions\babylon.condition.cs" />
+    <Compile Include="Actions\babylon.directActions.cs" />
+    <Compile Include="Actions\babylon.interpolateValueAction.cs" />
+    <Compile Include="Animations\babylon.animatable.cs" />
+    <Compile Include="Animations\babylon.animation.cs" />
+    <Compile Include="babylon.engine.cs" />
+    <Compile Include="babylon.mixins.cs" />
+    <Compile Include="babylon.node.cs" />
+    <Compile Include="babylon.scene.cs" />
+    <Compile Include="Bones\babylon.bone.cs" />
+    <Compile Include="Bones\babylon.skeleton.cs" />
+    <Compile Include="Cameras\babylon.anaglyphCamera.cs" />
+    <Compile Include="Cameras\babylon.arcRotateCamera.cs" />
+    <Compile Include="Cameras\babylon.camera.cs" />
+    <Compile Include="Cameras\babylon.deviceOrientationCamera.cs" />
+    <Compile Include="Cameras\babylon.freeCamera.cs" />
+    <Compile Include="Cameras\babylon.gamepadCamera.cs" />
+    <Compile Include="Cameras\babylon.oculusCamera.cs" />
+    <Compile Include="Cameras\babylon.touchCamera.cs" />
+    <Compile Include="Cameras\babylon.virtualJoysticksCamera.cs" />
+    <Compile Include="Collisions\babylon.collider.cs" />
+    <Compile Include="Collisions\babylon.pickingInfo.cs" />
+    <Compile Include="Culling\babylon.BoundingBox.cs" />
+    <Compile Include="Culling\babylon.boundingInfo.cs" />
+    <Compile Include="Culling\babylon.boundingSphere.cs" />
+    <Compile Include="Culling\Octrees\babylon.octree.cs" />
+    <Compile Include="Culling\Octrees\babylon.octreeBlock.cs" />
+    <Compile Include="Layer\babylon.layer.cs" />
+    <Compile Include="LensFlare\babylon.lensFlare.cs" />
+    <Compile Include="LensFlare\babylon.lensFlareSystem.cs" />
+    <Compile Include="Lights\babylon.directionalLight.cs" />
+    <Compile Include="Lights\babylon.hemisphericLight.cs" />
+    <Compile Include="Lights\babylon.light.cs" />
+    <Compile Include="Lights\babylon.pointLight.cs" />
+    <Compile Include="Lights\babylon.spotLight.cs" />
+    <Compile Include="Lights\Shadows\babylon.shadowGenerator.cs" />
+    <Compile Include="Loading\babylon.sceneLoader.cs" />
+    <Compile Include="Loading\Plugins\babylon.babylonFileLoader.cs" />
+    <Compile Include="Loading\scenelLoadedr.waiting.for.database.cs" />
+    <Compile Include="Materials\babylon.effect.cs" />
+    <Compile Include="Materials\babylon.material.cs" />
+    <Compile Include="Materials\babylon.multiMaterial.cs" />
+    <Compile Include="Materials\babylon.shaderMaterial.cs" />
+    <Compile Include="Materials\babylon.standardMaterial.cs" />
+    <Compile Include="Materials\textures\babylon.baseTexture.cs" />
+    <Compile Include="Materials\textures\babylon.cubeTexture.cs" />
+    <Compile Include="Materials\textures\babylon.dynamicTexture.cs" />
+    <Compile Include="Materials\textures\babylon.mirrorTexture.cs" />
+    <Compile Include="Materials\textures\babylon.renderTargetTexture.cs" />
+    <Compile Include="Materials\textures\babylon.texture.cs" />
+    <Compile Include="Materials\textures\babylon.videoTexture.cs" />
+    <Compile Include="Math\babylon.math.cs" />
+    <Compile Include="Mesh\babylon.abstractMesh.cs" />
+    <Compile Include="Mesh\babylon.csg.cs" />
+    <Compile Include="Mesh\babylon.geometry.cs" />
+    <Compile Include="Mesh\babylon.groundMesh.cs" />
+    <Compile Include="Mesh\babylon.InstancedMesh.cs" />
+    <Compile Include="Mesh\babylon.linesMesh.cs" />
+    <Compile Include="Mesh\babylon.mesh.cs" />
+    <Compile Include="Mesh\babylon.mesh.vertexData.cs" />
+    <Compile Include="Mesh\babylon.subMesh.cs" />
+    <Compile Include="Mesh\babylon.vertexBuffer.cs" />
+    <Compile Include="Particles\babylon.particle.cs" />
+    <Compile Include="Particles\babylon.particleSystem.cs" />
+    <Compile Include="Physics\babylon.physicsEngine.cs" />
+    <Compile Include="Physics\Plugins\babylon.cannonJSPlugin.cs" />
+    <Compile Include="PostProcess\babylon.anaglyphPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.blackAndWhitePostProcess.cs" />
+    <Compile Include="PostProcess\babylon.blurPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.convolutionPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.displayPassPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.filterPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.fxaaPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.oculusDistortionCorrectionPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.passPostProcess.cs" />
+    <Compile Include="PostProcess\babylon.postProcess.cs" />
+    <Compile Include="PostProcess\babylon.postProcessManager.cs" />
+    <Compile Include="PostProcess\babylon.refractionPostProcess.cs" />
+    <Compile Include="PostProcess\RenderPipeline\babylon.postProcessRenderEffect.cs" />
+    <Compile Include="PostProcess\RenderPipeline\babylon.postProcessRenderPass.cs" />
+    <Compile Include="PostProcess\RenderPipeline\babylon.postProcessRenderPipeline.cs" />
+    <Compile Include="PostProcess\RenderPipeline\babylon.postProcessRenderPipelineManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\babylon.boundingBoxRenderer.cs" />
+    <Compile Include="Rendering\babylon.renderingGroup.cs" />
+    <Compile Include="Rendering\babylon.renderingManager.cs" />
+    <Compile Include="Sprites\babylon.sprite.cs" />
+    <Compile Include="Sprites\babylon.spriteManager.cs" />
+    <Compile Include="Tools\babylon.andOrNotEvaluator.cs" />
+    <Compile Include="Tools\babylon.database.cs" />
+    <Compile Include="Tools\babylon.filesInput.cs" />
+    <Compile Include="Tools\babylon.gamepads.cs" />
+    <Compile Include="Tools\babylon.sceneSerializer.cs" />
+    <Compile Include="Tools\babylon.smartArray.cs" />
+    <Compile Include="Tools\babylon.tags.cs" />
+    <Compile Include="Tools\babylon.tools.cs" />
+    <Compile Include="Tools\babylon.tools.dds.cs" />
+    <Compile Include="Tools\babylon.tools.tga.cs" />
+    <Compile Include="Tools\babylon.virtualJoystick.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
