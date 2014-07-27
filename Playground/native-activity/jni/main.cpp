@@ -219,7 +219,7 @@ public:
 		auto materialSphere5 = StandardMaterial::New("texture5", scene);
 		materialSphere5->diffuseTexture = Texture::New("Planet.png", scene);//Planet
 		materialSphere5->diffuseTexture->hasAlpha = true;//Have an alpha
-
+		 
 		//Creation of a material and allways show all the faces
 		auto materialSphere6 = StandardMaterial::New("texture6", scene);
 		materialSphere6->diffuseTexture =  Texture::New("Planet.png", scene);//Planet
@@ -291,6 +291,7 @@ string copyFileFromAsset(struct engine* engine, const char* file) {
 		if (0 == res && sb.st_mode & S_IFREG)
 		{
 			LOGI("Application config file already present");
+			LOGI(filePath.c_str());
 		}
 		else
 		{
@@ -298,6 +299,7 @@ string copyFileFromAsset(struct engine* engine, const char* file) {
 			// read our application config file from the assets inside the apk
 			// save the config file contents in the application's internal storage
 			LOGI("Reading config file using the asset manager.\n");
+			LOGI(filePath.c_str());
 
 			AAssetManager* assetManager = nativeActivity->assetManager;
 			AAsset* fileAsset = AAssetManager_open(assetManager, file, AASSET_MODE_BUFFER);
@@ -553,9 +555,9 @@ void android_main(struct android_app* state) {
 						ASensorEvent event;
 						while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
 							&event, 1) > 0) {
-								LOGI("accelerometer: x=%f y=%f z=%f",
-									event.acceleration.x, event.acceleration.y,
-									event.acceleration.z);
+								//LOGI("accelerometer: x=%f y=%f z=%f",
+								//	event.acceleration.x, event.acceleration.y,
+								//	event.acceleration.z);
 						}
 					}
 				}

@@ -1,6 +1,7 @@
 #include "canvas.h"
 #include "defs.h"
 
+#include <android/log.h>
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
@@ -8,7 +9,17 @@
 
 #include "gl.h"
 
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+
 using namespace std;
+
+using namespace Ogre;
+
+static bool gInit = false;
+static Ogre::Root* gRoot = NULL;
+static Ogre::RenderWindow* gRenderWnd = NULL;
+
 
 Babylon::IGL::Ptr Canvas::getContext3d(bool antialias) {
 	FreeImage_Initialise(FALSE);
@@ -62,11 +73,7 @@ void FreeImage_SwapColorOrder32(BYTE *target, BYTE *source, int width_in_pixels)
 	for (int cols = 0; cols < width_in_pixels; cols++) {
 		auto tmp = target[FI_RGBA_RED];
 		target[FI_RGBA_RED] = source[FI_RGBA_BLUE];
-		target[FI_RGBA_BLUE] = tmp;
-		////target[FI_RGBA_RED] = 255;
-		////target[FI_RGBA_GREEN] = 0;
-		////target[FI_RGBA_BLUE] = 0;
-		////target[FI_RGBA_ALPHA] = 255;
+		target[FI_RGBA_BLUE] = tmp;	
 		target += 4;
 		source += 4;
 	}
@@ -79,16 +86,26 @@ void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onloa
 	FIBITMAP *dib(0);
 	//pointer to the image data
 
+	LOGI("Loading image");
+	LOGI(url.c_str());
+
 	//copy file from Asset
 	string path = this->fileLoader(url.c_str());
 
 	fif = FreeImage_GetFileType(path.c_str(), 0);
 	//if still unknown, try to guess the file format from the file extension
 	if(fif == FIF_UNKNOWN) 
+	{
+		LOGI("File Format can't be detected. trying to detect file format from filename");
+
 		fif = FreeImage_GetFIFFromFilename(path.c_str());
+	}
+
 	//if still unkown, return failure
 	if(fif == FIF_UNKNOWN)
 	{
+		LOGI("File Format still unkown, return failure");
+
 		onerror();
 		return;
 	}
@@ -99,6 +116,8 @@ void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onloa
 	//if the image failed to load, return failure
 	if(!dib)
 	{
+		LOGI("the image failed to load, return failure");
+
 		onerror();
 		return;
 	}
@@ -115,18 +134,22 @@ void Canvas::loadImage(string url, function_t<void (Babylon::IImage::Ptr)> onloa
 	auto height = FreeImage_GetHeight(dib32bit);
 
 	// fix color order
-	////for (int rows = 0; rows < height; rows++) {
-	////	FreeImage_SwapColorOrder32(FreeImage_GetScanLine(dib32bit, rows), FreeImage_GetScanLine(dib32bit, rows), width);
-	////}
+	for (int rows = 0; rows < height; rows++) {
+		FreeImage_SwapColorOrder32(FreeImage_GetScanLine(dib32bit, rows), FreeImage_GetScanLine(dib32bit, rows), width);
+	}
 
 	auto bits = FreeImage_GetBits(dib32bit);
 
 	//if this somehow one of these failed (they shouldn't), return failure
 	if((bits == 0) || (width == 0) || (height == 0))
 	{
+		LOGI("the image failed to load(bits or width or hight is 0), return failure");
+
 		onerror();
 		return;
 	}
+
+	LOGI("Image loaded.");
 
 	auto image = make_shared<LoadedImage>(width, height, bits);
 	onload(dynamic_pointer_cast<Babylon::IImage>(image));

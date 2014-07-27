@@ -34,6 +34,9 @@ namespace Babylon {
 
 #endif
 
+#ifdef _MSC_VER
+#define isnan _isnan
+#endif
 
 #ifdef ANDROID
 

@@ -7,11 +7,12 @@
     <NdkRootPath>$(ANDROID_NDK)</NdkRootPath>
     <AndroidDebugMode>native</AndroidDebugMode>
     <DebuggerFlavor>AndroidDebugger</DebuggerFlavor>
-    <AndroidLaunchSuspended>false</AndroidLaunchSuspended>
     <AdditionalGdbDirectories>$(AdditionalGdbDirectories)</AdditionalGdbDirectories>
     <AdditionalLibraryDirectories>$(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     <GdbSetupPath>
     </GdbSetupPath>
+    <UseHardwareWatchpoints>false</UseHardwareWatchpoints>
+    <AndroidLaunchSuspended>false</AndroidLaunchSuspended>
   </PropertyGroup>
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
