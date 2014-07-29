@@ -2,30 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-namespace BABYLON
-{
-    public class Texture : BaseTexture
-    {
-        public static dynamic NEAREST_SAMPLINGMODE = 1;
-        public static dynamic BILINEAR_SAMPLINGMODE = 2;
-        public static dynamic TRILINEAR_SAMPLINGMODE = 3;
-        public static dynamic EXPLICIT_MODE = 0;
-        public static dynamic SPHERICAL_MODE = 1;
-        public static dynamic PLANAR_MODE = 2;
-        public static dynamic CUBIC_MODE = 3;
-        public static dynamic PROJECTION_MODE = 4;
-        public static dynamic SKYBOX_MODE = 5;
-        public static dynamic CLAMP_ADDRESSMODE = 0;
-        public static dynamic WRAP_ADDRESSMODE = 1;
-        public static dynamic MIRROR_ADDRESSMODE = 2;
+namespace BABYLON {
+    public class Texture: BaseTexture {
+        public static
+        const float NEAREST_SAMPLINGMODE = 1;
+        public static
+        const float BILINEAR_SAMPLINGMODE = 2;
+        public static
+        const float TRILINEAR_SAMPLINGMODE = 3;
+        public static
+        const float EXPLICIT_MODE = 0;
+        public static
+        const float SPHERICAL_MODE = 1;
+        public static
+        const float PLANAR_MODE = 2;
+        public static
+        const float CUBIC_MODE = 3;
+        public static
+        const float PROJECTION_MODE = 4;
+        public static
+        const float SKYBOX_MODE = 5;
+        public static
+        const float CLAMP_ADDRESSMODE = 0;
+        public static
+        const float WRAP_ADDRESSMODE = 1;
+        public static
+        const float MIRROR_ADDRESSMODE = 2;
         public string url;
-        public dynamic uOffset = 0;
-        public dynamic vOffset = 0;
-        public dynamic uScale = 1.0;
-        public dynamic vScale = 1.0;
-        public dynamic uAng = 0;
-        public dynamic vAng = 0;
-        public dynamic wAng = 0;
+        public float uOffset = 0;
+        public float vOffset = 0;
+        public float uScale = 1.0;
+        public float vScale = 1.0;
+        public float uAng = 0;
+        public float vAng = 0;
+        public float wAng = 0;
         private bool _noMipmap;
         public bool _invertY;
         private Matrix _rowGenerationMatrix;
@@ -43,46 +53,35 @@ namespace BABYLON
         private float _cachedWAng;
         private float _cachedCoordinatesMode;
         private float _samplingMode;
-        public Texture(string url, Scene scene, bool noMipmap, bool invertY, float samplingMode)
-        {
-            base(scene);
+        public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(scene) {
             this.name = url;
             this.url = url;
             this._noMipmap = noMipmap;
             this._invertY = invertY;
             this._samplingMode = samplingMode;
-            if (!url)
-            {
+            if (!url) {
                 return;
             }
             this._texture = this._getFromCache(url, noMipmap);
-            if (!this._texture)
-            {
-                if (!scene.useDelayedTextureLoading)
-                {
+            if (!this._texture) {
+                if (!scene.useDelayedTextureLoading) {
                     this._texture = scene.getEngine().createTexture(url, noMipmap, invertY, scene, this._samplingMode);
-                }
-                else
-                {
+                } else {
                     this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NOTLOADED;
                 }
             }
         }
-        public virtual void delayLoad()
-        {
-            if (this.delayLoadState != BABYLON.Engine.DELAYLOADSTATE_NOTLOADED)
-            {
+        public virtual void delayLoad() {
+            if (this.delayLoadState != BABYLON.Engine.DELAYLOADSTATE_NOTLOADED) {
                 return;
             }
             this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADED;
             this._texture = this._getFromCache(this.url, this._noMipmap);
-            if (!this._texture)
-            {
+            if (!this._texture) {
                 this._texture = this.getScene().getEngine().createTexture(this.url, this._noMipmap, this._invertY, this.getScene(), this._samplingMode);
             }
         }
-        private virtual void _prepareRowForTextureGeneration(float x, float y, float z, Vector3 t)
-        {
+        private virtual void _prepareRowForTextureGeneration(float x, float y, float z, Vector3 t) {
             x -= this.uOffset + 0.5;
             y -= this.vOffset + 0.5;
             z -= 0.5;
@@ -93,10 +92,8 @@ namespace BABYLON
             t.y += 0.5;
             t.z += 0.5;
         }
-        public virtual Matrix getTextureMatrix()
-        {
-            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.uAng == this._cachedUAng && this.vAng == this._cachedVAng && this.wAng == this._cachedWAng)
-            {
+        public virtual Matrix getTextureMatrix() {
+            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.uAng == this._cachedUAng && this.vAng == this._cachedVAng && this.wAng == this._cachedWAng) {
                 return this._cachedTextureMatrix;
             }
             this._cachedUOffset = this.uOffset;
@@ -106,8 +103,7 @@ namespace BABYLON
             this._cachedUAng = this.uAng;
             this._cachedVAng = this.vAng;
             this._cachedWAng = this.wAng;
-            if (!this._cachedTextureMatrix)
-            {
+            if (!this._cachedTextureMatrix) {
                 this._cachedTextureMatrix = BABYLON.Matrix.Zero();
                 this._rowGenerationMatrix = new BABYLON.Matrix();
                 this._t0 = BABYLON.Vector3.Zero();
@@ -132,19 +128,15 @@ namespace BABYLON
             this._cachedTextureMatrix.m[10] = this._t0.z;
             return this._cachedTextureMatrix;
         }
-        public virtual Matrix getReflectionTextureMatrix()
-        {
-            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.coordinatesMode == this._cachedCoordinatesMode)
-            {
+        public virtual Matrix getReflectionTextureMatrix() {
+            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.coordinatesMode == this._cachedCoordinatesMode) {
                 return this._cachedTextureMatrix;
             }
-            if (!this._cachedTextureMatrix)
-            {
+            if (!this._cachedTextureMatrix) {
                 this._cachedTextureMatrix = BABYLON.Matrix.Zero();
                 this._projectionModeMatrix = BABYLON.Matrix.Zero();
             }
-            switch (this.coordinatesMode)
-            {
+            switch (this.coordinatesMode) {
                 case BABYLON.Texture.SPHERICAL_MODE:
                     BABYLON.Matrix.IdentityToRef(this._cachedTextureMatrix);
                     this._cachedTextureMatrix[0] = -0.5 * this.uScale;
@@ -176,8 +168,7 @@ namespace BABYLON
             }
             return this._cachedTextureMatrix;
         }
-        public virtual Texture clone()
-        {
+        public virtual Texture clone() {
             var newTexture = new BABYLON.Texture(this._texture.url, this.getScene(), this._noMipmap, this._invertY);
             newTexture.hasAlpha = this.hasAlpha;
             newTexture.level = this.level;
