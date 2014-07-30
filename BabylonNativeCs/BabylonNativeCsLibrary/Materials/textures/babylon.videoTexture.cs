@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class VideoTexture: Texture {
+    public partial class VideoTexture: Texture {
         public HTMLVideoElement video;
         private bool _autoLaunch = true;
-        private float _lastUpdate;
-        public VideoTexture(string name, Array < string > urls, object size, Scene scene, bool generateMipMaps, bool invertY, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(null, scene, !generateMipMaps, invertY) {
+        private double _lastUpdate;
+        public VideoTexture(string name, Array < string > urls, object size, Scene scene, bool generateMipMaps, bool invertY, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(null, scene, !generateMipMaps, invertY) {
             this.name = name;
             this.wrapU = BABYLON.Texture.WRAP_ADDRESSMODE;
             this.wrapV = BABYLON.Texture.WRAP_ADDRESSMODE;
@@ -15,18 +16,18 @@ namespace BABYLON {
             var requiredHeight = size.height || size;
             this._texture = scene.getEngine().createDynamicTexture(requiredWidth, requiredHeight, generateMipMaps, samplingMode);
             var textureSize = this.getSize();
-            this.video = document.createElement("vide");
+            this.video = document.createElement("video");
             this.video.width = textureSize.width;
             this.video.height = textureSize.height;
             this.video.autoplay = false;
             this.video.loop = true;
-            this.video.addEventListener("canplaythroug", () => {
+            this.video.addEventListener("canplaythrough", () => {
                 if (this._texture) {
                     this._texture.isReady = true;
                 }
             });
-            urls.forEach((object url) => {
-                var source = document.createElement("sourc");
+            urls.forEach((url) => {
+                var source = document.createElement("source");
                 source.src = url;
                 this.video.appendChild(source);
             });

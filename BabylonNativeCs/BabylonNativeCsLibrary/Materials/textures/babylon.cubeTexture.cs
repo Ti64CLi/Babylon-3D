@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class CubeTexture: BaseTexture {
+    public partial class CubeTexture: BaseTexture {
         public string url;
-        public null coordinatesMode = BABYLON.Texture.CUBIC_MODE;
+        public double coordinatesMode = BABYLON.Texture.CUBIC_MODE;
         private bool _noMipmap;
         private Array < string > _extensions;
         private Matrix _textureMatrix;
@@ -16,7 +17,7 @@ namespace BABYLON {
             this.hasAlpha = false;
             this._texture = this._getFromCache(rootUrl, noMipmap);
             if (!extensions) {
-                extensions = new Array < object > ("_px.jp", "_py.jp", "_pz.jp", "_nx.jp", "_ny.jp", "_nz.jp");
+                extensions = new Array < object > ("_px.jpg", "_py.jpg", "_pz.jpg", "_nx.jpg", "_ny.jpg", "_nz.jpg");
             }
             this._extensions = extensions;
             if (!this._texture) {

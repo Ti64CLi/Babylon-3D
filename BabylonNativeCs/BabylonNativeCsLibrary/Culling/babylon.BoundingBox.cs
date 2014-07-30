@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class BoundingBox {
+    public partial class BoundingBox {
         public Array < Vector3 > vectors = new Array < Vector3 > ();
         public Vector3 center;
         public Vector3 extends;
@@ -39,7 +40,7 @@ namespace BABYLON {
             this.maximumWorld = BABYLON.Vector3.Zero();
             this._update(BABYLON.Matrix.Identity());
         }
-        void intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, float sphereRadius) {
+        void intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, double sphereRadius) {
             if (boxMin.x > sphereCenter.x + sphereRadius)
                 return false;
             if (sphereCenter.x - sphereRadius > boxMax.x)
@@ -54,12 +55,12 @@ namespace BABYLON {
                 return false;
             return true;
         };
-        void getLowestRoot(float a, float b, float c, float maxR) {
+        void getLowestRoot(double a, double b, double c, double maxR) {
             var determinant = b * b - 4.0 * a * c;
             var result = new {};
             if (determinant < 0)
                 return result;
-            var sqrtD = Math.sqrt(determinant);
+            var sqrtD = Math.Sqrt(determinant);
             var r1 = (-b - sqrtD) / (2.0 * a);
             var r2 = (-b + sqrtD) / (2.0 * a);
             if (r1 > r2) {
@@ -124,12 +125,12 @@ namespace BABYLON {
         public virtual bool intersectsSphere(BoundingSphere sphere) {
             return BoundingBox.IntersectsSphere(this.minimumWorld, this.maximumWorld, sphere.centerWorld, sphere.radiusWorld);
         }
-        public virtual bool intersectsMinMax(Vector3 min, Vector3 max) {
-            if (this.maximumWorld.x < min.x || this.minimumWorld.x > max.x)
+        public virtual bool intersectsMinMax(Vector3 min, Vector3 Max) {
+            if (this.maximumWorld.x < min.x || this.minimumWorld.x > Max.x)
                 return false;
-            if (this.maximumWorld.y < min.y || this.minimumWorld.y > max.y)
+            if (this.maximumWorld.y < min.y || this.minimumWorld.y > Max.y)
                 return false;
-            if (this.maximumWorld.z < min.z || this.minimumWorld.z > max.z)
+            if (this.maximumWorld.z < min.z || this.minimumWorld.z > Max.z)
                 return false;
             return true;
         }
@@ -142,7 +143,7 @@ namespace BABYLON {
                 return false;
             return true;
         }
-        public static bool IntersectsSphere(Vector3 minPoint, Vector3 maxPoint, Vector3 sphereCenter, float sphereRadius) {
+        public static bool IntersectsSphere(Vector3 minPoint, Vector3 maxPoint, Vector3 sphereCenter, double sphereRadius) {
             var vector = BABYLON.Vector3.Clamp(sphereCenter, minPoint, maxPoint);
             var num = BABYLON.Vector3.DistanceSquared(sphereCenter, vector);
             return (num <= (sphereRadius * sphereRadius));

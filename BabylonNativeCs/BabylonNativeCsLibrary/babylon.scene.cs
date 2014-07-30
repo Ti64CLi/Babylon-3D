@@ -2,21 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public interface IDisposable {
+    public partial interface IDisposable {
         void dispose();
     }
-    public class Scene {
-        public static
-        const float FOGMODE_NONE = 0;
-        public static
-        const float FOGMODE_EXP = 1;
-        public static
-        const float FOGMODE_EXP2 = 2;
-        public static
-        const float FOGMODE_LINEAR = 3;
-        public static float MinDeltaTime = 1.0;
-        public static float MaxDeltaTime = 1000.0;
+    public partial class Scene {
+        public
+        const double FOGMODE_NONE = 0;
+        public
+        const double FOGMODE_EXP = 1;
+        public
+        const double FOGMODE_EXP2 = 2;
+        public
+        const double FOGMODE_LINEAR = 3;
+        public static double MinDeltaTime = 1.0;
+        public static double MaxDeltaTime = 1000.0;
         public bool autoClear = true;
         public BABYLON.Color3 clearColor = new BABYLON.Color3(0.2, 0.2, 0.3);
         public BABYLON.Color3 ambientColor = new BABYLON.Color3(0, 0, 0);
@@ -31,14 +32,14 @@ namespace BABYLON {
         private System.Action < PointerEvent > _onPointerDown;
         public System.Action < PointerEvent, PickingInfo > onPointerDown;
         public Camera cameraToUseForPointers = null;
-        private float _pointerX;
-        private float _pointerY;
+        private double _pointerX;
+        private double _pointerY;
         private AbstractMesh _meshUnderPointer;
-        public null fogMode = BABYLON.Scene.FOGMODE_NONE;
+        public double fogMode = BABYLON.Scene.FOGMODE_NONE;
         public Color3 fogColor = new Color3(0.2, 0.2, 0.3);
-        public float fogDensity = 0.1;
-        public float fogStart = 0;
-        public float fogEnd = 1000.0;
+        public double fogDensity = 0.1;
+        public double fogStart = 0;
+        public double fogEnd = 1000.0;
         public bool lightsEnabled = true;
         public Array < Light > lights = new Array < Light > ();
         public Array < Camera > cameras = new Array < Camera > ();
@@ -48,7 +49,7 @@ namespace BABYLON {
         private Array < Geometry > _geometries = new Array < Geometry > ();
         public Array < Material > materials = new Array < Material > ();
         public Array < MultiMaterial > multiMaterials = new Array < MultiMaterial > ();
-        public BABYLON.StandardMaterial defaultMaterial = new BABYLON.StandardMaterial("default materia", this);
+        public BABYLON.StandardMaterial defaultMaterial = new BABYLON.StandardMaterial("default material", this);
         public bool texturesEnabled = true;
         public Array < BaseTexture > textures = new Array < BaseTexture > ();
         public bool particlesEnabled = true;
@@ -71,22 +72,22 @@ namespace BABYLON {
         public Array < ActionManager > _actionManagers = new Array < ActionManager > ();
         private SmartArray < AbstractMesh > _meshesForIntersections = new SmartArray < AbstractMesh > (256);
         private Engine _engine;
-        private float _totalVertices = 0;
-        public float _activeVertices = 0;
-        public float _activeParticles = 0;
-        private float _lastFrameDuration = 0;
-        private float _evaluateActiveMeshesDuration = 0;
-        private float _renderTargetsDuration = 0;
-        public float _particlesDuration = 0;
-        private float _renderDuration = 0;
-        public float _spritesDuration = 0;
-        private float _animationRatio = 0;
-        private float _animationStartDate;
-        private float _renderId = 0;
-        private float _executeWhenReadyTimeoutId = -1;
+        private double _totalVertices = 0;
+        public double _activeVertices = 0;
+        public double _activeParticles = 0;
+        private double _lastFrameDuration = 0;
+        private double _evaluateActiveMeshesDuration = 0;
+        private double _renderTargetsDuration = 0;
+        public double _particlesDuration = 0;
+        private double _renderDuration = 0;
+        public double _spritesDuration = 0;
+        private double _animationRatio = 0;
+        private double _animationStartDate;
+        private double _renderId = 0;
+        private double _executeWhenReadyTimeoutId = -1;
         public SmartArray < IDisposable > _toBeDisposed = new SmartArray < IDisposable > (256);
         private Array < System.Action > _onReadyCallbacks = new Array < System.Action > ();
-        private null _pendingData = new Array < object > ();
+        private Array < object > _pendingData = new Array < object > ();
         private Array < System.Action > _onBeforeRenderCallbacks = new Array < System.Action > ();
         private SmartArray < Mesh > _activeMeshes = new SmartArray < Mesh > (256);
         private SmartArray < Material > _processedMaterials = new SmartArray < Material > (256);
@@ -96,10 +97,10 @@ namespace BABYLON {
         private RenderingManager _renderingManager;
         private PhysicsEngine _physicsEngine;
         public Array < Animatable > _activeAnimatables = new Array < Animatable > ();
-        private null _transformMatrix = Matrix.Zero();
+        private BABYLON.Matrix _transformMatrix = Matrix.Zero();
         private Matrix _pickWithRayInverseMatrix;
-        private null _scaledPosition = Vector3.Zero();
-        private null _scaledVelocity = Vector3.Zero();
+        private BABYLON.Vector3 _scaledPosition = Vector3.Zero();
+        private BABYLON.Vector3 _scaledVelocity = Vector3.Zero();
         private BoundingBoxRenderer _boundingBoxRenderer;
         private Matrix _viewMatrix;
         private Matrix _projectionMatrix;
@@ -120,12 +121,12 @@ namespace BABYLON {
                 return this._meshUnderPointer;
             }
         }
-        public virtual float pointerX {
+        public virtual double pointerX {
             get {
                 return this._pointerX;
             }
         }
-        public virtual float pointerY {
+        public virtual double pointerY {
             get {
                 return this._pointerY;
             }
@@ -136,43 +137,43 @@ namespace BABYLON {
         public virtual Engine getEngine() {
             return this._engine;
         }
-        public virtual float getTotalVertices() {
+        public virtual double getTotalVertices() {
             return this._totalVertices;
         }
-        public virtual float getActiveVertices() {
+        public virtual double getActiveVertices() {
             return this._activeVertices;
         }
-        public virtual float getActiveParticles() {
+        public virtual double getActiveParticles() {
             return this._activeParticles;
         }
-        public virtual float getLastFrameDuration() {
+        public virtual double getLastFrameDuration() {
             return this._lastFrameDuration;
         }
-        public virtual float getEvaluateActiveMeshesDuration() {
+        public virtual double getEvaluateActiveMeshesDuration() {
             return this._evaluateActiveMeshesDuration;
         }
         public virtual SmartArray < Mesh > getActiveMeshes() {
             return this._activeMeshes;
         }
-        public virtual float getRenderTargetsDuration() {
+        public virtual double getRenderTargetsDuration() {
             return this._renderTargetsDuration;
         }
-        public virtual float getRenderDuration() {
+        public virtual double getRenderDuration() {
             return this._renderDuration;
         }
-        public virtual float getParticlesDuration() {
+        public virtual double getParticlesDuration() {
             return this._particlesDuration;
         }
-        public virtual float getSpritesDuration() {
+        public virtual double getSpritesDuration() {
             return this._spritesDuration;
         }
-        public virtual float getAnimationRatio() {
+        public virtual double getAnimationRatio() {
             return this._animationRatio;
         }
-        public virtual float getRenderId() {
+        public virtual double getRenderId() {
             return this._renderId;
         }
-        private virtual void _updatePointerPosition(PointerEvent evt) {
+        private void _updatePointerPosition(PointerEvent evt) {
             var canvasRect = this._engine.getRenderingCanvasClientRect();
             this._pointerX = evt.clientX - canvasRect.left;
             this._pointerY = evt.clientY - canvasRect.top;
@@ -188,11 +189,11 @@ namespace BABYLON {
                 var pickResult = this.pick(this._pointerX, this._pointerY, (AbstractMesh mesh) => mesh.isPickable && mesh.isVisible && mesh.isReady() && mesh.actionManager && mesh.actionManager.hasPointerTriggers, false, this.cameraToUseForPointers);
                 if (pickResult.hit) {
                     this.setPointerOverMesh(pickResult.pickedMesh);
-                    canvas.style.cursor = "pointe";
+                    canvas.style.cursor = "pointer";
                     this._meshUnderPointer = pickResult.pickedMesh;
                 } else {
                     this.setPointerOverMesh(null);
-                    canvas.style.cursor = "\"";
+                    canvas.style.cursor = "";
                     this._meshUnderPointer = null;
                 }
             };
@@ -226,13 +227,13 @@ namespace BABYLON {
                 }
             };
             var eventPrefix = Tools.GetPointerPrefix();
-            this._engine.getRenderingCanvas().addEventListener(eventPrefix + "mov", this._onPointerMove, false);
-            this._engine.getRenderingCanvas().addEventListener(eventPrefix + "dow", this._onPointerDown, false);
+            this._engine.getRenderingCanvas().addEventListener(eventPrefix + "move", this._onPointerMove, false);
+            this._engine.getRenderingCanvas().addEventListener(eventPrefix + "down", this._onPointerDown, false);
         }
         public virtual void detachControl() {
             var eventPrefix = Tools.GetPointerPrefix();
-            this._engine.getRenderingCanvas().removeEventListener(eventPrefix + "mov", this._onPointerMove);
-            this._engine.getRenderingCanvas().removeEventListener(eventPrefix + "dow", this._onPointerDown);
+            this._engine.getRenderingCanvas().removeEventListener(eventPrefix + "move", this._onPointerMove);
+            this._engine.getRenderingCanvas().removeEventListener(eventPrefix + "down", this._onPointerDown);
         }
         public virtual bool isReady() {
             if (this._pendingData.Length > 0) {
@@ -276,7 +277,7 @@ namespace BABYLON {
                 this._pendingData.splice(index, 1);
             }
         }
-        public virtual float getWaitingItemsCount() {
+        public virtual double getWaitingItemsCount() {
             return this._pendingData.Length;
         }
         public virtual void executeWhenReady(System.Action func) {
@@ -290,7 +291,7 @@ namespace BABYLON {
         }
         public virtual void _checkIsReady() {
             if (this.isReady()) {
-                this._onReadyCallbacks.forEach((object func) => {
+                this._onReadyCallbacks.forEach((func) => {
                     func();
                 });
                 this._onReadyCallbacks = new Array < object > ();
@@ -301,8 +302,8 @@ namespace BABYLON {
                 this._checkIsReady();
             }, 150);
         }
-        public virtual Animatable beginAnimation(object target, float from, float to, bool loop = false, float speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null) {
-            if (speedRatio == undefined) {
+        public virtual Animatable beginAnimation(object target, double from, double to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null) {
+            if (speedRatio == null) {
                 speedRatio = 1.0;
             }
             this.stopAnimation(target);
@@ -320,8 +321,8 @@ namespace BABYLON {
             }
             return animatable;
         }
-        public virtual Animatable beginDirectAnimation(object target, Array < Animation > animations, float from, float to, bool loop = false, float speedRatio = 0.0, System.Action onAnimationEnd = null) {
-            if (speedRatio == undefined) {
+        public virtual Animatable beginDirectAnimation(object target, Array < Animation > animations, double from, double to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null) {
+            if (speedRatio == null) {
                 speedRatio = 1.0;
             }
             var animatable = new BABYLON.Animatable(this, target, from, to, loop, speedRatio, onAnimationEnd, animations);
@@ -341,7 +342,7 @@ namespace BABYLON {
                 animatable.stop();
             }
         }
-        private virtual void _animate() {
+        private void _animate() {
             if (!this._animationStartDate) {
                 this._animationStartDate = new Date().getTime();
             }
@@ -519,7 +520,7 @@ namespace BABYLON {
         public virtual bool isActiveMesh(Mesh mesh) {
             return (this._activeMeshes.indexOf(mesh) != -1);
         }
-        private virtual void _evaluateSubMesh(SubMesh subMesh, AbstractMesh mesh) {
+        private void _evaluateSubMesh(SubMesh subMesh, AbstractMesh mesh) {
             if (mesh.subMeshes.Length == 1 || subMesh.isInFrustum(this._frustumPlanes)) {
                 var material = subMesh.getMaterial();
                 if (mesh.showSubMeshesBoundingBox) {
@@ -537,7 +538,7 @@ namespace BABYLON {
                 }
             }
         }
-        private virtual void _evaluateActiveMeshes() {
+        private void _evaluateActiveMeshes() {
             this._activeMeshes.reset();
             this._renderingManager.reset();
             this._processedMaterials.reset();
@@ -591,7 +592,7 @@ namespace BABYLON {
             }
             this._particlesDuration += new Date().getTime() - beforeParticlesDate;
         }
-        private virtual void _activeMesh(AbstractMesh mesh) {
+        private void _activeMesh(AbstractMesh mesh) {
             if (mesh.skeleton) {
                 this._activeSkeletons.pushNoDuplicate(mesh.skeleton);
             }
@@ -618,11 +619,11 @@ namespace BABYLON {
         public virtual void updateTransformMatrix(bool force = false) {
             this.setTransformMatrix(this.activeCamera.getViewMatrix(), this.activeCamera.getProjectionMatrix(force));
         }
-        private virtual void _renderForCamera(Camera camera) {
+        private void _renderForCamera(Camera camera) {
             var engine = this._engine;
             this.activeCamera = camera;
             if (!this.activeCamera)
-                throw new Exception("Active camera not se");
+                throw new Error("Active camera not set");
             engine.setViewport(this.activeCamera.viewport);
             this._renderId++;
             this.updateTransformMatrix();
@@ -692,7 +693,7 @@ namespace BABYLON {
                 this.afterCameraRender(this.activeCamera);
             }
         }
-        private virtual void _processSubCameras(Camera camera) {
+        private void _processSubCameras(Camera camera) {
             if (camera.subCameras.Length == 0) {
                 this._renderForCamera(camera);
                 return;
@@ -704,7 +705,7 @@ namespace BABYLON {
             this.setTransformMatrix(this.activeCamera.getViewMatrix(), this.activeCamera.getProjectionMatrix());
             this.activeCamera._updateFromScene();
         }
-        private virtual void _checkIntersections() {
+        private void _checkIntersections() {
             for (var index = 0; index < this._meshesForIntersections.Length; index++) {
                 var sourceMesh = this._meshesForIntersections.data[index];
                 for (var actionIndex = 0; actionIndex < sourceMesh.actionManager.actions.Length; actionIndex++) {
@@ -747,7 +748,7 @@ namespace BABYLON {
             for (var callbackIndex = 0; callbackIndex < this._onBeforeRenderCallbacks.Length; callbackIndex++) {
                 this._onBeforeRenderCallbacks[callbackIndex]();
             }
-            var deltaTime = Math.max(Scene.MinDeltaTime, Math.min(BABYLON.Tools.GetDeltaTime(), Scene.MaxDeltaTime));
+            var deltaTime = Math.Max(Scene.MinDeltaTime, Math.min(BABYLON.Tools.GetDeltaTime(), Scene.MaxDeltaTime));
             this._animationRatio = deltaTime * (60.0 / 1000.0);
             this._animate();
             if (this._physicsEngine) {
@@ -828,7 +829,7 @@ namespace BABYLON {
             this._engine.scenes.splice(index, 1);
             this._engine.wipeCaches();
         }
-        public virtual void _getNewPosition(Vector3 position, Vector3 velocity, Collider collider, float maximumRetry, Vector3 finalPosition, AbstractMesh excludedMesh = null) {
+        public virtual void _getNewPosition(Vector3 position, Vector3 velocity, Collider collider, double maximumRetry, Vector3 finalPosition, AbstractMesh excludedMesh = null) {
             position.divideToRef(collider.radius, this._scaledPosition);
             velocity.divideToRef(collider.radius, this._scaledVelocity);
             collider.retry = 0;
@@ -837,7 +838,7 @@ namespace BABYLON {
             this._collideWithWorld(this._scaledPosition, this._scaledVelocity, collider, maximumRetry, finalPosition, excludedMesh);
             finalPosition.multiplyInPlace(collider.radius);
         }
-        private virtual void _collideWithWorld(Vector3 position, Vector3 velocity, Collider collider, float maximumRetry, Vector3 finalPosition, AbstractMesh excludedMesh = null) {
+        private void _collideWithWorld(Vector3 position, Vector3 velocity, Collider collider, double maximumRetry, Vector3 finalPosition, AbstractMesh excludedMesh = null) {
             var closeDistance = BABYLON.Engine.CollisionsEpsilon * 10.0;
             if (collider.retry >= maximumRetry) {
                 finalPosition.copyFrom(position);
@@ -869,23 +870,23 @@ namespace BABYLON {
                 this._selectionOctree = new BABYLON.Octree < AbstractMesh > (Octree.CreationFuncForMeshes, maxCapacity, maxDepth);
             }
             var min = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            var max = new BABYLON.Vector3(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
+            var Max = new BABYLON.Vector3(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
             for (var index = 0; index < this.meshes.Length; index++) {
                 var mesh = this.meshes[index];
                 mesh.computeWorldMatrix(true);
                 var minBox = mesh.getBoundingInfo().boundingBox.minimumWorld;
                 var maxBox = mesh.getBoundingInfo().boundingBox.maximumWorld;
-                Tools.CheckExtends(minBox, min, max);
-                Tools.CheckExtends(maxBox, min, max);
+                Tools.CheckExtends(minBox, min, Max);
+                Tools.CheckExtends(maxBox, min, Max);
             }
-            this._selectionOctree.update(min, max, this.meshes);
+            this._selectionOctree.update(min, Max, this.meshes);
             return this._selectionOctree;
         }
-        public virtual Ray createPickingRay(float x, float y, Matrix world, Camera camera) {
+        public virtual Ray createPickingRay(double x, double y, Matrix world, Camera camera) {
             var engine = this._engine;
             if (!camera) {
                 if (!this.activeCamera)
-                    throw new Exception("Active camera not se");
+                    throw new Error("Active camera not set");
                 camera = this.activeCamera;
             }
             var cameraViewport = camera.viewport;
@@ -894,7 +895,7 @@ namespace BABYLON {
             y = y / this._engine.getHardwareScalingLevel() - (this._engine.getRenderHeight() - viewport.y - viewport.height);
             return BABYLON.Ray.CreateNew(x, y, viewport.width, viewport.height, (world) ? world : BABYLON.Matrix.Identity(), camera.getViewMatrix(), camera.getProjectionMatrix());
         }
-        private virtual PickingInfo _internalPick(System.Func < Matrix, Ray > rayFunction, System.Func < AbstractMesh, bool > predicate, bool fastCheck = false) {
+        private PickingInfo _internalPick(System.Func < Matrix, Ray > rayFunction, System.Func < AbstractMesh, bool > predicate, bool fastCheck = false) {
             var pickingInfo = null;
             for (var meshIndex = 0; meshIndex < this.meshes.Length; meshIndex++) {
                 var mesh = this.meshes[meshIndex];
@@ -920,11 +921,11 @@ namespace BABYLON {
             }
             return pickingInfo || new BABYLON.PickingInfo();
         }
-        public virtual PickingInfo pick(float x, float y, System.Func < AbstractMesh, bool > predicate = null, bool fastCheck = false, Camera camera = null) {
-            return this._internalPick((object world) => this.createPickingRay(x, y, world, camera), predicate, fastCheck);
+        public virtual PickingInfo pick(double x, double y, System.Func < AbstractMesh, bool > predicate = null, bool fastCheck = false, Camera camera = null) {
+            return this._internalPick((world) => this.createPickingRay(x, y, world, camera), predicate, fastCheck);
         }
         public virtual void pickWithRay(Ray ray, System.Func < Mesh, bool > predicate, bool fastCheck = false) {
-            return this._internalPick((object world) => {
+            return this._internalPick((world) => {
                 if (!this._pickWithRayInverseMatrix) {
                     this._pickWithRayInverseMatrix = BABYLON.Matrix.Identity();
                 }
@@ -967,10 +968,10 @@ namespace BABYLON {
                 return;
             }
             this._physicsEngine.dispose();
-            this._physicsEngine = undefined;
+            this._physicsEngine = null;
         }
         public virtual bool isPhysicsEnabled() {
-            return this._physicsEngine != undefined;
+            return this._physicsEngine != null;
         }
         public virtual void setGravity(Vector3 gravity) {
             if (!this._physicsEngine) {
@@ -1002,8 +1003,8 @@ namespace BABYLON {
                 this._physicsEngine._unregisterMesh(mesh);
             }
         }
-        private virtual Array < object > _getByTags(Array < object > list, string tagsQuery) {
-            if (tagsQuery == undefined) {
+        private Array < object > _getByTags(Array < object > list, string tagsQuery) {
+            if (tagsQuery == null) {
                 return list;
             }
             var listByTags = new Array < object > ();

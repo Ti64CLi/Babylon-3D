@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class OctreeBlock {
+    public partial class OctreeBlock < T > {
         public Array < T > entries = new Array < T > ();
         public Array < OctreeBlock < T >> blocks;
-        private float _depth;
-        private float _maxDepth;
-        private float _capacity;
+        private double _depth;
+        private double _maxDepth;
+        private double _capacity;
         private Vector3 _minPoint;
         private Vector3 _maxPoint;
         private Array < Vector3 > _boundingVectors = new Array < Vector3 > ();
         private System.Action < T, OctreeBlock < T > > _creationFunc;
-        public OctreeBlock(Vector3 minPoint, Vector3 maxPoint, float capacity, float depth, float maxDepth, System.Action < T, OctreeBlock < T > > creationFunc) {
+        public OctreeBlock(Vector3 minPoint, Vector3 maxPoint, double capacity, double depth, double maxDepth, System.Action < T, OctreeBlock < T > > creationFunc) {
             this._capacity = capacity;
             this._depth = depth;
             this._maxDepth = maxDepth;
@@ -35,7 +36,7 @@ namespace BABYLON {
             this._boundingVectors.push(maxPoint.clone());
             this._boundingVectors[7].y = minPoint.y;
         }
-        public virtual float capacity {
+        public virtual double capacity {
             get {
                 return this._capacity;
             }
@@ -85,7 +86,7 @@ namespace BABYLON {
                 }
             }
         }
-        public virtual void intersects(Vector3 sphereCenter, float sphereRadius, SmartArray < T > selection, bool allowDuplicate = false) {
+        public virtual void intersects(Vector3 sphereCenter, double sphereRadius, SmartArray < T > selection, bool allowDuplicate = false) {
             if (BABYLON.BoundingBox.IntersectsSphere(this._minPoint, this._maxPoint, sphereCenter, sphereRadius)) {
                 if (this.blocks) {
                     for (var index = 0; index < this.blocks.Length; index++) {

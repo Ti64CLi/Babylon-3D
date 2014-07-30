@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Skeleton {
+    public partial class Skeleton {
         public Array < Bone > bones = new Array < Bone > ();
         private Scene _scene;
         private bool _isDirty = true;
         private Float32Array _transformMatrices;
         private Array < IAnimatable > _animatables;
-        private null _identity = Matrix.Identity();
+        private BABYLON.Matrix _identity = Matrix.Identity();
         public string name;
         public string id;
         public Skeleton(string name, string id, Scene scene) {

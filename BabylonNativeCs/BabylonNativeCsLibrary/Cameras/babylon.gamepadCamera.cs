@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class GamepadCamera: FreeCamera {
+    public partial class GamepadCamera: FreeCamera {
         private BABYLON.Gamepad _gamepad;
         private BABYLON.Gamepads _gamepads;
-        public float angularSensibility = 200;
-        public float moveSensibility = 75;
+        public double angularSensibility = 200;
+        public double moveSensibility = 75;
         public GamepadCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {
             this._gamepads = new BABYLON.Gamepads((BABYLON.Gamepad gamepad) => {
                 this._onNewGameConnected(gamepad);
             });
         }
-        private virtual void _onNewGameConnected(BABYLON.Gamepad gamepad) {
+        private void _onNewGameConnected(BABYLON.Gamepad gamepad) {
             if (gamepad.index == 0) {
                 this._gamepad = gamepad;
             }

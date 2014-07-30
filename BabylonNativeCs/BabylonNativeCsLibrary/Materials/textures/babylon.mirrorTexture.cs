@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class MirrorTexture: RenderTargetTexture {
+    public partial class MirrorTexture: RenderTargetTexture {
         public BABYLON.Plane mirrorPlane = new BABYLON.Plane(0, 1, 0, 1);
-        private null _transformMatrix = BABYLON.Matrix.Zero();
-        private null _mirrorMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _transformMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _mirrorMatrix = BABYLON.Matrix.Zero();
         private Matrix _savedViewMatrix;
-        public MirrorTexture(string name, float size, Scene scene, bool generateMipMaps = false): base(name, size, scene, generateMipMaps, true) {
+        public MirrorTexture(string name, double size, Scene scene, bool generateMipMaps = false): base(name, size, scene, generateMipMaps, true) {
             this.onBeforeRender = () => {
                 BABYLON.Matrix.ReflectionToRef(this.mirrorPlane, this._mirrorMatrix);
                 this._savedViewMatrix = scene.getViewMatrix();

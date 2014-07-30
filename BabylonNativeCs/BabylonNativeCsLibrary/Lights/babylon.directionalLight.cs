@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class DirectionalLight: Light {
+    public partial class DirectionalLight: Light {
         public Vector3 position;
         private Vector3 _transformedDirection;
         public Vector3 _transformedPosition;

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class ShaderMaterial: Material {
+    public partial class ShaderMaterial: Material {
         private string _shaderPath;
         private object _options;
         private Array < Texture > _textures = new Array < Texture > ();
-        private Array < float > _floats = new Array < float > ();
+        private Array < double > _floats = new Array < double > ();
         private dynamic _floatsArrays = new {};
         private Array < Color3 > _colors3 = new Array < Color3 > ();
         private Array < Color4 > _colors4 = new Array < Color4 > ();
@@ -19,8 +20,8 @@ namespace BABYLON {
             this._shaderPath = shaderPath;
             options.needAlphaBlending = options.needAlphaBlending || false;
             options.needAlphaTesting = options.needAlphaTesting || false;
-            options.attributes = options.attributes || new Array < object > ("positio", "norma", "u");
-            options.uniforms = options.uniforms || new Array < object > ("worldViewProjectio");
+            options.attributes = options.attributes || new Array < object > ("position", "normal", "uv");
+            options.uniforms = options.uniforms || new Array < object > ("worldViewProjection");
             options.samplers = options.samplers || new Array < object > ();
             this._options = options;
         }
@@ -30,7 +31,7 @@ namespace BABYLON {
         public virtual bool needAlphaTesting() {
             return this._options.needAlphaTesting;
         }
-        private virtual void _checkUniform(object uniformName) {
+        private void _checkUniform(object uniformName) {
             if (this._options.uniforms.indexOf(uniformName) == -1) {
                 this._options.uniforms.push(uniformName);
             }
@@ -42,12 +43,12 @@ namespace BABYLON {
             this._textures[name] = texture;
             return this;
         }
-        public virtual ShaderMaterial setFloat(string name, float value) {
+        public virtual ShaderMaterial setFloat(string name, double value) {
             this._checkUniform(name);
             this._floats[name] = value;
             return this;
         }
-        public virtual ShaderMaterial setFloats(string name, Array < float > value) {
+        public virtual ShaderMaterial setFloats(string name, Array < double > value) {
             this._checkUniform(name);
             this._floatsArrays[name] = value;
             return this;
@@ -79,28 +80,28 @@ namespace BABYLON {
         }
         public virtual bool isReady() {
             var engine = this.getScene().getEngine();
-            this._effect = engine.createEffect(this._shaderPath, this._options.attributes, this._options.uniforms, this._options.samplers, "\"", null, this.onCompiled, this.onException);
+            this._effect = engine.createEffect(this._shaderPath, this._options.attributes, this._options.uniforms, this._options.samplers, "", null, this.onCompiled, this.onError);
             if (!this._effect.isReady()) {
                 return false;
             }
             return true;
         }
         public virtual void bind(Matrix world) {
-            if (this._options.uniforms.indexOf("worl") != -1) {
-                this._effect.setMatrix("worl", world);
+            if (this._options.uniforms.indexOf("world") != -1) {
+                this._effect.setMatrix("world", world);
             }
-            if (this._options.uniforms.indexOf("vie") != -1) {
-                this._effect.setMatrix("vie", this.getScene().getViewMatrix());
+            if (this._options.uniforms.indexOf("view") != -1) {
+                this._effect.setMatrix("view", this.getScene().getViewMatrix());
             }
-            if (this._options.uniforms.indexOf("worldVie") != -1) {
+            if (this._options.uniforms.indexOf("worldView") != -1) {
                 world.multiplyToRef(this.getScene().getViewMatrix(), this._cachedWorldViewMatrix);
-                this._effect.setMatrix("worldVie", this._cachedWorldViewMatrix);
+                this._effect.setMatrix("worldView", this._cachedWorldViewMatrix);
             }
-            if (this._options.uniforms.indexOf("projectio") != -1) {
-                this._effect.setMatrix("projectio", this.getScene().getProjectionMatrix());
+            if (this._options.uniforms.indexOf("projection") != -1) {
+                this._effect.setMatrix("projection", this.getScene().getProjectionMatrix());
             }
-            if (this._options.uniforms.indexOf("worldViewProjectio") != -1) {
-                this._effect.setMatrix("worldViewProjectio", world.multiply(this.getScene().getTransformMatrix()));
+            if (this._options.uniforms.indexOf("worldViewProjection") != -1) {
+                this._effect.setMatrix("worldViewProjection", world.multiply(this.getScene().getTransformMatrix()));
             }
             foreach(var name in this._textures) {
                 this._effect.setTexture(name, this._textures[name]);

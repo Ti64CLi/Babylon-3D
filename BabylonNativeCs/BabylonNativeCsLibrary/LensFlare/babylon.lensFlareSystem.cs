@@ -2,27 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class LensFlareSystem {
+    public partial class LensFlareSystem {
         public Array < LensFlare > lensFlares = new Array < LensFlare > ();
-        public float borderLimit = 300;
+        public double borderLimit = 300;
         public System.Func < Mesh, bool > meshesSelectionPredicate;
         private Scene _scene;
         private object _emitter;
-        private null _vertexDeclaration = new Array < object > (2);
-        private null _vertexStrideSize = 2 * 4;
+        private Array < object > _vertexDeclaration = new Array < object > (2);
+        private double _vertexStrideSize = 2 * 4;
         private WebGLBuffer _vertexBuffer;
         private WebGLBuffer _indexBuffer;
         private Effect _effect;
-        private float _positionX;
-        private float _positionY;
+        private double _positionX;
+        private double _positionY;
         private bool _isEnabled = true;
         public string name;
         public LensFlareSystem(string name, object emitter, Scene scene) {
             this._scene = scene;
             this._emitter = emitter;
             scene.lensFlareSystems.push(this);
-            this.meshesSelectionPredicate = (object m) => m.material && m.isVisible && m.isEnabled() && m.checkCollisions && ((m.layerMask & scene.activeCamera.layerMask) != 0);
+            this.meshesSelectionPredicate = (m) => m.material && m.isVisible && m.isEnabled() && m.checkCollisions && ((m.layerMask & scene.activeCamera.layerMask) != 0);
             var vertices = new Array < object > ();
             vertices.push(1, 1);
             vertices.push(-1, 1);
@@ -37,7 +38,7 @@ namespace BABYLON {
             indices.push(2);
             indices.push(3);
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
-            this._effect = this._scene.getEngine().createEffect("lensFlar", new Array < object > ("positio"), new Array < object > ("colo", "viewportMatri"), new Array < object > ("textureSample"), "\"");
+            this._effect = this._scene.getEngine().createEffect("lensFlare", new Array < object > ("position"), new Array < object > ("color", "viewportMatrix"), new Array < object > ("textureSampler"), "");
         }
         public virtual bool isEnabled {
             get {
@@ -141,9 +142,9 @@ namespace BABYLON {
                 var cx = 2 * (x / globalViewport.width) - 1.0;
                 var cy = 1.0 - 2 * (y / globalViewport.height);
                 var viewportMatrix = BABYLON.Matrix.FromValues(cw / 2, 0, 0, 0, 0, ch / 2, 0, 0, 0, 0, 1, 0, cx, cy, 0, 1);
-                this._effect.setMatrix("viewportMatri", viewportMatrix);
-                this._effect.setTexture("textureSample", flare.texture);
-                this._effect.setFloat4("colo", flare.color.r * intensity, flare.color.g * intensity, flare.color.b * intensity, 1.0);
+                this._effect.setMatrix("viewportMatrix", viewportMatrix);
+                this._effect.setTexture("textureSampler", flare.texture);
+                this._effect.setFloat4("color", flare.color.r * intensity, flare.color.g * intensity, flare.color.b * intensity, 1.0);
                 engine.draw(true, 0, 6);
             }
             engine.setDepthBuffer(true);

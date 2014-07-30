@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class BaseTexture {
+    public partial class BaseTexture {
         public string name;
-        public null delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
+        public double delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
         public bool hasAlpha = false;
         public bool getAlphaFromRGB = false;
-        public float level = 1;
+        public double level = 1;
         public bool isCube = false;
         public bool isRenderTarget = false;
         public Array < Animation > animations = new Array < Animation > ();
         public System.Action onDispose;
-        public float coordinatesIndex = 0;
-        public null coordinatesMode = BABYLON.Texture.EXPLICIT_MODE;
-        public null wrapU = BABYLON.Texture.WRAP_ADDRESSMODE;
-        public null wrapV = BABYLON.Texture.WRAP_ADDRESSMODE;
-        public float anisotropicFilteringLevel = 4;
-        public float _cachedAnisotropicFilteringLevel;
+        public double coordinatesIndex = 0;
+        public double coordinatesMode = BABYLON.Texture.EXPLICIT_MODE;
+        public double wrapU = BABYLON.Texture.WRAP_ADDRESSMODE;
+        public double wrapV = BABYLON.Texture.WRAP_ADDRESSMODE;
+        public double anisotropicFilteringLevel = 4;
+        public double _cachedAnisotropicFilteringLevel;
         private Scene _scene;
         public WebGLTexture _texture;
         public BaseTexture(Scene scene) {
@@ -96,7 +97,7 @@ namespace BABYLON {
             if (index >= 0) {
                 this._scene.textures.splice(index, 1);
             }
-            if (this._texture == undefined) {
+            if (this._texture == null) {
                 return;
             }
             this.releaseInternalTexture();

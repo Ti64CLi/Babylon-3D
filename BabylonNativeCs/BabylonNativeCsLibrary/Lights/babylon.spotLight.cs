@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class SpotLight: Light {
+    public partial class SpotLight: Light {
         private Vector3 _transformedDirection;
         private Vector3 _transformedPosition;
         private Matrix _worldMatrix;
         public Vector3 position;
         public Vector3 direction;
-        public float angle;
-        public float exponent;
-        public SpotLight(string name, Vector3 position, Vector3 direction, float angle, float exponent, Scene scene): base(name, scene) {}
+        public double angle;
+        public double exponent;
+        public SpotLight(string name, Vector3 position, Vector3 direction, double angle, double exponent, Scene scene): base(name, scene) {}
         public virtual Vector3 setDirectionToTarget(Vector3 target) {
             this.direction = BABYLON.Vector3.Normalize(target.subtract(this.position));
             return this.direction;
@@ -34,7 +35,7 @@ namespace BABYLON {
                 effect.setFloat4(positionUniformName, this.position.x, this.position.y, this.position.z, this.exponent);
                 normalizeDirection = BABYLON.Vector3.Normalize(this.direction);
             }
-            effect.setFloat4(directionUniformName, normalizeDirection.x, normalizeDirection.y, normalizeDirection.z, Math.cos(this.angle * 0.5));
+            effect.setFloat4(directionUniformName, normalizeDirection.x, normalizeDirection.y, normalizeDirection.z, Math.Cos(this.angle * 0.5));
         }
         public virtual Matrix _getWorldMatrix() {
             if (!this._worldMatrix) {

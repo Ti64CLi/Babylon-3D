@@ -2,25 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class ArcRotateCamera: Camera {
-        public float inertialAlphaOffset = 0;
-        public float inertialBetaOffset = 0;
-        public float inertialRadiusOffset = 0;
-        public null lowerAlphaLimit = null;
-        public null upperAlphaLimit = null;
-        public float lowerBetaLimit = 0.01;
-        public null upperBetaLimit = Math.PI;
-        public null lowerRadiusLimit = null;
-        public null upperRadiusLimit = null;
-        public float angularSensibility = 1000.0;
-        public float wheelPrecision = 3.0;
-        public null keysUp = new Array < object > (38);
-        public null keysDown = new Array < object > (40);
-        public null keysLeft = new Array < object > (37);
-        public null keysRight = new Array < object > (39);
-        public float zoomOnFactor = 1;
-        private null _keys = new Array < object > ();
+    public partial class ArcRotateCamera: Camera {
+        public double inertialAlphaOffset = 0;
+        public double inertialBetaOffset = 0;
+        public double inertialRadiusOffset = 0;
+        public any lowerAlphaLimit = null;
+        public any upperAlphaLimit = null;
+        public double lowerBetaLimit = 0.01;
+        public any upperBetaLimit = Math.PI;
+        public any lowerRadiusLimit = null;
+        public any upperRadiusLimit = null;
+        public double angularSensibility = 1000.0;
+        public double wheelPrecision = 3.0;
+        public Array < object > keysUp = new Array < object > (38);
+        public Array < object > keysDown = new Array < object > (40);
+        public Array < object > keysLeft = new Array < object > (37);
+        public Array < object > keysRight = new Array < object > (39);
+        public double zoomOnFactor = 1;
+        private Array < object > _keys = new Array < object > ();
         private BABYLON.Matrix _viewMatrix = new BABYLON.Matrix();
         private HTMLElement _attachedElement;
         private System.Action < PointerEvent > _onPointerDown;
@@ -35,11 +36,11 @@ namespace BABYLON {
         private System.Action < PointerEvent > _onGestureStart;
         private System.Action < MSGestureEvent > _onGesture;
         private MSGesture _MSGestureHandler;
-        public float alpha;
-        public float beta;
-        public float radius;
+        public double alpha;
+        public double beta;
+        public double radius;
         public object target;
-        public ArcRotateCamera(string name, float alpha, float beta, float radius, object target, Scene scene): base(name, BABYLON.Vector3.Zero(), scene) {
+        public ArcRotateCamera(string name, double alpha, double beta, double radius, object target, Scene scene): base(name, BABYLON.Vector3.Zero(), scene) {
             this.getViewMatrix();
         }
         void eventPrefixTools.GetPointerPrefix();
@@ -49,9 +50,9 @@ namespace BABYLON {
         public virtual void _initCache() {
             base._initCache();
             this._cache.target = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            this._cache.alpha = undefined;
-            this._cache.beta = undefined;
-            this._cache.radius = undefined;
+            this._cache.alpha = null;
+            this._cache.beta = null;
+            this._cache.radius = null;
         }
         public virtual void _updateCache(bool ignoreParentClass = false) {
             if (!ignoreParentClass) {
@@ -75,8 +76,8 @@ namespace BABYLON {
             }
             this._attachedElement = element;
             var engine = this.getEngine();
-            if (this._onPointerDown == undefined) {
-                this._onPointerDown = (object evt) => {
+            if (this._onPointerDown == null) {
+                this._onPointerDown = (evt) => {
                     if (pointerId) {
                         return;
                     }
@@ -86,14 +87,14 @@ namespace BABYLON {
                         evt.preventDefault();
                     }
                 };
-                this._onPointerUp = (object evt) => {
+                this._onPointerUp = (evt) => {
                     previousPosition = null;
                     pointerId = null;
                     if (!noPreventDefault) {
                         evt.preventDefault();
                     }
                 };
-                this._onPointerMove = (object evt) => {
+                this._onPointerMove = (evt) => {
                     if (!previousPosition) {
                         return;
                     }
@@ -109,7 +110,7 @@ namespace BABYLON {
                         evt.preventDefault();
                     }
                 };
-                this._onMouseMove = (object evt) => {
+                this._onMouseMove = (evt) => {
                     if (!engine.isPointerLock) {
                         return;
                     }
@@ -121,23 +122,23 @@ namespace BABYLON {
                         evt.preventDefault();
                     }
                 };
-                this._wheel = (object event) => {
+                this._wheel = (_event) => {
                     var delta = 0;
-                    if (event.wheelDelta) {
-                        delta = event.wheelDelta / (this.wheelPrecision * 40);
+                    if (_event.wheelDelta) {
+                        delta = _event.wheelDelta / (this.wheelPrecision * 40);
                     } else
-                    if (event.detail) {
-                        delta = -event.detail / this.wheelPrecision;
+                    if (_event.detail) {
+                        delta = -_event.detail / this.wheelPrecision;
                     }
                     if (delta)
                         this.inertialRadiusOffset += delta;
-                    if (event.preventDefault) {
+                    if (_event.preventDefault) {
                         if (!noPreventDefault) {
-                            event.preventDefault();
+                            _event.preventDefault();
                         }
                     }
                 };
-                this._onKeyDown = (object evt) => {
+                this._onKeyDown = (evt) => {
                     if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1) {
                         var index = this._keys.indexOf(evt.keyCode);
                         if (index == -1) {
@@ -150,7 +151,7 @@ namespace BABYLON {
                         }
                     }
                 };
-                this._onKeyUp = (object evt) => {
+                this._onKeyUp = (evt) => {
                     if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1) {
                         var index = this._keys.indexOf(evt.keyCode);
                         if (index >= 0) {
@@ -167,8 +168,8 @@ namespace BABYLON {
                     this._keys = new Array < object > ();
                     pointerId = null;
                 };
-                this._onGestureStart = (object e) => {
-                    if (window.MSGesture == undefined) {
+                this._onGestureStart = (e) => {
+                    if (window.MSGesture == null) {
                         return;
                     }
                     if (!this._MSGestureHandler) {
@@ -177,7 +178,7 @@ namespace BABYLON {
                     }
                     this._MSGestureHandler.addPointer(e.pointerId);
                 };
-                this._onGesture = (object e) => {
+                this._onGesture = (e) => {
                     this.radius *= e.scale;
                     if (e.preventDefault) {
                         if (!noPreventDefault) {
@@ -195,30 +196,30 @@ namespace BABYLON {
                     pointerId = null;
                 };
             }
-            element.addEventListener(eventPrefix + "dow", this._onPointerDown, false);
-            element.addEventListener(eventPrefix + "u", this._onPointerUp, false);
-            element.addEventListener(eventPrefix + "ou", this._onPointerUp, false);
-            element.addEventListener(eventPrefix + "mov", this._onPointerMove, false);
-            element.addEventListener("mousemov", this._onMouseMove, false);
-            element.addEventListener("MSPointerDow", this._onGestureStart, false);
-            element.addEventListener("MSGestureChang", this._onGesture, false);
-            element.addEventListener("mousewhee", this._wheel, false);
-            element.addEventListener("DOMMouseScrol", this._wheel, false);
+            element.addEventListener(eventPrefix + "down", this._onPointerDown, false);
+            element.addEventListener(eventPrefix + "up", this._onPointerUp, false);
+            element.addEventListener(eventPrefix + "out", this._onPointerUp, false);
+            element.addEventListener(eventPrefix + "move", this._onPointerMove, false);
+            element.addEventListener("mousemove", this._onMouseMove, false);
+            element.addEventListener("MSPointerDown", this._onGestureStart, false);
+            element.addEventListener("MSGestureChange", this._onGesture, false);
+            element.addEventListener("mousewheel", this._wheel, false);
+            element.addEventListener("DOMMouseScroll", this._wheel, false);
             Tools.RegisterTopRootEvents(new Array < object > (new {}, new {}, new {}));
         }
         public virtual void detachControl(HTMLElement element) {
             if (this._attachedElement != element) {
                 return;
             }
-            element.removeEventListener(eventPrefix + "dow", this._onPointerDown);
-            element.removeEventListener(eventPrefix + "u", this._onPointerUp);
-            element.removeEventListener(eventPrefix + "ou", this._onPointerUp);
-            element.removeEventListener(eventPrefix + "mov", this._onPointerMove);
-            element.removeEventListener("mousemov", this._onMouseMove);
-            element.removeEventListener("MSPointerDow", this._onGestureStart);
-            element.removeEventListener("MSGestureChang", this._onGesture);
-            element.removeEventListener("mousewhee", this._wheel);
-            element.removeEventListener("DOMMouseScrol", this._wheel);
+            element.removeEventListener(eventPrefix + "down", this._onPointerDown);
+            element.removeEventListener(eventPrefix + "up", this._onPointerUp);
+            element.removeEventListener(eventPrefix + "out", this._onPointerUp);
+            element.removeEventListener(eventPrefix + "move", this._onPointerMove);
+            element.removeEventListener("mousemove", this._onMouseMove);
+            element.removeEventListener("MSPointerDown", this._onGestureStart);
+            element.removeEventListener("MSGestureChange", this._onGesture);
+            element.removeEventListener("mousewheel", this._wheel);
+            element.removeEventListener("DOMMouseScroll", this._wheel);
             Tools.UnregisterTopRootEvents(new Array < object > (new {}, new {}, new {}));
             this._MSGestureHandler = null;
             this._attachedElement = null;
@@ -278,17 +279,17 @@ namespace BABYLON {
         public virtual void setPosition(Vector3 position) {
             var radiusv3 = position.subtract(this._getTargetPosition());
             this.radius = radiusv3.Length();
-            this.alpha = Math.acos(radiusv3.x / Math.sqrt(Math.pow(radiusv3.x, 2) + Math.pow(radiusv3.z, 2)));
+            this.alpha = Math.acos(radiusv3.x / Math.Sqrt(Math.pow(radiusv3.x, 2) + Math.pow(radiusv3.z, 2)));
             if (radiusv3.z < 0) {
                 this.alpha = 2 * Math.PI - this.alpha;
             }
             this.beta = Math.acos(radiusv3.y / this.radius);
         }
         public virtual Matrix _getViewMatrix() {
-            var cosa = Math.cos(this.alpha);
-            var sina = Math.sin(this.alpha);
-            var cosb = Math.cos(this.beta);
-            var sinb = Math.sin(this.beta);
+            var cosa = Math.Cos(this.alpha);
+            var sina = Math.Sin(this.alpha);
+            var cosb = Math.Cos(this.beta);
+            var sinb = Math.Sin(this.beta);
             var target = this._getTargetPosition();
             target.addToRef(new BABYLON.Vector3(this.radius * cosa * sinb, this.radius * cosb, this.radius * sina * sinb), this.position);
             Matrix.LookAtLHToRef(this.position, target, this.upVector, this._viewMatrix);
@@ -297,17 +298,17 @@ namespace BABYLON {
         public virtual void zoomOn(Array < AbstractMesh > meshes = null) {
             meshes = meshes || this.getScene().meshes;
             var minMaxVector = BABYLON.Mesh.MinMax(meshes);
-            var distance = BABYLON.Vector3.Distance(minMaxVector.min, minMaxVector.max);
+            var distance = BABYLON.Vector3.Distance(minMaxVector.min, minMaxVector.Max);
             this.radius = distance * this.zoomOnFactor;
             this.focusOn(new {});
         }
         public virtual void focusOn(object meshesOrMinMaxVectorAndDistance) {
             var meshesOrMinMaxVector;
             var distance;
-            if (meshesOrMinMaxVectorAndDistance.min == undefined) {
+            if (meshesOrMinMaxVectorAndDistance.min == null) {
                 meshesOrMinMaxVector = meshesOrMinMaxVectorAndDistance || this.getScene().meshes;
                 meshesOrMinMaxVector = BABYLON.Mesh.MinMax(meshesOrMinMaxVector);
-                distance = BABYLON.Vector3.Distance(meshesOrMinMaxVector.min, meshesOrMinMaxVector.max);
+                distance = BABYLON.Vector3.Distance(meshesOrMinMaxVector.min, meshesOrMinMaxVector.Max);
             } else {
                 meshesOrMinMaxVector = meshesOrMinMaxVectorAndDistance;
                 distance = meshesOrMinMaxVectorAndDistance.distance;

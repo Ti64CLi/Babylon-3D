@@ -2,31 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Camera: Node {
-        public static
-        const float PERSPECTIVE_CAMERA = 0;
-        public static
-        const float ORTHOGRAPHIC_CAMERA = 1;
-        public null upVector = Vector3.Up();
-        public null orthoLeft = null;
-        public null orthoRight = null;
-        public null orthoBottom = null;
-        public null orthoTop = null;
-        public float fov = 0.8;
-        public float minZ = 0.1;
-        public float maxZ = 1000.0;
-        public float inertia = 0.9;
-        public null mode = Camera.PERSPECTIVE_CAMERA;
+    public partial class Camera: Node {
+        public
+        const double PERSPECTIVE_CAMERA = 0;
+        public
+        const double ORTHOGRAPHIC_CAMERA = 1;
+        public BABYLON.Vector3 upVector = Vector3.Up();
+        public any orthoLeft = null;
+        public any orthoRight = null;
+        public any orthoBottom = null;
+        public any orthoTop = null;
+        public double fov = 0.8;
+        public double minZ = 0.1;
+        public double maxZ = 1000.0;
+        public double inertia = 0.9;
+        public double mode = Camera.PERSPECTIVE_CAMERA;
         public bool isIntermediate = false;
         public Viewport viewport = new Viewport(0, 0, 1.0, 1.0);
-        public null subCameras = new Array < object > ();
-        public float layerMask = 0xFFFFFFFF;
-        private null _computedViewMatrix = BABYLON.Matrix.Identity();
+        public Array < object > subCameras = new Array < object > ();
+        public double layerMask = 0xFFFFFFFF;
+        private BABYLON.Matrix _computedViewMatrix = BABYLON.Matrix.Identity();
         public BABYLON.Matrix _projectionMatrix = new BABYLON.Matrix();
         private Matrix _worldMatrix;
         public Array < PostProcess > _postProcesses = new Array < PostProcess > ();
-        public null _postProcessesTakenIndices = new Array < object > ();
+        public Array < object > _postProcessesTakenIndices = new Array < object > ();
         public string _waitingParentId;
         public Vector3 position;
         public Camera(string name, Vector3 position, Scene scene): base(name, scene) {
@@ -39,17 +40,17 @@ namespace BABYLON {
             base._initCache();
             this._cache.position = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
             this._cache.upVector = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            this._cache.mode = undefined;
-            this._cache.minZ = undefined;
-            this._cache.maxZ = undefined;
-            this._cache.fov = undefined;
-            this._cache.aspectRatio = undefined;
-            this._cache.orthoLeft = undefined;
-            this._cache.orthoRight = undefined;
-            this._cache.orthoBottom = undefined;
-            this._cache.orthoTop = undefined;
-            this._cache.renderWidth = undefined;
-            this._cache.renderHeight = undefined;
+            this._cache.mode = null;
+            this._cache.minZ = null;
+            this._cache.maxZ = null;
+            this._cache.fov = null;
+            this._cache.aspectRatio = null;
+            this._cache.orthoLeft = null;
+            this._cache.orthoRight = null;
+            this._cache.orthoBottom = null;
+            this._cache.orthoTop = null;
+            this._cache.renderWidth = null;
+            this._cache.renderHeight = null;
         }
         public virtual void _updateCache(bool ignoreParentClass = false) {
             if (!ignoreParentClass) {
@@ -98,9 +99,9 @@ namespace BABYLON {
         public virtual void attachControl(HTMLElement element) {}
         public virtual void detachControl(HTMLElement element) {}
         public virtual void _update() {}
-        public virtual float attachPostProcess(PostProcess postProcess, float insertAt = null) {
+        public virtual double attachPostProcess(PostProcess postProcess, double insertAt = null) {
             if (!postProcess.isReusable() && this._postProcesses.indexOf(postProcess) > -1) {
-                Tools.Exception("You're trying to reuse a post process not defined as reusable");
+                Tools.Error("You're trying to reuse a post process not defined as reusable.");
                 return 0;
             }
             if (insertAt == null || insertAt < 0) {
@@ -134,7 +135,7 @@ namespace BABYLON {
             this._postProcesses[result] = postProcess;
             return result;
         }
-        public virtual Array < float > detachPostProcess(PostProcess postProcess, object atIndices = null) {
+        public virtual Array < double > detachPostProcess(PostProcess postProcess, object atIndices = null) {
             var result = new Array < object > ();
             if (!atIndices) {
                 var Length = this._postProcesses.Length;
@@ -147,7 +148,7 @@ namespace BABYLON {
                     this._postProcessesTakenIndices.splice(index, 1);
                 }
             } else {
-                atIndices = ((atIndicesisArray)) ? atIndices : new Array < object > (atIndices);
+                atIndices = ((atIndices is Array)) ? atIndices : new Array < object > (atIndices);
                 for (i = 0; i < atIndices.Length; i++) {
                     var foundPostProcess = this._postProcesses[atIndices[i]];
                     if (foundPostProcess != postProcess) {

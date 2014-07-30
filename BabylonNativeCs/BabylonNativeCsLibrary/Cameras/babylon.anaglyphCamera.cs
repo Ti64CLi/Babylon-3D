@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class AnaglyphArcRotateCamera: ArcRotateCamera {
-        private float _eyeSpace;
+    public partial class AnaglyphArcRotateCamera: ArcRotateCamera {
+        private double _eyeSpace;
         private ArcRotateCamera _leftCamera;
         private ArcRotateCamera _rightCamera;
-        public AnaglyphArcRotateCamera(string name, float alpha, float beta, float radius, object target, float eyeSpace, object scene): base(name, alpha, beta, radius, target, scene) {
+        public AnaglyphArcRotateCamera(string name, double alpha, double beta, double radius, object target, double eyeSpace, object scene): base(name, alpha, beta, radius, target, scene) {
             this._eyeSpace = BABYLON.Tools.ToRadians(eyeSpace);
-            this._leftCamera = new BABYLON.ArcRotateCamera(name + "_lef", alpha - this._eyeSpace, beta, radius, target, scene);
-            this._rightCamera = new BABYLON.ArcRotateCamera(name + "_righ", alpha + this._eyeSpace, beta, radius, target, scene);
+            this._leftCamera = new BABYLON.ArcRotateCamera(name + "_left", alpha - this._eyeSpace, beta, radius, target, scene);
+            this._rightCamera = new BABYLON.ArcRotateCamera(name + "_right", alpha + this._eyeSpace, beta, radius, target, scene);
             buildCamera(this, name);
         }
         public virtual void _update() {
@@ -29,26 +30,26 @@ namespace BABYLON {
             camera.target = this.target;
         }
     }
-    public class AnaglyphFreeCamera: FreeCamera {
-        private float _eyeSpace;
+    public partial class AnaglyphFreeCamera: FreeCamera {
+        private double _eyeSpace;
         private FreeCamera _leftCamera;
         private FreeCamera _rightCamera;
         private Matrix _transformMatrix;
-        public AnaglyphFreeCamera(string name, Vector3 position, float eyeSpace, Scene scene): base(name, position, scene) {
+        public AnaglyphFreeCamera(string name, Vector3 position, double eyeSpace, Scene scene): base(name, position, scene) {
             this._eyeSpace = BABYLON.Tools.ToRadians(eyeSpace);
             this._transformMatrix = new BABYLON.Matrix();
-            this._leftCamera = new BABYLON.FreeCamera(name + "_lef", position.clone(), scene);
-            this._rightCamera = new BABYLON.FreeCamera(name + "_righ", position.clone(), scene);
+            this._leftCamera = new BABYLON.FreeCamera(name + "_left", position.clone(), scene);
+            this._rightCamera = new BABYLON.FreeCamera(name + "_right", position.clone(), scene);
             buildCamera(this, name);
         }
         void buildCamera(object that, object name) {
             that._leftCamera.isIntermediate = true;
             that.subCameras.push(that._leftCamera);
             that.subCameras.push(that._rightCamera);
-            that._leftTexture = new BABYLON.PassPostProcess(name + "_leftTextur", 1.0, that._leftCamera);
-            that._anaglyphPostProcess = new BABYLON.AnaglyphPostProcess(name + "_anaglyp", 1.0, that._rightCamera);
-            that._anaglyphPostProcess.onApply = (object effect) => {
-                effect.setTextureFromPostProcess("leftSample", that._leftTexture);
+            that._leftTexture = new BABYLON.PassPostProcess(name + "_leftTexture", 1.0, that._leftCamera);
+            that._anaglyphPostProcess = new BABYLON.AnaglyphPostProcess(name + "_anaglyph", 1.0, that._rightCamera);
+            that._anaglyphPostProcess.onApply = (effect) => {
+                effect.setTextureFromPostProcess("leftSampler", that._leftTexture);
             };
             that._update();
         };

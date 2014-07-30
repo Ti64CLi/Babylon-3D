@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class DynamicTexture: Texture {
+    public partial class DynamicTexture: Texture {
         private bool _generateMipMaps;
         private HTMLCanvasElement _canvas;
         private CanvasRenderingContext2D _context;
-        public DynamicTexture(string name, object options, Scene scene, bool generateMipMaps, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(null, scene, !generateMipMaps) {
+        public DynamicTexture(string name, object options, Scene scene, bool generateMipMaps, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(null, scene, !generateMipMaps) {
             this.name = name;
             this.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
@@ -16,7 +17,7 @@ namespace BABYLON {
                 this._canvas = options;
                 this._texture = scene.getEngine().createDynamicTexture(options.width, options.height, generateMipMaps, samplingMode);
             } else {
-                this._canvas = document.createElement("canva");
+                this._canvas = document.createElement("canvas");
                 if (options.width) {
                     this._texture = scene.getEngine().createDynamicTexture(options.width, options.height, generateMipMaps, samplingMode);
                 } else {
@@ -26,15 +27,15 @@ namespace BABYLON {
             var textureSize = this.getSize();
             this._canvas.width = textureSize.width;
             this._canvas.height = textureSize.height;
-            this._context = this._canvas.getContext("2");
+            this._context = this._canvas.getContext("2d");
         }
         public virtual CanvasRenderingContext2D getContext() {
             return this._context;
         }
         public virtual void update(bool invertY = false) {
-            this.getScene().getEngine().updateDynamicTexture(this._texture, this._canvas, (invertY == undefined) ? true : invertY);
+            this.getScene().getEngine().updateDynamicTexture(this._texture, this._canvas, (invertY == null) ? true : invertY);
         }
-        public virtual void drawText(string text, float x, float y, string font, string color, string clearColor, bool invertY = false) {
+        public virtual void drawText(string text, double x, double y, string font, string color, string clearColor, bool invertY = false) {
             var size = this.getSize();
             if (clearColor) {
                 this._context.fillStyle = clearColor;

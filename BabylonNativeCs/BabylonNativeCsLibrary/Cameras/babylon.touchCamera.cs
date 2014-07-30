@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class TouchCamera: FreeCamera {
-        private float _offsetX = null;
-        private float _offsetY = null;
-        private float _pointerCount = 0;
-        private null _pointerPressed = new Array < object > ();
+    public partial class TouchCamera: FreeCamera {
+        private double _offsetX = null;
+        private double _offsetY = null;
+        private double _pointerCount = 0;
+        private Array < object > _pointerPressed = new Array < object > ();
         private HTMLCanvasElement _attachedCanvas;
         private System.Func < PointerEvent, object > _onPointerDown;
         private System.Func < PointerEvent, object > _onPointerUp;
         private System.Func < PointerEvent, object > _onPointerMove;
-        public float angularSensibility = 200000.0;
-        public float moveSensibility = 500.0;
+        public double angularSensibility = 200000.0;
+        public double moveSensibility = 500.0;
         public TouchCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {}
         public virtual void attachControl(HTMLCanvasElement canvas, bool noPreventDefault) {
             var previousPosition;
@@ -21,7 +22,7 @@ namespace BABYLON {
                 return;
             }
             this._attachedCanvas = canvas;
-            if (this._onPointerDown == undefined) {
+            if (this._onPointerDown == null) {
                 this._onPointerDown = (object evt) => {
                     if (!noPreventDefault) {
                         evt.preventDefault();
@@ -67,20 +68,20 @@ namespace BABYLON {
                     this._offsetY = null;
                 };
             }
-            canvas.addEventListener("pointerdow", this._onPointerDown);
-            canvas.addEventListener("pointeru", this._onPointerUp);
-            canvas.addEventListener("pointerou", this._onPointerUp);
-            canvas.addEventListener("pointermov", this._onPointerMove);
+            canvas.addEventListener("pointerdown", this._onPointerDown);
+            canvas.addEventListener("pointerup", this._onPointerUp);
+            canvas.addEventListener("pointerout", this._onPointerUp);
+            canvas.addEventListener("pointermove", this._onPointerMove);
             BABYLON.Tools.RegisterTopRootEvents(new Array < object > (new {}));
         }
         public virtual void detachControl(HTMLCanvasElement canvas) {
             if (this._attachedCanvas != canvas) {
                 return;
             }
-            canvas.removeEventListener("pointerdow", this._onPointerDown);
-            canvas.removeEventListener("pointeru", this._onPointerUp);
-            canvas.removeEventListener("pointerou", this._onPointerUp);
-            canvas.removeEventListener("pointermov", this._onPointerMove);
+            canvas.removeEventListener("pointerdown", this._onPointerDown);
+            canvas.removeEventListener("pointerup", this._onPointerUp);
+            canvas.removeEventListener("pointerout", this._onPointerUp);
+            canvas.removeEventListener("pointermove", this._onPointerMove);
             BABYLON.Tools.UnregisterTopRootEvents(new Array < object > (new {}));
             this._attachedCanvas = null;
         }

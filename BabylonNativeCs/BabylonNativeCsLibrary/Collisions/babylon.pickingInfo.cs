@@ -2,22 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class IntersectionInfo {
-        public float faceId = 0;
-        public float bu;
-        public float bv;
-        public float distance;
-        public IntersectionInfo(float bu, float bv, float distance) {}
+    public partial class IntersectionInfo {
+        public double faceId = 0;
+        public double bu;
+        public double bv;
+        public double distance;
+        public IntersectionInfo(double bu, double bv, double distance) {}
     }
-    public class PickingInfo {
+    public partial class PickingInfo {
         public bool hit = false;
-        public float distance = 0;
+        public double distance = 0;
         public Vector3 pickedPoint = null;
         public AbstractMesh pickedMesh = null;
-        public float bu = 0;
-        public float bv = 0;
-        public float faceId = -1;
+        public double bu = 0;
+        public double bv = 0;
+        public double faceId = -1;
         public virtual Vector3 getNormal() {
             if (!this.pickedMesh || !this.pickedMesh.isVerticesDataPresent(BABYLON.VertexBuffer.NormalKind)) {
                 return null;

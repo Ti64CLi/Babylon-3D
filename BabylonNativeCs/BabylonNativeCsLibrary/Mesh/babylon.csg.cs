@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Vertex {
+    public partial class Vertex {
         public Vector3 pos;
         public Vector3 normal;
         public Vector2 uv;
@@ -18,16 +19,15 @@ namespace BABYLON {
             return new Vertex(Vector3.Lerp(this.pos, other.pos, t), Vector3.Lerp(this.normal, other.normal, t), Vector2.Lerp(this.uv, other.uv, t));
         }
     }
-    public class Plane {
+    public partial class Plane {
         public Vector3 normal;
-        public float w;
-        public Plane(Vector3 normal, float w) {}
-        static
-        const float EPSILON = 1e-5;
+        public double w;
+        public Plane(Vector3 normal, double w) {}
+        const double EPSILON = 1e-5;
         public static Plane FromPoints(Vector3 a, Vector3 b, Vector3 c) {
             var v0 = c.subtract(a);
             var v1 = b.subtract(a);
-            if (v0.LengthSquared() == 0 || v1.LengthSquared() == 0) {
+            if (v0.lengthSquared() == 0 || v1.lengthSquared() == 0) {
                 return null;
             }
             var n = Vector3.Normalize(Vector3.Cross(v0, v1));
@@ -64,11 +64,14 @@ namespace BABYLON {
                     back.push(polygon);
                     break;
                 case SPANNING:
-                    var f = new Array < object > () b = new Array < object > ();
+                    var f = new Array < object > ();
+                    var b = new Array < object > ();
                     for (i = 0; i < polygon.vertices.Length; i++) {
                         var j = (i + 1) % polygon.vertices.Length;
-                        var ti = types[i] tj = types[j];
-                        var vi = polygon.vertices[i] vj = polygon.vertices[j];
+                        var ti = types[i];
+                        var tj = types[j];
+                        var vi = polygon.vertices[i];
+                        var vj = polygon.vertices[j];
                         if (ti != BACK)
                             f.push(vi);
                         if (ti != FRONT)
@@ -94,7 +97,7 @@ namespace BABYLON {
             }
         }
     }
-    public class Polygon {
+    public partial class Polygon {
         public Array < Vertex > vertices;
         public dynamic shared;
         public Plane plane;
@@ -104,21 +107,21 @@ namespace BABYLON {
             this.plane = Plane.FromPoints(vertices[0].pos, vertices[1].pos, vertices[2].pos);
         }
         public virtual Polygon clone() {
-            var vertices = this.vertices.map((object v) => v.clone());
+            var vertices = this.vertices.map((v) => v.clone());
             return new Polygon(vertices, this.shared);
         }
         public virtual void flip() {
-            this.vertices.reverse().map((object v) => {
+            this.vertices.reverse().map((v) => {
                 v.flip();
             });
             this.plane.flip();
         }
     }
-    public class Node {
-        private null plane = null;
-        private null front = null;
-        private null back = null;
-        private null polygons = new Array < object > ();
+    public partial class Node {
+        private any plane = null;
+        private any front = null;
+        private any back = null;
+        private Array < object > polygons = new Array < object > ();
         public Node(object polygons = null) {
             if (polygons) {
                 this.build(polygons);
@@ -129,7 +132,7 @@ namespace BABYLON {
             node.plane = this.plane && this.plane.clone();
             node.front = this.front && this.front.clone();
             node.back = this.back && this.back.clone();
-            node.polygons = this.polygons.map((object p) => p.clone());
+            node.polygons = this.polygons.map((p) => p.clone());
             return node;
         }
         public virtual void invert() {
@@ -152,7 +155,8 @@ namespace BABYLON {
         public virtual void clipPolygons(Array < Polygon > polygons) {
             if (!this.plane)
                 return polygons.slice();
-            var front = new Array < object > () back = new Array < object > ();
+            var front = new Array < object > ();
+            var back = new Array < object > ();
             for (var i = 0; i < polygons.Length; i++) {
                 this.plane.splitPolygon(polygons[i], front, back, front, back);
             }
@@ -186,7 +190,8 @@ namespace BABYLON {
                 return;
             if (!this.plane)
                 this.plane = polygons[0].plane.clone();
-            var front = new Array < object > () back = new Array < object > ();
+            var front = new Array < object > ();
+            var back = new Array < object > ();
             for (var i = 0; i < polygons.Length; i++) {
                 this.plane.splitPolygon(polygons[i], this.polygons, this.polygons, front, back);
             }
@@ -202,27 +207,38 @@ namespace BABYLON {
             }
         }
     }
-    public class CSG {
+    public partial class CSG {
         private Array < Polygon > polygons = new Array < Polygon > ();
         public Matrix matrix;
         public Vector3 position;
         public Vector3 rotation;
         public Vector3 scaling;
         public static void FromMesh(Mesh mesh) {
-            var vertexnormaluvpositionpolygonpolygons = new Array < object > () vertices;
-            if (meshisBABYLON.Mesh) {
+            var vertex;
+            var normal;
+            var uv;
+            var position;
+            var polygon;
+            var polygons = new Array < object > ();
+            var vertices;
+            if (mesh is BABYLON.Mesh) {
                 mesh.computeWorldMatrix(true);
                 var matrix = mesh.getWorldMatrix();
                 var meshPosition = mesh.position.clone();
                 var meshRotation = mesh.rotation.clone();
                 var meshScaling = mesh.scaling.clone();
             } else {
-                throw "BABYLON.CSG: Wrong Mesh type, must be BABYLON.Mes";
+                throw "BABYLON.CSG: Wrong Mesh type, must be BABYLON.Mesh";
             }
-            var indices = mesh.getIndices() positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind) normals = mesh.getVerticesData(BABYLON.VertexBuffer.NormalKind) uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind);
+            var indices = mesh.getIndices();
+            var positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+            var normals = mesh.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+            var uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind);
             var subMeshes = mesh.subMeshes;
-            for (var sm = 0sml = subMeshes.Length; sm < sml; sm++) {
-                for (var i = subMeshes[sm].indexStartil = subMeshes[sm].indexCount + subMeshes[sm].indexStart; i < il; i += 3) {
+            for (var sm = 0;
+                var sml = subMeshes.Length; sm < sml; sm++) {
+                for (var i = subMeshes[sm].indexStart;
+                    var il = subMeshes[sm].indexCount + subMeshes[sm].indexStart; i < il; i += 3) {
                     vertices = new Array < object > ();
                     for (var j = 0; j < 3; j++) {
                         normal = new BABYLON.Vector3(normals[indices[i + j] * 3], normals[indices[i + j] * 3 + 1], normals[indices[i + j] * 3 + 2]);
@@ -253,11 +269,11 @@ namespace BABYLON {
         }
         public virtual CSG clone() {
             var csg = new BABYLON.CSG();
-            csg.polygons = this.polygons.map((object p) => p.clone());
+            csg.polygons = this.polygons.map((p) => p.clone());
             csg.copyTransformAttributes(this);
             return csg;
         }
-        private virtual Array < Polygon > toPolygons() {
+        private Array < Polygon > toPolygons() {
             return this.polygons;
         }
         public virtual CSG union(CSG csg) {
@@ -338,7 +354,7 @@ namespace BABYLON {
             return csg;
         }
         public virtual void inverseInPlace() {
-            this.polygons.map((object p) => {
+            this.polygons.map((p) => {
                 p.flip();
             });
         }
@@ -352,9 +368,22 @@ namespace BABYLON {
         public virtual Mesh buildMeshGeometry(string name, Scene scene, bool keepSubMeshes) {
             var matrix = this.matrix.clone();
             matrix.invert();
-            var mesh = new BABYLON.Mesh(name, scene) vertices = new Array < object > () indices = new Array < object > () normals = new Array < object > () uvs = new Array < object > () vertex = BABYLON.Vector3.Zero() normal = BABYLON.Vector3.Zero() uv = BABYLON.Vector2.Zero() polygons = this.polygonspolygonIndices = new Array < object > (0, 0, 0) polygonvertice_dict = new {}
-            vertex_idxcurrentIndex = 0subMesh_dict = new {}
-            subMesh_obj;
+            var mesh = new BABYLON.Mesh(name, scene);
+            var vertices = new Array < object > ();
+            var indices = new Array < object > ();
+            var normals = new Array < object > ();
+            var uvs = new Array < object > ();
+            var vertex = BABYLON.Vector3.Zero();
+            var normal = BABYLON.Vector3.Zero();
+            var uv = BABYLON.Vector2.Zero();
+            var polygons = this.polygons;
+            var polygonIndices = new Array < object > (0, 0, 0);
+            var polygon;
+            var vertice_dict = new {};
+            var vertex_idx;
+            var currentIndex = 0;
+            var subMesh_dict = new {};
+            var subMesh_obj;
             if (keepSubMeshes) {
                 polygons.sort((object a, object b) => {
                     if (a.shared.meshId == b.shared.meshId) {
@@ -364,7 +393,8 @@ namespace BABYLON {
                     }
                 });
             }
-            for (var i = 0il = polygons.Length; i < il; i++) {
+            for (var i = 0;
+                var il = polygons.Length; i < il; i++) {
                 polygon = polygons[i];
                 if (!subMesh_dict[polygon.shared.meshId]) {
                     subMesh_dict[polygon.shared.meshId] = new {};
@@ -373,7 +403,8 @@ namespace BABYLON {
                     subMesh_dict[polygon.shared.meshId][polygon.shared.subMeshId] = new {};
                 }
                 subMesh_obj = subMesh_dict[polygon.shared.meshId][polygon.shared.subMeshId];
-                for (var j = 2jl = polygon.vertices.Length; j < jl; j++) {
+                for (var j = 2;
+                    var jl = polygon.vertices.Length; j < jl; j++) {
                     polygonIndices[0] = 0;
                     polygonIndices[1] = j - 1;
                     polygonIndices[2] = j;
@@ -383,16 +414,16 @@ namespace BABYLON {
                         uv.copyFrom(polygon.vertices[polygonIndices[k]].uv);
                         BABYLON.Vector3.TransformCoordinatesToRef(vertex, matrix, vertex);
                         BABYLON.Vector3.TransformNormalToRef(normal, matrix, normal);
-                        vertex_idx = vertice_dict[vertex.x + "" + vertex.y + "" + vertex.z];
-                        if (!(typeof(vertex_idx) != "undefine" && normals[vertex_idx * 3] == normal.x && normals[vertex_idx * 3 + 1] == normal.y && normals[vertex_idx * 3 + 2] == normal.z && uvs[vertex_idx * 2] == uv.x && uvs[vertex_idx * 2 + 1] == uv.y)) {
+                        vertex_idx = vertice_dict[vertex.x + "," + vertex.y + "," + vertex.z];
+                        if (!(typeof(vertex_idx) != "undefined" && normals[vertex_idx * 3] == normal.x && normals[vertex_idx * 3 + 1] == normal.y && normals[vertex_idx * 3 + 2] == normal.z && uvs[vertex_idx * 2] == uv.x && uvs[vertex_idx * 2 + 1] == uv.y)) {
                             vertices.push(vertex.x, vertex.y, vertex.z);
                             uvs.push(uv.x, uv.y);
                             normals.push(normal.x, normal.y, normal.z);
-                            vertex_idx = vertice_dict[vertex.x + "" + vertex.y + "" + vertex.z] = (vertices.Length / 3) - 1;
+                            vertex_idx = vertice_dict[vertex.x + "," + vertex.y + "," + vertex.z] = (vertices.Length / 3) - 1;
                         }
                         indices.push(vertex_idx);
                         subMesh_obj.indexStart = Math.min(currentIndex, subMesh_obj.indexStart);
-                        subMesh_obj.indexEnd = Math.max(currentIndex, subMesh_obj.indexEnd);
+                        subMesh_obj.indexEnd = Math.Max(currentIndex, subMesh_obj.indexEnd);
                         currentIndex++;
                     }
                 }
@@ -402,14 +433,15 @@ namespace BABYLON {
             mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
             mesh.setIndices(indices);
             if (keepSubMeshes) {
-                var materialIndexOffset = 0materialMaxIndex;
+                var materialIndexOffset = 0;
+                var materialMaxIndex;
                 mesh.subMeshes.Length = 0;
                 foreach(var m in subMesh_dict) {
                     materialMaxIndex = -1;
                     foreach(var sm in subMesh_dict[m]) {
                         subMesh_obj = subMesh_dict[m][sm];
                         BABYLON.SubMesh.CreateFromIndices(subMesh_obj.materialIndex + materialIndexOffset, subMesh_obj.indexStart, subMesh_obj.indexEnd - subMesh_obj.indexStart + 1, mesh);
-                        materialMaxIndex = Math.max(subMesh_obj.materialIndex, materialMaxIndex);
+                        materialMaxIndex = Math.Max(subMesh_obj.materialIndex, materialMaxIndex);
                     }
                     materialIndexOffset += ++materialMaxIndex;
                 }

@@ -2,31 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Effect {
+    public partial class Effect {
         public object name;
         public string defines;
         public System.Action < Effect > onCompiled;
-        public System.Action < Effect, string > onException;
+        public System.Action < Effect, string > onError;
         private Engine _engine;
         private Array < string > _uniformsNames;
         private Array < string > _samplers;
         private bool _isReady = false;
-        private string _compilationException = "\"";
+        private string _compilationError = "";
         private Array < string > _attributesNames;
-        private Array < float > _attributes;
+        private Array < double > _attributes;
         private Array < WebGLUniformLocation > _uniforms;
         public string _key;
         private WebGLProgram _program;
-        private null _valueCache = new Array < object > ();
-        public Effect(object baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, object engine, string defines = string.Empty, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onException = null) {
+        private Array < object > _valueCache = new Array < object > ();
+        public Effect(object baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, object engine, string defines = null, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onError = null) {
             this._engine = engine;
             this.name = baseName;
             this.defines = defines;
             this._uniformsNames = uniformsNames.concat(samplers);
             this._samplers = samplers;
             this._attributesNames = attributesNames;
-            this.onException = onException;
+            this.onError = onError;
             this.onCompiled = onCompiled;
             var vertexSource;
             var fragmentSource;
@@ -37,7 +38,7 @@ namespace BABYLON {
                 vertexSource = baseName.vertexElement || baseName.vertex || baseName;
                 fragmentSource = baseName.fragmentElement || baseName.fragment || baseName;
             }
-            this._loadVertexShader(vertexSource, (object vertexCode) => {
+            this._loadVertexShader(vertexSource, (vertexCode) => {
                 this._loadFragmentShader(fragmentSource, (object fragmentCode) => {
                     this._prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
                 });
@@ -169,7 +170,7 @@ namespace BABYLON {
         };
         void parseLensFlareSystem(object parsedLensFlareSystem, object scene, object rootUrl) {
             var emitter = scene.getLastEntryByID(parsedLensFlareSystem.emitterId);
-            var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem" + parsedLensFlareSystem.emitterId, emitter, scene);
+            var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem#" + parsedLensFlareSystem.emitterId, emitter, scene);
             lensFlareSystem.borderLimit = parsedLensFlareSystem.borderLimit;
             for (var index = 0; index < parsedLensFlareSystem.flares.Length; index++) {
                 var parsedFlare = parsedLensFlareSystem.flares[index];
@@ -179,7 +180,7 @@ namespace BABYLON {
         };
         void parseParticleSystem(object parsedParticleSystem, object scene, object rootUrl) {
             var emitter = scene.getLastMeshByID(parsedParticleSystem.emitterId);
-            var particleSystem = new BABYLON.ParticleSystem("particles" + emitter.name, parsedParticleSystem.capacity, scene);
+            var particleSystem = new BABYLON.ParticleSystem("particles#" + emitter.name, parsedParticleSystem.capacity, scene);
             if (parsedParticleSystem.textureName) {
                 particleSystem.particleTexture = new BABYLON.Texture(rootUrl + parsedParticleSystem.textureName, scene);
                 particleSystem.particleTexture.name = parsedParticleSystem.textureName;
@@ -221,7 +222,7 @@ namespace BABYLON {
             }
             return shadowGenerator;
         };
-        void parseAnimation(object parsedAnimation) => {
+        void parseAnimation(parsedAnimation) => {
             void animationnew BABYLON.Animation(parsedAnimation.name, parsedAnimation.property, parsedAnimation.framePerSecond, parsedAnimation.dataType, parsedAnimation.loopBehavior);
             void dataTypeparsedAnimation.dataType;
             void keysnew Array < object > ();
@@ -268,7 +269,7 @@ namespace BABYLON {
             }
             light.id = parsedLight.id;
             BABYLON.Tags.AddTagsTo(light, parsedLight.tags);
-            if (parsedLight.intensity != undefined) {
+            if (parsedLight.intensity != null) {
                 light.intensity = parsedLight.intensity;
             }
             if (parsedLight.range) {
@@ -453,12 +454,12 @@ namespace BABYLON {
             mesh.infiniteDistance = parsedMesh.infiniteDistance;
             mesh.showBoundingBox = parsedMesh.showBoundingBox;
             mesh.showSubMeshesBoundingBox = parsedMesh.showSubMeshesBoundingBox;
-            if (parsedMesh.pickable != undefined) {
+            if (parsedMesh.pickable != null) {
                 mesh.isPickable = parsedMesh.pickable;
             }
             mesh.receiveShadows = parsedMesh.receiveShadows;
             mesh.billboardMode = parsedMesh.billboardMode;
-            if (parsedMesh.visibility != undefined) {
+            if (parsedMesh.visibility != null) {
                 mesh.visibility = parsedMesh.visibility;
             }
             mesh.checkCollisions = parsedMesh.checkCollisions;
@@ -546,7 +547,7 @@ namespace BABYLON {
             return mesh;
         };
         void isDescendantOf(object mesh, object names, object hierarchyIds) {
-            names = ((namesisArray)) ? names : new Array < object > (names);
+            names = ((names is Array)) ? names : new Array < object > (names);
             foreach(var i in names) {
                 if (mesh.name == names[i]) {
                     hierarchyIds.push(mesh.id);
@@ -663,17 +664,17 @@ namespace BABYLON {
         public virtual Array < string > getAttributesNames() {
             return this._attributesNames;
         }
-        public virtual float getAttributeLocation(float index) {
+        public virtual double getAttributeLocation(double index) {
             return this._attributes[index];
         }
-        public virtual float getAttributeLocationByName(string name) {
+        public virtual double getAttributeLocationByName(string name) {
             var index = this._attributesNames.indexOf(name);
             return this._attributes[index];
         }
-        public virtual float getAttributesCount() {
+        public virtual double getAttributesCount() {
             return this._attributes.Length;
         }
-        public virtual float getUniformIndex(string uniformName) {
+        public virtual double getUniformIndex(string uniformName) {
             return this._uniformsNames.indexOf(uniformName);
         }
         public virtual WebGLUniformLocation getUniform(string uniformName) {
@@ -682,44 +683,44 @@ namespace BABYLON {
         public virtual Array < string > getSamplers() {
             return this._samplers;
         }
-        public virtual string getCompilationException() {
-            return this._compilationException;
+        public virtual string getCompilationError() {
+            return this._compilationError;
         }
         public virtual void _loadVertexShader(object vertex, System.Action < object > callback) {
-            if (vertexisHTMLElement) {
+            if (vertex is HTMLElement) {
                 var vertexCode = BABYLON.Tools.GetDOMTextContent(vertex);
                 callback(vertexCode);
                 return;
             }
-            if (BABYLON.Effect.ShadersStore[vertex + "VertexShade"]) {
-                callback(BABYLON.Effect.ShadersStore[vertex + "VertexShade"]);
+            if (BABYLON.Effect.ShadersStore[vertex + "VertexShader"]) {
+                callback(BABYLON.Effect.ShadersStore[vertex + "VertexShader"]);
                 return;
             }
             var vertexShaderUrl;
-            if (vertex[0] == "") {
+            if (vertex[0] == ".") {
                 vertexShaderUrl = vertex;
             } else {
                 vertexShaderUrl = BABYLON.Engine.ShadersRepository + vertex;
             }
-            BABYLON.Tools.LoadFile(vertexShaderUrl + ".vertex.f", callback);
+            BABYLON.Tools.LoadFile(vertexShaderUrl + ".vertex.fx", callback);
         }
         public virtual void _loadFragmentShader(object fragment, System.Action < object > callback) {
-            if (fragmentisHTMLElement) {
+            if (fragment is HTMLElement) {
                 var fragmentCode = BABYLON.Tools.GetDOMTextContent(fragment);
                 callback(fragmentCode);
                 return;
             }
-            if (BABYLON.Effect.ShadersStore[fragment + "PixelShade"]) {
-                callback(BABYLON.Effect.ShadersStore[fragment + "PixelShade"]);
+            if (BABYLON.Effect.ShadersStore[fragment + "PixelShader"]) {
+                callback(BABYLON.Effect.ShadersStore[fragment + "PixelShader"]);
                 return;
             }
             var fragmentShaderUrl;
-            if (fragment[0] == "") {
+            if (fragment[0] == ".") {
                 fragmentShaderUrl = fragment;
             } else {
                 fragmentShaderUrl = BABYLON.Engine.ShadersRepository + fragment;
             }
-            BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.f", callback);
+            BABYLON.Tools.LoadFile(fragmentShaderUrl + ".fragment.fx", callback);
         }
         public virtual void _prepareEffect(string vertexSourceCode, string fragmentSourceCode, Array < string > attributesNames, string defines, Array < string > optionalDefines = null, bool useFallback = false) {
             try {
@@ -742,17 +743,17 @@ namespace BABYLON {
             } catch (Exception e) {
                 if (!useFallback && optionalDefines) {
                     for (index = 0; index < optionalDefines.Length; index++) {
-                        defines = defines.replace(optionalDefines[index], "\"");
+                        defines = defines.replace(optionalDefines[index], "");
                     }
                     this._prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, true);
                 } else {
-                    Tools.Exception("Unable to compile effect:" + this.name);
-                    Tools.Exception("Defines:" + defines);
-                    Tools.Exception("Optional defines:" + optionalDefines);
-                    Tools.Exception("Error:" + e.message);
-                    this._compilationException = e.message;
-                    if (this.onException) {
-                        this.onException(this, this._compilationException);
+                    Tools.Error("Unable to compile effect: " + this.name);
+                    Tools.Error("Defines: " + defines);
+                    Tools.Error("Optional defines: " + optionalDefines);
+                    Tools.Error("Error: " + e.message);
+                    this._compilationError = e.message;
+                    if (this.onError) {
+                        this.onError(this, this._compilationError);
                     }
                 }
             }
@@ -766,7 +767,7 @@ namespace BABYLON {
         public virtual void setTextureFromPostProcess(string channel, PostProcess postProcess) {
             this._engine.setTextureFromPostProcess(this._samplers.indexOf(channel), postProcess);
         }
-        public virtual void _cacheFloat2(string uniformName, float x, float y) {
+        public virtual void _cacheFloat2(string uniformName, double x, double y) {
             if (!this._valueCache[uniformName]) {
                 this._valueCache[uniformName] = new Array < object > (x, y);
                 return;
@@ -774,7 +775,7 @@ namespace BABYLON {
             this._valueCache[uniformName][0] = x;
             this._valueCache[uniformName][1] = y;
         }
-        public virtual void _cacheFloat3(string uniformName, float x, float y, float z) {
+        public virtual void _cacheFloat3(string uniformName, double x, double y, double z) {
             if (!this._valueCache[uniformName]) {
                 this._valueCache[uniformName] = new Array < object > (x, y, z);
                 return;
@@ -783,7 +784,7 @@ namespace BABYLON {
             this._valueCache[uniformName][1] = y;
             this._valueCache[uniformName][2] = z;
         }
-        public virtual void _cacheFloat4(string uniformName, float x, float y, float z, float w) {
+        public virtual void _cacheFloat4(string uniformName, double x, double y, double z, double w) {
             if (!this._valueCache[uniformName]) {
                 this._valueCache[uniformName] = new Array < object > (x, y, z, w);
                 return;
@@ -793,7 +794,7 @@ namespace BABYLON {
             this._valueCache[uniformName][2] = z;
             this._valueCache[uniformName][3] = w;
         }
-        public virtual Effect setArray(string uniformName, Array < float > array) {
+        public virtual Effect setArray(string uniformName, Array < double > array) {
             this._engine.setArray(this.getUniform(uniformName), array);
             return this;
         }
@@ -805,7 +806,7 @@ namespace BABYLON {
             this._engine.setMatrix(this.getUniform(uniformName), matrix);
             return this;
         }
-        public virtual Effect setFloat(string uniformName, float value) {
+        public virtual Effect setFloat(string uniformName, double value) {
             if (this._valueCache[uniformName] && this._valueCache[uniformName] == value)
                 return this;
             this._valueCache[uniformName] = value;
@@ -826,7 +827,7 @@ namespace BABYLON {
             this._engine.setFloat2(this.getUniform(uniformName), vector2.x, vector2.y);
             return this;
         }
-        public virtual Effect setFloat2(string uniformName, float x, float y) {
+        public virtual Effect setFloat2(string uniformName, double x, double y) {
             if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y)
                 return this;
             this._cacheFloat2(uniformName, x, y);
@@ -840,14 +841,14 @@ namespace BABYLON {
             this._engine.setFloat3(this.getUniform(uniformName), vector3.x, vector3.y, vector3.z);
             return this;
         }
-        public virtual Effect setFloat3(string uniformName, float x, float y, float z) {
+        public virtual Effect setFloat3(string uniformName, double x, double y, double z) {
             if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z)
                 return this;
             this._cacheFloat3(uniformName, x, y, z);
             this._engine.setFloat3(this.getUniform(uniformName), x, y, z);
             return this;
         }
-        public virtual Effect setFloat4(string uniformName, float x, float y, float z, float w) {
+        public virtual Effect setFloat4(string uniformName, double x, double y, double z, double w) {
             if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z && this._valueCache[uniformName][3] == w)
                 return this;
             this._cacheFloat4(uniformName, x, y, z, w);
@@ -861,7 +862,7 @@ namespace BABYLON {
             this._engine.setColor3(this.getUniform(uniformName), color3);
             return this;
         }
-        public virtual Effect setColor4(string uniformName, Color3 color3, float alpha) {
+        public virtual Effect setColor4(string uniformName, Color3 color3, double alpha) {
             if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == color3.r && this._valueCache[uniformName][1] == color3.g && this._valueCache[uniformName][2] == color3.b && this._valueCache[uniformName][3] == alpha)
                 return this;
             this._cacheFloat4(uniformName, color3.r, color3.g, color3.b, alpha);

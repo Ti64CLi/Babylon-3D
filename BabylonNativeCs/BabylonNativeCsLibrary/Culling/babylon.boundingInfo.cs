@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class BoundingInfo {
+    public partial class BoundingInfo {
         public BoundingBox boundingBox;
         public BoundingSphere boundingSphere;
         public Vector3 minimum;
@@ -20,11 +21,11 @@ namespace BABYLON {
             var r = r0 + r1 + r2;
             return new {};
         };
-        void extentsOverlap(float min0, float max0, float min1, float max1)!(min0 > max1 || min1 > max0);
+        void extentsOverlap(double min0, double max0, double min1, double max1)!(min0 > max1 || min1 > max0);
         void axisOverlap(Vector3 axis, BoundingBox box0, BoundingBox box1) {
             var result0 = computeBoxExtents(axis, box0);
             var result1 = computeBoxExtents(axis, box1);
-            return extentsOverlap(result0.min, result0.max, result1.min, result1.max);
+            return extentsOverlap(result0.min, result0.Max, result1.min, result1.Max);
         };
         public virtual void _update(Matrix world) {
             this.boundingBox._update(world);

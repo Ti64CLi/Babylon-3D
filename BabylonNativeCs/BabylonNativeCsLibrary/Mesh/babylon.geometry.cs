@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Geometry: IGetSetVerticesData {
+    public partial class Geometry: IGetSetVerticesData {
         public string id;
-        public null delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
+        public double delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
         public string delayLoadingFile;
         private Scene _scene;
         private Engine _engine;
         private Array < Mesh > _meshes;
-        private float _totalVertices = 0;
-        private null _indices = new Array < object > ();
+        private double _totalVertices = 0;
+        private Array < object > _indices = new Array < object > ();
         private dynamic _vertexBuffers;
         public dynamic _delayInfo;
         private dynamic _indexBuffer;
@@ -45,7 +46,7 @@ namespace BABYLON {
         public virtual void setAllVerticesData(VertexData vertexData, bool updatable = false) {
             vertexData.applyToGeometry(this, updatable);
         }
-        public virtual void setVerticesData(string kind, Array < float > data, bool updatable = false) {
+        public virtual void setVerticesData(string kind, Array < double > data, bool updatable = false) {
             this._vertexBuffers = this._vertexBuffers || new {};
             if (this._vertexBuffers[kind]) {
                 this._vertexBuffers[kind].dispose();
@@ -66,7 +67,7 @@ namespace BABYLON {
                 }
             }
         }
-        public virtual void updateVerticesData(string kind, Array < float > data, bool updateExtends = false) {
+        public virtual void updateVerticesData(string kind, Array < double > data, bool updateExtends = false) {
             var vertexBuffer = this.getVertexBuffer(kind);
             if (!vertexBuffer) {
                 return;
@@ -90,13 +91,13 @@ namespace BABYLON {
                 }
             }
         }
-        public virtual float getTotalVertices() {
+        public virtual double getTotalVertices() {
             if (!this.isReady()) {
                 return 0;
             }
             return this._totalVertices;
         }
-        public virtual Array < float > getVerticesData(string kind) {
+        public virtual Array < double > getVerticesData(string kind) {
             var vertexBuffer = this.getVertexBuffer(kind);
             if (!vertexBuffer) {
                 return null;
@@ -122,7 +123,7 @@ namespace BABYLON {
                 }
                 return false;
             }
-            return this._vertexBuffers[kind] != undefined;
+            return this._vertexBuffers[kind] != null;
         }
         public virtual Array < string > getVerticesDataKinds() {
             var result = new Array < object > ();
@@ -137,7 +138,7 @@ namespace BABYLON {
             }
             return result;
         }
-        public virtual void setIndices(Array < float > indices) {
+        public virtual void setIndices(Array < double > indices) {
             if (this._indexBuffer) {
                 this._engine._releaseBuffer(this._indexBuffer);
             }
@@ -151,13 +152,13 @@ namespace BABYLON {
                 meshes[index]._createGlobalSubMesh();
             }
         }
-        public virtual float getTotalIndices() {
+        public virtual double getTotalIndices() {
             if (!this.isReady()) {
                 return 0;
             }
             return this._indices.Length;
         }
-        public virtual Array < float > getIndices() {
+        public virtual Array < double > getIndices() {
             if (!this.isReady()) {
                 return null;
             }
@@ -205,7 +206,7 @@ namespace BABYLON {
                 mesh._boundingInfo = this._boundingInfo;
             }
         }
-        private virtual void _applyToMesh(Mesh mesh) {
+        private void _applyToMesh(Mesh mesh) {
             var numOfMeshes = this._meshes.Length;
             foreach(var kind in this._vertexBuffers) {
                 if (numOfMeshes == 1) {
@@ -238,7 +239,7 @@ namespace BABYLON {
             }
             this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADING;
             scene._addPendingData(this);
-            BABYLON.Tools.LoadFile(this.delayLoadingFile, (object data) => {
+            BABYLON.Tools.LoadFile(this.delayLoadingFile, (data) => {
                 this._delayLoadingFunction(JSON.parse(data), this);
                 this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADED;
                 this._delayInfo = new Array < object > ();
@@ -317,8 +318,9 @@ namespace BABYLON {
             return geometry.copy(id);
         }
         public static string RandomId() {
-            return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxx".replace(new Regex(/[xy]/g), (object c) => {
-                var r = Math.random() * 16 | 0v = (c == "") ? r : (r & 0x3 | 0x8);
+            return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(new Regex(/[xy]/g), (c) => {
+                var r = Math.random() * 16 | 0;
+                var v = (c == "x") ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Light: Node {
+    public partial class Light: Node {
         public Color3 diffuse = new Color3(1.0, 1.0, 1.0);
         public Color3 specular = new Color3(1.0, 1.0, 1.0);
-        public float intensity = 1.0;
-        public null range = Number.MAX_VALUE;
+        public double intensity = 1.0;
+        public any range = Number.MAX_VALUE;
         public Array < AbstractMesh > excludedMeshes = new Array < AbstractMesh > ();
         public ShadowGenerator _shadowGenerator;
         private Matrix _parentedWorldMatrix;
@@ -18,7 +19,7 @@ namespace BABYLON {
         public virtual ShadowGenerator getShadowGenerator() {
             return this._shadowGenerator;
         }
-        public virtual void transferToEffect(Effect effect, string uniformName0 = string.Empty, string uniformName1 = string.Empty) {}
+        public virtual void transferToEffect(Effect effect, string uniformName0 = null, string uniformName1 = null) {}
         public virtual Matrix _getWorldMatrix() {
             return Matrix.Identity();
         }

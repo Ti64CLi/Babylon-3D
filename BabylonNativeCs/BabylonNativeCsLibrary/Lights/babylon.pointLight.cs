@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class PointLight: Light {
+    public partial class PointLight: Light {
         private Matrix _worldMatrix;
         private Vector3 _transformedPosition;
         public Vector3 position;

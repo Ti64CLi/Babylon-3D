@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Condition {
+    public partial class Condition {
         public ActionManager _actionManager;
-        public float _evaluationId;
+        public double _evaluationId;
         public bool _currentResult;
         public Condition(ActionManager actionManager) {
             this._actionManager = actionManager;
@@ -20,27 +21,27 @@ namespace BABYLON {
             return this._actionManager._getEffectiveTarget(target, propertyPath);
         }
     }
-    public class ValueCondition: Condition {
-        private static float _IsEqual = 0;
-        private static float _IsDifferent = 1;
-        private static float _IsGreater = 2;
-        private static float _IsLesser = 3;
-        public static float IsEqual {
+    public partial class ValueCondition: Condition {
+        private static double _IsEqual = 0;
+        private static double _IsDifferent = 1;
+        private static double _IsGreater = 2;
+        private static double _IsLesser = 3;
+        public static double IsEqual {
             get {
                 return ValueCondition._IsEqual;
             }
         }
-        public static float IsDifferent {
+        public static double IsDifferent {
             get {
                 return ValueCondition._IsDifferent;
             }
         }
-        public static float IsGreater {
+        public static double IsGreater {
             get {
                 return ValueCondition._IsGreater;
             }
         }
-        public static float IsLesser {
+        public static double IsLesser {
             get {
                 return ValueCondition._IsLesser;
             }
@@ -50,13 +51,13 @@ namespace BABYLON {
         private string _property;
         public string propertyPath;
         public object value;
-        public float operator;
-        public ValueCondition(ActionManager actionManager, object target, string propertyPath, object value, float operator = ValueCondition.IsEqual): base(actionManager) {
+        public double _operator;
+        public ValueCondition(ActionManager actionManager, object target, string propertyPath, object value, double _operator = ValueCondition.IsEqual): base(actionManager) {
             this._target = this._getEffectiveTarget(target, this.propertyPath);
             this._property = this._getProperty(this.propertyPath);
         }
         public virtual bool isValid() {
-            switch (this.operator) {
+            switch (this._operator) {
                 case ValueCondition.IsGreater:
                     return this._target[this._property] > this.value;
                 case ValueCondition.IsLesser:
@@ -69,12 +70,12 @@ namespace BABYLON {
                     } else {
                         check = this.value == this._target[this._property];
                     }
-                    return (this.operator == ValueCondition.IsEqual) ? check : !check;
+                    return (this._operator == ValueCondition.IsEqual) ? check : !check;
             }
             return false;
         }
     }
-    public class PredicateCondition: Condition {
+    public partial class PredicateCondition: Condition {
         public ActionManager _actionManager;
         public System.Func predicate;
         public PredicateCondition(ActionManager actionManager, System.Func predicate): base(actionManager) {}
@@ -82,7 +83,7 @@ namespace BABYLON {
             return this.predicate();
         }
     }
-    public class StateCondition: Condition {
+    public partial class StateCondition: Condition {
         public ActionManager _actionManager;
         private object _target;
         public string value;

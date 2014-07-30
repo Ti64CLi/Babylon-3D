@@ -93,6 +93,9 @@
     <Compile Include="Culling\Octrees\babylon.octree.cs" />
     <Compile Include="Culling\Octrees\babylon.octreeBlock.cs" />
     <Compile Include="extras.array.cs" />
+    <Compile Include="extras.date.cs" />
+    <Compile Include="extras.error.cs" />
+    <Compile Include="extras.interfaces.cs" />
     <Compile Include="Layer\babylon.layer.cs" />
     <Compile Include="LensFlare\babylon.lensFlare.cs" />
     <Compile Include="LensFlare\babylon.lensFlareSystem.cs" />

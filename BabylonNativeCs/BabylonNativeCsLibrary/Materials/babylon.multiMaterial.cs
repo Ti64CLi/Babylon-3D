@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class MultiMaterial: Material {
+    public partial class MultiMaterial: Material {
         public Array < Material > subMaterials = new Array < Material > ();
         public MultiMaterial(string name, Scene scene): base(name, scene, true) {
             scene.multiMaterials.push(this);

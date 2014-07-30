@@ -2,20 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class DeviceOrientationCamera: FreeCamera {
-        private float _offsetX = null;
-        private float _offsetY = null;
-        private float _orientationGamma = 0;
-        private float _orientationBeta = 0;
-        private float _initialOrientationGamma = 0;
-        private float _initialOrientationBeta = 0;
+    public partial class DeviceOrientationCamera: FreeCamera {
+        private double _offsetX = null;
+        private double _offsetY = null;
+        private double _orientationGamma = 0;
+        private double _orientationBeta = 0;
+        private double _initialOrientationGamma = 0;
+        private double _initialOrientationBeta = 0;
         private HTMLCanvasElement _attachedCanvas;
         private System.Func < DeviceOrientationEvent, object > _orientationChanged;
-        public float angularSensibility = 10000.0;
-        public float moveSensibility = 50.0;
+        public double angularSensibility = 10000.0;
+        public double moveSensibility = 50.0;
         public DeviceOrientationCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {
-            window.addEventListener("resiz", () => {
+            window.addEventListener("resize", () => {
                 this._initialOrientationGamma = null;
             }, false);
         }
@@ -36,13 +37,13 @@ namespace BABYLON {
                     this._offsetX = (this._initialOrientationGamma - this._orientationGamma);
                 };
             }
-            window.addEventListener("deviceorientatio", this._orientationChanged);
+            window.addEventListener("deviceorientation", this._orientationChanged);
         }
         public virtual void detachControl(HTMLCanvasElement canvas) {
             if (this._attachedCanvas != canvas) {
                 return;
             }
-            window.removeEventListener("deviceorientatio", this._orientationChanged);
+            window.removeEventListener("deviceorientation", this._orientationChanged);
             this._attachedCanvas = null;
             this._orientationGamma = 0;
             this._orientationBeta = 0;

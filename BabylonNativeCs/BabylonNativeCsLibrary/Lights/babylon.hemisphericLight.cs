@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class HemisphericLight: Light {
+    public partial class HemisphericLight: Light {
         public BABYLON.Color3 groundColor = new BABYLON.Color3(0.0, 0.0, 0.0);
         private Matrix _worldMatrix;
         public Vector3 direction;

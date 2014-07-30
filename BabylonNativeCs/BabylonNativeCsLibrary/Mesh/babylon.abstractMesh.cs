@@ -2,39 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class AbstractMesh: Node, IDisposable {
-        private static
-        const float _BILLBOARDMODE_NONE = 0;
-        private static
-        const float _BILLBOARDMODE_X = 1;
-        private static
-        const float _BILLBOARDMODE_Y = 2;
-        private static
-        const float _BILLBOARDMODE_Z = 4;
-        private static
-        const float _BILLBOARDMODE_ALL = 7;
-        public static float BILLBOARDMODE_NONE {
+    public partial class AbstractMesh: Node, IDisposable {
+        private
+        const double _BILLBOARDMODE_NONE = 0;
+        private
+        const double _BILLBOARDMODE_X = 1;
+        private
+        const double _BILLBOARDMODE_Y = 2;
+        private
+        const double _BILLBOARDMODE_Z = 4;
+        private
+        const double _BILLBOARDMODE_ALL = 7;
+        public static double BILLBOARDMODE_NONE {
             get {
                 return AbstractMesh._BILLBOARDMODE_NONE;
             }
         }
-        public static float BILLBOARDMODE_X {
+        public static double BILLBOARDMODE_X {
             get {
                 return AbstractMesh._BILLBOARDMODE_X;
             }
         }
-        public static float BILLBOARDMODE_Y {
+        public static double BILLBOARDMODE_Y {
             get {
                 return AbstractMesh._BILLBOARDMODE_Y;
             }
         }
-        public static float BILLBOARDMODE_Z {
+        public static double BILLBOARDMODE_Z {
             get {
                 return AbstractMesh._BILLBOARDMODE_Z;
             }
         }
-        public static float BILLBOARDMODE_ALL {
+        public static double BILLBOARDMODE_ALL {
             get {
                 return AbstractMesh._BILLBOARDMODE_ALL;
             }
@@ -43,65 +44,65 @@ namespace BABYLON {
         public BABYLON.Vector3 rotation = new BABYLON.Vector3(0, 0, 0);
         public Quaternion rotationQuaternion;
         public BABYLON.Vector3 scaling = new BABYLON.Vector3(1, 1, 1);
-        public null billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_NONE;
-        public float visibility = 1.0;
+        public double billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_NONE;
+        public double visibility = 1.0;
         public bool infiniteDistance = false;
         public bool isVisible = true;
         public bool isPickable = true;
         public bool showBoundingBox = false;
         public bool showSubMeshesBoundingBox = false;
-        public null onDispose = null;
+        public any onDispose = null;
         public bool checkCollisions = false;
         public Skeleton skeleton;
-        public float renderingGroupId = 0;
+        public double renderingGroupId = 0;
         public Material material;
         public bool receiveShadows = false;
         public ActionManager actionManager;
         public bool useOctreeForRenderingSelection = true;
         public bool useOctreeForPicking = true;
         public bool useOctreeForCollisions = true;
-        public float layerMask = 0xFFFFFFFF;
-        public null _physicImpostor = PhysicsEngine.NoImpostor;
-        public float _physicsMass;
-        public float _physicsFriction;
-        public float _physicRestitution;
+        public double layerMask = 0xFFFFFFFF;
+        public double _physicImpostor = PhysicsEngine.NoImpostor;
+        public double _physicsMass;
+        public double _physicsFriction;
+        public double _physicRestitution;
         public BABYLON.Vector3 ellipsoid = new BABYLON.Vector3(0.5, 1, 0.5);
         public BABYLON.Vector3 ellipsoidOffset = new BABYLON.Vector3(0, 0, 0);
         private Collider _collider = new Collider();
         private BABYLON.Vector3 _oldPositionForCollisions = new BABYLON.Vector3(0, 0, 0);
         private BABYLON.Vector3 _diffPositionForCollisions = new BABYLON.Vector3(0, 0, 0);
         private BABYLON.Vector3 _newPositionForCollisions = new BABYLON.Vector3(0, 0, 0);
-        private null _localScaling = BABYLON.Matrix.Zero();
-        private null _localRotation = BABYLON.Matrix.Zero();
-        private null _localTranslation = BABYLON.Matrix.Zero();
-        private null _localBillboard = BABYLON.Matrix.Zero();
-        private null _localPivotScaling = BABYLON.Matrix.Zero();
-        private null _localPivotScalingRotation = BABYLON.Matrix.Zero();
-        private null _localWorld = BABYLON.Matrix.Zero();
-        private null _worldMatrix = BABYLON.Matrix.Zero();
-        private null _rotateYByPI = BABYLON.Matrix.RotationY(Math.PI);
-        private null _absolutePosition = BABYLON.Vector3.Zero();
-        private null _collisionsTransformMatrix = BABYLON.Matrix.Zero();
-        private null _collisionsScalingMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localScaling = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localRotation = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localTranslation = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localBillboard = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localPivotScaling = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localPivotScalingRotation = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _localWorld = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _worldMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _rotateYByPI = BABYLON.Matrix.RotationY(Math.PI);
+        private BABYLON.Vector3 _absolutePosition = BABYLON.Vector3.Zero();
+        private BABYLON.Matrix _collisionsTransformMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _collisionsScalingMatrix = BABYLON.Matrix.Zero();
         public Array < Vector3 > _positions;
         private bool _isDirty = false;
         public BoundingInfo _boundingInfo;
-        private null _pivotMatrix = BABYLON.Matrix.Identity();
+        private BABYLON.Matrix _pivotMatrix = BABYLON.Matrix.Identity();
         public bool _isDisposed = false;
-        public float _renderId = 0;
+        public double _renderId = 0;
         public Array < SubMesh > subMeshes;
         public Octree < SubMesh > _submeshesOctree;
         public Array < AbstractMesh > _intersectionsInProgress = new Array < AbstractMesh > ();
         public AbstractMesh(string name, Scene scene): base(name, scene) {
             scene.meshes.push(this);
         };
-        public virtual float getTotalVertices() {
+        public virtual double getTotalVertices() {
             return 0;
         }
-        public virtual Array < float > getIndices() {
+        public virtual Array < double > getIndices() {
             return null;
         }
-        public virtual Array < float > getVerticesData(string kind) {
+        public virtual Array < double > getVerticesData(string kind) {
             return null;
         }
         public virtual bool isVerticesDataPresent(string kind) {
@@ -114,7 +115,7 @@ namespace BABYLON {
             return this._boundingInfo;
         }
         public virtual void _preActivate() {}
-        public virtual void _activate(float renderId) {
+        public virtual void _activate(double renderId) {
             this._renderId = renderId;
         }
         public virtual Matrix getWorldMatrix() {
@@ -133,7 +134,7 @@ namespace BABYLON {
                 return this._absolutePosition;
             }
         }
-        public virtual void rotate(Vector3 axis, float amount, Space space) {
+        public virtual void rotate(Vector3 axis, double amount, Space space) {
             if (!this.rotationQuaternion) {
                 this.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(this.rotation.y, this.rotation.x, this.rotation.z);
                 this.rotation = BABYLON.Vector3.Zero();
@@ -151,7 +152,7 @@ namespace BABYLON {
                 this.rotationQuaternion = rotationQuaternion.multiply(this.rotationQuaternion);
             }
         }
-        public virtual void translate(Vector3 axis, float distance, Space space) {
+        public virtual void translate(Vector3 axis, double distance, Space space) {
             var displacementVector = axis.scale(distance);
             if (!space || space == BABYLON.Space.LOCAL) {
                 var tempV3 = this.getPositionExpressedInLocalSpace().add(displacementVector);
@@ -171,7 +172,7 @@ namespace BABYLON {
             var absolutePositionX;
             var absolutePositionY;
             var absolutePositionZ;
-            if (absolutePosition.x == undefined) {
+            if (absolutePosition.x == null) {
                 if (arguments.Length < 3) {
                     return;
                 }
@@ -235,7 +236,7 @@ namespace BABYLON {
             this._cache.rotationQuaternion = new BABYLON.Quaternion(0, 0, 0, 0);
         }
         public virtual void markAsDirty(string property) {
-            if (property == "rotatio") {
+            if (property == "rotation") {
                 this.rotationQuaternion = null;
             }
             this._currentRenderId = Number.MAX_VALUE;
@@ -326,14 +327,14 @@ namespace BABYLON {
             this.computeWorldMatrix();
             this.position = BABYLON.Vector3.TransformCoordinates(vector3, this._localWorld);
         }
-        public virtual void lookAt(Vector3 targetPoint, float yawCor, float pitchCor, float rollCor) {
+        public virtual void lookAt(Vector3 targetPoint, double yawCor, double pitchCor, double rollCor) {
             yawCor = yawCor || 0;
             pitchCor = pitchCor || 0;
             rollCor = rollCor || 0;
             var dv = targetPoint.subtract(this.position);
-            var yaw = -Math.atan2(dv.z, dv.x) - Math.PI / 2;
-            var len = Math.sqrt(dv.x * dv.x + dv.z * dv.z);
-            var pitch = Math.atan2(dv.y, len);
+            var yaw = -Math.Atan2(dv.z, dv.x) - Math.PI / 2;
+            var len = Math.Sqrt(dv.x * dv.x + dv.z * dv.z);
+            var pitch = Math.Atan2(dv.y, len);
             this.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(yaw + yawCor, pitch + pitchCor, rollCor);
         }
         public virtual bool isInFrustum(Array < Plane > frustumPlanes) {
@@ -377,25 +378,25 @@ namespace BABYLON {
             this._physicRestitution = options.restitution;
             physicsEngine._registerMesh(this, impostor, options);
         }
-        public virtual float getPhysicsImpostor() {
+        public virtual double getPhysicsImpostor() {
             if (!this._physicImpostor) {
                 return BABYLON.PhysicsEngine.NoImpostor;
             }
             return this._physicImpostor;
         }
-        public virtual float getPhysicsMass() {
+        public virtual double getPhysicsMass() {
             if (!this._physicsMass) {
                 return 0;
             }
             return this._physicsMass;
         }
-        public virtual float getPhysicsFriction() {
+        public virtual double getPhysicsFriction() {
             if (!this._physicsFriction) {
                 return 0;
             }
             return this._physicsFriction;
         }
-        public virtual float getPhysicsRestitution() {
+        public virtual double getPhysicsRestitution() {
             if (!this._physicRestitution) {
                 return 0;
             }
@@ -451,7 +452,7 @@ namespace BABYLON {
             var subMeshes;
             var len;
             if (this._submeshesOctree && this.useOctreeForCollisions) {
-                var radius = collider.velocityWorldLength + Math.max(collider.radius.x, collider.radius.y, collider.radius.z);
+                var radius = collider.velocityWorldLength + Math.Max(collider.radius.x, collider.radius.y, collider.radius.z);
                 var intersections = this._submeshesOctree.intersects(collider.basePointWorld, radius);
                 len = intersections.Length;
                 subMeshes = intersections.data;

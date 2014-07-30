@@ -2,20 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Animatable {
-        private float _localDelayOffset;
+    public partial class Animatable {
+        private double _localDelayOffset;
         private Array < Animation > _animations = new Array < Animation > ();
         private bool _paused = false;
         private Scene _scene;
         public bool animationStarted = false;
         public dynamic target;
-        public float fromFrame;
-        public float toFrame;
+        public double fromFrame;
+        public double toFrame;
         public bool loopAnimation;
-        public float speedRatio;
+        public double speedRatio;
         public dynamic onAnimationEnd;
-        public Animatable(Scene scene, object target, float fromFrame = 0, float toFrame = 100, bool loopAnimation = false, float speedRatio = 1.0, object onAnimationEnd = null, object animations = null) {
+        public Animatable(Scene scene, object target, double fromFrame = 0, double toFrame = 100, bool loopAnimation = false, double speedRatio = 1.0, object onAnimationEnd = null, object animations = null) {
             if (animations) {
                 this.appendAnimations(target, animations);
             }
@@ -53,7 +54,7 @@ namespace BABYLON {
                 this.onAnimationEnd();
             }
         }
-        public virtual bool _animate(float delay) {
+        public virtual bool _animate(double delay) {
             if (this._paused) {
                 return true;
             }

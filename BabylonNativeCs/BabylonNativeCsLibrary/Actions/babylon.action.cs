@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Action {
-        public float trigger;
+    public partial class Action {
+        public double trigger;
         public ActionManager _actionManager;
         private Action _nextActiveAction;
         private Action _child;

@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Node {
+    public partial class Node {
         public Node parent;
         public string name;
         public string id;
-        public string state = "\"";
+        public string state = "";
         public Array < Animation > animations = new Array < Animation > ();
         public System.Action < Node > onReady;
-        private float _childrenFlag = -1;
+        private double _childrenFlag = -1;
         private bool _isEnabled = true;
         private bool _isReady = true;
-        public float _currentRenderId = -1;
+        public double _currentRenderId = -1;
         private Scene _scene;
         public dynamic _cache;
         public Node(string name, object scene) {
@@ -33,7 +34,7 @@ namespace BABYLON {
         }
         public virtual void _initCache() {
             this._cache = new {};
-            this._cache.parent = undefined;
+            this._cache.parent = null;
         }
         public virtual void updateCache(bool force = false) {
             if (!force && this.isSynchronized())

@@ -2,75 +2,76 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class ActionEvent {
+    public partial class ActionEvent {
         public AbstractMesh source;
-        public float pointerX;
-        public float pointerY;
+        public double pointerX;
+        public double pointerY;
         public AbstractMesh meshUnderPointer;
-        public ActionEvent(AbstractMesh source, float pointerX, float pointerY, AbstractMesh meshUnderPointer) {}
+        public ActionEvent(AbstractMesh source, double pointerX, double pointerY, AbstractMesh meshUnderPointer) {}
         public static ActionEvent CreateNew(AbstractMesh source) {
             var scene = source.getScene();
             return new ActionEvent(source, scene.pointerX, scene.pointerY, scene.meshUnderPointer);
         }
     }
-    public class ActionManager {
-        private static float _NothingTrigger = 0;
-        private static float _OnPickTrigger = 1;
-        private static float _OnLeftPickTrigger = 2;
-        private static float _OnRightPickTrigger = 3;
-        private static float _OnCenterPickTrigger = 4;
-        private static float _OnPointerOverTrigger = 5;
-        private static float _OnPointerOutTrigger = 6;
-        private static float _OnEveryFrameTrigger = 7;
-        private static float _OnIntersectionEnterTrigger = 8;
-        private static float _OnIntersectionExitTrigger = 9;
-        public static float NothingTrigger {
+    public partial class ActionManager {
+        private static double _NothingTrigger = 0;
+        private static double _OnPickTrigger = 1;
+        private static double _OnLeftPickTrigger = 2;
+        private static double _OnRightPickTrigger = 3;
+        private static double _OnCenterPickTrigger = 4;
+        private static double _OnPointerOverTrigger = 5;
+        private static double _OnPointerOutTrigger = 6;
+        private static double _OnEveryFrameTrigger = 7;
+        private static double _OnIntersectionEnterTrigger = 8;
+        private static double _OnIntersectionExitTrigger = 9;
+        public static double NothingTrigger {
             get {
                 return ActionManager._NothingTrigger;
             }
         }
-        public static float OnPickTrigger {
+        public static double OnPickTrigger {
             get {
                 return ActionManager._OnPickTrigger;
             }
         }
-        public static float OnLeftPickTrigger {
+        public static double OnLeftPickTrigger {
             get {
                 return ActionManager._OnLeftPickTrigger;
             }
         }
-        public static float OnRightPickTrigger {
+        public static double OnRightPickTrigger {
             get {
                 return ActionManager._OnRightPickTrigger;
             }
         }
-        public static float OnCenterPickTrigger {
+        public static double OnCenterPickTrigger {
             get {
                 return ActionManager._OnCenterPickTrigger;
             }
         }
-        public static float OnPointerOverTrigger {
+        public static double OnPointerOverTrigger {
             get {
                 return ActionManager._OnPointerOverTrigger;
             }
         }
-        public static float OnPointerOutTrigger {
+        public static double OnPointerOutTrigger {
             get {
                 return ActionManager._OnPointerOutTrigger;
             }
         }
-        public static float OnEveryFrameTrigger {
+        public static double OnEveryFrameTrigger {
             get {
                 return ActionManager._OnEveryFrameTrigger;
             }
         }
-        public static float OnIntersectionEnterTrigger {
+        public static double OnIntersectionEnterTrigger {
             get {
                 return ActionManager._OnIntersectionEnterTrigger;
             }
         }
-        public static float OnIntersectionExitTrigger {
+        public static double OnIntersectionExitTrigger {
             get {
                 return ActionManager._OnIntersectionExitTrigger;
             }
@@ -90,7 +91,7 @@ namespace BABYLON {
         public virtual Scene getScene() {
             return this._scene;
         }
-        public virtual bool hasSpecificTriggers(Array < float > triggers) {
+        public virtual bool hasSpecificTriggers(Array < double > triggers) {
             for (var index = 0; index < this.actions.Length; index++) {
                 var action = this.actions[index];
                 if (triggers.indexOf(action.trigger) > -1) {
@@ -124,7 +125,7 @@ namespace BABYLON {
         public virtual Action registerAction(Action action) {
             if (action.trigger == ActionManager.OnEveryFrameTrigger) {
                 if (this.getScene().actionManager != this) {
-                    Tools.Warn("OnEveryFrameTrigger can only be used with scene.actionManage");
+                    Tools.Warn("OnEveryFrameTrigger can only be used with scene.actionManager");
                     return null;
                 }
             }
@@ -133,7 +134,7 @@ namespace BABYLON {
             action._prepare();
             return action;
         }
-        public virtual void processTrigger(float trigger, ActionEvent evt) {
+        public virtual void processTrigger(double trigger, ActionEvent evt) {
             for (var index = 0; index < this.actions.Length; index++) {
                 var action = this.actions[index];
                 if (action.trigger == trigger) {
@@ -142,14 +143,14 @@ namespace BABYLON {
             }
         }
         public virtual object _getEffectiveTarget(object target, string propertyPath) {
-            var properties = propertyPath.split("");
+            var properties = propertyPath.Split(".");
             for (var index = 0; index < properties.Length - 1; index++) {
                 target = target[properties[index]];
             }
             return target;
         }
         public virtual string _getProperty(string propertyPath) {
-            var properties = propertyPath.split("");
+            var properties = propertyPath.Split(".");
             return properties[properties.Length - 1];
         }
     }

@@ -2,22 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class RenderTargetTexture: Texture {
+    public partial class RenderTargetTexture: Texture {
         public Array < AbstractMesh > renderList = new Array < AbstractMesh > ();
         public bool renderParticles = true;
         public bool renderSprites = false;
-        public null coordinatesMode = BABYLON.Texture.PROJECTION_MODE;
+        public double coordinatesMode = BABYLON.Texture.PROJECTION_MODE;
         public System.Action onBeforeRender;
         public System.Action onAfterRender;
         public System.Action < SmartArray < SubMesh > , SmartArray < SubMesh > , SmartArray < SubMesh > , System.Action > customRenderFunction;
-        private float _size;
+        private double _size;
         public bool _generateMipMaps;
         private RenderingManager _renderingManager;
         public Array < string > _waitingRenderList;
         private bool _doNotChangeAspectRatio;
-        private float _currentRefreshId = -1;
-        private float _refreshRate = 1;
+        private double _currentRefreshId = -1;
+        private double _refreshRate = 1;
         public RenderTargetTexture(string name, object size, Scene scene, bool generateMipMaps = false, bool doNotChangeAspectRatio = true): base(null, scene, !generateMipMaps) {
             this.name = name;
             this.isRenderTarget = true;
@@ -30,7 +31,7 @@ namespace BABYLON {
         public virtual void resetRefreshCounter() {
             this._currentRefreshId = -1;
         }
-        public virtual float refreshRate {
+        public virtual double refreshRate {
             get {
                 return this._refreshRate;
             }
@@ -51,7 +52,7 @@ namespace BABYLON {
             this._currentRefreshId++;
             return false;
         }
-        public virtual float getRenderSize() {
+        public virtual double getRenderSize() {
             return this._size;
         }
         public virtual void resize(object size, object generateMipMaps) {

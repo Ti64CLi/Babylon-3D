@@ -2,30 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class ShadowGenerator {
-        private static
-        const float _FILTER_NONE = 0;
-        private static
-        const float _FILTER_VARIANCESHADOWMAP = 1;
-        private static
-        const float _FILTER_POISSONSAMPLING = 2;
-        public static float FILTER_NONE {
+    public partial class ShadowGenerator {
+        private
+        const double _FILTER_NONE = 0;
+        private
+        const double _FILTER_VARIANCESHADOWMAP = 1;
+        private
+        const double _FILTER_POISSONSAMPLING = 2;
+        public static double FILTER_NONE {
             get {
                 return ShadowGenerator._FILTER_NONE;
             }
         }
-        public static float FILTER_VARIANCESHADOWMAP {
+        public static double FILTER_VARIANCESHADOWMAP {
             get {
                 return ShadowGenerator._FILTER_VARIANCESHADOWMAP;
             }
         }
-        public static float FILTER_POISSONSAMPLING {
+        public static double FILTER_POISSONSAMPLING {
             get {
                 return ShadowGenerator._FILTER_POISSONSAMPLING;
             }
         }
-        public null filter = ShadowGenerator.FILTER_VARIANCESHADOWMAP;
+        public double filter = ShadowGenerator.FILTER_VARIANCESHADOWMAP;
         public virtual bool useVarianceShadowMap {
             get {
                 return this.filter == ShadowGenerator.FILTER_VARIANCESHADOWMAP;
@@ -45,21 +46,21 @@ namespace BABYLON {
         private DirectionalLight _light;
         private Scene _scene;
         private RenderTargetTexture _shadowMap;
-        private float _darkness = 0;
+        private double _darkness = 0;
         private bool _transparencyShadow = false;
         private Effect _effect;
-        private null _viewMatrix = BABYLON.Matrix.Zero();
-        private null _projectionMatrix = BABYLON.Matrix.Zero();
-        private null _transformMatrix = BABYLON.Matrix.Zero();
-        private null _worldViewProjection = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _viewMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _projectionMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _transformMatrix = BABYLON.Matrix.Zero();
+        private BABYLON.Matrix _worldViewProjection = BABYLON.Matrix.Zero();
         private Vector3 _cachedPosition;
         private Vector3 _cachedDirection;
         private string _cachedDefines;
-        public ShadowGenerator(float mapSize, DirectionalLight light) {
+        public ShadowGenerator(double mapSize, DirectionalLight light) {
             this._light = light;
             this._scene = light.getScene();
             light._shadowGenerator = this;
-            this._shadowMap = new BABYLON.RenderTargetTexture(light.name + "_shadowMa", mapSize, this._scene, false);
+            this._shadowMap = new BABYLON.RenderTargetTexture(light.name + "_shadowMap", mapSize, this._scene, false);
             this._shadowMap.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._shadowMap.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._shadowMap.renderParticles = false;
@@ -77,27 +78,27 @@ namespace BABYLON {
                     engine.enableEffect(this._effect);
                     mesh._bind(subMesh, this._effect, false);
                     var material = subMesh.getMaterial();
-                    this._effect.setMatrix("viewProjectio", this.getTransformMatrix());
+                    this._effect.setMatrix("viewProjection", this.getTransformMatrix());
                     if (material && material.needAlphaTesting()) {
                         var alphaTexture = material.getAlphaTestTexture();
-                        this._effect.setTexture("diffuseSample", alphaTexture);
-                        this._effect.setMatrix("diffuseMatri", alphaTexture.getTextureMatrix());
+                        this._effect.setTexture("diffuseSampler", alphaTexture);
+                        this._effect.setMatrix("diffuseMatrix", alphaTexture.getTextureMatrix());
                     }
                     var useBones = mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind);
                     if (useBones) {
-                        this._effect.setMatrices("mBone", mesh.skeleton.getTransformMatrices());
+                        this._effect.setMatrices("mBones", mesh.skeleton.getTransformMatrices());
                     }
                     if (hardwareInstancedRendering) {
                         mesh._renderWithInstances(subMesh, false, batch, this._effect, engine);
                     } else {
                         if (batch.renderSelf[subMesh._id]) {
-                            this._effect.setMatrix("worl", mesh.getWorldMatrix());
+                            this._effect.setMatrix("world", mesh.getWorldMatrix());
                             mesh._draw(subMesh, true);
                         }
                         if (batch.visibleInstances[subMesh._id]) {
                             for (var instanceIndex = 0; instanceIndex < batch.visibleInstances[subMesh._id].Length; instanceIndex++) {
                                 var instance = batch.visibleInstances[subMesh._id][instanceIndex];
-                                this._effect.setMatrix("worl", instance.getWorldMatrix());
+                                this._effect.setMatrix("world", instance.getWorldMatrix());
                                 mesh._draw(subMesh, true);
                             }
                         }
@@ -124,39 +125,39 @@ namespace BABYLON {
         public virtual bool isReady(SubMesh subMesh, bool useInstances) {
             var defines = new Array < object > ();
             if (this.useVarianceShadowMap) {
-                defines.push("#define VS");
+                defines.push("#define VSM");
             }
             var attribs = new Array < object > (BABYLON.VertexBuffer.PositionKind);
             var mesh = subMesh.getMesh();
             var material = subMesh.getMaterial();
             if (material && material.needAlphaTesting()) {
-                defines.push("#define ALPHATES");
+                defines.push("#define ALPHATEST");
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBuffer.UVKind)) {
                     attribs.push(BABYLON.VertexBuffer.UVKind);
-                    defines.push("#define UV");
+                    defines.push("#define UV1");
                 }
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBuffer.UV2Kind)) {
                     attribs.push(BABYLON.VertexBuffer.UV2Kind);
-                    defines.push("#define UV");
+                    defines.push("#define UV2");
                 }
             }
             if (mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind)) {
                 attribs.push(BABYLON.VertexBuffer.MatricesIndicesKind);
                 attribs.push(BABYLON.VertexBuffer.MatricesWeightsKind);
-                defines.push("#define BONE");
-                defines.push("#define BonesPerMesh" + (mesh.skeleton.bones.Length + 1));
+                defines.push("#define BONES");
+                defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
             }
             if (useInstances) {
-                defines.push("#define INSTANCE");
-                attribs.push("world");
-                attribs.push("world");
-                attribs.push("world");
-                attribs.push("world");
+                defines.push("#define INSTANCES");
+                attribs.push("world0");
+                attribs.push("world1");
+                attribs.push("world2");
+                attribs.push("world3");
             }
-            var join = defines.join("\\");
+            var join = defines.join("\\n");
             if (this._cachedDefines != join) {
                 this._cachedDefines = join;
-                this._effect = this._scene.getEngine().createEffect("shadowMa", attribs, new Array < object > ("worl", "mBone", "viewProjectio", "diffuseMatri"), new Array < object > ("diffuseSample"), join);
+                this._effect = this._scene.getEngine().createEffect("shadowMap", attribs, new Array < object > ("world", "mBones", "viewProjection", "diffuseMatrix"), new Array < object > ("diffuseSampler"), join);
             }
             return this._effect.isReady();
         }
@@ -182,10 +183,10 @@ namespace BABYLON {
             }
             return this._transformMatrix;
         }
-        public virtual float getDarkness() {
+        public virtual double getDarkness() {
             return this._darkness;
         }
-        public virtual void setDarkness(float darkness) {
+        public virtual void setDarkness(double darkness) {
             if (darkness >= 1.0)
                 this._darkness = 1.0;
             else

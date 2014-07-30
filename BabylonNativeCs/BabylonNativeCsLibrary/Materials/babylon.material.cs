@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Material {
+    public partial class Material {
         public string id;
         public bool checkReadyOnEveryCall = true;
         public bool checkReadyOnlyOnce = false;
-        public string state = "\"";
-        public float alpha = 1.0;
+        public string state = "";
+        public double alpha = 1.0;
         public bool wireframe = false;
         public bool backFaceCulling = true;
         public System.Action < Effect > onCompiled;
-        public System.Action < Effect, string > onException;
+        public System.Action < Effect, string > onError;
         public System.Action onDispose;
         public System.Func getRenderTargetTextures;
         public Effect _effect;
@@ -44,7 +45,7 @@ namespace BABYLON {
         public virtual BaseTexture getAlphaTestTexture() {
             return null;
         }
-        public virtual void trackCreation(System.Action < Effect > onCompiled, System.Action < Effect, string > onException) {}
+        public virtual void trackCreation(System.Action < Effect > onCompiled, System.Action < Effect, string > onError) {}
         public virtual void _preBind() {
             var engine = this._scene.getEngine();
             engine.enableEffect(this._effect);

@@ -2,77 +2,78 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class EngineCapabilities {
-        public float maxTexturesImageUnits;
-        public float maxTextureSize;
-        public float maxCubemapTextureSize;
-        public float maxRenderTextureSize;
+    public partial class EngineCapabilities {
+        public double maxTexturesImageUnits;
+        public double maxTextureSize;
+        public double maxCubemapTextureSize;
+        public double maxRenderTextureSize;
         public bool standardDerivatives;
         public dynamic s3tc;
         public bool textureFloat;
         public dynamic textureAnisotropicFilterExtension;
-        public float maxAnisotropy;
+        public double maxAnisotropy;
         public dynamic instancedArrays;
     }
-    public class Engine {
-        private static
-        const float _ALPHA_DISABLE = 0;
-        private static
-        const float _ALPHA_ADD = 1;
-        private static
-        const float _ALPHA_COMBINE = 2;
-        private static
-        const float _DELAYLOADSTATE_NONE = 0;
-        private static
-        const float _DELAYLOADSTATE_LOADED = 1;
-        private static
-        const float _DELAYLOADSTATE_LOADING = 2;
-        private static
-        const float _DELAYLOADSTATE_NOTLOADED = 4;
-        public static float ALPHA_DISABLE {
+    public partial class Engine {
+        private
+        const double _ALPHA_DISABLE = 0;
+        private
+        const double _ALPHA_ADD = 1;
+        private
+        const double _ALPHA_COMBINE = 2;
+        private
+        const double _DELAYLOADSTATE_NONE = 0;
+        private
+        const double _DELAYLOADSTATE_LOADED = 1;
+        private
+        const double _DELAYLOADSTATE_LOADING = 2;
+        private
+        const double _DELAYLOADSTATE_NOTLOADED = 4;
+        public static double ALPHA_DISABLE {
             get {
                 return Engine._ALPHA_DISABLE;
             }
         }
-        public static float ALPHA_ADD {
+        public static double ALPHA_ADD {
             get {
                 return Engine._ALPHA_ADD;
             }
         }
-        public static float ALPHA_COMBINE {
+        public static double ALPHA_COMBINE {
             get {
                 return Engine._ALPHA_COMBINE;
             }
         }
-        public static float DELAYLOADSTATE_NONE {
+        public static double DELAYLOADSTATE_NONE {
             get {
                 return Engine._DELAYLOADSTATE_NONE;
             }
         }
-        public static float DELAYLOADSTATE_LOADED {
+        public static double DELAYLOADSTATE_LOADED {
             get {
                 return Engine._DELAYLOADSTATE_LOADED;
             }
         }
-        public static float DELAYLOADSTATE_LOADING {
+        public static double DELAYLOADSTATE_LOADING {
             get {
                 return Engine._DELAYLOADSTATE_LOADING;
             }
         }
-        public static float DELAYLOADSTATE_NOTLOADED {
+        public static double DELAYLOADSTATE_NOTLOADED {
             get {
                 return Engine._DELAYLOADSTATE_NOTLOADED;
             }
         }
         public static string Version {
             get {
-                return "1.13.";
+                return "1.13.0";
             }
         }
-        public static float Epsilon = 0.001;
-        public static float CollisionsEpsilon = 0.001;
-        public static string ShadersRepository = "Babylon/Shaders";
+        public static double Epsilon = 0.001;
+        public static double CollisionsEpsilon = 0.001;
+        public static string ShadersRepository = "Babylon/Shaders/";
         public bool isFullscreen = false;
         public bool isPointerLock = false;
         public bool forceWireframe = false;
@@ -86,7 +87,7 @@ namespace BABYLON {
         private System.Action _onFocus;
         private System.Action _onFullscreenChange;
         private System.Action _onPointerLockChange;
-        private float _hardwareScalingLevel;
+        private double _hardwareScalingLevel;
         private EngineCapabilities _caps;
         private bool _pointerLockRequested;
         private bool _alphaTest;
@@ -113,12 +114,12 @@ namespace BABYLON {
             options = options || new {};
             options.antialias = antialias;
             try {
-                this._gl = canvas.getContext("webg", options) || canvas.getContext("experimental-webg", options);
+                this._gl = canvas.getContext("webgl", options) || canvas.getContext("experimental-webgl", options);
             } catch (Exception e) {
-                throw new Exception("WebGL not supporte");
+                throw new Error("WebGL not supported");
             }
             if (!this._gl) {
-                throw new Exception("WebGL not supporte");
+                throw new Error("WebGL not supported");
             }
             this._onBlur = () => {
                 this._windowIsBackground = true;
@@ -126,10 +127,10 @@ namespace BABYLON {
             this._onFocus = () => {
                 this._windowIsBackground = false;
             };
-            window.addEventListener("blu", this._onBlur);
-            window.addEventListener("focu", this._onFocus);
-            this._workingCanvas = document.createElement("canva");
-            this._workingContext = this._workingCanvas.getContext("2");
+            window.addEventListener("blur", this._onBlur);
+            window.addEventListener("focus", this._onFocus);
+            this._workingCanvas = document.createElement("canvas");
+            this._workingContext = this._workingCanvas.getContext("2d");
             this._hardwareScalingLevel = 1.0 / (window.devicePixelRatio || 1.0);
             this.resize();
             this._caps = new EngineCapabilities();
@@ -137,26 +138,26 @@ namespace BABYLON {
             this._caps.maxTextureSize = this._gl.getParameter(this._gl.MAX_TEXTURE_SIZE);
             this._caps.maxCubemapTextureSize = this._gl.getParameter(this._gl.MAX_CUBE_MAP_TEXTURE_SIZE);
             this._caps.maxRenderTextureSize = this._gl.getParameter(this._gl.MAX_RENDERBUFFER_SIZE);
-            this._caps.standardDerivatives = (this._gl.getExtension("OES_standard_derivative") != null);
-            this._caps.s3tc = this._gl.getExtension("WEBGL_compressed_texture_s3t");
-            this._caps.textureFloat = (this._gl.getExtension("OES_texture_floa") != null);
-            this._caps.textureAnisotropicFilterExtension = this._gl.getExtension("EXT_texture_filter_anisotropi") || this._gl.getExtension("WEBKIT_EXT_texture_filter_anisotropi") || this._gl.getExtension("MOZ_EXT_texture_filter_anisotropi");
+            this._caps.standardDerivatives = (this._gl.getExtension("OES_standard_derivatives") != null);
+            this._caps.s3tc = this._gl.getExtension("WEBGL_compressed_texture_s3tc");
+            this._caps.textureFloat = (this._gl.getExtension("OES_texture_float") != null);
+            this._caps.textureAnisotropicFilterExtension = this._gl.getExtension("EXT_texture_filter_anisotropic") || this._gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") || this._gl.getExtension("MOZ_EXT_texture_filter_anisotropic");
             this._caps.maxAnisotropy = (this._caps.textureAnisotropicFilterExtension) ? this._gl.getParameter(this._caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
-            this._caps.instancedArrays = this._gl.getExtension("ANGLE_instanced_array");
+            this._caps.instancedArrays = this._gl.getExtension("ANGLE_instanced_arrays");
             this.setDepthBuffer(true);
             this.setDepthFunctionToLessOrEqual();
             this.setDepthWrite(true);
             this._onFullscreenChange = () => {
-                if (document.fullscreen != undefined) {
+                if (document.fullscreen != null) {
                     this.isFullscreen = document.fullscreen;
                 } else
-                if (document.mozFullScreen != undefined) {
+                if (document.mozFullScreen != null) {
                     this.isFullscreen = document.mozFullScreen;
                 } else
-                if (document.webkitIsFullScreen != undefined) {
+                if (document.webkitIsFullScreen != null) {
                     this.isFullscreen = document.webkitIsFullScreen;
                 } else
-                if (document.msIsFullScreen != undefined) {
+                if (document.msIsFullScreen != null) {
                     this.isFullscreen = document.msIsFullScreen;
                 }
                 if (this.isFullscreen && this._pointerLockRequested) {
@@ -166,28 +167,28 @@ namespace BABYLON {
                     }
                 }
             };
-            document.addEventListener("fullscreenchang", this._onFullscreenChange, false);
-            document.addEventListener("mozfullscreenchang", this._onFullscreenChange, false);
-            document.addEventListener("webkitfullscreenchang", this._onFullscreenChange, false);
-            document.addEventListener("msfullscreenchang", this._onFullscreenChange, false);
+            document.addEventListener("fullscreenchange", this._onFullscreenChange, false);
+            document.addEventListener("mozfullscreenchange", this._onFullscreenChange, false);
+            document.addEventListener("webkitfullscreenchange", this._onFullscreenChange, false);
+            document.addEventListener("msfullscreenchange", this._onFullscreenChange, false);
             this._onPointerLockChange = () => {
                 this.isPointerLock = (document.mozPointerLockElement == canvas || document.webkitPointerLockElement == canvas || document.msPointerLockElement == canvas || document.pointerLockElement == canvas);
             };
-            document.addEventListener("pointerlockchang", this._onPointerLockChange, false);
-            document.addEventListener("mspointerlockchang", this._onPointerLockChange, false);
-            document.addEventListener("mozpointerlockchang", this._onPointerLockChange, false);
-            document.addEventListener("webkitpointerlockchang", this._onPointerLockChange, false);
+            document.addEventListener("pointerlockchange", this._onPointerLockChange, false);
+            document.addEventListener("mspointerlockchange", this._onPointerLockChange, false);
+            document.addEventListener("mozpointerlockchange", this._onPointerLockChange, false);
+            document.addEventListener("webkitpointerlockchange", this._onPointerLockChange, false);
         }
         void compileShader(WebGLRenderingContext gl, string source, string type, string defines) {
-            var shader = gl.createShader((type == "verte") ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, ((defines) ? defines + "\\" : "\"") + source);
+            var shader = gl.createShader((type == "vertex") ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
+            gl.shaderSource(shader, ((defines) ? defines + "\\n" : "") + source);
             gl.compileShader(shader);
             if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                throw new Exception(gl.getShaderInfoLog(shader));
+                throw new Error(gl.getShaderInfoLog(shader));
             }
             return shader;
         };
-        void getSamplingParameters(float samplingMode, bool generateMipMaps, WebGLRenderingContext gl) {
+        void getSamplingParameters(double samplingMode, bool generateMipMaps, WebGLRenderingContext gl) {
             var magFilter = gl.NEAREST;
             var minFilter = gl.NEAREST;
             if (samplingMode == BABYLON.Texture.BILINEAR_SAMPLINGMODE) {
@@ -216,22 +217,22 @@ namespace BABYLON {
             }
             return new {};
         };
-        void getExponantOfTwo(float value, float max) {
+        void getExponantOfTwo(double value, double Max) {
             var count = 1;
             do {
                 count *= 2;
             }
             while (count < value);
-            if (count > max)
-                count = max;
+            if (count > Max)
+                count = Max;
             return count;
         };
-        void prepareWebGLTexture(WebGLTexture texture, WebGLRenderingContext gl, Scene scene, float width, float height, bool invertY, bool noMipmap, bool isCompressed, System.Action < float, float > processFunction, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE) {
+        void prepareWebGLTexture(WebGLTexture texture, WebGLRenderingContext gl, Scene scene, double width, double height, bool invertY, bool noMipmap, bool isCompressed, System.Action < double, double > processFunction, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE) {
             var engine = scene.getEngine();
             var potWidth = getExponantOfTwo(width, engine.getCaps().maxTextureSize);
             var potHeight = getExponantOfTwo(height, engine.getCaps().maxTextureSize);
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, (invertY == undefined) ? 1 : ((invertY) ? 1 : 0));
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, (invertY == null) ? 1 : ((invertY) ? 1 : 0));
             processFunction(potWidth, potHeight);
             var filters = getSamplingParameters(samplingMode, !noMipmap, gl);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
@@ -248,7 +249,7 @@ namespace BABYLON {
             texture.isReady = true;
             scene._removePendingData(texture);
         };
-        void cascadeLoad(string rootUrl, float index, Array < HTMLImageElement > loadedImages, object scene, System.Action < Array < HTMLImageElement > > onfinish, Array < string > extensions) {
+        void cascadeLoad(string rootUrl, double index, Array < HTMLImageElement > loadedImages, object scene, System.Action < Array < HTMLImageElement > > onfinish, Array < string > extensions) {
             var img;
             var onload = () => {
                 loadedImages.push(img);
@@ -265,17 +266,17 @@ namespace BABYLON {
             img = BABYLON.Tools.LoadImage(rootUrl + extensions[index], onload, onerror, scene.database);
             scene._addPendingData(img);
         };
-        public virtual float getAspectRatio(Camera camera) {
+        public virtual double getAspectRatio(Camera camera) {
             var viewport = camera.viewport;
             return (this.getRenderWidth() * viewport.width) / (this.getRenderHeight() * viewport.height);
         }
-        public virtual float getRenderWidth() {
+        public virtual double getRenderWidth() {
             if (this._currentRenderTarget) {
                 return this._currentRenderTarget._width;
             }
             return this._renderingCanvas.width;
         }
-        public virtual float getRenderHeight() {
+        public virtual double getRenderHeight() {
             if (this._currentRenderTarget) {
                 return this._currentRenderTarget._height;
             }
@@ -287,11 +288,11 @@ namespace BABYLON {
         public virtual ClientRect getRenderingCanvasClientRect() {
             return this._renderingCanvas.getBoundingClientRect();
         }
-        public virtual void setHardwareScalingLevel(float level) {
+        public virtual void setHardwareScalingLevel(double level) {
             this._hardwareScalingLevel = level;
             this.resize();
         }
-        public virtual float getHardwareScalingLevel() {
+        public virtual double getHardwareScalingLevel() {
             return this._hardwareScalingLevel;
         }
         public virtual Array < WebGLTexture > getLoadedTexturesCache() {
@@ -350,7 +351,7 @@ namespace BABYLON {
             }
         }
         public virtual void clear(object color, bool backBuffer, bool depthStencil) {
-            this._gl.clearColor(color.r, color.g, color.b, (color.a != undefined) ? color.a : 1.0);
+            this._gl.clearColor(color.r, color.g, color.b, (color.a != null) ? color.a : 1.0);
             if (this._depthMask) {
                 this._gl.clearDepth(1.0);
             }
@@ -361,7 +362,7 @@ namespace BABYLON {
                 mode |= this._gl.DEPTH_BUFFER_BIT;
             this._gl.clear(mode);
         }
-        public virtual void setViewport(Viewport viewport, float requiredWidth = 0.0, float requiredHeight = 0.0) {
+        public virtual void setViewport(Viewport viewport, double requiredWidth = 0.0, double requiredHeight = 0.0) {
             var width = requiredWidth || this._renderingCanvas.width;
             var height = requiredHeight || this._renderingCanvas.height;
             var x = viewport.x || 0;
@@ -369,7 +370,7 @@ namespace BABYLON {
             this._cachedViewport = viewport;
             this._gl.viewport(x * width, y * height, width * viewport.width, height * viewport.height);
         }
-        public virtual void setDirectViewport(float x, float y, float width, float height) {
+        public virtual void setDirectViewport(double x, double y, double width, double height) {
             this._cachedViewport = null;
             this._gl.viewport(x, y, width, height);
         }
@@ -409,11 +410,11 @@ namespace BABYLON {
             this.setViewport(this._cachedViewport);
             this.wipeCaches();
         }
-        private virtual void _resetVertexBufferBinding() {
+        private void _resetVertexBufferBinding() {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, null);
             this._cachedVertexBuffers = null;
         }
-        public virtual WebGLBuffer createVertexBuffer(Array < float > vertices) {
+        public virtual WebGLBuffer createVertexBuffer(Array < double > vertices) {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);
             this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(vertices), this._gl.STATIC_DRAW);
@@ -421,7 +422,7 @@ namespace BABYLON {
             vbo.references = 1;
             return vbo;
         }
-        public virtual WebGLBuffer createDynamicVertexBuffer(float capacity) {
+        public virtual WebGLBuffer createDynamicVertexBuffer(double capacity) {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);
             this._gl.bufferData(this._gl.ARRAY_BUFFER, capacity, this._gl.DYNAMIC_DRAW);
@@ -429,20 +430,20 @@ namespace BABYLON {
             vbo.references = 1;
             return vbo;
         }
-        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, object vertices, float Length = 0.0) {
+        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, object vertices, double Length = 0.0) {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
-            if (verticesisFloat32Array) {
+            if (vertices is Float32Array) {
                 this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, vertices);
             } else {
                 this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, new Float32Array(vertices));
             }
             this._resetVertexBufferBinding();
         }
-        private virtual void _resetIndexBufferBinding() {
+        private void _resetIndexBufferBinding() {
             this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, null);
             this._cachedIndexBuffer = null;
         }
-        public virtual WebGLBuffer createIndexBuffer(Array < float > indices) {
+        public virtual WebGLBuffer createIndexBuffer(Array < double > indices) {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, vbo);
             this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this._gl.STATIC_DRAW);
@@ -450,7 +451,7 @@ namespace BABYLON {
             vbo.references = 1;
             return vbo;
         }
-        public virtual void bindBuffers(WebGLBuffer vertexBuffer, WebGLBuffer indexBuffer, Array < float > vertexDeclaration, float vertexStrideSize, Effect effect) {
+        public virtual void bindBuffers(WebGLBuffer vertexBuffer, WebGLBuffer indexBuffer, Array < double > vertexDeclaration, double vertexStrideSize, Effect effect) {
             if (this._cachedVertexBuffers != vertexBuffer || this._cachedEffectForVertexBuffers != effect) {
                 this._cachedVertexBuffers = vertexBuffer;
                 this._cachedEffectForVertexBuffers = effect;
@@ -500,7 +501,7 @@ namespace BABYLON {
             }
             return false;
         }
-        public virtual WebGLBuffer createInstancesBuffer(float capacity) {
+        public virtual WebGLBuffer createInstancesBuffer(double capacity) {
             var buffer = this._gl.createBuffer();
             buffer.capacity = capacity;
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, buffer);
@@ -510,7 +511,7 @@ namespace BABYLON {
         public virtual void deleteInstancesBuffer(WebGLBuffer buffer) {
             this._gl.deleteBuffer(buffer);
         }
-        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, Float32Array data, Array < float > offsetLocations) {
+        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, Float32Array data, Array < double > offsetLocations) {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
             this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, data);
             for (var index = 0; index < 4; index++) {
@@ -520,7 +521,7 @@ namespace BABYLON {
                 this._caps.instancedArrays.vertexAttribDivisorANGLE(offsetLocation, 1);
             }
         }
-        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array < float > offsetLocations) {
+        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array < double > offsetLocations) {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
             for (var index = 0; index < 4; index++) {
                 var offsetLocation = offsetLocations[index];
@@ -528,7 +529,7 @@ namespace BABYLON {
                 this._caps.instancedArrays.vertexAttribDivisorANGLE(offsetLocation, 0);
             }
         }
-        public virtual void draw(bool useTriangles, float indexStart, float indexCount, float instancesCount = 0.0) {
+        public virtual void draw(bool useTriangles, double indexStart, double indexCount, double instancesCount = 0.0) {
             if (instancesCount) {
                 this._caps.instancedArrays.drawElementsInstancedANGLE((useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, indexStart * 2, instancesCount);
                 return;
@@ -543,21 +544,21 @@ namespace BABYLON {
                 }
             }
         }
-        public virtual Effect createEffect(object baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, string defines, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onException = null) {
+        public virtual Effect createEffect(object baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, string defines, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onError = null) {
             var vertex = baseName.vertexElement || baseName.vertex || baseName;
             var fragment = baseName.fragmentElement || baseName.fragment || baseName;
-            var name = vertex + "" + fragment + "" + defines;
+            var name = vertex + "+" + fragment + "@" + defines;
             if (this._compiledEffects[name]) {
                 return this._compiledEffects[name];
             }
-            var effect = new BABYLON.Effect(baseName, attributesNames, uniformsNames, samplers, this, defines, optionalDefines, onCompiled, onException);
+            var effect = new BABYLON.Effect(baseName, attributesNames, uniformsNames, samplers, this, defines, optionalDefines, onCompiled, onError);
             effect._key = name;
             this._compiledEffects[name] = effect;
             return effect;
         }
         public virtual WebGLProgram createShaderProgram(string vertexCode, string fragmentCode, string defines) {
-            var vertexShader = compileShader(this._gl, vertexCode, "verte", defines);
-            var fragmentShader = compileShader(this._gl, fragmentCode, "fragmen", defines);
+            var vertexShader = compileShader(this._gl, vertexCode, "vertex", defines);
+            var fragmentShader = compileShader(this._gl, fragmentCode, "fragment", defines);
             var shaderProgram = this._gl.createProgram();
             this._gl.attachShader(shaderProgram, vertexShader);
             this._gl.attachShader(shaderProgram, fragmentShader);
@@ -566,7 +567,7 @@ namespace BABYLON {
             if (!linked) {
                 var error = this._gl.getProgramInfoLog(shaderProgram);
                 if (error) {
-                    throw new Exception(error);
+                    throw new Error(error);
                 }
             }
             this._gl.deleteShader(vertexShader);
@@ -580,7 +581,7 @@ namespace BABYLON {
             }
             return results;
         }
-        public virtual Array < float > getAttributes(WebGLProgram shaderProgram, Array < string > attributesNames) {
+        public virtual Array < double > getAttributes(WebGLProgram shaderProgram, Array < string > attributesNames) {
             var results = new Array < object > ();
             for (var index = 0; index < attributesNames.Length; index++) {
                 try {
@@ -614,7 +615,7 @@ namespace BABYLON {
             }
             this._currentEffect = effect;
         }
-        public virtual void setArray(WebGLUniformLocation uniform, Array < float > array) {
+        public virtual void setArray(WebGLUniformLocation uniform, Array < double > array) {
             if (!uniform)
                 return;
             this._gl.uniform1fv(uniform, array);
@@ -629,27 +630,27 @@ namespace BABYLON {
                 return;
             this._gl.uniformMatrix4fv(uniform, false, matrix.toArray());
         }
-        public virtual void setFloat(WebGLUniformLocation uniform, float value) {
+        public virtual void setFloat(WebGLUniformLocation uniform, double value) {
             if (!uniform)
                 return;
             this._gl.uniform1f(uniform, value);
         }
-        public virtual void setFloat2(WebGLUniformLocation uniform, float x, float y) {
+        public virtual void setFloat2(WebGLUniformLocation uniform, double x, double y) {
             if (!uniform)
                 return;
             this._gl.uniform2f(uniform, x, y);
         }
-        public virtual void setFloat3(WebGLUniformLocation uniform, float x, float y, float z) {
+        public virtual void setFloat3(WebGLUniformLocation uniform, double x, double y, double z) {
             if (!uniform)
                 return;
             this._gl.uniform3f(uniform, x, y, z);
         }
-        public virtual void setBool(WebGLUniformLocation uniform, float _bool) {
+        public virtual void setBool(WebGLUniformLocation uniform, double _bool) {
             if (!uniform)
                 return;
             this._gl.uniform1i(uniform, _bool);
         }
-        public virtual void setFloat4(WebGLUniformLocation uniform, float x, float y, float z, float w) {
+        public virtual void setFloat4(WebGLUniformLocation uniform, double x, double y, double z, double w) {
             if (!uniform)
                 return;
             this._gl.uniform4f(uniform, x, y, z, w);
@@ -659,7 +660,7 @@ namespace BABYLON {
                 return;
             this._gl.uniform3f(uniform, color3.r, color3.g, color3.b);
         }
-        public virtual void setColor4(WebGLUniformLocation uniform, Color3 color3, float alpha) {
+        public virtual void setColor4(WebGLUniformLocation uniform, Color3 color3, double alpha) {
             if (!uniform)
                 return;
             this._gl.uniform4f(uniform, color3.r, color3.g, color3.b, alpha);
@@ -689,7 +690,7 @@ namespace BABYLON {
         public virtual void setColorWrite(bool enable) {
             this._gl.colorMask(enable, enable, enable, enable);
         }
-        public virtual void setAlphaMode(float mode) {
+        public virtual void setAlphaMode(double mode) {
             switch (mode) {
                 case BABYLON.Engine.ALPHA_DISABLE:
                     this.setDepthWrite(true);
@@ -721,7 +722,7 @@ namespace BABYLON {
             this._cachedIndexBuffer = null;
             this._cachedEffectForVertexBuffers = null;
         }
-        public virtual void setSamplingMode(WebGLTexture texture, float samplingMode) {
+        public virtual void setSamplingMode(WebGLTexture texture, double samplingMode) {
             var gl = this._gl;
             gl.bindTexture(gl.TEXTURE_2D, texture);
             var magFilter = gl.NEAREST;
@@ -738,18 +739,18 @@ namespace BABYLON {
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
             gl.bindTexture(gl.TEXTURE_2D, null);
         }
-        public virtual WebGLTexture createTexture(string url, bool noMipmap, bool invertY, Scene scene, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE) {
+        public virtual WebGLTexture createTexture(string url, bool noMipmap, bool invertY, Scene scene, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE) {
             var texture = this._gl.createTexture();
             var extension = url.substr(url.Length - 4, 4).toLowerCase();
-            var isDDS = this.getCaps().s3tc && (extension == ".dd");
-            var isTGA = (extension == ".tg");
+            var isDDS = this.getCaps().s3tc && (extension == ".dds");
+            var isTGA = (extension == ".tga");
             scene._addPendingData(texture);
             texture.url = url;
             texture.noMipmap = noMipmap;
             texture.references = 1;
             this._loadedTexturesCache.push(texture);
             if (isTGA) {
-                BABYLON.Tools.LoadFile(url, (object arrayBuffer) => {
+                BABYLON.Tools.LoadFile(url, (arrayBuffer) => {
                     var data = new Uint8Array(arrayBuffer);
                     var header = BABYLON.Internals.TGATools.GetTGAHeader(data);
                     prepareWebGLTexture(texture, this._gl, scene, header.width, header.height, invertY, noMipmap, false, () => {
@@ -758,11 +759,11 @@ namespace BABYLON {
                 }, null, scene.database, true);
             } else
             if (isDDS) {
-                BABYLON.Tools.LoadFile(url, (object data) => {
+                BABYLON.Tools.LoadFile(url, (data) => {
                     var info = BABYLON.Internals.DDSTools.GetDDSInfo(data);
                     var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap && ((info.width << (info.mipmapCount - 1)) == 1);
                     prepareWebGLTexture(texture, this._gl, scene, info.width, info.height, invertY, !loadMipmap, info.isFourCC, () => {
-                        console.log("loading" + url);
+                        console.log("loading " + url);
                         Internals.DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 1);
                     }, samplingMode);
                 }, null, scene.database, true);
@@ -785,7 +786,7 @@ namespace BABYLON {
             }
             return texture;
         }
-        public virtual WebGLTexture createDynamicTexture(float width, float height, bool generateMipMaps, float samplingMode) {
+        public virtual WebGLTexture createDynamicTexture(double width, double height, bool generateMipMaps, double samplingMode) {
             var texture = this._gl.createTexture();
             width = getExponantOfTwo(width, this._caps.maxTextureSize);
             height = getExponantOfTwo(height, this._caps.maxTextureSize);
@@ -821,8 +822,8 @@ namespace BABYLON {
             this._gl.pixelStorei(this._gl.UNPACK_FLIP_Y_WEBGL, (invertY) ? 0 : 1);
             if (video.videoWidth != texture._width || video.videoHeight != texture._height) {
                 if (!texture._workingCanvas) {
-                    texture._workingCanvas = document.createElement("canva");
-                    texture._workingContext = texture._workingCanvas.getContext("2");
+                    texture._workingCanvas = document.createElement("canvas");
+                    texture._workingContext = texture._workingCanvas.getContext("2d");
                     texture._workingCanvas.width = texture._width;
                     texture._workingCanvas.height = texture._height;
                 }
@@ -842,10 +843,10 @@ namespace BABYLON {
             var generateMipMaps = false;
             var generateDepthBuffer = true;
             var samplingMode = BABYLON.Texture.TRILINEAR_SAMPLINGMODE;
-            if (options != undefined) {
-                generateMipMaps = (options.generateMipMaps == undefined) ? options : options.generateMipmaps;
-                generateDepthBuffer = (options.generateDepthBuffer == undefined) ? true : options.generateDepthBuffer;
-                if (options.samplingMode != undefined) {
+            if (options != null) {
+                generateMipMaps = (options.generateMipMaps == null) ? options : options.generateMipmaps;
+                generateDepthBuffer = (options.generateDepthBuffer == null) ? true : options.generateDepthBuffer;
+                if (options.samplingMode != null) {
                     samplingMode = options.samplingMode;
                 }
             }
@@ -896,9 +897,9 @@ namespace BABYLON {
             texture.references = 1;
             this._loadedTexturesCache.push(texture);
             var extension = rootUrl.substr(rootUrl.Length - 4, 4).toLowerCase();
-            var isDDS = this.getCaps().s3tc && (extension == ".dd");
+            var isDDS = this.getCaps().s3tc && (extension == ".dds");
             if (isDDS) {
-                BABYLON.Tools.LoadFile(rootUrl, (object data) => {
+                BABYLON.Tools.LoadFile(rootUrl, (data) => {
                     var info = BABYLON.Internals.DDSTools.GetDDSInfo(data);
                     var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap;
                     gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
@@ -918,7 +919,7 @@ namespace BABYLON {
                     texture.isReady = true;
                 });
             } else {
-                cascadeLoad(rootUrl, 0, new Array < object > (), scene, (object imgs) => {
+                cascadeLoad(rootUrl, 0, new Array < object > (), scene, (imgs) => {
                     var width = getExponantOfTwo(imgs[0].width, this._caps.maxCubemapTextureSize);
                     var height = width;
                     this._workingCanvas.width = width;
@@ -956,7 +957,7 @@ namespace BABYLON {
             }
             gl.deleteTexture(texture);
             for (var channel = 0; channel < this._caps.maxTexturesImageUnits; channel++) {
-                this._gl.activeTexture(this._gl["TEXTUR" + channel]);
+                this._gl.activeTexture(this._gl["TEXTURE" + channel]);
                 this._gl.bindTexture(this._gl.TEXTURE_2D, null);
                 this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, null);
                 this._activeTexturesCache[channel] = null;
@@ -975,28 +976,28 @@ namespace BABYLON {
             }
             this._currentEffect = null;
         }
-        public virtual void _bindTexture(float channel, WebGLTexture texture) {
-            this._gl.activeTexture(this._gl["TEXTUR" + channel]);
+        public virtual void _bindTexture(double channel, WebGLTexture texture) {
+            this._gl.activeTexture(this._gl["TEXTURE" + channel]);
             this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
             this._activeTexturesCache[channel] = null;
         }
-        public virtual void setTextureFromPostProcess(float channel, PostProcess postProcess) {
+        public virtual void setTextureFromPostProcess(double channel, PostProcess postProcess) {
             this._bindTexture(channel, postProcess._textures.data[postProcess._currentRenderTextureInd]);
         }
-        public virtual void setTexture(float channel, BaseTexture texture) {
+        public virtual void setTexture(double channel, BaseTexture texture) {
             if (channel < 0) {
                 return;
             }
             if (!texture || !texture.isReady()) {
                 if (this._activeTexturesCache[channel] != null) {
-                    this._gl.activeTexture(this._gl["TEXTUR" + channel]);
+                    this._gl.activeTexture(this._gl["TEXTURE" + channel]);
                     this._gl.bindTexture(this._gl.TEXTURE_2D, null);
                     this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, null);
                     this._activeTexturesCache[channel] = null;
                 }
                 return;
             }
-            if (textureisBABYLON.VideoTexture) {
+            if (texture is BABYLON.VideoTexture) {
                 if (((VideoTexture) texture).update()) {
                     this._activeTexturesCache[channel] = null;
                 }
@@ -1010,7 +1011,7 @@ namespace BABYLON {
             }
             this._activeTexturesCache[channel] = texture;
             var internalTexture = texture.getInternalTexture();
-            this._gl.activeTexture(this._gl["TEXTUR" + channel]);
+            this._gl.activeTexture(this._gl["TEXTURE" + channel]);
             if (internalTexture.isCube) {
                 this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, internalTexture);
                 if (internalTexture._cachedCoordinatesMode != texture.coordinatesMode) {
@@ -1053,14 +1054,14 @@ namespace BABYLON {
                 this._setAnisotropicLevel(this._gl.TEXTURE_2D, texture);
             }
         }
-        public virtual void _setAnisotropicLevel(float key, BaseTexture texture) {
+        public virtual void _setAnisotropicLevel(double key, BaseTexture texture) {
             var anisotropicFilterExtension = this._caps.textureAnisotropicFilterExtension;
             if (anisotropicFilterExtension && texture._cachedAnisotropicFilteringLevel != texture.anisotropicFilteringLevel) {
                 this._gl.texParameterf(key, anisotropicFilterExtension.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(texture.anisotropicFilteringLevel, this._caps.maxAnisotropy));
                 texture._cachedAnisotropicFilteringLevel = texture.anisotropicFilteringLevel;
             }
         }
-        public virtual Uint8Array readPixels(float x, float y, float width, float height) {
+        public virtual Uint8Array readPixels(double x, double y, double width, double height) {
             var data = new Uint8Array(height * width * 4);
             this._gl.readPixels(0, 0, width, height, this._gl.RGBA, this._gl.UNSIGNED_BYTE, data);
             return data;
@@ -1079,21 +1080,21 @@ namespace BABYLON {
                 }
                 this._gl.disableVertexAttribArray(i);
             }
-            window.removeEventListener("blu", this._onBlur);
-            window.removeEventListener("focu", this._onFocus);
-            document.removeEventListener("fullscreenchang", this._onFullscreenChange);
-            document.removeEventListener("mozfullscreenchang", this._onFullscreenChange);
-            document.removeEventListener("webkitfullscreenchang", this._onFullscreenChange);
-            document.removeEventListener("msfullscreenchang", this._onFullscreenChange);
-            document.removeEventListener("pointerlockchang", this._onPointerLockChange);
-            document.removeEventListener("mspointerlockchang", this._onPointerLockChange);
-            document.removeEventListener("mozpointerlockchang", this._onPointerLockChange);
-            document.removeEventListener("webkitpointerlockchang", this._onPointerLockChange);
+            window.removeEventListener("blur", this._onBlur);
+            window.removeEventListener("focus", this._onFocus);
+            document.removeEventListener("fullscreenchange", this._onFullscreenChange);
+            document.removeEventListener("mozfullscreenchange", this._onFullscreenChange);
+            document.removeEventListener("webkitfullscreenchange", this._onFullscreenChange);
+            document.removeEventListener("msfullscreenchange", this._onFullscreenChange);
+            document.removeEventListener("pointerlockchange", this._onPointerLockChange);
+            document.removeEventListener("mspointerlockchange", this._onPointerLockChange);
+            document.removeEventListener("mozpointerlockchange", this._onPointerLockChange);
+            document.removeEventListener("webkitpointerlockchange", this._onPointerLockChange);
         }
         public static bool isSupported() {
             try {
-                var tempcanvas = document.createElement("canva");
-                var gl = tempcanvas.getContext("webg") || tempcanvas.getContext("experimental-webg");
+                var tempcanvas = document.createElement("canvas");
+                var gl = tempcanvas.getContext("webgl") || tempcanvas.getContext("experimental-webgl");
                 return gl != null && !!window.WebGLRenderingContext;
             } catch (Exception e) {
                 return false;

@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Bone {
+    public partial class Bone {
         public Array < Bone > children = new Array < Bone > ();
         public Array < Animation > animations = new Array < Animation > ();
         private Skeleton _skeleton;
@@ -56,7 +57,7 @@ namespace BABYLON {
             this._skeleton._markAsDirty();
             this._updateDifferenceMatrix();
         }
-        private virtual void _updateDifferenceMatrix() {
+        private void _updateDifferenceMatrix() {
             if (this._parent) {
                 this._matrix.multiplyToRef(this._parent._absoluteTransform, this._absoluteTransform);
             } else {

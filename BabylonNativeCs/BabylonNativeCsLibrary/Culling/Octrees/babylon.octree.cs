@@ -2,18 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public interface IOctreeContainer {
-        Array < OctreeBlock < T >> blocks;
+    public partial interface IOctreeContainer < T > {
+        Array < OctreeBlock < T >> blocks {
+            get;
+        }
     }
-    public class Octree {
+    public partial class Octree < T > {
         public Array < OctreeBlock < T >> blocks;
         public Array < T > dynamicContent = new Array < T > ();
-        private float _maxBlockCapacity;
+        private double _maxBlockCapacity;
         private SmartArray < T > _selectionContent;
         private System.Action < T, OctreeBlock < T > > _creationFunc;
         public dynamic maxDepth;
-        public Octree(System.Action < T, OctreeBlock < T > > creationFunc, float maxBlockCapacity = 0.0, object maxDepth = 2) {
+        public Octree(System.Action < T, OctreeBlock < T > > creationFunc, double maxBlockCapacity = 0.0, object maxDepth = 2) {
             this._maxBlockCapacity = maxBlockCapacity || 64;
             this._selectionContent = new BABYLON.SmartArray < T > (1024);
             this._creationFunc = creationFunc;
@@ -40,7 +43,7 @@ namespace BABYLON {
             }
             return this._selectionContent;
         }
-        public virtual SmartArray < T > intersects(Vector3 sphereCenter, float sphereRadius, bool allowDuplicate = false) {
+        public virtual SmartArray < T > intersects(Vector3 sphereCenter, double sphereRadius, bool allowDuplicate = false) {
             this._selectionContent.reset();
             for (var index = 0; index < this.blocks.Length; index++) {
                 var block = this.blocks[index];
@@ -62,7 +65,7 @@ namespace BABYLON {
             this._selectionContent.concatWithNoDuplicate(this.dynamicContent);
             return this._selectionContent;
         }
-        public static void _CreateBlocks(Vector3 worldMin, Vector3 worldMax, Array < T > entries, float maxBlockCapacity, float currentDepth, float maxDepth, IOctreeContainer < T > target, System.Action < T, OctreeBlock < T > > creationFunc) {
+        public static void _CreateBlocks(Vector3 worldMin, Vector3 worldMax, Array < T > entries, double maxBlockCapacity, double currentDepth, double maxDepth, IOctreeContainer < T > target, System.Action < T, OctreeBlock < T > > creationFunc) {
             target.blocks = new Array < OctreeBlock < T >> ();
             var blockSize = new BABYLON.Vector3((worldMax.x - worldMin.x) / 2, (worldMax.y - worldMin.y) / 2, (worldMax.z - worldMin.z) / 2);
             for (var x = 0; x < 2; x++) {
@@ -77,12 +80,12 @@ namespace BABYLON {
                 }
             }
         }
-        public static null CreationFuncForMeshes = (AbstractMesh entry, OctreeBlock < AbstractMesh > block) => {
+        public static CreationFuncForMeshes = (AbstractMesh entry, OctreeBlock < AbstractMesh > block) => {
             if (entry.getBoundingInfo().boundingBox.intersectsMinMax(block.minPoint, block.maxPoint)) {
                 block.entries.push(entry);
             }
         };
-        public static null CreationFuncForSubMeshes = (SubMesh entry, OctreeBlock < SubMesh > block) => {
+        public static CreationFuncForSubMeshes = (SubMesh entry, OctreeBlock < SubMesh > block) => {
             if (entry.getBoundingInfo().boundingBox.intersectsMinMax(block.minPoint, block.maxPoint)) {
                 block.entries.push(entry);
             }

@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class _OculusInnerCamera: FreeCamera {
-        private float _aspectRatioAspectRatio;
-        private float _aspectRatioFov;
+    public partial class _OculusInnerCamera: FreeCamera {
+        private double _aspectRatioAspectRatio;
+        private double _aspectRatioFov;
         private Matrix _hMatrix;
         private BABYLON.Matrix _workMatrix = new BABYLON.Matrix();
         private Matrix _preViewMatrix;
         private BABYLON.Vector3 _actualUp = new BABYLON.Vector3(0, 0, 0);
         public _OculusInnerCamera(string name, Vector3 position, Scene scene, bool isLeftEye): base(name, position, scene) {
             this._aspectRatioAspectRatio = OculusRiftDevKit2013_Metric.HResolution / (2 * OculusRiftDevKit2013_Metric.VResolution);
-            this._aspectRatioFov = (2 * Math.atan((OculusRiftDevKit2013_Metric.PostProcessScaleFactor * OculusRiftDevKit2013_Metric.VScreenSize) / (2 * OculusRiftDevKit2013_Metric.EyeToScreenDistance)));
+            this._aspectRatioFov = (2 * Math.Atan((OculusRiftDevKit2013_Metric.PostProcessScaleFactor * OculusRiftDevKit2013_Metric.VScreenSize) / (2 * OculusRiftDevKit2013_Metric.EyeToScreenDistance)));
             var hMeters = (OculusRiftDevKit2013_Metric.HScreenSize / 4) - (OculusRiftDevKit2013_Metric.LensSeparationDistance / 2);
             var h = (4 * hMeters) / OculusRiftDevKit2013_Metric.HScreenSize;
             this._hMatrix = BABYLON.Matrix.Translation((isLeftEye) ? h : -h, 0, 0);
             this.viewport = new BABYLON.Viewport((isLeftEye) ? 0 : 0.5, 0, 0.5, 1.0);
             this._preViewMatrix = BABYLON.Matrix.Translation((isLeftEye) ? .5 * OculusRiftDevKit2013_Metric.InterpupillaryDistance : -.5 * OculusRiftDevKit2013_Metric.InterpupillaryDistance, 0, 0);
-            var postProcess = new BABYLON.OculusDistortionCorrectionPostProcess("Oculus Distortio", this, !isLeftEye, OculusRiftDevKit2013_Metric);
+            var postProcess = new BABYLON.OculusDistortionCorrectionPostProcess("Oculus Distortion", this, !isLeftEye, OculusRiftDevKit2013_Metric);
         }
         public virtual Matrix getProjectionMatrix() {
             BABYLON.Matrix.PerspectiveFovLHToRef(this._aspectRatioFov, this._aspectRatioAspectRatio, this.minZ, this.maxZ, this._workMatrix);
@@ -35,17 +36,23 @@ namespace BABYLON {
             return this._viewMatrix;
         }
     }
-    public class OculusCamera: FreeCamera {
+    public partial class OculusCamera: FreeCamera {
         private _OculusInnerCamera _leftCamera;
         private _OculusInnerCamera _rightCamera;
         private new {
-            float yaw;, float pitch;, float roll;
+            double yaw {
+                get;
+            }, double pitch {
+                get;
+            }, double roll {
+                get;
+            }
         }
         _offsetOrientation;
         private dynamic _deviceOrientationHandler;
         public OculusCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {
-            this._leftCamera = new _OculusInnerCamera(name + "_lef", position.clone(), scene, true);
-            this._rightCamera = new _OculusInnerCamera(name + "_righ", position.clone(), scene, false);
+            this._leftCamera = new _OculusInnerCamera(name + "_left", position.clone(), scene, true);
+            this._rightCamera = new _OculusInnerCamera(name + "_right", position.clone(), scene, false);
             this.subCameras.push(this._leftCamera);
             this.subCameras.push(this._rightCamera);
             this._deviceOrientationHandler = this._onOrientationEvent.bind(this);
@@ -65,7 +72,7 @@ namespace BABYLON {
             camera.rotation.y = this.rotation.y;
             camera.rotation.z = this.rotation.z;
         }
-        private virtual void _onOrientationEvent(DeviceOrientationEvent evt) {
+        private void _onOrientationEvent(DeviceOrientationEvent evt) {
             var yaw = evt.alpha / 180 * Math.PI;
             var pitch = evt.beta / 180 * Math.PI;
             var roll = evt.gamma / 180 * Math.PI;
@@ -83,11 +90,11 @@ namespace BABYLON {
         }
         public virtual void attachControl(HTMLElement element, bool noPreventDefault = false) {
             base.attachControl(element, noPreventDefault);
-            window.addEventListener("deviceorientatio", this._deviceOrientationHandler);
+            window.addEventListener("deviceorientation", this._deviceOrientationHandler);
         }
         public virtual void detachControl(HTMLElement element) {
             base.detachControl(element);
-            window.removeEventListener("deviceorientatio", this._deviceOrientationHandler);
+            window.removeEventListener("deviceorientation", this._deviceOrientationHandler);
         }
     }
 }

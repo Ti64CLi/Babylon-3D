@@ -2,40 +2,41 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Texture: BaseTexture {
-        public static
-        const float NEAREST_SAMPLINGMODE = 1;
-        public static
-        const float BILINEAR_SAMPLINGMODE = 2;
-        public static
-        const float TRILINEAR_SAMPLINGMODE = 3;
-        public static
-        const float EXPLICIT_MODE = 0;
-        public static
-        const float SPHERICAL_MODE = 1;
-        public static
-        const float PLANAR_MODE = 2;
-        public static
-        const float CUBIC_MODE = 3;
-        public static
-        const float PROJECTION_MODE = 4;
-        public static
-        const float SKYBOX_MODE = 5;
-        public static
-        const float CLAMP_ADDRESSMODE = 0;
-        public static
-        const float WRAP_ADDRESSMODE = 1;
-        public static
-        const float MIRROR_ADDRESSMODE = 2;
+    public partial class Texture: BaseTexture {
+        public
+        const double NEAREST_SAMPLINGMODE = 1;
+        public
+        const double BILINEAR_SAMPLINGMODE = 2;
+        public
+        const double TRILINEAR_SAMPLINGMODE = 3;
+        public
+        const double EXPLICIT_MODE = 0;
+        public
+        const double SPHERICAL_MODE = 1;
+        public
+        const double PLANAR_MODE = 2;
+        public
+        const double CUBIC_MODE = 3;
+        public
+        const double PROJECTION_MODE = 4;
+        public
+        const double SKYBOX_MODE = 5;
+        public
+        const double CLAMP_ADDRESSMODE = 0;
+        public
+        const double WRAP_ADDRESSMODE = 1;
+        public
+        const double MIRROR_ADDRESSMODE = 2;
         public string url;
-        public float uOffset = 0;
-        public float vOffset = 0;
-        public float uScale = 1.0;
-        public float vScale = 1.0;
-        public float uAng = 0;
-        public float vAng = 0;
-        public float wAng = 0;
+        public double uOffset = 0;
+        public double vOffset = 0;
+        public double uScale = 1.0;
+        public double vScale = 1.0;
+        public double uAng = 0;
+        public double vAng = 0;
+        public double wAng = 0;
         private bool _noMipmap;
         public bool _invertY;
         private Matrix _rowGenerationMatrix;
@@ -44,16 +45,16 @@ namespace BABYLON {
         private Vector3 _t0;
         private Vector3 _t1;
         private Vector3 _t2;
-        private float _cachedUOffset;
-        private float _cachedVOffset;
-        private float _cachedUScale;
-        private float _cachedVScale;
-        private float _cachedUAng;
-        private float _cachedVAng;
-        private float _cachedWAng;
-        private float _cachedCoordinatesMode;
-        private float _samplingMode;
-        public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, float samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(scene) {
+        private double _cachedUOffset;
+        private double _cachedVOffset;
+        private double _cachedUScale;
+        private double _cachedVScale;
+        private double _cachedUAng;
+        private double _cachedVAng;
+        private double _cachedWAng;
+        private double _cachedCoordinatesMode;
+        private double _samplingMode;
+        public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE): base(scene) {
             this.name = url;
             this.url = url;
             this._noMipmap = noMipmap;
@@ -81,7 +82,7 @@ namespace BABYLON {
                 this._texture = this.getScene().getEngine().createTexture(this.url, this._noMipmap, this._invertY, this.getScene(), this._samplingMode);
             }
         }
-        private virtual void _prepareRowForTextureGeneration(float x, float y, float z, Vector3 t) {
+        private void _prepareRowForTextureGeneration(double x, double y, double z, Vector3 t) {
             x -= this.uOffset + 0.5;
             y -= this.vOffset + 0.5;
             z -= 0.5;

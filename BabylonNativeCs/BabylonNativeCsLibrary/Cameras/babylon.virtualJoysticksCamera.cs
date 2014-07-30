@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class VirtualJoysticksCamera: FreeCamera {
+    public partial class VirtualJoysticksCamera: FreeCamera {
         private BABYLON.VirtualJoystick _leftjoystick;
         private BABYLON.VirtualJoystick _rightjoystick;
         public VirtualJoysticksCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {
@@ -16,7 +17,7 @@ namespace BABYLON {
             this._rightjoystick.setAxisForLeftRight(BABYLON.JoystickAxis.Y);
             this._rightjoystick.reverseUpDown = true;
             this._rightjoystick.setJoystickSensibility(0.05);
-            this._rightjoystick.setJoystickColor("yello");
+            this._rightjoystick.setJoystickColor("yellow");
         }
         public virtual void _checkInputs() {
             var cameraTransform = BABYLON.Matrix.RotationYawPitchRoll(this.rotation.y, this.rotation.x, 0);

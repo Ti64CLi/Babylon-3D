@@ -2,24 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class Animation {
+    public partial class Animation {
         private Array < object > _keys;
         private dynamic _offsetsCache = new {};
         private dynamic _highLimitsCache = new {};
         private bool _stopped = false;
         public dynamic _target;
         public Array < string > targetPropertyPath;
-        public float currentFrame;
+        public double currentFrame;
         public string name;
         public string targetProperty;
-        public float framePerSecond;
-        public float dataType;
-        public float loopMode;
-        public Animation(string name, string targetProperty, float framePerSecond, float dataType, float loopMode = 0.0) {
-            this.targetPropertyPath = targetProperty.split("");
+        public double framePerSecond;
+        public double dataType;
+        public double loopMode;
+        public Animation(string name, string targetProperty, double framePerSecond, double dataType, double loopMode = 0.0) {
+            this.targetPropertyPath = targetProperty.Split(".");
             this.dataType = dataType;
-            this.loopMode = (loopMode == undefined) ? Animation.ANIMATIONLOOPMODE_CYCLE : loopMode;
+            this.loopMode = (loopMode == null) ? Animation.ANIMATIONLOOPMODE_CYCLE : loopMode;
         }
         public virtual bool isStopped() {
             return this._stopped;
@@ -27,20 +28,20 @@ namespace BABYLON {
         public virtual Array < object > getKeys() {
             return this._keys;
         }
-        public virtual float floatInterpolateFunction(float startValue, float endValue, float gradient) {
+        public virtual double floatInterpolateFunction(double startValue, double endValue, double gradient) {
             return startValue + (endValue - startValue) * gradient;
         }
-        public virtual Quaternion quaternionInterpolateFunction(Quaternion startValue, Quaternion endValue, float gradient) {
+        public virtual Quaternion quaternionInterpolateFunction(Quaternion startValue, Quaternion endValue, double gradient) {
             return BABYLON.Quaternion.Slerp(startValue, endValue, gradient);
         }
-        public virtual Vector3 vector3InterpolateFunction(Vector3 startValue, Vector3 endValue, float gradient) {
+        public virtual Vector3 vector3InterpolateFunction(Vector3 startValue, Vector3 endValue, double gradient) {
             return BABYLON.Vector3.Lerp(startValue, endValue, gradient);
         }
-        public virtual Color3 color3InterpolateFunction(Color3 startValue, Color3 endValue, float gradient) {
+        public virtual Color3 color3InterpolateFunction(Color3 startValue, Color3 endValue, double gradient) {
             return BABYLON.Color3.Lerp(startValue, endValue, gradient);
         }
         public virtual Animation clone() {
-            var clone = new Animation(this.name, this.targetPropertyPath.join(""), this.framePerSecond, this.dataType, this.loopMode);
+            var clone = new Animation(this.name, this.targetPropertyPath.join("."), this.framePerSecond, this.dataType, this.loopMode);
             clone.setKeys(this._keys);
             return clone;
         }
@@ -49,7 +50,7 @@ namespace BABYLON {
             this._offsetsCache = new {};
             this._highLimitsCache = new {};
         }
-        private virtual void _interpolate(float currentFrame, float repeatCount, float loopMode, object offsetValue = null, object highLimitValue = null) {
+        private void _interpolate(double currentFrame, double repeatCount, double loopMode, object offsetValue = null, object highLimitValue = null) {
             if (loopMode == Animation.ANIMATIONLOOPMODE_CONSTANT && repeatCount > 0) {
                 return (highLimitValue.clone) ? highLimitValue.clone() : highLimitValue;
             }
@@ -112,7 +113,7 @@ namespace BABYLON {
             }
             return this._keys[this._keys.Length - 1].value;
         }
-        public virtual bool animate(float delay, float from, float to, bool loop, float speedRatio) {
+        public virtual bool animate(double delay, double from, double to, bool loop, double speedRatio) {
             if (!this.targetPropertyPath || this.targetPropertyPath.Length < 1) {
                 this._stopped = true;
                 return false;
@@ -182,58 +183,58 @@ namespace BABYLON {
             }
             return returnValue;
         }
-        private static
-        const float _ANIMATIONTYPE_FLOAT = 0;
-        private static
-        const float _ANIMATIONTYPE_VECTOR3 = 1;
-        private static
-        const float _ANIMATIONTYPE_QUATERNION = 2;
-        private static
-        const float _ANIMATIONTYPE_MATRIX = 3;
-        private static
-        const float _ANIMATIONTYPE_COLOR3 = 4;
-        private static
-        const float _ANIMATIONLOOPMODE_RELATIVE = 0;
-        private static
-        const float _ANIMATIONLOOPMODE_CYCLE = 1;
-        private static
-        const float _ANIMATIONLOOPMODE_CONSTANT = 2;
-        public static float ANIMATIONTYPE_FLOAT {
+        private
+        const double _ANIMATIONTYPE_FLOAT = 0;
+        private
+        const double _ANIMATIONTYPE_VECTOR3 = 1;
+        private
+        const double _ANIMATIONTYPE_QUATERNION = 2;
+        private
+        const double _ANIMATIONTYPE_MATRIX = 3;
+        private
+        const double _ANIMATIONTYPE_COLOR3 = 4;
+        private
+        const double _ANIMATIONLOOPMODE_RELATIVE = 0;
+        private
+        const double _ANIMATIONLOOPMODE_CYCLE = 1;
+        private
+        const double _ANIMATIONLOOPMODE_CONSTANT = 2;
+        public static double ANIMATIONTYPE_FLOAT {
             get {
                 return Animation._ANIMATIONTYPE_FLOAT;
             }
         }
-        public static float ANIMATIONTYPE_VECTOR3 {
+        public static double ANIMATIONTYPE_VECTOR3 {
             get {
                 return Animation._ANIMATIONTYPE_VECTOR3;
             }
         }
-        public static float ANIMATIONTYPE_QUATERNION {
+        public static double ANIMATIONTYPE_QUATERNION {
             get {
                 return Animation._ANIMATIONTYPE_QUATERNION;
             }
         }
-        public static float ANIMATIONTYPE_MATRIX {
+        public static double ANIMATIONTYPE_MATRIX {
             get {
                 return Animation._ANIMATIONTYPE_MATRIX;
             }
         }
-        public static float ANIMATIONTYPE_COLOR3 {
+        public static double ANIMATIONTYPE_COLOR3 {
             get {
                 return Animation._ANIMATIONTYPE_COLOR3;
             }
         }
-        public static float ANIMATIONLOOPMODE_RELATIVE {
+        public static double ANIMATIONLOOPMODE_RELATIVE {
             get {
                 return Animation._ANIMATIONLOOPMODE_RELATIVE;
             }
         }
-        public static float ANIMATIONLOOPMODE_CYCLE {
+        public static double ANIMATIONLOOPMODE_CYCLE {
             get {
                 return Animation._ANIMATIONLOOPMODE_CYCLE;
             }
         }
-        public static float ANIMATIONLOOPMODE_CONSTANT {
+        public static double ANIMATIONLOOPMODE_CONSTANT {
             get {
                 return Animation._ANIMATIONLOOPMODE_CONSTANT;
             }

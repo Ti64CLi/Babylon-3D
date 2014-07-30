@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-    public class SwitchBooleanAction: Action {
+    public partial class SwitchBooleanAction: Action {
         private object _target;
         private string _property;
         public string propertyPath;
@@ -18,7 +19,7 @@ namespace BABYLON {
             this._target[this._property] = !this._target[this._property];
         }
     }
-    public class SetStateAction: Action {
+    public partial class SetStateAction: Action {
         private object _target;
         public string value;
         public SetStateAction(object triggerOptions, object target, string value, Condition condition = null): base(triggerOptions, condition) {
@@ -28,7 +29,7 @@ namespace BABYLON {
             this._target.state = this.value;
         }
     }
-    public class SetValueAction: Action {
+    public partial class SetValueAction: Action {
         private object _target;
         private string _property;
         public string propertyPath;
@@ -44,7 +45,7 @@ namespace BABYLON {
             this._target[this._property] = this.value;
         }
     }
-    public class IncrementValueAction: Action {
+    public partial class IncrementValueAction: Action {
         private object _target;
         private string _property;
         public string propertyPath;
@@ -55,20 +56,20 @@ namespace BABYLON {
         public virtual void _prepare() {
             this._target = this._getEffectiveTarget(this._target, this.propertyPath);
             this._property = this._getProperty(this.propertyPath);
-            if (typeof(this._target[this._property]) != "numbe") {
-                Tools.Warn("Warning: IncrementValueAction can only be used with number value");
+            if (typeof(this._target[this._property]) != "number") {
+                Tools.Warn("Warning: IncrementValueAction can only be used with number values");
             }
         }
         public virtual void execute() {
             this._target[this._property] += this.value;
         }
     }
-    public class PlayAnimationAction: Action {
+    public partial class PlayAnimationAction: Action {
         private object _target;
-        public float from;
-        public float to;
+        public double from;
+        public double to;
         public bool loop;
-        public PlayAnimationAction(object triggerOptions, object target, float from, float to, bool loop = false, Condition condition = null): base(triggerOptions, condition) {
+        public PlayAnimationAction(object triggerOptions, object target, double from, double to, bool loop = false, Condition condition = null): base(triggerOptions, condition) {
             this._target = target;
         }
         public virtual void _prepare() {}
@@ -77,7 +78,7 @@ namespace BABYLON {
             scene.beginAnimation(this._target, this.from, this.to, this.loop);
         }
     }
-    public class StopAnimationAction: Action {
+    public partial class StopAnimationAction: Action {
         private object _target;
         public StopAnimationAction(object triggerOptions, object target, Condition condition = null): base(triggerOptions, condition) {
             this._target = target;
@@ -88,11 +89,11 @@ namespace BABYLON {
             scene.stopAnimation(this._target);
         }
     }
-    public class DoNothingAction: Action {
+    public partial class DoNothingAction: Action {
         public DoNothingAction(object triggerOptions = ActionManager.NothingTrigger, Condition condition = null): base(triggerOptions, condition) {}
         public virtual void execute() {}
     }
-    public class CombineAction: Action {
+    public partial class CombineAction: Action {
         public Array < Action > children;
         public CombineAction(object triggerOptions, Array < Action > children, Condition condition = null): base(triggerOptions, condition) {}
         public virtual void _prepare() {
@@ -107,14 +108,14 @@ namespace BABYLON {
             }
         }
     }
-    public class ExecuteCodeAction: Action {
+    public partial class ExecuteCodeAction: Action {
         public System.Action < ActionEvent > func;
         public ExecuteCodeAction(object triggerOptions, System.Action < ActionEvent > func, Condition condition = null): base(triggerOptions, condition) {}
         public virtual void execute(ActionEvent evt) {
             this.func(evt);
         }
     }
-    public class SetParentAction: Action {
+    public partial class SetParentAction: Action {
         private object _parent;
         private object _target;
         public SetParentAction(object triggerOptions, object target, object parent, Condition condition = null): base(triggerOptions, condition) {

@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Web;
 namespace BABYLON {
-public class PassPostProcess: PostProcess {
-public PassPostProcess(string name, float ratio, Camera camera, float samplingMode, Engine engine, bool reusable) {
-base(name, "pas", null, null, ratio, camera, samplingMode, engine, reusable);
-}
-}
+    public partial class PassPostProcess: PostProcess {
+        public PassPostProcess(string name, double ratio, Camera camera, double samplingMode = 0.0, Engine engine = null, bool reusable = false): base(name, "pass", null, null, ratio, camera, samplingMode, engine, reusable) {}
+    }
 }
