@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-public interface Window
-{
+public interface Window {
     object mozIndexedDB(object func);
     object webkitIndexedDB(object func);
     object IDBTransaction(object func);
@@ -20,12 +19,10 @@ public interface Window
     WebGLRenderingContext WebGLRenderingContext;
     MSGesture MSGesture;
 }
-public interface HTMLURL
-{
-    void createObjectURL(object param1, object param2);
+public interface HTMLURL {
+    void createObjectURL(object param1, object param2 = null);
 }
-public interface Document
-{
+public interface Document {
     void exitFullscreen();
     void webkitCancelFullScreen();
     void mozCancelFullScreen();
@@ -39,15 +36,13 @@ public interface Document
     HTMLElement webkitPointerLockElement;
     HTMLElement pointerLockElement;
 }
-public interface HTMLCanvasElement
-{
+public interface HTMLCanvasElement {
     void requestPointerLock();
     void msRequestPointerLock();
     void mozRequestPointerLock();
     void webkitRequestPointerLock();
 }
-public interface WebGLTexture
-{
+public interface WebGLTexture {
     bool isReady;
     bool isCube;
     string url;
@@ -67,13 +62,11 @@ public interface WebGLTexture
     float _cachedWrapU;
     float _cachedWrapV;
 }
-public interface WebGLBuffer
-{
+public interface WebGLBuffer {
     float references;
     float capacity;
 }
-public interface MouseEvent
-{
+public interface MouseEvent {
     float movementX;
     float movementY;
     float mozMovementX;
