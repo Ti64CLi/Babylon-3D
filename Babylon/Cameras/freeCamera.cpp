@@ -136,15 +136,21 @@ void Babylon::FreeCamera::setTarget (Vector3::Ptr target) {
 
 	this->rotation->z = -acos(Vector3::Dot(make_shared<Vector3>(0, 1.0, 0), this->upVector));
 
-	if (isnan(this->rotation->x)) {
+#if WIN32
+#define ISNAN _isnan
+#else
+#define ISNAN isnan
+#endif
+
+	if (ISNAN(this->rotation->x)) {
 		this->rotation->x = 0;
 	}
 
-	if (isnan(this->rotation->y)) {
+	if (ISNAN(this->rotation->y)) {
 		this->rotation->y = 0;
 	}
 
-	if (isnan(this->rotation->z)) {
+	if (ISNAN(this->rotation->z)) {
 		this->rotation->z = 0;
 	}
 };
