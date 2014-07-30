@@ -239,7 +239,7 @@ namespace BABYLON {
             if (property == "rotation") {
                 this.rotationQuaternion = null;
             }
-            this._currentRenderId = Number.MAX_VALUE;
+            this._currentRenderId = double.MaxValue;
             this._isDirty = true;
         }
         public virtual void _updateBoundingInfo() {

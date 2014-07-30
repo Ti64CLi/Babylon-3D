@@ -38,8 +38,8 @@ namespace BABYLON {
         }
         public virtual void _initCache() {
             base._initCache();
-            this._cache.position = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            this._cache.upVector = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+            this._cache.position = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
+            this._cache.upVector = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
             this._cache.mode = null;
             this._cache.minZ = null;
             this._cache.maxZ = null;

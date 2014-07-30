@@ -2,9 +2,24 @@
 {
     using System;
 
-    public class Date
+    public class Date : DateTime 
     {
-        public double getTime()
+        public int getTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getHours()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getMinutes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getSeconds()
         {
             throw new NotImplementedException();
         }

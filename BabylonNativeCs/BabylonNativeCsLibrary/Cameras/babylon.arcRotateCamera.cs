@@ -49,7 +49,7 @@ namespace BABYLON {
         }
         public virtual void _initCache() {
             base._initCache();
-            this._cache.target = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+            this._cache.target = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
             this._cache.alpha = null;
             this._cache.beta = null;
             this._cache.radius = null;

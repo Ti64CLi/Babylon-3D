@@ -39,7 +39,7 @@ namespace BABYLON {
             for (var i = 0; i < parameters.Length; i++) {
                 switch (parameters[i]) {
                     case "name":
-                        args[i] = postProcessType.toString();
+                        args[i] = postProcessType.ToString();
                         break;
                     case "ratio":
                         args[i] = ratio;
@@ -69,7 +69,7 @@ namespace BABYLON {
         }
         private static Array < string > _GetParametersNames(object func) {
             var commentsRegex = new Regex(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg);
-            var functWithoutComments = func.toString().replace(commentsRegex, "");
+            var functWithoutComments = func.ToString().replace(commentsRegex, "");
             var parameters = functWithoutComments.slice(functWithoutComments.indexOf("(") + 1, functWithoutComments.indexOf(")")).match(new Regex(/([^\s,]+)/g));
             if (parameters == null)
                 parameters = new Array < object > ();

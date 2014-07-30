@@ -56,8 +56,8 @@ namespace BABYLON {
         }
         public virtual void _initCache() {
             base._initCache();
-            this._cache.lockedTarget = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            this._cache.rotation = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+            this._cache.lockedTarget = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
+            this._cache.rotation = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
         }
         public virtual void _updateCache(bool ignoreParentClass = false) {
             if (!ignoreParentClass) {

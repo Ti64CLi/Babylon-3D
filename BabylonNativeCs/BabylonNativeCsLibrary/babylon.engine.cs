@@ -108,6 +108,10 @@ namespace BABYLON {
         private ClientRect _canvasClientRect;
         private HTMLCanvasElement _workingCanvas;
         private CanvasRenderingContext2D _workingContext;
+
+        private Web.Window window;
+        private Web.Document document;
+
         public Engine(HTMLCanvasElement canvas, bool antialias = false, object options = null) {
             this._renderingCanvas = canvas;
             this._canvasClientRect = this._renderingCanvas.getBoundingClientRect();

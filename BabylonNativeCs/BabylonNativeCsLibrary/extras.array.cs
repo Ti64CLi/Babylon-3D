@@ -4,6 +4,21 @@
 
     public class Array<T>
     {
+        public Array()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Array(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Array(T item1, T item2)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Length
         {
             get
@@ -14,15 +29,25 @@
 
         public void push(T v)
         {
-            throw new NotImplementedException();            
+            throw new NotImplementedException();
         }
 
         public void push(T v1, T v2)
         {
-            throw new NotImplementedException();        
+            throw new NotImplementedException();
         }
 
         public int indexOf(T t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Array<T> slice(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string join(string joinSubstr)
         {
             throw new NotImplementedException();
         }
@@ -32,12 +57,22 @@
             throw new NotImplementedException();
         }
 
+        public void splice(int index, int size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void splice(int index, int size, Array<T> newKeys)
+        {
+            throw new NotImplementedException();
+        }
+
         public void forEach(Func<T> func)
         {
             throw new NotImplementedException();
         }
 
-        public object this[int subIndex]
+        public T this[int subIndex]
         {
             get
             {
@@ -61,14 +96,16 @@
 
     public class Float32Array : SmartArray<float>
     {
-        public Float32Array(int reserveSize) : base(reserveSize)
+        public Float32Array(int reserveSize)
+            : base(reserveSize)
         {
         }
     }
 
     public class Int32Array : SmartArray<int>
     {
-        public Int32Array(int reserveSize) : base(reserveSize)
+        public Int32Array(int reserveSize)
+            : base(reserveSize)
         {
         }
     }

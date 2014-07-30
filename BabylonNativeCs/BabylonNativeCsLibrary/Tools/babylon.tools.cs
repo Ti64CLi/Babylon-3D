@@ -3,142 +3,192 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial interface IAnimatable {
-        Array < Animation > animations {
+namespace BABYLON
+{
+    public partial interface IAnimatable
+    {
+        Array<Animation> animations
+        {
             get;
         }
     }
-    public partial interface ISize {
-        double width {
+    public partial interface ISize
+    {
+        double width
+        {
             get;
         }
-        double height {
+        double height
+        {
             get;
         }
     }
-    public partial class Tools {
+    public partial class Tools
+    {
+        public static Web.Window window;
+        public static Web.Console console;
+
+        // Screenshots
+        private static HTMLCanvasElement screenshotCanvas;
+
+        // FPS
+        private static int fpsRange = 60;
+        private static Array<int> previousFramesDuration = new Array<int>();
+        private static double fps = 60;
+        private static int deltaTime = 0;
+
+        object cloneValue(object source, object destinationObject)
+        {
+            if (source == null)
+                return null;
+
+            if (source is Mesh)
+            {
+                return null;
+            }
+
+            var subMesh = source as SubMesh;
+            if (subMesh != null)
+            {
+                return subMesh.clone(destinationObject as AbstractMesh);
+            }
+
+            var abstractMesh = source as AbstractMesh;
+            if (abstractMesh != null)
+            {
+                return abstractMesh.clone();
+            }
+
+            return null;
+        }
+
         public static string BaseUrl = "";
-        public static string GetFilename(string path) {
+        public static string GetFilename(string path)
+        {
             var index = path.LastIndexOf("/");
             if (index < 0)
                 return path;
             return path.Substring(index + 1);
         }
-        public static string GetDOMTextContent(HTMLElement element) {
+        public static string GetDOMTextContent(HTMLElement element)
+        {
             var result = "";
             var child = element.firstChild;
-            while (child) {
-                if (child.nodeType == 3) {
+            while (child != null)
+            {
+                if (child.nodeType == 3)
+                {
                     result += child.textContent;
                 }
                 child = child.nextSibling;
             }
+
             return result;
         }
-        public static double ToDegrees(double angle) {
+        public static double ToDegrees(double angle)
+        {
             return angle * 180 / Math.PI;
         }
-        public static double ToRadians(double angle) {
+        public static double ToRadians(double angle)
+        {
             return angle * Math.PI / 180;
         }
-        public static new {
-            Vector3 minimum {
-                get;
-            }, Vector3 maximum {
-                get;
-            }
-        }
-        ExtractMinAndMaxIndexed(Array < double > positions, Array < double > indices, double indexStart, double indexCount) {
-            var minimum = new Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            var maximum = new Vector3(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
-            for (var index = indexStart; index < indexStart + indexCount; index++) {
+        public static MinMax ExtractMinAndMaxIndexed(Array<double> positions, Array<int> indices, int indexStart, int indexCount)
+        {
+            var minimum = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
+            var maximum = new Vector3(-double.MaxValue, -double.MaxValue, -double.MaxValue);
+            for (var index = indexStart; index < indexStart + indexCount; index++)
+            {
                 var current = new Vector3(positions[indices[index] * 3], positions[indices[index] * 3 + 1], positions[indices[index] * 3 + 2]);
                 minimum = BABYLON.Vector3.Minimize(current, minimum);
                 maximum = BABYLON.Vector3.Maximize(current, maximum);
             }
-            return new {};
+            return new MinMax { minimum = minimum, maximum = maximum };
         }
-        public static new {
-            Vector3 minimum {
-                get;
-            }, Vector3 maximum {
-                get;
-            }
-        }
-        ExtractMinAndMax(Array < double > positions, double start, double count) {
-            var minimum = new Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-            var maximum = new Vector3(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
-            for (var index = start; index < start + count; index++) {
+        public static MinMax ExtractMinAndMax(Array<double> positions, int start, int count)
+        {
+            var minimum = new Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
+            var maximum = new Vector3(-double.MaxValue, -double.MaxValue, -double.MaxValue);
+            for (var index = start; index < start + count; index++)
+            {
                 var current = new Vector3(positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2]);
                 minimum = BABYLON.Vector3.Minimize(current, minimum);
                 maximum = BABYLON.Vector3.Maximize(current, maximum);
             }
-            return new {};
+            return new MinMax { minimum = minimum, maximum = maximum };
         }
-        public static Array < object > MakeArray(object obj, bool allowsNullUndefined = false) {
+        public static Array<T> MakeArray<T>(T obj, bool allowsNullUndefined = false)
+        {
             if (allowsNullUndefined != true && (obj == null || obj == null))
                 return null;
-            return (Array.isArray(obj)) ? obj : new Array < object > (obj);
+            return new Array<T>(obj);
         }
-        public static string GetPointerPrefix() {
+        public static string GetPointerPrefix()
+        {
             var eventPrefix = "pointer";
-            if (!navigator.pointerEnabled) {
+            /*
+            if (!navigator.pointerEnabled)
+            {
                 eventPrefix = "mouse";
             }
+            */
             return eventPrefix;
         }
-        public static void QueueNewFrame(object func) {
-            if (window.requestAnimationFrame)
-                window.requestAnimationFrame(func);
-            else
-            if (window.msRequestAnimationFrame)
-                window.msRequestAnimationFrame(func);
-            else
-            if (window.webkitRequestAnimationFrame)
-                window.webkitRequestAnimationFrame(func);
-            else
-            if (window.mozRequestAnimationFrame)
-                window.mozRequestAnimationFrame(func);
-            else
-            if (window.oRequestAnimationFrame)
-                window.oRequestAnimationFrame(func);
-            else {
-                window.setTimeout(func, 16);
-            }
+        public static void QueueNewFrame(FrameRequestCallback func)
+        {
+            window.requestAnimationFrame(func);
         }
-        public static void RequestFullscreen(object element) {
+        public static void RequestFullscreen(object element)
+        {
+            /*
             if (element.requestFullscreen)
                 element.requestFullscreen();
             else
-            if (element.msRequestFullscreen)
-                element.msRequestFullscreen();
-            else
-            if (element.webkitRequestFullscreen)
-                element.webkitRequestFullscreen();
-            else
-            if (element.mozRequestFullScreen)
-                element.mozRequestFullScreen();
+                if (element.msRequestFullscreen)
+                    element.msRequestFullscreen();
+                else
+                    if (element.webkitRequestFullscreen)
+                        element.webkitRequestFullscreen();
+                    else
+                        if (element.mozRequestFullScreen)
+                            element.mozRequestFullScreen();
+             */
+
+            throw new NotImplementedException();
         }
-        public static void ExitFullscreen() {
-            if (document.exitFullscreen) {
+        public static void ExitFullscreen()
+        {
+            /*
+            if (document.exitFullscreen)
+            {
                 document.exitFullscreen();
-            } else
-            if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else
-            if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen();
-            } else
-            if (document.msCancelFullScreen) {
-                document.msCancelFullScreen();
             }
+            else
+                if (document.mozCancelFullScreen)
+                {
+                    document.mozCancelFullScreen();
+                }
+                else
+                    if (document.webkitCancelFullScreen)
+                    {
+                        document.webkitCancelFullScreen();
+                    }
+                    else
+                        if (document.msCancelFullScreen)
+                        {
+                            document.msCancelFullScreen();
+                        }
+             */
+            throw new NotImplementedException();
         }
-        public static string CleanUrl(string url) {
-            url = url.replace(new Regex(/#/mg), "%23");
+        public static string CleanUrl(string url)
+        {
+            url = url.Replace("#", "%23");
             return url;
         }
-        public static HTMLImageElement LoadImage(string url, object onload, object onerror, object database) {
+        public static HTMLImageElement LoadImage(string url, object onload, object onerror, object database)
+        {
+            /*
             url = Tools.CleanUrl(url);
             var img = new Image();
             img.crossOrigin = "anonymous";
@@ -176,8 +226,13 @@ namespace BABYLON {
                 }
             }
             return img;
+             */
+
+            throw new NotImplementedException();
         }
-        public static void LoadFile(string url, System.Action < object > callback, System.Action progressCallBack = null, object database = null, bool useArrayBuffer = false) {
+        public static void LoadFile(string url, System.Action<object> callback, System.Action progressCallBack = null, object database = null, bool useArrayBuffer = false)
+        {
+            /*
             url = Tools.CleanUrl(url);
             var noIndexedDB = () => {
                 var request = new XMLHttpRequest();
@@ -211,9 +266,14 @@ namespace BABYLON {
                     noIndexedDB();
                 }
             }
+             */
+
+            throw new NotImplementedException();
         }
-        public static void ReadFile(object fileToLoad, object callback, object progressCallBack, bool useArrayBuffer = false) {
-            var reader = new FileReader();
+        public static void ReadFile(object fileToLoad, object callback, object progressCallBack, bool useArrayBuffer = false)
+        {
+            /*
+            FileReader reader = null;// new FileReader();
             reader.onload = (e) => {
                 callback(e.target.result);
             };
@@ -223,8 +283,12 @@ namespace BABYLON {
             } else {
                 reader.readAsArrayBuffer(fileToLoad);
             }
+            */
+
+            throw new NotImplementedException();
         }
-        public static void CheckExtends(Vector3 v, Vector3 min, Vector3 Max) {
+        public static void CheckExtends(Vector3 v, Vector3 min, Vector3 Max)
+        {
             if (v.x < min.x)
                 min.x = v.x;
             if (v.y < min.y)
@@ -238,11 +302,14 @@ namespace BABYLON {
             if (v.z > Max.z)
                 Max.z = v.z;
         }
-        public static bool WithinEpsilon(double a, double b) {
+        public static bool WithinEpsilon(double a, double b)
+        {
             var num = a - b;
             return -1.401298E-45 <= num && num <= 1.401298E-45;
         }
-        public static void DeepCopy(object source, object destination, Array < string > doNotCopyList = null, Array < string > mustCopyList = null) {
+        public static void DeepCopy(object source, object destination, Array<string> doNotCopyList = null, Array<string> mustCopyList = null)
+        {
+            /*
             foreach(var prop in source) {
                 if (prop[0] == "_" && (!mustCopyList || mustCopyList.indexOf(prop) == -1)) {
                     continue;
@@ -277,55 +344,63 @@ namespace BABYLON {
                     destination[prop] = sourceValue;
                 }
             }
+            */
+
+            throw new NotImplementedException();
         }
-        public static bool IsEmpty(object obj) {
+        public static bool IsEmpty(object obj)
+        {
+            /*
             foreach(var i in obj) {
                 return false;
             }
             return true;
+            */
+
+            throw new NotImplementedException();
         }
-        public static void RegisterTopRootEvents(Array < new {
-            string name {
-                get;
-            }, EventListener handler {
-                get;
-            }
-        } > events) {
-            for (var index = 0; index < events.Length; index++) {
+        public static void RegisterTopRootEvents(Array<EventDts> events)
+        {
+            for (var index = 0; index < events.Length; index++)
+            {
                 var _event = events[index];
                 window.addEventListener(_event.name, _event.handler, false);
-                try {
-                    if (window.parent) {
+                try
+                {
+                    if (window.parent != null)
+                    {
                         window.parent.addEventListener(_event.name, _event.handler, false);
                     }
-                } catch (Exception e) {}
+                }
+                catch (Exception e) { }
             }
         }
-        public static void UnregisterTopRootEvents(Array < new {
-            string name {
-                get;
-            }, EventListener handler {
-                get;
-            }
-        } > events) {
-            for (var index = 0; index < events.Length; index++) {
+        public static void UnregisterTopRootEvents(Array<EventDts> events)
+        {
+            for (var index = 0; index < events.Length; index++)
+            {
                 var _event = events[index];
                 window.removeEventListener(_event.name, _event.handler);
-                try {
-                    if (window.parent) {
+                try
+                {
+                    if (window.parent != null)
+                    {
                         window.parent.removeEventListener(_event.name, _event.handler);
                     }
-                } catch (Exception e) {}
+                }
+                catch (Exception e) { }
             }
         }
-        public static double GetFps() {
+        public static double GetFps()
+        {
             return fps;
         }
-        public static double GetDeltaTime() {
+        public static int GetDeltaTime()
+        {
             return deltaTime;
         }
         public static void _MeasureFps() {
-            previousFramesDuration.push((new Date).getTime());
+            previousFramesDuration.push(new Date().getTime());
             var Length = previousFramesDuration.Length;
             if (Length >= 2) {
                 deltaTime = previousFramesDuration[Length - 1] - previousFramesDuration[Length - 2];
@@ -343,6 +418,7 @@ namespace BABYLON {
             }
         }
         public static void CreateScreenshot(Engine engine, Camera camera, object size) {
+            /*
             var width;
             var height;
             var scene = camera.getScene();
@@ -426,101 +502,148 @@ namespace BABYLON {
             if (previousCamera) {
                 scene.activeCamera = previousCamera;
             }
+            */
+
+            throw new NotImplementedException();
         }
-        public static bool ValidateXHRData(XMLHttpRequest xhr, object dataType = 7) {
-            try {
-                if (dataType & 1) {
-                    if (xhr.responseText && xhr.responseText.Length > 0) {
+        public static bool ValidateXHRData(XMLHttpRequest xhr, int dataType = 7)
+        {
+            /*
+            try
+            {
+                if ((dataType & 1) > 0)
+                {
+                    if (xhr.responseText != null && xhr.responseText.Length > 0)
+                    {
                         return true;
-                    } else
-                    if (dataType == 1) {
-                        return false;
                     }
+                    else
+                        if (dataType == 1)
+                        {
+                            return false;
+                        }
                 }
-                if (dataType & 2) {
+                if ((dataType & 2) > 0)
+                {
                     var tgaHeader = BABYLON.Internals.TGATools.GetTGAHeader(xhr.response);
-                    if (tgaHeader.width && tgaHeader.height && tgaHeader.width > 0 && tgaHeader.height > 0) {
+                    if (tgaHeader.width && tgaHeader.height && tgaHeader.width > 0 && tgaHeader.height > 0)
+                    {
                         return true;
-                    } else
-                    if (dataType == 2) {
-                        return false;
                     }
+                    else
+                        if (dataType == 2)
+                        {
+                            return false;
+                        }
                 }
-                if (dataType & 4) {
+                if ((dataType & 4) > 0)
+                {
                     var ddsHeader = new Uint8Array(xhr.response, 0, 3);
-                    if (ddsHeader[0] == 68 && ddsHeader[1] == 68 && ddsHeader[2] == 83) {
+                    if (ddsHeader[0] == 68 && ddsHeader[1] == 68 && ddsHeader[2] == 83)
+                    {
                         return true;
-                    } else {
+                    }
+                    else
+                    {
                         return false;
                     }
                 }
-            } catch (Exception e) {}
+            }
+            catch (Exception e) { }
             return false;
+            */
+
+            throw new NotImplementedException();
         }
-        private static double _NoneLogLevel = 0;
-        private static double _MessageLogLevel = 1;
-        private static double _WarningLogLevel = 2;
-        private static double _ErrorLogLevel = 4;
-        static double NoneLogLevel {
-            get {
+        private static int _NoneLogLevel = 0;
+        private static int _MessageLogLevel = 1;
+        private static int _WarningLogLevel = 2;
+        private static int _ErrorLogLevel = 4;
+        static int NoneLogLevel
+        {
+            get
+            {
                 return Tools._NoneLogLevel;
             }
         }
-        static double MessageLogLevel {
-            get {
+        static int MessageLogLevel
+        {
+            get
+            {
                 return Tools._MessageLogLevel;
             }
         }
-        static double WarningLogLevel {
-            get {
+        static int WarningLogLevel
+        {
+            get
+            {
                 return Tools._WarningLogLevel;
             }
         }
-        static double ErrorLogLevel {
-            get {
+        static int ErrorLogLevel
+        {
+            get
+            {
                 return Tools._ErrorLogLevel;
             }
         }
-        static double AllLogLevel {
-            get {
+        static int AllLogLevel
+        {
+            get
+            {
                 return Tools._MessageLogLevel | Tools._WarningLogLevel | Tools._ErrorLogLevel;
             }
         }
-        private static string _FormatMessage(string message) {
-            var padStr = (i) => ((i < 10)) ? "0" + i : "" + i;
+        private static string _FormatMessage(string message)
+        {
+            Func<int, string> padStr = (i) => ((i < 10)) ? "0" + i : "" + i;
             var date = new Date();
             return "BJS - [" + padStr(date.getHours()) + ":" + padStr(date.getMinutes()) + ":" + padStr(date.getSeconds()) + "]: " + message;
         }
-        public static System.Action < string > Log = Tools._LogEnabled;
-        private static void _LogDisabled(string message) {}
-        private static void _LogEnabled(string message) {
+        public static System.Action<string> Log = Tools._LogEnabled;
+        private static void _LogDisabled(string message) { }
+        private static void _LogEnabled(string message)
+        {
             console.log(Tools._FormatMessage(message));
         }
-        public static System.Action < string > Warn = Tools._WarnEnabled;
-        private static void _WarnDisabled(string message) {}
-        private static void _WarnEnabled(string message) {
+        public static System.Action<string> Warn = Tools._WarnEnabled;
+        private static void _WarnDisabled(string message) { }
+        private static void _WarnEnabled(string message)
+        {
             console.warn(Tools._FormatMessage(message));
         }
-        public static System.Action < string > Error = Tools._ErrorEnabled;
-        private static void _ErrorDisabled(string message) {}
-        private static void _ErrorEnabled(string message) {
+        public static System.Action<string> Error = Tools._ErrorEnabled;
+        private static void _ErrorDisabled(string message) { }
+        private static void _ErrorEnabled(string message)
+        {
             console.error(Tools._FormatMessage(message));
         }
-        public static dynamic LogLevels {
-            set {
-                if ((level & Tools.MessageLogLevel) == Tools.MessageLogLevel) {
+        public static int LogLevels
+        {
+            set
+            {
+                if ((value & Tools.MessageLogLevel) == Tools.MessageLogLevel)
+                {
                     Tools.Log = Tools._LogEnabled;
-                } else {
+                }
+                else
+                {
                     Tools.Log = Tools._LogDisabled;
                 }
-                if ((level & Tools.WarningLogLevel) == Tools.WarningLogLevel) {
+                if ((value & Tools.WarningLogLevel) == Tools.WarningLogLevel)
+                {
                     Tools.Warn = Tools._WarnEnabled;
-                } else {
+                }
+                else
+                {
                     Tools.Warn = Tools._WarnDisabled;
                 }
-                if ((level & Tools.ErrorLogLevel) == Tools.ErrorLogLevel) {
+                if ((value & Tools.ErrorLogLevel) == Tools.ErrorLogLevel)
+                {
                     Tools.Error = Tools._ErrorEnabled;
-                } else {
+                }
+                else
+                {
                     Tools.Error = Tools._ErrorDisabled;
                 }
             }

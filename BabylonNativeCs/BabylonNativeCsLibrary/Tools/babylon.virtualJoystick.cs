@@ -192,11 +192,11 @@ namespace BABYLON {
                 this._deltaJoystickVector.x = 0;
                 this._deltaJoystickVector.y = 0;
                 this.pressed = true;
-                this._touches.add(e.pointerId.toString(), e);
+                this._touches.add(e.pointerId.ToString(), e);
             } else {
                 if (VirtualJoystick._globalJoystickIndex < 2 && this._action) {
                     this._action();
-                    this._touches.add(e.pointerId.toString(), e);
+                    this._touches.add(e.pointerId.ToString(), e);
                 }
             }
         }
@@ -233,9 +233,9 @@ namespace BABYLON {
                         break;
                 }
             } else {
-                if (this._touches.item(e.pointerId.toString())) {
-                    this._touches.item(e.pointerId.toString()).x = e.clientX;
-                    this._touches.item(e.pointerId.toString()).y = e.clientY;
+                if (this._touches.item(e.pointerId.ToString())) {
+                    this._touches.item(e.pointerId.ToString()).x = e.clientX;
+                    this._touches.item(e.pointerId.ToString()).y = e.clientY;
                 }
             }
         }
@@ -247,7 +247,7 @@ namespace BABYLON {
             }
             this._deltaJoystickVector.x = 0;
             this._deltaJoystickVector.y = 0;
-            this._touches.remove(e.pointerId.toString());
+            this._touches.remove(e.pointerId.ToString());
         }
         public virtual void setJoystickColor(string newColor) {
             this._joystickColor = newColor;

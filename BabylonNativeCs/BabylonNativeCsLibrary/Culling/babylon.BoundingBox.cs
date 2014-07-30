@@ -84,8 +84,8 @@ namespace BABYLON {
             return this._worldMatrix;
         }
         public virtual void _update(Matrix world) {
-            Vector3.FromFloatsToRef(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE, this.minimumWorld);
-            Vector3.FromFloatsToRef(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE, this.maximumWorld);
+            Vector3.FromFloatsToRef(double.MaxValue, double.MaxValue, double.MaxValue, this.minimumWorld);
+            Vector3.FromFloatsToRef(-double.MaxValue, -double.MaxValue, -double.MaxValue, this.maximumWorld);
             for (var index = 0; index < this.vectors.Length; index++) {
                 var v = this.vectorsWorld[index];
                 BABYLON.Vector3.TransformCoordinatesToRef(this.vectors[index], world, v);

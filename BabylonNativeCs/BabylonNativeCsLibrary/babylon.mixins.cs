@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
+
+/*
 public partial interface Window {
     object mozIndexedDB(object func);
     object webkitIndexedDB(object func);
@@ -157,3 +159,4 @@ public partial interface MouseEvent {
         get;
     }
 }
+*/
