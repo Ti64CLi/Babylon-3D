@@ -6,9 +6,9 @@ using Web;
 namespace BABYLON {
     public partial class SmartArray < T > {
         public Array < T > data;
-        public double Length = 0;
-        private double _id;
-        private double _duplicateId = 0;
+        public int Length = 0;
+        private int _id;
+        private int _duplicateId = 0;
         public SmartArray(double capacity) {
             this.data = new Array(capacity);
             this._id = SmartArray._GlobalId++;

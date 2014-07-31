@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
     public partial class Action {
-        public double trigger;
+        public int trigger;
         public ActionManager _actionManager;
         private Action _nextActiveAction;
         private Action _child;

@@ -14,6 +14,7 @@ namespace BABYLON {
         private Array < string > _samplers;
         private bool _isReady = false;
         private string _compilationError = "";
+        private Array < VertexBufferKind > _attributes;
         private Array < string > _attributesNames;
         private Array < int > _attributes;
         private Array < WebGLUniformLocation > _uniforms;
@@ -666,6 +667,9 @@ namespace BABYLON {
         }
         public virtual Array < string > getAttributesNames() {
             return this._attributesNames;
+        }
+        public virtual Array < VertexBufferKind > getAttributes() {
+            return this._attributes;
         }
         public virtual int getAttributeLocation(double index) {
             return this._attributes[index];

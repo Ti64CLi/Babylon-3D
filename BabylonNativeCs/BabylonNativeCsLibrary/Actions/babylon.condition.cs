@@ -26,22 +26,22 @@ namespace BABYLON {
         private static double _IsDifferent = 1;
         private static double _IsGreater = 2;
         private static double _IsLesser = 3;
-        public static double IsEqual {
+        public static int IsEqual {
             get {
                 return ValueCondition._IsEqual;
             }
         }
-        public static double IsDifferent {
+        public static int IsDifferent {
             get {
                 return ValueCondition._IsDifferent;
             }
         }
-        public static double IsGreater {
+        public static int IsGreater {
             get {
                 return ValueCondition._IsGreater;
             }
         }
-        public static double IsLesser {
+        public static int IsLesser {
             get {
                 return ValueCondition._IsLesser;
             }

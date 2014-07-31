@@ -15,7 +15,7 @@ namespace BABYLON {
         public System.Action < Effect > onCompiled;
         public System.Action < Effect, string > onError;
         public System.Action onDispose;
-        public System.Func getRenderTargetTextures;
+        public System.Func<SmartArray<RenderTargetTexture>> getRenderTargetTextures;
         public Effect _effect;
         public bool _wasPreviouslyReady = false;
         private Scene _scene;

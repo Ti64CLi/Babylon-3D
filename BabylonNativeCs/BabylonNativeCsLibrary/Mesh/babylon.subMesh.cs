@@ -17,12 +17,12 @@ namespace BABYLON
         public Matrix _lastColliderTransformMatrix;
         public double _renderId = 0;
         public double _distanceToCamera;
-        public double _id;
-        public double materialIndex;
-        public double verticesStart;
-        public double verticesCount;
-        public dynamic indexStart;
-        public double indexCount;
+        public int _id;
+        public int materialIndex;
+        public int verticesStart;
+        public int verticesCount;
+        public int indexStart;
+        public int indexCount;
         public SubMesh(double materialIndex, double verticesStart, double verticesCount, object indexStart, double indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
         {
             this._mesh = mesh;

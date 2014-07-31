@@ -85,11 +85,11 @@ namespace BABYLON
 
             return result;
         }
-        public static double ToDegrees(double angle)
+        public static int ToDegrees(double angle)
         {
             return angle * 180 / Math.PI;
         }
-        public static double ToRadians(double angle)
+        public static int ToRadians(double angle)
         {
             return angle * Math.PI / 180;
         }
@@ -391,7 +391,7 @@ namespace BABYLON
                 catch (Exception e) { }
             }
         }
-        public static double GetFps()
+        public static int GetFps()
         {
             return fps;
         }

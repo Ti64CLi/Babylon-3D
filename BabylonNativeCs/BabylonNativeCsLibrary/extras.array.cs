@@ -6,6 +6,10 @@
 
     using Web;
 
+    public class Map<K, V> : Dictionary<K, V>
+    {        
+    }
+
     public class Array<T> : IEnumerable<T>
     {
         public Array()

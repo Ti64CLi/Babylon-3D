@@ -11,17 +11,17 @@ namespace BABYLON {
         const int _FILTER_VARIANCESHADOWMAP = 1;
         private
         const int _FILTER_POISSONSAMPLING = 2;
-        public static double FILTER_NONE {
+        public static int FILTER_NONE {
             get {
                 return ShadowGenerator._FILTER_NONE;
             }
         }
-        public static double FILTER_VARIANCESHADOWMAP {
+        public static int FILTER_VARIANCESHADOWMAP {
             get {
                 return ShadowGenerator._FILTER_VARIANCESHADOWMAP;
             }
         }
-        public static double FILTER_POISSONSAMPLING {
+        public static int FILTER_POISSONSAMPLING {
             get {
                 return ShadowGenerator._FILTER_POISSONSAMPLING;
             }

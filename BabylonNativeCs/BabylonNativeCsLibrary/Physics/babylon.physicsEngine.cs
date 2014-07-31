@@ -80,16 +80,16 @@ namespace BABYLON {
         public virtual bool isSupported() {
             return this._currentPlugin.isSupported();
         }
-        public static double NoImpostor = 0;
-        public static double SphereImpostor = 1;
-        public static double BoxImpostor = 2;
-        public static double PlaneImpostor = 3;
-        public static double CompoundImpostor = 4;
-        public static double MeshImpostor = 4;
-        public static double CapsuleImpostor = 5;
-        public static double ConeImpostor = 6;
-        public static double CylinderImpostor = 7;
-        public static double ConvexHullImpostor = 8;
+        public static int NoImpostor = 0;
+        public static int SphereImpostor = 1;
+        public static int BoxImpostor = 2;
+        public static int PlaneImpostor = 3;
+        public static int CompoundImpostor = 4;
+        public static int MeshImpostor = 4;
+        public static int CapsuleImpostor = 5;
+        public static int ConeImpostor = 6;
+        public static int CylinderImpostor = 7;
+        public static int ConvexHullImpostor = 8;
         public static double Epsilon = 0.001;
     }
 }

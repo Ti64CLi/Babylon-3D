@@ -353,7 +353,7 @@ namespace BABYLON
             var y = start.y + ((end.y - start.y) * amount);
             return new Vector2(x, y);
         }
-        public static double Dot(Vector2 left, Vector2 right)
+        public static int Dot(Vector2 left, Vector2 right)
         {
             return left.x * right.x + left.y * right.y;
         }
@@ -381,11 +381,11 @@ namespace BABYLON
             var y = (vector.x * transformation.m[1]) + (vector.y * transformation.m[5]);
             return new Vector2(x, y);
         }
-        public static double Distance(Vector2 value1, Vector2 value2)
+        public static int Distance(Vector2 value1, Vector2 value2)
         {
             return Math.Sqrt(Vector2.DistanceSquared(value1, value2));
         }
-        public static double DistanceSquared(Vector2 value1, Vector2 value2)
+        public static int DistanceSquared(Vector2 value1, Vector2 value2)
         {
             var x = value1.x - value2.x;
             var y = value1.y - value2.y;
@@ -690,7 +690,7 @@ namespace BABYLON
             var z = start.z + ((end.z - start.z) * amount);
             return new Vector3(x, y, z);
         }
-        public static double Dot(Vector3 left, Vector3 right)
+        public static int Dot(Vector3 left, Vector3 right)
         {
             return (left.x * right.x + left.y * right.y + left.z * right.z);
         }
@@ -753,11 +753,11 @@ namespace BABYLON
             Max.MaximizeInPlace(right);
             return Max;
         }
-        public static double Distance(Vector3 value1, Vector3 value2)
+        public static int Distance(Vector3 value1, Vector3 value2)
         {
             return Math.Sqrt(Vector3.DistanceSquared(value1, value2));
         }
-        public static double DistanceSquared(Vector3 value1, Vector3 value2)
+        public static int DistanceSquared(Vector3 value1, Vector3 value2)
         {
             var x = value1.x - value2.x;
             var y = value1.y - value2.y;

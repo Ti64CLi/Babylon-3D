@@ -95,6 +95,7 @@
     <Compile Include="extras.animation.cs" />
     <Compile Include="extras.array.cs" />
     <Compile Include="extras.date.cs" />
+    <Compile Include="extras.enum.cs" />
     <Compile Include="extras.error.cs" />
     <Compile Include="extras.interfaces.cs" />
     <Compile Include="extras.web.interfaces.cs" />

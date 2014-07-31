@@ -15,8 +15,8 @@ namespace BABYLON
         public const int FOGMODE_EXP = 1;
         public const int FOGMODE_EXP2 = 2;
         public const int FOGMODE_LINEAR = 3;
-        public static double MinDeltaTime = 1.0;
-        public static double MaxDeltaTime = 1000.0;
+        public static int MinDeltaTime = 1.0;
+        public static int MaxDeltaTime = 1000.0;
         public bool autoClear = true;
         public BABYLON.Color3 clearColor = new BABYLON.Color3(0.2, 0.2, 0.3);
         public BABYLON.Color3 ambientColor = new BABYLON.Color3(0, 0, 0);
@@ -27,8 +27,8 @@ namespace BABYLON
         public System.Action<Camera> afterCameraRender;
         public bool forceWireframe = false;
         public Plane clipPlane;
-        private System.Action<PointerEvent> _onPointerMove;
-        private System.Action<PointerEvent> _onPointerDown;
+        private EventListener _onPointerMove;
+        private EventListener _onPointerDown;
         public System.Action<PointerEvent, PickingInfo> onPointerDown;
         public Camera cameraToUseForPointers = null;
         private double _pointerX;
@@ -48,7 +48,7 @@ namespace BABYLON
         private Array<Geometry> _geometries = new Array<Geometry>();
         public Array<Material> materials = new Array<Material>();
         public Array<MultiMaterial> multiMaterials = new Array<MultiMaterial>();
-        public BABYLON.StandardMaterial defaultMaterial = new BABYLON.StandardMaterial("default material", this);
+        public BABYLON.StandardMaterial defaultMaterial;// = new BABYLON.StandardMaterial("default material", this);
         public bool texturesEnabled = true;
         public Array<BaseTexture> textures = new Array<BaseTexture>();
         public bool particlesEnabled = true;
@@ -71,9 +71,9 @@ namespace BABYLON
         public Array<ActionManager> _actionManagers = new Array<ActionManager>();
         private SmartArray<AbstractMesh> _meshesForIntersections = new SmartArray<AbstractMesh>(256);
         private Engine _engine;
-        private double _totalVertices = 0;
-        public double _activeVertices = 0;
-        public double _activeParticles = 0;
+        private int _totalVertices = 0;
+        public int _activeVertices = 0;
+        public int _activeParticles = 0;
         private double _lastFrameDuration = 0;
         private double _evaluateActiveMeshesDuration = 0;
         private double _renderTargetsDuration = 0;
@@ -81,9 +81,9 @@ namespace BABYLON
         private double _renderDuration = 0;
         public double _spritesDuration = 0;
         private double _animationRatio = 0;
-        private double _animationStartDate;
-        private double _renderId = 0;
-        private double _executeWhenReadyTimeoutId = -1;
+        private int? _animationStartDate;
+        private int _renderId = 0;
+        private int _executeWhenReadyTimeoutId = -1;
         public SmartArray<IDisposable> _toBeDisposed = new SmartArray<IDisposable>(256);
         private Array<System.Action> _onReadyCallbacks = new Array<System.Action>();
         private Array<object> _pendingData = new Array<object>();
@@ -106,8 +106,13 @@ namespace BABYLON
         private Array<Plane> _frustumPlanes;
         private Octree<AbstractMesh> _selectionOctree;
         private AbstractMesh _pointerOverMesh;
+
+        private Web.Window window;
+
         public Scene(Engine engine)
         {
+            defaultMaterial = new BABYLON.StandardMaterial("default material", this);
+
             this._engine = engine;
             engine.scenes.push(this);
             this._renderingManager = new RenderingManager(this);
@@ -198,7 +203,7 @@ namespace BABYLON
             var canvasRect = this._engine.getRenderingCanvasClientRect();
             this._pointerX = evt.clientX - canvasRect.left;
             this._pointerY = evt.clientY - canvasRect.top;
-            if (this.cameraToUseForPointers)
+            if (this.cameraToUseForPointers != null)
             {
                 this._pointerX = this._pointerX - this.cameraToUseForPointers.viewport.x * this._engine.getRenderWidth();
                 this._pointerY = this._pointerY - this.cameraToUseForPointers.viewport.y * this._engine.getRenderHeight();
@@ -206,11 +211,16 @@ namespace BABYLON
         }
         public virtual void attachControl()
         {
-            this._onPointerMove = (PointerEvent evt) =>
+            this._onPointerMove = (Event evt) =>
             {
                 var canvas = this._engine.getRenderingCanvas();
-                this._updatePointerPosition(evt);
-                var pickResult = this.pick(this._pointerX, this._pointerY, (AbstractMesh mesh) => mesh.isPickable && mesh.isVisible && mesh.isReady() && mesh.actionManager && mesh.actionManager.hasPointerTriggers, false, this.cameraToUseForPointers);
+                this._updatePointerPosition((PointerEvent)evt);
+                var pickResult = this.pick(
+                    this._pointerX,
+                    this._pointerY,
+                    (AbstractMesh mesh) => mesh.isPickable && mesh.isVisible && mesh.isReady() && mesh.actionManager != null && mesh.actionManager.hasPointerTriggers,
+                    false,
+                    this.cameraToUseForPointers);
                 if (pickResult.hit)
                 {
                     this.setPointerOverMesh(pickResult.pickedMesh);
@@ -224,23 +234,23 @@ namespace BABYLON
                     this._meshUnderPointer = null;
                 }
             };
-            this._onPointerDown = (PointerEvent evt) =>
+            this._onPointerDown = (Event evt) =>
             {
-                var predicate = null;
-                if (!this.onPointerDown)
+                System.Func<AbstractMesh, bool> predicate = null;
+                if (this.onPointerDown == null)
                 {
                     predicate = (AbstractMesh mesh) =>
                     {
-                        return mesh.isPickable && mesh.isVisible && mesh.isReady() && mesh.actionManager && mesh.actionManager.hasPickTriggers;
+                        return mesh.isPickable && mesh.isVisible && mesh.isReady() && mesh.actionManager != null && mesh.actionManager.hasPickTriggers;
                     };
                 }
-                this._updatePointerPosition(evt);
+                this._updatePointerPosition((PointerEvent)evt);
                 var pickResult = this.pick(this._pointerX, this._pointerY, predicate, false, this.cameraToUseForPointers);
                 if (pickResult.hit)
                 {
-                    if (pickResult.pickedMesh.actionManager)
+                    if (pickResult.pickedMesh.actionManager != null)
                     {
-                        switch (evt.button)
+                        switch (((PointerEvent)evt).button)
                         {
                             case 0:
                                 pickResult.pickedMesh.actionManager.processTrigger(BABYLON.ActionManager.OnLeftPickTrigger, ActionEvent.CreateNew(pickResult.pickedMesh));
@@ -255,9 +265,9 @@ namespace BABYLON
                         pickResult.pickedMesh.actionManager.processTrigger(BABYLON.ActionManager.OnPickTrigger, ActionEvent.CreateNew(pickResult.pickedMesh));
                     }
                 }
-                if (this.onPointerDown)
+                if (this.onPointerDown != null)
                 {
-                    this.onPointerDown(evt, pickResult);
+                    this.onPointerDown((PointerEvent)evt, pickResult);
                 }
             };
             var eventPrefix = Tools.GetPointerPrefix();
@@ -284,7 +294,7 @@ namespace BABYLON
                     return false;
                 }
             }
-            for (index = 0; index < this.meshes.Length; index++)
+            for (var index = 0; index < this.meshes.Length; index++)
             {
                 var mesh = this.meshes[index];
                 if (!mesh.isReady())
@@ -292,7 +302,7 @@ namespace BABYLON
                     return false;
                 }
                 var mat = mesh.material;
-                if (mat)
+                if (mat != null)
                 {
                     if (!mat.isReady(mesh))
                     {
@@ -337,10 +347,11 @@ namespace BABYLON
             {
                 return;
             }
-            this._executeWhenReadyTimeoutId = setTimeout(() =>
-            {
-                this._checkIsReady();
-            }, 150);
+            ////this._executeWhenReadyTimeoutId = window.setTimeout((time) =>
+            ////{
+            ////    this._checkIsReady();
+            ////}, 150);
+            this._checkIsReady();
         }
         public virtual void _checkIsReady()
         {
@@ -350,14 +361,15 @@ namespace BABYLON
                 {
                     func();
                 });
-                this._onReadyCallbacks = new Array<object>();
+                this._onReadyCallbacks = new Array<System.Action>();
                 this._executeWhenReadyTimeoutId = -1;
                 return;
             }
-            this._executeWhenReadyTimeoutId = setTimeout(() =>
-            {
-                this._checkIsReady();
-            }, 150);
+            ////this._executeWhenReadyTimeoutId = setTimeout(() =>
+            ////{
+            ////    this._checkIsReady();
+            ////}, 150);
+            this._checkIsReady();
         }
         public virtual Animatable beginAnimation(IAnimatableTarget target, double from, double to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null)
         {
@@ -366,7 +378,7 @@ namespace BABYLON
                 speedRatio = 1.0;
             }
             this.stopAnimation(target);
-            if (!animatable)
+            if (animatable == null)
             {
                 animatable = new Animatable(this, target, from, to, loop, speedRatio, onAnimationEnd);
             }
@@ -407,19 +419,19 @@ namespace BABYLON
         public virtual void stopAnimation(object target)
         {
             var animatable = this.getAnimatableByTarget(target);
-            if (animatable)
+            if (animatable != null)
             {
                 animatable.stop();
             }
         }
         private void _animate()
         {
-            if (!this._animationStartDate)
+            if (!this._animationStartDate.HasValue)
             {
                 this._animationStartDate = new Date().getTime();
             }
             var now = new Date().getTime();
-            var delay = now - this._animationStartDate;
+            var delay = now - this._animationStartDate.Value;
             for (var index = 0; index < this._activeAnimatables.Length; index++)
             {
                 if (!this._activeAnimatables[index]._animate(delay))
@@ -450,7 +462,7 @@ namespace BABYLON
         public virtual Camera setActiveCameraByID(string id)
         {
             var camera = this.getCameraByID(id);
-            if (camera)
+            if (camera != null)
             {
                 this.activeCamera = camera;
                 return camera;
@@ -460,7 +472,7 @@ namespace BABYLON
         public virtual Camera setActiveCameraByName(string name)
         {
             var camera = this.getCameraByName(name);
-            if (camera)
+            if (camera != null)
             {
                 this.activeCamera = camera;
                 return camera;
@@ -546,7 +558,7 @@ namespace BABYLON
         }
         public virtual bool pushGeometry(Geometry geometry, bool force = false)
         {
-            if (!force && this.getGeometryByID(geometry.id))
+            if (!force && this.getGeometryByID(geometry.id)  != null)
             {
                 return false;
             }
@@ -588,14 +600,14 @@ namespace BABYLON
                     return this.meshes[index];
                 }
             }
-            for (index = this.cameras.Length - 1; index >= 0; index--)
+            for (var index = this.cameras.Length - 1; index >= 0; index--)
             {
                 if (this.cameras[index].id == id)
                 {
                     return this.cameras[index];
                 }
             }
-            for (index = this.lights.Length - 1; index >= 0; index--)
+            for (var index = this.lights.Length - 1; index >= 0; index--)
             {
                 if (this.lights[index].id == id)
                 {
@@ -661,9 +673,9 @@ namespace BABYLON
                 {
                     this._boundingBoxRenderer.renderList.push(subMesh.getBoundingInfo().boundingBox);
                 }
-                if (material)
+                if (material != null)
                 {
-                    if (material.getRenderTargetTextures)
+                    if (material.getRenderTargetTextures != null)
                     {
                         if (this._processedMaterials.indexOf(material) == -1)
                         {
@@ -684,7 +696,7 @@ namespace BABYLON
             this._activeParticleSystems.reset();
             this._activeSkeletons.reset();
             this._boundingBoxRenderer.reset();
-            if (!this._frustumPlanes)
+            if (this._frustumPlanes == null)
             {
                 this._frustumPlanes = BABYLON.Frustum.GetPlanes(this._transformMatrix);
             }
@@ -692,9 +704,9 @@ namespace BABYLON
             {
                 BABYLON.Frustum.GetPlanesToRef(this._transformMatrix, this._frustumPlanes);
             }
-            var meshes;
-            var len;
-            if (this._selectionOctree)
+            Array<AbstractMesh> meshes;
+            int len;
+            if (this._selectionOctree != null)
             {
                 var selection = this._selectionOctree.select(this._frustumPlanes);
                 meshes = selection.data;
@@ -715,7 +727,7 @@ namespace BABYLON
                 }
                 mesh.computeWorldMatrix();
                 mesh._preActivate();
-                if (mesh.actionManager && mesh.actionManager.hasSpecificTriggers(new Array<object>(ActionManager.OnIntersectionEnterTrigger, ActionManager.OnIntersectionExitTrigger)))
+                if (mesh.actionManager != null && mesh.actionManager.hasSpecificTriggers(new Array<int>(ActionManager.OnIntersectionEnterTrigger, ActionManager.OnIntersectionExitTrigger)))
                 {
                     this._meshesForIntersections.pushNoDuplicate(mesh);
                 }
@@ -736,7 +748,7 @@ namespace BABYLON
                     {
                         continue;
                     }
-                    if (!particleSystem.emitter.position || (particleSystem.emitter && particleSystem.emitter.isEnabled()))
+                    if (particleSystem.emitter.position == null || (particleSystem.emitter != null && particleSystem.emitter.isEnabled()))
                     {
                         this._activeParticleSystems.push(particleSystem);
                         particleSystem.animate();
@@ -747,7 +759,7 @@ namespace BABYLON
         }
         private void _activeMesh(AbstractMesh mesh)
         {
-            if (mesh.skeleton)
+            if (mesh.skeleton != null)
             {
                 this._activeSkeletons.pushNoDuplicate(mesh.skeleton);
             }
@@ -755,11 +767,11 @@ namespace BABYLON
             {
                 this._boundingBoxRenderer.renderList.push(mesh.getBoundingInfo().boundingBox);
             }
-            if (mesh.subMeshes)
+            if (mesh.subMeshes != null)
             {
-                var len;
-                var subMeshes;
-                if (mesh._submeshesOctree && mesh.useOctreeForRenderingSelection)
+                int len;
+                Array<SubMesh> subMeshes;
+                if (mesh._submeshesOctree != null && mesh.useOctreeForRenderingSelection)
                 {
                     var intersections = mesh._submeshesOctree.select(this._frustumPlanes);
                     len = intersections.Length;
@@ -785,12 +797,12 @@ namespace BABYLON
         {
             var engine = this._engine;
             this.activeCamera = camera;
-            if (!this.activeCamera)
+            if (this.activeCamera == null)
                 throw new Error("Active camera not set");
             engine.setViewport(this.activeCamera.viewport);
             this._renderId++;
             this.updateTransformMatrix();
-            if (this.beforeCameraRender)
+            if (this.beforeCameraRender != null)
             {
                 this.beforeCameraRender(this.activeCamera);
             }
@@ -812,7 +824,7 @@ namespace BABYLON
             {
                 for (var renderIndex = 0; renderIndex < this._renderTargets.Length; renderIndex++)
                 {
-                    renderTarget = this._renderTargets.data[renderIndex];
+                    var renderTarget = this._renderTargets.data[renderIndex];
                     if (renderTarget._shouldRender())
                     {
                         this._renderId++;
@@ -828,11 +840,11 @@ namespace BABYLON
             this._renderTargetsDuration = new Date().getTime() - beforeRenderTargetDate;
             this.postProcessManager._prepareFrame();
             var beforeRenderDate = new Date().getTime();
-            if (this.layers.Length)
+            if (this.layers.Length > 0)
             {
                 engine.setDepthBuffer(false);
-                var layerIndex;
-                var layer;
+                int layerIndex;
+                Layer layer;
                 for (layerIndex = 0; layerIndex < this.layers.Length; layerIndex++)
                 {
                     layer = this.layers[layerIndex];
@@ -849,12 +861,12 @@ namespace BABYLON
             {
                 this.lensFlareSystems[lensFlareSystemIndex].render();
             }
-            if (this.layers.Length)
+            if (this.layers.Length > 0)
             {
                 engine.setDepthBuffer(false);
-                for (layerIndex = 0; layerIndex < this.layers.Length; layerIndex++)
+                for (var layerIndex = 0; layerIndex < this.layers.Length; layerIndex++)
                 {
-                    layer = this.layers[layerIndex];
+                    var layer = this.layers[layerIndex];
                     if (!layer.isBackground)
                     {
                         layer.render();
@@ -866,7 +878,7 @@ namespace BABYLON
             this.postProcessManager._finalizeFrame(camera.isIntermediate);
             this.activeCamera._updateFromScene();
             this._renderTargets.reset();
-            if (this.afterCameraRender)
+            if (this.afterCameraRender != null)
             {
                 this.afterCameraRender(this.activeCamera);
             }

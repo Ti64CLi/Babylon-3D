@@ -17350,7 +17350,7 @@ namespace Web
         Array<string> getSupportedExtensions();
         void bufferSubData(int target, int offset, ArrayBuffer data);
         void bufferSubData(int target, int offset, ArrayBufferView data);
-        void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset);
+        void vertexAttribPointer(int indx, VertexBufferKind size, int type, bool normalized, int stride, int offset);
         void polygonOffset(int factor, int units);
         void blendColor(int red, int green, int blue, int alpha);
         WebGLTexture createTexture();
@@ -19339,3 +19339,11 @@ namespace Intl
         ResolvedDateTimeFormatOptions resolvedOptions();
     }
 }
+
+//const int VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE = 0x88FE;
+interface ANGLE_instanced_arrays
+{
+    void drawArraysInstancedANGLE(int mode, int first, int count, int primcount);
+    void drawElementsInstancedANGLE(int mode, int count, int type, IntPtr offset, int primcount);
+    void vertexAttribDivisorANGLE(uint index, uint divisor);
+};

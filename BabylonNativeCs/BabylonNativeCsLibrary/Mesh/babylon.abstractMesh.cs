@@ -15,27 +15,27 @@ namespace BABYLON {
         const int _BILLBOARDMODE_Z = 4;
         private
         const int _BILLBOARDMODE_ALL = 7;
-        public static double BILLBOARDMODE_NONE {
+        public static int BILLBOARDMODE_NONE {
             get {
                 return AbstractMesh._BILLBOARDMODE_NONE;
             }
         }
-        public static double BILLBOARDMODE_X {
+        public static int BILLBOARDMODE_X {
             get {
                 return AbstractMesh._BILLBOARDMODE_X;
             }
         }
-        public static double BILLBOARDMODE_Y {
+        public static int BILLBOARDMODE_Y {
             get {
                 return AbstractMesh._BILLBOARDMODE_Y;
             }
         }
-        public static double BILLBOARDMODE_Z {
+        public static int BILLBOARDMODE_Z {
             get {
                 return AbstractMesh._BILLBOARDMODE_Z;
             }
         }
-        public static double BILLBOARDMODE_ALL {
+        public static int BILLBOARDMODE_ALL {
             get {
                 return AbstractMesh._BILLBOARDMODE_ALL;
             }
@@ -51,7 +51,7 @@ namespace BABYLON {
         public bool isPickable = true;
         public bool showBoundingBox = false;
         public bool showSubMeshesBoundingBox = false;
-        public any onDispose = null;
+        public object onDispose = null;
         public bool checkCollisions = false;
         public Skeleton skeleton;
         public double renderingGroupId = 0;
@@ -61,8 +61,8 @@ namespace BABYLON {
         public bool useOctreeForRenderingSelection = true;
         public bool useOctreeForPicking = true;
         public bool useOctreeForCollisions = true;
-        public double layerMask = 0xFFFFFFFF;
-        public double _physicImpostor = PhysicsEngine.NoImpostor;
+        public uint layerMask = 0xFFFFFFFF;
+        public int _physicImpostor = PhysicsEngine.NoImpostor;
         public double _physicsMass;
         public double _physicsFriction;
         public double _physicRestitution;
@@ -96,7 +96,7 @@ namespace BABYLON {
         public AbstractMesh(string name, Scene scene): base(name, scene) {
             scene.meshes.push(this);
         };
-        public virtual double getTotalVertices() {
+        public virtual int getTotalVertices() {
             return 0;
         }
         public virtual Array < double > getIndices() {

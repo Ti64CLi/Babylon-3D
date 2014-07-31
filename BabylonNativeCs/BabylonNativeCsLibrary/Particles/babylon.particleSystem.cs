@@ -5,13 +5,11 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
     public partial class ParticleSystem: IDisposable {
-        public
-        const int BLENDMODE_ONEONE = 0;
-        public
-        const int BLENDMODE_STANDARD = 1;
+        public const int BLENDMODE_ONEONE = 0;
+        public const int BLENDMODE_STANDARD = 1;
         public string id;
         public double renderingGroupId = 0;
-        public any emitter = null;
+        public Mesh emitter = null;
         public double emitRate = 10;
         public double manualEmitCount = -1;
         public double updateSpeed = 0.01;

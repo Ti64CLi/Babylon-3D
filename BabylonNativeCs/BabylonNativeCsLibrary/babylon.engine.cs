@@ -16,7 +16,7 @@ namespace BABYLON
         public bool textureFloat;
         public EXT_texture_filter_anisotropic textureAnisotropicFilterExtension;
         public int maxAnisotropy;
-        public object instancedArrays;
+        public ANGLE_instanced_arrays instancedArrays;
     }
     public partial class Engine
     {
@@ -83,8 +83,8 @@ namespace BABYLON
                 return "1.13.0";
             }
         }
-        public static double Epsilon = 0.001;
-        public static double CollisionsEpsilon = 0.001;
+        public static int Epsilon = 0.001;
+        public static int CollisionsEpsilon = 0.001;
         public static string ShadersRepository = "Babylon/Shaders/";
         public bool isFullscreen = false;
         public bool isPointerLock = false;
@@ -109,7 +109,7 @@ namespace BABYLON
         public Array<BaseTexture> _activeTexturesCache = new Array<BaseTexture>();
         private Effect _currentEffect;
         private bool _cullingState;
-        private Array<Effect> _compiledEffects = new Array<Effect>();
+        private Map<string, Effect> _compiledEffects = new Map<string, Effect>();
         private Array<bool> _vertexAttribArrays;
         private bool _depthMask = false;
         private Viewport _cachedViewport;
@@ -167,7 +167,7 @@ namespace BABYLON
             this._caps.textureFloat = (this._gl.getExtension("OES_texture_float") != null);
             this._caps.textureAnisotropicFilterExtension = (EXT_texture_filter_anisotropic)(this._gl.getExtension("EXT_texture_filter_anisotropic") ?? this._gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ?? this._gl.getExtension("MOZ_EXT_texture_filter_anisotropic"));
             this._caps.maxAnisotropy = (int)((this._caps.textureAnisotropicFilterExtension != null) ? this._gl.getParameter(this._caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0);
-            this._caps.instancedArrays = this._gl.getExtension("ANGLE_instanced_arrays");
+            this._caps.instancedArrays = (ANGLE_instanced_arrays)this._gl.getExtension("ANGLE_instanced_arrays");
             this.setDepthBuffer(true);
             this.setDepthFunctionToLessOrEqual();
             this.setDepthWrite(true);
@@ -555,7 +555,7 @@ namespace BABYLON
             vbo.references = 1;
             return vbo;
         }
-        public virtual void bindBuffers(WebGLBuffer vertexBuffer, WebGLBuffer indexBuffer, Array<double> vertexDeclaration, double vertexStrideSize, Effect effect)
+        public virtual void bindBuffers(WebGLBuffer vertexBuffer, WebGLBuffer indexBuffer, Array<VertexBufferKind> vertexDeclaration, int vertexStrideSize, Effect effect)
         {
             if (this._cachedVertexBuffers != vertexBuffer || this._cachedEffectForVertexBuffers != effect)
             {
@@ -570,7 +570,7 @@ namespace BABYLON
                     {
                         this._gl.vertexAttribPointer(order, vertexDeclaration[index], this._gl.FLOAT, false, vertexStrideSize, offset);
                     }
-                    offset += vertexDeclaration[index] * 4;
+                    offset += (int)vertexDeclaration[index] * 4;
                 }
             }
             if (this._cachedIndexBuffer != indexBuffer)
@@ -585,7 +585,7 @@ namespace BABYLON
             {
                 this._cachedVertexBuffers = vertexBuffers;
                 this._cachedEffectForVertexBuffers = effect;
-                var attributes = effect.getAttributesNames();
+                var attributes = effect.getAttributes();
                 for (var index = 0; index < attributes.Length; index++)
                 {
                     var order = effect.getAttributeLocation(index);
@@ -638,8 +638,8 @@ namespace BABYLON
             {
                 var offsetLocation = offsetLocations[index];
                 this._gl.enableVertexAttribArray(offsetLocation);
-                this._gl.vertexAttribPointer(offsetLocation, 4, this._gl.FLOAT, false, 64, index * 16);
-                this._caps.instancedArrays.vertexAttribDivisorANGLE(offsetLocation, 1);
+                this._gl.vertexAttribPointer(offsetLocation, VertexBufferKind.UV2Kind, this._gl.FLOAT, false, 64, index * 16);
+                this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 1);
             }
         }
         public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<int> offsetLocations)
@@ -649,21 +649,22 @@ namespace BABYLON
             {
                 var offsetLocation = offsetLocations[index];
                 this._gl.disableVertexAttribArray(offsetLocation);
-                this._caps.instancedArrays.vertexAttribDivisorANGLE(offsetLocation, 0);
+                this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 0);
             }
         }
         public virtual void draw(bool useTriangles, int indexStart, int indexCount, int instancesCount = 0)
         {
             if (instancesCount > 0)
             {
-                this._caps.instancedArrays.drawElementsInstancedANGLE((useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, indexStart * 2, instancesCount);
+                this._caps.instancedArrays.drawElementsInstancedANGLE(
+                    (useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, new IntPtr(indexStart * 2), instancesCount);
                 return;
             }
             this._gl.drawElements((useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, indexStart * 2);
         }
         public virtual void _releaseEffect(Effect effect)
         {
-            if (this._compiledEffects[effect._key])
+            if (this._compiledEffects[effect._key] != null)
             {
                 this._compiledEffects[effect._key] = null;
                 if (effect.getProgram() != null)
