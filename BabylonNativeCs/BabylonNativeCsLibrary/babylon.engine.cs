@@ -83,8 +83,8 @@ namespace BABYLON
                 return "1.13.0";
             }
         }
-        public static int Epsilon = 0.001;
-        public static int CollisionsEpsilon = 0.001;
+        public static double Epsilon = 0.001;
+        public static double CollisionsEpsilon = 0.001;
         public static string ShadersRepository = "Babylon/Shaders/";
         public bool isFullscreen = false;
         public bool isPointerLock = false;
@@ -275,7 +275,7 @@ namespace BABYLON
                 count = max;
             return count;
         }
-        private void prepareWebGLTexture(WebGLTexture texture, WebGLRenderingContext gl, Scene scene, int width, int height, bool invertY, bool noMipmap, bool isCompressed, System.Action<double, double> processFunction, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
+        private void prepareWebGLTexture(WebGLTexture texture, WebGLRenderingContext gl, Scene scene, int width, int height, bool invertY, bool noMipmap, bool isCompressed, System.Action<int, int> processFunction, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
         {
             var engine = scene.getEngine();
             var potWidth = getExponantOfTwo(width, engine.getCaps().maxTextureSize);
@@ -930,7 +930,7 @@ namespace BABYLON
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
             gl.bindTexture(gl.TEXTURE_2D, null);
         }
-        public virtual WebGLTexture createTexture(string url, bool noMipmap, bool invertY, Scene scene, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
+        public virtual WebGLTexture createTexture(string url, bool noMipmap, bool invertY, Scene scene, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
         {
             var texture = this._gl.createTexture();
             var extension = url.Substring(url.Length - 4, 4).ToLower();
