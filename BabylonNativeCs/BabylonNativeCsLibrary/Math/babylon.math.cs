@@ -1616,7 +1616,7 @@ namespace BABYLON
         public int width;
         public int height;
         public Viewport(int x, int y, int width, int height) { }
-        public virtual void toGlobal(object engine)
+        public virtual Viewport toGlobal(object engine)
         {
             var width = engine.getRenderWidth();
             var height = engine.getRenderHeight();

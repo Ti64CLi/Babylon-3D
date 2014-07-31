@@ -53,7 +53,7 @@ namespace BABYLON {
             if (tag == "" || tag == "true" || tag == "false") {
                 return;
             }
-            if (tag.match(new Regex(/[\s]/)) || tag.match(new Regex(/^([!]|([|]|[&]){2})/))) {
+            if (new Regex(@"[\s]").Match(tag).Success || new Regex(@"^([!]|([|]|[&]){2})").Match(tag).Success) {
                 return;
             }
             Tags.EnableFor(obj);
@@ -63,7 +63,7 @@ namespace BABYLON {
             if (!Tags.HasTags(obj)) {
                 return;
             }
-            var tags = tagsString.Split(" ");
+            var tags = tagsString.Split(' ');
             foreach(var t in tags) {
                 Tags._RemoveTagFrom(obj, tags[t]);
             }

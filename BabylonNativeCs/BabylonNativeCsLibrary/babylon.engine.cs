@@ -434,9 +434,23 @@ namespace BABYLON
                 BABYLON.Tools.RequestFullscreen(this._renderingCanvas);
             }
         }
+        public virtual void clear(Color3 color, bool backBuffer, bool depthStencil)
+        {
+            this._gl.clearColor(color.r, color.g, color.b, 1.0);
+            if (this._depthMask)
+            {
+                this._gl.clearDepth(1.0);
+            }
+            var mode = 0;
+            if (backBuffer)
+                mode |= this._gl.COLOR_BUFFER_BIT;
+            if (depthStencil && this._depthMask)
+                mode |= this._gl.DEPTH_BUFFER_BIT;
+            this._gl.clear(mode);
+        }
         public virtual void clear(Color4 color, bool backBuffer, bool depthStencil)
         {
-            this._gl.clearColor(color.r, color.g, color.b, (color.a == 0.0) ? color.a : 1.0);
+            this._gl.clearColor(color.r, color.g, color.b, color.a);
             if (this._depthMask)
             {
                 this._gl.clearDepth(1.0);

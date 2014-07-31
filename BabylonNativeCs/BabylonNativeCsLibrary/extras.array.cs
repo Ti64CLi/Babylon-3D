@@ -17,6 +17,11 @@
             throw new NotImplementedException();
         }
 
+        public Array(int capacity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Array(T item)
         {
             throw new NotImplementedException();
@@ -94,7 +99,12 @@
             }
         }
 
-        public Array<string> concat(Array<string> samplers)
+        public Array<T> concat(Array<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void sort(Func<T, int> compareFn)
         {
             throw new NotImplementedException();
         }
@@ -136,6 +146,11 @@
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public Array<Tout> ToArray<Tout>()
+        {
+            throw new NotImplementedException();
         }
     }
 

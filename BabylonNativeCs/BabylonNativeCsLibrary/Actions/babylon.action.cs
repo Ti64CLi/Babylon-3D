@@ -10,7 +10,7 @@ namespace BABYLON {
         private Action _nextActiveAction;
         private Action _child;
         private Condition _condition;
-        private object _triggerParameter;
+        private AbstractMesh _triggerParameter;
         public object triggerOptions;
         public Action(object triggerOptions, Condition condition = null) {
             if (triggerOptions.parameter) {
@@ -23,7 +23,7 @@ namespace BABYLON {
             this._condition = condition;
         }
         public virtual void _prepare() {}
-        public virtual object getTriggerParameter() {
+        public virtual AbstractMesh getTriggerParameter() {
             return this._triggerParameter;
         }
         public virtual void _executeCurrent(ActionEvent evt) {

@@ -15,13 +15,16 @@ namespace BABYLON {
         }
         void computeBoxExtents(Vector3 axis, BoundingBox box) {
             var p = Vector3.Dot(box.center, axis);
-            var r0 = Math.abs(Vector3.Dot(box.directions[0], axis)) * box.extends.x;
-            var r1 = Math.abs(Vector3.Dot(box.directions[1], axis)) * box.extends.y;
-            var r2 = Math.abs(Vector3.Dot(box.directions[2], axis)) * box.extends.z;
+            var r0 = Math.Abs(Vector3.Dot(box.directions[0], axis)) * box.extends.x;
+            var r1 = Math.Abs(Vector3.Dot(box.directions[1], axis)) * box.extends.y;
+            var r2 = Math.Abs(Vector3.Dot(box.directions[2], axis)) * box.extends.z;
             var r = r0 + r1 + r2;
-            return new {};
+            return new {
+                min = p - r,
+                max = p + r
+            };
         };
-        void extentsOverlap(double min0, double max0, double min1, double max1)!(min0 > max1 || min1 > max0);
+        bool extentsOverlap(double min0, double max0, double min1, double max1){ return !(min0 > max1 || min1 > max0); }
         void axisOverlap(Vector3 axis, BoundingBox box0, BoundingBox box1) {
             var result0 = computeBoxExtents(axis, box0);
             var result1 = computeBoxExtents(axis, box1);

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
     public partial class Gamepads {
-        private Array < Gamepad > babylonGamepads = new Array < object > ();
+        private Array < Gamepad > babylonGamepads = new Array < Gamepad > ();
         private bool oneGamepadConnected = false;
         private bool isMonitoring = false;
         private bool gamepadEventSupported = "GamepadEvent" in window;
@@ -146,7 +146,7 @@ namespace BABYLON {
             var gamepads = (navigator.getGamepads) ? navigator.getGamepads() : ((navigator.webkitGetGamepads) ? navigator.webkitGetGamepads() : new Array < object > ());
             for (var i = 0; i < gamepads.Length; i++) {
                 if (gamepads[i]) {
-                    if (!(gamepads[i].index in this.babylonGamepads)) {
+                    if (!(this.babylonGamepads.Contains(gamepads[i].index))) {
                         var newGamepad = this._addNewGamepad(gamepads[i]);
                         if (this._callbackGamepadConnected) {
                             this._callbackGamepadConnected(newGamepad);

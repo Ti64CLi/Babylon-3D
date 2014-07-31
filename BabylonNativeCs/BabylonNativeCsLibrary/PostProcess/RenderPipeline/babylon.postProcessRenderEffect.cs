@@ -68,7 +68,7 @@ namespace BABYLON {
             return instance;
         }
         private static Array < string > _GetParametersNames(object func) {
-            var commentsRegex = new Regex(/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg);
+            var commentsRegex = new Regex("((\/\/.*$)|(\/\*[\s\S]*?\*\/))", RegexOptions.Multiline);
             var functWithoutComments = func.ToString().replace(commentsRegex, "");
             var parameters = functWithoutComments.slice(functWithoutComments.indexOf("(") + 1, functWithoutComments.indexOf(")")).match(new Regex(/([^\s,]+)/g));
             if (parameters == null)
