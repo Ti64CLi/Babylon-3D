@@ -186,7 +186,7 @@ namespace BABYLON
             url = url.Replace("#", "%23");
             return url;
         }
-        public static HTMLImageElement LoadImage(string url, object onload, object onerror, object database)
+        public static HTMLImageElement LoadImage(string url, Action<HTMLImageElement> onload, Action<HTMLImageElement, object> onerror, object database)
         {
             /*
             url = Tools.CleanUrl(url);
@@ -230,7 +230,7 @@ namespace BABYLON
 
             throw new NotImplementedException();
         }
-        public static void LoadFile(string url, System.Action<object> callback, System.Action progressCallBack = null, object database = null, bool useArrayBuffer = false)
+        public static void LoadFile(string url, System.Action<ArrayBuffer> callback, System.Action progressCallBack = null, object database = null, bool useArrayBuffer = false)
         {
             /*
             url = Tools.CleanUrl(url);

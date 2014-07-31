@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
     public partial class Effect {
-        public object name;
+        public EffectBaseName name;
         public string defines;
         public System.Action < Effect > onCompiled;
         public System.Action < Effect, string > onError;
@@ -15,12 +15,15 @@ namespace BABYLON {
         private bool _isReady = false;
         private string _compilationError = "";
         private Array < string > _attributesNames;
-        private Array < double > _attributes;
+        private Array < int > _attributes;
         private Array < WebGLUniformLocation > _uniforms;
         public string _key;
-        private WebGLProgram _program;
+        public WebGLProgram _program;
         private Array < object > _valueCache = new Array < object > ();
-        public Effect(object baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, object engine, string defines = null, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onError = null) {
+
+        private Web.Document document;
+
+        public Effect(EffectBaseName baseName, Array < string > attributesNames, Array < string > uniformsNames, Array < string > samplers, object engine, string defines = null, Array < string > optionalDefines = null, System.Action < Effect > onCompiled = null, System.Action < Effect, string > onError = null) {
             this._engine = engine;
             this.name = baseName;
             this.defines = defines;
@@ -35,8 +38,8 @@ namespace BABYLON {
                 vertexSource = document.getElementById(baseName.vertexElement);
                 fragmentSource = document.getElementById(baseName.fragmentElement);
             } else {
-                vertexSource = baseName.vertexElement || baseName.vertex || baseName;
-                fragmentSource = baseName.fragmentElement || baseName.fragment || baseName;
+                vertexSource = baseName.vertexElement ?? baseName.vertex ?? baseName.baseName;
+                fragmentSource = baseName.fragmentElement ?? baseName.fragment ?? baseName.baseName;
             }
             this._loadVertexShader(vertexSource, (vertexCode) => {
                 this._loadFragmentShader(fragmentSource, (object fragmentCode) => {
@@ -222,7 +225,7 @@ namespace BABYLON {
             }
             return shadowGenerator;
         };
-        void parseAnimation(parsedAnimation) => {
+        void parseAnimation(parsedAnimation) {
             void animationnew BABYLON.Animation(parsedAnimation.name, parsedAnimation.property, parsedAnimation.framePerSecond, parsedAnimation.dataType, parsedAnimation.loopBehavior);
             void dataTypeparsedAnimation.dataType;
             void keysnew Array < object > ();
@@ -664,7 +667,7 @@ namespace BABYLON {
         public virtual Array < string > getAttributesNames() {
             return this._attributesNames;
         }
-        public virtual double getAttributeLocation(double index) {
+        public virtual int getAttributeLocation(double index) {
             return this._attributes[index];
         }
         public virtual double getAttributeLocationByName(string name) {

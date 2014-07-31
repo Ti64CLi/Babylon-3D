@@ -1611,11 +1611,11 @@ namespace BABYLON
     }
     public partial class Viewport
     {
-        public double x;
-        public double y;
-        public double width;
-        public double height;
-        public Viewport(double x, double y, double width, double height) { }
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public Viewport(int x, int y, int width, int height) { }
         public virtual void toGlobal(object engine)
         {
             var width = engine.getRenderWidth();

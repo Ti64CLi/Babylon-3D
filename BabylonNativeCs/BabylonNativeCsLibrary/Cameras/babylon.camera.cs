@@ -6,9 +6,9 @@ using Web;
 namespace BABYLON {
     public partial class Camera: Node {
         public
-        const double PERSPECTIVE_CAMERA = 0;
+        const int PERSPECTIVE_CAMERA = 0;
         public
-        const double ORTHOGRAPHIC_CAMERA = 1;
+        const int ORTHOGRAPHIC_CAMERA = 1;
         public BABYLON.Vector3 upVector = Vector3.Up();
         public any orthoLeft = null;
         public any orthoRight = null;

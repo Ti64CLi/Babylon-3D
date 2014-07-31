@@ -1,8 +1,12 @@
 ﻿namespace BABYLON
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
-    public class Array<T>
+    using Web;
+
+    public class Array<T> : IEnumerable<T>
     {
         public Array()
         {
@@ -19,12 +23,14 @@
             throw new NotImplementedException();
         }
 
-        public int Length
+        public Array(T item1, T item2, T item3)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
+        }
+
+        public Array(params T[] items)
+        {
+            throw new NotImplementedException();
         }
 
         public void push(T v)
@@ -67,7 +73,7 @@
             throw new NotImplementedException();
         }
 
-        public void forEach(Func<T> func)
+        public void forEach(System.Action<T> func)
         {
             throw new NotImplementedException();
         }
@@ -78,67 +84,170 @@
             {
                 throw new NotImplementedException();
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
-    }
 
-    public class SmartArray<T> : Array<T>
-    {
-        public SmartArray(int reserveSize)
+        public Array<string> concat(Array<string> samplers)
         {
             throw new NotImplementedException();
         }
 
-        public void reset()
+        #region Web Array
+
+        public ArrayBuffer buffer { get; set; }
+
+        public int byteOffset { get; set; }
+
+        public int byteLength { get; set; }
+
+        public int BYTES_PER_ELEMENT { get; set; }
+
+        public int Length { get; set; }
+
+        public T get(int index)
         {
             throw new NotImplementedException();
         }
+
+        public void set(int index, T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void set(Array<T> array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
-    public class Float32Array : SmartArray<float>
+    public class Float32Array : Array<float>, Web.Float32Array
     {
         public Float32Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public Float32Array(Array<float> array)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void set(Web.Float32Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Float32Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Int32Array : SmartArray<int>
+    public class Int32Array : Array<int>, Web.Int32Array
     {
         public Int32Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public void set(Web.Int32Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Int32Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Uint8Array : SmartArray<byte>
+    public class Uint8Array : Array<byte>, Web.Uint8Array
     {
         public Uint8Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public Uint8Array(ArrayBuffer arrayBuffer)
+        {
+        }
+
+        public void set(Web.Uint8Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Uint8Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Int8Array : SmartArray<sbyte>
+    public class Int8Array : Array<sbyte>, Web.Int8Array
     {
         public Int8Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public void set(Web.Int8Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Int8Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Int16Array : SmartArray<short>
+    public class Int16Array : Array<short>, Web.Int16Array
     {
         public Int16Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public void set(Web.Int16Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Int16Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public class Uint16Array : SmartArray<ushort>
+    public class Uint16Array : Array<ushort>, Web.Uint16Array
     {
         public Uint16Array(int reserveSize)
-            : base(reserveSize)
         {
+        }
+
+        public Uint16Array(Array<int> array)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void set(Web.Uint16Array array, int offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Uint16Array subarray(int begin, int end = 0)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,9 +6,9 @@ using Web;
 namespace BABYLON {
     public partial class ParticleSystem: IDisposable {
         public
-        const double BLENDMODE_ONEONE = 0;
+        const int BLENDMODE_ONEONE = 0;
         public
-        const double BLENDMODE_STANDARD = 1;
+        const int BLENDMODE_STANDARD = 1;
         public string id;
         public double renderingGroupId = 0;
         public any emitter = null;

@@ -23,7 +23,7 @@ namespace BABYLON {
         public Vector3 normal;
         public double w;
         public Plane(Vector3 normal, double w) {}
-        const double EPSILON = 1e-5;
+        const int EPSILON = 1e-5;
         public static Plane FromPoints(Vector3 a, Vector3 b, Vector3 c) {
             var v0 = c.subtract(a);
             var v1 = b.subtract(a);

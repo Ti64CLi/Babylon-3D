@@ -6,15 +6,15 @@ using Web;
 namespace BABYLON {
     public partial class AbstractMesh: Node, IDisposable {
         private
-        const double _BILLBOARDMODE_NONE = 0;
+        const int _BILLBOARDMODE_NONE = 0;
         private
-        const double _BILLBOARDMODE_X = 1;
+        const int _BILLBOARDMODE_X = 1;
         private
-        const double _BILLBOARDMODE_Y = 2;
+        const int _BILLBOARDMODE_Y = 2;
         private
-        const double _BILLBOARDMODE_Z = 4;
+        const int _BILLBOARDMODE_Z = 4;
         private
-        const double _BILLBOARDMODE_ALL = 7;
+        const int _BILLBOARDMODE_ALL = 7;
         public static double BILLBOARDMODE_NONE {
             get {
                 return AbstractMesh._BILLBOARDMODE_NONE;

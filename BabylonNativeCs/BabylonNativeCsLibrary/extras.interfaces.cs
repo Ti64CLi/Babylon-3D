@@ -2,7 +2,7 @@
 
 namespace BABYLON
 {
-    interface IAnimatableTarget
+    public interface IAnimatableTarget
     {
         IAnimatableProperty this[string propertyName] { get; set; }
 
@@ -13,14 +13,14 @@ namespace BABYLON
         void markAsDirty(string propertyName);
     }
 
-    interface IAnimatableProperty
+    public interface IAnimatableProperty
     {
         IAnimatableProperty this[string subPropertyName] { get; set; }
 
         object value { get; set; }
     }
 
-    interface ICloneable
+    public interface ICloneable
     {
         object clone();
     }

@@ -8,7 +8,7 @@ namespace Web
 {
     public partial interface ArrayBuffer
     {
-        double byteLength
+        int byteLength
         {
             get;
             set;
@@ -21,12 +21,12 @@ namespace Web
             get;
             set;
         }
-        double byteOffset
+        int byteOffset
         {
             get;
             set;
         }
-        double byteLength
+        int byteLength
         {
             get;
             set;
@@ -34,206 +34,206 @@ namespace Web
     }
     public partial interface Int8Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        sbyte this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Int8Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Int8Array subarray(double begin, double end = 0.0);
+        sbyte get(int index);
+        void set(int index, sbyte value);
+        void set(Int8Array array, int offset = 0);
+        void set(Array<sbyte> array, int offset = 0);
+        Int8Array subarray(int begin, int end = 0);
     }
     public partial interface Uint8Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        byte this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Uint8Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Uint8Array subarray(double begin, double end = 0.0);
+        byte get(int index);
+        void set(int index, byte value);
+        void set(Uint8Array array, int offset = 0);
+        void set(Array<byte> array, int offset = 0);
+        Uint8Array subarray(int begin, int end = 0);
     }
     public partial interface Int16Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        short this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Int16Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Int16Array subarray(double begin, double end = 0.0);
+        short get(int index);
+        void set(int index, short value);
+        void set(Int16Array array, int offset = 0);
+        void set(Array<short> array, int offset = 0);
+        Int16Array subarray(int begin, int end = 0);
     }
     public partial interface Uint16Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        ushort this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Uint16Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Uint16Array subarray(double begin, double end = 0.0);
+        ushort get(int index);
+        void set(int index, ushort value);
+        void set(Uint16Array array, int offset = 0);
+        void set(Array<ushort> array, int offset = 0);
+        Uint16Array subarray(int begin, int end = 0);
     }
     public partial interface Int32Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        int this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Int32Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Int32Array subarray(double begin, double end = 0.0);
+        int get(int index);
+        void set(int index, int value);
+        void set(Int32Array array, int offset = 0);
+        void set(Array<int> array, int offset = 0);
+        Int32Array subarray(int begin, int end = 0);
     }
     public partial interface Uint32Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        int this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Uint32Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Uint32Array subarray(double begin, double end = 0.0);
+        uint get(int index);
+        void set(int index, uint value);
+        void set(Uint32Array array, int offset = 0);
+        void set(Array<uint> array, int offset = 0);
+        Uint32Array subarray(int begin, int end = 0);
     }
     public partial interface Float32Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        float this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Float32Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Float32Array subarray(double begin, double end = 0.0);
+        float get(int index);
+        void set(int index, float value);
+        void set(Float32Array array, int offset = 0);
+        void set(Array<float> array, int offset = 0);
+        Float32Array subarray(int begin, int end = 0);
     }
     public partial interface Float64Array : ArrayBufferView
     {
-        double BYTES_PER_ELEMENT
+        int BYTES_PER_ELEMENT
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double this[double index]
+        int this[int index]
         {
             get;
             set;
         }
-        double get(double index);
-        void set(double index, double value);
-        void set(Float64Array array, double offset = 0.0);
-        void set(Array<double> array, double offset = 0.0);
-        Float64Array subarray(double begin, double end = 0.0);
+        int get(int index);
+        void set(int index, int value);
+        void set(Float64Array array, int offset = 0);
+        void set(Array<double> array, int offset = 0);
+        Float64Array subarray(int begin, int end = 0);
     }
     public partial interface DataView : ArrayBufferView
     {
-        double getInt8(double byteOffset);
-        double getUint8(double byteOffset);
-        double getInt16(double byteOffset, bool littleEndian = false);
-        double getUint16(double byteOffset, bool littleEndian = false);
-        double getInt32(double byteOffset, bool littleEndian = false);
-        double getUint32(double byteOffset, bool littleEndian = false);
-        double getFloat32(double byteOffset, bool littleEndian = false);
-        double getFloat64(double byteOffset, bool littleEndian = false);
-        void setInt8(double byteOffset, double value);
-        void setUint8(double byteOffset, double value);
-        void setInt16(double byteOffset, double value, bool littleEndian = false);
-        void setUint16(double byteOffset, double value, bool littleEndian = false);
-        void setInt32(double byteOffset, double value, bool littleEndian = false);
-        void setUint32(double byteOffset, double value, bool littleEndian = false);
-        void setFloat32(double byteOffset, double value, bool littleEndian = false);
-        void setFloat64(double byteOffset, double value, bool littleEndian = false);
+        int getInt8(int byteOffset);
+        int getUint8(int byteOffset);
+        int getInt16(int byteOffset, bool littleEndian = false);
+        int getUint16(int byteOffset, bool littleEndian = false);
+        int getInt32(int byteOffset, bool littleEndian = false);
+        int getUint32(int byteOffset, bool littleEndian = false);
+        int getFloat32(int byteOffset, bool littleEndian = false);
+        int getFloat64(int byteOffset, bool littleEndian = false);
+        void setInt8(int byteOffset, int value);
+        void setUint8(int byteOffset, int value);
+        void setInt16(int byteOffset, int value, bool littleEndian = false);
+        void setUint16(int byteOffset, int value, bool littleEndian = false);
+        void setInt32(int byteOffset, int value, bool littleEndian = false);
+        void setUint32(int byteOffset, int value, bool littleEndian = false);
+        void setFloat32(int byteOffset, int value, bool littleEndian = false);
+        void setFloat64(int byteOffset, int value, bool littleEndian = false);
     }
     public partial interface Map<K, V>
     {
@@ -243,7 +243,7 @@ namespace Web
         V get(K key);
         bool has(K key);
         Map<K, V> set(K key, V value);
-        double size
+        int size
         {
             get;
             set;
@@ -264,7 +264,7 @@ namespace Web
         bool delete(T value);
         void forEach(System.Action<T, T, Set<T>> callbackfn, object thisArg = null);
         bool has(T value);
-        double size
+        int size
         {
             get;
             set;
@@ -272,8 +272,8 @@ namespace Web
     }
     public partial interface String
     {
-        double localeCompare(string that, Array<string> locales, Intl.CollatorOptions options = null);
-        double localeCompare(string that, string locale, Intl.CollatorOptions options = null);
+        int localeCompare(string that, Array<string> locales, Intl.CollatorOptions options = null);
+        int localeCompare(string that, string locale, Intl.CollatorOptions options = null);
     }
     public partial interface Number
     {
@@ -292,12 +292,12 @@ namespace Web
             get;
             set;
         }
-        double timeout
+        int timeout
         {
             get;
             set;
         }
-        double maximumAge
+        int maximumAge
         {
             get;
             set;
@@ -386,7 +386,7 @@ namespace Web
     }
     public partial interface PointerEventInit : MouseEventInit
     {
-        double pointerId
+        int pointerId
         {
             get;
             set;
@@ -396,22 +396,22 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
         }
-        double pressure
+        int pressure
         {
             get;
             set;
         }
-        double tiltX
+        int tiltX
         {
             get;
             set;
         }
-        double tiltY
+        int tiltY
         {
             get;
             set;
@@ -455,12 +455,12 @@ namespace Web
     }
     public partial interface MsZoomToOptions
     {
-        double contentX
+        int contentX
         {
             get;
             set;
         }
-        double contentY
+        int contentY
         {
             get;
             set;
@@ -475,7 +475,7 @@ namespace Web
             get;
             set;
         }
-        double scaleFactor
+        int scaleFactor
         {
             get;
             set;
@@ -488,17 +488,17 @@ namespace Web
     }
     public partial interface DeviceRotationRateDict
     {
-        double alpha
+        int alpha
         {
             get;
             set;
         }
-        double beta
+        int beta
         {
             get;
             set;
         }
-        double gamma
+        int gamma
         {
             get;
             set;
@@ -534,27 +534,27 @@ namespace Web
             get;
             set;
         }
-        double detail
+        int detail
         {
             get;
             set;
         }
-        double screenX
+        int screenX
         {
             get;
             set;
         }
-        double screenY
+        int screenY
         {
             get;
             set;
         }
-        double clientX
+        int clientX
         {
             get;
             set;
         }
-        double clientY
+        int clientY
         {
             get;
             set;
@@ -579,12 +579,12 @@ namespace Web
             get;
             set;
         }
-        double button
+        int button
         {
             get;
             set;
         }
-        double buttons
+        int buttons
         {
             get;
             set;
@@ -630,13 +630,13 @@ namespace Web
     }
     public partial interface NodeListOf<TNode> : NodeList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        TNode item(double index);
-        TNode this[double index]
+        TNode item(int index);
+        TNode this[int index]
         {
             get;
             set;
@@ -734,7 +734,7 @@ namespace Web
             get;
             set;
         }
-        double offsetHeight
+        int offsetHeight
         {
             get;
             set;
@@ -784,7 +784,7 @@ namespace Web
             get;
             set;
         }
-        double sourceIndex
+        int sourceIndex
         {
             get;
             set;
@@ -959,7 +959,7 @@ namespace Web
             get;
             set;
         }
-        double offsetTop
+        int offsetTop
         {
             get;
             set;
@@ -999,7 +999,7 @@ namespace Web
             get;
             set;
         }
-        double uniqueNumber
+        int uniqueNumber
         {
             get;
             set;
@@ -1034,7 +1034,7 @@ namespace Web
             get;
             set;
         }
-        double offsetLeft
+        int offsetLeft
         {
             get;
             set;
@@ -1104,7 +1104,7 @@ namespace Web
             get;
             set;
         }
-        double tabIndex
+        int tabIndex
         {
             get;
             set;
@@ -1264,7 +1264,7 @@ namespace Web
             get;
             set;
         }
-        double offsetWidth
+        int offsetWidth
         {
             get;
             set;
@@ -1353,14 +1353,14 @@ namespace Web
         void clearAttributes();
         void releaseCapture();
         ControlRangeCollection createControlRange();
-        bool removeBehavior(double cookie);
+        bool removeBehavior(int cookie);
         bool contains(HTMLElement child);
         void click();
         Element insertAdjacentElement(string position, Element insertedElement);
         void mergeAttributes(HTMLElement source, bool preserveIdentity = false);
         string replaceAdjacentText(string where, string newText);
         Element applyElement(Element apply, string where = null);
-        double addBehavior(string bstrUrl, object factory = null);
+        int addBehavior(string bstrUrl, object factory = null);
         void insertAdjacentHTML(string where, string html);
         MSInputMethodContext msGetInputContext();
         void addEventListener(string type, EventListener listener, bool useCapture = false);
@@ -1617,7 +1617,7 @@ namespace Web
             get;
             set;
         }
-        double documentMode
+        int documentMode
         {
             get;
             set;
@@ -2187,7 +2187,7 @@ namespace Web
         Comment createComment(string data);
         NodeList getElementsByTagName(string name);
         DocumentFragment createDocumentFragment();
-        CSSStyleSheet createStyleSheet(string href = null, double index = 0.0);
+        CSSStyleSheet createStyleSheet(string href = null, int index = 0);
         NodeList getElementsByName(string elementName);
         bool queryCommandState(string commandId);
         bool hasFocus();
@@ -2198,7 +2198,7 @@ namespace Web
         MSEventObj createEventObject(object eventObj = null);
         Selection getSelection();
         NodeList msElementsFromPoint(double x, double y);
-        NodeList msElementsFromRect(double left, double top, double width, double height);
+        NodeList msElementsFromRect(int left, int top, double width, int height);
         void clear();
         void msExitFullscreen();
         void addEventListener(string type, EventListener listener, bool useCapture = false);
@@ -2233,7 +2233,7 @@ namespace Web
             get;
             set;
         }
-        double keyCode
+        int keyCode
         {
             get;
             set;
@@ -2273,7 +2273,7 @@ namespace Web
             get;
             set;
         }
-        double offsetX
+        int offsetX
         {
             get;
             set;
@@ -2283,12 +2283,12 @@ namespace Web
             get;
             set;
         }
-        double screenX
+        int screenX
         {
             get;
             set;
         }
-        double buttonID
+        int buttonID
         {
             get;
             set;
@@ -2298,7 +2298,7 @@ namespace Web
             get;
             set;
         }
-        double reason
+        int reason
         {
             get;
             set;
@@ -2333,7 +2333,7 @@ namespace Web
             get;
             set;
         }
-        double behaviorCookie
+        int behaviorCookie
         {
             get;
             set;
@@ -2368,7 +2368,7 @@ namespace Web
             get;
             set;
         }
-        double offsetY
+        int offsetY
         {
             get;
             set;
@@ -2378,7 +2378,7 @@ namespace Web
             get;
             set;
         }
-        double behaviorPart
+        int behaviorPart
         {
             get;
             set;
@@ -2398,7 +2398,7 @@ namespace Web
             get;
             set;
         }
-        double clientY
+        int clientY
         {
             get;
             set;
@@ -2418,7 +2418,7 @@ namespace Web
             get;
             set;
         }
-        double screenY
+        int screenY
         {
             get;
             set;
@@ -2428,7 +2428,7 @@ namespace Web
             get;
             set;
         }
-        double button
+        int button
         {
             get;
             set;
@@ -2438,7 +2438,7 @@ namespace Web
             get;
             set;
         }
-        double clientX
+        int clientX
         {
             get;
             set;
@@ -2448,9 +2448,9 @@ namespace Web
             get;
             set;
         }
-        object getAttribute(string strAttributeName, double lFlags = 0.0);
-        void setAttribute(string strAttributeName, object AttributeValue, double lFlags = 0.0);
-        bool removeAttribute(string strAttributeName, double lFlags = 0.0);
+        object getAttribute(string strAttributeName, int lFlags = 0);
+        void setAttribute(string strAttributeName, object AttributeValue, int lFlags = 0);
+        bool removeAttribute(string strAttributeName, int lFlags = 0);
     }
     public partial interface HTMLCanvasElement : HTMLElement
     {
@@ -2459,7 +2459,7 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -2510,7 +2510,7 @@ namespace Web
             get;
             set;
         }
-        double screenX
+        int screenX
         {
             get;
             set;
@@ -2530,7 +2530,7 @@ namespace Web
             get;
             set;
         }
-        double pageXOffset
+        int pageXOffset
         {
             get;
             set;
@@ -2580,7 +2580,7 @@ namespace Web
             get;
             set;
         }
-        double innerHeight
+        int innerHeight
         {
             get;
             set;
@@ -2625,7 +2625,7 @@ namespace Web
             get;
             set;
         }
-        double outerWidth
+        int outerWidth
         {
             get;
             set;
@@ -2640,7 +2640,7 @@ namespace Web
             get;
             set;
         }
-        double innerWidth
+        int innerWidth
         {
             get;
             set;
@@ -2650,7 +2650,7 @@ namespace Web
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
@@ -2710,7 +2710,7 @@ namespace Web
             get;
             set;
         }
-        double pageYOffset
+        int pageYOffset
         {
             get;
             set;
@@ -2770,7 +2770,7 @@ namespace Web
             get;
             set;
         }
-        double outerHeight
+        int outerHeight
         {
             get;
             set;
@@ -2865,7 +2865,7 @@ namespace Web
             get;
             set;
         }
-        double screenY
+        int screenY
         {
             get;
             set;
@@ -2900,7 +2900,7 @@ namespace Web
             get;
             set;
         }
-        double animationStartTime
+        int animationStartTime
         {
             get;
             set;
@@ -2955,7 +2955,7 @@ namespace Web
             get;
             set;
         }
-        double msAnimationStartTime
+        int msAnimationStartTime
         {
             get;
             set;
@@ -2995,7 +2995,7 @@ namespace Web
             get;
             set;
         }
-        double devicePixelRatio
+        int devicePixelRatio
         {
             get;
             set;
@@ -3031,14 +3031,14 @@ namespace Web
             set;
         }
         void alert(object message = null);
-        void scroll(double x = 0.0, double y = 0.0);
+        void scroll(double x = 0, double y = 0);
         void focus();
-        void scrollTo(double x = 0.0, double y = 0.0);
+        void scrollTo(double x = 0, double y = 0);
         void print();
         string prompt(string message = null, string _default = null);
-        string.ToString();
+        string ToString();
         Window open(string url = null, string target = null, string features = null, bool replace = false);
-        void scrollBy(double x = 0.0, double y = 0.0);
+        void scrollBy(double x = 0, double y = 0);
         bool confirm(string message = null);
         void close();
         void postMessage(object message, string targetOrigin, object ports = null);
@@ -3046,13 +3046,13 @@ namespace Web
         void blur();
         Selection getSelection();
         CSSStyleDeclaration getComputedStyle(Element elt, string pseudoElt = null);
-        void msCancelRequestAnimationFrame(double handle);
+        void msCancelRequestAnimationFrame(int handle);
         MediaQueryList matchMedia(string mediaQuery);
-        void cancelAnimationFrame(double handle);
+        void cancelAnimationFrame(int handle);
         bool msIsStaticHTML(string html);
         MediaQueryList msMatchMedia(string mediaQuery);
-        double requestAnimationFrame(FrameRequestCallback callback);
-        double msRequestAnimationFrame(FrameRequestCallback callback);
+        int requestAnimationFrame(FrameRequestCallback callback);
+        int msRequestAnimationFrame(FrameRequestCallback callback);
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface NavigatorID
@@ -3130,7 +3130,7 @@ namespace Web
             get;
             set;
         }
-        double cols
+        int cols
         {
             get;
             set;
@@ -3185,15 +3185,15 @@ namespace Web
             get;
             set;
         }
-        void deleteRow(double index = 0.0);
+        void deleteRow(int index = 0);
         HTMLElement createTBody();
         void deleteCaption();
-        HTMLElement insertRow(double index = 0.0);
+        HTMLElement insertRow(int index = 0);
         void deleteTFoot();
         HTMLElement createTHead();
         void deleteTHead();
         HTMLElement createCaption();
-        object moveRow(double indexFrom = 0.0, double indexTo = 0.0);
+        object moveRow(int indexFrom = 0, int indexTo = 0);
         HTMLElement createTFoot();
     }
     public partial interface TreeWalker
@@ -3281,12 +3281,12 @@ namespace Web
         object getEntriesByName(string name, string entryType = null);
         object getEntries();
         void clearMeasures(string measureName = null);
-        void setResourceTimingBufferSize(double maxSize);
-        double now();
+        void setResourceTimingBufferSize(int maxSize);
+        int now();
     }
     public partial interface MSDataBindingTableExtensions
     {
-        double dataPageSize
+        int dataPageSize
         {
             get;
             set;
@@ -3313,10 +3313,10 @@ namespace Web
     }
     public partial interface WindowTimers : WindowTimersExtension
     {
-        void clearTimeout(double handle);
-        double setTimeout(object handler, object timeout = null, params object[] args);
-        void clearInterval(double handle);
-        double setInterval(object handler, object timeout = null, params object[] args);
+        void clearTimeout(int handle);
+        int setTimeout(object handler, object timeout = null, params object[] args);
+        void clearInterval(int handle);
+        int setInterval(object handler, object timeout = null, params object[] args);
     }
     public partial interface SVGMarkerElement : SVGElement, SVGStylable, SVGLangSpace, SVGFitToViewBox, SVGExternalResourcesRequired
     {
@@ -3357,32 +3357,32 @@ namespace Web
         }
         void setOrientToAngle(SVGAngle angle);
         void setOrientToAuto();
-        double SVG_MARKER_ORIENT_UNKNOWN
+        int SVG_MARKER_ORIENT_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_MARKER_ORIENT_ANGLE
+        int SVG_MARKER_ORIENT_ANGLE
         {
             get;
             set;
         }
-        double SVG_MARKERUNITS_UNKNOWN
+        int SVG_MARKERUNITS_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_MARKERUNITS_STROKEWIDTH
+        int SVG_MARKERUNITS_STROKEWIDTH
         {
             get;
             set;
         }
-        double SVG_MARKER_ORIENT_AUTO
+        int SVG_MARKER_ORIENT_AUTO
         {
             get;
             set;
         }
-        double SVG_MARKERUNITS_USERSPACEONUSE
+        int SVG_MARKERUNITS_USERSPACEONUSE
         {
             get;
             set;
@@ -3580,7 +3580,7 @@ namespace Web
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
@@ -4833,8 +4833,8 @@ namespace Web
         string getPropertyPriority(string propertyName);
         string getPropertyValue(string propertyName);
         string removeProperty(string propertyName);
-        string item(double index);
-        string this[double index]
+        string item(int index);
+        string this[int index]
         {
             get;
             set;
@@ -4844,27 +4844,27 @@ namespace Web
     public partial interface SVGGElement : SVGElement, SVGStylable, SVGTransformable, SVGLangSpace, SVGTests, SVGExternalResourcesRequired { }
     public partial interface MSStyleCSSProperties : MSCSSProperties
     {
-        double pixelWidth
+        int pixelWidth
         {
             get;
             set;
         }
-        double posHeight
+        int posHeight
         {
             get;
             set;
         }
-        double posLeft
+        int posLeft
         {
             get;
             set;
         }
-        double pixelTop
+        int pixelTop
         {
             get;
             set;
         }
-        double pixelBottom
+        int pixelBottom
         {
             get;
             set;
@@ -4874,17 +4874,17 @@ namespace Web
             get;
             set;
         }
-        double pixelLeft
+        int pixelLeft
         {
             get;
             set;
         }
-        double posTop
+        int posTop
         {
             get;
             set;
         }
-        double posBottom
+        int posBottom
         {
             get;
             set;
@@ -4894,7 +4894,7 @@ namespace Web
             get;
             set;
         }
-        double posWidth
+        int posWidth
         {
             get;
             set;
@@ -4904,7 +4904,7 @@ namespace Web
             get;
             set;
         }
-        double pixelHeight
+        int pixelHeight
         {
             get;
             set;
@@ -4914,12 +4914,12 @@ namespace Web
             get;
             set;
         }
-        double posRight
+        int posRight
         {
             get;
             set;
         }
-        double pixelRight
+        int pixelRight
         {
             get;
             set;
@@ -4932,7 +4932,7 @@ namespace Web
     }
     public partial interface Navigator : NavigatorID, NavigatorOnLine, NavigatorContentUtils, MSNavigatorExtensions, NavigatorGeolocation, MSNavigatorDoNotTrack, NavigatorStorageUtils, MSFileSaver
     {
-        double msMaxTouchPoints
+        int msMaxTouchPoints
         {
             get;
             set;
@@ -4952,7 +4952,7 @@ namespace Web
             get;
             set;
         }
-        double maxTouchPoints
+        int maxTouchPoints
         {
             get;
             set;
@@ -4989,12 +4989,12 @@ namespace Web
             get;
             set;
         }
-        double previousScale
+        int previousScale
         {
             get;
             set;
         }
-        double newScale
+        int newScale
         {
             get;
             set;
@@ -5031,7 +5031,7 @@ namespace Web
     }
     public partial interface ClientRect
     {
-        double left
+        int left
         {
             get;
             set;
@@ -5041,22 +5041,22 @@ namespace Web
             get;
             set;
         }
-        double right
+        int right
         {
             get;
             set;
         }
-        double top
+        int top
         {
             get;
             set;
         }
-        double bottom
+        int bottom
         {
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -5072,17 +5072,17 @@ namespace Web
     }
     public partial interface SVGUnitTypes
     {
-        double SVG_UNIT_TYPE_UNKNOWN
+        int SVG_UNIT_TYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_UNIT_TYPE_OBJECTBOUNDINGBOX
+        int SVG_UNIT_TYPE_OBJECTBOUNDINGBOX
         {
             get;
             set;
         }
-        double SVG_UNIT_TYPE_USERSPACEONUSE
+        int SVG_UNIT_TYPE_USERSPACEONUSE
         {
             get;
             set;
@@ -5090,17 +5090,17 @@ namespace Web
     }
     public partial interface Element : Node, NodeSelector, ElementTraversal, GlobalEventHandlers
     {
-        double scrollTop
+        int scrollTop
         {
             get;
             set;
         }
-        double clientLeft
+        int clientLeft
         {
             get;
             set;
         }
-        double scrollLeft
+        int scrollLeft
         {
             get;
             set;
@@ -5110,27 +5110,27 @@ namespace Web
             get;
             set;
         }
-        double clientWidth
+        int clientWidth
         {
             get;
             set;
         }
-        double scrollWidth
+        int scrollWidth
         {
             get;
             set;
         }
-        double clientHeight
+        int clientHeight
         {
             get;
             set;
         }
-        double clientTop
+        int clientTop
         {
             get;
             set;
         }
-        double scrollHeight
+        int scrollHeight
         {
             get;
             set;
@@ -5215,7 +5215,7 @@ namespace Web
             get;
             set;
         }
-        double msContentZoomFactor
+        int msContentZoomFactor
         {
             get;
             set;
@@ -5265,12 +5265,12 @@ namespace Web
         void setAttribute(string name = null, string value = null);
         void removeAttributeNS(string namespaceURI, string localName);
         MSRangeCollection msGetRegionContent();
-        void msReleasePointerCapture(double pointerId);
-        void msSetPointerCapture(double pointerId);
+        void msReleasePointerCapture(int pointerId);
+        void msSetPointerCapture(int pointerId);
         void msZoomTo(MsZoomToOptions args);
-        void setPointerCapture(double pointerId);
+        void setPointerCapture(int pointerId);
         ClientRect msGetUntransformedBounds();
-        void releasePointerCapture(double pointerId);
+        void releasePointerCapture(int pointerId);
         void msRequestFullscreen();
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
@@ -5328,13 +5328,13 @@ namespace Web
     }
     public partial interface HTMLAreasCollection : HTMLCollection
     {
-        void remove(double index = 0.0);
+        void remove(int index = 0);
         void add(HTMLElement element, object before = null);
     }
     public partial interface SVGDescElement : SVGElement, SVGStylable, SVGLangSpace { }
     public partial interface Node : EventTarget
     {
-        double nodeType
+        int nodeType
         {
             get;
             set;
@@ -5415,7 +5415,7 @@ namespace Web
         bool isEqualNode(Node arg);
         string lookupPrefix(string namespaceURI);
         bool isDefaultNamespace(string namespaceURI);
-        double compareDocumentPosition(Node other);
+        int compareDocumentPosition(Node other);
         void normalize();
         bool isSameNode(Node other);
         bool hasAttributes();
@@ -5424,92 +5424,92 @@ namespace Web
         bool hasChildNodes();
         Node replaceChild(Node newChild, Node oldChild);
         Node insertBefore(Node newChild, Node refChild = null);
-        double ENTITY_REFERENCE_NODE
+        int ENTITY_REFERENCE_NODE
         {
             get;
             set;
         }
-        double ATTRIBUTE_NODE
+        int ATTRIBUTE_NODE
         {
             get;
             set;
         }
-        double DOCUMENT_FRAGMENT_NODE
+        int DOCUMENT_FRAGMENT_NODE
         {
             get;
             set;
         }
-        double TEXT_NODE
+        int TEXT_NODE
         {
             get;
             set;
         }
-        double ELEMENT_NODE
+        int ELEMENT_NODE
         {
             get;
             set;
         }
-        double COMMENT_NODE
+        int COMMENT_NODE
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_DISCONNECTED
+        int DOCUMENT_POSITION_DISCONNECTED
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_CONTAINED_BY
+        int DOCUMENT_POSITION_CONTAINED_BY
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_CONTAINS
+        int DOCUMENT_POSITION_CONTAINS
         {
             get;
             set;
         }
-        double DOCUMENT_TYPE_NODE
+        int DOCUMENT_TYPE_NODE
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
+        int DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
         {
             get;
             set;
         }
-        double DOCUMENT_NODE
+        int DOCUMENT_NODE
         {
             get;
             set;
         }
-        double ENTITY_NODE
+        int ENTITY_NODE
         {
             get;
             set;
         }
-        double PROCESSING_INSTRUCTION_NODE
+        int PROCESSING_INSTRUCTION_NODE
         {
             get;
             set;
         }
-        double CDATA_SECTION_NODE
+        int CDATA_SECTION_NODE
         {
             get;
             set;
         }
-        double NOTATION_NODE
+        int NOTATION_NODE
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_FOLLOWING
+        int DOCUMENT_POSITION_FOLLOWING
         {
             get;
             set;
         }
-        double DOCUMENT_POSITION_PRECEDING
+        int DOCUMENT_POSITION_PRECEDING
         {
             get;
             set;
@@ -5552,7 +5552,7 @@ namespace Web
             get;
             set;
         }
-        double layerY
+        int layerY
         {
             get;
             set;
@@ -5567,12 +5567,12 @@ namespace Web
             get;
             set;
         }
-        double pageX
+        int pageX
         {
             get;
             set;
         }
-        double offsetY
+        int offsetY
         {
             get;
             set;
@@ -5602,17 +5602,17 @@ namespace Web
             get;
             set;
         }
-        double offsetX
+        int offsetX
         {
             get;
             set;
         }
-        double screenX
+        int screenX
         {
             get;
             set;
         }
-        double clientY
+        int clientY
         {
             get;
             set;
@@ -5622,12 +5622,12 @@ namespace Web
             get;
             set;
         }
-        double layerX
+        int layerX
         {
             get;
             set;
         }
-        double screenY
+        int screenY
         {
             get;
             set;
@@ -5637,32 +5637,32 @@ namespace Web
             get;
             set;
         }
-        double button
+        int button
         {
             get;
             set;
         }
-        double pageY
+        int pageY
         {
             get;
             set;
         }
-        double buttons
+        int buttons
         {
             get;
             set;
         }
-        double clientX
+        int clientX
         {
             get;
             set;
         }
-        void initMouseEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, double buttonArg, EventTarget relatedTargetArg);
+        void initMouseEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, int buttonArg, EventTarget relatedTargetArg);
         bool getModifierState(string keyArg);
     }
     public partial interface RangeException
     {
-        double code
+        int code
         {
             get;
             set;
@@ -5677,13 +5677,13 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
-        double INVALID_NODE_TYPE_ERR
+        string ToString();
+        int INVALID_NODE_TYPE_ERR
         {
             get;
             set;
         }
-        double BAD_BOUNDARYPOINTS_ERR
+        int BAD_BOUNDARYPOINTS_ERR
         {
             get;
             set;
@@ -5829,7 +5829,7 @@ namespace Web
     }
     public partial interface HTMLOListElement : HTMLElement, DOML2DeprecatedListSpaceReduction, DOML2DeprecatedListNumberingAndBulletStyle
     {
-        double start
+        int start
         {
             get;
             set;
@@ -5888,17 +5888,17 @@ namespace Web
             get;
             set;
         }
-        double size
+        int size
         {
             get;
             set;
         }
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double selectedIndex
+        int selectedIndex
         {
             get;
             set;
@@ -5938,7 +5938,7 @@ namespace Web
             get;
             set;
         }
-        void remove(double index = 0.0);
+        void remove(int index = 0);
         void add(HTMLElement element, object before = null);
         object item(object name = null, object index = null);
         object namedItem(string name);
@@ -5952,7 +5952,7 @@ namespace Web
     }
     public partial interface TextRange
     {
-        double boundingLeft
+        int boundingLeft
         {
             get;
             set;
@@ -5962,22 +5962,22 @@ namespace Web
             get;
             set;
         }
-        double offsetLeft
+        int offsetLeft
         {
             get;
             set;
         }
-        double boundingWidth
+        int boundingWidth
         {
             get;
             set;
         }
-        double boundingHeight
+        int boundingHeight
         {
             get;
             set;
         }
-        double boundingTop
+        int boundingTop
         {
             get;
             set;
@@ -5987,7 +5987,7 @@ namespace Web
             get;
             set;
         }
-        double offsetTop
+        int offsetTop
         {
             get;
             set;
@@ -5995,10 +5995,10 @@ namespace Web
         void moveToPoint(double x, double y);
         object queryCommandValue(string cmdID);
         string getBookmark();
-        double move(string unit, double count = 0.0);
+        int move(string unit, int count = 0);
         bool queryCommandIndeterm(string cmdID);
         void scrollIntoView(bool fStart = false);
-        bool findText(string _string, double count = 0.0, double flags = 0.0);
+        bool findText(string _string, int count = 0, int flags = 0);
         bool execCommand(string cmdID, bool showUI = false, object value = null);
         ClientRect getBoundingClientRect();
         bool moveToBookmark(string bookmark);
@@ -6009,12 +6009,12 @@ namespace Web
         void select();
         void pasteHTML(string html);
         bool inRange(TextRange range);
-        double moveEnd(string unit, double count = 0.0);
+        int moveEnd(string unit, int count = 0);
         ClientRectList getClientRects();
-        double moveStart(string unit, double count = 0.0);
+        int moveStart(string unit, int count = 0);
         Element parentElement();
         bool queryCommandState(string cmdID);
-        double compareEndPoints(string how, TextRange sourceRange);
+        int compareEndPoints(string how, TextRange sourceRange);
         bool execCommandShowHelp(string cmdID);
         void moveToElementText(Element element);
         bool expand(string Unit);
@@ -6116,13 +6116,13 @@ namespace Web
             get;
             set;
         }
-        double addImport(string bstrURL, double lIndex = 0.0);
-        double addPageRule(string bstrSelector, string bstrStyle, double lIndex = 0.0);
-        double insertRule(string rule, double index = 0.0);
-        void removeRule(double lIndex);
-        void deleteRule(double index = 0.0);
-        double addRule(string bstrSelector, string bstrStyle = null, double lIndex = 0.0);
-        void removeImport(double lIndex);
+        int addImport(string bstrURL, int lIndex = 0);
+        int addPageRule(string bstrSelector, string bstrStyle, int lIndex = 0);
+        int insertRule(string rule, int index = 0);
+        void removeRule(int lIndex);
+        void deleteRule(int index = 0);
+        int addRule(string bstrSelector, string bstrStyle = null, int lIndex = 0);
+        void removeImport(int lIndex);
     }
     public partial interface MSSelection
     {
@@ -6242,27 +6242,27 @@ namespace Web
             get;
             set;
         }
-        double anchorOffset
+        int anchorOffset
         {
             get;
             set;
         }
-        double focusOffset
+        int focusOffset
         {
             get;
             set;
         }
-        double rangeCount
+        int rangeCount
         {
             get;
             set;
         }
         void addRange(Range range);
         void collapseToEnd();
-        string.ToString();
+        string ToString();
         void selectAllChildren(Node parentNode);
-        Range getRangeAt(double index);
-        void collapse(Node parentNode, double offset);
+        Range getRangeAt(int index);
+        void collapse(Node parentNode, int offset);
         void removeAllRanges();
         void collapseToStart();
         void deleteFromDocument();
@@ -6416,18 +6416,18 @@ namespace Web
     public partial interface SVGTitleElement : SVGElement, SVGStylable, SVGLangSpace { }
     public partial interface ControlRangeCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
         object queryCommandValue(string cmdID);
-        void remove(double index);
+        void remove(int index);
         void add(Element item);
         bool queryCommandIndeterm(string cmdID);
         void scrollIntoView(object varargStart = null);
-        Element item(double index);
-        Element this[double index]
+        Element item(int index);
+        Element this[int index]
         {
             get;
             set;
@@ -6501,7 +6501,7 @@ namespace Web
     }
     public partial interface HTMLOptionElement : HTMLElement, MSDataBindingExtensions
     {
-        double index
+        int index
         {
             get;
             set;
@@ -6565,7 +6565,7 @@ namespace Web
             get;
             set;
         }
-        void initMouseWheelEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, double buttonArg, EventTarget relatedTargetArg, string modifiersListArg, double wheelDeltaArg);
+        void initMouseWheelEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, int buttonArg, EventTarget relatedTargetArg, string modifiersListArg, double wheelDeltaArg);
     }
     public partial interface SVGFitToViewBox
     {
@@ -6582,18 +6582,18 @@ namespace Web
     }
     public partial interface SVGPointList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        SVGPoint replaceItem(SVGPoint newItem, double index);
-        SVGPoint getItem(double index);
+        SVGPoint replaceItem(SVGPoint newItem, int index);
+        SVGPoint getItem(int index);
         void clear();
         SVGPoint appendItem(SVGPoint newItem);
         SVGPoint initialize(SVGPoint newItem);
-        SVGPoint removeItem(double index);
-        SVGPoint insertItemBefore(SVGPoint newItem, double index);
+        SVGPoint removeItem(int index);
+        SVGPoint insertItemBefore(SVGPoint newItem, int index);
     }
     public partial interface SVGAnimatedLengthList
     {
@@ -6623,7 +6623,7 @@ namespace Web
     }
     public partial interface MSSiteModeEvent : Event
     {
-        double buttonID
+        int buttonID
         {
             get;
             set;
@@ -6644,13 +6644,13 @@ namespace Web
     }
     public partial interface StyleSheetPageList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        CSSPageRule item(double index);
-        CSSPageRule this[double index]
+        CSSPageRule item(int index);
+        CSSPageRule this[int index]
         {
             get;
             set;
@@ -6808,13 +6808,13 @@ namespace Web
             get;
             set;
         }
-        object getAttribute(string attributeName, double flags = 0.0);
-        void setAttribute(string attributeName, object AttributeValue, double flags = 0.0);
-        bool removeAttribute(string attributeName, double flags = 0.0);
+        object getAttribute(string attributeName, int flags = 0);
+        void setAttribute(string attributeName, object AttributeValue, int flags = 0);
+        bool removeAttribute(string attributeName, int flags = 0);
     }
     public partial interface HTMLCollection : MSHTMLCollectionExtensions
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -6832,17 +6832,17 @@ namespace Web
     }
     public partial interface HTMLImageElement : HTMLElement, MSImageResourceExtensions, MSDataBindingExtensions, MSResourceMetadata
     {
-        double width
+        int width
         {
             get;
             set;
         }
-        double vspace
+        int vspace
         {
             get;
             set;
         }
-        double naturalHeight
+        int naturalHeight
         {
             get;
             set;
@@ -6867,7 +6867,7 @@ namespace Web
             get;
             set;
         }
-        double naturalWidth
+        int naturalWidth
         {
             get;
             set;
@@ -6877,7 +6877,7 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -6887,7 +6887,7 @@ namespace Web
             get;
             set;
         }
-        double hspace
+        int hspace
         {
             get;
             set;
@@ -7005,7 +7005,7 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
+        string ToString();
     }
     public partial interface EventTarget
     {
@@ -7020,44 +7020,44 @@ namespace Web
             get;
             set;
         }
-        double valueInSpecifiedUnits
+        int valueInSpecifiedUnits
         {
             get;
             set;
         }
-        double value
+        int value
         {
             get;
             set;
         }
-        double unitType
+        int unitType
         {
             get;
             set;
         }
-        void newValueSpecifiedUnits(double unitType, double valueInSpecifiedUnits);
-        void convertToSpecifiedUnits(double unitType);
-        double SVG_ANGLETYPE_RAD
+        void newValueSpecifiedUnits(int unitType, int valueInSpecifiedUnits);
+        void convertToSpecifiedUnits(int unitType);
+        int SVG_ANGLETYPE_RAD
         {
             get;
             set;
         }
-        double SVG_ANGLETYPE_UNKNOWN
+        int SVG_ANGLETYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_ANGLETYPE_UNSPECIFIED
+        int SVG_ANGLETYPE_UNSPECIFIED
         {
             get;
             set;
         }
-        double SVG_ANGLETYPE_DEG
+        int SVG_ANGLETYPE_DEG
         {
             get;
             set;
         }
-        double SVG_ANGLETYPE_GRAD
+        int SVG_ANGLETYPE_GRAD
         {
             get;
             set;
@@ -7164,16 +7164,16 @@ namespace Web
     }
     public partial interface CanvasGradient
     {
-        void addColorStop(double offset, string color);
+        void addColorStop(int offset, string color);
     }
     public partial interface KeyboardEvent : UIEvent
     {
-        double location
+        int location
         {
             get;
             set;
         }
-        double keyCode
+        int keyCode
         {
             get;
             set;
@@ -7223,39 +7223,39 @@ namespace Web
             get;
             set;
         }
-        double charCode
+        int charCode
         {
             get;
             set;
         }
         bool getModifierState(string keyArg);
-        void initKeyboardEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, string keyArg, double locationArg, string modifiersListArg, bool repeat, string locale);
-        double DOM_KEY_LOCATION_RIGHT
+        void initKeyboardEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, string keyArg, int locationArg, string modifiersListArg, bool repeat, string locale);
+        int DOM_KEY_LOCATION_RIGHT
         {
             get;
             set;
         }
-        double DOM_KEY_LOCATION_STANDARD
+        int DOM_KEY_LOCATION_STANDARD
         {
             get;
             set;
         }
-        double DOM_KEY_LOCATION_LEFT
+        int DOM_KEY_LOCATION_LEFT
         {
             get;
             set;
         }
-        double DOM_KEY_LOCATION_NUMPAD
+        int DOM_KEY_LOCATION_NUMPAD
         {
             get;
             set;
         }
-        double DOM_KEY_LOCATION_JOYSTICK
+        int DOM_KEY_LOCATION_JOYSTICK
         {
             get;
             set;
         }
-        double DOM_KEY_LOCATION_MOBILE
+        int DOM_KEY_LOCATION_MOBILE
         {
             get;
             set;
@@ -7404,7 +7404,7 @@ namespace Web
     }
     public partial interface HTMLTableRowElement : HTMLElement, HTMLTableAlignment, DOML2DeprecatedBackgroundColorStyle
     {
-        double rowIndex
+        int rowIndex
         {
             get;
             set;
@@ -7424,7 +7424,7 @@ namespace Web
             get;
             set;
         }
-        double sectionRowIndex
+        int sectionRowIndex
         {
             get;
             set;
@@ -7444,12 +7444,12 @@ namespace Web
             get;
             set;
         }
-        void deleteCell(double index = 0.0);
-        HTMLElement insertCell(double index = 0.0);
+        void deleteCell(int index = 0);
+        HTMLElement insertCell(int index = 0);
     }
     public partial interface CanvasRenderingContext2D
     {
-        double miterLimit
+        int miterLimit
         {
             get;
             set;
@@ -7479,7 +7479,7 @@ namespace Web
             get;
             set;
         }
-        double lineDashOffset
+        int lineDashOffset
         {
             get;
             set;
@@ -7494,12 +7494,12 @@ namespace Web
             get;
             set;
         }
-        double shadowOffsetX
+        int shadowOffsetX
         {
             get;
             set;
         }
-        double lineWidth
+        int lineWidth
         {
             get;
             set;
@@ -7514,12 +7514,12 @@ namespace Web
             get;
             set;
         }
-        double globalAlpha
+        int globalAlpha
         {
             get;
             set;
         }
-        double shadowOffsetY
+        int shadowOffsetY
         {
             get;
             set;
@@ -7529,7 +7529,7 @@ namespace Web
             get;
             set;
         }
-        double shadowBlur
+        int shadowBlur
         {
             get;
             set;
@@ -7545,50 +7545,50 @@ namespace Web
             set;
         }
         void restore();
-        void setTransform(double m11, double m12, double m21, double m22, double dx, double dy);
+        void setTransform(int m11, int m12, int m21, int m22, int dx, int dy);
         void save();
-        void arc(double x, double y, double radius, double startAngle, double endAngle, bool anticlockwise = false);
+        void arc(double x, double y, int radius, int startAngle, int endAngle, bool anticlockwise = false);
         TextMetrics measureText(string text);
         bool isPointInPath(double x, double y, string fillRule = null);
-        void quadraticCurveTo(double cpx, double cpy, double x, double y);
-        void putImageData(ImageData imagedata, double dx, double dy, double dirtyX = 0.0, double dirtyY = 0.0, double dirtyWidth = 0.0, double dirtyHeight = 0.0);
-        void rotate(double angle);
-        void fillText(string text, double x, double y, double maxWidth = 0.0);
+        void quadraticCurveTo(int cpx, int cpy, double x, double y);
+        void putImageData(ImageData imagedata, int dx, int dy, int dirtyX = 0, int dirtyY = 0, int dirtyWidth = 0, int dirtyHeight = 0);
+        void rotate(int angle);
+        void fillText(string text, double x, double y, int maxWidth = 0);
         void translate(double x, double y);
         void scale(double x, double y);
-        CanvasGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1);
+        CanvasGradient createRadialGradient(double x0, double y0, int r0, double x1, double y1, int r1);
         void lineTo(double x, double y);
         Array<double> getLineDash();
         void fill(string fillRule = null);
-        ImageData createImageData(object imageDataOrSw, double sh = 0.0);
+        ImageData createImageData(object imageDataOrSw, int sh = 0);
         CanvasPattern createPattern(HTMLElement image, string repetition);
         void closePath();
-        void rect(double x, double y, double w, double h);
+        void rect(double x, double y, double w, int h);
         void clip(string fillRule = null);
-        void clearRect(double x, double y, double w, double h);
+        void clearRect(double x, double y, double w, int h);
         void moveTo(double x, double y);
-        ImageData getImageData(double sx, double sy, double sw, double sh);
-        void fillRect(double x, double y, double w, double h);
-        void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y);
-        void drawImage(HTMLElement image, double offsetX, double offsetY, double width = 0.0, double height = 0.0, double canvasOffsetX = 0.0, double canvasOffsetY = 0.0, double canvasImageWidth = 0.0, double canvasImageHeight = 0.0);
-        void transform(double m11, double m12, double m21, double m22, double dx, double dy);
+        ImageData getImageData(int sx, int sy, int sw, int sh);
+        void fillRect(double x, double y, double w, int h);
+        void bezierCurveTo(int cp1x, int cp1y, int cp2x, int cp2y, double x, double y);
+        void drawImage(HTMLElement image, int offsetX, int offsetY, double width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0);
+        void transform(int m11, int m12, int m21, int m22, int dx, int dy);
         void stroke();
-        void strokeRect(double x, double y, double w, double h);
+        void strokeRect(double x, double y, double w, int h);
         void setLineDash(Array<double> segments);
-        void strokeText(string text, double x, double y, double maxWidth = 0.0);
+        void strokeText(string text, double x, double y, int maxWidth = 0);
         void beginPath();
-        void arcTo(double x1, double y1, double x2, double y2, double radius);
+        void arcTo(double x1, double y1, double x2, double y2, int radius);
         CanvasGradient createLinearGradient(double x0, double y0, double x1, double y1);
     }
     public partial interface MSCSSRuleList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        CSSStyleRule item(double index = 0.0);
-        CSSStyleRule this[double index]
+        CSSStyleRule item(int index = 0);
+        CSSStyleRule this[int index]
         {
             get;
             set;
@@ -7614,7 +7614,7 @@ namespace Web
             get;
             set;
         }
-        double r2
+        int r2
         {
             get;
             set;
@@ -7624,12 +7624,12 @@ namespace Web
             get;
             set;
         }
-        double angle
+        int angle
         {
             get;
             set;
         }
-        double r1
+        int r1
         {
             get;
             set;
@@ -7642,19 +7642,19 @@ namespace Web
     }
     public partial interface SVGTransformList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        SVGTransform getItem(double index);
+        SVGTransform getItem(int index);
         SVGTransform consolidate();
         void clear();
         SVGTransform appendItem(SVGTransform newItem);
         SVGTransform initialize(SVGTransform newItem);
-        SVGTransform removeItem(double index);
-        SVGTransform insertItemBefore(SVGTransform newItem, double index);
-        SVGTransform replaceItem(SVGTransform newItem, double index);
+        SVGTransform removeItem(int index);
+        SVGTransform insertItemBefore(SVGTransform newItem, int index);
+        SVGTransform replaceItem(SVGTransform newItem, int index);
         SVGTransform createSVGTransformFromMatrix(SVGMatrix matrix);
     }
     public partial interface HTMLHtmlElement : HTMLElement
@@ -7807,8 +7807,8 @@ namespace Web
             get;
             set;
         }
-        double insertRule(string rule, double index = 0.0);
-        void deleteRule(double index = 0.0);
+        int insertRule(string rule, int index = 0);
+        void deleteRule(int index = 0);
     }
     public partial interface WindowModal
     {
@@ -7830,12 +7830,12 @@ namespace Web
             get;
             set;
         }
-        double status
+        int status
         {
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
@@ -7865,7 +7865,7 @@ namespace Web
             get;
             set;
         }
-        double timeout
+        int timeout
         {
             get;
             set;
@@ -7933,27 +7933,27 @@ namespace Web
         string getResponseHeader(string header);
         bool msCachingEnabled();
         void overrideMimeType(string mime);
-        double LOADING
+        int LOADING
         {
             get;
             set;
         }
-        double DONE
+        int DONE
         {
             get;
             set;
         }
-        double UNSENT
+        int UNSENT
         {
             get;
             set;
         }
-        double OPENED
+        int OPENED
         {
             get;
             set;
         }
-        double HEADERS_RECEIVED
+        int HEADERS_RECEIVED
         {
             get;
             set;
@@ -8173,7 +8173,7 @@ namespace Web
             get;
             set;
         }
-        double deviceXDPI
+        int deviceXDPI
         {
             get;
             set;
@@ -8183,62 +8183,62 @@ namespace Web
             get;
             set;
         }
-        double bufferDepth
+        int bufferDepth
         {
             get;
             set;
         }
-        double logicalXDPI
+        int logicalXDPI
         {
             get;
             set;
         }
-        double systemXDPI
+        int systemXDPI
         {
             get;
             set;
         }
-        double availHeight
+        int availHeight
         {
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
         }
-        double logicalYDPI
+        int logicalYDPI
         {
             get;
             set;
         }
-        double systemYDPI
+        int systemYDPI
         {
             get;
             set;
         }
-        double updateInterval
+        int updateInterval
         {
             get;
             set;
         }
-        double colorDepth
+        int colorDepth
         {
             get;
             set;
         }
-        double availWidth
+        int availWidth
         {
             get;
             set;
         }
-        double deviceYDPI
+        int deviceYDPI
         {
             get;
             set;
         }
-        double pixelDepth
+        int pixelDepth
         {
             get;
             set;
@@ -8260,37 +8260,37 @@ namespace Web
     }
     public partial interface Coordinates
     {
-        double altitudeAccuracy
+        int altitudeAccuracy
         {
             get;
             set;
         }
-        double longitude
+        int longitude
         {
             get;
             set;
         }
-        double latitude
+        int latitude
         {
             get;
             set;
         }
-        double speed
+        int speed
         {
             get;
             set;
         }
-        double heading
+        int heading
         {
             get;
             set;
         }
-        double altitude
+        int altitude
         {
             get;
             set;
         }
-        double accuracy
+        int accuracy
         {
             get;
             set;
@@ -8352,11 +8352,11 @@ namespace Web
             get;
             set;
         }
-        void initFocusEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, EventTarget relatedTargetArg);
+        void initFocusEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, EventTarget relatedTargetArg);
     }
     public partial interface Range
     {
-        double startOffset
+        int startOffset
         {
             get;
             set;
@@ -8366,7 +8366,7 @@ namespace Web
             get;
             set;
         }
-        double endOffset
+        int endOffset
         {
             get;
             set;
@@ -8386,19 +8386,19 @@ namespace Web
             get;
             set;
         }
-        void setStart(Node refNode, double offset);
+        void setStart(Node refNode, int offset);
         void setEndBefore(Node refNode);
         void setStartBefore(Node refNode);
         void selectNode(Node refNode);
         void detach();
         ClientRect getBoundingClientRect();
-        string.ToString();
-        double compareBoundaryPoints(double how, Range sourceRange);
+        string ToString();
+        int compareBoundaryPoints(int how, Range sourceRange);
         void insertNode(Node newNode);
         void collapse(bool toStart);
         void selectNodeContents(Node refNode);
         DocumentFragment cloneContents();
-        void setEnd(Node refNode, double offset);
+        void setEnd(Node refNode, int offset);
         Range cloneRange();
         ClientRectList getClientRects();
         void surroundContents(Node newParent);
@@ -8407,22 +8407,22 @@ namespace Web
         DocumentFragment extractContents();
         void setEndAfter(Node refNode);
         DocumentFragment createContextualFragment(string fragment);
-        double END_TO_END
+        int END_TO_END
         {
             get;
             set;
         }
-        double START_TO_START
+        int START_TO_START
         {
             get;
             set;
         }
-        double START_TO_END
+        int START_TO_END
         {
             get;
             set;
         }
-        double END_TO_START
+        int END_TO_START
         {
             get;
             set;
@@ -8444,7 +8444,7 @@ namespace Web
     }
     public partial interface MSPluginsCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -8501,7 +8501,7 @@ namespace Web
             get;
             set;
         }
-        double pixelUnitToMillimeterY
+        int pixelUnitToMillimeterY
         {
             get;
             set;
@@ -8511,7 +8511,7 @@ namespace Web
             get;
             set;
         }
-        double screenPixelToMillimeterY
+        int screenPixelToMillimeterY
         {
             get;
             set;
@@ -8531,7 +8531,7 @@ namespace Web
             get;
             set;
         }
-        double pixelUnitToMillimeterX
+        int pixelUnitToMillimeterX
         {
             get;
             set;
@@ -8546,7 +8546,7 @@ namespace Web
             get;
             set;
         }
-        double currentScale
+        int currentScale
         {
             get;
             set;
@@ -8556,12 +8556,12 @@ namespace Web
             get;
             set;
         }
-        double screenPixelToMillimeterX
+        int screenPixelToMillimeterX
         {
             get;
             set;
         }
-        void setCurrentTime(double seconds);
+        void setCurrentTime(int seconds);
         SVGLength createSVGLength();
         NodeList getIntersectionList(SVGRect rect, SVGElement referenceElement);
         void unpauseAnimations();
@@ -8569,14 +8569,14 @@ namespace Web
         bool checkIntersection(SVGElement element, SVGRect rect);
         void unsuspendRedrawAll();
         void pauseAnimations();
-        double suspendRedraw(double maxWaitMilliseconds);
+        int suspendRedraw(int maxWaitMilliseconds);
         void deselectAll();
         SVGAngle createSVGAngle();
         NodeList getEnclosureList(SVGRect rect, SVGElement referenceElement);
         SVGTransform createSVGTransform();
-        void unsuspendRedraw(double suspendHandleID);
+        void unsuspendRedraw(int suspendHandleID);
         void forceRedraw();
-        double getCurrentTime();
+        int getCurrentTime();
         bool checkEnclosure(SVGElement element, SVGRect rect);
         SVGMatrix createSVGMatrix();
         SVGPoint createSVGPoint();
@@ -8653,12 +8653,12 @@ namespace Web
     public partial interface HTMLDirectoryElement : HTMLElement, DOML2DeprecatedListSpaceReduction, DOML2DeprecatedListNumberingAndBulletStyle { }
     public partial interface SVGAnimatedInteger
     {
-        double animVal
+        int animVal
         {
             get;
             set;
         }
-        double baseVal
+        int baseVal
         {
             get;
             set;
@@ -8668,7 +8668,7 @@ namespace Web
     public partial interface SVGTSpanElement : SVGTextPositioningElement { }
     public partial interface HTMLLIElement : HTMLElement, DOML2DeprecatedListNumberingAndBulletStyle
     {
-        double value
+        int value
         {
             get;
             set;
@@ -8684,7 +8684,7 @@ namespace Web
     }
     public partial interface MSStorageExtensions
     {
-        double remainingSpace
+        int remainingSpace
         {
             get;
             set;
@@ -8748,7 +8748,7 @@ namespace Web
     }
     public partial interface Storage : MSStorageExtensions
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -8762,8 +8762,8 @@ namespace Web
         void setItem(string key, string data);
         void clear();
         void removeItem(string key);
-        string key(double index);
-        string this[double index]
+        string key(int index);
+        string this[int index]
         {
             get;
             set;
@@ -8806,7 +8806,7 @@ namespace Web
             get;
             set;
         }
-        double vspace
+        int vspace
         {
             get;
             set;
@@ -8846,7 +8846,7 @@ namespace Web
             get;
             set;
         }
-        double hspace
+        int hspace
         {
             get;
             set;
@@ -8875,13 +8875,13 @@ namespace Web
     }
     public partial interface TextRangeCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        TextRange item(double index);
-        TextRange this[double index]
+        TextRange item(int index);
+        TextRange this[int index]
         {
             get;
             set;
@@ -9100,7 +9100,7 @@ namespace Web
             get;
             set;
         }
-        double attrChange
+        int attrChange
         {
             get;
             set;
@@ -9120,18 +9120,18 @@ namespace Web
             get;
             set;
         }
-        void initMutationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Node relatedNodeArg, string prevValueArg, string newValueArg, string attrNameArg, double attrChangeArg);
-        double MODIFICATION
+        void initMutationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Node relatedNodeArg, string prevValueArg, string newValueArg, string attrNameArg, int attrChangeArg);
+        int MODIFICATION
         {
             get;
             set;
         }
-        double REMOVAL
+        int REMOVAL
         {
             get;
             set;
         }
-        double ADDITION
+        int ADDITION
         {
             get;
             set;
@@ -9144,7 +9144,7 @@ namespace Web
             get;
             set;
         }
-        void initDragEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, double buttonArg, EventTarget relatedTargetArg, DataTransfer dataTransferArg);
+        void initDragEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, int buttonArg, EventTarget relatedTargetArg, DataTransfer dataTransferArg);
         void msConvertURL(File file, string targetType, string targetURL = null);
     }
     public partial interface HTMLTableSectionElement : HTMLElement, HTMLTableAlignment, DOML2DeprecatedBackgroundColorStyle
@@ -9159,9 +9159,9 @@ namespace Web
             get;
             set;
         }
-        void deleteRow(double index = 0.0);
-        object moveRow(double indexFrom = 0.0, double indexTo = 0.0);
-        HTMLElement insertRow(double index = 0.0);
+        void deleteRow(int index = 0);
+        object moveRow(int indexFrom = 0, int indexTo = 0);
+        HTMLElement insertRow(int index = 0);
     }
     public partial interface DOML2DeprecatedListNumberingAndBulletStyle
     {
@@ -9188,7 +9188,7 @@ namespace Web
             get;
             set;
         }
-        double selectionStart
+        int selectionStart
         {
             get;
             set;
@@ -9203,17 +9203,17 @@ namespace Web
             get;
             set;
         }
-        double size
+        int size
         {
             get;
             set;
         }
-        double loop
+        int loop
         {
             get;
             set;
         }
-        double selectionEnd
+        int selectionEnd
         {
             get;
             set;
@@ -9228,7 +9228,7 @@ namespace Web
             get;
             set;
         }
-        double vspace
+        int vspace
         {
             get;
             set;
@@ -9293,12 +9293,12 @@ namespace Web
             get;
             set;
         }
-        double hspace
+        int hspace
         {
             get;
             set;
         }
-        double maxLength
+        int maxLength
         {
             get;
             set;
@@ -9368,7 +9368,7 @@ namespace Web
             get;
             set;
         }
-        double valueAsNumber
+        int valueAsNumber
         {
             get;
             set;
@@ -9424,11 +9424,11 @@ namespace Web
             set;
         }
         TextRange createTextRange();
-        void setSelectionRange(double start, double end);
+        void setSelectionRange(int start, int end);
         void select();
         bool checkValidity();
-        void stepDown(double n = 0.0);
-        void stepUp(double n = 0.0);
+        void stepDown(int n = 0);
+        void stepUp(int n = 0);
         void setCustomValidity(string error);
     }
     public partial interface HTMLAnchorElement : HTMLElement, MSDataBindingExtensions
@@ -9548,7 +9548,7 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
+        string ToString();
     }
     public partial interface HTMLParamElement : HTMLElement
     {
@@ -9603,12 +9603,12 @@ namespace Web
     }
     public partial interface SVGAnimatedNumber
     {
-        double animVal
+        int animVal
         {
             get;
             set;
         }
-        double baseVal
+        int baseVal
         {
             get;
             set;
@@ -9616,107 +9616,107 @@ namespace Web
     }
     public partial interface PerformanceTiming
     {
-        double redirectStart
+        int redirectStart
         {
             get;
             set;
         }
-        double domainLookupEnd
+        int domainLookupEnd
         {
             get;
             set;
         }
-        double responseStart
+        int responseStart
         {
             get;
             set;
         }
-        double domComplete
+        int domComplete
         {
             get;
             set;
         }
-        double domainLookupStart
+        int domainLookupStart
         {
             get;
             set;
         }
-        double loadEventStart
+        int loadEventStart
         {
             get;
             set;
         }
-        double msFirstPaint
+        int msFirstPaint
         {
             get;
             set;
         }
-        double unloadEventEnd
+        int unloadEventEnd
         {
             get;
             set;
         }
-        double fetchStart
+        int fetchStart
         {
             get;
             set;
         }
-        double requestStart
+        int requestStart
         {
             get;
             set;
         }
-        double domInteractive
+        int domInteractive
         {
             get;
             set;
         }
-        double navigationStart
+        int navigationStart
         {
             get;
             set;
         }
-        double connectEnd
+        int connectEnd
         {
             get;
             set;
         }
-        double loadEventEnd
+        int loadEventEnd
         {
             get;
             set;
         }
-        double connectStart
+        int connectStart
         {
             get;
             set;
         }
-        double responseEnd
+        int responseEnd
         {
             get;
             set;
         }
-        double domLoading
+        int domLoading
         {
             get;
             set;
         }
-        double redirectEnd
+        int redirectEnd
         {
             get;
             set;
         }
-        double unloadEventStart
+        int unloadEventStart
         {
             get;
             set;
         }
-        double domContentLoadedEventStart
+        int domContentLoadedEventStart
         {
             get;
             set;
         }
-        double domContentLoadedEventEnd
+        int domContentLoadedEventEnd
         {
             get;
             set;
@@ -9738,7 +9738,7 @@ namespace Web
     }
     public partial interface EventException
     {
-        double code
+        int code
         {
             get;
             set;
@@ -9753,13 +9753,13 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
-        double DISPATCH_REQUEST_ERR
+        string ToString();
+        int DISPATCH_REQUEST_ERR
         {
             get;
             set;
         }
-        double UNSPECIFIED_EVENT_TYPE_ERR
+        int UNSPECIFIED_EVENT_TYPE_ERR
         {
             get;
             set;
@@ -9808,7 +9808,7 @@ namespace Web
             get;
             set;
         }
-        double r2
+        int r2
         {
             get;
             set;
@@ -9818,12 +9818,12 @@ namespace Web
             get;
             set;
         }
-        double angle
+        int angle
         {
             get;
             set;
         }
-        double r1
+        int r1
         {
             get;
             set;
@@ -9849,22 +9849,22 @@ namespace Web
     }
     public partial interface SVGStringList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        string replaceItem(string newItem, double index);
-        string getItem(double index);
+        string replaceItem(string newItem, int index);
+        string getItem(int index);
         void clear();
         string appendItem(string newItem);
         string initialize(string newItem);
-        string removeItem(double index);
-        string insertItemBefore(string newItem, double index);
+        string removeItem(int index);
+        string insertItemBefore(string newItem, int index);
     }
     public partial interface XDomainRequest
     {
-        double timeout
+        int timeout
         {
             get;
             set;
@@ -9914,7 +9914,7 @@ namespace Web
     }
     public partial interface ElementTraversal
     {
-        double childElementCount
+        int childElementCount
         {
             get;
             set;
@@ -9947,74 +9947,74 @@ namespace Web
             get;
             set;
         }
-        double valueInSpecifiedUnits
+        int valueInSpecifiedUnits
         {
             get;
             set;
         }
-        double value
+        int value
         {
             get;
             set;
         }
-        double unitType
+        int unitType
         {
             get;
             set;
         }
-        void newValueSpecifiedUnits(double unitType, double valueInSpecifiedUnits);
-        void convertToSpecifiedUnits(double unitType);
-        double SVG_LENGTHTYPE_NUMBER
+        void newValueSpecifiedUnits(int unitType, int valueInSpecifiedUnits);
+        void convertToSpecifiedUnits(int unitType);
+        int SVG_LENGTHTYPE_NUMBER
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_CM
+        int SVG_LENGTHTYPE_CM
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_PC
+        int SVG_LENGTHTYPE_PC
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_PERCENTAGE
+        int SVG_LENGTHTYPE_PERCENTAGE
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_MM
+        int SVG_LENGTHTYPE_MM
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_PT
+        int SVG_LENGTHTYPE_PT
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_IN
+        int SVG_LENGTHTYPE_IN
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_EMS
+        int SVG_LENGTHTYPE_EMS
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_PX
+        int SVG_LENGTHTYPE_PX
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_UNKNOWN
+        int SVG_LENGTHTYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_LENGTHTYPE_EXS
+        int SVG_LENGTHTYPE_EXS
         {
             get;
             set;
@@ -10080,26 +10080,26 @@ namespace Web
             get;
             set;
         }
-        double getCharNumAtPosition(SVGPoint point);
-        SVGPoint getStartPositionOfChar(double charnum);
-        SVGRect getExtentOfChar(double charnum);
-        double getComputedTextLength();
-        double getSubStringLength(double charnum, double nchars);
-        void selectSubString(double charnum, double nchars);
-        double getNumberOfChars();
-        double getRotationOfChar(double charnum);
-        SVGPoint getEndPositionOfChar(double charnum);
-        double LENGTHADJUST_SPACING
+        int getCharNumAtPosition(SVGPoint point);
+        SVGPoint getStartPositionOfChar(int charnum);
+        SVGRect getExtentOfChar(int charnum);
+        int getComputedTextLength();
+        int getSubStringLength(int charnum, int nchars);
+        void selectSubString(int charnum, int nchars);
+        int getNumberOfChars();
+        int getRotationOfChar(int charnum);
+        SVGPoint getEndPositionOfChar(int charnum);
+        int LENGTHADJUST_SPACING
         {
             get;
             set;
         }
-        double LENGTHADJUST_SPACINGANDGLYPHS
+        int LENGTHADJUST_SPACINGANDGLYPHS
         {
             get;
             set;
         }
-        double LENGTHADJUST_UNKNOWN
+        int LENGTHADJUST_UNKNOWN
         {
             get;
             set;
@@ -10158,7 +10158,7 @@ namespace Web
         void reload(bool flag = false);
         void replace(string url);
         void assign(string url);
-        string.ToString();
+        string ToString();
     }
     public partial interface HTMLTitleElement : HTMLElement
     {
@@ -10188,12 +10188,12 @@ namespace Web
             get;
             set;
         }
-        double startTime
+        int startTime
         {
             get;
             set;
         }
-        double duration
+        int duration
         {
             get;
             set;
@@ -10206,12 +10206,12 @@ namespace Web
     }
     public partial interface SVGTransform
     {
-        double type
+        int type
         {
             get;
             set;
         }
-        double angle
+        int angle
         {
             get;
             set;
@@ -10221,43 +10221,43 @@ namespace Web
             get;
             set;
         }
-        void setTranslate(double tx, double ty);
-        void setScale(double sx, double sy);
+        void setTranslate(int tx, int ty);
+        void setScale(int sx, int sy);
         void setMatrix(SVGMatrix matrix);
-        void setSkewY(double angle);
-        void setRotate(double angle, double cx, double cy);
-        void setSkewX(double angle);
-        double SVG_TRANSFORM_SKEWX
+        void setSkewY(int angle);
+        void setRotate(int angle, int cx, int cy);
+        void setSkewX(int angle);
+        int SVG_TRANSFORM_SKEWX
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_UNKNOWN
+        int SVG_TRANSFORM_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_SCALE
+        int SVG_TRANSFORM_SCALE
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_TRANSLATE
+        int SVG_TRANSFORM_TRANSLATE
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_MATRIX
+        int SVG_TRANSFORM_MATRIX
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_ROTATE
+        int SVG_TRANSFORM_ROTATE
         {
             get;
             set;
         }
-        double SVG_TRANSFORM_SKEWY
+        int SVG_TRANSFORM_SKEWY
         {
             get;
             set;
@@ -10265,7 +10265,7 @@ namespace Web
     }
     public partial interface UIEvent : Event
     {
-        double detail
+        int detail
         {
             get;
             set;
@@ -10275,7 +10275,7 @@ namespace Web
             get;
             set;
         }
-        void initUIEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg);
+        void initUIEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg);
     }
     public partial interface SVGURIReference
     {
@@ -10287,7 +10287,7 @@ namespace Web
     }
     public partial interface SVGPathSeg
     {
-        double pathSegType
+        int pathSegType
         {
             get;
             set;
@@ -10297,102 +10297,102 @@ namespace Web
             get;
             set;
         }
-        double PATHSEG_MOVETO_REL
+        int PATHSEG_MOVETO_REL
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_VERTICAL_REL
+        int PATHSEG_LINETO_VERTICAL_REL
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_CUBIC_SMOOTH_ABS
+        int PATHSEG_CURVETO_CUBIC_SMOOTH_ABS
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_QUADRATIC_REL
+        int PATHSEG_CURVETO_QUADRATIC_REL
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_CUBIC_ABS
+        int PATHSEG_CURVETO_CUBIC_ABS
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_HORIZONTAL_ABS
+        int PATHSEG_LINETO_HORIZONTAL_ABS
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_QUADRATIC_ABS
+        int PATHSEG_CURVETO_QUADRATIC_ABS
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_ABS
+        int PATHSEG_LINETO_ABS
         {
             get;
             set;
         }
-        double PATHSEG_CLOSEPATH
+        int PATHSEG_CLOSEPATH
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_HORIZONTAL_REL
+        int PATHSEG_LINETO_HORIZONTAL_REL
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_CUBIC_SMOOTH_REL
+        int PATHSEG_CURVETO_CUBIC_SMOOTH_REL
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_REL
+        int PATHSEG_LINETO_REL
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS
+        int PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS
         {
             get;
             set;
         }
-        double PATHSEG_ARC_REL
+        int PATHSEG_ARC_REL
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_CUBIC_REL
+        int PATHSEG_CURVETO_CUBIC_REL
         {
             get;
             set;
         }
-        double PATHSEG_UNKNOWN
+        int PATHSEG_UNKNOWN
         {
             get;
             set;
         }
-        double PATHSEG_LINETO_VERTICAL_ABS
+        int PATHSEG_LINETO_VERTICAL_ABS
         {
             get;
             set;
         }
-        double PATHSEG_ARC_ABS
+        int PATHSEG_ARC_ABS
         {
             get;
             set;
         }
-        double PATHSEG_MOVETO_ABS
+        int PATHSEG_MOVETO_ABS
         {
             get;
             set;
         }
-        double PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL
+        int PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL
         {
             get;
             set;
@@ -10400,39 +10400,39 @@ namespace Web
     }
     public partial interface WheelEvent : MouseEvent
     {
-        double deltaZ
+        int deltaZ
         {
             get;
             set;
         }
-        double deltaX
+        int deltaX
         {
             get;
             set;
         }
-        double deltaMode
+        int deltaMode
         {
             get;
             set;
         }
-        double deltaY
+        int deltaY
         {
             get;
             set;
         }
-        void initWheelEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, double buttonArg, EventTarget relatedTargetArg, string modifiersListArg, double deltaXArg, double deltaYArg, double deltaZArg, double deltaMode);
+        void initWheelEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, int buttonArg, EventTarget relatedTargetArg, string modifiersListArg, int deltaXArg, int deltaYArg, int deltaZArg, int deltaMode);
         void getCurrentPoint(Element element);
-        double DOM_DELTA_PIXEL
+        int DOM_DELTA_PIXEL
         {
             get;
             set;
         }
-        double DOM_DELTA_LINE
+        int DOM_DELTA_LINE
         {
             get;
             set;
         }
-        double DOM_DELTA_PAGE
+        int DOM_DELTA_PAGE
         {
             get;
             set;
@@ -10445,7 +10445,7 @@ namespace Web
     }
     public partial interface SVGNumber
     {
-        double value
+        int value
         {
             get;
             set;
@@ -10453,8 +10453,8 @@ namespace Web
     }
     public partial interface SVGPathElement : SVGElement, SVGStylable, SVGAnimatedPathData, SVGTransformable, SVGLangSpace, SVGTests, SVGExternalResourcesRequired
     {
-        double getPathSegAtLength(double distance);
-        SVGPoint getPointAtLength(double distance);
+        int getPathSegAtLength(int distance);
+        SVGPoint getPointAtLength(int distance);
         SVGPathSegCurvetoQuadraticAbs createSVGPathSegCurvetoQuadraticAbs(double x, double y, double x1, double y1);
         SVGPathSegLinetoRel createSVGPathSegLinetoRel(double x, double y);
         SVGPathSegCurvetoQuadraticRel createSVGPathSegCurvetoQuadraticRel(double x, double y, double x1, double y1);
@@ -10467,14 +10467,14 @@ namespace Web
         SVGPathSegCurvetoCubicSmoothAbs createSVGPathSegCurvetoCubicSmoothAbs(double x, double y, double x2, double y2);
         SVGPathSegMovetoAbs createSVGPathSegMovetoAbs(double x, double y);
         SVGPathSegLinetoVerticalRel createSVGPathSegLinetoVerticalRel(double y);
-        SVGPathSegArcRel createSVGPathSegArcRel(double x, double y, double r1, double r2, double angle, bool largeArcFlag, bool sweepFlag);
+        SVGPathSegArcRel createSVGPathSegArcRel(double x, double y, int r1, int r2, int angle, bool largeArcFlag, bool sweepFlag);
         SVGPathSegCurvetoQuadraticSmoothAbs createSVGPathSegCurvetoQuadraticSmoothAbs(double x, double y);
         SVGPathSegLinetoHorizontalRel createSVGPathSegLinetoHorizontalRel(double x);
-        double getTotalLength();
+        int getTotalLength();
         SVGPathSegCurvetoCubicSmoothRel createSVGPathSegCurvetoCubicSmoothRel(double x, double y, double x2, double y2);
         SVGPathSegLinetoHorizontalAbs createSVGPathSegLinetoHorizontalAbs(double x);
         SVGPathSegLinetoVerticalAbs createSVGPathSegLinetoVerticalAbs(double y);
-        SVGPathSegArcAbs createSVGPathSegArcAbs(double x, double y, double r1, double r2, double angle, bool largeArcFlag, bool sweepFlag);
+        SVGPathSegArcAbs createSVGPathSegArcAbs(double x, double y, int r1, int r2, int angle, bool largeArcFlag, bool sweepFlag);
     }
     public partial interface MSCompatibleInfo
     {
@@ -10496,7 +10496,7 @@ namespace Web
             get;
             set;
         }
-        Text splitText(double offset);
+        Text splitText(int offset);
         Text replaceWholeText(string content);
     }
     public partial interface SVGAnimatedRect
@@ -10527,18 +10527,18 @@ namespace Web
     }
     public partial interface SVGPathSegList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        SVGPathSeg replaceItem(SVGPathSeg newItem, double index);
-        SVGPathSeg getItem(double index);
+        SVGPathSeg replaceItem(SVGPathSeg newItem, int index);
+        SVGPathSeg getItem(int index);
         void clear();
         SVGPathSeg appendItem(SVGPathSeg newItem);
         SVGPathSeg initialize(SVGPathSeg newItem);
-        SVGPathSeg removeItem(double index);
-        SVGPathSeg insertItemBefore(SVGPathSeg newItem, double index);
+        SVGPathSeg removeItem(int index);
+        SVGPathSeg insertItemBefore(SVGPathSeg newItem, int index);
     }
     public partial interface HTMLUnknownElement : HTMLElement, MSDataBindingRecordSetReadonlyExtensions { }
     public partial interface HTMLAudioElement : HTMLMediaElement { }
@@ -10564,7 +10564,7 @@ namespace Web
             get;
             set;
         }
-        double loop
+        int loop
         {
             get;
             set;
@@ -10572,7 +10572,7 @@ namespace Web
     }
     public partial interface PositionError
     {
-        double code
+        int code
         {
             get;
             set;
@@ -10582,18 +10582,18 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
-        double POSITION_UNAVAILABLE
+        string ToString();
+        int POSITION_UNAVAILABLE
         {
             get;
             set;
         }
-        double PERMISSION_DENIED
+        int PERMISSION_DENIED
         {
             get;
             set;
         }
-        double TIMEOUT
+        int TIMEOUT
         {
             get;
             set;
@@ -10611,7 +10611,7 @@ namespace Web
             get;
             set;
         }
-        double cellIndex
+        int cellIndex
         {
             get;
             set;
@@ -10626,7 +10626,7 @@ namespace Web
             get;
             set;
         }
-        double colSpan
+        int colSpan
         {
             get;
             set;
@@ -10656,7 +10656,7 @@ namespace Web
             get;
             set;
         }
-        double rowSpan
+        int rowSpan
         {
             get;
             set;
@@ -10717,7 +10717,7 @@ namespace Web
     }
     public partial interface MSNamespaceInfoCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -10745,13 +10745,13 @@ namespace Web
     }
     public partial interface StyleSheetList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        StyleSheet item(double index = 0.0);
-        StyleSheet this[double index]
+        StyleSheet item(int index = 0);
+        StyleSheet this[int index]
         {
             get;
             set;
@@ -10791,7 +10791,7 @@ namespace Web
             get;
             set;
         }
-        double size
+        int size
         {
             get;
             set;
@@ -10819,17 +10819,17 @@ namespace Web
             get;
             set;
         }
-        double selectionStart
+        int selectionStart
         {
             get;
             set;
         }
-        double rows
+        int rows
         {
             get;
             set;
         }
-        double cols
+        int cols
         {
             get;
             set;
@@ -10844,7 +10844,7 @@ namespace Web
             get;
             set;
         }
-        double selectionEnd
+        int selectionEnd
         {
             get;
             set;
@@ -10879,7 +10879,7 @@ namespace Web
             get;
             set;
         }
-        double maxLength
+        int maxLength
         {
             get;
             set;
@@ -10895,25 +10895,25 @@ namespace Web
             set;
         }
         TextRange createTextRange();
-        void setSelectionRange(double start, double end);
+        void setSelectionRange(int start, int end);
         void select();
         bool checkValidity();
         void setCustomValidity(string error);
     }
     public partial interface Geolocation
     {
-        void clearWatch(double watchId);
+        void clearWatch(int watchId);
         void getCurrentPosition(PositionCallback successCallback, PositionErrorCallback errorCallback = null, PositionOptions options = null);
         double watchPosition(PositionCallback successCallback, PositionErrorCallback errorCallback = null, PositionOptions options = null);
     }
     public partial interface DOML2DeprecatedMarginStyle
     {
-        double vspace
+        int vspace
         {
             get;
             set;
         }
-        double hspace
+        int hspace
         {
             get;
             set;
@@ -10967,7 +10967,7 @@ namespace Web
             get;
             set;
         }
-        double vspace
+        int vspace
         {
             get;
             set;
@@ -10977,12 +10977,12 @@ namespace Web
             get;
             set;
         }
-        double scrollAmount
+        int scrollAmount
         {
             get;
             set;
         }
-        double scrollDelay
+        int scrollDelay
         {
             get;
             set;
@@ -10997,7 +10997,7 @@ namespace Web
             get;
             set;
         }
-        double loop
+        int loop
         {
             get;
             set;
@@ -11007,7 +11007,7 @@ namespace Web
             get;
             set;
         }
-        double hspace
+        int hspace
         {
             get;
             set;
@@ -11042,7 +11042,7 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -11056,7 +11056,7 @@ namespace Web
     }
     public partial interface History
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -11130,13 +11130,13 @@ namespace Web
     }
     public partial interface TimeRanges
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        double start(double index);
-        double end(double index);
+        int start(int index);
+        int end(int index);
     }
     public partial interface CSSRule
     {
@@ -11155,62 +11155,62 @@ namespace Web
             get;
             set;
         }
-        double type
+        int type
         {
             get;
             set;
         }
-        double IMPORT_RULE
+        int IMPORT_RULE
         {
             get;
             set;
         }
-        double MEDIA_RULE
+        int MEDIA_RULE
         {
             get;
             set;
         }
-        double STYLE_RULE
+        int STYLE_RULE
         {
             get;
             set;
         }
-        double NAMESPACE_RULE
+        int NAMESPACE_RULE
         {
             get;
             set;
         }
-        double PAGE_RULE
+        int PAGE_RULE
         {
             get;
             set;
         }
-        double UNKNOWN_RULE
+        int UNKNOWN_RULE
         {
             get;
             set;
         }
-        double FONT_FACE_RULE
+        int FONT_FACE_RULE
         {
             get;
             set;
         }
-        double CHARSET_RULE
+        int CHARSET_RULE
         {
             get;
             set;
         }
-        double KEYFRAMES_RULE
+        int KEYFRAMES_RULE
         {
             get;
             set;
         }
-        double KEYFRAME_RULE
+        int KEYFRAME_RULE
         {
             get;
             set;
         }
-        double VIEWPORT_RULE
+        int VIEWPORT_RULE
         {
             get;
             set;
@@ -11244,47 +11244,47 @@ namespace Web
     }
     public partial interface SVGMatrix
     {
-        double e
+        int e
         {
             get;
             set;
         }
-        double c
+        int c
         {
             get;
             set;
         }
-        double a
+        int a
         {
             get;
             set;
         }
-        double b
+        int b
         {
             get;
             set;
         }
-        double d
+        int d
         {
             get;
             set;
         }
-        double f
+        int f
         {
             get;
             set;
         }
         SVGMatrix multiply(SVGMatrix secondMatrix);
         SVGMatrix flipY();
-        SVGMatrix skewY(double angle);
+        SVGMatrix skewY(int angle);
         SVGMatrix inverse();
-        SVGMatrix scaleNonUniform(double scaleFactorX, double scaleFactorY);
-        SVGMatrix rotate(double angle);
+        SVGMatrix scaleNonUniform(int scaleFactorX, int scaleFactorY);
+        SVGMatrix rotate(int angle);
         SVGMatrix flipX();
         SVGMatrix translate(double x, double y);
-        SVGMatrix scale(double scaleFactor);
+        SVGMatrix scale(int scaleFactor);
         SVGMatrix rotateFromVector(double x, double y);
-        SVGMatrix skewX(double angle);
+        SVGMatrix skewX(int angle);
     }
     public partial interface MSPopupWindow
     {
@@ -11298,7 +11298,7 @@ namespace Web
             get;
             set;
         }
-        void show(double x, double y, double w, double h, object element = null);
+        void show(double x, double y, double w, int h, object element = null);
         void hide();
     }
     public partial interface BeforeUnloadEvent : Event
@@ -11344,7 +11344,7 @@ namespace Web
     }
     public partial interface Event
     {
-        double timeStamp
+        int timeStamp
         {
             get;
             set;
@@ -11374,7 +11374,7 @@ namespace Web
             get;
             set;
         }
-        double eventPhase
+        int eventPhase
         {
             get;
             set;
@@ -11403,17 +11403,17 @@ namespace Web
         void stopPropagation();
         void stopImmediatePropagation();
         void preventDefault();
-        double CAPTURING_PHASE
+        int CAPTURING_PHASE
         {
             get;
             set;
         }
-        double AT_TARGET
+        int AT_TARGET
         {
             get;
             set;
         }
-        double BUBBLING_PHASE
+        int BUBBLING_PHASE
         {
             get;
             set;
@@ -11431,7 +11431,7 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -11449,7 +11449,7 @@ namespace Web
             get;
             set;
         }
-        double span
+        int span
         {
             get;
             set;
@@ -11457,7 +11457,7 @@ namespace Web
     }
     public partial interface SVGException
     {
-        double code
+        int code
         {
             get;
             set;
@@ -11472,18 +11472,18 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
-        double SVG_MATRIX_NOT_INVERTABLE
+        string ToString();
+        int SVG_MATRIX_NOT_INVERTABLE
         {
             get;
             set;
         }
-        double SVG_WRONG_TYPE_ERR
+        int SVG_WRONG_TYPE_ERR
         {
             get;
             set;
         }
-        double SVG_INVALID_VALUE_ERR
+        int SVG_INVALID_VALUE_ERR
         {
             get;
             set;
@@ -11532,12 +11532,12 @@ namespace Web
     }
     public partial interface SVGAnimatedEnumeration
     {
-        double animVal
+        int animVal
         {
             get;
             set;
         }
-        double baseVal
+        int baseVal
         {
             get;
             set;
@@ -11545,7 +11545,7 @@ namespace Web
     }
     public partial interface DOML2DeprecatedSizeProperty
     {
-        double size
+        int size
         {
             get;
             set;
@@ -11585,7 +11585,7 @@ namespace Web
             set;
         }
     }
-    public delegate void ErrorEventHandler(Event _event, string source, double fileno, double columnNumber);
+    public delegate void ErrorEventHandler(Event _event, string source, int fileno, int columnNumber);
     public partial interface HTMLDivElement : HTMLElement, MSDataBindingExtensions
     {
         string align
@@ -11609,14 +11609,14 @@ namespace Web
     }
     public partial interface NamedNodeMap
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
         Attr removeNamedItemNS(string namespaceURI, string localName);
-        Attr item(double index);
-        Attr this[double index]
+        Attr item(int index);
+        Attr this[int index]
         {
             get;
             set;
@@ -11629,7 +11629,7 @@ namespace Web
     }
     public partial interface MediaList
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -11641,13 +11641,13 @@ namespace Web
         }
         void deleteMedium(string oldMedium);
         void appendMedium(string newMedium);
-        string item(double index);
-        string this[double index]
+        string item(int index);
+        string this[int index]
         {
             get;
             set;
         }
-        string.ToString();
+        string ToString();
     }
     public partial interface SVGPathSegCurvetoQuadraticSmoothAbs : SVGPathSeg
     {
@@ -11687,18 +11687,18 @@ namespace Web
     }
     public partial interface SVGLengthList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        SVGLength replaceItem(SVGLength newItem, double index);
-        SVGLength getItem(double index);
+        SVGLength replaceItem(SVGLength newItem, int index);
+        SVGLength getItem(int index);
         void clear();
         SVGLength appendItem(SVGLength newItem);
         SVGLength initialize(SVGLength newItem);
-        SVGLength removeItem(double index);
-        SVGLength insertItemBefore(SVGLength newItem, double index);
+        SVGLength removeItem(int index);
+        SVGLength insertItemBefore(SVGLength newItem, int index);
     }
     public partial interface ProcessingInstruction : Node
     {
@@ -11725,7 +11725,7 @@ namespace Web
             get;
             set;
         }
-        double screenLeft
+        int screenLeft
         {
             get;
             set;
@@ -11735,7 +11735,7 @@ namespace Web
             get;
             set;
         }
-        double maxConnectionsPerServer
+        int maxConnectionsPerServer
         {
             get;
             set;
@@ -11785,7 +11785,7 @@ namespace Web
             get;
             set;
         }
-        double screenTop
+        int screenTop
         {
             get;
             set;
@@ -11797,15 +11797,15 @@ namespace Web
         }
         Window showModelessDialog(string url = null, object argument = null, object options = null);
         void navigate(string url);
-        void resizeBy(double x = 0.0, double y = 0.0);
+        void resizeBy(double x = 0, double y = 0);
         object item(object index);
-        void resizeTo(double x = 0.0, double y = 0.0);
+        void resizeTo(double x = 0, double y = 0);
         MSPopupWindow createPopup(object arguments = null);
         string toStaticHTML(string html);
         object execScript(string code, string language = null);
         void msWriteProfilerMark(string profilerMarkName);
-        void moveTo(double x = 0.0, double y = 0.0);
-        void moveBy(double x = 0.0, double y = 0.0);
+        void moveTo(double x = 0, double y = 0);
+        void moveBy(double x = 0, double y = 0);
         void showHelp(string url, object helpArg = null, string features = null);
         void captureEvents();
         void releaseEvents();
@@ -11813,12 +11813,12 @@ namespace Web
     }
     public partial interface MSBehaviorUrnsCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        string item(double index);
+        string item(int index);
     }
     public partial interface CSSFontFaceRule : CSSRule
     {
@@ -11838,7 +11838,7 @@ namespace Web
     }
     public partial interface TextEvent : UIEvent
     {
-        double inputMethod
+        int inputMethod
         {
             get;
             set;
@@ -11853,53 +11853,53 @@ namespace Web
             get;
             set;
         }
-        void initTextEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, string dataArg, double inputMethod, string locale);
-        double DOM_INPUT_METHOD_KEYBOARD
+        void initTextEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, string dataArg, int inputMethod, string locale);
+        int DOM_INPUT_METHOD_KEYBOARD
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_DROP
+        int DOM_INPUT_METHOD_DROP
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_IME
+        int DOM_INPUT_METHOD_IME
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_SCRIPT
+        int DOM_INPUT_METHOD_SCRIPT
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_VOICE
+        int DOM_INPUT_METHOD_VOICE
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_UNKNOWN
+        int DOM_INPUT_METHOD_UNKNOWN
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_PASTE
+        int DOM_INPUT_METHOD_PASTE
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_HANDWRITING
+        int DOM_INPUT_METHOD_HANDWRITING
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_OPTION
+        int DOM_INPUT_METHOD_OPTION
         {
             get;
             set;
         }
-        double DOM_INPUT_METHOD_MULTIMODAL
+        int DOM_INPUT_METHOD_MULTIMODAL
         {
             get;
             set;
@@ -11930,13 +11930,13 @@ namespace Web
     }
     public partial interface BookmarkCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        object item(double index);
-        object this[double index]
+        object item(int index);
+        object this[int index]
         {
             get;
             set;
@@ -12006,7 +12006,7 @@ namespace Web
             get;
             set;
         }
-        double connectionSpeed
+        int connectionSpeed
         {
             get;
             set;
@@ -12053,7 +12053,7 @@ namespace Web
     }
     public partial interface HTMLFormElement : HTMLElement, MSHTMLCollectionExtensions
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -12126,17 +12126,17 @@ namespace Web
             get;
             set;
         }
-        double SVG_ZOOMANDPAN_MAGNIFY
+        int SVG_ZOOMANDPAN_MAGNIFY
         {
             get;
             set;
         }
-        double SVG_ZOOMANDPAN_UNKNOWN
+        int SVG_ZOOMANDPAN_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_ZOOMANDPAN_DISABLE
+        int SVG_ZOOMANDPAN_DISABLE
         {
             get;
             set;
@@ -12144,7 +12144,7 @@ namespace Web
     }
     public partial interface HTMLMediaElement : HTMLElement
     {
-        double initialTime
+        int initialTime
         {
             get;
             set;
@@ -12204,7 +12204,7 @@ namespace Web
             get;
             set;
         }
-        double volume
+        int volume
         {
             get;
             set;
@@ -12214,12 +12214,12 @@ namespace Web
             get;
             set;
         }
-        double playbackRate
+        int playbackRate
         {
             get;
             set;
         }
-        double duration
+        int duration
         {
             get;
             set;
@@ -12229,7 +12229,7 @@ namespace Web
             get;
             set;
         }
-        double defaultPlaybackRate
+        int defaultPlaybackRate
         {
             get;
             set;
@@ -12244,7 +12244,7 @@ namespace Web
             get;
             set;
         }
-        double currentTime
+        int currentTime
         {
             get;
             set;
@@ -12254,7 +12254,7 @@ namespace Web
             get;
             set;
         }
-        double networkState
+        int networkState
         {
             get;
             set;
@@ -12328,47 +12328,47 @@ namespace Web
         void msInsertAudioEffect(string activatableClassId, bool effectRequired, object config = null);
         void msSetMediaKeys(MSMediaKeys mediaKeys);
         TextTrack addTextTrack(string kind, string label = null, string language = null);
-        double HAVE_METADATA
+        int HAVE_METADATA
         {
             get;
             set;
         }
-        double HAVE_CURRENT_DATA
+        int HAVE_CURRENT_DATA
         {
             get;
             set;
         }
-        double HAVE_NOTHING
+        int HAVE_NOTHING
         {
             get;
             set;
         }
-        double NETWORK_NO_SOURCE
+        int NETWORK_NO_SOURCE
         {
             get;
             set;
         }
-        double HAVE_ENOUGH_DATA
+        int HAVE_ENOUGH_DATA
         {
             get;
             set;
         }
-        double NETWORK_EMPTY
+        int NETWORK_EMPTY
         {
             get;
             set;
         }
-        double NETWORK_LOADING
+        int NETWORK_LOADING
         {
             get;
             set;
         }
-        double NETWORK_IDLE
+        int NETWORK_IDLE
         {
             get;
             set;
         }
-        double HAVE_FUTURE_DATA
+        int HAVE_FUTURE_DATA
         {
             get;
             set;
@@ -12396,7 +12396,7 @@ namespace Web
     }
     public partial interface MSMimeTypesCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -12457,32 +12457,32 @@ namespace Web
             get;
             set;
         }
-        double TEXTPATH_SPACINGTYPE_EXACT
+        int TEXTPATH_SPACINGTYPE_EXACT
         {
             get;
             set;
         }
-        double TEXTPATH_METHODTYPE_STRETCH
+        int TEXTPATH_METHODTYPE_STRETCH
         {
             get;
             set;
         }
-        double TEXTPATH_SPACINGTYPE_AUTO
+        int TEXTPATH_SPACINGTYPE_AUTO
         {
             get;
             set;
         }
-        double TEXTPATH_SPACINGTYPE_UNKNOWN
+        int TEXTPATH_SPACINGTYPE_UNKNOWN
         {
             get;
             set;
         }
-        double TEXTPATH_METHODTYPE_UNKNOWN
+        int TEXTPATH_METHODTYPE_UNKNOWN
         {
             get;
             set;
         }
-        double TEXTPATH_METHODTYPE_ALIGN
+        int TEXTPATH_METHODTYPE_ALIGN
         {
             get;
             set;
@@ -12498,13 +12498,13 @@ namespace Web
     }
     public partial interface NodeList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        Node item(double index);
-        Node this[double index]
+        Node item(int index);
+        Node this[int index]
         {
             get;
             set;
@@ -12532,22 +12532,22 @@ namespace Web
             get;
             set;
         }
-        double SVG_SPREADMETHOD_REFLECT
+        int SVG_SPREADMETHOD_REFLECT
         {
             get;
             set;
         }
-        double SVG_SPREADMETHOD_PAD
+        int SVG_SPREADMETHOD_PAD
         {
             get;
             set;
         }
-        double SVG_SPREADMETHOD_UNKNOWN
+        int SVG_SPREADMETHOD_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_SPREADMETHOD_REPEAT
+        int SVG_SPREADMETHOD_REPEAT
         {
             get;
             set;
@@ -12555,83 +12555,83 @@ namespace Web
     }
     public partial interface NodeFilter
     {
-        double acceptNode(Node n);
-        double SHOW_ENTITY_REFERENCE
+        int acceptNode(Node n);
+        int SHOW_ENTITY_REFERENCE
         {
             get;
             set;
         }
-        double SHOW_NOTATION
+        int SHOW_NOTATION
         {
             get;
             set;
         }
-        double SHOW_ENTITY
+        int SHOW_ENTITY
         {
             get;
             set;
         }
-        double SHOW_DOCUMENT
+        int SHOW_DOCUMENT
         {
             get;
             set;
         }
-        double SHOW_PROCESSING_INSTRUCTION
+        int SHOW_PROCESSING_INSTRUCTION
         {
             get;
             set;
         }
-        double FILTER_REJECT
+        int FILTER_REJECT
         {
             get;
             set;
         }
-        double SHOW_CDATA_SECTION
+        int SHOW_CDATA_SECTION
         {
             get;
             set;
         }
-        double FILTER_ACCEPT
+        int FILTER_ACCEPT
         {
             get;
             set;
         }
-        double SHOW_ALL
+        int SHOW_ALL
         {
             get;
             set;
         }
-        double SHOW_DOCUMENT_TYPE
+        int SHOW_DOCUMENT_TYPE
         {
             get;
             set;
         }
-        double SHOW_TEXT
+        int SHOW_TEXT
         {
             get;
             set;
         }
-        double SHOW_ELEMENT
+        int SHOW_ELEMENT
         {
             get;
             set;
         }
-        double SHOW_COMMENT
+        int SHOW_COMMENT
         {
             get;
             set;
         }
-        double FILTER_SKIP
+        int FILTER_SKIP
         {
             get;
             set;
         }
-        double SHOW_ATTRIBUTE
+        int SHOW_ATTRIBUTE
         {
             get;
             set;
         }
-        double SHOW_DOCUMENT_FRAGMENT
+        int SHOW_DOCUMENT_FRAGMENT
         {
             get;
             set;
@@ -12639,52 +12639,52 @@ namespace Web
     }
     public partial interface SVGNumberList
     {
-        double numberOfItems
+        int numberOfItems
         {
             get;
             set;
         }
-        SVGNumber replaceItem(SVGNumber newItem, double index);
-        SVGNumber getItem(double index);
+        SVGNumber replaceItem(SVGNumber newItem, int index);
+        SVGNumber getItem(int index);
         void clear();
         SVGNumber appendItem(SVGNumber newItem);
         SVGNumber initialize(SVGNumber newItem);
-        SVGNumber removeItem(double index);
-        SVGNumber insertItemBefore(SVGNumber newItem, double index);
+        SVGNumber removeItem(int index);
+        SVGNumber insertItemBefore(SVGNumber newItem, int index);
     }
     public partial interface MediaError
     {
-        double code
+        int code
         {
             get;
             set;
         }
-        double msExtendedCode
+        int msExtendedCode
         {
             get;
             set;
         }
-        double MEDIA_ERR_ABORTED
+        int MEDIA_ERR_ABORTED
         {
             get;
             set;
         }
-        double MEDIA_ERR_NETWORK
+        int MEDIA_ERR_NETWORK
         {
             get;
             set;
         }
-        double MEDIA_ERR_SRC_NOT_SUPPORTED
+        int MEDIA_ERR_SRC_NOT_SUPPORTED
         {
             get;
             set;
         }
-        double MEDIA_ERR_DECODE
+        int MEDIA_ERR_DECODE
         {
             get;
             set;
         }
-        double MS_MEDIA_ERR_ENCRYPTED
+        int MS_MEDIA_ERR_ENCRYPTED
         {
             get;
             set;
@@ -12737,7 +12737,7 @@ namespace Web
             get;
             set;
         }
-        double loop
+        int loop
         {
             get;
             set;
@@ -12753,47 +12753,47 @@ namespace Web
     }
     public partial interface PerformanceResourceTiming : PerformanceEntry
     {
-        double redirectStart
+        int redirectStart
         {
             get;
             set;
         }
-        double redirectEnd
+        int redirectEnd
         {
             get;
             set;
         }
-        double domainLookupEnd
+        int domainLookupEnd
         {
             get;
             set;
         }
-        double responseStart
+        int responseStart
         {
             get;
             set;
         }
-        double domainLookupStart
+        int domainLookupStart
         {
             get;
             set;
         }
-        double fetchStart
+        int fetchStart
         {
             get;
             set;
         }
-        double requestStart
+        int requestStart
         {
             get;
             set;
         }
-        double connectEnd
+        int connectEnd
         {
             get;
             set;
         }
-        double connectStart
+        int connectStart
         {
             get;
             set;
@@ -12803,7 +12803,7 @@ namespace Web
             get;
             set;
         }
-        double responseEnd
+        int responseEnd
         {
             get;
             set;
@@ -12955,7 +12955,7 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
@@ -13067,7 +13067,7 @@ namespace Web
     }
     public partial interface CharacterData : Node
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -13077,15 +13077,15 @@ namespace Web
             get;
             set;
         }
-        void deleteData(double offset, double count);
-        void replaceData(double offset, double count, string arg);
+        void deleteData(int offset, int count);
+        void replaceData(int offset, int count, string arg);
         void appendData(string arg);
-        void insertData(double offset, string arg);
-        string substringData(double offset, double count);
+        void insertData(int offset, string arg);
+        string substringData(int offset, int count);
     }
     public partial interface HTMLOptGroupElement : HTMLElement, MSDataBindingExtensions
     {
-        double index
+        int index
         {
             get;
             set;
@@ -13154,7 +13154,7 @@ namespace Web
     }
     public partial interface DOMException
     {
-        double code
+        int code
         {
             get;
             set;
@@ -13169,138 +13169,138 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
-        double HIERARCHY_REQUEST_ERR
+        string ToString();
+        int HIERARCHY_REQUEST_ERR
         {
             get;
             set;
         }
-        double NO_MODIFICATION_ALLOWED_ERR
+        int NO_MODIFICATION_ALLOWED_ERR
         {
             get;
             set;
         }
-        double INVALID_MODIFICATION_ERR
+        int INVALID_MODIFICATION_ERR
         {
             get;
             set;
         }
-        double NAMESPACE_ERR
+        int NAMESPACE_ERR
         {
             get;
             set;
         }
-        double INVALID_CHARACTER_ERR
+        int INVALID_CHARACTER_ERR
         {
             get;
             set;
         }
-        double TYPE_MISMATCH_ERR
+        int TYPE_MISMATCH_ERR
         {
             get;
             set;
         }
-        double ABORT_ERR
+        int ABORT_ERR
         {
             get;
             set;
         }
-        double INVALID_STATE_ERR
+        int INVALID_STATE_ERR
         {
             get;
             set;
         }
-        double SECURITY_ERR
+        int SECURITY_ERR
         {
             get;
             set;
         }
-        double NETWORK_ERR
+        int NETWORK_ERR
         {
             get;
             set;
         }
-        double WRONG_DOCUMENT_ERR
+        int WRONG_DOCUMENT_ERR
         {
             get;
             set;
         }
-        double QUOTA_EXCEEDED_ERR
+        int QUOTA_EXCEEDED_ERR
         {
             get;
             set;
         }
-        double INDEX_SIZE_ERR
+        int INDEX_SIZE_ERR
         {
             get;
             set;
         }
-        double DOMSTRING_SIZE_ERR
+        int DOMSTRING_SIZE_ERR
         {
             get;
             set;
         }
-        double SYNTAX_ERR
+        int SYNTAX_ERR
         {
             get;
             set;
         }
-        double SERIALIZE_ERR
+        int SERIALIZE_ERR
         {
             get;
             set;
         }
-        double VALIDATION_ERR
+        int VALIDATION_ERR
         {
             get;
             set;
         }
-        double NOT_FOUND_ERR
+        int NOT_FOUND_ERR
         {
             get;
             set;
         }
-        double URL_MISMATCH_ERR
+        int URL_MISMATCH_ERR
         {
             get;
             set;
         }
-        double PARSE_ERR
+        int PARSE_ERR
         {
             get;
             set;
         }
-        double NO_DATA_ALLOWED_ERR
+        int NO_DATA_ALLOWED_ERR
         {
             get;
             set;
         }
-        double NOT_SUPPORTED_ERR
+        int NOT_SUPPORTED_ERR
         {
             get;
             set;
         }
-        double INVALID_ACCESS_ERR
+        int INVALID_ACCESS_ERR
         {
             get;
             set;
         }
-        double INUSE_ATTRIBUTE_ERR
+        int INUSE_ATTRIBUTE_ERR
         {
             get;
             set;
         }
-        double INVALID_NODE_TYPE_ERR
+        int INVALID_NODE_TYPE_ERR
         {
             get;
             set;
         }
-        double DATA_CLONE_ERR
+        int DATA_CLONE_ERR
         {
             get;
             set;
         }
-        double TIMEOUT_ERR
+        int TIMEOUT_ERR
         {
             get;
             set;
@@ -13321,92 +13321,92 @@ namespace Web
     }
     public partial interface MSCompatibleInfoCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        MSCompatibleInfo item(double index);
+        MSCompatibleInfo item(int index);
     }
     public partial interface SVGSwitchElement : SVGElement, SVGStylable, SVGTransformable, SVGLangSpace, SVGTests, SVGExternalResourcesRequired { }
     public partial interface SVGPreserveAspectRatio
     {
-        double align
+        int align
         {
             get;
             set;
         }
-        double meetOrSlice
+        int meetOrSlice
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_NONE
+        int SVG_PRESERVEASPECTRATIO_NONE
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMINYMID
+        int SVG_PRESERVEASPECTRATIO_XMINYMID
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMAXYMIN
+        int SVG_PRESERVEASPECTRATIO_XMAXYMIN
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMINYMAX
+        int SVG_PRESERVEASPECTRATIO_XMINYMAX
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMAXYMAX
+        int SVG_PRESERVEASPECTRATIO_XMAXYMAX
         {
             get;
             set;
         }
-        double SVG_MEETORSLICE_UNKNOWN
+        int SVG_MEETORSLICE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMAXYMID
+        int SVG_PRESERVEASPECTRATIO_XMAXYMID
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMIDYMAX
+        int SVG_PRESERVEASPECTRATIO_XMIDYMAX
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMINYMIN
+        int SVG_PRESERVEASPECTRATIO_XMINYMIN
         {
             get;
             set;
         }
-        double SVG_MEETORSLICE_MEET
+        int SVG_MEETORSLICE_MEET
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMIDYMID
+        int SVG_PRESERVEASPECTRATIO_XMIDYMID
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_XMIDYMIN
+        int SVG_PRESERVEASPECTRATIO_XMIDYMIN
         {
             get;
             set;
         }
-        double SVG_MEETORSLICE_SLICE
+        int SVG_MEETORSLICE_SLICE
         {
             get;
             set;
         }
-        double SVG_PRESERVEASPECTRATIO_UNKNOWN
+        int SVG_PRESERVEASPECTRATIO_UNKNOWN
         {
             get;
             set;
@@ -13442,33 +13442,33 @@ namespace Web
     }
     public partial interface PerformanceNavigation
     {
-        double redirectCount
+        int redirectCount
         {
             get;
             set;
         }
-        double type
+        int type
         {
             get;
             set;
         }
         object toJSON();
-        double TYPE_RELOAD
+        int TYPE_RELOAD
         {
             get;
             set;
         }
-        double TYPE_RESERVED
+        int TYPE_RESERVED
         {
             get;
             set;
         }
-        double TYPE_BACK_FORWARD
+        int TYPE_BACK_FORWARD
         {
             get;
             set;
         }
-        double TYPE_NAVIGATE
+        int TYPE_NAVIGATE
         {
             get;
             set;
@@ -13486,22 +13486,22 @@ namespace Web
     public partial interface SVGSymbolElement : SVGElement, SVGStylable, SVGLangSpace, SVGFitToViewBox, SVGExternalResourcesRequired { }
     public partial interface SVGElementInstanceList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        SVGElementInstance item(double index);
+        SVGElementInstance item(int index);
     }
     public partial interface CSSRuleList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        CSSRule item(double index);
-        CSSRule this[double index]
+        CSSRule item(int index);
+        CSSRule this[int index]
         {
             get;
             set;
@@ -13536,17 +13536,17 @@ namespace Web
             get;
             set;
         }
-        double videoWidth
+        int videoWidth
         {
             get;
             set;
         }
-        double videoHeight
+        int videoHeight
         {
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -13602,20 +13602,20 @@ namespace Web
             set;
         }
         void msInsertVideoEffect(string activatableClassId, bool effectRequired, object config = null);
-        void msSetVideoRectangle(double left, double top, double right, double bottom);
+        void msSetVideoRectangle(int left, int top, int right, int bottom);
         void msFrameStep(bool forward);
         VideoPlaybackQuality getVideoPlaybackQuality();
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface ClientRectList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        ClientRect item(double index);
-        ClientRect this[double index]
+        ClientRect item(int index);
+        ClientRect this[int index]
         {
             get;
             set;
@@ -13657,77 +13657,77 @@ namespace Web
     public partial interface External { }
     public partial interface MSGestureEvent : UIEvent
     {
-        double offsetY
+        int offsetY
         {
             get;
             set;
         }
-        double translationY
+        int translationY
         {
             get;
             set;
         }
-        double velocityExpansion
+        int velocityExpansion
         {
             get;
             set;
         }
-        double velocityY
+        int velocityY
         {
             get;
             set;
         }
-        double velocityAngular
+        int velocityAngular
         {
             get;
             set;
         }
-        double translationX
+        int translationX
         {
             get;
             set;
         }
-        double velocityX
+        int velocityX
         {
             get;
             set;
         }
-        double hwTimestamp
+        int hwTimestamp
         {
             get;
             set;
         }
-        double offsetX
+        int offsetX
         {
             get;
             set;
         }
-        double screenX
+        int screenX
         {
             get;
             set;
         }
-        double rotation
+        int rotation
         {
             get;
             set;
         }
-        double expansion
+        int expansion
         {
             get;
             set;
         }
-        double clientY
+        int clientY
         {
             get;
             set;
         }
-        double screenY
+        int screenY
         {
             get;
             set;
         }
-        double scale
+        int scale
         {
             get;
             set;
@@ -13737,33 +13737,33 @@ namespace Web
             get;
             set;
         }
-        double clientX
+        int clientX
         {
             get;
             set;
         }
-        void initGestureEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, double offsetXArg, double offsetYArg, double translationXArg, double translationYArg, double scaleArg, double expansionArg, double rotationArg, double velocityXArg, double velocityYArg, double velocityExpansionArg, double velocityAngularArg, double hwTimestampArg);
-        double MSGESTURE_FLAG_BEGIN
+        void initGestureEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, int offsetXArg, int offsetYArg, int translationXArg, int translationYArg, int scaleArg, int expansionArg, int rotationArg, int velocityXArg, int velocityYArg, int velocityExpansionArg, int velocityAngularArg, int hwTimestampArg);
+        int MSGESTURE_FLAG_BEGIN
         {
             get;
             set;
         }
-        double MSGESTURE_FLAG_END
+        int MSGESTURE_FLAG_END
         {
             get;
             set;
         }
-        double MSGESTURE_FLAG_CANCEL
+        int MSGESTURE_FLAG_CANCEL
         {
             get;
             set;
         }
-        double MSGESTURE_FLAG_INERTIA
+        int MSGESTURE_FLAG_INERTIA
         {
             get;
             set;
         }
-        double MSGESTURE_FLAG_NONE
+        int MSGESTURE_FLAG_NONE
         {
             get;
             set;
@@ -13771,7 +13771,7 @@ namespace Web
     }
     public partial interface ErrorEvent : Event
     {
-        double colno
+        int colno
         {
             get;
             set;
@@ -13786,7 +13786,7 @@ namespace Web
             get;
             set;
         }
-        double lineno
+        int lineno
         {
             get;
             set;
@@ -13796,7 +13796,7 @@ namespace Web
             get;
             set;
         }
-        void initErrorEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string messageArg, string filenameArg, double linenoArg);
+        void initErrorEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string messageArg, string filenameArg, int linenoArg);
     }
     public partial interface SVGFilterElement : SVGElement, SVGUnitTypes, SVGStylable, SVGLangSpace, SVGURIReference, SVGExternalResourcesRequired
     {
@@ -13840,7 +13840,7 @@ namespace Web
             get;
             set;
         }
-        void setFilterRes(double filterResX, double filterResY);
+        void setFilterRes(int filterResX, int filterResY);
     }
     public partial interface TrackEvent : Event
     {
@@ -13866,7 +13866,7 @@ namespace Web
             get;
             set;
         }
-        void addPointer(double pointerId);
+        void addPointer(int pointerId);
         void stop();
     }
     public partial interface TextTrackCue : EventTarget
@@ -13881,7 +13881,7 @@ namespace Web
             get;
             set;
         }
-        double endTime
+        int endTime
         {
             get;
             set;
@@ -13901,7 +13901,7 @@ namespace Web
             get;
             set;
         }
-        double startTime
+        int startTime
         {
             get;
             set;
@@ -13921,14 +13921,14 @@ namespace Web
             get;
             set;
         }
-        void readAsArrayBuffer(MSStream stream, double size = 0.0);
-        void readAsBlob(MSStream stream, double size = 0.0);
-        void readAsDataURL(MSStream stream, double size = 0.0);
-        void readAsText(MSStream stream, string encoding = null, double size = 0.0);
+        void readAsArrayBuffer(MSStream stream, int size = 0);
+        void readAsBlob(MSStream stream, int size = 0);
+        void readAsDataURL(MSStream stream, int size = 0);
+        void readAsText(MSStream stream, string encoding = null, int size = 0);
     }
     public partial interface DOMTokenList
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -13937,13 +13937,13 @@ namespace Web
         void remove(string token);
         bool toggle(string token);
         void add(string token);
-        string item(double index);
-        string this[double index]
+        string item(int index);
+        string this[int index]
         {
             get;
             set;
         }
-        string.ToString();
+        string ToString();
     }
     public partial interface SVGFEFuncAElement : SVGComponentTransferFunctionElement { }
     public partial interface SVGFETileElement : SVGElement, SVGFilterPrimitiveStandardAttributes
@@ -13971,32 +13971,32 @@ namespace Web
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_DARKEN
+        int SVG_FEBLEND_MODE_DARKEN
         {
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_UNKNOWN
+        int SVG_FEBLEND_MODE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_MULTIPLY
+        int SVG_FEBLEND_MODE_MULTIPLY
         {
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_NORMAL
+        int SVG_FEBLEND_MODE_NORMAL
         {
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_SCREEN
+        int SVG_FEBLEND_MODE_SCREEN
         {
             get;
             set;
         }
-        double SVG_FEBLEND_MODE_LIGHTEN
+        int SVG_FEBLEND_MODE_LIGHTEN
         {
             get;
             set;
@@ -14023,12 +14023,12 @@ namespace Web
             get;
             set;
         }
-        double elapsedTime
+        int elapsedTime
         {
             get;
             set;
         }
-        void initTransitionEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string propertyNameArg, double elapsedTimeArg);
+        void initTransitionEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string propertyNameArg, int elapsedTimeArg);
     }
     public partial interface MediaQueryList
     {
@@ -14052,7 +14052,7 @@ namespace Web
             get;
             set;
         }
-        string.ToString();
+        string ToString();
     }
     public partial interface CloseEvent : Event
     {
@@ -14066,12 +14066,12 @@ namespace Web
             get;
             set;
         }
-        double code
+        int code
         {
             get;
             set;
         }
-        void initCloseEvent(string typeArg, bool canBubbleArg, bool cancelableArg, bool wasCleanArg, double codeArg, string reasonArg);
+        void initCloseEvent(string typeArg, bool canBubbleArg, bool cancelableArg, bool wasCleanArg, int codeArg, string reasonArg);
     }
     public partial interface WebSocket : EventTarget
     {
@@ -14080,12 +14080,12 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
         }
-        double bufferedAmount
+        int bufferedAmount
         {
             get;
             set;
@@ -14125,24 +14125,24 @@ namespace Web
             get;
             set;
         }
-        void close(double code = 0.0, string reason = null);
+        void close(int code = 0, string reason = null);
         void send(object data);
-        double OPEN
+        int OPEN
         {
             get;
             set;
         }
-        double CLOSING
+        int CLOSING
         {
             get;
             set;
         }
-        double CONNECTING
+        int CONNECTING
         {
             get;
             set;
         }
-        double CLOSED
+        int CLOSED
         {
             get;
             set;
@@ -14169,7 +14169,7 @@ namespace Web
     }
     public partial interface ProgressEvent : Event
     {
-        double loaded
+        int loaded
         {
             get;
             set;
@@ -14179,12 +14179,12 @@ namespace Web
             get;
             set;
         }
-        double total
+        int total
         {
             get;
             set;
         }
-        void initProgressEvent(string typeArg, bool canBubbleArg, bool cancelableArg, bool lengthComputableArg, double loadedArg, double totalArg);
+        void initProgressEvent(string typeArg, bool canBubbleArg, bool cancelableArg, bool lengthComputableArg, int loadedArg, int totalArg);
     }
     public partial interface IDBObjectStore
     {
@@ -14236,7 +14236,7 @@ namespace Web
             get;
             set;
         }
-        void setStdDeviation(double stdDeviationX, double stdDeviationY);
+        void setStdDeviation(int stdDeviationX, int stdDeviationY);
     }
     public partial interface SVGFilterPrimitiveStandardAttributes : SVGStylable
     {
@@ -14268,12 +14268,12 @@ namespace Web
     }
     public partial interface IDBVersionChangeEvent : Event
     {
-        double newVersion
+        int newVersion
         {
             get;
             set;
         }
-        double oldVersion
+        int oldVersion
         {
             get;
             set;
@@ -14309,13 +14309,13 @@ namespace Web
     }
     public partial interface FileList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        File item(double index);
-        File this[double index]
+        File item(int index);
+        File this[int index]
         {
             get;
             set;
@@ -14343,7 +14343,7 @@ namespace Web
             get;
             set;
         }
-        void advance(double count);
+        void advance(int count);
         IDBRequest delete();
         void _continue(object key = null);
         IDBRequest update(object value);
@@ -14473,7 +14473,7 @@ namespace Web
     }
     public partial interface AudioTrackList : EventTarget
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -14494,8 +14494,8 @@ namespace Web
             set;
         }
         AudioTrack getTrackById(string id);
-        AudioTrack item(double index);
-        AudioTrack this[double index]
+        AudioTrack item(int index);
+        AudioTrack this[int index]
         {
             get;
             set;
@@ -14509,7 +14509,7 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
@@ -14545,17 +14545,17 @@ namespace Web
             set;
         }
         void abort();
-        double LOADING
+        int LOADING
         {
             get;
             set;
         }
-        double EMPTY
+        int EMPTY
         {
             get;
             set;
         }
-        double DONE
+        int DONE
         {
             get;
             set;
@@ -14584,17 +14584,17 @@ namespace Web
             get;
             set;
         }
-        double SVG_MORPHOLOGY_OPERATOR_UNKNOWN
+        int SVG_MORPHOLOGY_OPERATOR_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_MORPHOLOGY_OPERATOR_ERODE
+        int SVG_MORPHOLOGY_OPERATOR_ERODE
         {
             get;
             set;
         }
-        double SVG_MORPHOLOGY_OPERATOR_DILATE
+        int SVG_MORPHOLOGY_OPERATOR_DILATE
         {
             get;
             set;
@@ -14603,10 +14603,10 @@ namespace Web
     public partial interface SVGFEFuncRElement : SVGComponentTransferFunctionElement { }
     public partial interface WindowTimersExtension
     {
-        double msSetImmediate(object expression, params object[] args);
-        void clearImmediate(double handle);
-        void msClearImmediate(double handle);
-        double setImmediate(object expression, params object[] args);
+        int msSetImmediate(object expression, params object[] args);
+        void clearImmediate(int handle);
+        void msClearImmediate(int handle);
+        int setImmediate(object expression, params object[] args);
     }
     public partial interface SVGFEDisplacementMapElement : SVGElement, SVGFilterPrimitiveStandardAttributes
     {
@@ -14635,27 +14635,27 @@ namespace Web
             get;
             set;
         }
-        double SVG_CHANNEL_B
+        int SVG_CHANNEL_B
         {
             get;
             set;
         }
-        double SVG_CHANNEL_R
+        int SVG_CHANNEL_R
         {
             get;
             set;
         }
-        double SVG_CHANNEL_G
+        int SVG_CHANNEL_G
         {
             get;
             set;
         }
-        double SVG_CHANNEL_UNKNOWN
+        int SVG_CHANNEL_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_CHANNEL_A
+        int SVG_CHANNEL_A
         {
             get;
             set;
@@ -14668,12 +14668,12 @@ namespace Web
             get;
             set;
         }
-        double elapsedTime
+        int elapsedTime
         {
             get;
             set;
         }
-        void initAnimationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string animationNameArg, double elapsedTimeArg);
+        void initAnimationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, string animationNameArg, int elapsedTimeArg);
     }
     public partial interface SVGComponentTransferFunctionElement : SVGElement
     {
@@ -14712,32 +14712,32 @@ namespace Web
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN
+        int SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_TABLE
+        int SVG_FECOMPONENTTRANSFER_TYPE_TABLE
         {
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY
+        int SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY
         {
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_GAMMA
+        int SVG_FECOMPONENTTRANSFER_TYPE_GAMMA
         {
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE
+        int SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE
         {
             get;
             set;
         }
-        double SVG_FECOMPONENTTRANSFER_TYPE_LINEAR
+        int SVG_FECOMPONENTTRANSFER_TYPE_LINEAR
         {
             get;
             set;
@@ -14745,13 +14745,13 @@ namespace Web
     }
     public partial interface MSRangeCollection
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        Range item(double index);
-        Range this[double index]
+        Range item(int index);
+        Range this[int index]
         {
             get;
             set;
@@ -14948,22 +14948,22 @@ namespace Web
             get;
             set;
         }
-        double SVG_EDGEMODE_WRAP
+        int SVG_EDGEMODE_WRAP
         {
             get;
             set;
         }
-        double SVG_EDGEMODE_DUPLICATE
+        int SVG_EDGEMODE_DUPLICATE
         {
             get;
             set;
         }
-        double SVG_EDGEMODE_UNKNOWN
+        int SVG_EDGEMODE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_EDGEMODE_NONE
+        int SVG_EDGEMODE_NONE
         {
             get;
             set;
@@ -14971,13 +14971,13 @@ namespace Web
     }
     public partial interface TextTrackCueList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        TextTrackCue item(double index);
-        TextTrackCue this[double index]
+        TextTrackCue item(int index);
+        TextTrackCue this[int index]
         {
             get;
             set;
@@ -15032,32 +15032,32 @@ namespace Web
             get;
             set;
         }
-        double SVG_STITCHTYPE_UNKNOWN
+        int SVG_STITCHTYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_STITCHTYPE_NOSTITCH
+        int SVG_STITCHTYPE_NOSTITCH
         {
             get;
             set;
         }
-        double SVG_TURBULENCE_TYPE_UNKNOWN
+        int SVG_TURBULENCE_TYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_TURBULENCE_TYPE_TURBULENCE
+        int SVG_TURBULENCE_TYPE_TURBULENCE
         {
             get;
             set;
         }
-        double SVG_TURBULENCE_TYPE_FRACTALNOISE
+        int SVG_TURBULENCE_TYPE_FRACTALNOISE
         {
             get;
             set;
         }
-        double SVG_STITCHTYPE_STITCH
+        int SVG_STITCHTYPE_STITCH
         {
             get;
             set;
@@ -15065,7 +15065,7 @@ namespace Web
     }
     public partial interface TextTrackList : EventTarget
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -15075,8 +15075,8 @@ namespace Web
             get;
             set;
         }
-        TextTrack item(double index);
-        TextTrack this[double index]
+        TextTrack item(int index);
+        TextTrack this[int index]
         {
             get;
             set;
@@ -15101,27 +15101,27 @@ namespace Web
             get;
             set;
         }
-        double SVG_FECOLORMATRIX_TYPE_SATURATE
+        int SVG_FECOLORMATRIX_TYPE_SATURATE
         {
             get;
             set;
         }
-        double SVG_FECOLORMATRIX_TYPE_UNKNOWN
+        int SVG_FECOLORMATRIX_TYPE_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_FECOLORMATRIX_TYPE_MATRIX
+        int SVG_FECOLORMATRIX_TYPE_MATRIX
         {
             get;
             set;
         }
-        double SVG_FECOLORMATRIX_TYPE_HUEROTATE
+        int SVG_FECOLORMATRIX_TYPE_HUEROTATE
         {
             get;
             set;
         }
-        double SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA
+        int SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA
         {
             get;
             set;
@@ -15210,14 +15210,14 @@ namespace Web
     }
     public partial interface DOMStringList
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
         bool contains(string str);
-        string item(double index);
-        string this[double index]
+        string item(int index);
+        string this[int index]
         {
             get;
             set;
@@ -15239,17 +15239,17 @@ namespace Web
     }
     public partial interface HTMLProgressElement : HTMLElement
     {
-        double value
+        int value
         {
             get;
             set;
         }
-        double Max
+        int Max
         {
             get;
             set;
         }
-        double position
+        int position
         {
             get;
             set;
@@ -15292,7 +15292,7 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
@@ -15334,37 +15334,37 @@ namespace Web
         }
         void addCue(TextTrackCue cue);
         void removeCue(TextTrackCue cue);
-        double ERROR
+        int ERROR
         {
             get;
             set;
         }
-        double SHOWING
+        int SHOWING
         {
             get;
             set;
         }
-        double LOADING
+        int LOADING
         {
             get;
             set;
         }
-        double LOADED
+        int LOADED
         {
             get;
             set;
         }
-        double NONE
+        int NONE
         {
             get;
             set;
         }
-        double HIDDEN
+        int HIDDEN
         {
             get;
             set;
         }
-        double DISABLED
+        int DISABLED
         {
             get;
             set;
@@ -15441,18 +15441,18 @@ namespace Web
             get;
             set;
         }
-        double size
+        int size
         {
             get;
             set;
         }
         object msDetachStream();
-        Blob slice(double start = 0.0, double end = 0.0, string contentType = null);
+        Blob slice(int start = 0, int end = 0, string contentType = null);
         void msClose();
     }
     public partial interface ApplicationCache : EventTarget
     {
-        double status
+        int status
         {
             get;
             set;
@@ -15500,39 +15500,39 @@ namespace Web
         void swapCache();
         void abort();
         void update();
-        double CHECKING
+        int CHECKING
         {
             get;
             set;
         }
-        double UNCACHED
+        int UNCACHED
         {
             get;
             set;
         }
-        double UPDATEREADY
+        int UPDATEREADY
         {
             get;
             set;
         }
-        double DOWNLOADING
+        int DOWNLOADING
         {
             get;
             set;
         }
-        double IDLE
+        int IDLE
         {
             get;
             set;
         }
-        double OBSOLETE
+        int OBSOLETE
         {
             get;
             set;
         }
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
-    public delegate void FrameRequestCallback(double time);
+    public delegate void FrameRequestCallback(int time);
     public partial interface PopStateEvent : Event
     {
         object state
@@ -15585,8 +15585,8 @@ namespace Web
     }
     public partial interface IDBFactory
     {
-        IDBOpenDBRequest open(string name, double version = 0.0);
-        double cmp(object first, object second);
+        IDBOpenDBRequest open(string name, int version = 0);
+        int cmp(object first, object second);
         IDBOpenDBRequest deleteDatabase(string name);
     }
     public partial interface MSPointerEvent : MouseEvent
@@ -15596,12 +15596,12 @@ namespace Web
             get;
             set;
         }
-        double rotation
+        int rotation
         {
             get;
             set;
         }
-        double pressure
+        int pressure
         {
             get;
             set;
@@ -15616,12 +15616,12 @@ namespace Web
             get;
             set;
         }
-        double tiltY
+        int tiltY
         {
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -15636,35 +15636,35 @@ namespace Web
             get;
             set;
         }
-        double tiltX
+        int tiltX
         {
             get;
             set;
         }
-        double hwTimestamp
+        int hwTimestamp
         {
             get;
             set;
         }
-        double pointerId
+        int pointerId
         {
             get;
             set;
         }
-        void initPointerEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, double buttonArg, EventTarget relatedTargetArg, double offsetXArg, double offsetYArg, double widthArg, double heightArg, double pressure, double rotation, double tiltX, double tiltY, double pointerIdArg, object pointerType, double hwTimestampArg, bool isPrimary);
+        void initPointerEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, int buttonArg, EventTarget relatedTargetArg, int offsetXArg, int offsetYArg, double widthArg, int heightArg, int pressure, int rotation, int tiltX, int tiltY, int pointerIdArg, object pointerType, int hwTimestampArg, bool isPrimary);
         void getCurrentPoint(Element element);
         void getIntermediatePoints(Element element);
-        double MSPOINTER_TYPE_PEN
+        int MSPOINTER_TYPE_PEN
         {
             get;
             set;
         }
-        double MSPOINTER_TYPE_MOUSE
+        int MSPOINTER_TYPE_MOUSE
         {
             get;
             set;
         }
-        double MSPOINTER_TYPE_TOUCH
+        int MSPOINTER_TYPE_TOUCH
         {
             get;
             set;
@@ -15672,53 +15672,53 @@ namespace Web
     }
     public partial interface MSManipulationEvent : UIEvent
     {
-        double lastState
+        int lastState
         {
             get;
             set;
         }
-        double currentState
+        int currentState
         {
             get;
             set;
         }
-        void initMSManipulationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double lastState, double currentState);
-        double MS_MANIPULATION_STATE_STOPPED
+        void initMSManipulationEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int lastState, int currentState);
+        int MS_MANIPULATION_STATE_STOPPED
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_ACTIVE
+        int MS_MANIPULATION_STATE_ACTIVE
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_INERTIA
+        int MS_MANIPULATION_STATE_INERTIA
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_SELECTING
+        int MS_MANIPULATION_STATE_SELECTING
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_COMMITTED
+        int MS_MANIPULATION_STATE_COMMITTED
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_PRESELECT
+        int MS_MANIPULATION_STATE_PRESELECT
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_DRAGGING
+        int MS_MANIPULATION_STATE_DRAGGING
         {
             get;
             set;
         }
-        double MS_MANIPULATION_STATE_CANCELLED
+        int MS_MANIPULATION_STATE_CANCELLED
         {
             get;
             set;
@@ -15790,37 +15790,37 @@ namespace Web
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_OUT
+        int SVG_FECOMPOSITE_OPERATOR_OUT
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_OVER
+        int SVG_FECOMPOSITE_OPERATOR_OVER
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_XOR
+        int SVG_FECOMPOSITE_OPERATOR_XOR
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_ARITHMETIC
+        int SVG_FECOMPOSITE_OPERATOR_ARITHMETIC
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_UNKNOWN
+        int SVG_FECOMPOSITE_OPERATOR_UNKNOWN
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_IN
+        int SVG_FECOMPOSITE_OPERATOR_IN
         {
             get;
             set;
         }
-        double SVG_FECOMPOSITE_OPERATOR_ATOP
+        int SVG_FECOMPOSITE_OPERATOR_ATOP
         {
             get;
             set;
@@ -15906,27 +15906,27 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
         }
-        double ERROR
+        int ERROR
         {
             get;
             set;
         }
-        double LOADING
+        int LOADING
         {
             get;
             set;
         }
-        double LOADED
+        int LOADED
         {
             get;
             set;
         }
-        double NONE
+        int NONE
         {
             get;
             set;
@@ -16001,126 +16001,126 @@ namespace Web
     }
     public partial interface MSCSSMatrix
     {
-        double m24
+        int m24
         {
             get;
             set;
         }
-        double m34
+        int m34
         {
             get;
             set;
         }
-        double a
+        int a
         {
             get;
             set;
         }
-        double d
+        int d
         {
             get;
             set;
         }
-        double m32
+        int m32
         {
             get;
             set;
         }
-        double m41
+        int m41
         {
             get;
             set;
         }
-        double m11
+        int m11
         {
             get;
             set;
         }
-        double f
+        int f
         {
             get;
             set;
         }
-        double e
+        int e
         {
             get;
             set;
         }
-        double m23
+        int m23
         {
             get;
             set;
         }
-        double m14
+        int m14
         {
             get;
             set;
         }
-        double m33
+        int m33
         {
             get;
             set;
         }
-        double m22
+        int m22
         {
             get;
             set;
         }
-        double m21
+        int m21
         {
             get;
             set;
         }
-        double c
+        int c
         {
             get;
             set;
         }
-        double m12
+        int m12
         {
             get;
             set;
         }
-        double b
+        int b
         {
             get;
             set;
         }
-        double m42
+        int m42
         {
             get;
             set;
         }
-        double m31
+        int m31
         {
             get;
             set;
         }
-        double m43
+        int m43
         {
             get;
             set;
         }
-        double m13
+        int m13
         {
             get;
             set;
         }
-        double m44
+        int m44
         {
             get;
             set;
         }
         MSCSSMatrix multiply(MSCSSMatrix secondMatrix);
-        MSCSSMatrix skewY(double angle);
+        MSCSSMatrix skewY(int angle);
         void setMatrixValue(string value);
         MSCSSMatrix inverse();
-        MSCSSMatrix rotateAxisAngle(double x, double y, double z, double angle);
-        string.ToString();
-        MSCSSMatrix rotate(double angleX, double angleY = 0.0, double angleZ = 0.0);
-        MSCSSMatrix translate(double x, double y, double z = 0.0);
-        MSCSSMatrix scale(double scaleX, double scaleY = 0.0, double scaleZ = 0.0);
-        MSCSSMatrix skewX(double angle);
+        MSCSSMatrix rotateAxisAngle(double x, double y, double z, int angle);
+        string ToString();
+        MSCSSMatrix rotate(int angleX, int angleY = 0, int angleZ = 0);
+        MSCSSMatrix translate(double x, double y, double z = 0);
+        MSCSSMatrix scale(int scaleX, int scaleY = 0, int scaleZ = 0);
+        MSCSSMatrix skewX(int angle);
     }
     public partial interface Worker : AbstractWorker
     {
@@ -16171,22 +16171,22 @@ namespace Web
     }
     public partial interface VideoPlaybackQuality
     {
-        double totalFrameDelay
+        int totalFrameDelay
         {
             get;
             set;
         }
-        double creationTime
+        int creationTime
         {
             get;
             set;
         }
-        double totalVideoFrames
+        int totalVideoFrames
         {
             get;
             set;
         }
-        double droppedVideoFrames
+        int droppedVideoFrames
         {
             get;
             set;
@@ -16357,13 +16357,13 @@ namespace Web
     }
     public partial interface MimeTypeArray
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        Plugin item(double index);
-        Plugin this[double index]
+        Plugin item(int index);
+        Plugin this[int index]
         {
             get;
             set;
@@ -16392,12 +16392,12 @@ namespace Web
     public partial interface DOMStringMap { }
     public partial interface DeviceOrientationEvent : Event
     {
-        double gamma
+        int gamma
         {
             get;
             set;
         }
-        double alpha
+        int alpha
         {
             get;
             set;
@@ -16407,12 +16407,12 @@ namespace Web
             get;
             set;
         }
-        double beta
+        int beta
         {
             get;
             set;
         }
-        void initDeviceOrientationEvent(string type, bool bubbles, bool cancelable, double alpha, double beta, double gamma, bool absolute);
+        void initDeviceOrientationEvent(string type, bool bubbles, bool cancelable, int alpha, int beta, int gamma, bool absolute);
     }
     public partial interface MSMediaKeys
     {
@@ -16458,7 +16458,7 @@ namespace Web
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -16500,12 +16500,12 @@ namespace Web
             get;
             set;
         }
-        double appendWindowStart
+        int appendWindowStart
         {
             get;
             set;
         }
-        double appendWindowEnd
+        int appendWindowEnd
         {
             get;
             set;
@@ -16515,7 +16515,7 @@ namespace Web
             get;
             set;
         }
-        double timestampOffset
+        int timestampOffset
         {
             get;
             set;
@@ -16526,9 +16526,9 @@ namespace Web
             set;
         }
         void appendBuffer(ArrayBuffer data);
-        void remove(double start, double end);
+        void remove(int start, int end);
         void abort();
-        void appendStream(MSStream stream, double maxSize = 0.0);
+        void appendStream(MSStream stream, int maxSize = 0);
     }
     public partial interface MSInputMethodContext : EventTarget
     {
@@ -16542,7 +16542,7 @@ namespace Web
             get;
             set;
         }
-        double compositionStartOffset
+        int compositionStartOffset
         {
             get;
             set;
@@ -16557,7 +16557,7 @@ namespace Web
             get;
             set;
         }
-        double compositionEndOffset
+        int compositionEndOffset
         {
             get;
             set;
@@ -16570,17 +16570,17 @@ namespace Web
     }
     public partial interface DeviceRotationRate
     {
-        double gamma
+        int gamma
         {
             get;
             set;
         }
-        double alpha
+        int alpha
         {
             get;
             set;
         }
-        double beta
+        int beta
         {
             get;
             set;
@@ -16588,14 +16588,14 @@ namespace Web
     }
     public partial interface PluginArray
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
         void refresh(bool reload = false);
-        Plugin item(double index);
-        Plugin this[double index]
+        Plugin item(int index);
+        Plugin this[int index]
         {
             get;
             set;
@@ -16604,42 +16604,42 @@ namespace Web
     }
     public partial interface MSMediaKeyError
     {
-        double systemCode
+        int systemCode
         {
             get;
             set;
         }
-        double code
+        int code
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_SERVICE
+        int MS_MEDIA_KEYERR_SERVICE
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_HARDWARECHANGE
+        int MS_MEDIA_KEYERR_HARDWARECHANGE
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_OUTPUT
+        int MS_MEDIA_KEYERR_OUTPUT
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_DOMAIN
+        int MS_MEDIA_KEYERR_DOMAIN
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_UNKNOWN
+        int MS_MEDIA_KEYERR_UNKNOWN
         {
             get;
             set;
         }
-        double MS_MEDIA_KEYERR_CLIENT
+        int MS_MEDIA_KEYERR_CLIENT
         {
             get;
             set;
@@ -16647,7 +16647,7 @@ namespace Web
     }
     public partial interface Plugin
     {
-        double Length
+        int Length
         {
             get;
             set;
@@ -16672,8 +16672,8 @@ namespace Web
             get;
             set;
         }
-        MimeType item(double index);
-        MimeType this[double index]
+        MimeType item(int index);
+        MimeType this[int index]
         {
             get;
             set;
@@ -16687,7 +16687,7 @@ namespace Web
             get;
             set;
         }
-        double duration
+        int duration
         {
             get;
             set;
@@ -16708,13 +16708,13 @@ namespace Web
     }
     public partial interface SourceBufferList : EventTarget
     {
-        double Length
+        int Length
         {
             get;
             set;
         }
-        SourceBuffer item(double index);
-        SourceBuffer this[double index]
+        SourceBuffer item(int index);
+        SourceBuffer this[int index]
         {
             get;
             set;
@@ -16733,7 +16733,7 @@ namespace Web
             get;
             set;
         }
-        double interval
+        int interval
         {
             get;
             set;
@@ -16743,7 +16743,7 @@ namespace Web
             get;
             set;
         }
-        void initDeviceMotionEvent(string type, bool bubbles, bool cancelable, DeviceAccelerationDict acceleration, DeviceAccelerationDict accelerationIncludingGravity, DeviceRotationRateDict rotationRate, double interval);
+        void initDeviceMotionEvent(string type, bool bubbles, bool cancelable, DeviceAccelerationDict acceleration, DeviceAccelerationDict accelerationIncludingGravity, DeviceRotationRateDict rotationRate, int interval);
     }
     public partial interface MimeType
     {
@@ -16775,12 +16775,12 @@ namespace Web
             get;
             set;
         }
-        double rotation
+        int rotation
         {
             get;
             set;
         }
-        double pressure
+        int pressure
         {
             get;
             set;
@@ -16795,12 +16795,12 @@ namespace Web
             get;
             set;
         }
-        double tiltY
+        int tiltY
         {
             get;
             set;
         }
-        double height
+        int height
         {
             get;
             set;
@@ -16815,22 +16815,22 @@ namespace Web
             get;
             set;
         }
-        double tiltX
+        int tiltX
         {
             get;
             set;
         }
-        double hwTimestamp
+        int hwTimestamp
         {
             get;
             set;
         }
-        double pointerId
+        int pointerId
         {
             get;
             set;
         }
-        void initPointerEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, double detailArg, double screenXArg, double screenYArg, double clientXArg, double clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, double buttonArg, EventTarget relatedTargetArg, double offsetXArg, double offsetYArg, double widthArg, double heightArg, double pressure, double rotation, double tiltX, double tiltY, double pointerIdArg, object pointerType, double hwTimestampArg, bool isPrimary);
+        void initPointerEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, int buttonArg, EventTarget relatedTargetArg, int offsetXArg, int offsetYArg, double widthArg, int heightArg, int pressure, int rotation, int tiltX, int tiltY, int pointerIdArg, object pointerType, int hwTimestampArg, bool isPrimary);
         void getCurrentPoint(Element element);
         void getIntermediatePoints(Element element);
     }
@@ -16867,12 +16867,12 @@ namespace Web
             get;
             set;
         }
-        double readyState
+        int readyState
         {
             get;
             set;
         }
-        double type
+        int type
         {
             get;
             set;
@@ -16883,32 +16883,32 @@ namespace Web
             set;
         }
         void start();
-        double ERROR
+        int ERROR
         {
             get;
             set;
         }
-        double TYPE_CREATE_DATA_PACKAGE_FROM_SELECTION
+        int TYPE_CREATE_DATA_PACKAGE_FROM_SELECTION
         {
             get;
             set;
         }
-        double TYPE_INVOKE_SCRIPT
+        int TYPE_INVOKE_SCRIPT
         {
             get;
             set;
         }
-        double COMPLETED
+        int COMPLETED
         {
             get;
             set;
         }
-        double TYPE_CAPTURE_PREVIEW_TO_RANDOM_ACCESS_STREAM
+        int TYPE_CAPTURE_PREVIEW_TO_RANDOM_ACCESS_STREAM
         {
             get;
             set;
         }
-        double STARTED
+        int STARTED
         {
             get;
             set;
@@ -16930,107 +16930,107 @@ namespace Web
     }
     public partial interface PerformanceNavigationTiming : PerformanceEntry
     {
-        double redirectStart
+        int redirectStart
         {
             get;
             set;
         }
-        double domainLookupEnd
+        int domainLookupEnd
         {
             get;
             set;
         }
-        double responseStart
+        int responseStart
         {
             get;
             set;
         }
-        double domComplete
+        int domComplete
         {
             get;
             set;
         }
-        double domainLookupStart
+        int domainLookupStart
         {
             get;
             set;
         }
-        double loadEventStart
+        int loadEventStart
         {
             get;
             set;
         }
-        double unloadEventEnd
+        int unloadEventEnd
         {
             get;
             set;
         }
-        double fetchStart
+        int fetchStart
         {
             get;
             set;
         }
-        double requestStart
+        int requestStart
         {
             get;
             set;
         }
-        double domInteractive
+        int domInteractive
         {
             get;
             set;
         }
-        double navigationStart
+        int navigationStart
         {
             get;
             set;
         }
-        double connectEnd
+        int connectEnd
         {
             get;
             set;
         }
-        double loadEventEnd
+        int loadEventEnd
         {
             get;
             set;
         }
-        double connectStart
+        int connectStart
         {
             get;
             set;
         }
-        double responseEnd
+        int responseEnd
         {
             get;
             set;
         }
-        double domLoading
+        int domLoading
         {
             get;
             set;
         }
-        double redirectEnd
+        int redirectEnd
         {
             get;
             set;
         }
-        double redirectCount
+        int redirectCount
         {
             get;
             set;
         }
-        double unloadEventStart
+        int unloadEventStart
         {
             get;
             set;
         }
-        double domContentLoadedEventStart
+        int domContentLoadedEventStart
         {
             get;
             set;
         }
-        double domContentLoadedEventEnd
+        int domContentLoadedEventEnd
         {
             get;
             set;
@@ -17056,7 +17056,7 @@ namespace Web
             get;
             set;
         }
-        double executionTime
+        int executionTime
         {
             get;
             set;
@@ -17064,7 +17064,7 @@ namespace Web
     }
     public partial interface MSAppView
     {
-        double viewId
+        int viewId
         {
             get;
             set;
@@ -17074,7 +17074,7 @@ namespace Web
     }
     public partial interface PerfWidgetExternal
     {
-        double maxCpuSpeed
+        int maxCpuSpeed
         {
             get;
             set;
@@ -17094,22 +17094,22 @@ namespace Web
             get;
             set;
         }
-        double performanceCounter
+        int performanceCounter
         {
             get;
             set;
         }
-        double averagePaintTime
+        int averagePaintTime
         {
             get;
             set;
         }
-        double activeNetworkRequestCount
+        int activeNetworkRequestCount
         {
             get;
             set;
         }
-        double paintRequestsPerSecond
+        int paintRequestsPerSecond
         {
             get;
             set;
@@ -17119,26 +17119,26 @@ namespace Web
             get;
             set;
         }
-        double performanceCounterFrequency
+        int performanceCounterFrequency
         {
             get;
             set;
         }
-        double averageFrameTime
+        int averageFrameTime
         {
             get;
             set;
         }
         void repositionWindow(double x, double y);
-        object getRecentMemoryUsage(double last);
-        double getMemoryUsage();
-        void resizeWindow(double width, double height);
-        double getProcessCpuUsage();
+        object getRecentMemoryUsage(int last);
+        int getMemoryUsage();
+        void resizeWindow(int width, int height);
+        int getProcessCpuUsage();
         void removeEventListener(string eventType, System.Func<object, object> callback);
-        object getRecentCpuUsage(double last);
+        object getRecentCpuUsage(int last);
         void addEventListener(string eventType, System.Func<object, object> callback);
-        object getRecentFrames(double last);
-        object getRecentPaintRequests(double last);
+        object getRecentFrames(int last);
+        object getRecentPaintRequests(int last);
     }
     public partial interface PageTransitionEvent : Event
     {
@@ -17233,7 +17233,41 @@ namespace Web
         void process(ArrayBufferView buffer);
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
-    public partial interface WebGLTexture : WebGLObject { }
+    public partial interface WebGLTexture : WebGLObject {
+        int _baseWidth { get; set; }
+
+        int _baseHeight { get; set; }
+
+        int _width { get; set; }
+
+        int _height { get; set; }
+
+        bool isReady { get; set; }
+
+        WebGLFramebuffer _framebuffer { get; set; }
+
+        bool generateMipMaps { get; set; }
+
+        int references { get; set; }
+
+        HTMLCanvasElement _workingCanvas { get; set; }
+
+        CanvasRenderingContext2D _workingContext { get; set; }
+
+        WebGLRenderbuffer _depthBuffer { get; set; }
+
+        string url { get; set; }
+
+        bool noMipmap { get; set; }
+
+        bool isCube { get; set; }
+
+        int _cachedCoordinatesMode { get; set; }
+
+        int _cachedWrapU { get; set; }
+
+        int _cachedWrapV { get; set; }
+    }
     public partial interface OES_texture_float { }
     public partial interface WebGLContextEvent : Event
     {
@@ -17252,12 +17286,12 @@ namespace Web
             get;
             set;
         }
-        double type
+        int type
         {
             get;
             set;
         }
-        double size
+        int size
         {
             get;
             set;
@@ -17265,22 +17299,22 @@ namespace Web
     }
     public partial interface WEBGL_compressed_texture_s3tc
     {
-        double COMPRESSED_RGBA_S3TC_DXT1_EXT
+        int COMPRESSED_RGBA_S3TC_DXT1_EXT
         {
             get;
             set;
         }
-        double COMPRESSED_RGBA_S3TC_DXT5_EXT
+        int COMPRESSED_RGBA_S3TC_DXT5_EXT
         {
             get;
             set;
         }
-        double COMPRESSED_RGBA_S3TC_DXT3_EXT
+        int COMPRESSED_RGBA_S3TC_DXT3_EXT
         {
             get;
             set;
         }
-        double COMPRESSED_RGB_S3TC_DXT1_EXT
+        int COMPRESSED_RGB_S3TC_DXT1_EXT
         {
             get;
             set;
@@ -17288,12 +17322,12 @@ namespace Web
     }
     public partial interface WebGLRenderingContext
     {
-        double drawingBufferWidth
+        int drawingBufferWidth
         {
             get;
             set;
         }
-        double drawingBufferHeight
+        int drawingBufferHeight
         {
             get;
             set;
@@ -17304,1647 +17338,1649 @@ namespace Web
             set;
         }
         WebGLUniformLocation getUniformLocation(WebGLProgram program, string name);
-        void bindTexture(double target, WebGLTexture texture);
-        void bufferData(double target, ArrayBufferView data, double usage);
-        void bufferData(double target, ArrayBuffer data, double usage);
-        void bufferData(double target, double size, double usage);
+        void bindTexture(int target, WebGLTexture texture);
+        void bufferData(int target, ArrayBufferView data, int usage);
+        void bufferData(int target, ArrayBuffer data, int usage);
+        void bufferData(int target, int size, int usage);
         void depthMask(bool flag);
         object getUniform(WebGLProgram program, WebGLUniformLocation location);
-        void vertexAttrib3fv(double indx, Array<double> values);
-        void vertexAttrib3fv(double indx, Float32Array values);
+        void vertexAttrib3fv(int indx, Array<double> values);
+        void vertexAttrib3fv(int indx, Float32Array values);
         void linkProgram(WebGLProgram program);
         Array<string> getSupportedExtensions();
-        void bufferSubData(double target, double offset, ArrayBuffer data);
-        void bufferSubData(double target, double offset, ArrayBufferView data);
-        void vertexAttribPointer(double indx, double size, double type, bool normalized, double stride, double offset);
-        void polygonOffset(double factor, double units);
-        void blendColor(double red, double green, double blue, double alpha);
+        void bufferSubData(int target, int offset, ArrayBuffer data);
+        void bufferSubData(int target, int offset, ArrayBufferView data);
+        void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset);
+        void polygonOffset(int factor, int units);
+        void blendColor(int red, int green, int blue, int alpha);
         WebGLTexture createTexture();
-        void hint(double target, double mode);
-        object getVertexAttrib(double index, double pname);
-        void enableVertexAttribArray(double index);
+        void hint(int target, int mode);
+        object getVertexAttrib(int index, int pname);
+        void enableVertexAttribArray(int index);
         void depthRange(double zNear, double zFar);
-        void cullFace(double mode);
+        void cullFace(int mode);
         WebGLFramebuffer createFramebuffer();
         void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, Array<double> value);
         void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, Float32Array value);
-        void framebufferTexture2D(double target, double attachment, double textarget, WebGLTexture texture, double level);
+        void framebufferTexture2D(int target, int attachment, int textarget, WebGLTexture texture, int level);
         void deleteFramebuffer(WebGLFramebuffer framebuffer);
         void colorMask(bool red, bool green, bool blue, bool alpha);
-        void compressedTexImage2D(double target, double level, double internalformat, double width, double height, double border, ArrayBufferView data);
+        void compressedTexImage2D(int target, int level, int internalformat, double width, int height, int border, ArrayBufferView data);
         void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, Array<double> value);
         void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, Float32Array value);
         object getExtension(string name);
         WebGLProgram createProgram();
         void deleteShader(WebGLShader shader);
         Array<WebGLShader> getAttachedShaders(WebGLProgram program);
-        void enable(double cap);
-        void blendEquation(double mode);
-        void texImage2D(double target, double level, double internalformat, double width, double height, double border, double format, double type, ArrayBufferView pixels);
-        void texImage2D(double target, double level, double internalformat, double format, double type, HTMLImageElement image);
-        void texImage2D(double target, double level, double internalformat, double format, double type, HTMLCanvasElement canvas);
-        void texImage2D(double target, double level, double internalformat, double format, double type, HTMLVideoElement video);
-        void texImage2D(double target, double level, double internalformat, double format, double type, ImageData pixels);
+        void enable(int cap);
+        void blendEquation(int mode);
+        void texImage2D(int target, int level, int internalformat, double width, int height, int border, int format, int type, ArrayBufferView pixels);
+        void texImage2D(int target, int level, int internalformat, int format, int type, HTMLImageElement image);
+        void texImage2D(int target, int level, int internalformat, int format, int type, HTMLCanvasElement canvas);
+        void texImage2D(int target, int level, int internalformat, int format, int type, HTMLVideoElement video);
+        void texImage2D(int target, int level, int internalformat, int format, int type, ImageData pixels);
         WebGLBuffer createBuffer();
         void deleteTexture(WebGLTexture texture);
         void useProgram(WebGLProgram program);
-        void vertexAttrib2fv(double indx, Array<double> values);
-        void vertexAttrib2fv(double indx, Float32Array values);
-        double checkFramebufferStatus(double target);
-        void frontFace(double mode);
-        object getBufferParameter(double target, double pname);
-        void texSubImage2D(double target, double level, double xoffset, double yoffset, double width, double height, double format, double type, ArrayBufferView pixels);
-        void texSubImage2D(double target, double level, double xoffset, double yoffset, double format, double type, HTMLImageElement image);
-        void texSubImage2D(double target, double level, double xoffset, double yoffset, double format, double type, HTMLCanvasElement canvas);
-        void texSubImage2D(double target, double level, double xoffset, double yoffset, double format, double type, HTMLVideoElement video);
-        void texSubImage2D(double target, double level, double xoffset, double yoffset, double format, double type, ImageData pixels);
-        void copyTexImage2D(double target, double level, double internalformat, double x, double y, double width, double height, double border);
-        double getVertexAttribOffset(double index, double pname);
-        void disableVertexAttribArray(double index);
-        void blendFunc(double sfactor, double dfactor);
-        void drawElements(double mode, double count, double type, double offset);
+        void vertexAttrib2fv(int indx, Array<double> values);
+        void vertexAttrib2fv(int indx, Float32Array values);
+        int checkFramebufferStatus(int target);
+        void frontFace(int mode);
+        object getBufferParameter(int target, int pname);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, int type, ArrayBufferView pixels);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLImageElement image);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLCanvasElement canvas);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLVideoElement video);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, ImageData pixels);
+        void copyTexImage2D(int target, int level, int internalformat, double x, double y, double width, int height, int border);
+        int getVertexAttribOffset(int index, int pname);
+        void disableVertexAttribArray(int index);
+        void blendFunc(int sfactor, int dfactor);
+        void drawElements(int mode, int count, int type, int offset);
         bool isFramebuffer(WebGLFramebuffer framebuffer);
         void uniform3iv(WebGLUniformLocation location, Array<double> v);
         void uniform3iv(WebGLUniformLocation location, Int32Array v);
-        void lineWidth(double width);
+        void lineWidth(int width);
         string getShaderInfoLog(WebGLShader shader);
-        object getTexParameter(double target, double pname);
-        object getParameter(double pname);
-        WebGLShaderPrecisionFormat getShaderPrecisionFormat(double shadertype, double precisiontype);
+        object getTexParameter(int target, int pname);
+        object getParameter(int pname);
+        WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype);
         WebGLContextAttributes getContextAttributes();
-        void vertexAttrib1f(double indx, double x);
-        void bindFramebuffer(double target, WebGLFramebuffer framebuffer);
-        void compressedTexSubImage2D(double target, double level, double xoffset, double yoffset, double width, double height, double format, ArrayBufferView data);
+        void vertexAttrib1f(int indx, double x);
+        void bindFramebuffer(int target, WebGLFramebuffer framebuffer);
+        void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, ArrayBufferView data);
         bool isContextLost();
         void uniform1iv(WebGLUniformLocation location, Array<double> v);
         void uniform1iv(WebGLUniformLocation location, Int32Array v);
-        object getRenderbufferParameter(double target, double pname);
+        object getRenderbufferParameter(int target, int pname);
         void uniform2fv(WebGLUniformLocation location, Array<double> v);
         void uniform2fv(WebGLUniformLocation location, Float32Array v);
         bool isTexture(WebGLTexture texture);
-        double getError();
+        int getError();
         void shaderSource(WebGLShader shader, string source);
         void deleteRenderbuffer(WebGLRenderbuffer renderbuffer);
-        void stencilMask(double mask);
-        void bindBuffer(double target, WebGLBuffer buffer);
-        double getAttribLocation(WebGLProgram program, string name);
+        void stencilMask(int mask);
+        void bindBuffer(int target, WebGLBuffer buffer);
+        int getAttribLocation(WebGLProgram program, string name);
         void uniform3i(WebGLUniformLocation location, double x, double y, double z);
-        void blendEquationSeparate(double modeRGB, double modeAlpha);
-        void clear(double mask);
-        void blendFuncSeparate(double srcRGB, double dstRGB, double srcAlpha, double dstAlpha);
-        void stencilFuncSeparate(double face, double func, double _ref, double mask);
-        void readPixels(double x, double y, double width, double height, double format, double type, ArrayBufferView pixels);
-        void scissor(double x, double y, double width, double height);
+        void blendEquationSeparate(int modeRGB, int modeAlpha);
+        void clear(int mask);
+        void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
+        void stencilFuncSeparate(int face, int func, int _ref, int mask);
+        void readPixels(double x, double y, double width, int height, int format, int type, ArrayBufferView pixels);
+        void scissor(double x, double y, double width, int height);
         void uniform2i(WebGLUniformLocation location, double x, double y);
-        WebGLActiveInfo getActiveAttrib(WebGLProgram program, double index);
+        WebGLActiveInfo getActiveAttrib(WebGLProgram program, int index);
         string getShaderSource(WebGLShader shader);
-        void generateMipmap(double target);
-        void bindAttribLocation(WebGLProgram program, double index, string name);
+        void generateMipmap(int target);
+        void bindAttribLocation(WebGLProgram program, int index, string name);
         void uniform1fv(WebGLUniformLocation location, Array<double> v);
         void uniform1fv(WebGLUniformLocation location, Float32Array v);
         void uniform2iv(WebGLUniformLocation location, Array<double> v);
         void uniform2iv(WebGLUniformLocation location, Int32Array v);
-        void stencilOp(double fail, double zfail, double zpass);
+        void stencilOp(int fail, double zfail, double zpass);
         void uniform4fv(WebGLUniformLocation location, Array<double> v);
         void uniform4fv(WebGLUniformLocation location, Float32Array v);
-        void vertexAttrib1fv(double indx, Array<double> values);
-        void vertexAttrib1fv(double indx, Float32Array values);
+        void vertexAttrib1fv(int indx, Array<double> values);
+        void vertexAttrib1fv(int indx, Float32Array values);
         void flush();
         void uniform4f(WebGLUniformLocation location, double x, double y, double z, double w);
         void deleteProgram(WebGLProgram program);
         bool isRenderbuffer(WebGLRenderbuffer renderbuffer);
         void uniform1i(WebGLUniformLocation location, double x);
-        object getProgramParameter(WebGLProgram program, double pname);
-        WebGLActiveInfo getActiveUniform(WebGLProgram program, double index);
-        void stencilFunc(double func, double _ref, double mask);
-        void pixelStorei(double pname, double param);
-        void disable(double cap);
-        void vertexAttrib4fv(double indx, Array<double> values);
-        void vertexAttrib4fv(double indx, Float32Array values);
+        object getProgramParameter(WebGLProgram program, int pname);
+        WebGLActiveInfo getActiveUniform(WebGLProgram program, int index);
+        void stencilFunc(int func, int _ref, int mask);
+        void pixelStorei(int pname, int param);
+        void disable(int cap);
+        void vertexAttrib4fv(int indx, Array<double> values);
+        void vertexAttrib4fv(int indx, Float32Array values);
         WebGLRenderbuffer createRenderbuffer();
         bool isBuffer(WebGLBuffer buffer);
-        void stencilOpSeparate(double face, double fail, double zfail, double zpass);
-        object getFramebufferAttachmentParameter(double target, double attachment, double pname);
+        void stencilOpSeparate(int face, int fail, double zfail, double zpass);
+        object getFramebufferAttachmentParameter(int target, int attachment, int pname);
         void uniform4i(WebGLUniformLocation location, double x, double y, double z, double w);
-        void sampleCoverage(double value, bool invert);
-        void depthFunc(double func);
-        void texParameterf(double target, double pname, double param);
-        void vertexAttrib3f(double indx, double x, double y, double z);
-        void drawArrays(double mode, double first, double count);
-        void texParameteri(double target, double pname, double param);
-        void vertexAttrib4f(double indx, double x, double y, double z, double w);
-        object getShaderParameter(WebGLShader shader, double pname);
+        void sampleCoverage(int value, bool invert);
+        void depthFunc(int func);
+        void texParameterf(int target, int pname, float param);
+        void vertexAttrib3f(int indx, double x, double y, double z);
+        void drawArrays(int mode, int first, int count);
+        void texParameteri(int target, int pname, int param);
+        void vertexAttrib4f(int indx, double x, double y, double z, double w);
+        object getShaderParameter(WebGLShader shader, int pname);
         void clearDepth(double depth);
-        void activeTexture(double texture);
-        void viewport(double x, double y, double width, double height);
+        void activeTexture(int texture);
+        void viewport(double x, double y, double width, int height);
         void detachShader(WebGLProgram program, WebGLShader shader);
         void uniform1f(WebGLUniformLocation location, double x);
         void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Array<double> value);
         void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Float32Array value);
         void deleteBuffer(WebGLBuffer buffer);
-        void copyTexSubImage2D(double target, double level, double xoffset, double yoffset, double x, double y, double width, double height);
+        void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, double width, int height);
         void uniform3fv(WebGLUniformLocation location, Array<double> v);
         void uniform3fv(WebGLUniformLocation location, Float32Array v);
-        void stencilMaskSeparate(double face, double mask);
+        void stencilMaskSeparate(int face, int mask);
         void attachShader(WebGLProgram program, WebGLShader shader);
         void compileShader(WebGLShader shader);
         void clearColor(double red, double green, double blue, double alpha);
         bool isShader(WebGLShader shader);
-        void clearStencil(double s);
-        void framebufferRenderbuffer(double target, double attachment, double renderbuffertarget, WebGLRenderbuffer renderbuffer);
+        void clearStencil(int s);
+        void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, WebGLRenderbuffer renderbuffer);
         void finish();
         void uniform2f(WebGLUniformLocation location, double x, double y);
-        void renderbufferStorage(double target, double internalformat, double width, double height);
+        void renderbufferStorage(int target, int internalformat, double width, int height);
         void uniform3f(WebGLUniformLocation location, double x, double y, double z);
         string getProgramInfoLog(WebGLProgram program);
         void validateProgram(WebGLProgram program);
-        bool isEnabled(double cap);
-        void vertexAttrib2f(double indx, double x, double y);
+        bool isEnabled(int cap);
+        void vertexAttrib2f(int indx, double x, double y);
         bool isProgram(WebGLProgram program);
-        WebGLShader createShader(double type);
-        void bindRenderbuffer(double target, WebGLRenderbuffer renderbuffer);
+        WebGLShader createShader(int type);
+        void bindRenderbuffer(int target, WebGLRenderbuffer renderbuffer);
         void uniform4iv(WebGLUniformLocation location, Array<double> v);
         void uniform4iv(WebGLUniformLocation location, Int32Array v);
-        double DEPTH_FUNC
+        int DEPTH_FUNC
         {
             get;
             set;
         }
-        double DEPTH_COMPONENT16
+        int DEPTH_COMPONENT16
         {
             get;
             set;
         }
-        double REPLACE
+        int REPLACE
         {
             get;
             set;
         }
-        double REPEAT
+        int REPEAT
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_ENABLED
+        int VERTEX_ATTRIB_ARRAY_ENABLED
         {
             get;
             set;
         }
-        double FRAMEBUFFER_INCOMPLETE_DIMENSIONS
+        int FRAMEBUFFER_INCOMPLETE_DIMENSIONS
         {
             get;
             set;
         }
-        double STENCIL_BUFFER_BIT
+        int STENCIL_BUFFER_BIT
         {
             get;
             set;
         }
-        double RENDERER
+        int RENDERER
         {
             get;
             set;
         }
-        double STENCIL_BACK_REF
+        int STENCIL_BACK_REF
         {
             get;
             set;
         }
-        double TEXTURE26
+        int TEXTURE26
         {
             get;
             set;
         }
-        double RGB565
+        int RGB565
         {
             get;
             set;
         }
-        double DITHER
+        int DITHER
         {
             get;
             set;
         }
-        double CONSTANT_COLOR
+        int CONSTANT_COLOR
         {
             get;
             set;
         }
-        double GENERATE_MIPMAP_HINT
+        int GENERATE_MIPMAP_HINT
         {
             get;
             set;
         }
-        double POINTS
+        int POINTS
         {
             get;
             set;
         }
-        double DECR
+        int DECR
         {
             get;
             set;
         }
-        double INT_VEC3
+        int INT_VEC3
         {
             get;
             set;
         }
-        double TEXTURE28
+        int TEXTURE28
         {
             get;
             set;
         }
-        double ONE_MINUS_CONSTANT_ALPHA
+        int ONE_MINUS_CONSTANT_ALPHA
         {
             get;
             set;
         }
-        double BACK
+        int BACK
         {
             get;
             set;
         }
-        double RENDERBUFFER_STENCIL_SIZE
+        int RENDERBUFFER_STENCIL_SIZE
         {
             get;
             set;
         }
-        double UNPACK_FLIP_Y_WEBGL
+        int UNPACK_FLIP_Y_WEBGL
         {
             get;
             set;
         }
-        double BLEND
+        int BLEND
         {
             get;
             set;
         }
-        double TEXTURE9
+        int TEXTURE9
         {
             get;
             set;
         }
-        double ARRAY_BUFFER_BINDING
+        int ARRAY_BUFFER_BINDING
         {
             get;
             set;
         }
-        double MAX_VIEWPORT_DIMS
+        int MAX_VIEWPORT_DIMS
         {
             get;
             set;
         }
-        double INVALID_FRAMEBUFFER_OPERATION
+        int INVALID_FRAMEBUFFER_OPERATION
         {
             get;
             set;
         }
-        double TEXTURE
+        int TEXTURE
         {
             get;
             set;
         }
-        double TEXTURE0
+        int TEXTURE0
         {
             get;
             set;
         }
-        double TEXTURE31
+        int TEXTURE31
         {
             get;
             set;
         }
-        double TEXTURE24
+        int TEXTURE24
         {
             get;
             set;
         }
-        double HIGH_INT
+        int HIGH_INT
         {
             get;
             set;
         }
-        double RENDERBUFFER_BINDING
+        int RENDERBUFFER_BINDING
         {
             get;
             set;
         }
-        double BLEND_COLOR
+        int BLEND_COLOR
         {
             get;
             set;
         }
-        double FASTEST
+        int FASTEST
         {
             get;
             set;
         }
-        double STENCIL_WRITEMASK
+        int STENCIL_WRITEMASK
         {
             get;
             set;
         }
-        double ALIASED_POINT_SIZE_RANGE
+        int ALIASED_POINT_SIZE_RANGE
         {
             get;
             set;
         }
-        double TEXTURE12
+        int TEXTURE12
         {
             get;
             set;
         }
-        double DST_ALPHA
+        int DST_ALPHA
         {
             get;
             set;
         }
-        double BLEND_EQUATION_RGB
+        int BLEND_EQUATION_RGB
         {
             get;
             set;
         }
-        double FRAMEBUFFER_COMPLETE
+        int FRAMEBUFFER_COMPLETE
         {
             get;
             set;
         }
-        double NEAREST_MIPMAP_NEAREST
+        int NEAREST_MIPMAP_NEAREST
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_SIZE
+        int VERTEX_ATTRIB_ARRAY_SIZE
         {
             get;
             set;
         }
-        double TEXTURE3
+        int TEXTURE3
         {
             get;
             set;
         }
-        double DEPTH_WRITEMASK
+        int DEPTH_WRITEMASK
         {
             get;
             set;
         }
-        double CONTEXT_LOST_WEBGL
+        int CONTEXT_LOST_WEBGL
         {
             get;
             set;
         }
-        double INVALID_VALUE
+        int INVALID_VALUE
         {
             get;
             set;
         }
-        double TEXTURE_MAG_FILTER
+        int TEXTURE_MAG_FILTER
         {
             get;
             set;
         }
-        double ONE_MINUS_CONSTANT_COLOR
+        int ONE_MINUS_CONSTANT_COLOR
         {
             get;
             set;
         }
-        double ONE_MINUS_SRC_ALPHA
+        int ONE_MINUS_SRC_ALPHA
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_POSITIVE_Z
+        int TEXTURE_CUBE_MAP_POSITIVE_Z
         {
             get;
             set;
         }
-        double NOTEQUAL
+        int NOTEQUAL
         {
             get;
             set;
         }
-        double ALPHA
+        int ALPHA
         {
             get;
             set;
         }
-        double DEPTH_STENCIL
+        int DEPTH_STENCIL
         {
             get;
             set;
         }
-        double MAX_VERTEX_UNIFORM_VECTORS
+        int MAX_VERTEX_UNIFORM_VECTORS
         {
             get;
             set;
         }
-        double DEPTH_COMPONENT
+        int DEPTH_COMPONENT
         {
             get;
             set;
         }
-        double RENDERBUFFER_RED_SIZE
+        int RENDERBUFFER_RED_SIZE
         {
             get;
             set;
         }
-        double TEXTURE20
+        int TEXTURE20
         {
             get;
             set;
         }
-        double RED_BITS
+        int RED_BITS
         {
             get;
             set;
         }
-        double RENDERBUFFER_BLUE_SIZE
+        int RENDERBUFFER_BLUE_SIZE
         {
             get;
             set;
         }
-        double SCISSOR_BOX
+        int SCISSOR_BOX
         {
             get;
             set;
         }
-        double VENDOR
+        int VENDOR
         {
             get;
             set;
         }
-        double FRONT_AND_BACK
+        int FRONT_AND_BACK
         {
             get;
             set;
         }
-        double CONSTANT_ALPHA
+        int CONSTANT_ALPHA
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_BUFFER_BINDING
+        int VERTEX_ATTRIB_ARRAY_BUFFER_BINDING
         {
             get;
             set;
         }
-        double NEAREST
+        int NEAREST
         {
             get;
             set;
         }
-        double CULL_FACE
+        int CULL_FACE
         {
             get;
             set;
         }
-        double ALIASED_LINE_WIDTH_RANGE
+        int ALIASED_LINE_WIDTH_RANGE
         {
             get;
             set;
         }
-        double TEXTURE19
+        int TEXTURE19
         {
             get;
             set;
         }
-        double FRONT
+        int FRONT
         {
             get;
             set;
         }
-        double DEPTH_CLEAR_VALUE
+        int DEPTH_CLEAR_VALUE
         {
             get;
             set;
         }
-        double GREEN_BITS
+        int GREEN_BITS
         {
             get;
             set;
         }
-        double TEXTURE29
+        int TEXTURE29
         {
             get;
             set;
         }
-        double TEXTURE23
+        int TEXTURE23
         {
             get;
             set;
         }
-        double MAX_RENDERBUFFER_SIZE
+        int MAX_RENDERBUFFER_SIZE
         {
             get;
             set;
         }
-        double STENCIL_ATTACHMENT
+        int STENCIL_ATTACHMENT
         {
             get;
             set;
         }
-        double TEXTURE27
+        int TEXTURE27
         {
             get;
             set;
         }
-        double BOOL_VEC2
+        int BOOL_VEC2
         {
             get;
             set;
         }
-        double OUT_OF_MEMORY
+        int OUT_OF_MEMORY
         {
             get;
             set;
         }
-        double MIRRORED_REPEAT
+        int MIRRORED_REPEAT
         {
             get;
             set;
         }
-        double POLYGON_OFFSET_UNITS
+        int POLYGON_OFFSET_UNITS
         {
             get;
             set;
         }
-        double TEXTURE_MIN_FILTER
+        int TEXTURE_MIN_FILTER
         {
             get;
             set;
         }
-        double STENCIL_BACK_PASS_DEPTH_PASS
+        int STENCIL_BACK_PASS_DEPTH_PASS
         {
             get;
             set;
         }
-        double LINE_LOOP
+        int LINE_LOOP
         {
             get;
             set;
         }
-        double FLOAT_MAT3
+        int FLOAT_MAT3
         {
             get;
             set;
         }
-        double TEXTURE14
+        int TEXTURE14
         {
             get;
             set;
         }
-        double LINEAR
+        int LINEAR
         {
             get;
             set;
         }
-        double RGB5_A1
+        int RGB5_A1
         {
             get;
             set;
         }
-        double ONE_MINUS_SRC_COLOR
+        int ONE_MINUS_SRC_COLOR
         {
             get;
             set;
         }
-        double SAMPLE_COVERAGE_INVERT
+        int SAMPLE_COVERAGE_INVERT
         {
             get;
             set;
         }
-        double DONT_CARE
+        int DONT_CARE
         {
             get;
             set;
         }
-        double FRAMEBUFFER_BINDING
+        int FRAMEBUFFER_BINDING
         {
             get;
             set;
         }
-        double RENDERBUFFER_ALPHA_SIZE
+        int RENDERBUFFER_ALPHA_SIZE
         {
             get;
             set;
         }
-        double STENCIL_REF
+        int STENCIL_REF
         {
             get;
             set;
         }
-        double ZERO
+        int ZERO
         {
             get;
             set;
         }
-        double DECR_WRAP
+        int DECR_WRAP
         {
             get;
             set;
         }
-        double SAMPLE_COVERAGE
+        int SAMPLE_COVERAGE
         {
             get;
             set;
         }
-        double STENCIL_BACK_FUNC
+        int STENCIL_BACK_FUNC
         {
             get;
             set;
         }
-        double TEXTURE30
+        int TEXTURE30
         {
             get;
             set;
         }
-        double VIEWPORT
+        int VIEWPORT
         {
             get;
             set;
         }
-        double STENCIL_BITS
+        int STENCIL_BITS
         {
             get;
             set;
         }
-        double FLOAT
+        int FLOAT
         {
             get;
             set;
         }
-        double COLOR_WRITEMASK
+        int COLOR_WRITEMASK
         {
             get;
             set;
         }
-        double SAMPLE_COVERAGE_VALUE
+        int SAMPLE_COVERAGE_VALUE
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_NEGATIVE_Y
+        int TEXTURE_CUBE_MAP_NEGATIVE_Y
         {
             get;
             set;
         }
-        double STENCIL_BACK_FAIL
+        int STENCIL_BACK_FAIL
         {
             get;
             set;
         }
-        double FLOAT_MAT4
+        int FLOAT_MAT4
         {
             get;
             set;
         }
-        double UNSIGNED_SHORT_4_4_4_4
+        int UNSIGNED_SHORT_4_4_4_4
         {
             get;
             set;
         }
-        double TEXTURE6
+        int TEXTURE6
         {
             get;
             set;
         }
-        double RENDERBUFFER_WIDTH
+        int RENDERBUFFER_WIDTH
         {
             get;
             set;
         }
-        double RGBA4
+        int RGBA4
         {
             get;
             set;
         }
-        double ALWAYS
+        int ALWAYS
         {
             get;
             set;
         }
-        double BLEND_EQUATION_ALPHA
+        int BLEND_EQUATION_ALPHA
         {
             get;
             set;
         }
-        double COLOR_BUFFER_BIT
+        int COLOR_BUFFER_BIT
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP
+        int TEXTURE_CUBE_MAP
         {
             get;
             set;
         }
-        double DEPTH_BUFFER_BIT
+        int DEPTH_BUFFER_BIT
         {
             get;
             set;
         }
-        double STENCIL_CLEAR_VALUE
+        int STENCIL_CLEAR_VALUE
         {
             get;
             set;
         }
-        double BLEND_EQUATION
+        int BLEND_EQUATION
         {
             get;
             set;
         }
-        double RENDERBUFFER_GREEN_SIZE
+        int RENDERBUFFER_GREEN_SIZE
         {
             get;
             set;
         }
-        double NEAREST_MIPMAP_LINEAR
+        int NEAREST_MIPMAP_LINEAR
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_TYPE
+        int VERTEX_ATTRIB_ARRAY_TYPE
         {
             get;
             set;
         }
-        double INCR_WRAP
+        int INCR_WRAP
         {
             get;
             set;
         }
-        double ONE_MINUS_DST_COLOR
+        int ONE_MINUS_DST_COLOR
         {
             get;
             set;
         }
-        double HIGH_FLOAT
+        int HIGH_FLOAT
         {
             get;
             set;
         }
-        double BYTE
+        int BYTE
         {
             get;
             set;
         }
-        double FRONT_FACE
+        int FRONT_FACE
         {
             get;
             set;
         }
-        double SAMPLE_ALPHA_TO_COVERAGE
+        int SAMPLE_ALPHA_TO_COVERAGE
         {
             get;
             set;
         }
-        double CCW
+        int CCW
         {
             get;
             set;
         }
-        double TEXTURE13
+        int TEXTURE13
         {
             get;
             set;
         }
-        double MAX_VERTEX_ATTRIBS
+        int MAX_VERTEX_ATTRIBS
         {
             get;
             set;
         }
-        double MAX_VERTEX_TEXTURE_IMAGE_UNITS
+        int MAX_VERTEX_TEXTURE_IMAGE_UNITS
         {
             get;
             set;
         }
-        double TEXTURE_WRAP_T
+        int TEXTURE_WRAP_T
         {
             get;
             set;
         }
-        double UNPACK_PREMULTIPLY_ALPHA_WEBGL
+        int UNPACK_PREMULTIPLY_ALPHA_WEBGL
         {
             get;
             set;
         }
-        double FLOAT_VEC2
+        int FLOAT_VEC2
         {
             get;
             set;
         }
-        double LUMINANCE
+        int LUMINANCE
         {
             get;
             set;
         }
-        double GREATER
+        int GREATER
         {
             get;
             set;
         }
-        double INT_VEC2
+        int INT_VEC2
         {
             get;
             set;
         }
-        double VALIDATE_STATUS
+        int VALIDATE_STATUS
         {
             get;
             set;
         }
-        double FRAMEBUFFER
+        int FRAMEBUFFER
         {
             get;
             set;
         }
-        double FRAMEBUFFER_UNSUPPORTED
+        int FRAMEBUFFER_UNSUPPORTED
         {
             get;
             set;
         }
-        double TEXTURE5
+        int TEXTURE5
         {
             get;
             set;
         }
-        double FUNC_SUBTRACT
+        int FUNC_SUBTRACT
         {
             get;
             set;
         }
-        double BLEND_DST_ALPHA
+        int BLEND_DST_ALPHA
         {
             get;
             set;
         }
-        double SAMPLER_CUBE
+        int SAMPLER_CUBE
         {
             get;
             set;
         }
-        double ONE_MINUS_DST_ALPHA
+        int ONE_MINUS_DST_ALPHA
         {
             get;
             set;
         }
-        double LESS
+        int LESS
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_POSITIVE_X
+        int TEXTURE_CUBE_MAP_POSITIVE_X
         {
             get;
             set;
         }
-        double BLUE_BITS
+        int BLUE_BITS
         {
             get;
             set;
         }
-        double DEPTH_TEST
+        int DEPTH_TEST
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_STRIDE
+        int VERTEX_ATTRIB_ARRAY_STRIDE
         {
             get;
             set;
         }
-        double DELETE_STATUS
+        int DELETE_STATUS
         {
             get;
             set;
         }
-        double TEXTURE18
+        int TEXTURE18
         {
             get;
             set;
         }
-        double POLYGON_OFFSET_FACTOR
+        int POLYGON_OFFSET_FACTOR
         {
             get;
             set;
         }
-        double UNSIGNED_INT
+        int UNSIGNED_INT
         {
             get;
             set;
         }
-        double TEXTURE_2D
+        int TEXTURE_2D
         {
             get;
             set;
         }
-        double DST_COLOR
+        int DST_COLOR
         {
             get;
             set;
         }
-        double FLOAT_MAT2
+        int FLOAT_MAT2
         {
             get;
             set;
         }
-        double COMPRESSED_TEXTURE_FORMATS
+        int COMPRESSED_TEXTURE_FORMATS
         {
             get;
             set;
         }
-        double MAX_FRAGMENT_UNIFORM_VECTORS
+        int MAX_FRAGMENT_UNIFORM_VECTORS
         {
             get;
             set;
         }
-        double DEPTH_STENCIL_ATTACHMENT
+        int DEPTH_STENCIL_ATTACHMENT
         {
             get;
             set;
         }
-        double LUMINANCE_ALPHA
+        int LUMINANCE_ALPHA
         {
             get;
             set;
         }
-        double CW
+        int CW
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_NORMALIZED
+        int VERTEX_ATTRIB_ARRAY_NORMALIZED
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_NEGATIVE_Z
+        int TEXTURE_CUBE_MAP_NEGATIVE_Z
         {
             get;
             set;
         }
-        double LINEAR_MIPMAP_LINEAR
+        int LINEAR_MIPMAP_LINEAR
         {
             get;
             set;
         }
-        double BUFFER_SIZE
+        int BUFFER_SIZE
         {
             get;
             set;
         }
-        double SAMPLE_BUFFERS
+        int SAMPLE_BUFFERS
         {
             get;
             set;
         }
-        double TEXTURE15
+        int TEXTURE15
         {
             get;
             set;
         }
-        double ACTIVE_TEXTURE
+        int ACTIVE_TEXTURE
         {
             get;
             set;
         }
-        double VERTEX_SHADER
+        int VERTEX_SHADER
         {
             get;
             set;
         }
-        double TEXTURE22
+        int TEXTURE22
         {
             get;
             set;
         }
-        double VERTEX_ATTRIB_ARRAY_POINTER
+        int VERTEX_ATTRIB_ARRAY_POINTER
         {
             get;
             set;
         }
-        double INCR
+        int INCR
         {
             get;
             set;
         }
-        double COMPILE_STATUS
+        int COMPILE_STATUS
         {
             get;
             set;
         }
-        double MAX_COMBINED_TEXTURE_IMAGE_UNITS
+        int MAX_COMBINED_TEXTURE_IMAGE_UNITS
         {
             get;
             set;
         }
-        double TEXTURE7
+        int TEXTURE7
         {
             get;
             set;
         }
-        double UNSIGNED_SHORT_5_5_5_1
+        int UNSIGNED_SHORT_5_5_5_1
         {
             get;
             set;
         }
-        double DEPTH_BITS
+        int DEPTH_BITS
         {
             get;
             set;
         }
-        double RGBA
+        int RGBA
         {
             get;
             set;
         }
-        double TRIANGLE_STRIP
+        int TRIANGLE_STRIP
         {
             get;
             set;
         }
-        double COLOR_CLEAR_VALUE
+        int COLOR_CLEAR_VALUE
         {
             get;
             set;
         }
-        double BROWSER_DEFAULT_WEBGL
+        int BROWSER_DEFAULT_WEBGL
         {
             get;
             set;
         }
-        double INVALID_ENUM
+        int INVALID_ENUM
         {
             get;
             set;
         }
-        double SCISSOR_TEST
+        int SCISSOR_TEST
         {
             get;
             set;
         }
-        double LINE_STRIP
+        int LINE_STRIP
         {
             get;
             set;
         }
-        double FRAMEBUFFER_INCOMPLETE_ATTACHMENT
+        int FRAMEBUFFER_INCOMPLETE_ATTACHMENT
         {
             get;
             set;
         }
-        double STENCIL_FUNC
+        int STENCIL_FUNC
         {
             get;
             set;
         }
-        double FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
+        int FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
         {
             get;
             set;
         }
-        double RENDERBUFFER_HEIGHT
+        int RENDERBUFFER_HEIGHT
         {
             get;
             set;
         }
-        double TEXTURE8
+        int TEXTURE8
         {
             get;
             set;
         }
-        double TRIANGLES
+        int TRIANGLES
         {
             get;
             set;
         }
-        double FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE
+        int FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE
         {
             get;
             set;
         }
-        double STENCIL_BACK_VALUE_MASK
+        int STENCIL_BACK_VALUE_MASK
         {
             get;
             set;
         }
-        double TEXTURE25
+        int TEXTURE25
         {
             get;
             set;
         }
-        double RENDERBUFFER
+        int RENDERBUFFER
         {
             get;
             set;
         }
-        double LEQUAL
+        int LEQUAL
         {
             get;
             set;
         }
-        double TEXTURE1
+        int TEXTURE1
         {
             get;
             set;
         }
-        double STENCIL_INDEX8
+        int STENCIL_INDEX8
         {
             get;
             set;
         }
-        double FUNC_ADD
+        int FUNC_ADD
         {
             get;
             set;
         }
-        double STENCIL_FAIL
+        int STENCIL_FAIL
         {
             get;
             set;
         }
-        double BLEND_SRC_ALPHA
+        int BLEND_SRC_ALPHA
         {
             get;
             set;
         }
-        double BOOL
+        int BOOL
         {
             get;
             set;
         }
-        double ALPHA_BITS
+        int ALPHA_BITS
         {
             get;
             set;
         }
-        double LOW_INT
+        int LOW_INT
         {
             get;
             set;
         }
-        double TEXTURE10
+        int TEXTURE10
         {
             get;
             set;
         }
-        double SRC_COLOR
+        int SRC_COLOR
         {
             get;
             set;
         }
-        double MAX_VARYING_VECTORS
+        int MAX_VARYING_VECTORS
         {
             get;
             set;
         }
-        double BLEND_DST_RGB
+        int BLEND_DST_RGB
         {
             get;
             set;
         }
-        double TEXTURE_BINDING_CUBE_MAP
+        int TEXTURE_BINDING_CUBE_MAP
         {
             get;
             set;
         }
-        double STENCIL_INDEX
+        int STENCIL_INDEX
         {
             get;
             set;
         }
-        double TEXTURE_BINDING_2D
+        int TEXTURE_BINDING_2D
         {
             get;
             set;
         }
-        double MEDIUM_INT
+        int MEDIUM_INT
         {
             get;
             set;
         }
-        double SHADER_TYPE
+        int SHADER_TYPE
         {
             get;
             set;
         }
-        double POLYGON_OFFSET_FILL
+        int POLYGON_OFFSET_FILL
         {
             get;
             set;
         }
-        double DYNAMIC_DRAW
+        int DYNAMIC_DRAW
         {
             get;
             set;
         }
-        double TEXTURE4
+        int TEXTURE4
         {
             get;
             set;
         }
-        double STENCIL_BACK_PASS_DEPTH_FAIL
+        int STENCIL_BACK_PASS_DEPTH_FAIL
         {
             get;
             set;
         }
-        double STREAM_DRAW
+        int STREAM_DRAW
         {
             get;
             set;
         }
-        double MAX_CUBE_MAP_TEXTURE_SIZE
+        int MAX_CUBE_MAP_TEXTURE_SIZE
         {
             get;
             set;
         }
-        double TEXTURE17
+        int TEXTURE17
         {
             get;
             set;
         }
-        double TRIANGLE_FAN
+        int TRIANGLE_FAN
         {
             get;
             set;
         }
-        double UNPACK_ALIGNMENT
+        int UNPACK_ALIGNMENT
         {
             get;
             set;
         }
-        double CURRENT_PROGRAM
+        int CURRENT_PROGRAM
         {
             get;
             set;
         }
-        double LINES
+        int LINES
         {
             get;
             set;
         }
-        double INVALID_OPERATION
+        int INVALID_OPERATION
         {
             get;
             set;
         }
-        double FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
+        int FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
         {
             get;
             set;
         }
-        double LINEAR_MIPMAP_NEAREST
+        int LINEAR_MIPMAP_NEAREST
         {
             get;
             set;
         }
-        double CLAMP_TO_EDGE
+        int CLAMP_TO_EDGE
         {
             get;
             set;
         }
-        double RENDERBUFFER_DEPTH_SIZE
+        int RENDERBUFFER_DEPTH_SIZE
         {
             get;
             set;
         }
-        double TEXTURE_WRAP_S
+        int TEXTURE_WRAP_S
         {
             get;
             set;
         }
-        double ELEMENT_ARRAY_BUFFER
+        int ELEMENT_ARRAY_BUFFER
         {
             get;
             set;
         }
-        double UNSIGNED_SHORT_5_6_5
+        int UNSIGNED_SHORT_5_6_5
         {
             get;
             set;
         }
-        double ACTIVE_UNIFORMS
+        int ACTIVE_UNIFORMS
         {
             get;
             set;
         }
-        double FLOAT_VEC3
+        int FLOAT_VEC3
         {
             get;
             set;
         }
-        double NO_ERROR
+        int NO_ERROR
         {
             get;
             set;
         }
-        double ATTACHED_SHADERS
+        int ATTACHED_SHADERS
         {
             get;
             set;
         }
-        double DEPTH_ATTACHMENT
+        int DEPTH_ATTACHMENT
         {
             get;
             set;
         }
-        double TEXTURE11
+        int TEXTURE11
         {
             get;
             set;
         }
-        double STENCIL_TEST
+        int STENCIL_TEST
         {
             get;
             set;
         }
-        double ONE
+        int ONE
         {
             get;
             set;
         }
-        double FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
+        int FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
         {
             get;
             set;
         }
-        double STATIC_DRAW
+        int STATIC_DRAW
         {
             get;
             set;
         }
-        double GEQUAL
+        int GEQUAL
         {
             get;
             set;
         }
-        double BOOL_VEC4
+        int BOOL_VEC4
         {
             get;
             set;
         }
-        double COLOR_ATTACHMENT0
+        int COLOR_ATTACHMENT0
         {
             get;
             set;
         }
-        double PACK_ALIGNMENT
+        int PACK_ALIGNMENT
         {
             get;
             set;
         }
-        double MAX_TEXTURE_SIZE
+        int MAX_TEXTURE_SIZE
         {
             get;
             set;
         }
-        double STENCIL_PASS_DEPTH_FAIL
+        int STENCIL_PASS_DEPTH_FAIL
         {
             get;
             set;
         }
-        double CULL_FACE_MODE
+        int CULL_FACE_MODE
         {
             get;
             set;
         }
-        double TEXTURE16
+        int TEXTURE16
         {
             get;
             set;
         }
-        double STENCIL_BACK_WRITEMASK
+        int STENCIL_BACK_WRITEMASK
         {
             get;
             set;
         }
-        double SRC_ALPHA
+        int SRC_ALPHA
         {
             get;
             set;
         }
-        double UNSIGNED_SHORT
+        int UNSIGNED_SHORT
         {
             get;
             set;
         }
-        double TEXTURE21
+        int TEXTURE21
         {
             get;
             set;
         }
-        double FUNC_REVERSE_SUBTRACT
+        int FUNC_REVERSE_SUBTRACT
         {
             get;
             set;
         }
-        double SHADING_LANGUAGE_VERSION
+        int SHADING_LANGUAGE_VERSION
         {
             get;
             set;
         }
-        double EQUAL
+        int EQUAL
         {
             get;
             set;
         }
-        double FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL
+        int FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL
         {
             get;
             set;
         }
-        double BOOL_VEC3
+        int BOOL_VEC3
         {
             get;
             set;
         }
-        double SAMPLER_2D
+        int SAMPLER_2D
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_NEGATIVE_X
+        int TEXTURE_CUBE_MAP_NEGATIVE_X
         {
             get;
             set;
         }
-        double MAX_TEXTURE_IMAGE_UNITS
+        int MAX_TEXTURE_IMAGE_UNITS
         {
             get;
             set;
         }
-        double TEXTURE_CUBE_MAP_POSITIVE_Y
+        int TEXTURE_CUBE_MAP_POSITIVE_Y
         {
             get;
             set;
         }
-        double RENDERBUFFER_INTERNAL_FORMAT
+        int RENDERBUFFER_INTERNAL_FORMAT
         {
             get;
             set;
         }
-        double STENCIL_VALUE_MASK
+        int STENCIL_VALUE_MASK
         {
             get;
             set;
         }
-        double ELEMENT_ARRAY_BUFFER_BINDING
+        int ELEMENT_ARRAY_BUFFER_BINDING
         {
             get;
             set;
         }
-        double ARRAY_BUFFER
+        int ARRAY_BUFFER
         {
             get;
             set;
         }
-        double DEPTH_RANGE
+        int DEPTH_RANGE
         {
             get;
             set;
         }
-        double NICEST
+        int NICEST
         {
             get;
             set;
         }
-        double ACTIVE_ATTRIBUTES
+        int ACTIVE_ATTRIBUTES
         {
             get;
             set;
         }
-        double NEVER
+        int NEVER
         {
             get;
             set;
         }
-        double FLOAT_VEC4
+        int FLOAT_VEC4
         {
             get;
             set;
         }
-        double CURRENT_VERTEX_ATTRIB
+        int CURRENT_VERTEX_ATTRIB
         {
             get;
             set;
         }
-        double STENCIL_PASS_DEPTH_PASS
+        int STENCIL_PASS_DEPTH_PASS
         {
             get;
             set;
         }
-        double INVERT
+        int INVERT
         {
             get;
             set;
         }
-        double LINK_STATUS
+        int LINK_STATUS
         {
             get;
             set;
         }
-        double RGB
+        int RGB
         {
             get;
             set;
         }
-        double INT_VEC4
+        int INT_VEC4
         {
             get;
             set;
         }
-        double TEXTURE2
+        int TEXTURE2
         {
             get;
             set;
         }
-        double UNPACK_COLORSPACE_CONVERSION_WEBGL
+        int UNPACK_COLORSPACE_CONVERSION_WEBGL
         {
             get;
             set;
         }
-        double MEDIUM_FLOAT
+        int MEDIUM_FLOAT
         {
             get;
             set;
         }
-        double SRC_ALPHA_SATURATE
+        int SRC_ALPHA_SATURATE
         {
             get;
             set;
         }
-        double BUFFER_USAGE
+        int BUFFER_USAGE
         {
             get;
             set;
         }
-        double SHORT
+        int SHORT
         {
             get;
             set;
         }
-        double NONE
+        int NONE
         {
             get;
             set;
         }
-        double UNSIGNED_BYTE
+        int UNSIGNED_BYTE
         {
             get;
             set;
         }
-        double INT
+        int INT
         {
             get;
             set;
         }
-        double SUBPIXEL_BITS
+        int SUBPIXEL_BITS
         {
             get;
             set;
         }
-        double KEEP
+        int KEEP
         {
             get;
             set;
         }
-        double SAMPLES
+        int SAMPLES
         {
             get;
             set;
         }
-        double FRAGMENT_SHADER
+        int FRAGMENT_SHADER
         {
             get;
             set;
         }
-        double LINE_WIDTH
+        int LINE_WIDTH
         {
             get;
             set;
         }
-        double BLEND_SRC_RGB
+        int BLEND_SRC_RGB
         {
             get;
             set;
         }
-        double LOW_FLOAT
+        int LOW_FLOAT
         {
             get;
             set;
         }
-        double VERSION
+        int VERSION
         {
             get;
             set;
         }
+
+        int this[string enumName] { get; }
     }
     public partial interface WebGLProgram : WebGLObject { }
     public partial interface OES_standard_derivatives
     {
-        double FRAGMENT_SHADER_DERIVATIVE_HINT_OES
+        int FRAGMENT_SHADER_DERIVATIVE_HINT_OES
         {
             get;
             set;
@@ -18954,20 +18990,24 @@ namespace Web
     public partial interface WebGLShader : WebGLObject { }
     public partial interface OES_texture_float_linear { }
     public partial interface WebGLObject { }
-    public partial interface WebGLBuffer : WebGLObject { }
+    public partial interface WebGLBuffer : WebGLObject {
+        int references { get; set; }
+
+        int capacity { get; set; }
+    }
     public partial interface WebGLShaderPrecisionFormat
     {
-        double rangeMin
+        int rangeMin
         {
             get;
             set;
         }
-        double rangeMax
+        int rangeMax
         {
             get;
             set;
         }
-        double precision
+        int precision
         {
             get;
             set;
@@ -18975,12 +19015,12 @@ namespace Web
     }
     public partial interface EXT_texture_filter_anisotropic
     {
-        double TEXTURE_MAX_ANISOTROPY_EXT
+        int TEXTURE_MAX_ANISOTROPY_EXT
         {
             get;
             set;
         }
-        double MAX_TEXTURE_MAX_ANISOTROPY_EXT
+        int MAX_TEXTURE_MAX_ANISOTROPY_EXT
         {
             get;
             set;
@@ -19063,7 +19103,7 @@ namespace Intl
     }
     public partial interface Collator
     {
-        double compare(string x, string y);
+        int compare(string x, string y);
         ResolvedCollatorOptions resolvedOptions();
     }
     public partial interface NumberFormatOptions
@@ -19121,27 +19161,27 @@ namespace Intl
             get;
             set;
         }
-        double minimumintegerDigits
+        int minimumintegerDigits
         {
             get;
             set;
         }
-        double minimumFractionDigits
+        int minimumFractionDigits
         {
             get;
             set;
         }
-        double maximumFractionDigits
+        int maximumFractionDigits
         {
             get;
             set;
         }
-        double minimumSignificantDigits
+        int minimumSignificantDigits
         {
             get;
             set;
         }
-        double maximumSignificantDigits
+        int maximumSignificantDigits
         {
             get;
             set;
@@ -19154,7 +19194,7 @@ namespace Intl
     }
     public partial interface NumberFormat
     {
-        string format(double value);
+        string format(int value);
         ResolvedNumberFormatOptions resolvedOptions();
     }
     public partial interface DateTimeFormatOptions
@@ -19295,7 +19335,7 @@ namespace Intl
     }
     public partial interface DateTimeFormat
     {
-        string format(double date);
+        string format(int date);
         ResolvedDateTimeFormatOptions resolvedOptions();
     }
 }

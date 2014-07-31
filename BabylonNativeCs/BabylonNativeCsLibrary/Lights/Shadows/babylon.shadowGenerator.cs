@@ -6,11 +6,11 @@ using Web;
 namespace BABYLON {
     public partial class ShadowGenerator {
         private
-        const double _FILTER_NONE = 0;
+        const int _FILTER_NONE = 0;
         private
-        const double _FILTER_VARIANCESHADOWMAP = 1;
+        const int _FILTER_VARIANCESHADOWMAP = 1;
         private
-        const double _FILTER_POISSONSAMPLING = 2;
+        const int _FILTER_POISSONSAMPLING = 2;
         public static double FILTER_NONE {
             get {
                 return ShadowGenerator._FILTER_NONE;

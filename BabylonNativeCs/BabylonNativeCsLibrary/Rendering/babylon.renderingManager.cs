@@ -6,7 +6,7 @@ using Web;
 namespace BABYLON {
     public partial class RenderingManager {
         public
-        const double MAX_RENDERINGGROUPS = 4;
+        const int MAX_RENDERINGGROUPS = 4;
         private Scene _scene;
         private Array < RenderingGroup > _renderingGroups = new Array < RenderingGroup > ();
         private bool _depthBufferAlreadyCleaned;

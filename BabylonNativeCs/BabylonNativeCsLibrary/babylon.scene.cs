@@ -11,10 +11,10 @@ namespace BABYLON
     }
     public partial class Scene
     {
-        public const double FOGMODE_NONE = 0;
-        public const double FOGMODE_EXP = 1;
-        public const double FOGMODE_EXP2 = 2;
-        public const double FOGMODE_LINEAR = 3;
+        public const int FOGMODE_NONE = 0;
+        public const int FOGMODE_EXP = 1;
+        public const int FOGMODE_EXP2 = 2;
+        public const int FOGMODE_LINEAR = 3;
         public static double MinDeltaTime = 1.0;
         public static double MaxDeltaTime = 1000.0;
         public bool autoClear = true;
@@ -66,7 +66,7 @@ namespace BABYLON
         public Array<RenderTargetTexture> customRenderTargets = new Array<RenderTargetTexture>();
         public bool useDelayedTextureLoading;
         public Array<string> importedMeshesFiles = new Array<string>();
-        public dynamic database;
+        public object database;
         public ActionManager actionManager;
         public Array<ActionManager> _actionManagers = new Array<ActionManager>();
         private SmartArray<AbstractMesh> _meshesForIntersections = new SmartArray<AbstractMesh>(256);
