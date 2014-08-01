@@ -17242,6 +17242,9 @@ namespace Web
 
         int _height { get; set; }
 
+        // hack for width and hight
+        int _size { get; set; }
+
         bool isReady { get; set; }
 
         WebGLFramebuffer _framebuffer { get; set; }

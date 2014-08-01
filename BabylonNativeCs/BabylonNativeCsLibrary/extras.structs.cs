@@ -12,7 +12,7 @@ namespace BABYLON
         public Vector3 maximum { get; set; }
     }
 
-    public struct Size
+    public struct Size : ISize
     {
         public int width { get; set; }
 
@@ -28,6 +28,11 @@ namespace BABYLON
 
     public struct EffectBaseName
     {
+        public EffectBaseName(string baseName)
+        {
+            this.baseName = baseName;
+        }
+
         public string baseName { get; set; }
 
         public string vertexElement { get; set; }

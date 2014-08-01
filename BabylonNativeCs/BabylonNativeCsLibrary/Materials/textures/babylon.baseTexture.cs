@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    public partial class BaseTexture
+    public partial class BaseTexture : IAnimatable
     {
         public string name;
         public int delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
@@ -14,7 +14,6 @@ namespace BABYLON
         public int level = 1;
         public bool isCube = false;
         public bool isRenderTarget = false;
-        public Array<Animation> animations = new Array<Animation>();
         public System.Action onDispose;
         public int coordinatesIndex = 0;
         public int coordinatesMode = BABYLON.Texture.EXPLICIT_MODE;
@@ -51,7 +50,7 @@ namespace BABYLON
             {
                 return true;
             }
-            if (this._texture)
+            if (this._texture != null)
             {
                 return this._texture.isReady;
             }
@@ -59,25 +58,25 @@ namespace BABYLON
         }
         public virtual ISize getSize()
         {
-            if (this._texture._width)
+            if (this._texture._width > 0)
             {
-                return new { };
+                return new Size { width = this._texture._width, height = this._texture._height };
             }
-            if (this._texture._size)
+            if (this._texture._size > 0)
             {
-                return new { };
+                return new Size { width = this._texture._size, height = this._texture._size };
             }
-            return new { };
+            return new Size { width = 0, height = 0 };
         }
         public virtual ISize getBaseSize()
         {
             if (!this.isReady())
-                return new { };
-            if (this._texture._size)
+                return new Size { width = 0, height = 0 };
+            if (this._texture._size > 0)
             {
-                return new { };
+                return new Size { width = this._texture._size, height = this._texture._size };
             }
-            return new { };
+            return new Size { width = this._texture._baseWidth, height = this._texture._baseHeight };
         }
         public virtual WebGLTexture _getFromCache(string url, bool noMipmap)
         {
@@ -96,7 +95,7 @@ namespace BABYLON
         public virtual void delayLoad() { }
         public virtual void releaseInternalTexture()
         {
-            if (!this._texture)
+            if (this._texture == null)
             {
                 return;
             }
@@ -112,7 +111,7 @@ namespace BABYLON
         }
         public virtual BaseTexture clone()
         {
-            return null;
+            return null
         }
         public virtual void dispose()
         {
@@ -126,10 +125,12 @@ namespace BABYLON
                 return;
             }
             this.releaseInternalTexture();
-            if (this.onDispose)
+            if (this.onDispose != null)
             {
                 this.onDispose();
             }
         }
+
+        public Array<Animation> animations { get; private set; }
     }
 }

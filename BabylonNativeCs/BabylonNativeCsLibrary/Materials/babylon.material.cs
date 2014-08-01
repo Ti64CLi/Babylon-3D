@@ -31,6 +31,13 @@ namespace BABYLON
                 scene.materials.push(this);
             }
         }
+        public virtual Array<Animation> animations
+        {
+            get
+            {
+                return null;
+            }
+        }
         public virtual bool isReady(AbstractMesh mesh = null, bool useInstances = false)
         {
             return true;
@@ -69,12 +76,12 @@ namespace BABYLON
         {
             var index = this._scene.materials.indexOf(this);
             this._scene.materials.splice(index, 1);
-            if (forceDisposeEffect && this._effect)
+            if (forceDisposeEffect && this._effect != null)
             {
                 this._scene.getEngine()._releaseEffect(this._effect);
                 this._effect = null;
             }
-            if (this.onDispose)
+            if (this.onDispose != null)
             {
                 this.onDispose();
             }

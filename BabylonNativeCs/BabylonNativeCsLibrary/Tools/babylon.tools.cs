@@ -14,11 +14,11 @@ namespace BABYLON
     }
     public partial interface ISize
     {
-        double width
+        int width
         {
             get;
         }
-        double height
+        int height
         {
             get;
         }

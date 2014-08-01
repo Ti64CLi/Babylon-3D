@@ -109,15 +109,15 @@ namespace BABYLON
         {
             return 0;
         }
-        public virtual Array<double> getIndices()
+        public virtual Array<int> getIndices()
         {
             return null;
         }
-        public virtual Array<double> getVerticesData(string kind)
+        public virtual Array<double> getVerticesData(VertexBufferKind kind)
         {
             return null;
         }
-        public virtual bool isVerticesDataPresent(string kind)
+        public virtual bool isVerticesDataPresent(VertexBufferKind kind)
         {
             return false;
         }

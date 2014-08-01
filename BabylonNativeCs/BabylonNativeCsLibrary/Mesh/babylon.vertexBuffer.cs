@@ -104,5 +104,13 @@ namespace BABYLON
                 this._buffer = null;
             }
         }
+
+        public static string PositionKind = "position";
+        public static string NormalKind = "normal";
+        public static string UVKind = "uv";
+        public static string UV2Kind = "uv2";
+        public static string ColorKind = "color";
+        public static string MatricesIndicesKind = "matricesIndices";
+        public static string MatricesWeightsKind = "matricesWeights";
     }
 }

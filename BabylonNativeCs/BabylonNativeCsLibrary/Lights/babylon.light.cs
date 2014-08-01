@@ -8,7 +8,7 @@ namespace BABYLON {
         public Color3 diffuse = new Color3(1.0, 1.0, 1.0);
         public Color3 specular = new Color3(1.0, 1.0, 1.0);
         public double intensity = 1.0;
-        public any range = double.MaxValue;
+        public double range = double.MaxValue;
         public Array < AbstractMesh > excludedMeshes = new Array < AbstractMesh > ();
         public ShadowGenerator _shadowGenerator;
         private Matrix _parentedWorldMatrix;

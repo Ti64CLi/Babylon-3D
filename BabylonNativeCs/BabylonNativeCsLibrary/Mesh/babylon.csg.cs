@@ -3,57 +3,71 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class Vertex {
+namespace BABYLON.CSG
+{
+    /*
+    public partial class Vertex
+    {
         public Vector3 pos;
         public Vector3 normal;
         public Vector2 uv;
-        public Vertex(Vector3 pos, Vector3 normal, Vector2 uv) {}
-        public virtual Vertex clone() {
+        public Vertex(Vector3 pos, Vector3 normal, Vector2 uv) { }
+        public virtual Vertex clone()
+        {
             return new Vertex(this.pos.clone(), this.normal.clone(), this.uv.clone());
         }
-        public virtual void flip() {
+        public virtual void flip()
+        {
             this.normal = this.normal.scale(-1);
         }
-        public virtual Vertex interpolate(object other, object t) {
+        public virtual Vertex interpolate(object other, object t)
+        {
             return new Vertex(Vector3.Lerp(this.pos, other.pos, t), Vector3.Lerp(this.normal, other.normal, t), Vector2.Lerp(this.uv, other.uv, t));
         }
     }
-    public partial class Plane {
+    public partial class Plane
+    {
         public Vector3 normal;
         public double w;
-        public Plane(Vector3 normal, double w) {}
+        public Plane(Vector3 normal, double w) { }
         const int EPSILON = 1e-5;
-        public static Plane FromPoints(Vector3 a, Vector3 b, Vector3 c) {
+        public static Plane FromPoints(Vector3 a, Vector3 b, Vector3 c)
+        {
             var v0 = c.subtract(a);
             var v1 = b.subtract(a);
-            if (v0.lengthSquared() == 0 || v1.lengthSquared() == 0) {
+            if (v0.lengthSquared() == 0 || v1.lengthSquared() == 0)
+            {
                 return null;
             }
             var n = Vector3.Normalize(Vector3.Cross(v0, v1));
             return new Plane(n, Vector3.Dot(n, a));
         }
-        public virtual Plane clone() {
+        public virtual Plane clone()
+        {
             return new Plane(this.normal.clone(), this.w);
         }
-        public virtual void flip() {
+        public virtual void flip()
+        {
             this.normal.scaleInPlace(-1);
             this.w = -this.w;
         }
-        public virtual void splitPolygon(Polygon polygon, Array < Polygon > coplanarFront, Array < Polygon > coplanarBack, Array < Polygon > front, Array < Polygon > back) {
+        public virtual void splitPolygon(Polygon polygon, Array<Polygon> coplanarFront, Array<Polygon> coplanarBack, Array<Polygon> front, Array<Polygon> back)
+        {
             var COPLANAR = 0;
             var FRONT = 1;
             var BACK = 2;
             var SPANNING = 3;
             var polygonType = 0;
-            var types = new Array < object > ();
-            for (var i = 0; i < polygon.vertices.Length; i++) {
+            var types = new Array<object>();
+            for (var i = 0; i < polygon.vertices.Length; i++)
+            {
                 var t = Vector3.Dot(this.normal, polygon.vertices[i].pos) - this.w;
                 var type = ((t < -Plane.EPSILON)) ? BACK : ((t > Plane.EPSILON)) ? FRONT : COPLANAR;
                 polygonType |= type;
                 types.push(type);
             }
-            switch (polygonType) {
+            switch (polygonType)
+            {
                 case COPLANAR:
                     ((Vector3.Dot(this.normal, polygon.plane.normal) > 0) ? coplanarFront : coplanarBack).push(polygon);
                     break;
@@ -64,9 +78,10 @@ namespace BABYLON {
                     back.push(polygon);
                     break;
                 case SPANNING:
-                    var f = new Array < object > ();
-                    var b = new Array < object > ();
-                    for (i = 0; i < polygon.vertices.Length; i++) {
+                    var f = new Array<object>();
+                    var b = new Array<object>();
+                    for (i = 0; i < polygon.vertices.Length; i++)
+                    {
                         var j = (i + 1) % polygon.vertices.Length;
                         var ti = types[i];
                         var tj = types[j];
@@ -76,19 +91,22 @@ namespace BABYLON {
                             f.push(vi);
                         if (ti != FRONT)
                             b.push((ti != BACK) ? vi.clone() : vi);
-                        if ((ti | tj) == SPANNING) {
+                        if ((ti | tj) == SPANNING)
+                        {
                             t = (this.w - Vector3.Dot(this.normal, vi.pos)) / Vector3.Dot(this.normal, vj.pos.subtract(vi.pos));
                             var v = vi.interpolate(vj, t);
                             f.push(v);
                             b.push(v.clone());
                         }
                     }
-                    if (f.Length >= 3) {
+                    if (f.Length >= 3)
+                    {
                         var poly = new Polygon(f, polygon.shared);
                         if (poly.plane)
                             front.push(poly);
                     }
-                    if (b.Length >= 3) {
+                    if (b.Length >= 3)
+                    {
                         poly = new Polygon(b, polygon.shared);
                         if (poly.plane)
                             back.push(poly);
@@ -97,37 +115,46 @@ namespace BABYLON {
             }
         }
     }
-    public partial class Polygon {
-        public Array < Vertex > vertices;
+    public partial class Polygon
+    {
+        public Array<Vertex> vertices;
         public dynamic shared;
         public Plane plane;
-        public Polygon(Array < Vertex > vertices, object shared) {
+        public Polygon(Array<Vertex> vertices, object shared)
+        {
             this.vertices = vertices;
             this.shared = shared;
             this.plane = Plane.FromPoints(vertices[0].pos, vertices[1].pos, vertices[2].pos);
         }
-        public virtual Polygon clone() {
+        public virtual Polygon clone()
+        {
             var vertices = this.vertices.map((v) => v.clone());
             return new Polygon(vertices, this.shared);
         }
-        public virtual void flip() {
-            this.vertices.reverse().map((v) => {
+        public virtual void flip()
+        {
+            this.vertices.reverse().map((v) =>
+            {
                 v.flip();
             });
             this.plane.flip();
         }
     }
-    public partial class Node {
+    public partial class Node
+    {
         private any plane = null;
         private any front = null;
         private any back = null;
-        private Array < object > polygons = new Array < object > ();
-        public Node(object polygons = null) {
-            if (polygons) {
+        private Array<object> polygons = new Array<object>();
+        public Node(object polygons = null)
+        {
+            if (polygons)
+            {
                 this.build(polygons);
             }
         }
-        public virtual Node clone() {
+        public virtual Node clone()
+        {
             var node = new Node();
             node.plane = this.plane && this.plane.clone();
             node.front = this.front && this.front.clone();
@@ -135,49 +162,62 @@ namespace BABYLON {
             node.polygons = this.polygons.map((p) => p.clone());
             return node;
         }
-        public virtual void invert() {
-            for (var i = 0; i < this.polygons.Length; i++) {
+        public virtual void invert()
+        {
+            for (var i = 0; i < this.polygons.Length; i++)
+            {
                 this.polygons[i].flip();
             }
-            if (this.plane) {
+            if (this.plane)
+            {
                 this.plane.flip();
             }
-            if (this.front) {
+            if (this.front)
+            {
                 this.front.invert();
             }
-            if (this.back) {
+            if (this.back)
+            {
                 this.back.invert();
             }
             var temp = this.front;
             this.front = this.back;
             this.back = temp;
         }
-        public virtual void clipPolygons(Array < Polygon > polygons) {
+        public virtual void clipPolygons(Array<Polygon> polygons)
+        {
             if (!this.plane)
                 return polygons.slice();
-            var front = new Array < object > ();
-            var back = new Array < object > ();
-            for (var i = 0; i < polygons.Length; i++) {
+            var front = new Array<object>();
+            var back = new Array<object>();
+            for (var i = 0; i < polygons.Length; i++)
+            {
                 this.plane.splitPolygon(polygons[i], front, back, front, back);
             }
-            if (this.front) {
+            if (this.front)
+            {
                 front = this.front.clipPolygons(front);
             }
-            if (this.back) {
+            if (this.back)
+            {
                 back = this.back.clipPolygons(back);
-            } else {
-                back = new Array < object > ();
+            }
+            else
+            {
+                back = new Array<object>();
             }
             return front.concat(back);
         }
-        public virtual void clipTo(Node bsp) {
+        public virtual void clipTo(Node bsp)
+        {
             this.polygons = bsp.clipPolygons(this.polygons);
             if (this.front)
                 this.front.clipTo(bsp);
             if (this.back)
                 this.back.clipTo(bsp);
         }
-        public virtual Array < Polygon > allPolygons() {
+        public virtual Array<Polygon> allPolygons()
+        {
             var polygons = this.polygons.slice();
             if (this.front)
                 polygons = polygons.concat(this.front.allPolygons());
@@ -185,30 +225,35 @@ namespace BABYLON {
                 polygons = polygons.concat(this.back.allPolygons());
             return polygons;
         }
-        public virtual void build(Array < Polygon > polygons) {
+        public virtual void build(Array<Polygon> polygons)
+        {
             if (!polygons.Length)
                 return;
             if (!this.plane)
                 this.plane = polygons[0].plane.clone();
-            var front = new Array < object > ();
-            var back = new Array < object > ();
-            for (var i = 0; i < polygons.Length; i++) {
+            var front = new Array<object>();
+            var back = new Array<object>();
+            for (var i = 0; i < polygons.Length; i++)
+            {
                 this.plane.splitPolygon(polygons[i], this.polygons, this.polygons, front, back);
             }
-            if (front.Length) {
+            if (front.Length)
+            {
                 if (!this.front)
                     this.front = new Node();
                 this.front.build(front);
             }
-            if (back.Length) {
+            if (back.Length)
+            {
                 if (!this.back)
                     this.back = new Node();
                 this.back.build(back);
             }
         }
     }
-    public partial class CSG {
-        private Array < Polygon > polygons = new Array < Polygon > ();
+    public partial class CSG
+    {
+        private Array<Polygon> polygons = new Array<Polygon>();
         public Matrix matrix;
         public Vector3 position;
         public Vector3 rotation;
@@ -262,21 +307,25 @@ namespace BABYLON {
             currentCSGMeshId++;
             return csg;
         }
-        private static CSG FromPolygons(Array < Polygon > polygons) {
+        private static CSG FromPolygons(Array<Polygon> polygons)
+        {
             var csg = new BABYLON.CSG();
             csg.polygons = polygons;
             return csg;
         }
-        public virtual CSG clone() {
+        public virtual CSG clone()
+        {
             var csg = new BABYLON.CSG();
             csg.polygons = this.polygons.map((p) => p.clone());
             csg.copyTransformAttributes(this);
             return csg;
         }
-        private Array < Polygon > toPolygons() {
+        private Array<Polygon> toPolygons()
+        {
             return this.polygons;
         }
-        public virtual CSG union(CSG csg) {
+        public virtual CSG union(CSG csg)
+        {
             var a = new Node(this.clone().polygons);
             var b = new Node(csg.clone().polygons);
             a.clipTo(b);
@@ -287,7 +336,8 @@ namespace BABYLON {
             a.build(b.allPolygons());
             return CSG.FromPolygons(a.allPolygons()).copyTransformAttributes(this);
         }
-        public virtual void unionInPlace(CSG csg) {
+        public virtual void unionInPlace(CSG csg)
+        {
             var a = new Node(this.polygons);
             var b = new Node(csg.polygons);
             a.clipTo(b);
@@ -298,7 +348,8 @@ namespace BABYLON {
             a.build(b.allPolygons());
             this.polygons = a.allPolygons();
         }
-        public virtual CSG subtract(CSG csg) {
+        public virtual CSG subtract(CSG csg)
+        {
             var a = new Node(this.clone().polygons);
             var b = new Node(csg.clone().polygons);
             a.invert();
@@ -311,7 +362,8 @@ namespace BABYLON {
             a.invert();
             return CSG.FromPolygons(a.allPolygons()).copyTransformAttributes(this);
         }
-        public virtual void subtractInPlace(CSG csg) {
+        public virtual void subtractInPlace(CSG csg)
+        {
             var a = new Node(this.polygons);
             var b = new Node(csg.polygons);
             a.invert();
@@ -324,7 +376,8 @@ namespace BABYLON {
             a.invert();
             this.polygons = a.allPolygons();
         }
-        public virtual CSG intersect(CSG csg) {
+        public virtual CSG intersect(CSG csg)
+        {
             var a = new Node(this.clone().polygons);
             var b = new Node(csg.clone().polygons);
             a.invert();
@@ -336,7 +389,8 @@ namespace BABYLON {
             a.invert();
             return CSG.FromPolygons(a.allPolygons()).copyTransformAttributes(this);
         }
-        public virtual void intersectInPlace(CSG csg) {
+        public virtual void intersectInPlace(CSG csg)
+        {
             var a = new Node(this.polygons);
             var b = new Node(csg.polygons);
             a.invert();
@@ -348,17 +402,21 @@ namespace BABYLON {
             a.invert();
             this.polygons = a.allPolygons();
         }
-        public virtual CSG inverse() {
+        public virtual CSG inverse()
+        {
             var csg = this.clone();
             csg.inverseInPlace();
             return csg;
         }
-        public virtual void inverseInPlace() {
-            this.polygons.map((p) => {
+        public virtual void inverseInPlace()
+        {
+            this.polygons.map((p) =>
+            {
                 p.flip();
             });
         }
-        public virtual CSG copyTransformAttributes(CSG csg) {
+        public virtual CSG copyTransformAttributes(CSG csg)
+        {
             this.matrix = csg.matrix;
             this.position = csg.position;
             this.rotation = csg.rotation;
@@ -448,7 +506,8 @@ namespace BABYLON {
             }
             return mesh;
         }
-        public virtual Mesh toMesh(string name, Material material, Scene scene, bool keepSubMeshes) {
+        public virtual Mesh toMesh(string name, Material material, Scene scene, bool keepSubMeshes)
+        {
             var mesh = this.buildMeshGeometry(name, scene, keepSubMeshes);
             mesh.material = material;
             mesh.position.copyFrom(this.position);
@@ -458,4 +517,5 @@ namespace BABYLON {
             return mesh;
         }
     }
+     */
 }

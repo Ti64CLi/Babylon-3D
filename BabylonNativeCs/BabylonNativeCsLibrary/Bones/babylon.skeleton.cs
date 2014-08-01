@@ -18,7 +18,7 @@ namespace BABYLON {
             this._scene = scene;
             scene.skeletons.push(this);
         }
-        public virtual void getTransformMatrices() {
+        public virtual Float32Array getTransformMatrices() {
             return this._transformMatrices;
         }
         public virtual void _markAsDirty() {
