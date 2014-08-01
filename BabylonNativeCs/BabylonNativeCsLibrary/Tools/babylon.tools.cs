@@ -406,25 +406,31 @@ namespace BABYLON
         {
             return deltaTime;
         }
-        public static void _MeasureFps() {
+        public static void _MeasureFps()
+        {
             previousFramesDuration.push(new Date().getTime());
             var Length = previousFramesDuration.Length;
-            if (Length >= 2) {
+            if (Length >= 2)
+            {
                 deltaTime = previousFramesDuration[Length - 1] - previousFramesDuration[Length - 2];
             }
-            if (Length >= fpsRange) {
-                if (Length > fpsRange) {
+            if (Length >= fpsRange)
+            {
+                if (Length > fpsRange)
+                {
                     previousFramesDuration.splice(0, 1);
                     Length = previousFramesDuration.Length;
                 }
                 var sum = 0;
-                for (var id = 0; id < Length - 1; id++) {
+                for (var id = 0; id < Length - 1; id++)
+                {
                     sum += previousFramesDuration[id + 1] - previousFramesDuration[id];
                 }
                 fps = 1000.0 / (sum / (Length - 1));
             }
         }
-        public static void CreateScreenshot(Engine engine, Camera camera, object size) {
+        public static void CreateScreenshot(Engine engine, Camera camera, object size)
+        {
             /*
             var width;
             var height;

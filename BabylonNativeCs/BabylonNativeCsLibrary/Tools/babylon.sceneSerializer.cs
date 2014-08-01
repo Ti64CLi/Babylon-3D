@@ -7,6 +7,7 @@ namespace BABYLON
 {
     public partial class SceneSerializer
     {
+        /*
         public static object Serialize(Scene scene)
         {
             var serializationObject = new { };
@@ -671,5 +672,6 @@ namespace BABYLON
             serializationObject.layerMask = mesh.layerMask;
             return serializationObject;
         }
+        */
     }
 }

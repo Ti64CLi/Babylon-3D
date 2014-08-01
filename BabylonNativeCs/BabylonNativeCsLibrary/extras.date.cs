@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Date : DateTime 
+    public class Date
     {
         public int getTime()
         {

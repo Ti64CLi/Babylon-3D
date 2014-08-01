@@ -7,46 +7,12 @@ namespace BABYLON
 {
     public partial class AbstractMesh : Node, IDisposable
     {
-        private const int _BILLBOARDMODE_NONE = 0;
-        private const int _BILLBOARDMODE_X = 1;
-        private const int _BILLBOARDMODE_Y = 2;
-        private const int _BILLBOARDMODE_Z = 4;
-        private const int _BILLBOARDMODE_ALL = 7;
-        public static int BILLBOARDMODE_NONE
-        {
-            get
-            {
-                return AbstractMesh._BILLBOARDMODE_NONE;
-            }
-        }
-        public static int BILLBOARDMODE_X
-        {
-            get
-            {
-                return AbstractMesh._BILLBOARDMODE_X;
-            }
-        }
-        public static int BILLBOARDMODE_Y
-        {
-            get
-            {
-                return AbstractMesh._BILLBOARDMODE_Y;
-            }
-        }
-        public static int BILLBOARDMODE_Z
-        {
-            get
-            {
-                return AbstractMesh._BILLBOARDMODE_Z;
-            }
-        }
-        public static int BILLBOARDMODE_ALL
-        {
-            get
-            {
-                return AbstractMesh._BILLBOARDMODE_ALL;
-            }
-        }
+        public const int BILLBOARDMODE_NONE = 0;
+        public const int BILLBOARDMODE_X = 1;
+        public const int BILLBOARDMODE_Y = 2;
+        public const int BILLBOARDMODE_Z = 4;
+        public const int BILLBOARDMODE_ALL = 7;
+
         public BABYLON.Vector3 position = new BABYLON.Vector3(0, 0, 0);
         public BABYLON.Vector3 rotation = new BABYLON.Vector3(0, 0, 0);
         public Quaternion rotationQuaternion;

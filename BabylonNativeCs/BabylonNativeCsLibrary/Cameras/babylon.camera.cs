@@ -10,31 +10,31 @@ namespace BABYLON
         public const int PERSPECTIVE_CAMERA = 0;
         public const int ORTHOGRAPHIC_CAMERA = 1;
         public BABYLON.Vector3 upVector = Vector3.Up();
-        public any orthoLeft = null;
-        public any orthoRight = null;
-        public any orthoBottom = null;
-        public any orthoTop = null;
+        public double? orthoLeft = null;
+        public double? orthoRight = null;
+        public double? orthoBottom = null;
+        public double? orthoTop = null;
         public double fov = 0.8;
         public double minZ = 0.1;
         public double maxZ = 1000.0;
         public double inertia = 0.9;
-        public double mode = Camera.PERSPECTIVE_CAMERA;
+        public int mode = Camera.PERSPECTIVE_CAMERA;
         public bool isIntermediate = false;
         public Viewport viewport = new Viewport(0, 0, 1.0, 1.0);
         public Array<Camera> subCameras = new Array<Camera>();
-        public int layerMask = 0xFFFFFFFF;
+        public uint layerMask = 0xFFFFFFFF;
         private BABYLON.Matrix _computedViewMatrix = BABYLON.Matrix.Identity();
         public BABYLON.Matrix _projectionMatrix = new BABYLON.Matrix();
         private Matrix _worldMatrix;
         public Array<PostProcess> _postProcesses = new Array<PostProcess>();
-        public Array<object> _postProcessesTakenIndices = new Array<object>();
+        public Array<int> _postProcessesTakenIndices = new Array<int>();
         public string _waitingParentId;
         public Vector3 position;
         public Camera(string name, Vector3 position, Scene scene)
             : base(name, scene)
         {
             scene.cameras.push(this);
-            if (!scene.activeCamera)
+            if (scene.activeCamera == null)
             {
                 scene.activeCamera = this;
             }
@@ -44,17 +44,17 @@ namespace BABYLON
             base._initCache();
             this._cache.position = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
             this._cache.upVector = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
-            this._cache.mode = null;
-            this._cache.minZ = null;
-            this._cache.maxZ = null;
-            this._cache.fov = null;
-            this._cache.aspectRatio = null;
+            this._cache.mode = 0;
+            this._cache.minZ = 0;
+            this._cache.maxZ = 0;
+            this._cache.fov = 0;
+            this._cache.aspectRatio = 0;
             this._cache.orthoLeft = null;
             this._cache.orthoRight = null;
             this._cache.orthoBottom = null;
             this._cache.orthoTop = null;
-            this._cache.renderWidth = null;
-            this._cache.renderHeight = null;
+            this._cache.renderWidth = 0;
+            this._cache.renderHeight = 0;
         }
         public virtual void _updateCache(bool ignoreParentClass = false)
         {
@@ -113,21 +113,21 @@ namespace BABYLON
         public virtual void attachControl(HTMLElement element) { }
         public virtual void detachControl(HTMLElement element) { }
         public virtual void _update() { }
-        public virtual double attachPostProcess(PostProcess postProcess, double insertAt = null)
+        public virtual double attachPostProcess(PostProcess postProcess, int insertAt = -1)
         {
             if (!postProcess.isReusable() && this._postProcesses.indexOf(postProcess) > -1)
             {
                 Tools.Error("You're trying to reuse a post process not defined as reusable.");
                 return 0;
             }
-            if (insertAt == null || insertAt < 0)
+            if (insertAt < 0)
             {
                 this._postProcesses.push(postProcess);
                 this._postProcessesTakenIndices.push(this._postProcesses.Length - 1);
                 return this._postProcesses.Length - 1;
             }
             var add = 0;
-            if (this._postProcesses[insertAt])
+            if (this._postProcesses[insertAt] != null)
             {
                 var start = this._postProcesses.Length - 1;
                 for (var i = start; i >= insertAt + 1; --i)
@@ -136,13 +136,13 @@ namespace BABYLON
                 }
                 add = 1;
             }
-            for (i = 0; i < this._postProcessesTakenIndices.Length; ++i)
+            for (var i = 0; i < this._postProcessesTakenIndices.Length; ++i)
             {
                 if (this._postProcessesTakenIndices[i] < insertAt)
                 {
                     continue;
                 }
-                start = this._postProcessesTakenIndices.Length - 1;
+                var start = this._postProcessesTakenIndices.Length - 1;
                 for (var j = start; j >= i; --j)
                 {
                     this._postProcessesTakenIndices[j + 1] = this._postProcessesTakenIndices[j] + add;
@@ -150,7 +150,7 @@ namespace BABYLON
                 this._postProcessesTakenIndices[i] = insertAt;
                 break;
             }
-            if (!add && this._postProcessesTakenIndices.indexOf(insertAt) == -1)
+            if (add == 0 && this._postProcessesTakenIndices.indexOf(insertAt) == -1)
             {
                 this._postProcessesTakenIndices.push(insertAt);
             }
@@ -158,10 +158,10 @@ namespace BABYLON
             this._postProcesses[result] = postProcess;
             return result;
         }
-        public virtual Array<double> detachPostProcess(PostProcess postProcess, object atIndices = null)
+        public virtual Array<int> detachPostProcess(PostProcess postProcess, Array<int> atIndices = null)
         {
-            var result = new Array<object>();
-            if (!atIndices)
+            var result = new Array<int>();
+            if (atIndices == null)
             {
                 var Length = this._postProcesses.Length;
                 for (var i = 0; i < Length; i++)
@@ -177,8 +177,7 @@ namespace BABYLON
             }
             else
             {
-                atIndices = ((atIndices is Array)) ? atIndices : new Array<object>(atIndices);
-                for (i = 0; i < atIndices.Length; i++)
+                for (var i = 0; i < atIndices.Length; i++)
                 {
                     var foundPostProcess = this._postProcesses[atIndices[i]];
                     if (foundPostProcess != postProcess)
@@ -187,7 +186,7 @@ namespace BABYLON
                         continue;
                     }
                     this._postProcesses[atIndices[i]] = null;
-                    index = this._postProcessesTakenIndices.indexOf(atIndices[i]);
+                    var index = this._postProcessesTakenIndices.indexOf(atIndices[i]);
                     this._postProcessesTakenIndices.splice(index, 1);
                 }
             }
@@ -195,7 +194,7 @@ namespace BABYLON
         }
         public virtual Matrix getWorldMatrix()
         {
-            if (!this._worldMatrix)
+            if (this._worldMatrix == null)
             {
                 this._worldMatrix = BABYLON.Matrix.Identity();
             }
@@ -210,11 +209,11 @@ namespace BABYLON
         public virtual Matrix getViewMatrix()
         {
             this._computedViewMatrix = this._computeViewMatrix();
-            if (!this.parent || !this.parent.getWorldMatrix || this.isSynchronized())
+            if (this.parent == null || this.isSynchronized())
             {
                 return this._computedViewMatrix;
             }
-            if (!this._worldMatrix)
+            if (this._worldMatrix == null)
             {
                 this._worldMatrix = BABYLON.Matrix.Identity();
             }
@@ -231,7 +230,7 @@ namespace BABYLON
                 return this._computedViewMatrix;
             }
             this._computedViewMatrix = this._getViewMatrix();
-            if (!this.parent || !this.parent.getWorldMatrix)
+            if (this.parent == null)
             {
                 this._currentRenderId = this.getScene().getRenderId();
             }
@@ -255,7 +254,7 @@ namespace BABYLON
             }
             var halfWidth = engine.getRenderWidth() / 2.0;
             var halfHeight = engine.getRenderHeight() / 2.0;
-            BABYLON.Matrix.OrthoOffCenterLHToRef(this.orthoLeft || -halfWidth, this.orthoRight || halfWidth, this.orthoBottom || -halfHeight, this.orthoTop || halfHeight, this.minZ, this.maxZ, this._projectionMatrix);
+            BABYLON.Matrix.OrthoOffCenterLHToRef(this.orthoLeft ?? -halfWidth, this.orthoRight ?? halfWidth, this.orthoBottom ?? -halfHeight, this.orthoTop ?? halfHeight, this.minZ, this.maxZ, this._projectionMatrix);
             return this._projectionMatrix;
         }
         public virtual void dispose()

@@ -22,7 +22,7 @@ namespace BABYLON {
         public virtual void _update(Matrix world) {
             BABYLON.Vector3.TransformCoordinatesToRef(this.center, world, this.centerWorld);
             BABYLON.Vector3.TransformNormalFromFloatsToRef(1.0, 1.0, 1.0, world, this._tempRadiusVector);
-            this.radiusWorld = Math.Max(Math.abs(this._tempRadiusVector.x), Math.abs(this._tempRadiusVector.y), Math.abs(this._tempRadiusVector.z)) * this.radius;
+            this.radiusWorld = Math.Max(Math.Abs(this._tempRadiusVector.x), Math.Abs(this._tempRadiusVector.y), Math.Abs(this._tempRadiusVector.z)) * this.radius;
         }
         public virtual bool isInFrustum(Array < Plane > frustumPlanes) {
             for (var i = 0; i < 6; i++) {
@@ -36,7 +36,7 @@ namespace BABYLON {
             var y = this.centerWorld.y - point.y;
             var z = this.centerWorld.z - point.z;
             var distance = Math.Sqrt((x * x) + (y * y) + (z * z));
-            if (Math.abs(this.radiusWorld - distance) < Engine.Epsilon)
+            if (Math.Abs(this.radiusWorld - distance) < Engine.Epsilon)
                 return false;
             return true;
         }

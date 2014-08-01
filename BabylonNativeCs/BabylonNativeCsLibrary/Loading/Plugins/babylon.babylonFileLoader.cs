@@ -351,7 +351,7 @@ namespace BABYLON.Internals
         }
         if (parsedCamera.layerMask && (!isNaN(parsedCamera.layerMask)))
         {
-            camera.layerMask = Math.abs(parseInt(parsedCamera.layerMask));
+            camera.layerMask = Math.Abs(parseInt(parsedCamera.layerMask));
         }
         else
         {
@@ -600,7 +600,7 @@ namespace BABYLON.Internals
         }
         if (parsedMesh.layerMask && (!isNaN(parsedMesh.layerMask)))
         {
-            mesh.layerMask = Math.abs(parseInt(parsedMesh.layerMask));
+            mesh.layerMask = Math.Abs(parseInt(parsedMesh.layerMask));
         }
         else
         {

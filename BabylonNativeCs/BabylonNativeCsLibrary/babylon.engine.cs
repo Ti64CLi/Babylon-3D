@@ -327,7 +327,7 @@ namespace BABYLON
             var viewport = camera.viewport;
             return (this.getRenderWidth() * viewport.width) / (this.getRenderHeight() * viewport.height);
         }
-        public virtual double getRenderWidth()
+        public virtual int getRenderWidth()
         {
             if (this._currentRenderTarget != null)
             {
@@ -335,7 +335,7 @@ namespace BABYLON
             }
             return this._renderingCanvas.width;
         }
-        public virtual double getRenderHeight()
+        public virtual int getRenderHeight()
         {
             if (this._currentRenderTarget != null)
             {
@@ -469,7 +469,7 @@ namespace BABYLON
             var x = viewport.x;
             var y = viewport.y;
             this._cachedViewport = viewport;
-            this._gl.viewport(x * width, y * height, width * viewport.width, height * viewport.height);
+            this._gl.viewport((int)(x * width), (int)(y * height), (int)(width * viewport.width), (int)(height * viewport.height));
         }
         public virtual void setDirectViewport(int x, int y, int width, int height)
         {

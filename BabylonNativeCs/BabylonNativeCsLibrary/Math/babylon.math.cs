@@ -15,7 +15,7 @@ namespace BABYLON
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + "}";
         }
-        public virtual void toArray(Array<double> array, double index = 0.0)
+        public virtual void toArray(Array<double> array, int index = 0)
         {
             if (index == null)
             {
@@ -27,7 +27,7 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            var result = new Array<object>();
+            var result = new Array<double>();
             this.toArray(result, 0);
             return result;
         }
@@ -43,7 +43,7 @@ namespace BABYLON
         }
         public virtual bool equals(Color3 otherColor)
         {
-            return otherColor && this.r == otherColor.r && this.g == otherColor.g && this.b == otherColor.b;
+            return otherColor != null && this.r == otherColor.r && this.g == otherColor.g && this.b == otherColor.b;
         }
         public virtual Color3 scale(double scale)
         {
@@ -159,11 +159,11 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            var result = new Array<object>();
+            var result = new Array<double>();
             this.toArray(result, 0);
             return result;
         }
-        public virtual void toArray(Array<double> array, double index = 0.0)
+        public virtual void toArray(Array<double> array, int index = 0)
         {
             if (index == null)
             {
@@ -221,7 +221,7 @@ namespace BABYLON
             result.b = left.b + (right.b - left.b) * amount;
             result.a = left.a + (right.a - left.a) * amount;
         }
-        public static Color4 FromArray(Array<double> array, double offset = 0)
+        public static Color4 FromArray(Array<double> array, int offset = 0)
         {
             return new Color4(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
@@ -239,7 +239,7 @@ namespace BABYLON
         {
             return "{X: " + this.x + " Y:" + this.y + "}";
         }
-        public virtual void toArray(Array<double> array, double index = 0.0)
+        public virtual void toArray(Array<double> array, int index = 0)
         {
             if (index == null)
             {
@@ -250,7 +250,7 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            var result = new Array<object>();
+            var result = new Array<double>();
             this.toArray(result, 0);
             return result;
         }
@@ -282,7 +282,7 @@ namespace BABYLON
         }
         public virtual bool equals(Vector2 otherVector)
         {
-            return otherVector && this.x == otherVector.x && this.y == otherVector.y;
+            return otherVector != null && this.x == otherVector.x && this.y == otherVector.y;
         }
         public virtual double Length()
         {
@@ -309,12 +309,8 @@ namespace BABYLON
         {
             return new Vector2(0, 0);
         }
-        public static Vector2 FromArray(Array<double> array, double offset = 0.0)
+        public static Vector2 FromArray(Array<double> array, int offset = 0)
         {
-            if (!offset)
-            {
-                offset = 0;
-            }
             return new Vector2(array[offset], array[offset + 1]);
         }
         public static Vector2 CatmullRom(Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4, double amount)
@@ -353,7 +349,7 @@ namespace BABYLON
             var y = start.y + ((end.y - start.y) * amount);
             return new Vector2(x, y);
         }
-        public static int Dot(Vector2 left, Vector2 right)
+        public static double Dot(Vector2 left, Vector2 right)
         {
             return left.x * right.x + left.y * right.y;
         }
@@ -381,11 +377,11 @@ namespace BABYLON
             var y = (vector.x * transformation.m[1]) + (vector.y * transformation.m[5]);
             return new Vector2(x, y);
         }
-        public static int Distance(Vector2 value1, Vector2 value2)
+        public static double Distance(Vector2 value1, Vector2 value2)
         {
             return Math.Sqrt(Vector2.DistanceSquared(value1, value2));
         }
-        public static int DistanceSquared(Vector2 value1, Vector2 value2)
+        public static double DistanceSquared(Vector2 value1, Vector2 value2)
         {
             var x = value1.x - value2.x;
             var y = value1.y - value2.y;
@@ -404,11 +400,11 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            var result = new Array<object>();
+            var result = new Array<double>();
             this.toArray(result, 0);
             return result;
         }
-        public virtual void toArray(Array<double> array, double index = 0.0)
+        public virtual void toArray(Array<double> array, int index = 0)
         {
             if (index == null)
             {
@@ -482,7 +478,7 @@ namespace BABYLON
         }
         public virtual bool equals(Vector3 otherVector)
         {
-            return otherVector && this.x == otherVector.x && this.y == otherVector.y && this.z == otherVector.z;
+            return otherVector != null && this.x == otherVector.x && this.y == otherVector.y && this.z == otherVector.z;
         }
         public virtual bool equalsToFloats(double x, double y, double z)
         {
@@ -570,21 +566,17 @@ namespace BABYLON
             this.y = y;
             this.z = z;
         }
-        public static Vector3 FromArray(Array<double> array, double offset = 0.0)
+        public static Vector3 FromArray(Array<double> array, int offset = 0)
         {
-            if (!offset)
-            {
-                offset = 0;
-            }
             return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
         }
-        public static void FromArrayToRef(Array<double> array, double offset, Vector3 result)
+        public static void FromArrayToRef(Array<double> array, int offset, Vector3 result)
         {
             result.x = array[offset];
             result.y = array[offset + 1];
             result.z = array[offset + 2];
         }
-        public static void FromFloatArrayToRef(Float32Array array, double offset, Vector3 result)
+        public static void FromFloatArrayToRef(Float32Array array, int offset, Vector3 result)
         {
             result.x = array[offset];
             result.y = array[offset + 1];
@@ -690,7 +682,7 @@ namespace BABYLON
             var z = start.z + ((end.z - start.z) * amount);
             return new Vector3(x, y, z);
         }
-        public static int Dot(Vector3 left, Vector3 right)
+        public static double Dot(Vector3 left, Vector3 right)
         {
             return (left.x * right.x + left.y * right.y + left.z * right.z);
         }
@@ -753,11 +745,11 @@ namespace BABYLON
             Max.MaximizeInPlace(right);
             return Max;
         }
-        public static int Distance(Vector3 value1, Vector3 value2)
+        public static double Distance(Vector3 value1, Vector3 value2)
         {
             return Math.Sqrt(Vector3.DistanceSquared(value1, value2));
         }
-        public static int DistanceSquared(Vector3 value1, Vector3 value2)
+        public static double DistanceSquared(Vector3 value1, Vector3 value2)
         {
             var x = value1.x - value2.x;
             var y = value1.y - value2.y;
@@ -784,11 +776,11 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            return new Array<object>(this.x, this.y, this.z, this.w);
+            return new Array<double>(this.x, this.y, this.z, this.w);
         }
         public virtual bool equals(Quaternion otherQuaternion)
         {
-            return otherQuaternion && this.x == otherQuaternion.x && this.y == otherQuaternion.y && this.z == otherQuaternion.z && this.w == otherQuaternion.w;
+            return otherQuaternion != null && this.x == otherQuaternion.x && this.y == otherQuaternion.y && this.z == otherQuaternion.z && this.w == otherQuaternion.w;
         }
         public virtual Quaternion clone()
         {
@@ -848,7 +840,7 @@ namespace BABYLON
             var sqy = qy * qy;
             var sqz = qz * qz;
             var yaw = Math.Atan2(2.0 * (qy * qw - qx * qz), 1.0 - 2.0 * (sqy + sqz));
-            var pitch = Math.asin(2.0 * (qx * qy + qz * qw));
+            var pitch = Math.Asin(2.0 * (qx * qy + qz * qw));
             var roll = Math.Atan2(2.0 * (qx * qw - qy * qz), 1.0 - 2.0 * (sqx + sqz));
             var gimbaLockTest = qx * qy + qz * qw;
             if (gimbaLockTest > 0.499)
@@ -902,12 +894,8 @@ namespace BABYLON
             result.z = axis.z * Sin;
             return result;
         }
-        public static Quaternion FromArray(Array<double> array, double offset = 0.0)
+        public static Quaternion FromArray(Array<double> array, int offset = 0)
         {
-            if (!offset)
-            {
-                offset = 0;
-            }
             return new Quaternion(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
         public static Quaternion RotationYawPitchRoll(double yaw, double pitch, double roll)
@@ -934,8 +922,8 @@ namespace BABYLON
         }
         public static Quaternion Slerp(Quaternion left, Quaternion right, double amount)
         {
-            var num2;
-            var num3;
+            double num2;
+            double num3;
             var num = amount;
             var num4 = (((left.x * right.x) + (left.y * right.y)) + (left.z * right.z)) + (left.w * right.w);
             var flag = false;
@@ -951,7 +939,7 @@ namespace BABYLON
             }
             else
             {
-                var num5 = Math.acos(num4);
+                var num5 = Math.Acos(num4);
                 var num6 = (1.0 / Math.Sin(num5));
                 num3 = (Math.Sin((1.0 - num) * num5)) * num6;
                 num2 = (flag) ? ((-Math.Sin(num * num5)) * num6) : ((Math.Sin(num * num5)) * num6);
@@ -1073,7 +1061,7 @@ namespace BABYLON
                 this.m[index] = other.m[index];
             }
         }
-        public virtual void copyToArray(Float32Array array, double offset = 0)
+        public virtual void copyToArray(Float32Array array, int offset = 0)
         {
             for (var index = 0; index < 16; index++)
             {
@@ -1084,7 +1072,7 @@ namespace BABYLON
         {
             this.multiplyToArray(other, result.m, 0);
         }
-        public virtual void multiplyToArray(Matrix other, Float32Array result, double offset)
+        public virtual void multiplyToArray(Matrix other, Float32Array result, int offset)
         {
             var tm0 = this.m[0];
             var tm1 = this.m[1];
@@ -1137,23 +1125,19 @@ namespace BABYLON
         }
         public virtual bool equals(Matrix value)
         {
-            return value && (this.m[0] == value.m[0] && this.m[1] == value.m[1] && this.m[2] == value.m[2] && this.m[3] == value.m[3] && this.m[4] == value.m[4] && this.m[5] == value.m[5] && this.m[6] == value.m[6] && this.m[7] == value.m[7] && this.m[8] == value.m[8] && this.m[9] == value.m[9] && this.m[10] == value.m[10] && this.m[11] == value.m[11] && this.m[12] == value.m[12] && this.m[13] == value.m[13] && this.m[14] == value.m[14] && this.m[15] == value.m[15]);
+            return value != null && (this.m[0] == value.m[0] && this.m[1] == value.m[1] && this.m[2] == value.m[2] && this.m[3] == value.m[3] && this.m[4] == value.m[4] && this.m[5] == value.m[5] && this.m[6] == value.m[6] && this.m[7] == value.m[7] && this.m[8] == value.m[8] && this.m[9] == value.m[9] && this.m[10] == value.m[10] && this.m[11] == value.m[11] && this.m[12] == value.m[12] && this.m[13] == value.m[13] && this.m[14] == value.m[14] && this.m[15] == value.m[15]);
         }
         public virtual Matrix clone()
         {
             return Matrix.FromValues(this.m[0], this.m[1], this.m[2], this.m[3], this.m[4], this.m[5], this.m[6], this.m[7], this.m[8], this.m[9], this.m[10], this.m[11], this.m[12], this.m[13], this.m[14], this.m[15]);
         }
-        public static Matrix FromArray(Array<double> array, double offset = 0.0)
+        public static Matrix FromArray(Array<double> array, int offset = 0)
         {
             var result = new Matrix();
-            if (!offset)
-            {
-                offset = 0;
-            }
             Matrix.FromArrayToRef(array, offset, result);
             return result;
         }
-        public static void FromArrayToRef(Array<double> array, double offset, Matrix result)
+        public static void FromArrayToRef(Array<double> array, int offset, Matrix result)
         {
             for (var index = 0; index < 16; index++)
             {
@@ -1323,8 +1307,8 @@ namespace BABYLON
         }
         public static void RotationYawPitchRollToRef(double yaw, double pitch, double roll, Matrix result)
         {
-            Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, this._tempQuaternion);
-            this._tempQuaternion.toRotationMatrix(result);
+            Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, _tempQuaternion);
+            _tempQuaternion.toRotationMatrix(result);
         }
         public static Matrix Scaling(double x, double y, double z)
         {
@@ -1369,16 +1353,16 @@ namespace BABYLON
         }
         public static void LookAtLHToRef(Vector3 eye, Vector3 target, Vector3 up, Matrix result)
         {
-            target.subtractToRef(eye, this._zAxis);
-            this._zAxis.normalize();
-            Vector3.CrossToRef(up, this._zAxis, this._xAxis);
-            this._xAxis.normalize();
-            Vector3.CrossToRef(this._zAxis, this._xAxis, this._yAxis);
-            this._yAxis.normalize();
-            var ex = -Vector3.Dot(this._xAxis, eye);
-            var ey = -Vector3.Dot(this._yAxis, eye);
-            var ez = -Vector3.Dot(this._zAxis, eye);
-            return Matrix.FromValuesToRef(this._xAxis.x, this._yAxis.x, this._zAxis.x, 0, this._xAxis.y, this._yAxis.y, this._zAxis.y, 0, this._xAxis.z, this._yAxis.z, this._zAxis.z, 0, ex, ey, ez, 1, result);
+            target.subtractToRef(eye, _zAxis);
+            _zAxis.normalize();
+            Vector3.CrossToRef(up, _zAxis, _xAxis);
+            _xAxis.normalize();
+            Vector3.CrossToRef(_zAxis, _xAxis, _yAxis);
+            _yAxis.normalize();
+            var ex = -Vector3.Dot(_xAxis, eye);
+            var ey = -Vector3.Dot(_yAxis, eye);
+            var ez = -Vector3.Dot(_zAxis, eye);
+            Matrix.FromValuesToRef(_xAxis.x, _yAxis.x, _zAxis.x, 0, _xAxis.y, _yAxis.y, _zAxis.y, 0, _xAxis.z, _yAxis.z, _zAxis.z, 0, ex, ey, ez, 1, result);
         }
         public static Matrix OrthoLH(double width, double height, double znear, double zfar)
         {
@@ -1394,7 +1378,7 @@ namespace BABYLON
             Matrix.OrthoOffCenterLHToRef(left, right, bottom, top, znear, zfar, matrix);
             return matrix;
         }
-        public static void OrthoOffCenterLHToRef(double left, object right, double bottom, double top, double znear, double zfar, Matrix result)
+        public static void OrthoOffCenterLHToRef(double left, double right, double bottom, double top, double znear, double zfar, Matrix result)
         {
             result.m[0] = 2.0 / (right - left);
             result.m[1] = result.m[2] = result.m[3] = 0;
@@ -1514,7 +1498,7 @@ namespace BABYLON
         }
         public virtual Array<double> asArray()
         {
-            return new Array<object>(this.normal.x, this.normal.y, this.normal.z, this.d);
+            return new Array<double>(this.normal.x, this.normal.y, this.normal.z, this.d);
         }
         public virtual Plane clone()
         {
@@ -1523,8 +1507,8 @@ namespace BABYLON
         public virtual void normalize()
         {
             var norm = (Math.Sqrt((this.normal.x * this.normal.x) + (this.normal.y * this.normal.y) + (this.normal.z * this.normal.z)));
-            var magnitude = 0;
-            if (norm != 0)
+            var magnitude = 0.0;
+            if (norm != 0.0)
             {
                 magnitude = 1.0 / norm;
             }
@@ -1546,7 +1530,7 @@ namespace BABYLON
             var finalD = (((x * transposedMatrix.m[12]) + (y * transposedMatrix.m[13])) + (z * transposedMatrix.m[14])) + (d * transposedMatrix.m[15]);
             return new BABYLON.Plane(normalX, normalY, normalZ, finalD);
         }
-        public virtual double dotCoordinate(object point)
+        public virtual double dotCoordinate(Vector3 point)
         {
             return ((((this.normal.x * point.x) + (this.normal.y * point.y)) + (this.normal.z * point.z)) + this.d);
         }
@@ -1562,7 +1546,7 @@ namespace BABYLON
             var xz = (z1 * x2) - (x1 * z2);
             var xy = (x1 * y2) - (y1 * x2);
             var pyth = (Math.Sqrt((yz * yz) + (xz * xz) + (xy * xy)));
-            var invPyth;
+            double invPyth;
             if (pyth != 0)
             {
                 invPyth = 1.0 / pyth;
@@ -1589,7 +1573,7 @@ namespace BABYLON
         {
             return new BABYLON.Plane(array[0], array[1], array[2], array[3]);
         }
-        static Plane FromPoints(object point1, object point2, object point3)
+        static Plane FromPoints(Vector3 point1, Vector3 point2, Vector3 point3)
         {
             var result = new BABYLON.Plane(0, 0, 0, 0);
             result.copyFromPoints(point1, point2, point3);
@@ -1611,12 +1595,12 @@ namespace BABYLON
     }
     public partial class Viewport
     {
-        public int x;
-        public int y;
-        public int width;
-        public int height;
-        public Viewport(int x, int y, int width, int height) { }
-        public virtual Viewport toGlobal(object engine)
+        public double x;
+        public double y;
+        public double width;
+        public double height;
+        public Viewport(double x, double y, double width, double height) { }
+        public virtual Viewport toGlobal(Engine engine)
         {
             var width = engine.getRenderWidth();
             var height = engine.getRenderHeight();
@@ -1627,7 +1611,7 @@ namespace BABYLON
     {
         public static Array<Plane> GetPlanes(Matrix transform)
         {
-            var frustumPlanes = new Array<object>();
+            var frustumPlanes = new Array<Plane>();
             for (var index = 0; index < 6; index++)
             {
                 frustumPlanes.push(new Plane(0, 0, 0, 0));
@@ -1683,7 +1667,7 @@ namespace BABYLON
         {
             var d = 0.0;
             var maxValue = double.MaxValue;
-            if (Math.abs(this.direction.x) < 0.0000001)
+            if (Math.Abs(this.direction.x) < 0.0000001)
             {
                 if (this.origin.x < minimum.x || this.origin.x > maximum.x)
                 {
@@ -1694,21 +1678,21 @@ namespace BABYLON
             {
                 var inv = 1.0 / this.direction.x;
                 var min = (minimum.x - this.origin.x) * inv;
-                var Max = (maximum.x - this.origin.x) * inv;
-                if (min > Max)
+                var max = (maximum.x - this.origin.x) * inv;
+                if (min > max)
                 {
                     var temp = min;
-                    min = Max;
-                    Max = temp;
+                    min = max;
+                    max = temp;
                 }
                 d = Math.Max(min, d);
-                maxValue = Math.min(Max, maxValue);
+                maxValue = Math.Min(max, maxValue);
                 if (d > maxValue)
                 {
                     return false;
                 }
             }
-            if (Math.abs(this.direction.y) < 0.0000001)
+            if (Math.Abs(this.direction.y) < 0.0000001)
             {
                 if (this.origin.y < minimum.y || this.origin.y > maximum.y)
                 {
@@ -1717,23 +1701,23 @@ namespace BABYLON
             }
             else
             {
-                inv = 1.0 / this.direction.y;
-                min = (minimum.y - this.origin.y) * inv;
-                Max = (maximum.y - this.origin.y) * inv;
-                if (min > Max)
+                var inv = 1.0 / this.direction.y;
+                var min = (minimum.y - this.origin.y) * inv;
+                var max = (maximum.y - this.origin.y) * inv;
+                if (min > max)
                 {
-                    temp = min;
-                    min = Max;
-                    Max = temp;
+                    var temp = min;
+                    min = max;
+                    max = temp;
                 }
                 d = Math.Max(min, d);
-                maxValue = Math.min(Max, maxValue);
+                maxValue = Math.Min(max, maxValue);
                 if (d > maxValue)
                 {
                     return false;
                 }
             }
-            if (Math.abs(this.direction.z) < 0.0000001)
+            if (Math.Abs(this.direction.z) < 0.0000001)
             {
                 if (this.origin.z < minimum.z || this.origin.z > maximum.z)
                 {
@@ -1742,17 +1726,17 @@ namespace BABYLON
             }
             else
             {
-                inv = 1.0 / this.direction.z;
-                min = (minimum.z - this.origin.z) * inv;
-                Max = (maximum.z - this.origin.z) * inv;
-                if (min > Max)
+                var inv = 1.0 / this.direction.z;
+                var min = (minimum.z - this.origin.z) * inv;
+                var max = (maximum.z - this.origin.z) * inv;
+                if (min > max)
                 {
-                    temp = min;
-                    min = Max;
-                    Max = temp;
+                    var temp = min;
+                    min = max;
+                    max = temp;
                 }
                 d = Math.Max(min, d);
-                maxValue = Math.min(Max, maxValue);
+                maxValue = Math.Min(max, maxValue);
                 if (d > maxValue)
                 {
                     return false;
@@ -1764,7 +1748,7 @@ namespace BABYLON
         {
             return this.intersectsBoxMinMax(box.minimum, box.maximum);
         }
-        public virtual bool intersectsSphere(object sphere)
+        public virtual bool intersectsSphere(BoundingSphere sphere)
         {
             var x = sphere.center.x - this.origin.x;
             var y = sphere.center.y - this.origin.y;
@@ -1785,7 +1769,7 @@ namespace BABYLON
         }
         public virtual IntersectionInfo intersectsTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2)
         {
-            if (!this._edge1)
+            if (this._edge1 == null)
             {
                 this._edge1 = BABYLON.Vector3.Zero();
                 this._edge2 = BABYLON.Vector3.Zero();
@@ -1837,11 +1821,8 @@ namespace BABYLON
     }
     public partial class Axis
     {
-        public
-        const Vector3 X = new BABYLON.Vector3(1, 0, 0);
-        public
-        const Vector3 Y = new BABYLON.Vector3(0, 1, 0);
-        public
-        const Vector3 Z = new BABYLON.Vector3(0, 0, 1);
+        public static Vector3 X = new BABYLON.Vector3(1, 0, 0);
+        public static Vector3 Y = new BABYLON.Vector3(0, 1, 0);
+        public static Vector3 Z = new BABYLON.Vector3(0, 0, 1);
     }
 }

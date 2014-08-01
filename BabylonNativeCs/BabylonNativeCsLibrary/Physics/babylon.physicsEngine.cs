@@ -58,7 +58,7 @@ namespace BABYLON
         {
             this._currentPlugin = plugin ?? new CannonJSPlugin();
         }
-        void CANNON;
+
         public virtual void _initialize(Vector3 gravity = null)
         {
             this._currentPlugin.initialize();

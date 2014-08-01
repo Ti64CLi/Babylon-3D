@@ -56,9 +56,9 @@ namespace BABYLON {
         public virtual void _prepare() {
             this._target = this._getEffectiveTarget(this._target, this.propertyPath);
             this._property = this._getProperty(this.propertyPath);
-            if (typeof(this._target[this._property]) != "number") {
-                Tools.Warn("Warning: IncrementValueAction can only be used with number values");
-            }
+            ////if (typeof(this._target[this._property]).Name != "number") {
+            ////    Tools.Warn("Warning: IncrementValueAction can only be used with number values");
+            ////}
         }
         public virtual void execute() {
             this._target[this._property] += this.value;
@@ -90,7 +90,7 @@ namespace BABYLON {
         }
     }
     public partial class DoNothingAction: Action {
-        public DoNothingAction(object triggerOptions = ActionManager.NothingTrigger, Condition condition = null): base(triggerOptions, condition) {}
+        public DoNothingAction(int triggerOptions = ActionManager.NothingTrigger, Condition condition = null): base(triggerOptions, condition) {}
         public virtual void execute() {}
     }
     public partial class CombineAction: Action {

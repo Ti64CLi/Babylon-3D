@@ -20,6 +20,7 @@ namespace BABYLON
         private WebGLBuffer _indexBuffer;
         public BoundingInfo _boundingInfo;
         public System.Action<object, object> _delayLoadingFunction;
+        int currentCSGMeshId0;
         public Geometry(string id, Scene scene, VertexData vertexData = null, bool updatable = false, Mesh mesh = null)
         {
             this.id = id;
@@ -35,12 +36,11 @@ namespace BABYLON
                 this._totalVertices = 0;
                 this._indices = new Array<int>();
             }
-            if (mesh)
+            if (mesh != null)
             {
                 this.applyToMesh(mesh);
             }
         }
-        void currentCSGMeshId0;
         public virtual Scene getScene()
         {
             return this._scene;

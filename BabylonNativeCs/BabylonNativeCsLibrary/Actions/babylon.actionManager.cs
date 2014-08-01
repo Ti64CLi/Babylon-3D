@@ -20,86 +20,16 @@ namespace BABYLON
     }
     public partial class ActionManager
     {
-        private static int _NothingTrigger = 0;
-        private static int _OnPickTrigger = 1;
-        private static int _OnLeftPickTrigger = 2;
-        private static int _OnRightPickTrigger = 3;
-        private static int _OnCenterPickTrigger = 4;
-        private static int _OnPointerOverTrigger = 5;
-        private static int _OnPointerOutTrigger = 6;
-        private static int _OnEveryFrameTrigger = 7;
-        private static int _OnIntersectionEnterTrigger = 8;
-        private static int _OnIntersectionExitTrigger = 9;
-        public static int NothingTrigger
-        {
-            get
-            {
-                return ActionManager._NothingTrigger;
-            }
-        }
-        public static int OnPickTrigger
-        {
-            get
-            {
-                return ActionManager._OnPickTrigger;
-            }
-        }
-        public static int OnLeftPickTrigger
-        {
-            get
-            {
-                return ActionManager._OnLeftPickTrigger;
-            }
-        }
-        public static int OnRightPickTrigger
-        {
-            get
-            {
-                return ActionManager._OnRightPickTrigger;
-            }
-        }
-        public static int OnCenterPickTrigger
-        {
-            get
-            {
-                return ActionManager._OnCenterPickTrigger;
-            }
-        }
-        public static int OnPointerOverTrigger
-        {
-            get
-            {
-                return ActionManager._OnPointerOverTrigger;
-            }
-        }
-        public static int OnPointerOutTrigger
-        {
-            get
-            {
-                return ActionManager._OnPointerOutTrigger;
-            }
-        }
-        public static int OnEveryFrameTrigger
-        {
-            get
-            {
-                return ActionManager._OnEveryFrameTrigger;
-            }
-        }
-        public static int OnIntersectionEnterTrigger
-        {
-            get
-            {
-                return ActionManager._OnIntersectionEnterTrigger;
-            }
-        }
-        public static int OnIntersectionExitTrigger
-        {
-            get
-            {
-                return ActionManager._OnIntersectionExitTrigger;
-            }
-        }
+        public const int NothingTrigger = 0;
+        public const int OnPickTrigger = 1;
+        public const int OnLeftPickTrigger = 2;
+        public const int OnRightPickTrigger = 3;
+        public const int OnCenterPickTrigger = 4;
+        public const int OnPointerOverTrigger = 5;
+        public const int OnPointerOutTrigger = 6;
+        public const int OnEveryFrameTrigger = 7;
+        public const int OnIntersectionEnterTrigger = 8;
+        public const int OnIntersectionExitTrigger = 9;
         public Array<Action> actions = new Array<Action>();
         private Scene _scene;
         public ActionManager(Scene scene)

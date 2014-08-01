@@ -2454,7 +2454,7 @@ namespace Web
     }
     public partial interface HTMLCanvasElement : HTMLElement
     {
-        double width
+        int width
         {
             get;
             set;
@@ -17473,7 +17473,7 @@ namespace Web
         object getShaderParameter(WebGLShader shader, int pname);
         void clearDepth(double depth);
         void activeTexture(int texture);
-        void viewport(double x, double y, double width, int height);
+        void viewport(int x, int y, int width, int height);
         void detachShader(WebGLProgram program, WebGLShader shader);
         void uniform1f(WebGLUniformLocation location, double x);
         void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Array<double> value);

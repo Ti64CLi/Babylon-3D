@@ -180,6 +180,18 @@
         {
             throw new NotImplementedException();
         }
+
+        public double this[int subIndex]
+        {
+            get
+            {
+                return (double)base[subIndex];
+            }
+            set
+            {
+                base[subIndex] = (float)value;
+            }
+        }
     }
 
     public class Int32Array : Array<int>, Web.Int32Array

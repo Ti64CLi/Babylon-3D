@@ -83,7 +83,7 @@ namespace BABYLON {
             var signedDistToTrianglePlane = trianglePlane.signedDistanceTo(this.basePoint);
             var normalDotVelocity = BABYLON.Vector3.Dot(trianglePlane.normal, this.velocity);
             if (normalDotVelocity == 0) {
-                if (Math.abs(signedDistToTrianglePlane) >= 1.0)
+                if (Math.Abs(signedDistToTrianglePlane) >= 1.0)
                     return;
                 embeddedInPlane = true;
                 t0 = 0;

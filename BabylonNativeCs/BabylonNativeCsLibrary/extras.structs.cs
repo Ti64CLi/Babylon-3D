@@ -12,6 +12,15 @@ namespace BABYLON
         public Vector3 maximum { get; set; }
     }
 
+    public struct MinMaxDistance
+    {
+        public Vector3 minimum { get; set; }
+
+        public Vector3 maximum { get; set; }
+
+        public double distance { get; set; }
+    }
+
     public struct Size : ISize
     {
         public int width { get; set; }
@@ -51,6 +60,13 @@ namespace BABYLON
         public int mag { get; set; }
     }
 
+    public class PositionCoord
+    {
+        public int x { get; set; }
+
+        public int y { get; set; }
+    }
+
     public struct EventDts
     {
         public string name { get; set; }
@@ -60,6 +76,28 @@ namespace BABYLON
 
     public class Cache
     {
+        public int mode { get; set; }
+
+        public double minZ { get; set; }
+
+        public double maxZ { get; set; }
+
+        public double fov { get; set; }
+
+        public double aspectRatio { get; set; }
+
+        public double? orthoLeft { get; set; }
+
+        public double? orthoRight { get; set; }
+
+        public double? orthoBottom { get; set; }
+
+        public double? orthoTop { get; set; }
+
+        public int renderWidth { get; set; }
+
+        public int renderHeight { get; set; }
+
         public bool localMatrixUpdated { get; set; }
 
         public Vector3 scaling { get; set; }
@@ -73,6 +111,16 @@ namespace BABYLON
         public bool pivotMatrixUpdated { get; set; }
 
         public Node parent { get; set; }
+
+        public Vector3 target { get; set; }
+
+        public double? alpha { get; set; }
+
+        public double? beta { get; set; }
+
+        public double? radius { get; set; }
+
+        public Vector3 upVector { get; set; }
     }
 
     public class EngineOptions

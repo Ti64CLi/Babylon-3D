@@ -325,7 +325,7 @@ namespace BABYLON
                 instancesCount++;
             }
             var visibleInstances = batch.visibleInstances[subMesh._id];
-            if (visibleInstances)
+            if (visibleInstances != null)
             {
                 for (var instanceIndex = 0; instanceIndex < visibleInstances.Length; instanceIndex++)
                 {
