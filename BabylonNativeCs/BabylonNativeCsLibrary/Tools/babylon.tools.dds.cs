@@ -38,17 +38,86 @@ namespace BABYLON.Internals
     }
     public partial class DDSTools
     {
-        public static DDSInfo GetDDSInfo(object arrayBuffer)
+        public const int DDS_MAGIC = 0x20534444;
+
+        public const int DDSD_CAPS = 0x1;
+        public const int DDSD_HEIGHT = 0x2;
+        public const int DDSD_WIDTH = 0x4;
+        public const int DDSD_PITCH = 0x8;
+        public const int DDSD_PIXELFORMAT = 0x1000;
+        public const int DDSD_MIPMAPCOUNT = 0x20000;
+        public const int DDSD_LINEARSIZE = 0x80000;
+        public const int DDSD_DEPTH = 0x800000;
+
+        public const int DDSCAPS_COMPLEX = 0x8;
+        public const int DDSCAPS_MIPMAP = 0x400000;
+        public const int DDSCAPS_TEXTURE = 0x1000;
+
+        public const int DDSCAPS2_CUBEMAP = 0x200;
+        public const int DDSCAPS2_CUBEMAP_POSITIVEX = 0x400;
+        public const int DDSCAPS2_CUBEMAP_NEGATIVEX = 0x800;
+        public const int DDSCAPS2_CUBEMAP_POSITIVEY = 0x1000;
+        public const int DDSCAPS2_CUBEMAP_NEGATIVEY = 0x2000;
+        public const int DDSCAPS2_CUBEMAP_POSITIVEZ = 0x4000;
+        public const int DDSCAPS2_CUBEMAP_NEGATIVEZ = 0x8000;
+        public const int DDSCAPS2_VOLUME = 0x200000;
+
+        public const int DDPF_ALPHAPIXELS = 0x1;
+        public const int DDPF_ALPHA = 0x2;
+        public const int DDPF_FOURCC = 0x4;
+        public const int DDPF_RGB = 0x40;
+        public const int DDPF_YUV = 0x200;
+        public const int DDPF_LUMINANCE = 0x20000;
+
+        public const int headerLengthInt = 31; // The header length in 32 bit ints
+
+        // Offsets into the header array
+        public const int off_magic = 0;
+
+        public const int off_size = 1;
+        public const int off_flags = 2;
+        public const int off_height = 3;
+        public const int off_width = 4;
+
+        public const int off_mipmapCount = 7;
+
+        public const int off_pfFlags = 20;
+        public const int off_pfFourCC = 21;
+        public const int off_RGBbpp = 22;
+        public const int off_RMask = 23;
+        public const int off_GMask = 24;
+        public const int off_BMask = 25;
+        public const int off_AMask = 26;
+        public const int off_caps1 = 27;
+        public const int off_caps2 = 28;
+
+        public const int FOURCC_DXT1 = 'D' + ('X' << 8) + ('T' << 16) + ('1' << 24);
+        public const int FOURCC_DXT3 = 'D' + ('X' << 8) + ('T' << 16) + ('3' << 24);
+        public const int FOURCC_DXT5 = 'D' + ('X' << 8) + ('T' << 16) + ('5' << 24);
+
+        private static Web.Console console;
+
+        public static DDSInfo GetDDSInfo(ArrayBuffer arrayBuffer)
         {
             var header = new Int32Array(arrayBuffer, 0, headerLengthInt);
             var mipmapCount = 1;
-            if (header[off_flags] & DDSD_MIPMAPCOUNT)
+            if ((header[off_flags] & DDSD_MIPMAPCOUNT) > 0)
             {
                 mipmapCount = Math.Max(1, header[off_mipmapCount]);
             }
-            return new { };
+
+            return new DDSInfoDts
+            {
+                width = header[off_width],
+                height = header[off_height],
+                mipmapCount = mipmapCount,
+                isFourCC = (header[off_pfFlags] & DDPF_FOURCC) == DDPF_FOURCC,
+                isRGB = (header[off_pfFlags] & DDPF_RGB) == DDPF_RGB,
+                isLuminance = (header[off_pfFlags] & DDPF_LUMINANCE) == DDPF_LUMINANCE,
+                isCube = (header[off_caps2] & DDSCAPS2_CUBEMAP) == DDSCAPS2_CUBEMAP
+            };
         }
-        private static Uint8Array GetRGBAArrayBuffer(double width, double height, double dataOffset, double dataLength, ArrayBuffer arrayBuffer)
+        private static Uint8Array GetRGBAArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
         {
             var byteArray = new Uint8Array(dataLength);
             var srcData = new Uint8Array(arrayBuffer);
@@ -67,7 +136,7 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        private static Uint8Array GetRGBArrayBuffer(double width, double height, double dataOffset, double dataLength, ArrayBuffer arrayBuffer)
+        private static Uint8Array GetRGBArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
         {
             var byteArray = new Uint8Array(dataLength);
             var srcData = new Uint8Array(arrayBuffer);
@@ -85,7 +154,7 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        private static Uint8Array GetLuminanceArrayBuffer(double width, double height, double dataOffset, double dataLength, ArrayBuffer arrayBuffer)
+        private static Uint8Array GetLuminanceArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
         {
             var byteArray = new Uint8Array(dataLength);
             var srcData = new Uint8Array(arrayBuffer);
@@ -101,19 +170,19 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        public static void UploadDDSLevels(WebGLRenderingContext gl, object ext, object arrayBuffer, DDSInfo info, bool loadMipmaps, double faces)
+        public static void UploadDDSLevels(WebGLRenderingContext gl, WEBGL_compressed_texture_s3tc ext, ArrayBuffer arrayBuffer, DDSInfo info, bool loadMipmaps, int faces)
         {
             var header = new Int32Array(arrayBuffer, 0, headerLengthInt);
-            var fourCC;
-            var blockBytes;
-            var internalFormat;
-            var width;
-            var height;
-            var dataLength;
-            var dataOffset;
-            var byteArray;
-            var mipmapCount;
-            var i;
+            int fourCC;
+            int blockBytes;
+            int internalFormat;
+            int width;
+            int height;
+            int dataLength;
+            int dataOffset;
+            Uint8Array byteArray;
+            int mipmapCount;
+            int i;
             if (header[off_magic] != DDS_MAGIC)
             {
                 Tools.Error("Invalid magic number in DDS header");
@@ -142,12 +211,12 @@ namespace BABYLON.Internals
                         internalFormat = ext.COMPRESSED_RGBA_S3TC_DXT5_EXT;
                         break;
                     default:
-                        console.error("Unsupported FourCC code:", Int32ToFourCC(fourCC));
+                        console.error("Unsupported FourCC code:", fourCC);
                         return;
                 }
             }
             mipmapCount = 1;
-            if (header[off_flags] & DDSD_MIPMAPCOUNT && loadMipmaps != false)
+            if ((header[off_flags] & DDSD_MIPMAPCOUNT) > 0 && loadMipmaps)
             {
                 mipmapCount = Math.Max(1, header[off_mipmapCount]);
             }
@@ -178,9 +247,9 @@ namespace BABYLON.Internals
                     else
                         if (info.isLuminance)
                         {
-                            var unpackAlignment = gl.getParameter(gl.UNPACK_ALIGNMENT);
+                            var unpackAlignment = (int)gl.getParameter(gl.UNPACK_ALIGNMENT);
                             var unpaddedRowSize = width;
-                            var paddedRowSize = Math.floor((width + unpackAlignment - 1) / unpackAlignment) * unpackAlignment;
+                            var paddedRowSize = (int)Math.Floor((width + unpackAlignment - 1) / unpackAlignment) * unpackAlignment;
                             dataLength = paddedRowSize * (height - 1) + unpaddedRowSize;
                             byteArray = DDSTools.GetLuminanceArrayBuffer(width, height, dataOffset, dataLength, arrayBuffer);
                             gl.texImage2D(sampler, i, gl.LUMINANCE, width, height, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, byteArray);
@@ -192,10 +261,10 @@ namespace BABYLON.Internals
                             gl.compressedTexImage2D(sampler, i, internalFormat, width, height, 0, byteArray);
                         }
                     dataOffset += dataLength;
-                    width *= 0.5;
-                    height *= 0.5;
-                    width = Math.Max(1.0, width);
-                    height = Math.Max(1.0, height);
+                    width /= 2;
+                    height /= 2;
+                    width = Math.Max(1, width);
+                    height = Math.Max(1, height);
                 }
             }
         }

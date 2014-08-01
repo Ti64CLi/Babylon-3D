@@ -3,6 +3,8 @@ using Web;
 
 namespace BABYLON
 {
+    using BABYLON.Internals;
+
     public struct MinMax
     {
         public Vector3 minimum { get; set; }
@@ -86,5 +88,22 @@ namespace BABYLON
         public byte colormap_size { get; set; }
 
         public byte pixel_size { get; set; }
+    }
+
+    public class DDSInfoDts : DDSInfo
+    {
+        public int width { get; set; }
+
+        public int height { get; set; }
+
+        public int mipmapCount { get; set; }
+
+        public bool isFourCC { get; set; }
+
+        public bool isRGB { get; set; }
+
+        public bool isLuminance { get; set; }
+
+        public bool isCube { get; set; }
     }
 }

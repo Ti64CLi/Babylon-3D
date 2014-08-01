@@ -158,6 +158,7 @@
     {
         public Float32Array(int reserveSize)
         {
+            throw new NotImplementedException();
         }
 
         public Float32Array(Array<float> array)
@@ -180,6 +181,12 @@
     {
         public Int32Array(int reserveSize)
         {
+            throw new NotImplementedException();
+        }
+
+        public Int32Array(ArrayBuffer arrayBuffer, int start, int count)
+        {
+            throw new NotImplementedException();
         }
 
         public void set(Web.Int32Array array, int offset = 0)
@@ -197,10 +204,17 @@
     {
         public Uint8Array(int reserveSize)
         {
+            throw new NotImplementedException();
         }
 
         public Uint8Array(ArrayBuffer arrayBuffer)
         {
+            throw new NotImplementedException();
+        }
+
+        public Uint8Array(ArrayBuffer arrayBuffer, int start, int count)
+        {
+            throw new NotImplementedException();
         }
 
         public void set(Web.Uint8Array array, int offset = 0)
@@ -218,6 +232,7 @@
     {
         public Int8Array(int reserveSize)
         {
+            throw new NotImplementedException();
         }
 
         public void set(Web.Int8Array array, int offset = 0)
@@ -235,6 +250,7 @@
     {
         public Int16Array(int reserveSize)
         {
+            throw new NotImplementedException();
         }
 
         public void set(Web.Int16Array array, int offset = 0)
@@ -252,6 +268,7 @@
     {
         public Uint16Array(int reserveSize)
         {
+            throw new NotImplementedException();
         }
 
         public Uint16Array(Array<int> array)
