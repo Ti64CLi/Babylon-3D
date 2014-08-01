@@ -16,13 +16,14 @@ namespace BABYLON
         private Array<string> _samplers;
         private bool _isReady = false;
         private string _compilationError = "";
-        private Array<VertexBufferKind> _attributes;
         private Array<string> _attributesNames;
-        private Array<int> _attributes;
+        private Array<VertexBufferKind> _attributes;
         private Array<WebGLUniformLocation> _uniforms;
         public string _key;
         public WebGLProgram _program;
-        private Array<object> _valueCache = new Array<object>();
+        private Map<string, Array<double>> _valueCache = new Map<string, Array<double>>();
+        private Map<string, bool> _valueCacheBool = new Map<string, bool>();
+        private Map<string, double> _valueCacheDouble = new Map<string, double>();
 
         private Web.Document document;
 
@@ -48,9 +49,9 @@ namespace BABYLON
                 vertexSource = baseName.vertexElement ?? baseName.vertex ?? baseName.baseName;
                 fragmentSource = baseName.fragmentElement ?? baseName.fragment ?? baseName.baseName;
             }
-            this._loadVertexShader(vertexSource, (object vertexCode) =>
+            this._loadVertexShader(vertexSource, (vertexCode) =>
             {
-                this._loadFragmentShader(fragmentSource, (object fragmentCode) =>
+                this._loadFragmentShader(fragmentSource, (fragmentCode) =>
                 {
                     this._prepareEffect(vertexCode, fragmentCode, attributesNames, defines, optionalDefines);
                 });
@@ -72,20 +73,20 @@ namespace BABYLON
         {
             return this._attributes;
         }
-        public virtual int getAttributeLocation(double index)
+        public virtual VertexBufferKind getAttributeLocation(int index)
         {
             return this._attributes[index];
         }
-        public virtual double getAttributeLocationByName(string name)
+        public virtual VertexBufferKind getAttributeLocationByName(string name)
         {
             var index = this._attributesNames.indexOf(name);
             return this._attributes[index];
         }
-        public virtual double getAttributesCount()
+        public virtual int getAttributesCount()
         {
             return this._attributes.Length;
         }
-        public virtual double getUniformIndex(string uniformName)
+        public virtual int getUniformIndex(string uniformName)
         {
             return this._uniformsNames.indexOf(uniformName);
         }
@@ -101,23 +102,25 @@ namespace BABYLON
         {
             return this._compilationError;
         }
-        public virtual void _loadVertexShader(object vertex, System.Action<object> callback)
+
+        public virtual void _loadVertexShader(HTMLElement vertex, System.Action<string> callback)
         {
-            if (vertex is HTMLElement)
-            {
-                var vertexCode = BABYLON.Tools.GetDOMTextContent(vertex);
-                callback(vertexCode);
-                return;
-            }
-            if (BABYLON.Effect.ShadersStore[vertex + "VertexShader"])
+            var vertexCode = BABYLON.Tools.GetDOMTextContent((HTMLElement)vertex);
+            callback(vertexCode);
+        }
+
+        public virtual void _loadVertexShader(object vertex, System.Action<string> callback)
+        {
+            if (BABYLON.Effect.ShadersStore[vertex + "VertexShader"] != null)
             {
                 callback(BABYLON.Effect.ShadersStore[vertex + "VertexShader"]);
                 return;
             }
-            var vertexShaderUrl;
-            if (vertex[0] == ".")
+            string vertexShaderUrl;
+            var vertexString = vertex.ToString();
+            if (vertexString[0] == '.')
             {
-                vertexShaderUrl = vertex;
+                vertexShaderUrl = vertexString;
             }
             else
             {
@@ -125,23 +128,25 @@ namespace BABYLON
             }
             BABYLON.Tools.LoadFile(vertexShaderUrl + ".vertex.fx", callback);
         }
-        public virtual void _loadFragmentShader(object fragment, System.Action<object> callback)
+
+        public virtual void _loadFragmentShader(HTMLElement fragment, System.Action<string> callback)
         {
-            if (fragment is HTMLElement)
-            {
-                var fragmentCode = BABYLON.Tools.GetDOMTextContent(fragment);
-                callback(fragmentCode);
-                return;
-            }
-            if (BABYLON.Effect.ShadersStore[fragment + "PixelShader"])
+            var fragmentCode = BABYLON.Tools.GetDOMTextContent(fragment);
+            callback(fragmentCode);
+        }
+
+        public virtual void _loadFragmentShader(object fragment, System.Action<string> callback)
+        {
+            if (BABYLON.Effect.ShadersStore[fragment + "PixelShader"] != null)
             {
                 callback(BABYLON.Effect.ShadersStore[fragment + "PixelShader"]);
                 return;
             }
-            var fragmentShaderUrl;
-            if (fragment[0] == ".")
+            string fragmentShaderUrl;
+            var fragmentString = fragment.ToString();
+            if (fragmentString[0] == '.')
             {
-                fragmentShaderUrl = fragment;
+                fragmentShaderUrl = fragmentString;
             }
             else
             {
@@ -168,18 +173,18 @@ namespace BABYLON
                 }
                 engine.bindSamplers(this);
                 this._isReady = true;
-                if (this.onCompiled)
+                if (this.onCompiled != null)
                 {
                     this.onCompiled(this);
                 }
             }
             catch (Exception e)
             {
-                if (!useFallback && optionalDefines)
+                if (!useFallback && optionalDefines != null)
                 {
-                    for (index = 0; index < optionalDefines.Length; index++)
+                    for (var index = 0; index < optionalDefines.Length; index++)
                     {
-                        defines = defines.replace(optionalDefines[index], "");
+                        defines = defines.Replace(optionalDefines[index], string.Empty);
                     }
                     this._prepareEffect(vertexSourceCode, fragmentSourceCode, attributesNames, defines, optionalDefines, true);
                 }
@@ -188,9 +193,9 @@ namespace BABYLON
                     Tools.Error("Unable to compile effect: " + this.name);
                     Tools.Error("Defines: " + defines);
                     Tools.Error("Optional defines: " + optionalDefines);
-                    Tools.Error("Error: " + e.message);
-                    this._compilationError = e.message;
-                    if (this.onError)
+                    Tools.Error("Error: " + e.Message);
+                    this._compilationError = e.Message;
+                    if (this.onError != null)
                     {
                         this.onError(this, this._compilationError);
                     }
@@ -211,9 +216,9 @@ namespace BABYLON
         }
         public virtual void _cacheFloat2(string uniformName, double x, double y)
         {
-            if (!this._valueCache[uniformName])
+            if (this._valueCache[uniformName] == null)
             {
-                this._valueCache[uniformName] = new Array<object>(x, y);
+                this._valueCache[uniformName] = new Array<double>(x, y);
                 return;
             }
             this._valueCache[uniformName][0] = x;
@@ -221,9 +226,9 @@ namespace BABYLON
         }
         public virtual void _cacheFloat3(string uniformName, double x, double y, double z)
         {
-            if (!this._valueCache[uniformName])
+            if (this._valueCache[uniformName] == null)
             {
-                this._valueCache[uniformName] = new Array<object>(x, y, z);
+                this._valueCache[uniformName] = new Array<double>(x, y, z);
                 return;
             }
             this._valueCache[uniformName][0] = x;
@@ -232,9 +237,9 @@ namespace BABYLON
         }
         public virtual void _cacheFloat4(string uniformName, double x, double y, double z, double w)
         {
-            if (!this._valueCache[uniformName])
+            if (this._valueCache[uniformName] == null)
             {
-                this._valueCache[uniformName] = new Array<object>(x, y, z, w);
+                this._valueCache[uniformName] = new Array<double>(x, y, z, w);
                 return;
             }
             this._valueCache[uniformName][0] = x;
@@ -259,23 +264,23 @@ namespace BABYLON
         }
         public virtual Effect setFloat(string uniformName, double value)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName] == value)
+            if (this._valueCacheDouble.ContainsKey(uniformName) && this._valueCacheDouble[uniformName] == value)
                 return this;
-            this._valueCache[uniformName] = value;
+            this._valueCacheDouble[uniformName] = value;
             this._engine.setFloat(this.getUniform(uniformName), value);
             return this;
         }
         public virtual Effect setBool(string uniformName, bool _bool)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName] == _bool)
+            if (this._valueCacheBool.ContainsKey(uniformName) && this._valueCacheBool[uniformName] == _bool)
                 return this;
-            this._valueCache[uniformName] = _bool;
+            this._valueCacheBool[uniformName] = _bool;
             this._engine.setBool(this.getUniform(uniformName), (_bool) ? 1 : 0);
             return this;
         }
         public virtual Effect setVector2(string uniformName, Vector2 vector2)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == vector2.x && this._valueCache[uniformName][1] == vector2.y)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == vector2.x && this._valueCache[uniformName][1] == vector2.y)
                 return this;
             this._cacheFloat2(uniformName, vector2.x, vector2.y);
             this._engine.setFloat2(this.getUniform(uniformName), vector2.x, vector2.y);
@@ -283,7 +288,7 @@ namespace BABYLON
         }
         public virtual Effect setFloat2(string uniformName, double x, double y)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y)
                 return this;
             this._cacheFloat2(uniformName, x, y);
             this._engine.setFloat2(this.getUniform(uniformName), x, y);
@@ -291,7 +296,7 @@ namespace BABYLON
         }
         public virtual Effect setVector3(string uniformName, Vector3 vector3)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == vector3.x && this._valueCache[uniformName][1] == vector3.y && this._valueCache[uniformName][2] == vector3.z)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == vector3.x && this._valueCache[uniformName][1] == vector3.y && this._valueCache[uniformName][2] == vector3.z)
                 return this;
             this._cacheFloat3(uniformName, vector3.x, vector3.y, vector3.z);
             this._engine.setFloat3(this.getUniform(uniformName), vector3.x, vector3.y, vector3.z);
@@ -299,7 +304,7 @@ namespace BABYLON
         }
         public virtual Effect setFloat3(string uniformName, double x, double y, double z)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z)
                 return this;
             this._cacheFloat3(uniformName, x, y, z);
             this._engine.setFloat3(this.getUniform(uniformName), x, y, z);
@@ -307,7 +312,7 @@ namespace BABYLON
         }
         public virtual Effect setFloat4(string uniformName, double x, double y, double z, double w)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z && this._valueCache[uniformName][3] == w)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == x && this._valueCache[uniformName][1] == y && this._valueCache[uniformName][2] == z && this._valueCache[uniformName][3] == w)
                 return this;
             this._cacheFloat4(uniformName, x, y, z, w);
             this._engine.setFloat4(this.getUniform(uniformName), x, y, z, w);
@@ -315,7 +320,7 @@ namespace BABYLON
         }
         public virtual Effect setColor3(string uniformName, Color3 color3)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == color3.r && this._valueCache[uniformName][1] == color3.g && this._valueCache[uniformName][2] == color3.b)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == color3.r && this._valueCache[uniformName][1] == color3.g && this._valueCache[uniformName][2] == color3.b)
                 return this;
             this._cacheFloat3(uniformName, color3.r, color3.g, color3.b);
             this._engine.setColor3(this.getUniform(uniformName), color3);
@@ -323,12 +328,12 @@ namespace BABYLON
         }
         public virtual Effect setColor4(string uniformName, Color3 color3, double alpha)
         {
-            if (this._valueCache[uniformName] && this._valueCache[uniformName][0] == color3.r && this._valueCache[uniformName][1] == color3.g && this._valueCache[uniformName][2] == color3.b && this._valueCache[uniformName][3] == alpha)
+            if (this._valueCache[uniformName] != null && this._valueCache[uniformName][0] == color3.r && this._valueCache[uniformName][1] == color3.g && this._valueCache[uniformName][2] == color3.b && this._valueCache[uniformName][3] == alpha)
                 return this;
             this._cacheFloat4(uniformName, color3.r, color3.g, color3.b, alpha);
             this._engine.setColor4(this.getUniform(uniformName), color3, alpha);
             return this;
         }
-        public static dynamic ShadersStore = new { };
+        public static Map<string, string> ShadersStore = new Map<string, string>();
     }
 }

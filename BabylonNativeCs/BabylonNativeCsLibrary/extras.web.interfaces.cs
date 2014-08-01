@@ -19341,7 +19341,7 @@ namespace Intl
 }
 
 //const int VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE = 0x88FE;
-interface ANGLE_instanced_arrays
+public interface ANGLE_instanced_arrays
 {
     void drawArraysInstancedANGLE(int mode, int first, int count, int primcount);
     void drawElementsInstancedANGLE(int mode, int count, int type, IntPtr offset, int primcount);

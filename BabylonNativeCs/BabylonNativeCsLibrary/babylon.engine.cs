@@ -12,7 +12,7 @@ namespace BABYLON
         public int maxCubemapTextureSize;
         public int maxRenderTextureSize;
         public bool standardDerivatives;
-        public object s3tc;
+        public WEBGL_compressed_texture_s3tc s3tc;
         public bool textureFloat;
         public EXT_texture_filter_anisotropic textureAnisotropicFilterExtension;
         public int maxAnisotropy;
@@ -163,7 +163,7 @@ namespace BABYLON
             this._caps.maxCubemapTextureSize = (int)this._gl.getParameter(this._gl.MAX_CUBE_MAP_TEXTURE_SIZE);
             this._caps.maxRenderTextureSize = (int)this._gl.getParameter(this._gl.MAX_RENDERBUFFER_SIZE);
             this._caps.standardDerivatives = (this._gl.getExtension("OES_standard_derivatives") != null);
-            this._caps.s3tc = this._gl.getExtension("WEBGL_compressed_texture_s3tc");
+            this._caps.s3tc = (WEBGL_compressed_texture_s3tc)this._gl.getExtension("WEBGL_compressed_texture_s3tc");
             this._caps.textureFloat = (this._gl.getExtension("OES_texture_float") != null);
             this._caps.textureAnisotropicFilterExtension = (EXT_texture_filter_anisotropic)(this._gl.getExtension("EXT_texture_filter_anisotropic") ?? this._gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ?? this._gl.getExtension("MOZ_EXT_texture_filter_anisotropic"));
             this._caps.maxAnisotropy = (int)((this._caps.textureAnisotropicFilterExtension != null) ? this._gl.getParameter(this._caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0);
@@ -218,7 +218,7 @@ namespace BABYLON
             }
             return shader;
         }
-        private MinMagFilter getSamplingParameters(double samplingMode, bool generateMipMaps, WebGLRenderingContext gl)
+        private MinMagFilter getSamplingParameters(int samplingMode, bool generateMipMaps, WebGLRenderingContext gl)
         {
             var magFilter = gl.NEAREST;
             var minFilter = gl.NEAREST;
@@ -281,7 +281,7 @@ namespace BABYLON
             var potWidth = getExponantOfTwo(width, engine.getCaps().maxTextureSize);
             var potHeight = getExponantOfTwo(height, engine.getCaps().maxTextureSize);
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, (invertY == null) ? 1 : ((invertY) ? 1 : 0));
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, invertY);
             processFunction(potWidth, potHeight);
             var filters = getSamplingParameters(samplingMode, !noMipmap, gl);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
@@ -692,7 +692,7 @@ namespace BABYLON
             var vertex = baseName.vertexElement ?? baseName.vertex ?? baseName.baseName;
             var fragment = baseName.fragmentElement ?? baseName.fragment ?? baseName.baseName;
             var name = vertex + "+" + fragment + "@" + defines;
-            if (this._compiledEffects[name])
+            if (this._compiledEffects[name] != null)
             {
                 return this._compiledEffects[name];
             }
@@ -731,18 +731,18 @@ namespace BABYLON
             }
             return results;
         }
-        public virtual Array<int> getAttributes(WebGLProgram shaderProgram, Array<string> attributesNames)
+        public virtual Array<VertexBufferKind> getAttributes(WebGLProgram shaderProgram, Array<string> attributesNames)
         {
-            var results = new Array<int>();
+            var results = new Array<VertexBufferKind>();
             for (var index = 0; index < attributesNames.Length; index++)
             {
                 try
                 {
-                    results.push(this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
+                    results.push((VertexBufferKind)this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
                 }
                 catch (Exception e)
                 {
-                    results.push(-1);
+                    results.push((VertexBufferKind)(-1));
                 }
             }
             return results;
@@ -1001,7 +1001,7 @@ namespace BABYLON
                 }
             return texture;
         }
-        public virtual WebGLTexture createDynamicTexture(int width, int height, bool generateMipMaps, double samplingMode)
+        public virtual WebGLTexture createDynamicTexture(int width, int height, bool generateMipMaps, int samplingMode)
         {
             var texture = this._gl.createTexture();
             width = getExponantOfTwo(width, this._caps.maxTextureSize);

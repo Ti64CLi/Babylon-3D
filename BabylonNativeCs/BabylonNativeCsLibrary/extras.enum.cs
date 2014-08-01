@@ -1,6 +1,6 @@
 ﻿namespace BABYLON
 {
-    public enum VertexBufferKind
+    public enum VertexBufferKind : int
     {
         PositionKind = 1,
         NormalKind = 2,
@@ -11,5 +11,6 @@
         MatricesWeightsKind = 7,
         Attribute_Options = 8,
         Attribute_CellInfo = 9,
+        Error = -1
     }
 }
