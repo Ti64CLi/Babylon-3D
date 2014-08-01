@@ -7,11 +7,11 @@ namespace BABYLON
 {
     public partial interface IGetSetVerticesData
     {
-        bool isVerticesDataPresent(string kind);
-        Array<double> getVerticesData(string kind);
-        Array<double> getIndices();
-        void setVerticesData(string kind, Array<double> data, bool updatable = false);
-        void updateVerticesData(string kind, Array<double> data, bool updateExtends = false, bool makeItUnique = false);
+        bool isVerticesDataPresent(VertexBufferKind kind);
+        Array<double> getVerticesData(VertexBufferKind kind);
+        Array<int> getIndices();
+        void setVerticesData(VertexBufferKind kind, Array<double> data, bool updatable = false);
+        void updateVerticesData(VertexBufferKind kind, Array<double> data, bool updateExtends = false, bool makeItUnique = false);
         void setIndices(Array<int> indices);
     }
     public partial class VertexData
@@ -23,30 +23,30 @@ namespace BABYLON
         public Array<double> colors;
         public Array<double> matricesIndices;
         public Array<double> matricesWeights;
-        public Array<double> indices;
+        public Array<int> indices;
         public virtual void set(Array<double> data, VertexBufferKind kind)
         {
             switch (kind)
             {
-                case BABYLON.VertexBuffer.PositionKind:
+                case BABYLON.VertexBufferKind.PositionKind:
                     this.positions = data;
                     break;
-                case BABYLON.VertexBuffer.NormalKind:
+                case BABYLON.VertexBufferKind.NormalKind:
                     this.normals = data;
                     break;
-                case BABYLON.VertexBuffer.UVKind:
+                case BABYLON.VertexBufferKind.UVKind:
                     this.uvs = data;
                     break;
-                case BABYLON.VertexBuffer.UV2Kind:
+                case BABYLON.VertexBufferKind.UV2Kind:
                     this.uv2s = data;
                     break;
-                case BABYLON.VertexBuffer.ColorKind:
+                case BABYLON.VertexBufferKind.ColorKind:
                     this.colors = data;
                     break;
-                case BABYLON.VertexBuffer.MatricesIndicesKind:
+                case BABYLON.VertexBufferKind.MatricesIndicesKind:
                     this.matricesIndices = data;
                     break;
-                case BABYLON.VertexBuffer.MatricesWeightsKind:
+                case BABYLON.VertexBufferKind.MatricesWeightsKind:
                     this.matricesWeights = data;
                     break;
             }
@@ -69,70 +69,70 @@ namespace BABYLON
         }
         private void _applyTo(IGetSetVerticesData meshOrGeometry, bool updatable = false)
         {
-            if (this.positions)
+            if (this.positions != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.PositionKind, this.positions, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.PositionKind, this.positions, updatable);
             }
-            if (this.normals)
+            if (this.normals != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.NormalKind, this.normals, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.NormalKind, this.normals, updatable);
             }
-            if (this.uvs)
+            if (this.uvs != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.UVKind, this.uvs, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.UVKind, this.uvs, updatable);
             }
-            if (this.uv2s)
+            if (this.uv2s != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.UV2Kind, this.uv2s, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, this.uv2s, updatable);
             }
-            if (this.colors)
+            if (this.colors != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.ColorKind, this.colors, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.ColorKind, this.colors, updatable);
             }
-            if (this.matricesIndices)
+            if (this.matricesIndices != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, this.matricesIndices, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, this.matricesIndices, updatable);
             }
-            if (this.matricesWeights)
+            if (this.matricesWeights != null)
             {
-                meshOrGeometry.setVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, this.matricesWeights, updatable);
+                meshOrGeometry.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, this.matricesWeights, updatable);
             }
-            if (this.indices)
+            if (this.indices != null)
             {
                 meshOrGeometry.setIndices(this.indices);
             }
         }
         private void _update(IGetSetVerticesData meshOrGeometry, bool updateExtends = false, bool makeItUnique = false)
         {
-            if (this.positions)
+            if (this.positions != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.PositionKind, this.positions, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.PositionKind, this.positions, updateExtends, makeItUnique);
             }
-            if (this.normals)
+            if (this.normals != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.NormalKind, this.normals, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.NormalKind, this.normals, updateExtends, makeItUnique);
             }
-            if (this.uvs)
+            if (this.uvs != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.UVKind, this.uvs, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.UVKind, this.uvs, updateExtends, makeItUnique);
             }
-            if (this.uv2s)
+            if (this.uv2s != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.UV2Kind, this.uv2s, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.UV2Kind, this.uv2s, updateExtends, makeItUnique);
             }
-            if (this.colors)
+            if (this.colors != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.ColorKind, this.colors, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.ColorKind, this.colors, updateExtends, makeItUnique);
             }
-            if (this.matricesIndices)
+            if (this.matricesIndices != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, this.matricesIndices, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, this.matricesIndices, updateExtends, makeItUnique);
             }
-            if (this.matricesWeights)
+            if (this.matricesWeights != null)
             {
-                meshOrGeometry.updateVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, this.matricesWeights, updateExtends, makeItUnique);
+                meshOrGeometry.updateVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, this.matricesWeights, updateExtends, makeItUnique);
             }
-            if (this.indices)
+            if (this.indices != null)
             {
                 meshOrGeometry.setIndices(this.indices);
             }
@@ -140,7 +140,7 @@ namespace BABYLON
         public virtual void transform(Matrix matrix)
         {
             var transformed = BABYLON.Vector3.Zero();
-            if (this.positions)
+            if (this.positions != null)
             {
                 var position = BABYLON.Vector3.Zero();
                 for (var index = 0; index < this.positions.Length; index += 3)
@@ -152,10 +152,10 @@ namespace BABYLON
                     this.positions[index + 2] = transformed.z;
                 }
             }
-            if (this.normals)
+            if (this.normals != null)
             {
                 var normal = BABYLON.Vector3.Zero();
-                for (index = 0; index < this.normals.Length; index += 3)
+                for (var index = 0; index < this.normals.Length; index += 3)
                 {
                     BABYLON.Vector3.FromArrayToRef(this.normals, index, normal);
                     BABYLON.Vector3.TransformNormalToRef(normal, matrix, transformed);
@@ -167,91 +167,91 @@ namespace BABYLON
         }
         public virtual void merge(VertexData other)
         {
-            if (other.indices)
+            if (other.indices != null)
             {
-                if (!this.indices)
+                if (this.indices == null)
                 {
-                    this.indices = new Array<object>();
+                    this.indices = new Array<int>();
                 }
-                var offset = (this.positions) ? this.positions.Length / 3 : 0;
+                var offset = (this.positions != null) ? this.positions.Length / 3 : 0;
                 for (var index = 0; index < other.indices.Length; index++)
                 {
                     this.indices.push(other.indices[index] + offset);
                 }
             }
-            if (other.positions)
+            if (other.positions != null)
             {
-                if (!this.positions)
+                if (this.positions == null)
                 {
-                    this.positions = new Array<object>();
+                    this.positions = new Array<double>();
                 }
-                for (index = 0; index < other.positions.Length; index++)
+                for (var index = 0; index < other.positions.Length; index++)
                 {
                     this.positions.push(other.positions[index]);
                 }
             }
-            if (other.normals)
+            if (other.normals != null)
             {
-                if (!this.normals)
+                if (this.normals == null)
                 {
-                    this.normals = new Array<object>();
+                    this.normals = new Array<double>();
                 }
-                for (index = 0; index < other.normals.Length; index++)
+                for (var index = 0; index < other.normals.Length; index++)
                 {
                     this.normals.push(other.normals[index]);
                 }
             }
-            if (other.uvs)
+            if (other.uvs != null)
             {
-                if (!this.uvs)
+                if (this.uvs == null)
                 {
-                    this.uvs = new Array<object>();
+                    this.uvs = new Array<double>();
                 }
-                for (index = 0; index < other.uvs.Length; index++)
+                for (var index = 0; index < other.uvs.Length; index++)
                 {
                     this.uvs.push(other.uvs[index]);
                 }
             }
-            if (other.uv2s)
+            if (other.uv2s != null)
             {
-                if (!this.uv2s)
+                if (this.uv2s == null)
                 {
-                    this.uv2s = new Array<object>();
+                    this.uv2s = new Array<double>();
                 }
-                for (index = 0; index < other.uv2s.Length; index++)
+                for (var index = 0; index < other.uv2s.Length; index++)
                 {
                     this.uv2s.push(other.uv2s[index]);
                 }
             }
-            if (other.matricesIndices)
+            if (other.matricesIndices != null)
             {
-                if (!this.matricesIndices)
+                if (this.matricesIndices == null)
                 {
-                    this.matricesIndices = new Array<object>();
+                    this.matricesIndices = new Array<double>();
                 }
-                for (index = 0; index < other.matricesIndices.Length; index++)
+                for (var index = 0; index < other.matricesIndices.Length; index++)
                 {
                     this.matricesIndices.push(other.matricesIndices[index]);
                 }
             }
-            if (other.matricesWeights)
+            if (other.matricesWeights != null)
             {
-                if (!this.matricesWeights)
+                if (this.matricesWeights == null)
                 {
-                    this.matricesWeights = new Array<object>();
+                    this.matricesWeights = new Array<double>();
                 }
-                for (index = 0; index < other.matricesWeights.Length; index++)
+                for (var index = 0; index < other.matricesWeights.Length; index++)
                 {
                     this.matricesWeights.push(other.matricesWeights[index]);
                 }
             }
-            if (other.colors)
+            if (other.colors != null)
             {
-                if (!this.colors)
+                if (this.colors == null)
                 {
-                    this.colors = new Array<object>();
+                    this.colors = new Array<double>();
                 }
-                for (index = 0; index < other.colors.Length; index++)
+                for (var index = 0; index < other.colors.Length; index++)
                 {
                     this.colors.push(other.colors[index]);
                 }
@@ -268,45 +268,44 @@ namespace BABYLON
         private static VertexData _ExtractFrom(IGetSetVerticesData meshOrGeometry)
         {
             var result = new BABYLON.VertexData();
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.PositionKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.PositionKind))
             {
-                result.positions = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+                result.positions = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.NormalKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.NormalKind))
             {
-                result.normals = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+                result.normals = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.NormalKind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.UVKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
             {
-                result.uvs = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.UVKind);
+                result.uvs = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.UVKind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.UV2Kind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
             {
-                result.uv2s = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.UV2Kind);
+                result.uv2s = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.UV2Kind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.ColorKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.ColorKind))
             {
-                result.colors = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.ColorKind);
+                result.colors = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.ColorKind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind))
             {
-                result.matricesIndices = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind);
+                result.matricesIndices = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind);
             }
-            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind))
+            if (meshOrGeometry.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
             {
-                result.matricesWeights = meshOrGeometry.getVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind);
+                result.matricesWeights = meshOrGeometry.getVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind);
             }
             result.indices = meshOrGeometry.getIndices();
             return result;
         }
-        public static VertexData CreateBox(double size)
+        public static VertexData CreateBox(double size = 1.0)
         {
-            var normalsSource = new Array<object>(new BABYLON.Vector3(0, 0, 1), new BABYLON.Vector3(0, 0, -1), new BABYLON.Vector3(1, 0, 0), new BABYLON.Vector3(-1, 0, 0), new BABYLON.Vector3(0, 1, 0), new BABYLON.Vector3(0, -1, 0));
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            size = size || 1;
+            var normalsSource = new Array<Vector3>(new BABYLON.Vector3(0, 0, 1), new BABYLON.Vector3(0, 0, -1), new BABYLON.Vector3(1, 0, 0), new BABYLON.Vector3(-1, 0, 0), new BABYLON.Vector3(0, 1, 0), new BABYLON.Vector3(0, -1, 0));
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             for (var index = 0; index < normalsSource.Length; index++)
             {
                 var normal = normalsSource[index];
@@ -343,17 +342,15 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateSphere(double segments, double diameter)
+        public static VertexData CreateSphere(int segments = 32, double diameter = 1.0)
         {
-            segments = segments || 32;
-            diameter = diameter || 1;
             var radius = diameter / 2;
             var totalZRotationSteps = 2 + segments;
             var totalYRotationSteps = 2 * totalZRotationSteps;
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             for (var zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++)
             {
                 var normalizedZ = zRotationStep / totalZRotationSteps;
@@ -394,19 +391,14 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateCylinder(double height, double diameterTop, double diameterBottom, int tessellation, int subdivisions = 1)
+        public static VertexData CreateCylinder(double height = 1.0, double diameterTop = 0.5, double diameterBottom = 1.0, int tessellation = 16, int subdivisions = 1)
         {
             var radiusTop = diameterTop / 2;
             var radiusBottom = diameterBottom / 2;
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            height = height || 1;
-            diameterTop = diameterTop || 0.5;
-            diameterBottom = diameterBottom || 1;
-            tessellation = tessellation || 16;
-            subdivisions = subdivisions || 1;
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             subdivisions = ((subdivisions < 1)) ? 1 : subdivisions;
             var getCircleVector = new Func<int, Vector3>((i) =>
             {
@@ -415,57 +407,57 @@ namespace BABYLON
                 var dz = Math.Sin(angle);
                 return new BABYLON.Vector3(dx, 0, dz);
             });
-            var createCylinderCap = (isTop) =>
-            {
-                var radius = (isTop) ? radiusTop : radiusBottom;
-                if (radius == 0)
+            Vector3 offset;
+            var createCylinderCap = new Action<bool>((isTop) =>
                 {
-                    return;
-                }
-                var vbase = positions.Length / 3;
-                var offset = new BABYLON.Vector3(0, height / 2, 0);
-                var textureScale = new BABYLON.Vector2(0.5, 0.5);
-                if (!isTop)
-                {
-                    offset.scaleInPlace(-1);
-                    textureScale.x = -textureScale.x;
-                }
-                for (var i = 0; i < tessellation; i++)
-                {
-                    var circleVector = getCircleVector(i);
-                    var position = circleVector.scale(radius).add(offset);
-                    var textureCoordinate = new BABYLON.Vector2(circleVector.x * textureScale.x + 0.5, circleVector.z * textureScale.y + 0.5);
-                    positions.push(position.x, position.y, position.z);
-                    uvs.push(textureCoordinate.x, textureCoordinate.y);
-                }
-                for (var i = 0; i < tessellation - 2; i++)
-                {
+                    var radius = (isTop) ? radiusTop : radiusBottom;
+                    if (radius == 0.0)
+                    {
+                        return;
+                    }
+                    var vbase = positions.Length / 3;
+                    offset = new BABYLON.Vector3(0, height / 2, 0);
+                    var textureScale = new BABYLON.Vector2(0.5, 0.5);
                     if (!isTop)
                     {
-                        indices.push(vbase);
-                        indices.push(vbase + (i + 2) % tessellation);
-                        indices.push(vbase + (i + 1) % tessellation);
+                        offset.scaleInPlace(-1.0);
+                        textureScale.x = -textureScale.x;
                     }
-                    else
+                    for (var i = 0; i < tessellation; i++)
                     {
-                        indices.push(vbase);
-                        indices.push(vbase + (i + 1) % tessellation);
-                        indices.push(vbase + (i + 2) % tessellation);
+                        var circleVector = getCircleVector(i);
+                        var position = circleVector.scale(radius).add(offset);
+                        var textureCoordinate = new BABYLON.Vector2(circleVector.x * textureScale.x + 0.5, circleVector.z * textureScale.y + 0.5);
+                        positions.push(position.x, position.y, position.z);
+                        uvs.push(textureCoordinate.x, textureCoordinate.y);
                     }
-                }
-            };
+                    for (var i = 0; i < tessellation - 2; i++)
+                    {
+                        if (!isTop)
+                        {
+                            indices.push(vbase);
+                            indices.push(vbase + (i + 2) % tessellation);
+                            indices.push(vbase + (i + 1) % tessellation);
+                        }
+                        else
+                        {
+                            indices.push(vbase);
+                            indices.push(vbase + (i + 1) % tessellation);
+                            indices.push(vbase + (i + 2) % tessellation);
+                        }
+                    }
+                });
             var _base = new BABYLON.Vector3(0, -1, 0).scale(height / 2);
-            var offset = new BABYLON.Vector3(0, 1, 0).scale(height / subdivisions);
+            offset = new BABYLON.Vector3(0, 1, 0).scale(height / subdivisions);
             var stride = tessellation + 1;
             for (var i = 0; i <= tessellation; i++)
             {
                 var circleVector = getCircleVector(i);
                 var textureCoordinate = new BABYLON.Vector2(i / tessellation, 0);
-                var position;
                 var radius = radiusBottom;
                 for (var s = 0; s <= subdivisions; s++)
                 {
-                    position = circleVector.scale(radius);
+                    var position = circleVector.scale(radius);
                     position.addInPlace(_base.add(offset.scale(s)));
                     textureCoordinate.y += 1 / subdivisions;
                     radius += (radiusTop - radiusBottom) / subdivisions;
@@ -496,15 +488,12 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateTorus(object diameter, object thickness, object tessellation)
+        public static VertexData CreateTorus(double diameter = 1.0, double thickness = 0.5, int tessellation = 16)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            diameter = diameter || 1;
-            thickness = thickness || 0.5;
-            tessellation = tessellation || 16;
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             var stride = tessellation + 1;
             for (var i = 0; i <= tessellation; i++)
             {
@@ -544,8 +533,8 @@ namespace BABYLON
         }
         public static VertexData CreateLines(Array<Vector3> points)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
+            var indices = new Array<int>();
+            var positions = new Array<double>();
             for (var index = 0; index < points.Length; index++)
             {
                 positions.push(points[index].x, points[index].y, points[index].z);
@@ -560,20 +549,15 @@ namespace BABYLON
             vertexData.positions = positions;
             return vertexData;
         }
-        public static VertexData CreateGround(double width, double height, double subdivisions)
+        public static VertexData CreateGround(double width = 1.0, double height = 1.0, int subdivisions = 1)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            var row;
-            var col;
-            width = width || 1;
-            height = height || 1;
-            subdivisions = subdivisions || 1;
-            for (row = 0; row <= subdivisions; row++)
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
+            for (var row = 0; row <= subdivisions; row++)
             {
-                for (col = 0; col <= subdivisions; col++)
+                for (var col = 0; col <= subdivisions; col++)
                 {
                     var position = new BABYLON.Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
                     var normal = new BABYLON.Vector3(0, 1.0, 0);
@@ -582,9 +566,9 @@ namespace BABYLON
                     uvs.push(col / subdivisions, 1.0 - row / subdivisions);
                 }
             }
-            for (row = 0; row < subdivisions; row++)
+            for (var row = 0; row < subdivisions; row++)
             {
-                for (col = 0; col < subdivisions; col++)
+                for (var col = 0; col < subdivisions; col++)
                 {
                     indices.push(col + 1 + (row + 1) * (subdivisions + 1));
                     indices.push(col + 1 + row * (subdivisions + 1));
@@ -601,28 +585,72 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateTiledGround(double xmin, double zmin, double xmax, double zmax, object subdivisions = new {}, object precision = new {})
+        public static VertexData CreateTiledGround(double xmin, double zmin, double xmax, double zmax, SizeI subdivisions, SizeI precision)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            var row;
-            var col;
-            var tileRow;
-            var tileCol;
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             subdivisions.h = ((subdivisions.w < 1)) ? 1 : subdivisions.h;
             subdivisions.w = ((subdivisions.w < 1)) ? 1 : subdivisions.w;
             precision.w = ((precision.w < 1)) ? 1 : precision.w;
             precision.h = ((precision.h < 1)) ? 1 : precision.h;
-            var tileSize = new { };
-            for (tileRow = 0; tileRow < subdivisions.h; tileRow++)
+            var tileSize = new SizeI
+                               {
+                                   w = (int)((xmax - xmin) / subdivisions.w),
+                                   h = (int)((zmax - zmin) / subdivisions.h)
+                               };
+            for (var tileRow = 0; tileRow < subdivisions.h; tileRow++)
             {
-                for (tileCol = 0; tileCol < subdivisions.w; tileCol++)
+                for (var tileCol = 0; tileCol < subdivisions.w; tileCol++)
                 {
-                    applyTile(xmin + tileCol * tileSize.w, zmin + tileRow * tileSize.h, xmin + (tileCol + 1) * tileSize.w, zmin + (tileRow + 1) * tileSize.h);
+                    var xTileMin = xmin + tileCol * tileSize.w;
+                    var zTileMin = zmin + tileRow * tileSize.h;
+                    var xTileMax = xmin + (tileCol + 1) * tileSize.w;
+                    var zTileMax = zmin + (tileRow + 1) * tileSize.h;
+
+                    // Indices
+                    var _base = positions.Length / 3;
+                    var rowLength = precision.w + 1;
+                    for (var row = 0; row < precision.h; row++)
+                    {
+                        for (var col = 0; col < precision.w; col++)
+                        {
+                            var square = new Array<int>(
+                                _base + col + row * rowLength,
+                                _base + (col + 1) + row * rowLength,
+                                _base + (col + 1) + (row + 1) * rowLength,
+                                _base + col + (row + 1) * rowLength
+                            );
+
+                            indices.push(square[1]);
+                            indices.push(square[2]);
+                            indices.push(square[3]);
+                            indices.push(square[0]);
+                            indices.push(square[1]);
+                            indices.push(square[3]);
+                        }
+                    }
+
+                    // Position, normals and uvs
+                    var position = BABYLON.Vector3.Zero();
+                    var normal = new BABYLON.Vector3(0, 1.0, 0);
+                    for (var row = 0; row <= precision.h; row++)
+                    {
+                        position.z = (row * (zTileMax - zTileMin)) / precision.h + zTileMin;
+                        for (var col = 0; col <= precision.w; col++)
+                        {
+                            position.x = (col * (xTileMax - xTileMin)) / precision.w + xTileMin;
+                            position.y = 0;
+
+                            positions.push(position.x, position.y, position.z);
+                            normals.push(normal.x, normal.y, normal.z);
+                            uvs.push(col / precision.w, row / precision.h);
+                        }
+                    }
+
                 }
-            } { }
+            }
             var vertexData = new BABYLON.VertexData();
             vertexData.indices = indices;
             vertexData.positions = positions;
@@ -630,22 +658,21 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateGroundFromHeightMap(double width, double height, double subdivisions, double minHeight, double maxHeight, Web.Uint8Array buffer, double bufferWidth, double bufferHeight)
+
+        public static VertexData CreateGroundFromHeightMap(double width, double height, int subdivisions, double minHeight, double maxHeight, Web.Uint8Array buffer, double bufferWidth, double bufferHeight)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            var row;
-            var col;
-            for (row = 0; row <= subdivisions; row++)
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
+            for (var row = 0; row <= subdivisions; row++)
             {
-                for (col = 0; col <= subdivisions; col++)
+                for (var col = 0; col <= subdivisions; col++)
                 {
                     var position = new BABYLON.Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
-                    var heightMapX = (((position.x + width / 2) / width) * (bufferWidth - 1)) | 0;
-                    var heightMapY = ((1.0 - (position.z + height / 2) / height) * (bufferHeight - 1)) | 0;
-                    var pos = (heightMapX + heightMapY * bufferWidth) * 4;
+                    var heightMapX = (((position.x + width / 2) / width) * (bufferWidth - 1));
+                    var heightMapY = ((1.0 - (position.z + height / 2) / height) * (bufferHeight - 1));
+                    var pos = (int) (heightMapX + heightMapY * bufferWidth) * 4;
                     var r = buffer[pos] / 255.0;
                     var g = buffer[pos + 1] / 255.0;
                     var b = buffer[pos + 2] / 255.0;
@@ -656,9 +683,9 @@ namespace BABYLON
                     uvs.push(col / subdivisions, 1.0 - row / subdivisions);
                 }
             }
-            for (row = 0; row < subdivisions; row++)
+            for (var row = 0; row < subdivisions; row++)
             {
-                for (col = 0; col < subdivisions; col++)
+                for (var col = 0; col < subdivisions; col++)
                 {
                     indices.push(col + 1 + (row + 1) * (subdivisions + 1));
                     indices.push(col + 1 + row * (subdivisions + 1));
@@ -676,13 +703,12 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreatePlane(double size)
+        public static VertexData CreatePlane(double size = 1)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            size = size || 1;
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
             var halfSize = size / 2.0;
             positions.push(-halfSize, -halfSize, 0);
             normals.push(0, 0, -1.0);
@@ -709,29 +735,23 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static VertexData CreateTorusKnot(double radius, double tube, double radialSegments, double tubularSegments, double p, double q)
+        public static VertexData CreateTorusKnot(double radius = 2, double tube = 0.5, int radialSegments = 32, int tubularSegments = 32, double p = 2, double q = 3)
         {
-            var indices = new Array<object>();
-            var positions = new Array<object>();
-            var normals = new Array<object>();
-            var uvs = new Array<object>();
-            radius = radius || 2;
-            tube = tube || 0.5;
-            radialSegments = radialSegments || 32;
-            tubularSegments = tubularSegments || 32;
-            p = p || 2;
-            q = q || 3;
-            var getPos = (object angle) =>
-            {
-                var cu = Math.Cos(angle);
-                var su = Math.Sin(angle);
-                var quOverP = q / p * angle;
-                var cs = Math.Cos(quOverP);
-                var tx = radius * (2 + cs) * 0.5 * cu;
-                var ty = radius * (2 + cs) * su * 0.5;
-                var tz = radius * Math.Sin(quOverP) * 0.5;
-                return new BABYLON.Vector3(tx, ty, tz);
-            };
+            var indices = new Array<int>();
+            var positions = new Array<double>();
+            var normals = new Array<double>();
+            var uvs = new Array<double>();
+            var getPos = new Func<double, Vector3>(angle =>
+                {
+                    var cu = Math.Cos(angle);
+                    var su = Math.Sin(angle);
+                    var quOverP = q / p * angle;
+                    var cs = Math.Cos(quOverP);
+                    var tx = radius * (2 + cs) * 0.5 * cu;
+                    var ty = radius * (2 + cs) * su * 0.5;
+                    var tz = radius * Math.Sin(quOverP) * 0.5;
+                    return new BABYLON.Vector3(tx, ty, tz);
+                });
             for (var i = 0; i <= radialSegments; i++)
             {
                 var modI = i % radialSegments;
@@ -757,9 +777,9 @@ namespace BABYLON
                     uvs.push(j / tubularSegments);
                 }
             }
-            for (i = 0; i < radialSegments; i++)
+            for (var i = 0; i < radialSegments; i++)
             {
-                for (j = 0; j < tubularSegments; j++)
+                for (var j = 0; j < tubularSegments; j++)
                 {
                     var jNext = (j + 1) % tubularSegments;
                     var a = i * tubularSegments + j;
@@ -782,19 +802,18 @@ namespace BABYLON
             vertexData.uvs = uvs;
             return vertexData;
         }
-        public static void ComputeNormals(Array<double> positions, Array<double> indices, Array<double> normals)
+        public static void ComputeNormals(Array<double> positions, Array<int> indices, Array<double> normals)
         {
-            var positionVectors = new Array<object>();
-            var facesOfVertices = new Array<object>();
-            var index;
-            for (index = 0; index < positions.Length; index += 3)
+            var positionVectors = new Array<Vector3>();
+            var facesOfVertices = new Array<Array<int>>();
+            for (var index = 0; index < positions.Length; index += 3)
             {
                 var vector3 = new BABYLON.Vector3(positions[index], positions[index + 1], positions[index + 2]);
                 positionVectors.push(vector3);
-                facesOfVertices.push(new Array<object>());
+                facesOfVertices.push(new Array<int>());
             }
-            var facesNormals = new Array<object>();
-            for (index = 0; index < indices.Length / 3; index++)
+            var facesNormals = new Array<Vector3>();
+            for (var index = 0; index < indices.Length / 3; index++)
             {
                 var i1 = indices[index * 3];
                 var i2 = indices[index * 3 + 1];
@@ -809,7 +828,7 @@ namespace BABYLON
                 facesOfVertices[i2].push(index);
                 facesOfVertices[i3].push(index);
             }
-            for (index = 0; index < positionVectors.Length; index++)
+            for (var index = 0; index < positionVectors.Length; index++)
             {
                 var faces = facesOfVertices[index];
                 var normal = BABYLON.Vector3.Zero();

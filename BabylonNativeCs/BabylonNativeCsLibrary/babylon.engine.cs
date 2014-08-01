@@ -582,7 +582,7 @@ namespace BABYLON
                     var order = index;
                     if (order >= 0)
                     {
-                        this._gl.vertexAttribPointer(order, vertexDeclaration[index], this._gl.FLOAT, false, vertexStrideSize, offset);
+                        this._gl.vertexAttribPointer(order, (int)vertexDeclaration[index], this._gl.FLOAT, false, vertexStrideSize, offset);
                     }
                     offset += (int)vertexDeclaration[index] * 4;
                 }

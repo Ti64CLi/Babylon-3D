@@ -12,18 +12,11 @@ namespace BABYLON
         private WebGLBuffer _buffer;
         private Array<double> _data;
         private bool _updatable;
-        private string _kind;
-        private VertexBufferKind _strideSize;
-        public VertexBuffer(object engine, Array<double> data, string kind, bool updatable, bool postponeInternalCreation = false)
+        private VertexBufferKind _kind;
+        private int _strideSize;
+        public VertexBuffer(Engine engine, Array<double> data, VertexBufferKind kind, bool updatable, bool postponeInternalCreation = false)
         {
-            if (engine is Mesh)
-            {
-                this._engine = engine.getScene().getEngine();
-            }
-            else
-            {
-                this._engine = engine;
-            }
+            this._engine = engine;
             this._updatable = updatable;
             this._data = data;
             if (!postponeInternalCreation)
@@ -33,25 +26,25 @@ namespace BABYLON
             this._kind = kind;
             switch (kind)
             {
-                case VertexBuffer.PositionKind:
+                case VertexBufferKind.PositionKind:
                     this._strideSize = 3;
                     break;
-                case VertexBuffer.NormalKind:
+                case VertexBufferKind.NormalKind:
                     this._strideSize = 3;
                     break;
-                case VertexBuffer.UVKind:
+                case VertexBufferKind.UVKind:
                     this._strideSize = 2;
                     break;
-                case VertexBuffer.UV2Kind:
+                case VertexBufferKind.UV2Kind:
                     this._strideSize = 2;
                     break;
-                case VertexBuffer.ColorKind:
+                case VertexBufferKind.ColorKind:
                     this._strideSize = 3;
                     break;
-                case VertexBuffer.MatricesIndicesKind:
+                case VertexBufferKind.MatricesIndicesKind:
                     this._strideSize = 4;
                     break;
-                case VertexBuffer.MatricesWeightsKind:
+                case VertexBufferKind.MatricesWeightsKind:
                     this._strideSize = 4;
                     break;
             }
@@ -68,18 +61,18 @@ namespace BABYLON
         {
             return this._buffer;
         }
-        public virtual VertexBufferKind getStrideSize()
+        public virtual int getStrideSize()
         {
             return this._strideSize;
         }
         public virtual void create(Array<double> data = null)
         {
-            if (!data && this._buffer)
+            if (data == null && this._buffer != null)
             {
                 return;
             }
-            data = data || this._data;
-            if (!this._buffer)
+            data = data ?? this._data;
+            if (this._buffer == null)
             {
                 if (this._updatable)
                 {
@@ -102,7 +95,7 @@ namespace BABYLON
         }
         public virtual void dispose()
         {
-            if (!this._buffer)
+            if (this._buffer == null)
             {
                 return;
             }
@@ -111,13 +104,5 @@ namespace BABYLON
                 this._buffer = null;
             }
         }
-
-        public static VertexBufferKind PositionKind = VertexBufferKind.PositionKind;
-        public static VertexBufferKind NormalKind = VertexBufferKind.NormalKind;
-        public static VertexBufferKind UVKind = VertexBufferKind.UVKind;
-        public static VertexBufferKind UV2Kind = VertexBufferKind.UV2Kind;
-        public static VertexBufferKind ColorKind = VertexBufferKind.ColorKind;
-        public static VertexBufferKind MatricesIndicesKind = VertexBufferKind.MatricesIndicesKind;
-        public static VertexBufferKind MatricesWeightsKind = VertexBufferKind.MatricesWeightsKind;
     }
 }

@@ -42,12 +42,17 @@
             throw new NotImplementedException();
         }
 
-        public void push(T v)
+        public void push(T v1)
         {
             throw new NotImplementedException();
         }
 
         public void push(T v1, T v2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void push(T v1, T v2, T v3)
         {
             throw new NotImplementedException();
         }

@@ -504,28 +504,28 @@ namespace BABYLON
         }
         public virtual void bakeTransformIntoVertices(Matrix transform)
         {
-            if (!this.isVerticesDataPresent(BABYLON.VertexBuffer.PositionKind))
+            if (!this.isVerticesDataPresent(BABYLON.VertexBufferKind.PositionKind))
             {
                 return;
             }
             this._resetPointsArrayCache();
-            var data = this.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+            var data = this.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             var temp = new Array<double>();
             for (var index = 0; index < data.Length; index += 3)
             {
                 BABYLON.Vector3.TransformCoordinates(BABYLON.Vector3.FromArray(data, index), transform).toArray(temp, index);
             }
-            this.setVerticesData(BABYLON.VertexBuffer.PositionKind, temp, this.getVertexBuffer(BABYLON.VertexBuffer.PositionKind).isUpdatable());
-            if (!this.isVerticesDataPresent(BABYLON.VertexBuffer.NormalKind))
+            this.setVerticesData(BABYLON.VertexBufferKind.PositionKind, temp, this.getVertexBuffer(BABYLON.VertexBufferKind.PositionKind).isUpdatable());
+            if (!this.isVerticesDataPresent(BABYLON.VertexBufferKind.NormalKind))
             {
                 return;
             }
-            data = this.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+            data = this.getVerticesData(BABYLON.VertexBufferKind.NormalKind);
             for (var index = 0; index < data.Length; index += 3)
             {
                 BABYLON.Vector3.TransformNormal(BABYLON.Vector3.FromArray(data, index), transform).toArray(temp, index);
             }
-            this.setVerticesData(BABYLON.VertexBuffer.NormalKind, temp, this.getVertexBuffer(BABYLON.VertexBuffer.NormalKind).isUpdatable());
+            this.setVerticesData(BABYLON.VertexBufferKind.NormalKind, temp, this.getVertexBuffer(BABYLON.VertexBufferKind.NormalKind).isUpdatable());
         }
         public virtual void _resetPointsArrayCache()
         {
@@ -536,7 +536,7 @@ namespace BABYLON
             if (this._positions != null)
                 return true;
             this._positions = new Array<Vector3>();
-            var data = this.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+            var data = this.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             if (data == null)
             {
                 return false;
@@ -607,7 +607,7 @@ namespace BABYLON
             {
                 var kind = kinds[kindIndex];
                 var vertexBuffer = this.getVertexBuffer(kind);
-                if (kind == BABYLON.VertexBuffer.NormalKind)
+                if (kind == BABYLON.VertexBufferKind.NormalKind)
                 {
                     updatableNormals = vertexBuffer.isUpdatable();
                     kinds.splice(kindIndex, 1);
@@ -635,7 +635,7 @@ namespace BABYLON
                 }
             }
             var normals = new Array<double>();
-            var positions = newdata[(int)BABYLON.VertexBuffer.PositionKind];
+            var positions = newdata[(int)BABYLON.VertexBufferKind.PositionKind];
             for (var index = 0; index < totalIndices; index += 3)
             {
                 indices[index] = index;
@@ -655,7 +655,7 @@ namespace BABYLON
                 }
             }
             this.setIndices(indices);
-            this.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals, updatableNormals);
+            this.setVerticesData(BABYLON.VertexBufferKind.NormalKind, normals, updatableNormals);
             for (var kindIndex = 0; kindIndex < kinds.Length; kindIndex++)
             {
                 var kind = kinds[kindIndex];
@@ -740,7 +740,7 @@ namespace BABYLON
             ground._setReady(true);
             return ground;
         }
-        public static Mesh CreateTiledGround(string name, double xmin, double zmin, double xmax, double zmax, MeshSize subdivisions, MeshSize precision, Scene scene, bool updatable = false)
+        public static Mesh CreateTiledGround(string name, double xmin, double zmin, double xmax, double zmax, SizeI subdivisions, SizeI precision, Scene scene, bool updatable = false)
         {
             var tiledGround = new BABYLON.Mesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateTiledGround(xmin, zmin, xmax, zmax, subdivisions, precision);

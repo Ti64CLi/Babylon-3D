@@ -19,11 +19,11 @@ namespace BABYLON
         public int height { get; set; }
     }
 
-    public struct MeshSize
+    public struct SizeI
     {
-        public double w { get; set; }
+        public int w { get; set; }
 
-        public double h { get; set; }
+        public int h { get; set; }
     }
 
     public struct EffectBaseName
