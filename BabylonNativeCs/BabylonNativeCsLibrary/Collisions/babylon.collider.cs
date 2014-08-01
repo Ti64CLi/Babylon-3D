@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class Collider {
+namespace BABYLON
+{
+    public partial class Collider
+    {
         public BABYLON.Vector3 radius = new BABYLON.Vector3(1, 1, 1);
         public double retry = 0;
         public Vector3 velocity;
@@ -31,7 +33,8 @@ namespace BABYLON {
         private BABYLON.Vector3 _destinationPoint = BABYLON.Vector3.Zero();
         private BABYLON.Vector3 _slidePlaneNormal = BABYLON.Vector3.Zero();
         private BABYLON.Vector3 _displacementVector = BABYLON.Vector3.Zero();
-        public virtual void _initialize(Vector3 source, Vector3 dir, double e) {
+        public virtual void _initialize(Vector3 source, Vector3 dir, double e)
+        {
             this.velocity = dir;
             BABYLON.Vector3.NormalizeToRef(dir, this.normalizedVelocity);
             this.basePoint = source;
@@ -41,7 +44,53 @@ namespace BABYLON {
             this.epsilon = e;
             this.collisionFound = false;
         }
-        public virtual bool _checkPointInTriangle(Vector3 point, Vector3 pa, Vector3 pb, Vector3 pc, Vector3 n) {
+        public bool intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, double sphereRadius)
+        {
+            if (boxMin.x > sphereCenter.x + sphereRadius)
+                return false;
+            if (sphereCenter.x - sphereRadius > boxMax.x)
+                return false;
+            if (boxMin.y > sphereCenter.y + sphereRadius)
+                return false;
+            if (sphereCenter.y - sphereRadius > boxMax.y)
+                return false;
+            if (boxMin.z > sphereCenter.z + sphereRadius)
+                return false;
+            if (sphereCenter.z - sphereRadius > boxMax.z)
+                return false;
+            return true;
+        }
+        public RootResult getLowestRoot(double a, double b, double c, double maxR)
+        {
+            var determinant = b * b - 4.0 * a * c;
+            var result = new RootResult { root = 0, found = false };
+            if (determinant < 0)
+                return result;
+            var sqrtD = Math.Sqrt(determinant);
+            var r1 = (-b - sqrtD) / (2.0 * a);
+            var r2 = (-b + sqrtD) / (2.0 * a);
+            if (r1 > r2)
+            {
+                var temp = r2;
+                r2 = r1;
+                r1 = temp;
+            }
+            if (r1 > 0 && r1 < maxR)
+            {
+                result.root = r1;
+                result.found = true;
+                return result;
+            }
+            if (r2 > 0 && r2 < maxR)
+            {
+                result.root = r2;
+                result.found = true;
+                return result;
+            }
+            return result;
+        }
+        public virtual bool _checkPointInTriangle(Vector3 point, Vector3 pa, Vector3 pb, Vector3 pc, Vector3 n)
+        {
             pa.subtractToRef(point, this._tempVector);
             pb.subtractToRef(point, this._tempVector2);
             BABYLON.Vector3.CrossToRef(this._tempVector, this._tempVector2, this._tempVector4);
@@ -57,40 +106,49 @@ namespace BABYLON {
             d = BABYLON.Vector3.Dot(this._tempVector4, n);
             return d >= 0;
         }
-        public virtual bool _canDoCollision(Vector3 sphereCenter, double sphereRadius, Vector3 vecMin, Vector3 vecMax) {
+        public virtual bool _canDoCollision(Vector3 sphereCenter, double sphereRadius, Vector3 vecMin, Vector3 vecMax)
+        {
             var distance = BABYLON.Vector3.Distance(this.basePointWorld, sphereCenter);
-            var Max = Math.Max(this.radius.x, this.radius.y, this.radius.z);
-            if (distance > this.velocityWorldLength + Max + sphereRadius) {
+            var max = Math.Max(Math.Max(this.radius.x, this.radius.y), this.radius.z);
+            if (distance > this.velocityWorldLength + max + sphereRadius)
+            {
                 return false;
             }
-            if (!intersectBoxAASphere(vecMin, vecMax, this.basePointWorld, this.velocityWorldLength + Max))
+            if (!intersectBoxAASphere(vecMin, vecMax, this.basePointWorld, this.velocityWorldLength + max))
                 return false;
             return true;
         }
-        public virtual void _testTriangle(double faceIndex, SubMesh subMesh, Vector3 p1, Vector3 p2, Vector3 p3) {
-            var t0;
+        public virtual void _testTriangle(int faceIndex, SubMesh subMesh, Vector3 p1, Vector3 p2, Vector3 p3)
+        {
+            double t0;
             var embeddedInPlane = false;
-            if (!subMesh._trianglePlanes) {
-                subMesh._trianglePlanes = new Array < object > ();
+            if (subMesh._trianglePlanes == null)
+            {
+                subMesh._trianglePlanes = new Array<Plane>();
             }
-            if (!subMesh._trianglePlanes[faceIndex]) {
+            if (subMesh._trianglePlanes[faceIndex] == null)
+            {
                 subMesh._trianglePlanes[faceIndex] = new BABYLON.Plane(0, 0, 0, 0);
                 subMesh._trianglePlanes[faceIndex].copyFromPoints(p1, p2, p3);
             }
             var trianglePlane = subMesh._trianglePlanes[faceIndex];
-            if ((!subMesh.getMaterial()) && !trianglePlane.isFrontFacingTo(this.normalizedVelocity, 0))
+            if ((subMesh.getMaterial() == null) && !trianglePlane.isFrontFacingTo(this.normalizedVelocity, 0))
                 return;
             var signedDistToTrianglePlane = trianglePlane.signedDistanceTo(this.basePoint);
             var normalDotVelocity = BABYLON.Vector3.Dot(trianglePlane.normal, this.velocity);
-            if (normalDotVelocity == 0) {
+            if (normalDotVelocity == 0)
+            {
                 if (Math.Abs(signedDistToTrianglePlane) >= 1.0)
                     return;
                 embeddedInPlane = true;
                 t0 = 0;
-            } else {
+            }
+            else
+            {
                 t0 = (-1.0 - signedDistToTrianglePlane) / normalDotVelocity;
                 var t1 = (1.0 - signedDistToTrianglePlane) / normalDotVelocity;
-                if (t0 > t1) {
+                if (t0 > t1)
+                {
                     var temp = t1;
                     t1 = t0;
                     t0 = temp;
@@ -105,24 +163,28 @@ namespace BABYLON {
             this._collisionPoint.copyFromFloats(0, 0, 0);
             var found = false;
             var t = 1.0;
-            if (!embeddedInPlane) {
+            if (!embeddedInPlane)
+            {
                 this.basePoint.subtractToRef(trianglePlane.normal, this._planeIntersectionPoint);
                 this.velocity.scaleToRef(t0, this._tempVector);
                 this._planeIntersectionPoint.addInPlace(this._tempVector);
-                if (this._checkPointInTriangle(this._planeIntersectionPoint, p1, p2, p3, trianglePlane.normal)) {
+                if (this._checkPointInTriangle(this._planeIntersectionPoint, p1, p2, p3, trianglePlane.normal))
+                {
                     found = true;
                     t = t0;
                     this._collisionPoint.copyFrom(this._planeIntersectionPoint);
                 }
             }
-            if (!found) {
+            if (!found)
+            {
                 var velocitySquaredLength = this.velocity.lengthSquared();
                 var a = velocitySquaredLength;
                 this.basePoint.subtractToRef(p1, this._tempVector);
                 var b = 2.0 * (BABYLON.Vector3.Dot(this.velocity, this._tempVector));
                 var c = this._tempVector.lengthSquared() - 1.0;
                 var lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
+                if (lowestRoot.found)
+                {
                     t = lowestRoot.root;
                     found = true;
                     this._collisionPoint.copyFrom(p1);
@@ -131,7 +193,8 @@ namespace BABYLON {
                 b = 2.0 * (BABYLON.Vector3.Dot(this.velocity, this._tempVector));
                 c = this._tempVector.lengthSquared() - 1.0;
                 lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
+                if (lowestRoot.found)
+                {
                     t = lowestRoot.root;
                     found = true;
                     this._collisionPoint.copyFrom(p2);
@@ -140,7 +203,8 @@ namespace BABYLON {
                 b = 2.0 * (BABYLON.Vector3.Dot(this.velocity, this._tempVector));
                 c = this._tempVector.lengthSquared() - 1.0;
                 lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
+                if (lowestRoot.found)
+                {
                     t = lowestRoot.root;
                     found = true;
                     this._collisionPoint.copyFrom(p3);
@@ -154,9 +218,11 @@ namespace BABYLON {
                 b = edgeSquaredLength * (2.0 * BABYLON.Vector3.Dot(this.velocity, this._baseToVertex)) - 2.0 * edgeDotVelocity * edgeDotBaseToVertex;
                 c = edgeSquaredLength * (1.0 - this._baseToVertex.lengthSquared()) + edgeDotBaseToVertex * edgeDotBaseToVertex;
                 lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
+                if (lowestRoot.found)
+                {
                     var f = (edgeDotVelocity * lowestRoot.root - edgeDotBaseToVertex) / edgeSquaredLength;
-                    if (f >= 0.0 && f <= 1.0) {
+                    if (f >= 0.0 && f <= 1.0)
+                    {
                         t = lowestRoot.root;
                         found = true;
                         this._edge.scaleInPlace(f);
@@ -172,9 +238,11 @@ namespace BABYLON {
                 b = edgeSquaredLength * (2.0 * BABYLON.Vector3.Dot(this.velocity, this._baseToVertex)) - 2.0 * edgeDotVelocity * edgeDotBaseToVertex;
                 c = edgeSquaredLength * (1.0 - this._baseToVertex.lengthSquared()) + edgeDotBaseToVertex * edgeDotBaseToVertex;
                 lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
-                    f = (edgeDotVelocity * lowestRoot.root - edgeDotBaseToVertex) / edgeSquaredLength;
-                    if (f >= 0.0 && f <= 1.0) {
+                if (lowestRoot.found)
+                {
+                    var f = (edgeDotVelocity * lowestRoot.root - edgeDotBaseToVertex) / edgeSquaredLength;
+                    if (f >= 0.0 && f <= 1.0)
+                    {
                         t = lowestRoot.root;
                         found = true;
                         this._edge.scaleInPlace(f);
@@ -190,9 +258,11 @@ namespace BABYLON {
                 b = edgeSquaredLength * (2.0 * BABYLON.Vector3.Dot(this.velocity, this._baseToVertex)) - 2.0 * edgeDotVelocity * edgeDotBaseToVertex;
                 c = edgeSquaredLength * (1.0 - this._baseToVertex.lengthSquared()) + edgeDotBaseToVertex * edgeDotBaseToVertex;
                 lowestRoot = getLowestRoot(a, b, c, t);
-                if (lowestRoot.found) {
-                    f = (edgeDotVelocity * lowestRoot.root - edgeDotBaseToVertex) / edgeSquaredLength;
-                    if (f >= 0.0 && f <= 1.0) {
+                if (lowestRoot.found)
+                {
+                    var f = (edgeDotVelocity * lowestRoot.root - edgeDotBaseToVertex) / edgeSquaredLength;
+                    if (f >= 0.0 && f <= 1.0)
+                    {
                         t = lowestRoot.root;
                         found = true;
                         this._edge.scaleInPlace(f);
@@ -200,12 +270,17 @@ namespace BABYLON {
                     }
                 }
             }
-            if (found) {
+            if (found)
+            {
                 var distToCollision = t * this.velocity.Length();
-                if (!this.collisionFound || distToCollision < this.nearestDistance) {
-                    if (!this.intersectionPoint) {
+                if (!this.collisionFound || distToCollision < this.nearestDistance)
+                {
+                    if (this.intersectionPoint == null)
+                    {
                         this.intersectionPoint = this._collisionPoint.clone();
-                    } else {
+                    }
+                    else
+                    {
                         this.intersectionPoint.copyFrom(this._collisionPoint);
                     }
                     this.nearestDistance = distToCollision;
@@ -214,15 +289,18 @@ namespace BABYLON {
                 }
             }
         }
-        public virtual void _collide(object subMesh, Array < Vector3 > pts, Array < double > indices, double indexStart, double indexEnd, double decal) {
-            for (var i = indexStart; i < indexEnd; i += 3) {
+        public virtual void _collide(SubMesh subMesh, Array<Vector3> pts, Array<int> indices, int indexStart, int indexEnd, int decal)
+        {
+            for (var i = indexStart; i < indexEnd; i += 3)
+            {
                 var p1 = pts[indices[i] - decal];
                 var p2 = pts[indices[i + 1] - decal];
                 var p3 = pts[indices[i + 2] - decal];
                 this._testTriangle(i, subMesh, p3, p2, p1);
             }
         }
-        public virtual void _getResponse(Vector3 pos, Vector3 vel) {
+        public virtual void _getResponse(Vector3 pos, Vector3 vel)
+        {
             pos.addToRef(vel, this._destinationPoint);
             vel.scaleInPlace((this.nearestDistance / vel.Length()));
             this.basePoint.addToRef(vel, pos);

@@ -57,6 +57,11 @@
             throw new NotImplementedException();
         }
 
+        public void push(params T[] items)
+        {
+            throw new NotImplementedException();
+        }
+
         public int indexOf(T t)
         {
             throw new NotImplementedException();
@@ -77,7 +82,7 @@
             throw new NotImplementedException();
         }
 
-        public void splice(int index, int size)
+        public Array<T> splice(int index, int size)
         {
             throw new NotImplementedException();
         }
@@ -157,6 +162,11 @@
         {
             throw new NotImplementedException();
         }
+
+        public T pop()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Float32Array : Array<float>, Web.Float32Array
@@ -167,6 +177,11 @@
         }
 
         public Float32Array(Array<float> array)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Float32Array(Array<double> array)
         {
             throw new NotImplementedException();
         }

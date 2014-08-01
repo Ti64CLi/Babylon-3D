@@ -22,11 +22,12 @@ namespace BABYLON
         {
             return this._actionManager._getProperty(propertyPath);
         }
-        public virtual object _getEffectiveTarget(object target, string propertyPath)
+        public virtual object _getEffectiveTarget(IAnimatable target, string propertyPath)
         {
             return this._actionManager._getEffectiveTarget(target, propertyPath);
         }
     }
+    /*
     public partial class ValueCondition : Condition
     {
         public const int IsEqual = 0;
@@ -94,4 +95,5 @@ namespace BABYLON
             return this._target.state == this.value;
         }
     }
+     */
 }

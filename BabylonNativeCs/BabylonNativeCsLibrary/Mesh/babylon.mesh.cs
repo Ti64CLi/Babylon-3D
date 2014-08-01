@@ -195,7 +195,7 @@ namespace BABYLON
                 this._geometry.setVerticesData(kind, data, updatable);
             }
         }
-        public virtual void updateVerticesData(string kind, Array<double> data, bool updateExtends = false, bool makeItUnique = false)
+        public virtual void updateVerticesData(VertexBufferKind kind, Array<double> data, bool updateExtends = false, bool makeItUnique = false)
         {
             if (this._geometry == null)
             {
@@ -627,7 +627,7 @@ namespace BABYLON
                 for (var kindIndex = 0; kindIndex < kinds.Length; kindIndex++)
                 {
                     var kind = kinds[kindIndex];
-                    var stride = (int)vbs[kind].getStrideSize();
+                    var stride = vbs[(int)kind].getStrideSize();
                     for (var offset = 0; offset < stride; offset++)
                     {
                         newdata[(int)kind].push(data[(int)kind][vertexIndex * stride + offset]);
@@ -688,28 +688,28 @@ namespace BABYLON
             vertexData.applyToMesh(box, updatable);
             return box;
         }
-        public static Mesh CreateSphere(string name, double segments, double diameter, Scene scene, bool updatable = false)
+        public static Mesh CreateSphere(string name, int segments, double diameter, Scene scene, bool updatable = false)
         {
             var sphere = new BABYLON.Mesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateSphere(segments, diameter);
             vertexData.applyToMesh(sphere, updatable);
             return sphere;
         }
-        public static Mesh CreateCylinder(string name, double height, double diameterTop, double diameterBottom, double tessellation, int subdivisions, Scene scene, bool updatable = false)
+        public static Mesh CreateCylinder(string name, double height, double diameterTop, double diameterBottom, int tessellation, int subdivisions, Scene scene, bool updatable = false)
         {
             var cylinder = new BABYLON.Mesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateCylinder(height, diameterTop, diameterBottom, tessellation, subdivisions);
             vertexData.applyToMesh(cylinder, updatable);
             return cylinder;
         }
-        public static Mesh CreateTorus(string name, double diameter, double thickness, double tessellation, Scene scene, bool updatable = false)
+        public static Mesh CreateTorus(string name, double diameter, double thickness, int tessellation, Scene scene, bool updatable = false)
         {
             var torus = new BABYLON.Mesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateTorus(diameter, thickness, tessellation);
             vertexData.applyToMesh(torus, updatable);
             return torus;
         }
-        public static Mesh CreateTorusKnot(string name, double radius, double tube, double radialSegments, double tubularSegments, double p, double q, Scene scene, bool updatable = false)
+        public static Mesh CreateTorusKnot(string name, double radius, double tube, int radialSegments, int tubularSegments, double p, double q, Scene scene, bool updatable = false)
         {
             var torusKnot = new BABYLON.Mesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateTorusKnot(radius, tube, radialSegments, tubularSegments, p, q);
@@ -730,7 +730,7 @@ namespace BABYLON
             vertexData.applyToMesh(plane, updatable);
             return plane;
         }
-        public static Mesh CreateGround(string name, double width, double height, double subdivisions, Scene scene, bool updatable = false)
+        public static Mesh CreateGround(string name, double width, double height, int subdivisions, Scene scene, bool updatable = false)
         {
             var ground = new BABYLON.GroundMesh(name, scene);
             ground._setReady(false);
@@ -747,7 +747,7 @@ namespace BABYLON
             vertexData.applyToMesh(tiledGround, updatable);
             return tiledGround;
         }
-        public static GroundMesh CreateGroundFromHeightMap(string name, string url, double width, double height, double subdivisions, double minHeight, double maxHeight, Scene scene, bool updatable = false)
+        public static GroundMesh CreateGroundFromHeightMap(string name, string url, double width, double height, int subdivisions, double minHeight, double maxHeight, Scene scene, bool updatable = false)
         {
             var ground = new BABYLON.GroundMesh(name, scene);
             ground._subdivisions = subdivisions;

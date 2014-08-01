@@ -530,7 +530,7 @@ namespace BABYLON
             IntersectionInfo intersectInfo = null;
             Array<SubMesh> subMeshes;
             int len;
-            if (this._submeshesOctree && this.useOctreeForPicking)
+            if (this._submeshesOctree != null && this.useOctreeForPicking)
             {
                 var worldRay = Ray.Transform(ray, this.getWorldMatrix());
                 var intersections = this._submeshesOctree.intersectsRay(worldRay);
@@ -580,7 +580,7 @@ namespace BABYLON
             }
             return pickingInfo;
         }
-        public virtual AbstractMesh clone(string name, Node newParent, bool doNotCloneChildren = false)
+        public virtual AbstractMesh clone(string name = null, Node newParent = null, bool doNotCloneChildren = false)
         {
             return null;
         }

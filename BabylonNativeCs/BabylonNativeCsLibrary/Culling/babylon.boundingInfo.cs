@@ -3,68 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class BoundingInfo {
+namespace BABYLON
+{
+    public partial class BoundingInfo
+    {
         public BoundingBox boundingBox;
         public BoundingSphere boundingSphere;
         public Vector3 minimum;
         public Vector3 maximum;
-        public BoundingInfo(Vector3 minimum, Vector3 maximum) {
+        public BoundingInfo(Vector3 minimum, Vector3 maximum)
+        {
             this.boundingBox = new BABYLON.BoundingBox(minimum, maximum);
             this.boundingSphere = new BABYLON.BoundingSphere(minimum, maximum);
         }
-        void computeBoxExtents(Vector3 axis, BoundingBox box) {
+        Extents computeBoxExtents(Vector3 axis, BoundingBox box)
+        {
             var p = Vector3.Dot(box.center, axis);
             var r0 = Math.Abs(Vector3.Dot(box.directions[0], axis)) * box.extends.x;
             var r1 = Math.Abs(Vector3.Dot(box.directions[1], axis)) * box.extends.y;
             var r2 = Math.Abs(Vector3.Dot(box.directions[2], axis)) * box.extends.z;
             var r = r0 + r1 + r2;
-            return new {
+            return new Extents
+            {
                 min = p - r,
                 max = p + r
             };
         }
-        bool extentsOverlap(double min0, double max0, double min1, double max1){ return !(min0 > max1 || min1 > max0); }
-        void axisOverlap(Vector3 axis, BoundingBox box0, BoundingBox box1) {
+        bool extentsOverlap(double min0, double max0, double min1, double max1) { return !(min0 > max1 || min1 > max0); }
+        bool axisOverlap(Vector3 axis, BoundingBox box0, BoundingBox box1)
+        {
             var result0 = computeBoxExtents(axis, box0);
             var result1 = computeBoxExtents(axis, box1);
-            return extentsOverlap(result0.min, result0.Max, result1.min, result1.Max);
+            return extentsOverlap(result0.min, result0.max, result1.min, result1.max);
         }
-        public virtual void _update(Matrix world) {
+        public virtual void _update(Matrix world)
+        {
             this.boundingBox._update(world);
             this.boundingSphere._update(world);
         }
-        public virtual bool isInFrustum(Array < Plane > frustumPlanes) {
+        public virtual bool isInFrustum(Array<Plane> frustumPlanes)
+        {
             if (!this.boundingSphere.isInFrustum(frustumPlanes))
                 return false;
             return this.boundingBox.isInFrustum(frustumPlanes);
         }
-        public virtual bool _checkCollision(Collider collider) {
+        public virtual bool _checkCollision(Collider collider)
+        {
             return collider._canDoCollision(this.boundingSphere.centerWorld, this.boundingSphere.radiusWorld, this.boundingBox.minimumWorld, this.boundingBox.maximumWorld);
         }
-        public virtual bool intersectsPoint(Vector3 point) {
-            if (!this.boundingSphere.centerWorld) {
+        public virtual bool intersectsPoint(Vector3 point)
+        {
+            if (this.boundingSphere.centerWorld == null)
+            {
                 return false;
             }
-            if (!this.boundingSphere.intersectsPoint(point)) {
+            if (!this.boundingSphere.intersectsPoint(point))
+            {
                 return false;
             }
-            if (!this.boundingBox.intersectsPoint(point)) {
+            if (!this.boundingBox.intersectsPoint(point))
+            {
                 return false;
             }
             return true;
         }
-        public virtual bool intersects(BoundingInfo boundingInfo, bool precise) {
-            if (!this.boundingSphere.centerWorld || !boundingInfo.boundingSphere.centerWorld) {
+        public virtual bool intersects(BoundingInfo boundingInfo, bool precise)
+        {
+            if (this.boundingSphere.centerWorld == null || boundingInfo.boundingSphere.centerWorld == null)
+            {
                 return false;
             }
-            if (!BABYLON.BoundingSphere.Intersects(this.boundingSphere, boundingInfo.boundingSphere)) {
+            if (!BABYLON.BoundingSphere.Intersects(this.boundingSphere, boundingInfo.boundingSphere))
+            {
                 return false;
             }
-            if (!BABYLON.BoundingBox.Intersects(this.boundingBox, boundingInfo.boundingBox)) {
+            if (!BABYLON.BoundingBox.Intersects(this.boundingBox, boundingInfo.boundingBox))
+            {
                 return false;
             }
-            if (!precise) {
+            if (!precise)
+            {
                 return true;
             }
             var box0 = this.boundingBox;

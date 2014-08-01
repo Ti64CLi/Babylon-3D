@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
+    /*
     public partial class Gamepads
     {
         private Array<Gamepad> babylonGamepads = new Array<Gamepad>();
@@ -621,6 +622,7 @@ namespace BABYLON
             this.dPadRight = this.browserGamepad.buttons[15].value;
         }
     }
+     */
 }
 public partial interface Navigator
 {

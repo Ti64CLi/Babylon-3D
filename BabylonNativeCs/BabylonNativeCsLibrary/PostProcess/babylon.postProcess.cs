@@ -7,7 +7,7 @@ namespace BABYLON
 {
     public partial class PostProcess
     {
-        public System.Action<object> onApply;
+        public System.Action<Effect> onApply;
         public System.Action onSizeChanged;
         public System.Action<object> onActivate;
         public int width = -1;
@@ -22,7 +22,7 @@ namespace BABYLON
         public int _currentRenderTextureInd = 0;
         private Effect _effect;
         public string name;
-        public PostProcess(string name, string fragmentUrl, Array<string> parameters, Array<string> samplers, double ratio, Camera camera, double samplingMode, Engine engine = null, bool reusable = false)
+        public PostProcess(string name, string fragmentUrl, Array<string> parameters, Array<string> samplers, double ratio, Camera camera, int samplingMode, Engine engine = null, bool reusable = false)
         {
             if (camera != null)
             {
@@ -36,11 +36,11 @@ namespace BABYLON
                 this._engine = engine;
             }
             this._renderRatio = ratio;
-            this.renderTargetSamplingMode = (samplingMode) ? samplingMode : BABYLON.Texture.NEAREST_SAMPLINGMODE;
+            this.renderTargetSamplingMode = (samplingMode > 0) ? samplingMode : BABYLON.Texture.NEAREST_SAMPLINGMODE;
             this._reusable = reusable || false;
-            samplers = samplers || new Array<object>();
+            samplers = samplers ?? new Array<string>();
             samplers.push("textureSampler");
-            this._effect = this._engine.createEffect(new { }, new Array<object>("position"), parameters || new Array<object>(), samplers, "");
+            this._effect = this._engine.createEffect(new EffectBaseName { vertex = "postprocess", fragment = fragmentUrl }, new Array<string>("position"), parameters ?? new Array<string>(), samplers, string.Empty);
         }
         public virtual bool isReusable()
         {
@@ -48,10 +48,10 @@ namespace BABYLON
         }
         public virtual void activate(Camera camera, WebGLTexture sourceTexture = null)
         {
-            camera = camera || this._camera;
+            camera = camera ?? this._camera;
             var scene = camera.getScene();
-            var desiredWidth = ((sourceTexture) ? sourceTexture._width : this._engine.getRenderingCanvas().width) * this._renderRatio;
-            var desiredHeight = ((sourceTexture) ? sourceTexture._height : this._engine.getRenderingCanvas().height) * this._renderRatio;
+            var desiredWidth = ((sourceTexture != null) ? sourceTexture._width : this._engine.getRenderingCanvas().width) * this._renderRatio;
+            var desiredHeight = ((sourceTexture != null) ? sourceTexture._height : this._engine.getRenderingCanvas().height) * this._renderRatio;
             if (this.width != desiredWidth || this.height != desiredHeight)
             {
                 if (this._textures.Length > 0)
@@ -62,20 +62,20 @@ namespace BABYLON
                     }
                     this._textures.reset();
                 }
-                this.width = desiredWidth;
-                this.height = desiredHeight;
-                this._textures.push(this._engine.createRenderTargetTexture(new { }, new { }));
+                this.width = (int)desiredWidth;
+                this.height = (int)desiredHeight;
+                this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, new RenderTargetTextureOptions { generateMipMaps = false, generateDepthBuffer = camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode = this.renderTargetSamplingMode }));
                 if (this._reusable)
                 {
-                    this._textures.push(this._engine.createRenderTargetTexture(new { }, new { }));
+                    this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, new RenderTargetTextureOptions  { generateMipMaps = false, generateDepthBuffer = camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode = this.renderTargetSamplingMode }));
                 }
-                if (this.onSizeChanged)
+                if (this.onSizeChanged != null)
                 {
                     this.onSizeChanged();
                 }
             }
             this._engine.bindFramebuffer(this._textures.data[this._currentRenderTextureInd]);
-            if (this.onActivate)
+            if (this.onActivate != null)
             {
                 this.onActivate(camera);
             }
@@ -95,7 +95,7 @@ namespace BABYLON
             this._engine.setDepthBuffer(false);
             this._engine.setDepthWrite(false);
             this._effect._bindTexture("textureSampler", this._textures.data[this._currentRenderTextureInd]);
-            if (this.onApply)
+            if (this.onApply != null)
             {
                 this.onApply(this._effect);
             }
@@ -103,7 +103,7 @@ namespace BABYLON
         }
         public virtual void dispose(Camera camera)
         {
-            camera = camera || this._camera;
+            camera = camera ?? this._camera;
             if (this._textures.Length > 0)
             {
                 for (var i = 0; i < this._textures.Length; i++)

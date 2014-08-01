@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
+
+    /*
     public partial class CannonJSPlugin: IPhysicsEnginePlugin {
         public System.Func < double, double > checkWithEpsilon;
         private object _world;
@@ -220,4 +222,5 @@ namespace BABYLON {
             return window.CANNON != null;
         }
     }
+    */
 }

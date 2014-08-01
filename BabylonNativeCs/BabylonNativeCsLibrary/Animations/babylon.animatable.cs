@@ -12,13 +12,13 @@ namespace BABYLON
         private bool _paused = false;
         private Scene _scene;
         public bool animationStarted = false;
-        public IAnimatableTarget target;
+        public IAnimatable target;
         public int fromFrame;
         public int toFrame;
         public bool loopAnimation;
         public double speedRatio;
         public System.Action onAnimationEnd;
-        public Animatable(Scene scene, IAnimatableTarget target, double fromFrame = 0, double toFrame = 100, bool loopAnimation = false, double speedRatio = 1.0, System.Action onAnimationEnd = null, Array<Animation> animations = null)
+        public Animatable(Scene scene, IAnimatable target, int fromFrame = 0, int toFrame = 100, bool loopAnimation = false, double speedRatio = 1.0, System.Action onAnimationEnd = null, Array<Animation> animations = null)
         {
             if (animations != null)
             {
@@ -27,7 +27,7 @@ namespace BABYLON
             this._scene = scene;
             scene._activeAnimatables.push(this);
         }
-        public virtual void appendAnimations(IAnimatableTarget target, Array<Animation> animations)
+        public virtual void appendAnimations(IAnimatable target, Array<Animation> animations)
         {
             for (var index = 0; index < animations.Length; index++)
             {

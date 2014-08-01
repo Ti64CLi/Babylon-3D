@@ -26,7 +26,7 @@ namespace BABYLON
         public SubMesh(int materialIndex, int verticesStart, int verticesCount, int indexStart, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
         {
             this._mesh = mesh;
-            this._renderingMesh = renderingMesh || (Mesh)mesh;
+            this._renderingMesh = renderingMesh ?? (Mesh)mesh;
             mesh.subMeshes.push(this);
             this._id = mesh.subMeshes.Length - 1;
             if (createBoundingBox)
@@ -49,12 +49,12 @@ namespace BABYLON
         public virtual Material getMaterial()
         {
             var rootMaterial = this._renderingMesh.material;
-            if (rootMaterial && rootMaterial is MultiMaterial)
+            if (rootMaterial != null && rootMaterial is MultiMaterial)
             {
                 var multiMaterial = (MultiMaterial)rootMaterial;
                 return multiMaterial.getSubMaterial(this.materialIndex);
             }
-            if (!rootMaterial)
+            if (rootMaterial == null)
             {
                 return this._mesh.getScene().defaultMaterial;
             }
@@ -62,14 +62,14 @@ namespace BABYLON
         }
         public virtual void refreshBoundingInfo()
         {
-            var data = this._renderingMesh.getVerticesData(VertexBuffer.PositionKind);
-            if (!data)
+            var data = this._renderingMesh.getVerticesData(VertexBufferKind.PositionKind);
+            if (data == null)
             {
                 this._boundingInfo = this._mesh._boundingInfo;
                 return;
             }
             var indices = this._renderingMesh.getIndices();
-            var extend;
+            MinMax extend = null;
             if (this.indexStart == 0 && this.indexCount == indices.Length)
             {
                 extend = BABYLON.Tools.ExtractMinAndMax(data, this.verticesStart, this.verticesCount);
@@ -86,7 +86,7 @@ namespace BABYLON
         }
         public virtual void updateBoundingInfo(Matrix world)
         {
-            if (!this._boundingInfo)
+            if (this._boundingInfo == null)
             {
                 this.refreshBoundingInfo();
             }
@@ -102,9 +102,9 @@ namespace BABYLON
         }
         public virtual WebGLBuffer getLinesIndexBuffer(Array<int> indices, Engine engine)
         {
-            if (!this._linesIndexBuffer)
+            if (this._linesIndexBuffer == null)
             {
-                var linesIndices = new Array<object>();
+                var linesIndices = new Array<int>();
                 for (var index = this.indexStart; index < this.indexStart + this.indexCount; index += 3)
                 {
                     linesIndices.push(indices[index], indices[index + 1], indices[index + 1], indices[index + 2], indices[index + 2], indices[index]);
@@ -118,18 +118,18 @@ namespace BABYLON
         {
             return ray.intersectsBox(this._boundingInfo.boundingBox);
         }
-        public virtual IntersectionInfo intersects(Ray ray, Array<Vector3> positions, Array<double> indices, bool fastCheck = false)
+        public virtual IntersectionInfo intersects(Ray ray, Array<Vector3> positions, Array<int> indices, bool fastCheck = false)
         {
-            var intersectInfo = null;
+            IntersectionInfo intersectInfo = null;
             for (var index = this.indexStart; index < this.indexStart + this.indexCount; index += 3)
             {
                 var p0 = positions[indices[index]];
                 var p1 = positions[indices[index + 1]];
                 var p2 = positions[indices[index + 2]];
                 var currentIntersectInfo = ray.intersectsTriangle(p0, p1, p2);
-                if (currentIntersectInfo)
+                if (currentIntersectInfo != null)
                 {
-                    if (fastCheck || !intersectInfo || currentIntersectInfo.distance < intersectInfo.distance)
+                    if (fastCheck || intersectInfo == null || currentIntersectInfo.distance < intersectInfo.distance)
                     {
                         intersectInfo = currentIntersectInfo;
                         intersectInfo.faceId = index / 3;
@@ -150,7 +150,7 @@ namespace BABYLON
         }
         public virtual void dispose()
         {
-            if (this._linesIndexBuffer)
+            if (this._linesIndexBuffer != null)
             {
                 this._mesh.getScene().getEngine()._releaseBuffer(this._linesIndexBuffer);
                 this._linesIndexBuffer = null;
@@ -158,11 +158,11 @@ namespace BABYLON
             var index = this._mesh.subMeshes.indexOf(this);
             this._mesh.subMeshes.splice(index, 1);
         }
-        public static SubMesh CreateFromIndices(double materialIndex, double startIndex, double indexCount, AbstractMesh mesh, Mesh renderingMesh = null)
+        public static SubMesh CreateFromIndices(int materialIndex, int startIndex, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null)
         {
-            var minVertexIndex = double.MaxValue;
-            var maxVertexIndex = -double.MaxValue;
-            renderingMesh = renderingMesh || (Mesh)mesh;
+            var minVertexIndex = int.MaxValue;
+            var maxVertexIndex = -int.MaxValue;
+            renderingMesh = renderingMesh ?? (Mesh)mesh;
             var indices = renderingMesh.getIndices();
             for (var index = startIndex; index < startIndex + indexCount; index++)
             {

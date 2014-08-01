@@ -9,7 +9,7 @@ namespace BABYLON
     {
         private Mesh _mesh;
         private Engine _engine;
-        private WebGLBuffer _buffer;
+        public WebGLBuffer _buffer;
         private Array<double> _data;
         private bool _updatable;
         private VertexBufferKind _kind;
@@ -49,6 +49,11 @@ namespace BABYLON
                     break;
             }
         }
+
+        public VertexBufferKind Kind
+        {
+            get { return _kind; }
+        }
         public virtual bool isUpdatable()
         {
             return this._updatable;
@@ -85,7 +90,7 @@ namespace BABYLON
             }
             if (this._updatable)
             {
-                this._engine.updateDynamicVertexBuffer(this._buffer, data);
+                this._engine.updateDynamicVertexBuffer(this._buffer, new Float32Array(data));
                 this._data = data;
             }
         }

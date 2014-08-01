@@ -86,5 +86,52 @@ namespace BABYLON
                 this.onDispose();
             }
         }
+
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public object value
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        Array<Animation> IAnimatable.animations
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Array<IAnimatable> getAnimatables()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void markAsDirty(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

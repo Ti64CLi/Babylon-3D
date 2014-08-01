@@ -7,7 +7,7 @@ namespace BABYLON {
     public partial class GroundMesh: Mesh {
         public bool generateOctree = false;
         private BABYLON.Matrix _worldInverse = new BABYLON.Matrix();
-        public double _subdivisions;
+        public int _subdivisions;
         public GroundMesh(string name, Scene scene): base(name, scene) {}
         public virtual double subdivisions {
             get {

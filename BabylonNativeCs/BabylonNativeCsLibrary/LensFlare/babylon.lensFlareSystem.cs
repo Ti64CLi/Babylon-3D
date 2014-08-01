@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class LensFlareSystem {
-        public Array < LensFlare > lensFlares = new Array < LensFlare > ();
+namespace BABYLON
+{
+    public partial class LensFlareSystem
+    {
+        public Array<LensFlare> lensFlares = new Array<LensFlare>();
         public double borderLimit = 300;
-        public System.Func < Mesh, bool > meshesSelectionPredicate;
+        public System.Func<AbstractMesh, bool> meshesSelectionPredicate;
         private Scene _scene;
         private object _emitter;
-        private Array < object > _vertexDeclaration = new Array < object > (2);
-        private double _vertexStrideSize = 2 * 4;
+        private Array<VertexBufferKind> _vertexDeclaration = new Array<object>(VertexBufferKind.NormalKind);
+        private int _vertexStrideSize = 2 * 4;
         private WebGLBuffer _vertexBuffer;
         private WebGLBuffer _indexBuffer;
         private Effect _effect;
@@ -19,18 +21,19 @@ namespace BABYLON {
         private double _positionY;
         private bool _isEnabled = true;
         public string name;
-        public LensFlareSystem(string name, object emitter, Scene scene) {
+        public LensFlareSystem(string name, object emitter, Scene scene)
+        {
             this._scene = scene;
             this._emitter = emitter;
             scene.lensFlareSystems.push(this);
-            this.meshesSelectionPredicate = (m) => m.material && m.isVisible && m.isEnabled() && m.checkCollisions && ((m.layerMask & scene.activeCamera.layerMask) != 0);
-            var vertices = new Array < object > ();
+            this.meshesSelectionPredicate = (m) => m.material != null && m.isVisible && m.isEnabled() && m.checkCollisions && ((m.layerMask & scene.activeCamera.layerMask) != 0);
+            var vertices = new Array<double>();
             vertices.push(1, 1);
             vertices.push(-1, 1);
             vertices.push(-1, -1);
             vertices.push(1, -1);
             this._vertexBuffer = scene.getEngine().createVertexBuffer(vertices);
-            var indices = new Array < object > ();
+            var indices = new Array<int>();
             indices.push(0);
             indices.push(1);
             indices.push(2);
@@ -38,41 +41,52 @@ namespace BABYLON {
             indices.push(2);
             indices.push(3);
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
-            this._effect = this._scene.getEngine().createEffect("lensFlare", new Array < object > ("position"), new Array < object > ("color", "viewportMatrix"), new Array < object > ("textureSampler"), "");
+            this._effect = this._scene.getEngine().createEffect(new EffectBaseName { baseName = "lensFlare" }, new Array<string>("position"), new Array<string>("color", "viewportMatrix"), new Array<string>("textureSampler"), "");
         }
-        public virtual bool isEnabled {
-            get {
+        public virtual bool isEnabled
+        {
+            get
+            {
                 return this._isEnabled;
             }
-            set {
+            set
+            {
                 this._isEnabled = value;
             }
         }
-        public virtual Scene getScene() {
+        public virtual Scene getScene()
+        {
             return this._scene;
         }
-        public virtual object getEmitter() {
+        public virtual object getEmitter()
+        {
             return this._emitter;
         }
-        public virtual Vector3 getEmitterPosition() {
-            return (this._emitter.getAbsolutePosition) ? this._emitter.getAbsolutePosition() : this._emitter.position;
+        public virtual Vector3 getEmitterPosition()
+        {
+            return ((Mesh)this._emitter).getAbsolutePosition();
         }
-        public virtual bool computeEffectivePosition(Viewport globalViewport) {
+        public virtual bool computeEffectivePosition(Viewport globalViewport)
+        {
             var position = this.getEmitterPosition();
             position = BABYLON.Vector3.Project(position, BABYLON.Matrix.Identity(), this._scene.getTransformMatrix(), globalViewport);
             this._positionX = position.x;
             this._positionY = position.y;
             position = BABYLON.Vector3.TransformCoordinates(this.getEmitterPosition(), this._scene.getViewMatrix());
-            if (position.z > 0) {
-                if ((this._positionX > globalViewport.x) && (this._positionX < globalViewport.x + globalViewport.width)) {
+            if (position.z > 0)
+            {
+                if ((this._positionX > globalViewport.x) && (this._positionX < globalViewport.x + globalViewport.width))
+                {
                     if ((this._positionY > globalViewport.y) && (this._positionY < globalViewport.y + globalViewport.height))
                         return true;
                 }
             }
             return false;
         }
-        public virtual bool _isVisible() {
-            if (!this._isEnabled) {
+        public virtual bool _isVisible()
+        {
+            if (!this._isEnabled)
+            {
                 return false;
             }
             var emitterPosition = this.getEmitterPosition();
@@ -83,45 +97,61 @@ namespace BABYLON {
             var pickInfo = this._scene.pickWithRay(ray, this.meshesSelectionPredicate, true);
             return !pickInfo.hit || pickInfo.distance > distance;
         }
-        public virtual bool render() {
+        public virtual bool render()
+        {
             if (!this._effect.isReady())
                 return false;
             var engine = this._scene.getEngine();
             var viewport = this._scene.activeCamera.viewport;
             var globalViewport = viewport.toGlobal(engine);
-            if (!this.computeEffectivePosition(globalViewport)) {
+            if (!this.computeEffectivePosition(globalViewport))
+            {
                 return false;
             }
-            if (!this._isVisible()) {
+            if (!this._isVisible())
+            {
                 return false;
             }
-            var awayX;
-            var awayY;
-            if (this._positionX < this.borderLimit + globalViewport.x) {
+            double awayX;
+            double awayY;
+            if (this._positionX < this.borderLimit + globalViewport.x)
+            {
                 awayX = this.borderLimit + globalViewport.x - this._positionX;
-            } else
-            if (this._positionX > globalViewport.x + globalViewport.width - this.borderLimit) {
-                awayX = this._positionX - globalViewport.x - globalViewport.width + this.borderLimit;
-            } else {
-                awayX = 0;
             }
-            if (this._positionY < this.borderLimit + globalViewport.y) {
+            else
+                if (this._positionX > globalViewport.x + globalViewport.width - this.borderLimit)
+                {
+                    awayX = this._positionX - globalViewport.x - globalViewport.width + this.borderLimit;
+                }
+                else
+                {
+                    awayX = 0;
+                }
+            if (this._positionY < this.borderLimit + globalViewport.y)
+            {
                 awayY = this.borderLimit + globalViewport.y - this._positionY;
-            } else
-            if (this._positionY > globalViewport.y + globalViewport.height - this.borderLimit) {
-                awayY = this._positionY - globalViewport.y - globalViewport.height + this.borderLimit;
-            } else {
-                awayY = 0;
             }
+            else
+                if (this._positionY > globalViewport.y + globalViewport.height - this.borderLimit)
+                {
+                    awayY = this._positionY - globalViewport.y - globalViewport.height + this.borderLimit;
+                }
+                else
+                {
+                    awayY = 0;
+                }
             var away = ((awayX > awayY)) ? awayX : awayY;
-            if (away > this.borderLimit) {
+            if (away > this.borderLimit)
+            {
                 away = this.borderLimit;
             }
             var intensity = 1.0 - (away / this.borderLimit);
-            if (intensity < 0) {
+            if (intensity < 0)
+            {
                 return false;
             }
-            if (intensity > 1.0) {
+            if (intensity > 1.0)
+            {
                 intensity = 1.0;
             }
             var centerX = globalViewport.x + globalViewport.width / 2;
@@ -133,7 +163,8 @@ namespace BABYLON {
             engine.setDepthBuffer(false);
             engine.setAlphaMode(BABYLON.Engine.ALPHA_ADD);
             engine.bindBuffers(this._vertexBuffer, this._indexBuffer, this._vertexDeclaration, this._vertexStrideSize, this._effect);
-            for (var index = 0; index < this.lensFlares.Length; index++) {
+            for (var index = 0; index < this.lensFlares.Length; index++)
+            {
                 var flare = this.lensFlares[index];
                 var x = centerX - (distX * flare.position);
                 var y = centerY - (distY * flare.position);
@@ -151,16 +182,20 @@ namespace BABYLON {
             engine.setAlphaMode(BABYLON.Engine.ALPHA_DISABLE);
             return true;
         }
-        public virtual void dispose() {
-            if (this._vertexBuffer) {
+        public virtual void dispose()
+        {
+            if (this._vertexBuffer != null)
+            {
                 this._scene.getEngine()._releaseBuffer(this._vertexBuffer);
                 this._vertexBuffer = null;
             }
-            if (this._indexBuffer) {
+            if (this._indexBuffer != null)
+            {
                 this._scene.getEngine()._releaseBuffer(this._indexBuffer);
                 this._indexBuffer = null;
             }
-            while (this.lensFlares.Length) {
+            while (this.lensFlares.Length > 0)
+            {
                 this.lensFlares[0].dispose();
             }
             var index = this._scene.lensFlareSystems.indexOf(this);

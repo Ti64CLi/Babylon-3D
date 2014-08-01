@@ -68,7 +68,7 @@ namespace BABYLON
                 for (var index = 0; index < this.actions.Length; index++)
                 {
                     var action = this.actions[index];
-                    if (action.trigger >= ActionManager._OnPickTrigger && action.trigger <= ActionManager._OnPointerOutTrigger)
+                    if (action.trigger >= ActionManager.OnPickTrigger && action.trigger <= ActionManager.OnPointerOutTrigger)
                     {
                         return true;
                     }
@@ -83,7 +83,7 @@ namespace BABYLON
                 for (var index = 0; index < this.actions.Length; index++)
                 {
                     var action = this.actions[index];
-                    if (action.trigger >= ActionManager._OnPickTrigger && action.trigger <= ActionManager._OnCenterPickTrigger)
+                    if (action.trigger >= ActionManager.OnPickTrigger && action.trigger <= ActionManager.OnCenterPickTrigger)
                     {
                         return true;
                     }
@@ -117,18 +117,18 @@ namespace BABYLON
                 }
             }
         }
-        public virtual object _getEffectiveTarget(object target, string propertyPath)
+        public virtual IAnimatable _getEffectiveTarget(IAnimatable target, string propertyPath)
         {
-            var properties = propertyPath.Split(".");
+            var properties = propertyPath.Split('.');
             for (var index = 0; index < properties.Length - 1; index++)
             {
-                target = target[properties[index]];
+                target = target[properties[index]].value as IAnimatable;
             }
             return target;
         }
         public virtual string _getProperty(string propertyPath)
         {
-            var properties = propertyPath.Split(".");
+            var properties = propertyPath.Split('.');
             return properties[properties.Length - 1];
         }
     }

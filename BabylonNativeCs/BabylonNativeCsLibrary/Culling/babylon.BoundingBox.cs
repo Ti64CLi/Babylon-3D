@@ -35,7 +35,7 @@ namespace BABYLON
             this.vectors[7].y = this.minimum.y;
             this.center = this.maximum.add(this.minimum).scale(0.5);
             this.extends = this.maximum.subtract(this.minimum).scale(0.5);
-            this.directions = new Array<object>(BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
+            this.directions = new Array<Vector3>(BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
             for (var index = 0; index < this.vectors.Length; index++)
             {
                 this.vectorsWorld[index] = BABYLON.Vector3.Zero();
@@ -43,51 +43,6 @@ namespace BABYLON
             this.minimumWorld = BABYLON.Vector3.Zero();
             this.maximumWorld = BABYLON.Vector3.Zero();
             this._update(BABYLON.Matrix.Identity());
-        }
-        void intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, double sphereRadius)
-        {
-            if (boxMin.x > sphereCenter.x + sphereRadius)
-                return false;
-            if (sphereCenter.x - sphereRadius > boxMax.x)
-                return false;
-            if (boxMin.y > sphereCenter.y + sphereRadius)
-                return false;
-            if (sphereCenter.y - sphereRadius > boxMax.y)
-                return false;
-            if (boxMin.z > sphereCenter.z + sphereRadius)
-                return false;
-            if (sphereCenter.z - sphereRadius > boxMax.z)
-                return false;
-            return true;
-        }
-        void getLowestRoot(double a, double b, double c, double maxR)
-        {
-            var determinant = b * b - 4.0 * a * c;
-            var result = new { };
-            if (determinant < 0)
-                return result;
-            var sqrtD = Math.Sqrt(determinant);
-            var r1 = (-b - sqrtD) / (2.0 * a);
-            var r2 = (-b + sqrtD) / (2.0 * a);
-            if (r1 > r2)
-            {
-                var temp = r2;
-                r2 = r1;
-                r1 = temp;
-            }
-            if (r1 > 0 && r1 < maxR)
-            {
-                result.root = r1;
-                result.found = true;
-                return result;
-            }
-            if (r2 > 0 && r2 < maxR)
-            {
-                result.root = r2;
-                result.found = true;
-                return result;
-            }
-            return result;
         }
         public virtual Matrix getWorldMatrix()
         {

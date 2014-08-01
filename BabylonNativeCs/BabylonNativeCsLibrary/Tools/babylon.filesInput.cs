@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
+    /*
     public partial class FilesInput {
         private BABYLON.Engine engine;
         private BABYLON.Scene currentScene;
@@ -122,4 +123,5 @@ namespace BABYLON {
             }
         }
     }
+     */
 }

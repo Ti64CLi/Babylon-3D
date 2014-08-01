@@ -131,6 +131,41 @@ namespace BABYLON
             }
         }
 
-        public Array<Animation> animations { get; private set; }
+        public Array<Animation> animations { get; set; }
+
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public object value
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public Array<IAnimatable> getAnimatables()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void markAsDirty(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -61,6 +61,21 @@ namespace BABYLON
                 this.data[this.Length++] = array[index];
             }
         }
+        public virtual void concat(Array<T> array)
+        {
+            if (array.Length == 0)
+            {
+                return;
+            }
+            if (this.Length + array.Length > this.data.Length)
+            {
+                this.data.Length = (this.Length + array.Length) * 2;
+            }
+            for (var index = 0; index < array.Length; index++)
+            {
+                this.data[this.Length++] = array[index];
+            }
+        }
         public virtual void concat(SmartArray<T> array)
         {
             if (array.Length == 0)
@@ -77,6 +92,22 @@ namespace BABYLON
             }
         }
         public virtual void concatWithNoDuplicate(T[] array)
+        {
+            if (array.Length == 0)
+            {
+                return;
+            }
+            if (this.Length + array.Length > this.data.Length)
+            {
+                this.data.Length = (this.Length + array.Length) * 2;
+            }
+            for (var index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                this.pushNoDuplicate(item);
+            }
+        }
+        public virtual void concatWithNoDuplicate(Array<T> array)
         {
             if (array.Length == 0)
             {

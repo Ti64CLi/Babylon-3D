@@ -9,7 +9,7 @@ namespace BABYLON {
         public Color3 color;
         public double depth;
         public double colorLevel;
-        public RefractionPostProcess(string name, string refractionTextureUrl, Color3 color, double depth, double colorLevel, double ratio, Camera camera, double samplingMode = 0.0, Engine engine = null, bool reusable = false): base(name, "refraction", new Array < object > ("baseColor", "depth", "colorLevel"), new Array < object > ("refractionSampler"), ratio, camera, samplingMode, engine, reusable) {
+        public RefractionPostProcess(string name, string refractionTextureUrl, Color3 color, double depth, double colorLevel, double ratio, Camera camera, int samplingMode = 0, Engine engine = null, bool reusable = false): base(name, "refraction", new Array < object > ("baseColor", "depth", "colorLevel"), new Array < object > ("refractionSampler"), ratio, camera, samplingMode, engine, reusable) {
             this.onActivate = (Camera cam) => {
                 this._refRexture = this._refRexture || new BABYLON.Texture(refractionTextureUrl, cam.getScene());
             };

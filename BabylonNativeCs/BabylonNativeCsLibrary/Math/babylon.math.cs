@@ -1587,7 +1587,7 @@ namespace BABYLON
             result.d = -(normal.x * origin.x + normal.y * origin.y + normal.z * origin.z);
             return result;
         }
-        static double SignedDistanceToPlaneFromPositionAndNormal(Vector3 origin, Vector3 normal, Vector3 point)
+        public static double SignedDistanceToPlaneFromPositionAndNormal(Vector3 origin, Vector3 normal, Vector3 point)
         {
             var d = -(normal.x * origin.x + normal.y * origin.y + normal.z * origin.z);
             return Vector3.Dot(point, normal) + d;

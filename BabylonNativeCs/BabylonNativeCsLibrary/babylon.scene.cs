@@ -7,7 +7,7 @@ namespace BABYLON
 {
     public partial interface IDisposable
     {
-        void dispose();
+        void dispose(bool doNotRecurse = false);
     }
     public partial class Scene
     {
@@ -371,7 +371,7 @@ namespace BABYLON
             ////}, 150);
             this._checkIsReady();
         }
-        public virtual Animatable beginAnimation(IAnimatableTarget target, double from, double to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null)
+        public virtual Animatable beginAnimation(IAnimatable target, int from, int to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null)
         {
             if (speedRatio == null)
             {
@@ -396,7 +396,7 @@ namespace BABYLON
             }
             return animatable;
         }
-        public virtual Animatable beginDirectAnimation(IAnimatableTarget target, Array<Animation> animations, double from, double to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null)
+        public virtual Animatable beginDirectAnimation(IAnimatable target, Array<Animation> animations, int from, int to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null)
         {
             if (speedRatio == null)
             {
@@ -748,7 +748,7 @@ namespace BABYLON
                     {
                         continue;
                     }
-                    if (particleSystem.emitter.position == null || (particleSystem.emitter != null && particleSystem.emitter.isEnabled()))
+                    if (((Mesh)particleSystem.emitter).position == null || (particleSystem.emitter != null && ((Mesh)particleSystem.emitter).isEnabled()))
                     {
                         this._activeParticleSystems.push(particleSystem);
                         particleSystem.animate();

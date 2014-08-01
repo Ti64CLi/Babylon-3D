@@ -5,11 +5,18 @@ namespace BABYLON
 {
     using BABYLON.Internals;
 
-    public struct MinMax
+    public class MinMax
     {
         public Vector3 minimum { get; set; }
 
         public Vector3 maximum { get; set; }
+    }
+
+    public struct Extents
+    {
+        public double min { get; set; }
+
+        public double max { get; set; }
     }
 
     public struct MinMaxDistance
@@ -37,11 +44,6 @@ namespace BABYLON
 
     public struct EffectBaseName
     {
-        public EffectBaseName(string baseName)
-        {
-            this.baseName = baseName;
-        }
-
         public string baseName { get; set; }
 
         public string vertexElement { get; set; }
@@ -58,6 +60,13 @@ namespace BABYLON
         public int min { get; set; }
 
         public int mag { get; set; }
+    }
+
+    public struct RootResult
+    {
+        public double root { get; set; }
+
+        public bool found { get; set; }
     }
 
     public class PositionCoord

@@ -11,7 +11,7 @@ namespace BABYLON
         private IDictionary<string, object> _offsetsCache = new Dictionary<string, object>();
         private IDictionary<string, object> _highLimitsCache = new Dictionary<string, object>();
         private bool _stopped = false;
-        public IAnimatableTarget _target;
+        public IAnimatable _target;
         public string[] targetPropertyPath;
         public double currentFrame;
         public string name;

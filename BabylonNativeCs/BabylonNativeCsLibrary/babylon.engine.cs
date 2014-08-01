@@ -525,7 +525,7 @@ namespace BABYLON
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, null);
             this._cachedVertexBuffers = null;
         }
-        public virtual WebGLBuffer createVertexBuffer(Array<float> vertices)
+        public virtual WebGLBuffer createVertexBuffer(Array<double> vertices)
         {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);

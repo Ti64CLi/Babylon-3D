@@ -5,12 +5,15 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    public partial interface IAnimatable
+    public partial interface IAnimatable: IAnimatableProperty
     {
-        Array<Animation> animations
-        {
-            get;
-        }
+        IAnimatableProperty this[string propertyName] { get; set; }
+
+        Array<Animation> animations { get; set; }
+
+        Array<IAnimatable> getAnimatables();
+
+        void markAsDirty(string propertyName);
     }
     public partial interface ISize
     {
@@ -34,7 +37,7 @@ namespace BABYLON
         // FPS
         private static int fpsRange = 60;
         private static Array<int> previousFramesDuration = new Array<int>();
-        private static double fps = 60;
+        private static int fps = 60;
         private static int deltaTime = 0;
 
         object cloneValue(object source, object destinationObject)
@@ -85,11 +88,11 @@ namespace BABYLON
 
             return result;
         }
-        public static int ToDegrees(double angle)
+        public static double ToDegrees(double angle)
         {
             return angle * 180 / Math.PI;
         }
-        public static int ToRadians(double angle)
+        public static double ToRadians(double angle)
         {
             return angle * Math.PI / 180;
         }
