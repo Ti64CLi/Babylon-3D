@@ -65,7 +65,7 @@ namespace BABYLON
                 this._vertexBuffers[kind].dispose();
             }
             this._vertexBuffers[kind] = new VertexBuffer(this._engine, data, kind, updatable, this._meshes.Length == 0);
-            if (kind == BABYLON.VertexBuffer.PositionKind)
+            if (kind == BABYLON.VertexBufferKind.PositionKind)
             {
                 var stride = this._vertexBuffers[kind].getStrideSize();
                 this._totalVertices = data.Length / stride;
@@ -90,7 +90,7 @@ namespace BABYLON
                 return;
             }
             vertexBuffer.update(data);
-            if (kind == BABYLON.VertexBuffer.PositionKind)
+            if (kind == BABYLON.VertexBufferKind.PositionKind)
             {
                 var extend;
                 if (updateExtends)
@@ -275,7 +275,7 @@ namespace BABYLON
                     this._vertexBuffers[kind].create();
                 }
                 this._vertexBuffers[kind]._buffer.references = numOfMeshes;
-                if (kind == BABYLON.VertexBuffer.PositionKind)
+                if (kind == BABYLON.VertexBufferKind.PositionKind)
                 {
                     mesh._resetPointsArrayCache();
                     var extend = BABYLON.Tools.ExtractMinAndMax(this._vertexBuffers[kind].getData(), 0, this._totalVertices);
@@ -388,7 +388,7 @@ namespace BABYLON
                 geometry._delayInfo = geometry._delayInfo ?? new Array<VertexBufferKind>();
                 geometry._delayInfo.push(kind);
             }
-            var extend = BABYLON.Tools.ExtractMinAndMax(this.getVerticesData(BABYLON.VertexBuffer.PositionKind), 0, this.getTotalVertices());
+            var extend = BABYLON.Tools.ExtractMinAndMax(this.getVerticesData(BABYLON.VertexBufferKind.PositionKind), 0, this.getTotalVertices());
             geometry._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);
             return geometry;
         }

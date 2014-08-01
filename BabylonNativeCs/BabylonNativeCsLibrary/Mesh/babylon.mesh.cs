@@ -131,7 +131,7 @@ namespace BABYLON
         }
         public virtual void refreshBoundingInfo()
         {
-            var data = this.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+            var data = this.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             if (data != null)
             {
                 var extend = BABYLON.Tools.ExtractMinAndMax(data, 0, this.getTotalVertices());

@@ -18,7 +18,7 @@ namespace BABYLON {
             this._colorShader = new ShaderMaterial("colorShader", scene, "color", new {});
             var engine = this._scene.getEngine();
             var boxdata = BABYLON.VertexData.CreateBox(1.0);
-            this._vb = new BABYLON.VertexBuffer(engine, boxdata.positions, BABYLON.VertexBuffer.PositionKind, false);
+            this._vb = new BABYLON.VertexBuffer(engine, boxdata.positions, BABYLON.VertexBufferKind.PositionKind, false);
             this._ib = engine.createIndexBuffer(new Array < object > (0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 7, 1, 6, 2, 5, 3, 4));
         }
         public virtual void reset() {

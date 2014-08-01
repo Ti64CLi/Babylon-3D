@@ -231,9 +231,9 @@ namespace BABYLON {
                 throw "BABYLON.CSG: Wrong Mesh type, must be BABYLON.Mesh";
             }
             var indices = mesh.getIndices();
-            var positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-            var normals = mesh.getVerticesData(BABYLON.VertexBuffer.NormalKind);
-            var uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind);
+            var positions = mesh.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
+            var normals = mesh.getVerticesData(BABYLON.VertexBufferKind.NormalKind);
+            var uvs = mesh.getVerticesData(BABYLON.VertexBufferKind.UVKind);
             var subMeshes = mesh.subMeshes;
             for (var sm = 0;
                 var sml = subMeshes.Length; sm < sml; sm++) {
@@ -428,9 +428,9 @@ namespace BABYLON {
                     }
                 }
             }
-            mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, vertices);
-            mesh.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals);
-            mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
+            mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, vertices);
+            mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, normals);
+            mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, uvs);
             mesh.setIndices(indices);
             if (keepSubMeshes) {
                 var materialIndexOffset = 0;

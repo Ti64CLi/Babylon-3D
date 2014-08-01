@@ -457,23 +457,23 @@ namespace BABYLON.Internals
             geometry._delayInfo = new Array<object>();
             if (parsedVertexData.hasUVs)
             {
-                geometry._delayInfo.push(BABYLON.VertexBuffer.UVKind);
+                geometry._delayInfo.push(BABYLON.VertexBufferKind.UVKind);
             }
             if (parsedVertexData.hasUVs2)
             {
-                geometry._delayInfo.push(BABYLON.VertexBuffer.UV2Kind);
+                geometry._delayInfo.push(BABYLON.VertexBufferKind.UV2Kind);
             }
             if (parsedVertexData.hasColors)
             {
-                geometry._delayInfo.push(BABYLON.VertexBuffer.ColorKind);
+                geometry._delayInfo.push(BABYLON.VertexBufferKind.ColorKind);
             }
             if (parsedVertexData.hasMatricesIndices)
             {
-                geometry._delayInfo.push(BABYLON.VertexBuffer.MatricesIndicesKind);
+                geometry._delayInfo.push(BABYLON.VertexBufferKind.MatricesIndicesKind);
             }
             if (parsedVertexData.hasMatricesWeights)
             {
-                geometry._delayInfo.push(BABYLON.VertexBuffer.MatricesWeightsKind);
+                geometry._delayInfo.push(BABYLON.VertexBufferKind.MatricesWeightsKind);
             }
             geometry._delayLoadingFunction = importVertexData;
         }
@@ -538,23 +538,23 @@ namespace BABYLON.Internals
             mesh._delayInfo = new Array<object>();
             if (parsedMesh.hasUVs)
             {
-                mesh._delayInfo.push(BABYLON.VertexBuffer.UVKind);
+                mesh._delayInfo.push(BABYLON.VertexBufferKind.UVKind);
             }
             if (parsedMesh.hasUVs2)
             {
-                mesh._delayInfo.push(BABYLON.VertexBuffer.UV2Kind);
+                mesh._delayInfo.push(BABYLON.VertexBufferKind.UV2Kind);
             }
             if (parsedMesh.hasColors)
             {
-                mesh._delayInfo.push(BABYLON.VertexBuffer.ColorKind);
+                mesh._delayInfo.push(BABYLON.VertexBufferKind.ColorKind);
             }
             if (parsedMesh.hasMatricesIndices)
             {
-                mesh._delayInfo.push(BABYLON.VertexBuffer.MatricesIndicesKind);
+                mesh._delayInfo.push(BABYLON.VertexBufferKind.MatricesIndicesKind);
             }
             if (parsedMesh.hasMatricesWeights)
             {
-                mesh._delayInfo.push(BABYLON.VertexBuffer.MatricesWeightsKind);
+                mesh._delayInfo.push(BABYLON.VertexBufferKind.MatricesWeightsKind);
             }
             mesh._delayLoadingFunction = importGeometry;
             if (BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental)
@@ -661,37 +661,37 @@ namespace BABYLON.Internals
         var positions = parsedVertexData.positions;
         if (positions)
         {
-            vertexData.set(positions, BABYLON.VertexBuffer.PositionKind);
+            vertexData.set(positions, BABYLON.VertexBufferKind.PositionKind);
         }
         var normals = parsedVertexData.normals;
         if (normals)
         {
-            vertexData.set(normals, BABYLON.VertexBuffer.NormalKind);
+            vertexData.set(normals, BABYLON.VertexBufferKind.NormalKind);
         }
         var uvs = parsedVertexData.uvs;
         if (uvs)
         {
-            vertexData.set(uvs, BABYLON.VertexBuffer.UVKind);
+            vertexData.set(uvs, BABYLON.VertexBufferKind.UVKind);
         }
         var uv2s = parsedVertexData.uv2s;
         if (uv2s)
         {
-            vertexData.set(uv2s, BABYLON.VertexBuffer.UV2Kind);
+            vertexData.set(uv2s, BABYLON.VertexBufferKind.UV2Kind);
         }
         var colors = parsedVertexData.colors;
         if (colors)
         {
-            vertexData.set(colors, BABYLON.VertexBuffer.ColorKind);
+            vertexData.set(colors, BABYLON.VertexBufferKind.ColorKind);
         }
         var matricesIndices = parsedVertexData.matricesIndices;
         if (matricesIndices)
         {
-            vertexData.set(matricesIndices, BABYLON.VertexBuffer.MatricesIndicesKind);
+            vertexData.set(matricesIndices, BABYLON.VertexBufferKind.MatricesIndicesKind);
         }
         var matricesWeights = parsedVertexData.matricesWeights;
         if (matricesWeights)
         {
-            vertexData.set(matricesWeights, BABYLON.VertexBuffer.MatricesWeightsKind);
+            vertexData.set(matricesWeights, BABYLON.VertexBufferKind.MatricesWeightsKind);
         }
         var indices = parsedVertexData.indices;
         if (indices)
@@ -715,19 +715,19 @@ namespace BABYLON.Internals
         else
             if (parsedGeometry.positions && parsedGeometry.normals && parsedGeometry.indices)
             {
-                mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, parsedGeometry.positions, false);
-                mesh.setVerticesData(BABYLON.VertexBuffer.NormalKind, parsedGeometry.normals, false);
+                mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, parsedGeometry.positions, false);
+                mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, parsedGeometry.normals, false);
                 if (parsedGeometry.uvs)
                 {
-                    mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, parsedGeometry.uvs, false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, parsedGeometry.uvs, false);
                 }
                 if (parsedGeometry.uvs2)
                 {
-                    mesh.setVerticesData(BABYLON.VertexBuffer.UV2Kind, parsedGeometry.uvs2, false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, parsedGeometry.uvs2, false);
                 }
                 if (parsedGeometry.colors)
                 {
-                    mesh.setVerticesData(BABYLON.VertexBuffer.ColorKind, parsedGeometry.colors, false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, parsedGeometry.colors, false);
                 }
                 if (parsedGeometry.matricesIndices)
                 {
@@ -742,17 +742,17 @@ namespace BABYLON.Internals
                             floatIndices.push((matricesIndex & 0x00FF0000) << 16);
                             floatIndices.push(matricesIndex << 24);
                         }
-                        mesh.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, floatIndices, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, floatIndices, false);
                     }
                     else
                     {
                         parsedGeometry.matricesIndices._isExpanded = null;
-                        mesh.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, parsedGeometry.matricesIndices, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, parsedGeometry.matricesIndices, false);
                     }
                 }
                 if (parsedGeometry.matricesWeights)
                 {
-                    mesh.setVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, parsedGeometry.matricesWeights, false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, parsedGeometry.matricesWeights, false);
                 }
                 mesh.setIndices(parsedGeometry.indices);
             }

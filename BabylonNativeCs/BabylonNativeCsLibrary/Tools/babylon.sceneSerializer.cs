@@ -498,34 +498,34 @@ namespace BABYLON
         dynamic serializeVertexData(Geometry vertexData)
         {
             var serializationObject = serializeGeometryBase(vertexData);
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.PositionKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.PositionKind))
             {
-                serializationObject.positions = vertexData.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+                serializationObject.positions = vertexData.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.NormalKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.NormalKind))
             {
-                serializationObject.normals = vertexData.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+                serializationObject.normals = vertexData.getVerticesData(BABYLON.VertexBufferKind.NormalKind);
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.UVKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
             {
-                serializationObject.uvs = vertexData.getVerticesData(BABYLON.VertexBuffer.UVKind);
+                serializationObject.uvs = vertexData.getVerticesData(BABYLON.VertexBufferKind.UVKind);
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.UV2Kind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
             {
-                serializationObject.uvs2 = vertexData.getVerticesData(BABYLON.VertexBuffer.UV2Kind);
+                serializationObject.uvs2 = vertexData.getVerticesData(BABYLON.VertexBufferKind.UV2Kind);
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.ColorKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.ColorKind))
             {
-                serializationObject.colors = vertexData.getVerticesData(BABYLON.VertexBuffer.ColorKind);
+                serializationObject.colors = vertexData.getVerticesData(BABYLON.VertexBufferKind.ColorKind);
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind))
             {
-                serializationObject.matricesIndices = vertexData.getVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind);
+                serializationObject.matricesIndices = vertexData.getVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind);
                 serializationObject.matricesIndices._isExpanded = true;
             }
-            if (vertexData.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind))
+            if (vertexData.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
             {
-                serializationObject.matricesWeights = vertexData.getVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind);
+                serializationObject.matricesWeights = vertexData.getVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind);
             }
             serializationObject.indices = vertexData.getIndices();
             return serializationObject;

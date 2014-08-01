@@ -58,7 +58,7 @@ namespace BABYLON {
                 case BABYLON.PhysicsEngine.PlaneImpostor:
                     return this._createPlane(mesh, options);
                 case BABYLON.PhysicsEngine.MeshImpostor:
-                    var rawVerts = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+                    var rawVerts = mesh.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
                     var rawFaces = mesh.getIndices();
                     return this._createConvexPolyhedron(rawVerts, rawFaces, mesh, options);
             }

@@ -63,7 +63,7 @@ namespace BABYLON {
             }
         }
         public virtual void refreshBoundingInfo() {
-            var data = this._sourceMesh.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+            var data = this._sourceMesh.getVerticesData(BABYLON.VertexBufferKind.PositionKind);
             if (data) {
                 var extend = BABYLON.Tools.ExtractMinAndMax(data, 0, this._sourceMesh.getTotalVertices());
                 this._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);

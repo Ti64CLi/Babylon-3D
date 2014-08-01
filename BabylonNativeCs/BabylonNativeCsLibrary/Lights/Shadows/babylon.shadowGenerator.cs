@@ -84,7 +84,7 @@ namespace BABYLON {
                         this._effect.setTexture("diffuseSampler", alphaTexture);
                         this._effect.setMatrix("diffuseMatrix", alphaTexture.getTextureMatrix());
                     }
-                    var useBones = mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind);
+                    var useBones = mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind);
                     if (useBones) {
                         this._effect.setMatrices("mBones", mesh.skeleton.getTransformMatrices());
                     }
@@ -127,23 +127,23 @@ namespace BABYLON {
             if (this.useVarianceShadowMap) {
                 defines.push("#define VSM");
             }
-            var attribs = new Array < object > (BABYLON.VertexBuffer.PositionKind);
+            var attribs = new Array < object > (BABYLON.VertexBufferKind.PositionKind);
             var mesh = subMesh.getMesh();
             var material = subMesh.getMaterial();
             if (material && material.needAlphaTesting()) {
                 defines.push("#define ALPHATEST");
-                if (mesh.isVerticesDataPresent(BABYLON.VertexBuffer.UVKind)) {
-                    attribs.push(BABYLON.VertexBuffer.UVKind);
+                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind)) {
+                    attribs.push(BABYLON.VertexBufferKind.UVKind);
                     defines.push("#define UV1");
                 }
-                if (mesh.isVerticesDataPresent(BABYLON.VertexBuffer.UV2Kind)) {
-                    attribs.push(BABYLON.VertexBuffer.UV2Kind);
+                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind)) {
+                    attribs.push(BABYLON.VertexBufferKind.UV2Kind);
                     defines.push("#define UV2");
                 }
             }
-            if (mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBuffer.MatricesWeightsKind)) {
-                attribs.push(BABYLON.VertexBuffer.MatricesIndicesKind);
-                attribs.push(BABYLON.VertexBuffer.MatricesWeightsKind);
+            if (mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind)) {
+                attribs.push(BABYLON.VertexBufferKind.MatricesIndicesKind);
+                attribs.push(BABYLON.VertexBufferKind.MatricesWeightsKind);
                 defines.push("#define BONES");
                 defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
             }
