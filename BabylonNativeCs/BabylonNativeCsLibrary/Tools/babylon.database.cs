@@ -44,11 +44,11 @@ namespace BABYLON {
         }
 
         public virtual void checkManifestFile() {
-            {}
+            /*
             var that = this;
             var manifestURL = this.currentSceneUrl + ".manifest";
             var xhr = new XMLHttpRequest();
-            var manifestURLTimeStamped = manifestURL + ((manifestURL.match(new Regex(/\?/)) == null) ? "?" : "&") + (new Date()).getTime();
+            var manifestURLTimeStamped = manifestURL + ((new Regex(@"\?").Match(manifestURL).Success) ? "?" : "&") + (new Date()).getTime();
             xhr.open("GET", manifestURLTimeStamped, true);
             xhr.addEventListener("load", () {
                 if (xhr.status == 200 || BABYLON.Tools.ValidateXHRData(xhr, 1)) {
@@ -78,9 +78,12 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error on XHR send request.");
                 that.callbackManifestChecked(false);
             }
+            */
+
+            throw new NotImplementedException();
         }
         public virtual void openAsync(object successCallback, object errorCallback) {
-            {}
+            /*
             var that = this;
             if (!this.idbFactory || !(this.enableSceneOffline || this.enableTexturesOffline)) {
                 this.isSupported = false;
@@ -123,6 +126,9 @@ namespace BABYLON {
                         successCallback();
                 }
             }
+             */
+
+            throw new NotImplementedException();
         }
         public virtual void loadImageFromDB(string url, HTMLImageElement image) {
             var that = this;
@@ -141,6 +147,7 @@ namespace BABYLON {
             }
         }
         private void _loadImageFromDBAsync(string url, HTMLImageElement image, System.Func notInDBCallback) {
+            /*
             if (this.isSupported && this.db != null) {
                 var texture;
                 var transaction = this.db.transaction(new Array < object > ("textures"));
@@ -173,8 +180,12 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error: IndexedDB not supported by your browser or BabylonJS Database is not open.");
                 image.src = url;
             }
+             */
+
+            throw new NotImplementedException();
         }
         private void _saveImageIntoDBAsync(string url, HTMLImageElement image) {
+            /*
             if (this.isSupported) {
                 var generateBlobUrl = () {
                     var blobTextureURL;
@@ -238,15 +249,23 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error: IndexedDB not supported by your browser or BabylonJS Database is not open.");
                 image.src = url;
             }
+             */
+
+            throw new NotImplementedException();
         }
         private void _checkVersionFromDB(string url, object versionLoaded) {
+            /*
             var that = this;
             var updateVersion = (object _event) {
                 that._saveVersionIntoDBAsync(url, versionLoaded);
             };
             this._loadVersionFromDBAsync(url, versionLoaded, updateVersion);
+             */
+
+            throw new NotImplementedException();
         }
         private void _loadVersionFromDBAsync(string url, object callback, object updateInDBCallback) {
+            /*
             if (this.isSupported) {
                 var version;
                 var that = this;
@@ -284,8 +303,12 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error: IndexedDB not supported by your browser or BabylonJS Database is not open.");
                 callback(-1);
             }
+             */
+
+            throw new NotImplementedException();
         }
         private void _saveVersionIntoDBAsync(string url, object callback) {
+            /*
             if (this.isSupported && !this.hasReachedQuota) {
                 var that = this;
                 try {
@@ -314,8 +337,12 @@ namespace BABYLON {
             } else {
                 callback(-1);
             }
+             */
+
+            throw new NotImplementedException();
         }
         private void loadFileFromDB(string url, object sceneLoaded, object progressCallBack, object errorCallback, bool useArrayBuffer = false) {
+            /*
             var that = this;
             var completeUrl = BABYLON.Database.ReturnFullUrlLocation(url);
             var saveAndLoadFile = (object _event) {
@@ -332,8 +359,12 @@ namespace BABYLON {
                     errorCallback();
                 }
             });
+             */
+            
+            throw new NotImplementedException();
         }
         private void _loadFileFromDBAsync(object url, object callback, object notInDBCallback, bool useArrayBuffer = false) {
+            /*
             if (this.isSupported) {
                 var targetStore;
                 if (url.indexOf(".babylon") != -1) {
@@ -365,8 +396,12 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error: IndexedDB not supported by your browser or BabylonJS Database is not open.");
                 callback();
             }
+             */
+
+            throw new NotImplementedException();
         }
         private void _saveFileIntoDBAsync(string url, object callback, object progressCallback, bool useArrayBuffer = false) {
+            /*
             if (this.isSupported) {
                 var targetStore;
                 if (url.indexOf(".babylon") != -1) {
@@ -429,6 +464,9 @@ namespace BABYLON {
                 BABYLON.Tools.Error("Error: IndexedDB not supported by your browser or BabylonJS Database is not open.");
                 callback();
             }
+             */
+             
+            throw new NotImplementedException();
         }
     }
 }

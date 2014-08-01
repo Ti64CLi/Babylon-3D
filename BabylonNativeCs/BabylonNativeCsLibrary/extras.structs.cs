@@ -48,6 +48,18 @@ namespace BABYLON
 
     public class Cache
     {
+        public bool localMatrixUpdated { get; set; }
+
+        public Vector3 scaling { get; set; }
+
+        public Vector3 rotation { get; set; }
+
+        public Quaternion rotationQuaternion { get; set; }
+
+        public Vector3 position { get; set; }
+
+        public bool pivotMatrixUpdated { get; set; }
+
         public Node parent { get; set; }
     }
 

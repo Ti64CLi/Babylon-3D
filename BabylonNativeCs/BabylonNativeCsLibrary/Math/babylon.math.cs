@@ -11,7 +11,7 @@ namespace BABYLON
         public double g;
         public double b;
         public Color3(double r = 0, double g = 0, double b = 0) { }
-        public virtual string.ToString()
+        public virtual string ToString()
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + "}";
         }
@@ -200,7 +200,7 @@ namespace BABYLON
             result.b = this.b * scale;
             result.a = this.a * scale;
         }
-        public virtual string.ToString()
+        public virtual string ToString()
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + " A:" + this.a + "}";
         }
@@ -235,7 +235,7 @@ namespace BABYLON
         public double x;
         public double y;
         public Vector2(double x, double y) { }
-        public virtual string.ToString()
+        public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + "}";
         }
@@ -398,7 +398,7 @@ namespace BABYLON
         public double y;
         public double z;
         public Vector3(double x, double y, double z) { }
-        public virtual string.ToString()
+        public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + "}";
         }
@@ -778,7 +778,7 @@ namespace BABYLON
         public double z;
         public double w;
         public Quaternion(double x = 0, double y = 0, double z = 0, double w = 0) { }
-        public virtual string.ToString()
+        public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + " W:" + this.w + "}";
         }

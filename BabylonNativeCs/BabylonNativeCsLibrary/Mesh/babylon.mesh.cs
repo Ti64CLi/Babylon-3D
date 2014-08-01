@@ -135,7 +135,7 @@ namespace BABYLON {
                 if (offset >= totalIndices) {
                     break;
                 }
-                BABYLON.SubMesh.CreateFromIndices(0, offset, Math.min(subdivisionSize, totalIndices - offset), this);
+                BABYLON.SubMesh.CreateFromIndices(0, offset, Math.Min(subdivisionSize, totalIndices - offset), this);
                 offset += subdivisionSize;
             }
             this.synchronizeInstances();

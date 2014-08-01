@@ -6,13 +6,14 @@ using Web;
 namespace BABYLON.Internals {
     public partial class AndOrNotEvaluator {
         public static bool Eval(string query, System.Func < object, bool > evaluateCallback) {
-            if (!query.match(new Regex(/\([^\(\)]*\)/g))) {
+            if (!(new Regex(@"\([^\(\)]*\)").Match(query).Success)) {
                 query = AndOrNotEvaluator._HandleParenthesisContent(query, evaluateCallback);
             } else {
-                query = query.replace(new Regex(/\([^\(\)]*\)/g), (r) => {
-                    r = r.slice(1, r.Length - 1);
-                    return AndOrNotEvaluator._HandleParenthesisContent(r, evaluateCallback);
-                });
+                throw new NotImplementedException();
+                ////query = query.replace(new Regex(@"\([^\(\)]*\)"), (r) => {
+                ////    r = r.slice(1, r.Length - 1);
+                ////    return AndOrNotEvaluator._HandleParenthesisContent(r, evaluateCallback);
+                ////});
             }
             if (query == "true") {
                 return true;
@@ -23,17 +24,17 @@ namespace BABYLON.Internals {
             return AndOrNotEvaluator.Eval(query, evaluateCallback);
         }
         private static string _HandleParenthesisContent(string parenthesisContent, System.Func < object, bool > evaluateCallback) {
-            evaluateCallback = evaluateCallback || ((object r) => {
+            evaluateCallback = evaluateCallback ?? ((string r) => {
                 return (r == "true") ? true : false;
             });
             var result;
             var or = parenthesisContent.Split("||");
             foreach(var i in or) {
-                var ori = AndOrNotEvaluator._SimplifyNegation(or[i].trim());
+                var ori = AndOrNotEvaluator._SimplifyNegation(or[i].Trim());
                 var and = ori.Split("&&");
                 if (and.Length > 1) {
                     for (var j = 0; j < and.Length; ++j) {
-                        var andj = AndOrNotEvaluator._SimplifyNegation(and[j].trim());
+                        var andj = AndOrNotEvaluator._SimplifyNegation(and[j].Trim());
                         if (andj != "true" && andj != "false") {
                             if (andj[0] == "!") {
                                 result = !evaluateCallback(andj.Substring(1));
@@ -66,11 +67,11 @@ namespace BABYLON.Internals {
             return (result) ? "true" : "false";
         }
         private static string _SimplifyNegation(string booleanString) {
-            booleanString = booleanString.replace(new Regex(/^[\s!]+/), (r) => {
-                r = r.replace(new Regex(/[\s]/g), () => "");
-                return (r.Length % 2) ? "!" : "";
-            });
-            booleanString = booleanString.trim();
+            ////booleanString = booleanString.replace(new Regex(@"^[\s!]+"), (r) => {
+            ////    r = r.replace(new Regex(@"[\s]"), () => "");
+            ////    return (r.Length % 2) ? "!" : "";
+            ////});
+            booleanString = booleanString.Trim();
             if (booleanString == "!true") {
                 booleanString = "false";
             } else

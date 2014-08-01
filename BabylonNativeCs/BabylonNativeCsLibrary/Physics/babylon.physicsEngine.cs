@@ -35,14 +35,9 @@ namespace BABYLON
         {
             get;
         }
-        double friction
-        {
-            get;
-        }
-        double restitution
-        {
-            get;
-        }
+        double friction { get; set; }
+
+        double restitution { get; set; }
     }
     public partial interface PhysicsCompoundBodyPart
     {
@@ -115,16 +110,16 @@ namespace BABYLON
         {
             return this._currentPlugin.isSupported();
         }
-        public static int NoImpostor = 0;
-        public static int SphereImpostor = 1;
-        public static int BoxImpostor = 2;
-        public static int PlaneImpostor = 3;
-        public static int CompoundImpostor = 4;
-        public static int MeshImpostor = 4;
-        public static int CapsuleImpostor = 5;
-        public static int ConeImpostor = 6;
-        public static int CylinderImpostor = 7;
-        public static int ConvexHullImpostor = 8;
-        public static double Epsilon = 0.001;
+        public const int NoImpostor = 0;
+        public const int SphereImpostor = 1;
+        public const int BoxImpostor = 2;
+        public const int PlaneImpostor = 3;
+        public const int CompoundImpostor = 4;
+        public const int MeshImpostor = 4;
+        public const int CapsuleImpostor = 5;
+        public const int ConeImpostor = 6;
+        public const int CylinderImpostor = 7;
+        public const int ConvexHullImpostor = 8;
+        public const double Epsilon = 0.001;
     }
 }
