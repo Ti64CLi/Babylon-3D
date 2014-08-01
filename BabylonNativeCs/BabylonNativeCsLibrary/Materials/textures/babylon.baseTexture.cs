@@ -111,7 +111,7 @@ namespace BABYLON
         }
         public virtual BaseTexture clone()
         {
-            return null
+            return null;
         }
         public virtual void dispose()
         {

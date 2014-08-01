@@ -14,7 +14,11 @@ namespace BABYLON {
         private bool mustUpdateRessources;
         private bool hasReachedQuota;
         private bool isSupported;
-        private any idbFactory = (IDBFactory)(window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB);
+        private IDBFactory idbFactory = (IDBFactory)window.indexedDB;
+
+        private static Web.Document document;
+        private static Web.Window window;
+
         static bool isUASupportingBlobStorage = true;
         public Database(string urlToScene, System.Func < object, object > callbackManifestChecked) {
             this.callbackManifestChecked = callbackManifestChecked;
@@ -27,20 +31,28 @@ namespace BABYLON {
             this.hasReachedQuota = false;
             this.checkManifestFile();
         }
-        static parseURL(object url) {
+        static string parseURL(object url) {
+            /*
             var a = document.createElement("a");
             a.href = url;
             var fileName = url.Substring(url.LastIndexOf("/") + 1, url.Length);
             var absLocation = url.Substring(0, url.indexOf(fileName, 0));
             return absLocation;
+            */
+
+            throw new NotImplementedException();
         }
 
         static string ReturnFullUrlLocation(object url) {
+            /*
             if (url.indexOf("http:/") == -1) {
                 return (BABYLON.Database.parseURL(window.location.href) + url);
             } else {
                 return url;
             }
+            */
+
+            throw new NotImplementedException();
         }
 
         public virtual void checkManifestFile() {
@@ -133,7 +145,7 @@ namespace BABYLON {
         public virtual void loadImageFromDB(string url, HTMLImageElement image) {
             var that = this;
             var completeURL = BABYLON.Database.ReturnFullUrlLocation(url);
-            var saveAndLoadImage = () {
+            var saveAndLoadImage = () => {
                 if (!that.hasReachedQuota && that.db != null) {
                     that._saveImageIntoDBAsync(completeURL, image);
                 } else {
@@ -146,7 +158,7 @@ namespace BABYLON {
                 saveAndLoadImage();
             }
         }
-        private void _loadImageFromDBAsync(string url, HTMLImageElement image, System.Func notInDBCallback) {
+        private void _loadImageFromDBAsync(string url, HTMLImageElement image, System.Action notInDBCallback) {
             /*
             if (this.isSupported && this.db != null) {
                 var texture;

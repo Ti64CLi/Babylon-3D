@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
+    /*
     public enum JoystickAxis {
         X, Y, Z
     }
@@ -367,4 +368,5 @@ namespace BABYLON.VirtualJoystick {
             }
         }
     }
+    */
 }

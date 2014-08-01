@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON {
+    /*
     public partial class _OculusInnerCamera: FreeCamera {
         private double _aspectRatioAspectRatio;
         private double _aspectRatioFov;
@@ -97,4 +98,5 @@ namespace BABYLON {
             window.removeEventListener("deviceorientation", this._deviceOrientationHandler);
         }
     }
+     */
 }
