@@ -73,10 +73,6 @@ namespace BABYLON
         {
             return this._attributes;
         }
-        public virtual VertexBufferKind getAttributeLocation(int index)
-        {
-            return this._attributes[index];
-        }
         public virtual VertexBufferKind getAttributeLocationByName(string name)
         {
             var index = this._attributesNames.indexOf(name);

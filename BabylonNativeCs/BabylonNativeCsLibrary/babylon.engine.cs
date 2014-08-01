@@ -281,7 +281,7 @@ namespace BABYLON
             var potWidth = getExponantOfTwo(width, engine.getCaps().maxTextureSize);
             var potHeight = getExponantOfTwo(height, engine.getCaps().maxTextureSize);
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, invertY);
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, invertY ? 1 : 0);
             processFunction(potWidth, potHeight);
             var filters = getSamplingParameters(samplingMode, !noMipmap, gl);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
@@ -579,7 +579,7 @@ namespace BABYLON
                 var offset = 0;
                 for (var index = 0; index < vertexDeclaration.Length; index++)
                 {
-                    var order = effect.getAttributeLocation(index);
+                    var order = index;
                     if (order >= 0)
                     {
                         this._gl.vertexAttribPointer(order, vertexDeclaration[index], this._gl.FLOAT, false, vertexStrideSize, offset);
@@ -602,17 +602,17 @@ namespace BABYLON
                 var attributes = effect.getAttributes();
                 for (var index = 0; index < attributes.Length; index++)
                 {
-                    var order = effect.getAttributeLocation(index);
+                    var order = index;
                     if (order >= 0)
                     {
-                        var vertexBuffer = vertexBuffers[attributes[index]];
+                        var vertexBuffer = vertexBuffers[(int)attributes[index]];
                         if (vertexBuffer == null)
                         {
                             continue;
                         }
                         var stride = vertexBuffer.getStrideSize();
                         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer.getBuffer());
-                        this._gl.vertexAttribPointer(order, stride, this._gl.FLOAT, false, stride * 4, 0);
+                        this._gl.vertexAttribPointer(order, stride, this._gl.FLOAT, false, (int)stride * 4, 0);
                     }
                 }
             }
@@ -767,7 +767,7 @@ namespace BABYLON
             var attributesCount = effect.getAttributesCount();
             for (var index = 0; index < attributesCount; index++)
             {
-                var order = effect.getAttributeLocation(index);
+                var order = index;
                 if (order >= 0)
                 {
                     this._vertexAttribArrays[order] = true;
@@ -1341,7 +1341,7 @@ namespace BABYLON
             {
                 this.scenes[0].dispose();
             }
-            foreach (var effect in this._compiledEffects)
+            foreach (var effect in this._compiledEffects.Values)
             {
                 this._gl.deleteProgram(effect._program);
             }

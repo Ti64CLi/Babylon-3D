@@ -11,7 +11,7 @@ namespace BABYLON {
         private Array < double > _data;
         private bool _updatable;
         private string _kind;
-        private int _strideSize;
+        private VertexBufferKind _strideSize;
         public VertexBuffer(object engine, Array < double > data, string kind, bool updatable, bool postponeInternalCreation = false) {
             if (engine is Mesh) {
                 this._engine = engine.getScene().getEngine();
@@ -57,7 +57,8 @@ namespace BABYLON {
         public virtual WebGLBuffer getBuffer() {
             return this._buffer;
         }
-        public virtual int getStrideSize() {
+        public virtual VertexBufferKind getStrideSize()
+        {
             return this._strideSize;
         }
         public virtual void create(Array < double > data = null) {
