@@ -52,7 +52,7 @@ namespace BABYLON {
                 effect.setTextureFromPostProcess("leftSampler", that._leftTexture);
             };
             that._update();
-        };
+        }
         public virtual void _getSubCameraPosition(object eyeSpace, object result) {
             var target = this.getTarget();
             BABYLON.Matrix.Translation(-target.x, -target.y, -target.z).multiplyToRef(BABYLON.Matrix.RotationY(eyeSpace), this._transformMatrix);

@@ -93,13 +93,13 @@ namespace BABYLON {
                 BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
             };
         }
-        void randomNumber(double min, double Max) {
-            if (min == Max) {
+        void randomNumber(double min, double max) {
+            if (min == max) {
                 return (min);
             }
-            var random = Math.random();
-            return ((random * (Max - min)) + min);
-        };
+            var random = new Random().Next();
+            return ((random * (max - min)) + min);
+        }
         public virtual double getCapacity() {
             return this._capacity;
         }

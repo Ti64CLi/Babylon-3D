@@ -7,7 +7,7 @@ namespace BABYLON
 {
     public partial class SubMesh
     {
-        public double linesIndexCount;
+        public int linesIndexCount;
         private AbstractMesh _mesh;
         private Mesh _renderingMesh;
         private BoundingInfo _boundingInfo;
@@ -23,7 +23,7 @@ namespace BABYLON
         public int verticesCount;
         public int indexStart;
         public int indexCount;
-        public SubMesh(double materialIndex, double verticesStart, double verticesCount, object indexStart, double indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
+        public SubMesh(int materialIndex, int verticesStart, int verticesCount, int indexStart, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
         {
             this._mesh = mesh;
             this._renderingMesh = renderingMesh || (Mesh)mesh;
@@ -100,7 +100,7 @@ namespace BABYLON
         {
             this._renderingMesh.render(this);
         }
-        public virtual WebGLBuffer getLinesIndexBuffer(Array<double> indices, object engine)
+        public virtual WebGLBuffer getLinesIndexBuffer(Array<int> indices, Engine engine)
         {
             if (!this._linesIndexBuffer)
             {

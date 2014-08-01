@@ -23,13 +23,13 @@ namespace BABYLON {
                 min = p - r,
                 max = p + r
             };
-        };
+        }
         bool extentsOverlap(double min0, double max0, double min1, double max1){ return !(min0 > max1 || min1 > max0); }
         void axisOverlap(Vector3 axis, BoundingBox box0, BoundingBox box1) {
             var result0 = computeBoxExtents(axis, box0);
             var result1 = computeBoxExtents(axis, box1);
             return extentsOverlap(result0.min, result0.Max, result1.min, result1.Max);
-        };
+        }
         public virtual void _update(Matrix world) {
             this.boundingBox._update(world);
             this.boundingSphere._update(world);

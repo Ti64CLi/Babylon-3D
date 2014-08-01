@@ -194,7 +194,7 @@ namespace BABYLON
         {
             return this._animationRatio;
         }
-        public virtual double getRenderId()
+        public virtual int getRenderId()
         {
             return this._renderId;
         }

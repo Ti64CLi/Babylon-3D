@@ -11421,12 +11421,12 @@ namespace Web
     }
     public partial interface ImageData
     {
-        double width
+        uint width
         {
             get;
             set;
         }
-        Array<double> data
+        Uint8Array data
         {
             get;
             set;
@@ -17350,7 +17350,7 @@ namespace Web
         Array<string> getSupportedExtensions();
         void bufferSubData(int target, int offset, ArrayBuffer data);
         void bufferSubData(int target, int offset, ArrayBufferView data);
-        void vertexAttribPointer(int indx, VertexBufferKind size, int type, bool normalized, int stride, int offset);
+        void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset);
         void polygonOffset(int factor, int units);
         void blendColor(int red, int green, int blue, int alpha);
         WebGLTexture createTexture();

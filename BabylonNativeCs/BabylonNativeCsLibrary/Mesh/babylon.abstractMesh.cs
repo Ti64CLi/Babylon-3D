@@ -96,7 +96,7 @@ namespace BABYLON
         public BoundingInfo _boundingInfo;
         private BABYLON.Matrix _pivotMatrix = BABYLON.Matrix.Identity();
         public bool _isDisposed = false;
-        public double _renderId = 0;
+        public int _renderId = 0;
         public Array<SubMesh> subMeshes;
         public Octree<SubMesh> _submeshesOctree;
         public Array<AbstractMesh> _intersectionsInProgress = new Array<AbstractMesh>();
@@ -130,7 +130,7 @@ namespace BABYLON
             return this._boundingInfo;
         }
         public virtual void _preActivate() { }
-        public virtual void _activate(double renderId)
+        public virtual void _activate(int renderId)
         {
             this._renderId = renderId;
         }

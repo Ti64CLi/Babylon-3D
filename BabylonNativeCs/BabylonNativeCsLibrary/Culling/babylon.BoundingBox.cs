@@ -3,19 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class BoundingBox {
-        public Array < Vector3 > vectors = new Array < Vector3 > ();
+namespace BABYLON
+{
+    public partial class BoundingBox
+    {
+        public Array<Vector3> vectors = new Array<Vector3>();
         public Vector3 center;
         public Vector3 extends;
-        public Array < Vector3 > directions;
-        public Array < Vector3 > vectorsWorld = new Array < Vector3 > ();
+        public Array<Vector3> directions;
+        public Array<Vector3> vectorsWorld = new Array<Vector3>();
         public Vector3 minimumWorld;
         public Vector3 maximumWorld;
         private Matrix _worldMatrix;
         public Vector3 minimum;
         public Vector3 maximum;
-        public BoundingBox(Vector3 minimum, Vector3 maximum) {
+        public BoundingBox(Vector3 minimum, Vector3 maximum)
+        {
             this.vectors.push(this.minimum.clone());
             this.vectors.push(this.maximum.clone());
             this.vectors.push(this.minimum.clone());
@@ -32,15 +35,17 @@ namespace BABYLON {
             this.vectors[7].y = this.minimum.y;
             this.center = this.maximum.add(this.minimum).scale(0.5);
             this.extends = this.maximum.subtract(this.minimum).scale(0.5);
-            this.directions = new Array < object > (BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
-            for (var index = 0; index < this.vectors.Length; index++) {
+            this.directions = new Array<object>(BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
+            for (var index = 0; index < this.vectors.Length; index++)
+            {
                 this.vectorsWorld[index] = BABYLON.Vector3.Zero();
             }
             this.minimumWorld = BABYLON.Vector3.Zero();
             this.maximumWorld = BABYLON.Vector3.Zero();
             this._update(BABYLON.Matrix.Identity());
         }
-        void intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, double sphereRadius) {
+        void intersectBoxAASphere(Vector3 boxMin, Vector3 boxMax, Vector3 sphereCenter, double sphereRadius)
+        {
             if (boxMin.x > sphereCenter.x + sphereRadius)
                 return false;
             if (sphereCenter.x - sphereRadius > boxMax.x)
@@ -54,39 +59,46 @@ namespace BABYLON {
             if (sphereCenter.z - sphereRadius > boxMax.z)
                 return false;
             return true;
-        };
-        void getLowestRoot(double a, double b, double c, double maxR) {
+        }
+        void getLowestRoot(double a, double b, double c, double maxR)
+        {
             var determinant = b * b - 4.0 * a * c;
-            var result = new {};
+            var result = new { };
             if (determinant < 0)
                 return result;
             var sqrtD = Math.Sqrt(determinant);
             var r1 = (-b - sqrtD) / (2.0 * a);
             var r2 = (-b + sqrtD) / (2.0 * a);
-            if (r1 > r2) {
+            if (r1 > r2)
+            {
                 var temp = r2;
                 r2 = r1;
                 r1 = temp;
             }
-            if (r1 > 0 && r1 < maxR) {
+            if (r1 > 0 && r1 < maxR)
+            {
                 result.root = r1;
                 result.found = true;
                 return result;
             }
-            if (r2 > 0 && r2 < maxR) {
+            if (r2 > 0 && r2 < maxR)
+            {
                 result.root = r2;
                 result.found = true;
                 return result;
             }
             return result;
-        };
-        public virtual Matrix getWorldMatrix() {
+        }
+        public virtual Matrix getWorldMatrix()
+        {
             return this._worldMatrix;
         }
-        public virtual void _update(Matrix world) {
+        public virtual void _update(Matrix world)
+        {
             Vector3.FromFloatsToRef(double.MaxValue, double.MaxValue, double.MaxValue, this.minimumWorld);
             Vector3.FromFloatsToRef(-double.MaxValue, -double.MaxValue, -double.MaxValue, this.maximumWorld);
-            for (var index = 0; index < this.vectors.Length; index++) {
+            for (var index = 0; index < this.vectors.Length; index++)
+            {
                 var v = this.vectorsWorld[index];
                 BABYLON.Vector3.TransformCoordinatesToRef(this.vectors[index], world, v);
                 if (v.x < this.minimumWorld.x)
@@ -109,10 +121,12 @@ namespace BABYLON {
             Vector3.FromFloatArrayToRef(world.m, 8, this.directions[2]);
             this._worldMatrix = world;
         }
-        public virtual bool isInFrustum(Array < Plane > frustumPlanes) {
+        public virtual bool isInFrustum(Array<Plane> frustumPlanes)
+        {
             return BoundingBox.IsInFrustum(this.vectorsWorld, frustumPlanes);
         }
-        public virtual bool intersectsPoint(Vector3 point) {
+        public virtual bool intersectsPoint(Vector3 point)
+        {
             var delta = Engine.Epsilon;
             if (this.maximumWorld.x - point.x < delta || delta > point.x - this.minimumWorld.x)
                 return false;
@@ -122,10 +136,12 @@ namespace BABYLON {
                 return false;
             return true;
         }
-        public virtual bool intersectsSphere(BoundingSphere sphere) {
+        public virtual bool intersectsSphere(BoundingSphere sphere)
+        {
             return BoundingBox.IntersectsSphere(this.minimumWorld, this.maximumWorld, sphere.centerWorld, sphere.radiusWorld);
         }
-        public virtual bool intersectsMinMax(Vector3 min, Vector3 Max) {
+        public virtual bool intersectsMinMax(Vector3 min, Vector3 Max)
+        {
             if (this.maximumWorld.x < min.x || this.minimumWorld.x > Max.x)
                 return false;
             if (this.maximumWorld.y < min.y || this.minimumWorld.y > Max.y)
@@ -134,7 +150,8 @@ namespace BABYLON {
                 return false;
             return true;
         }
-        public static bool Intersects(BoundingBox box0, BoundingBox box1) {
+        public static bool Intersects(BoundingBox box0, BoundingBox box1)
+        {
             if (box0.maximumWorld.x < box1.minimumWorld.x || box0.minimumWorld.x > box1.maximumWorld.x)
                 return false;
             if (box0.maximumWorld.y < box1.minimumWorld.y || box0.minimumWorld.y > box1.maximumWorld.y)
@@ -143,18 +160,25 @@ namespace BABYLON {
                 return false;
             return true;
         }
-        public static bool IntersectsSphere(Vector3 minPoint, Vector3 maxPoint, Vector3 sphereCenter, double sphereRadius) {
+        public static bool IntersectsSphere(Vector3 minPoint, Vector3 maxPoint, Vector3 sphereCenter, double sphereRadius)
+        {
             var vector = BABYLON.Vector3.Clamp(sphereCenter, minPoint, maxPoint);
             var num = BABYLON.Vector3.DistanceSquared(sphereCenter, vector);
             return (num <= (sphereRadius * sphereRadius));
         }
-        public static bool IsInFrustum(Array < Vector3 > boundingVectors, Array < Plane > frustumPlanes) {
-            for (var p = 0; p < 6; p++) {
+        public static bool IsInFrustum(Array<Vector3> boundingVectors, Array<Plane> frustumPlanes)
+        {
+            for (var p = 0; p < 6; p++)
+            {
                 var inCount = 8;
-                for (var i = 0; i < 8; i++) {
-                    if (frustumPlanes[p].dotCoordinate(boundingVectors[i]) < 0) {
+                for (var i = 0; i < 8; i++)
+                {
+                    if (frustumPlanes[p].dotCoordinate(boundingVectors[i]) < 0)
+                    {
                         --inCount;
-                    } else {
+                    }
+                    else
+                    {
                         break;
                     }
                 }

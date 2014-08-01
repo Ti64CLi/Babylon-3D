@@ -19,6 +19,13 @@ namespace BABYLON
         public int height { get; set; }
     }
 
+    public struct MeshSize
+    {
+        public double w { get; set; }
+
+        public double h { get; set; }
+    }
+
     public struct EffectBaseName
     {
         public string baseName { get; set; }
@@ -117,5 +124,31 @@ namespace BABYLON
         public bool isLuminance { get; set; }
 
         public bool isCube { get; set; }
+    }
+
+    public class InstancedMeshes
+    {
+        private Map<int, Array<InstancedMesh>> items;
+
+        public InstancedMeshes()
+        {
+            this.items = new Map<int, Array<InstancedMesh>>();
+        }
+
+        public int selfDefaultRenderId { get; set; }
+
+        public int defaultRenderId { get; set; }
+
+        public Array<InstancedMesh> this[int renderId]
+        {
+            get
+            {
+                return this.items[renderId];
+            }
+            set
+            {
+                this.items[renderId] = value;
+            }
+        }
     }
 }

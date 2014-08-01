@@ -644,25 +644,25 @@ namespace BABYLON
         {
             this._gl.deleteBuffer(buffer);
         }
-        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, Float32Array data, Array<int> offsetLocations)
+        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, Float32Array data, Array<VertexBufferKind> offsetLocations)
         {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
             this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, data);
             for (var index = 0; index < 4; index++)
             {
                 var offsetLocation = offsetLocations[index];
-                this._gl.enableVertexAttribArray(offsetLocation);
-                this._gl.vertexAttribPointer(offsetLocation, VertexBufferKind.UV2Kind, this._gl.FLOAT, false, 64, index * 16);
+                this._gl.enableVertexAttribArray((int)offsetLocation);
+                this._gl.vertexAttribPointer((int)offsetLocation, (int)VertexBufferKind.UV2Kind, this._gl.FLOAT, false, 64, index * 16);
                 this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 1);
             }
         }
-        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<int> offsetLocations)
+        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<VertexBufferKind> offsetLocations)
         {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
             for (var index = 0; index < 4; index++)
             {
                 var offsetLocation = offsetLocations[index];
-                this._gl.disableVertexAttribArray(offsetLocation);
+                this._gl.disableVertexAttribArray((int)offsetLocation);
                 this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 0);
             }
         }
