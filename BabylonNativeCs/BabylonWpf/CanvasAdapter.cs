@@ -6,34 +6,53 @@ using System.Threading.Tasks;
 
 namespace BabylonWpf
 {
-    public class CanvasAdapter : Web.HTMLCanvasElement 
+    public class CanvasAdapter : Web.HTMLCanvasElement
     {
+        private int maxWidth;
+        private int maxHeight;
+
+        private SharpGL.OpenGL openGl;
+
+        private Dictionary<string, Web.EventListener> listeners;
+
+
+        public CanvasAdapter(int width, int height, int maxWidth, int maxHeight, SharpGL.OpenGL openGl)
+        {
+            this.width = width;
+            this.height = height;
+            this.maxWidth = maxWidth;
+            this.maxHeight = maxHeight;
+
+            this.document = new DocumentAdapter(this);
+            this.listeners = new Dictionary<string, Web.EventListener>();
+
+            this.openGl = openGl;
+        }
+
         public int width
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public int height
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public object getContext(string contextId, params object[] args)
         {
+            if (contextId == "webgl")
+            {
+                return new GLRenderingContextAdapter(this.openGl);
+            }
+
+            if (contextId == "2d")
+            {
+                return new CanvasRenderingContext2DAdapter();
+            }
+
             throw new NotImplementedException();
         }
 
@@ -1165,14 +1184,8 @@ namespace BabylonWpf
 
         public Web.Document document
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.ProgressEvent, object> onprogress
@@ -1837,7 +1850,7 @@ namespace BabylonWpf
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
-            throw new NotImplementedException();
+            this.listeners[type] = listener;
         }
 
         public int scrollTop
@@ -1892,7 +1905,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return this.width;
             }
             set
             {
@@ -1916,7 +1929,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return this.height;
             }
             set
             {
@@ -2229,7 +2242,7 @@ namespace BabylonWpf
 
         public Web.ClientRect getBoundingClientRect()
         {
-            throw new NotImplementedException();
+            return new ClientRectAdapter(0, 0, width, height);
         }
 
         public string getAttributeNS(string namespaceURI, string localName)

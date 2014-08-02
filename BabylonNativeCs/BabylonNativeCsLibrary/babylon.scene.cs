@@ -1299,7 +1299,8 @@ namespace BABYLON
         }
         public virtual Array<Material> getMaterialByTags(string tagsQuery)
         {
-            return this._getByTags(this.materials, tagsQuery).concat(this._getByTags(this.multiMaterials, tagsQuery).ToArray<Material>());
+            // TODO: finish it
+            return this._getByTags(this.materials, tagsQuery);//.concat(this._getByTags(this.multiMaterials, tagsQuery));
         }
     }
 }

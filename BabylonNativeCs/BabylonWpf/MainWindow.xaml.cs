@@ -34,7 +34,7 @@ namespace BabylonWpf
 
         private void OpenGLControl_OpenGLInitialized(object sender, OpenGLEventArgs args)
         {
-            var canvas = new CanvasAdapter();
+            var canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
 
             this.engine = new Engine(canvas, true);
 

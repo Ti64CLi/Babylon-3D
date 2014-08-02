@@ -5036,7 +5036,7 @@ namespace Web
             get;
             set;
         }
-        double width
+        int width
         {
             get;
             set;
@@ -17233,7 +17233,8 @@ namespace Web
         void process(ArrayBufferView buffer);
         void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
-    public partial interface WebGLTexture : WebGLObject {
+    public partial interface WebGLTexture : WebGLObject
+    {
         int _baseWidth { get; set; }
 
         int _baseHeight { get; set; }
@@ -18993,7 +18994,8 @@ namespace Web
     public partial interface WebGLShader : WebGLObject { }
     public partial interface OES_texture_float_linear { }
     public partial interface WebGLObject { }
-    public partial interface WebGLBuffer : WebGLObject {
+    public partial interface WebGLBuffer : WebGLObject
+    {
         int references { get; set; }
 
         int capacity { get; set; }

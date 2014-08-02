@@ -132,7 +132,7 @@
 
         public void sort(Func<T, T, int> compareFn)
         {
-            throw new NotImplementedException();
+            this.Sort(new ComparerAdapter(compareFn));
         }
 
         #region Web Array
@@ -164,14 +164,25 @@
 
         #endregion
 
-        public Array<Tout> ToArray<Tout>()
-        {
-            throw new NotImplementedException();
-        }
-
         public T pop()
         {
-            throw new NotImplementedException();
+            var t = this[Length - 1];
+            this.RemoveAt(Length - 1);
+            return t;
+        }
+
+        public class ComparerAdapter : IComparer<T>
+        {
+            private Func<T, T, int> compareFn;
+            public ComparerAdapter(Func<T, T, int> compareFn)
+            {
+                this.compareFn = compareFn;
+            }
+
+            public int Compare(T x, T y)
+            {
+                return compareFn(x, y);
+            }
         }
     }
 

@@ -143,6 +143,11 @@ namespace BABYLON
             {
                 throw new Error("WebGL not supported");
             }
+
+            document = canvas.document;
+            window = document.parentWindow;
+            console = window.console;
+
             this._onBlur = (e) =>
             {
                 this._windowIsBackground = true;
@@ -165,7 +170,7 @@ namespace BABYLON
             this._caps.standardDerivatives = (this._gl.getExtension("OES_standard_derivatives") != null);
             this._caps.s3tc = (WEBGL_compressed_texture_s3tc)this._gl.getExtension("WEBGL_compressed_texture_s3tc");
             this._caps.textureFloat = (this._gl.getExtension("OES_texture_float") != null);
-            this._caps.textureAnisotropicFilterExtension = (EXT_texture_filter_anisotropic)(this._gl.getExtension("EXT_texture_filter_anisotropic") ?? this._gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ?? this._gl.getExtension("MOZ_EXT_texture_filter_anisotropic"));
+            this._caps.textureAnisotropicFilterExtension = (EXT_texture_filter_anisotropic)(this._gl.getExtension("EXT_texture_filter_anisotropic"));
             this._caps.maxAnisotropy = (int)((this._caps.textureAnisotropicFilterExtension != null) ? this._gl.getParameter(this._caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0);
             this._caps.instancedArrays = (ANGLE_instanced_arrays)this._gl.getExtension("ANGLE_instanced_arrays");
             this.setDepthBuffer(true);
