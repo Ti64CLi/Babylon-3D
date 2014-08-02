@@ -23,21 +23,13 @@ namespace BABYLON
             {
                 this.data.Length *= 2;
             }
-            if (value.__smartArrayFlags == null)
-            {
-                value.__smartArrayFlags = new { };
-            }
-            value.__smartArrayFlags[this._id] = this._duplicateId;
         }
         public virtual void pushNoDuplicate(T value)
         {
-            if (value.__smartArrayFlags && value.__smartArrayFlags[this._id] == this._duplicateId)
-            {
-                return;
-            }
+            // TODO: finish it
             this.push(value);
         }
-        public virtual void sort(System.Func<T, int> compareFn)
+        public virtual void sort(System.Func<T, T, int> compareFn)
         {
             this.data.sort(compareFn);
         }

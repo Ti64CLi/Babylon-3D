@@ -18,7 +18,11 @@ namespace BABYLON
         public BoundingBoxRenderer(Scene scene)
         {
             this._scene = scene;
-            this._colorShader = new ShaderMaterial("colorShader", scene, "color", new { });
+            this._colorShader = new ShaderMaterial("colorShader", scene, "color", new ShaderMaterialOptions
+            {
+                attributes = new Array<string>("position"),
+                uniforms = new Array<string>("worldViewProjection", "color")
+            });
             var engine = this._scene.getEngine();
             var boxdata = BABYLON.VertexData.CreateBox(1.0);
             this._vb = new BABYLON.VertexBuffer(engine, boxdata.positions, BABYLON.VertexBufferKind.PositionKind, false);

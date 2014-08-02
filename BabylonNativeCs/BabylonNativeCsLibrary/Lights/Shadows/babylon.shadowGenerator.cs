@@ -23,7 +23,8 @@ namespace BABYLON
         private Vector3 _cachedPosition;
         private Vector3 _cachedDirection;
         private string _cachedDefines;
-        private bool useVarianceShadowMap;
+        public bool useVarianceShadowMap;
+        public bool usePoissonSampling;
         public ShadowGenerator(double mapSize, DirectionalLight light)
         {
             this._light = light;

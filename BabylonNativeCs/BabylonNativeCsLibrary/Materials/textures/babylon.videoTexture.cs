@@ -29,7 +29,7 @@ namespace BABYLON
             this.video.height = textureSize.height;
             this.video.autoplay = false;
             this.video.loop = true;
-            this.video.addEventListener("canplaythrough", () =>
+            this.video.addEventListener("canplaythrough", (e) =>
             {
                 if (this._texture != null)
                 {
@@ -38,7 +38,7 @@ namespace BABYLON
             });
             urls.forEach((url) =>
             {
-                var source = document.createElement("source");
+                var source = (HTMLSourceElement) document.createElement("source");
                 source.src = url;
                 this.video.appendChild(source);
             });

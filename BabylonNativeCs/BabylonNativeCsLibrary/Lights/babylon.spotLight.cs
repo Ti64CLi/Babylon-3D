@@ -22,7 +22,7 @@ namespace BABYLON
         }
         public virtual void transferToEffect(Effect effect, string positionUniformName, string directionUniformName)
         {
-            var normalizeDirection;
+            Vector3 normalizeDirection = null;
             if (this.parent != null)
             {
                 if (this._transformedDirection == null)

@@ -137,6 +137,19 @@ namespace BABYLON
         public bool antialias { get; set; }
     }
 
+    public class ShaderMaterialOptions
+    {
+        public bool needAlphaBlending { get; set; }
+
+        public bool needAlphaTesting { get; set; }
+
+        public Array<string> attributes { get; set; }
+
+        public Array<string> uniforms { get; set; }
+
+        public Array<string> samplers { get; set; }
+    }
+
     public class RenderTargetTextureOptions
     {
         public int? samplingMode { get; set; }

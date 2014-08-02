@@ -44,7 +44,7 @@ namespace BABYLON
         private double _cachedWAng;
         private double _cachedCoordinatesMode;
         private int _samplingMode;
-        public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
+        public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(scene)
         {
             this.name = url;

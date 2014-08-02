@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    public partial class Bone
+    public partial class Bone, IAnimatable
     {
         public Array<Bone> children = new Array<Bone>();
         public Array<Animation> animations = new Array<Animation>();

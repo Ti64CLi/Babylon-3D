@@ -67,7 +67,7 @@
             throw new NotImplementedException();
         }
 
-        public Array<T> slice(int index)
+        public Array<T> slice(int index, int length = 0)
         {
             throw new NotImplementedException();
         }
@@ -114,7 +114,7 @@
             throw new NotImplementedException();
         }
 
-        public void sort(Func<T, int> compareFn)
+        public void sort(Func<T, T, int> compareFn)
         {
             throw new NotImplementedException();
         }

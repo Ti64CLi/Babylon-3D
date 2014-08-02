@@ -15,7 +15,11 @@ namespace BABYLON
         public LinesMesh(string name, Scene scene, bool updatable = false)
             : base(name, scene)
         {
-            this._colorShader = new ShaderMaterial("colorShader", scene, "color", new { });
+            this._colorShader = new ShaderMaterial("colorShader", scene, "color", new ShaderMaterialOptions
+            {
+                attributes = new Array<string>("position"),
+                uniforms = new Array<string>("worldViewProjection", "color")
+            });
         }
         public virtual Material material
         {
