@@ -3,68 +3,73 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-
+    using System.Text;
     using Web;
 
     public class Map<K, V> : Dictionary<K, V>
     {        
     }
 
-    public class Array<T> : IEnumerable<T>
+    public class Array<T> : List<T>
     {
         public Array()
         {
-            throw new NotImplementedException();
         }
 
         public Array(int capacity)
         {
-            throw new NotImplementedException();
+            this.Capacity = capacity;
         }
 
         public Array(T item)
         {
-            throw new NotImplementedException();
+            this.Add(item);
         }
 
         public Array(T item1, T item2)
         {
-            throw new NotImplementedException();
+            this.Add(item1);
+            this.Add(item2);
         }
 
         public Array(T item1, T item2, T item3)
         {
-            throw new NotImplementedException();
+            this.Add(item1);
+            this.Add(item2);
+            this.Add(item3);
         }
 
         public Array(params T[] items)
         {
-            throw new NotImplementedException();
+            this.AddRange(items);
         }
 
         public void push(T v1)
         {
-            throw new NotImplementedException();
+            this.Add(v1);
         }
 
         public void push(T v1, T v2)
         {
-            throw new NotImplementedException();
+            this.Add(v1);
+            this.Add(v2);
         }
 
         public void push(T v1, T v2, T v3)
         {
-            throw new NotImplementedException();
+            this.Add(v1);
+            this.Add(v2);
+            this.Add(v3);
         }
 
         public void push(params T[] items)
         {
-            throw new NotImplementedException();
+            this.AddRange(items);
         }
 
         public int indexOf(T t)
         {
-            throw new NotImplementedException();
+            return this.IndexOf(t);
         }
 
         public Array<T> slice(int index, int length = 0)
@@ -72,9 +77,25 @@
             throw new NotImplementedException();
         }
 
-        public string join(string joinSubstr)
+        public string join(string joinSubstring)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            var first = true;
+            foreach (var item in this)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    sb.Append(joinSubstring);
+                }
+
+                sb.Append(item.ToString());
+            }
+
+            return sb.ToString();
         }
 
         public void splice(int index)
@@ -94,24 +115,19 @@
 
         public void forEach(System.Action<T> func)
         {
-            throw new NotImplementedException();
-        }
-
-        public T this[int subIndex]
-        {
-            get
+            foreach (var item in this)
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                func(item);
             }
         }
 
         public Array<T> concat(Array<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                this.Add(item);
+            }
+            return this;
         }
 
         public void sort(Func<T, T, int> compareFn)
@@ -147,16 +163,6 @@
         }
 
         #endregion
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
 
         public Array<Tout> ToArray<Tout>()
         {
