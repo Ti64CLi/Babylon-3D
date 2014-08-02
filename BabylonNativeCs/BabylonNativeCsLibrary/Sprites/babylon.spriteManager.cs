@@ -18,7 +18,7 @@ namespace BABYLON
         private int _vertexStrideSize = 15 * 4;
         private WebGLBuffer _vertexBuffer;
         private WebGLBuffer _indexBuffer;
-        private Float32Array _vertices;
+        private double[] _vertices;
         private Effect _effectBase;
         private Effect _effectFog;
         public string name;
@@ -48,7 +48,7 @@ namespace BABYLON
                 index += 4;
             }
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
-            this._vertices = new Float32Array(capacity * this._vertexStrideSize);
+            this._vertices = new double[capacity * this._vertexStrideSize];
             this._effectBase = this._scene.getEngine().createEffect(new EffectBaseName { baseName = "sprites" }, new Array<string>("position", "options", "cellInfo", "color"), new Array<string>("view", "projection", "textureInfos", "alphaTest"), new Array<string>("diffuseSampler"), "");
             this._effectFog = this._scene.getEngine().createEffect(new EffectBaseName { baseName = "sprites" }, new Array<string>("position", "options", "cellInfo", "color"), new Array<string>("view", "projection", "textureInfos", "alphaTest", "vFogInfos", "vFogColor"), new Array<string>("diffuseSampler"), "#define FOG");
         }

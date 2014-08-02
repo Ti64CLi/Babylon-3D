@@ -97,9 +97,9 @@ namespace BABYLON.Internals
 
         private static Web.Console console;
 
-        public static DDSInfo GetDDSInfo(ArrayBuffer arrayBuffer)
+        public static DDSInfo GetDDSInfo(byte[] arrayBuffer)
         {
-            var header = new Int32Array(arrayBuffer, 0, headerLengthInt);
+            var header = ArrayConvert.AsInt(arrayBuffer, 0, headerLengthInt);
             var mipmapCount = 1;
             if ((header[off_flags] & DDSD_MIPMAPCOUNT) > 0)
             {
@@ -117,10 +117,10 @@ namespace BABYLON.Internals
                 isCube = (header[off_caps2] & DDSCAPS2_CUBEMAP) == DDSCAPS2_CUBEMAP
             };
         }
-        private static Uint8Array GetRGBAArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
+        private static byte[] GetRGBAArrayBuffer(int width, int height, int dataOffset, int dataLength, byte[] arrayBuffer)
         {
-            var byteArray = new Uint8Array(dataLength);
-            var srcData = new Uint8Array(arrayBuffer);
+            var byteArray = new byte[dataLength];
+            var srcData = arrayBuffer;
             var index = 0;
             for (var y = height - 1; y >= 0; y--)
             {
@@ -136,10 +136,10 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        private static Uint8Array GetRGBArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
+        private static byte[] GetRGBArrayBuffer(int width, int height, int dataOffset, int dataLength, byte[] arrayBuffer)
         {
-            var byteArray = new Uint8Array(dataLength);
-            var srcData = new Uint8Array(arrayBuffer);
+            var byteArray = new byte[dataLength];
+            var srcData = arrayBuffer;
             var index = 0;
             for (var y = height - 1; y >= 0; y--)
             {
@@ -154,10 +154,10 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        private static Uint8Array GetLuminanceArrayBuffer(int width, int height, int dataOffset, int dataLength, ArrayBuffer arrayBuffer)
+        private static byte[] GetLuminanceArrayBuffer(int width, int height, int dataOffset, int dataLength, byte[] arrayBuffer)
         {
-            var byteArray = new Uint8Array(dataLength);
-            var srcData = new Uint8Array(arrayBuffer);
+            var byteArray = new byte[dataLength];
+            var srcData = arrayBuffer;
             var index = 0;
             for (var y = height - 1; y >= 0; y--)
             {
@@ -170,9 +170,9 @@ namespace BABYLON.Internals
             }
             return byteArray;
         }
-        public static void UploadDDSLevels(WebGLRenderingContext gl, WEBGL_compressed_texture_s3tc ext, ArrayBuffer arrayBuffer, DDSInfo info, bool loadMipmaps, int faces)
+        public static void UploadDDSLevels(WebGLRenderingContext gl, WEBGL_compressed_texture_s3tc ext, byte[] arrayBuffer, DDSInfo info, bool loadMipmaps, int faces)
         {
-            var header = new Int32Array(arrayBuffer, 0, headerLengthInt);
+            var header = ArrayConvert.AsInt(arrayBuffer, 0, headerLengthInt);
             int fourCC;
             int blockBytes = 0;
             int internalFormat = 0;
@@ -180,7 +180,7 @@ namespace BABYLON.Internals
             int height;
             int dataLength;
             int dataOffset;
-            Uint8Array byteArray;
+            byte[] byteArray;
             int mipmapCount;
             int i;
             if (header[off_magic] != DDS_MAGIC)
@@ -257,7 +257,7 @@ namespace BABYLON.Internals
                         else
                         {
                             dataLength = Math.Max(4, width) / 4 * Math.Max(4, height) / 4 * blockBytes;
-                            byteArray = new Uint8Array(arrayBuffer, dataOffset, dataLength);
+                            byteArray = ArrayConvert.AsByte(arrayBuffer, dataOffset, dataLength);
                             gl.compressedTexImage2D(sampler, i, internalFormat, width, height, 0, byteArray);
                         }
                     dataOffset += dataLength;

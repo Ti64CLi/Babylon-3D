@@ -576,7 +576,7 @@ namespace BABYLON
             result.y = array[offset + 1];
             result.z = array[offset + 2];
         }
-        public static void FromFloatArrayToRef(Float32Array array, int offset, Vector3 result)
+        public static void FromFloatArrayToRef(double[] array, int offset, Vector3 result)
         {
             result.x = array[offset];
             result.y = array[offset + 1];
@@ -953,7 +953,7 @@ namespace BABYLON
         private static Vector3 _xAxis = Vector3.Zero();
         private static Vector3 _yAxis = Vector3.Zero();
         private static Vector3 _zAxis = Vector3.Zero();
-        public Float32Array m = new Float32Array(16);
+        public double[] m = new double[16];
         public virtual bool isIdentity()
         {
             if (this.m[0] != 1.0 || this.m[5] != 1.0 || this.m[10] != 1.0 || this.m[15] != 1.0)
@@ -972,11 +972,11 @@ namespace BABYLON
             var temp6 = (this.m[8] * this.m[13]) - (this.m[9] * this.m[12]);
             return ((((this.m[0] * (((this.m[5] * temp1) - (this.m[6] * temp2)) + (this.m[7] * temp3))) - (this.m[1] * (((this.m[4] * temp1) - (this.m[6] * temp4)) + (this.m[7] * temp5)))) + (this.m[2] * (((this.m[4] * temp2) - (this.m[5] * temp4)) + (this.m[7] * temp6)))) - (this.m[3] * (((this.m[4] * temp3) - (this.m[5] * temp5)) + (this.m[6] * temp6))));
         }
-        public virtual Float32Array toArray()
+        public virtual double[] toArray()
         {
             return this.m;
         }
-        public virtual Float32Array asArray()
+        public virtual double[] asArray()
         {
             return this.toArray();
         }
@@ -1061,7 +1061,7 @@ namespace BABYLON
                 this.m[index] = other.m[index];
             }
         }
-        public virtual void copyToArray(Float32Array array, int offset = 0)
+        public virtual void copyToArray(double[] array, int offset = 0)
         {
             for (var index = 0; index < 16; index++)
             {
@@ -1072,7 +1072,7 @@ namespace BABYLON
         {
             this.multiplyToArray(other, result.m, 0);
         }
-        public virtual void multiplyToArray(Matrix other, Float32Array result, int offset)
+        public virtual void multiplyToArray(Matrix other, double[] result, int offset)
         {
             var tm0 = this.m[0];
             var tm1 = this.m[1];

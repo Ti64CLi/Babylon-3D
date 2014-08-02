@@ -216,7 +216,7 @@ namespace BABYLON
 
             throw new NotImplementedException();
         }
-        public static void LoadFile(string url, System.Action<ArrayBuffer> callback, System.Action<object> progressCallBack = null, object database = null, bool useArrayBuffer = false)
+        public static void LoadFile(string url, System.Action<byte[]> callback, System.Action<object> progressCallBack = null, object database = null, bool useArrayBuffer = false)
         {
             /*
             url = Tools.CleanUrl(url);

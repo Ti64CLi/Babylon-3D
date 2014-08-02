@@ -10,7 +10,7 @@ namespace BABYLON
         public Array<Bone> bones = new Array<Bone>();
         private Scene _scene;
         private bool _isDirty = true;
-        private Float32Array _transformMatrices;
+        private double[] _transformMatrices;
         private Array<IAnimatable> _animatables;
         private BABYLON.Matrix _identity = Matrix.Identity();
         public string name;
@@ -21,7 +21,7 @@ namespace BABYLON
             this._scene = scene;
             scene.skeletons.push(this);
         }
-        public virtual Float32Array getTransformMatrices()
+        public virtual double[] getTransformMatrices()
         {
             return this._transformMatrices;
         }
@@ -37,7 +37,7 @@ namespace BABYLON
             }
             if (this._transformMatrices == null || this._transformMatrices.Length != 16 * (this.bones.Length + 1))
             {
-                this._transformMatrices = new Float32Array(16 * (this.bones.Length + 1));
+                this._transformMatrices = new double[16 * (this.bones.Length + 1)];
             }
             for (var index = 0; index < this.bones.Length; index++)
             {

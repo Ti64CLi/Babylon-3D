@@ -61,14 +61,14 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void bufferData(int target, Web.ArrayBufferView data, int usage)
+        public void bufferData(int target, float[] data, int usage)
         {
-            throw new NotImplementedException();
+            this.openGl.BufferData((uint)target, data, (uint)usage);
         }
 
-        public void bufferData(int target, Web.ArrayBuffer data, int usage)
+        public void bufferData(int target, ushort[] data, int usage)
         {
-            throw new NotImplementedException();
+            this.openGl.BufferData((uint)target, data, (uint)usage);
         }
 
         public void bufferData(int target, int size, int usage)
@@ -86,7 +86,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib3fv(int indx, BABYLON.Array<double> values)
+        public void vertexAttrib3fv(int indx, float[] values)
         {
             throw new NotImplementedException();
         }
@@ -106,12 +106,12 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void bufferSubData(int target, int offset, Web.ArrayBuffer data)
+        public void bufferSubData(int target, int offset, int size, IntPtr data)
         {
-            throw new NotImplementedException();
+            this.openGl.BufferSubData((uint)target, offset, size, data);
         }
 
-        public void bufferSubData(int target, int offset, Web.ArrayBufferView data)
+        public void bufferSubData(int target, int offset, float[] data)
         {
             throw new NotImplementedException();
         }
@@ -166,7 +166,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, BABYLON.Array<double> value)
+        public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
             throw new NotImplementedException();
         }
@@ -191,12 +191,12 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void compressedTexImage2D(int target, int level, int internalformat, double width, int height, int border, Web.ArrayBufferView data)
+        public void compressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, byte[] data)
         {
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix2fv(Web.WebGLUniformLocation location, bool transpose, BABYLON.Array<double> value)
+        public void uniformMatrix2fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
             throw new NotImplementedException();
         }
@@ -236,7 +236,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, double width, int height, int border, int format, int type, Web.ArrayBufferView pixels)
+        public void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte[] pixels)
         {
             throw new NotImplementedException();
         }
@@ -276,7 +276,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib2fv(int indx, BABYLON.Array<double> values)
+        public void vertexAttrib2fv(int indx, float[] values)
         {
             throw new NotImplementedException();
         }
@@ -301,7 +301,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, int type, Web.ArrayBufferView pixels)
+        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, int type, Web.ArrayBufferView pixels)
         {
             throw new NotImplementedException();
         }
@@ -326,7 +326,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void copyTexImage2D(int target, int level, int internalformat, double x, double y, double width, int height, int border)
+        public void copyTexImage2D(int target, int level, int internalformat, double x, double y, int width, int height, int border)
         {
             throw new NotImplementedException();
         }
@@ -356,7 +356,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform3iv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform3iv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -408,7 +408,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, Web.ArrayBufferView data)
+        public void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, Web.ArrayBufferView data)
         {
             throw new NotImplementedException();
         }
@@ -418,7 +418,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform1iv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform1iv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -433,7 +433,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform2fv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform2fv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -503,12 +503,12 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void readPixels(double x, double y, double width, int height, int format, int type, Web.ArrayBufferView pixels)
+        public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
-            throw new NotImplementedException();
+            this.openGl.ReadPixels(x, y, width, height, (uint)format, (uint)type, pixels);
         }
 
-        public void scissor(double x, double y, double width, int height)
+        public void scissor(int x, int y, int width, int height)
         {
             throw new NotImplementedException();
         }
@@ -538,7 +538,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform1fv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform1fv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -548,7 +548,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform2iv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform2iv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -563,7 +563,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform4fv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform4fv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -573,7 +573,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib1fv(int indx, BABYLON.Array<double> values)
+        public void vertexAttrib1fv(int indx, float[] values)
         {
             throw new NotImplementedException();
         }
@@ -633,7 +633,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib4fv(int indx, BABYLON.Array<double> values)
+        public void vertexAttrib4fv(int indx, float[] values)
         {
             throw new NotImplementedException();
         }
@@ -733,7 +733,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix3fv(Web.WebGLUniformLocation location, bool transpose, BABYLON.Array<double> value)
+        public void uniformMatrix3fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
             throw new NotImplementedException();
         }
@@ -748,12 +748,12 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, double width, int height)
+        public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform3fv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform3fv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
@@ -808,7 +808,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void renderbufferStorage(int target, int internalformat, double width, int height)
+        public void renderbufferStorage(int target, int internalformat, int width, int height)
         {
             throw new NotImplementedException();
         }
@@ -853,7 +853,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void uniform4iv(Web.WebGLUniformLocation location, BABYLON.Array<double> v)
+        public void uniform4iv(Web.WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }

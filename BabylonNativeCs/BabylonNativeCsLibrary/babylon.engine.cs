@@ -534,7 +534,7 @@ namespace BABYLON
         {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);
-            this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(vertices), this._gl.STATIC_DRAW);
+            this._gl.bufferData(this._gl.ARRAY_BUFFER, ArrayConvert.AsFloat(vertices), this._gl.STATIC_DRAW);
             this._resetVertexBufferBinding();
             vbo.references = 1;
             return vbo;
@@ -548,16 +548,16 @@ namespace BABYLON
             vbo.references = 1;
             return vbo;
         }
-        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, Float32Array vertices, int length = 0)
+        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, Array<double> vertices, int length = 0)
         {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, vertices);
+            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
             this._resetVertexBufferBinding();
         }
-        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, ArrayBuffer vertices, int length = 0)
+        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, double[] vertices, int length = 0)
         {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, vertices);
+            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
             this._resetVertexBufferBinding();
         }
         private void _resetIndexBufferBinding()
@@ -569,7 +569,7 @@ namespace BABYLON
         {
             var vbo = this._gl.createBuffer();
             this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, vbo);
-            this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this._gl.STATIC_DRAW);
+            this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, ArrayConvert.AsUshort(indices), this._gl.STATIC_DRAW);
             this._resetIndexBufferBinding();
             vbo.references = 1;
             return vbo;
@@ -649,10 +649,10 @@ namespace BABYLON
         {
             this._gl.deleteBuffer(buffer);
         }
-        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, Float32Array data, Array<VertexBufferKind> offsetLocations)
+        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, double[] data, Array<VertexBufferKind> offsetLocations)
         {
             this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, data);
+            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(data));
             for (var index = 0; index < 4; index++)
             {
                 var offsetLocation = offsetLocations[index];
@@ -785,9 +785,9 @@ namespace BABYLON
         {
             if (uniform == null)
                 return;
-            this._gl.uniform1fv(uniform, array);
+            this._gl.uniform1fv(uniform, ArrayConvert.AsFloat(array));
         }
-        public virtual void setMatrices(WebGLUniformLocation uniform, Float32Array matrices)
+        public virtual void setMatrices(WebGLUniformLocation uniform, float[] matrices)
         {
             if (uniform == null)
                 return;
@@ -797,7 +797,7 @@ namespace BABYLON
         {
             if (uniform == null)
                 return;
-            this._gl.uniformMatrix4fv(uniform, false, matrix.toArray());
+            this._gl.uniformMatrix4fv(uniform, false, ArrayConvert.AsFloat(matrix.toArray()));
         }
         public virtual void setFloat(WebGLUniformLocation uniform, double value)
         {
@@ -950,7 +950,7 @@ namespace BABYLON
             {
                 BABYLON.Tools.LoadFile(url, (arrayBuffer) =>
                 {
-                    var data = new Uint8Array(arrayBuffer);
+                    var data = arrayBuffer;
                     var header = BABYLON.Internals.TGATools.GetTGAHeader(data);
                     prepareWebGLTexture(texture, this._gl, scene, header.width, header.height, invertY, noMipmap, false, (pos, max) =>
                     {
@@ -1321,9 +1321,9 @@ namespace BABYLON
                 texture._cachedAnisotropicFilteringLevel = texture.anisotropicFilteringLevel;
             }
         }
-        public virtual Uint8Array readPixels(int x, int y, int width, int height)
+        public virtual byte[] readPixels(int x, int y, int width, int height)
         {
-            var data = new Uint8Array(height * width * 4);
+            var data = new byte[height * width * 4];
             this._gl.readPixels(0, 0, width, height, this._gl.RGBA, this._gl.UNSIGNED_BYTE, data);
             return data;
         }

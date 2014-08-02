@@ -24,7 +24,7 @@ namespace BABYLON
         private Array<int> _renderIdForInstances = new Array<int>();
         private _InstancesBatch _batchCache = new _InstancesBatch();
         private WebGLBuffer _worldMatricesInstancesBuffer;
-        private Float32Array _worldMatricesInstancesArray;
+        private double[] _worldMatricesInstancesArray;
         private int _instancesBufferSize = 32 * 16 * 4;
         public bool _shouldGenerateFlatShading;
 
@@ -313,7 +313,7 @@ namespace BABYLON
                     engine.deleteInstancesBuffer(this._worldMatricesInstancesBuffer);
                 }
                 this._worldMatricesInstancesBuffer = engine.createInstancesBuffer(this._instancesBufferSize);
-                this._worldMatricesInstancesArray = new Float32Array(this._instancesBufferSize / 4);
+                this._worldMatricesInstancesArray = new double[this._instancesBufferSize / 4];
             }
             var offset = 0;
             var instancesCount = 0;

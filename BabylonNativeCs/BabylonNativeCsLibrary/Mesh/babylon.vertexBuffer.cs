@@ -90,7 +90,7 @@ namespace BABYLON
             }
             if (this._updatable)
             {
-                this._engine.updateDynamicVertexBuffer(this._buffer, new Float32Array(data));
+                this._engine.updateDynamicVertexBuffer(this._buffer, data);
                 this._data = data;
             }
         }

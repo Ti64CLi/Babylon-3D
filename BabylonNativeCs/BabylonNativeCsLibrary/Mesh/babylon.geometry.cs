@@ -309,7 +309,7 @@ namespace BABYLON
             }
             this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADING;
             scene._addPendingData(this);
-            BABYLON.Tools.LoadFile(this.delayLoadingFile, (ArrayBuffer data) =>
+            BABYLON.Tools.LoadFile(this.delayLoadingFile, (byte[] data) =>
             {
                 this._delayLoadingFunction(data/*JSON.parse(data)*/, this);
                 this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADED;

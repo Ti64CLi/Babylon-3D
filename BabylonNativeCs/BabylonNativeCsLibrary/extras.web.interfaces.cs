@@ -213,7 +213,7 @@ namespace Web
         int get(int index);
         void set(int index, int value);
         void set(Float64Array array, int offset = 0);
-        void set(Array<double> array, int offset = 0);
+        void set(float[] array, int offset = 0);
         Float64Array subarray(int begin, int end = 0);
     }
     public partial interface DataView : ArrayBufferView
@@ -391,7 +391,7 @@ namespace Web
             get;
             set;
         }
-        double width
+        int width
         {
             get;
             set;
@@ -2198,7 +2198,7 @@ namespace Web
         MSEventObj createEventObject(object eventObj = null);
         Selection getSelection();
         NodeList msElementsFromPoint(double x, double y);
-        NodeList msElementsFromRect(int left, int top, double width, int height);
+        NodeList msElementsFromRect(int left, int top, int width, int height);
         void clear();
         void msExitFullscreen();
         void addEventListener(string type, EventListener listener, bool useCapture = false);
@@ -5719,7 +5719,7 @@ namespace Web
     }
     public partial interface HTMLAppletElement : HTMLElement, DOML2DeprecatedMarginStyle, DOML2DeprecatedBorderStyle, DOML2DeprecatedAlignmentStyle, MSDataBindingExtensions, MSDataBindingRecordSetExtensions
     {
-        double width
+        int width
         {
             get;
             set;
@@ -5817,7 +5817,7 @@ namespace Web
     }
     public partial interface TextMetrics
     {
-        double width
+        int width
         {
             get;
             set;
@@ -6043,7 +6043,7 @@ namespace Web
     }
     public partial interface HTMLBlockElement : HTMLElement, DOML2DeprecatedTextFlowControl
     {
-        double width
+        int width
         {
             get;
             set;
@@ -7558,7 +7558,7 @@ namespace Web
         void scale(double x, double y);
         CanvasGradient createRadialGradient(double x0, double y0, int r0, double x1, double y1, int r1);
         void lineTo(double x, double y);
-        Array<double> getLineDash();
+        float[] getLineDash();
         void fill(string fillRule = null);
         ImageData createImageData(object imageDataOrSw, int sh = 0);
         CanvasPattern createPattern(HTMLElement image, string repetition);
@@ -7570,11 +7570,11 @@ namespace Web
         ImageData getImageData(int sx, int sy, int sw, int sh);
         void fillRect(double x, double y, double w, int h);
         void bezierCurveTo(int cp1x, int cp1y, int cp2x, int cp2y, double x, double y);
-        void drawImage(HTMLElement image, int offsetX, int offsetY, double width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0);
+        void drawImage(HTMLElement image, int offsetX, int offsetY, int width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0);
         void transform(int m11, int m12, int m21, int m22, int dx, int dy);
         void stroke();
         void strokeRect(double x, double y, double w, int h);
-        void setLineDash(Array<double> segments);
+        void setLineDash(float[] segments);
         void strokeText(string text, double x, double y, int maxWidth = 0);
         void beginPath();
         void arcTo(double x1, double y1, double x2, double y2, int radius);
@@ -8168,7 +8168,7 @@ namespace Web
     }
     public partial interface Screen : EventTarget
     {
-        double width
+        int width
         {
             get;
             set;
@@ -9725,7 +9725,7 @@ namespace Web
     }
     public partial interface HTMLPreElement : HTMLElement, DOML2DeprecatedTextFlowControl
     {
-        double width
+        int width
         {
             get;
             set;
@@ -10601,7 +10601,7 @@ namespace Web
     }
     public partial interface HTMLTableCellElement : HTMLElement, HTMLTableAlignment, DOML2DeprecatedBackgroundStyle, DOML2DeprecatedBackgroundColorStyle
     {
-        double width
+        int width
         {
             get;
             set;
@@ -11032,7 +11032,7 @@ namespace Web
             get;
             set;
         }
-        double width
+        int width
         {
             get;
             set;
@@ -12812,7 +12812,7 @@ namespace Web
     public partial interface CanvasPattern { }
     public partial interface HTMLHRElement : HTMLElement, DOML2DeprecatedColorProperty, DOML2DeprecatedSizeProperty
     {
-        double width
+        int width
         {
             get;
             set;
@@ -13531,7 +13531,7 @@ namespace Web
     }
     public partial interface HTMLVideoElement : HTMLMediaElement
     {
-        double width
+        int width
         {
             get;
             set;
@@ -15591,7 +15591,7 @@ namespace Web
     }
     public partial interface MSPointerEvent : MouseEvent
     {
-        double width
+        int width
         {
             get;
             set;
@@ -16443,7 +16443,7 @@ namespace Web
             get;
             set;
         }
-        double width
+        int width
         {
             get;
             set;
@@ -16770,7 +16770,7 @@ namespace Web
     }
     public partial interface PointerEvent : MouseEvent
     {
-        double width
+        int width
         {
             get;
             set;
@@ -17343,17 +17343,17 @@ namespace Web
         }
         WebGLUniformLocation getUniformLocation(WebGLProgram program, string name);
         void bindTexture(int target, WebGLTexture texture);
-        void bufferData(int target, ArrayBufferView data, int usage);
-        void bufferData(int target, ArrayBuffer data, int usage);
+        void bufferData(int target, float[] data, int usage);
+        void bufferData(int target, ushort[] data, int usage);
         void bufferData(int target, int size, int usage);
         void depthMask(bool flag);
         object getUniform(WebGLProgram program, WebGLUniformLocation location);
-        void vertexAttrib3fv(int indx, Array<double> values);
+        void vertexAttrib3fv(int indx, float[] values);
         void vertexAttrib3fv(int indx, Float32Array values);
         void linkProgram(WebGLProgram program);
         Array<string> getSupportedExtensions();
-        void bufferSubData(int target, int offset, ArrayBuffer data);
-        void bufferSubData(int target, int offset, ArrayBufferView data);
+        void bufferSubData(int target, int offset, float[] data);
+        void bufferSubData(int target, int offset, int size, IntPtr data);
         void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset);
         void polygonOffset(int factor, int units);
         void blendColor(int red, int green, int blue, int alpha);
@@ -17364,13 +17364,12 @@ namespace Web
         void depthRange(double zNear, double zFar);
         void cullFace(int mode);
         WebGLFramebuffer createFramebuffer();
-        void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, Array<double> value);
-        void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, Float32Array value);
+        void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, float[] value);
         void framebufferTexture2D(int target, int attachment, int textarget, WebGLTexture texture, int level);
         void deleteFramebuffer(WebGLFramebuffer framebuffer);
         void colorMask(bool red, bool green, bool blue, bool alpha);
-        void compressedTexImage2D(int target, int level, int internalformat, double width, int height, int border, ArrayBufferView data);
-        void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, Array<double> value);
+        void compressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, byte[] data);
+        void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, float[] value);
         void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, Float32Array value);
         object getExtension(string name);
         WebGLProgram createProgram();
@@ -17378,7 +17377,7 @@ namespace Web
         Array<WebGLShader> getAttachedShaders(WebGLProgram program);
         void enable(int cap);
         void blendEquation(int mode);
-        void texImage2D(int target, int level, int internalformat, double width, int height, int border, int format, int type, ArrayBufferView pixels);
+        void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte[] pixels);
         void texImage2D(int target, int level, int internalformat, int format, int type, HTMLImageElement image);
         void texImage2D(int target, int level, int internalformat, int format, int type, HTMLCanvasElement canvas);
         void texImage2D(int target, int level, int internalformat, int format, int type, HTMLVideoElement video);
@@ -17386,23 +17385,23 @@ namespace Web
         WebGLBuffer createBuffer();
         void deleteTexture(WebGLTexture texture);
         void useProgram(WebGLProgram program);
-        void vertexAttrib2fv(int indx, Array<double> values);
+        void vertexAttrib2fv(int indx, float[] values);
         void vertexAttrib2fv(int indx, Float32Array values);
         int checkFramebufferStatus(int target);
         void frontFace(int mode);
         object getBufferParameter(int target, int pname);
-        void texSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, int type, ArrayBufferView pixels);
+        void texSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, int type, ArrayBufferView pixels);
         void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLImageElement image);
         void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLCanvasElement canvas);
         void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, HTMLVideoElement video);
         void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, ImageData pixels);
-        void copyTexImage2D(int target, int level, int internalformat, double x, double y, double width, int height, int border);
+        void copyTexImage2D(int target, int level, int internalformat, double x, double y, int width, int height, int border);
         int getVertexAttribOffset(int index, int pname);
         void disableVertexAttribArray(int index);
         void blendFunc(int sfactor, int dfactor);
         void drawElements(int mode, int count, int type, int offset);
         bool isFramebuffer(WebGLFramebuffer framebuffer);
-        void uniform3iv(WebGLUniformLocation location, Array<double> v);
+        void uniform3iv(WebGLUniformLocation location, float[] v);
         void uniform3iv(WebGLUniformLocation location, Int32Array v);
         void lineWidth(int width);
         string getShaderInfoLog(WebGLShader shader);
@@ -17412,12 +17411,12 @@ namespace Web
         WebGLContextAttributes getContextAttributes();
         void vertexAttrib1f(int indx, double x);
         void bindFramebuffer(int target, WebGLFramebuffer framebuffer);
-        void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, double width, int height, int format, ArrayBufferView data);
+        void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, ArrayBufferView data);
         bool isContextLost();
-        void uniform1iv(WebGLUniformLocation location, Array<double> v);
+        void uniform1iv(WebGLUniformLocation location, float[] v);
         void uniform1iv(WebGLUniformLocation location, Int32Array v);
         object getRenderbufferParameter(int target, int pname);
-        void uniform2fv(WebGLUniformLocation location, Array<double> v);
+        void uniform2fv(WebGLUniformLocation location, float[] v);
         void uniform2fv(WebGLUniformLocation location, Float32Array v);
         bool isTexture(WebGLTexture texture);
         int getError();
@@ -17431,21 +17430,21 @@ namespace Web
         void clear(int mask);
         void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
         void stencilFuncSeparate(int face, int func, int _ref, int mask);
-        void readPixels(double x, double y, double width, int height, int format, int type, ArrayBufferView pixels);
-        void scissor(double x, double y, double width, int height);
+        void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels);
+        void scissor(int x, int y, int width, int height);
         void uniform2i(WebGLUniformLocation location, double x, double y);
         WebGLActiveInfo getActiveAttrib(WebGLProgram program, int index);
         string getShaderSource(WebGLShader shader);
         void generateMipmap(int target);
         void bindAttribLocation(WebGLProgram program, int index, string name);
-        void uniform1fv(WebGLUniformLocation location, Array<double> v);
+        void uniform1fv(WebGLUniformLocation location, float[] v);
         void uniform1fv(WebGLUniformLocation location, Float32Array v);
-        void uniform2iv(WebGLUniformLocation location, Array<double> v);
+        void uniform2iv(WebGLUniformLocation location, float[] v);
         void uniform2iv(WebGLUniformLocation location, Int32Array v);
         void stencilOp(int fail, double zfail, double zpass);
-        void uniform4fv(WebGLUniformLocation location, Array<double> v);
+        void uniform4fv(WebGLUniformLocation location, float[] v);
         void uniform4fv(WebGLUniformLocation location, Float32Array v);
-        void vertexAttrib1fv(int indx, Array<double> values);
+        void vertexAttrib1fv(int indx, float[] values);
         void vertexAttrib1fv(int indx, Float32Array values);
         void flush();
         void uniform4f(WebGLUniformLocation location, double x, double y, double z, double w);
@@ -17457,7 +17456,7 @@ namespace Web
         void stencilFunc(int func, int _ref, int mask);
         void pixelStorei(int pname, int param);
         void disable(int cap);
-        void vertexAttrib4fv(int indx, Array<double> values);
+        void vertexAttrib4fv(int indx, float[] values);
         void vertexAttrib4fv(int indx, Float32Array values);
         WebGLRenderbuffer createRenderbuffer();
         bool isBuffer(WebGLBuffer buffer);
@@ -17477,11 +17476,11 @@ namespace Web
         void viewport(int x, int y, int width, int height);
         void detachShader(WebGLProgram program, WebGLShader shader);
         void uniform1f(WebGLUniformLocation location, double x);
-        void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Array<double> value);
+        void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, float[] value);
         void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Float32Array value);
         void deleteBuffer(WebGLBuffer buffer);
-        void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, double width, int height);
-        void uniform3fv(WebGLUniformLocation location, Array<double> v);
+        void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height);
+        void uniform3fv(WebGLUniformLocation location, float[] v);
         void uniform3fv(WebGLUniformLocation location, Float32Array v);
         void stencilMaskSeparate(int face, int mask);
         void attachShader(WebGLProgram program, WebGLShader shader);
@@ -17492,7 +17491,7 @@ namespace Web
         void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, WebGLRenderbuffer renderbuffer);
         void finish();
         void uniform2f(WebGLUniformLocation location, double x, double y);
-        void renderbufferStorage(int target, int internalformat, double width, int height);
+        void renderbufferStorage(int target, int internalformat, int width, int height);
         void uniform3f(WebGLUniformLocation location, double x, double y, double z);
         string getProgramInfoLog(WebGLProgram program);
         void validateProgram(WebGLProgram program);
@@ -17501,7 +17500,7 @@ namespace Web
         bool isProgram(WebGLProgram program);
         WebGLShader createShader(int type);
         void bindRenderbuffer(int target, WebGLRenderbuffer renderbuffer);
-        void uniform4iv(WebGLUniformLocation location, Array<double> v);
+        void uniform4iv(WebGLUniformLocation location, float[] v);
         void uniform4iv(WebGLUniformLocation location, Int32Array v);
         int DEPTH_FUNC
         {

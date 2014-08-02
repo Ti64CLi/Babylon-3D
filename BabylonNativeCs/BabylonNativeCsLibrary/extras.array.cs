@@ -6,6 +6,75 @@
     using System.Text;
     using Web;
 
+    public class ArrayConvert
+    {
+        public static ushort[] AsUshort(int[] array)
+        {
+            var newArray = new ushort[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (ushort)array[index];
+            }
+
+            return newArray;
+        }
+
+        public static ushort[] AsUshort(Array<int> array)
+        {
+            var newArray = new ushort[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (ushort)array[index];
+            }
+
+            return newArray;
+        }
+
+        public static float[] AsFloat(double[] array)
+        {
+            var newArray = new float[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (float)array[index];
+            }
+
+            return newArray;
+        }
+
+        public static float[] AsFloat(Array<double> array)
+        {
+            var newArray = new float[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (float)array[index];
+            }
+
+            return newArray;
+        }
+
+        public static int[] AsInt(byte[] array, int start, int length)
+        {
+            var newArray = new int[length];
+            for (var index = 0; index < length; index++)
+            {
+                newArray[index] = (byte)array[start + index];
+            }
+
+            return newArray;
+        }
+
+        public static byte[] AsByte(byte[] array, int start, int length)
+        {
+            var newArray = new byte[length];
+            for (var index = 0; index < length; index++)
+            {
+                newArray[index] = (byte)array[start + index];
+            }
+
+            return newArray;
+        }
+    }
+
     public class Map<K, V> : Dictionary<K, V>
     {        
     }
@@ -183,156 +252,6 @@
             {
                 return compareFn(x, y);
             }
-        }
-    }
-
-    public class Float32Array : Array<float>, Web.Float32Array
-    {
-        public Float32Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Float32Array(Array<float> array)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Float32Array(Array<double> array)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Float32Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Float32Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public double this[int subIndex]
-        {
-            get
-            {
-                return (double)base[subIndex];
-            }
-            set
-            {
-                base[subIndex] = (float)value;
-            }
-        }
-    }
-
-    public class Int32Array : Array<int>, Web.Int32Array
-    {
-        public Int32Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Int32Array(ArrayBuffer arrayBuffer, int start, int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Int32Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Int32Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Uint8Array : Array<byte>, Web.Uint8Array
-    {
-        public Uint8Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Uint8Array(ArrayBuffer arrayBuffer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Uint8Array(ArrayBuffer arrayBuffer, int start, int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Uint8Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Uint8Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Int8Array : Array<sbyte>, Web.Int8Array
-    {
-        public Int8Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Int8Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Int8Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Int16Array : Array<short>, Web.Int16Array
-    {
-        public Int16Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Int16Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Int16Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Uint16Array : Array<ushort>, Web.Uint16Array
-    {
-        public Uint16Array(int reserveSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Uint16Array(Array<int> array)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Web.Uint16Array array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Uint16Array subarray(int begin, int end = 0)
-        {
-            throw new NotImplementedException();
         }
     }
 }

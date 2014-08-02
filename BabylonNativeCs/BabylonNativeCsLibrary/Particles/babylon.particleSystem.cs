@@ -49,7 +49,7 @@ namespace BABYLON
         private double _newPartsExcess = 0;
         private WebGLBuffer _vertexBuffer;
         private WebGLBuffer _indexBuffer;
-        private Float32Array _vertices;
+        private double[] _vertices;
         private Effect _effect;
         private string _cachedDefines;
         private BABYLON.Color4 _scaledColorStep = new BABYLON.Color4(0, 0, 0, 0);
@@ -83,7 +83,7 @@ namespace BABYLON
                 index += 4;
             }
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
-            this._vertices = new Float32Array(capacity * this._vertexStrideSize);
+            this._vertices = new double[capacity * this._vertexStrideSize];
             this.startDirectionFunction = (double emitPower, Matrix worldMatrix, Vector3 directionToUpdate) =>
             {
                 var randX = randomNumber(this.direction1.x, this.direction2.x);

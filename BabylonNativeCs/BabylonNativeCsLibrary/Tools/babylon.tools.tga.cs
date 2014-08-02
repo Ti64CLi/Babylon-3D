@@ -20,7 +20,7 @@ namespace BABYLON.Internals
         private const int _ORIGIN_BR = 0x01;
         private const int _ORIGIN_UL = 0x02;
         private const int _ORIGIN_UR = 0x03;
-        public static TGAHeader GetTGAHeader(Uint8Array data)
+        public static TGAHeader GetTGAHeader(byte[] data)
         {
             var offset = 0;
 
@@ -45,7 +45,7 @@ namespace BABYLON.Internals
             return header;
 
         }
-        public static void UploadContent(WebGLRenderingContext gl, Uint8Array data)
+        public static void UploadContent(WebGLRenderingContext gl, byte[] data)
         {
             if (data.Length < 19)
             {
@@ -88,23 +88,23 @@ namespace BABYLON.Internals
                     use_grey = true;
                     break;
             }
-            Web.Uint8Array pixel_data;
+            byte[] pixel_data;
             var numAlphaBits = header.flags & 0xf;
             var pixel_size = header.pixel_size << 3;
             var pixel_total = header.width * header.height * pixel_size;
-            Web.Uint8Array palettes = null;
+            byte[] palettes = null;
             if (use_pal)
             {
-                palettes = data.subarray(offset, offset += header.colormap_length * (header.colormap_size << 3));
+                palettes = ArrayConvert.AsByte(data, offset, header.colormap_length * (header.colormap_size << 3));
             }
             if (use_rle)
             {
-                pixel_data = new Uint8Array(pixel_total);
+                pixel_data = new byte[pixel_total];
                 byte c;
                 int count;
                 int i;
                 var localOffset = 0;
-                var pixels = new Uint8Array(pixel_size);
+                var pixels = new byte[pixel_size];
                 while (offset < pixel_total)
                 {
                     c = data[offset++];
@@ -117,7 +117,7 @@ namespace BABYLON.Internals
                         }
                         for (i = 0; i < count; ++i)
                         {
-                            pixel_data.set((Web.Uint8Array)pixels, localOffset + i * pixel_size);
+                            pixel_data = ArrayConvert.AsByte(pixels, localOffset, i * pixel_size);
                         }
                         localOffset += pixel_size * count;
                     }
@@ -134,7 +134,7 @@ namespace BABYLON.Internals
             }
             else
             {
-                pixel_data = data.subarray(offset, offset += ((use_pal) ? header.width * header.height : pixel_total));
+                pixel_data = ArrayConvert.AsByte(data, offset, ((use_pal) ? header.width * header.height : pixel_total));
             }
             int x_start;
             int y_start;
@@ -179,7 +179,7 @@ namespace BABYLON.Internals
                     break;
             }
 
-            Uint8Array imageData = null;
+            byte[] imageData = null;
 
             if (use_grey)
             {
@@ -214,7 +214,7 @@ namespace BABYLON.Internals
 
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, header.width, header.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, imageData);
         }
-        static Uint8Array _getImageData8bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageData8bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var colormap = palettes;
@@ -224,7 +224,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i++)
@@ -238,7 +238,7 @@ namespace BABYLON.Internals
             }
             return imageData;
         }
-        static Uint8Array _getImageData16bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageData16bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -247,7 +247,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i += 2)
@@ -261,7 +261,7 @@ namespace BABYLON.Internals
             }
             return imageData;
         }
-        static Uint8Array _getImageData24bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageData24bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -269,7 +269,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i += 3)
@@ -282,7 +282,7 @@ namespace BABYLON.Internals
             }
             return imageData;
         }
-        static Uint8Array _getImageData32bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageData32bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -290,7 +290,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i += 4)
@@ -303,7 +303,7 @@ namespace BABYLON.Internals
             }
             return imageData;
         }
-        static Uint8Array _getImageDataGrey8bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageDataGrey8bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -312,7 +312,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i++)
@@ -326,7 +326,7 @@ namespace BABYLON.Internals
             }
             return imageData;
         }
-        static Uint8Array _getImageDataGrey16bits(TGAHeader header, Web.Uint8Array palettes, Web.Uint8Array pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        static byte[] _getImageDataGrey16bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -334,7 +334,7 @@ namespace BABYLON.Internals
             var i = 0;
             int x;
             int y;
-            var imageData = new Uint8Array(width * height * 4);
+            var imageData = new byte[width * height * 4];
             for (y = y_start; y != y_end; y += y_step)
             {
                 for (x = x_start; x != x_end; x += x_step, i += 2)

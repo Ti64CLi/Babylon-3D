@@ -248,9 +248,9 @@ namespace BABYLON
             this._engine.setArray(this.getUniform(uniformName), array);
             return this;
         }
-        public virtual Effect setMatrices(string uniformName, Float32Array matrices)
+        public virtual Effect setMatrices(string uniformName, double[] matrices)
         {
-            this._engine.setMatrices(this.getUniform(uniformName), matrices);
+            this._engine.setMatrices(this.getUniform(uniformName), ArrayConvert.AsFloat(matrices));
             return this;
         }
         public virtual Effect setMatrix(string uniformName, Matrix matrix)

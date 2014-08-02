@@ -306,7 +306,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public BABYLON.Array<double> getLineDash()
+        public float[] getLineDash()
         {
             throw new NotImplementedException();
         }
@@ -366,7 +366,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void drawImage(Web.HTMLElement image, int offsetX, int offsetY, double width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0)
+        public void drawImage(Web.HTMLElement image, int offsetX, int offsetY, int width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0)
         {
             throw new NotImplementedException();
         }
@@ -386,7 +386,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public void setLineDash(BABYLON.Array<double> segments)
+        public void setLineDash(float[] segments)
         {
             throw new NotImplementedException();
         }

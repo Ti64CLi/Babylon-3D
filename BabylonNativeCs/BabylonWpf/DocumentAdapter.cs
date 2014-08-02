@@ -2120,7 +2120,7 @@ namespace BabylonWpf
             throw new NotImplementedException();
         }
 
-        public Web.NodeList msElementsFromRect(int left, int top, double width, int height)
+        public Web.NodeList msElementsFromRect(int left, int top, int width, int height)
         {
             throw new NotImplementedException();
         }
