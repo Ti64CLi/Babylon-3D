@@ -14,24 +14,24 @@ namespace BABYLON
         Web.Window window;
         Web.Document document;
 
-        public VideoTexture(string name, Array<string> urls, object size, Scene scene, bool generateMipMaps, bool invertY, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
+        public VideoTexture(string name, Array<string> urls, Size size, Scene scene, bool generateMipMaps, bool invertY, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(null, scene, !generateMipMaps, invertY)
         {
             this.name = name;
             this.wrapU = BABYLON.Texture.WRAP_ADDRESSMODE;
             this.wrapV = BABYLON.Texture.WRAP_ADDRESSMODE;
-            var requiredWidth = size.width || size;
-            var requiredHeight = size.height || size;
+            var requiredWidth = size.width;
+            var requiredHeight = size.height;
             this._texture = scene.getEngine().createDynamicTexture(requiredWidth, requiredHeight, generateMipMaps, samplingMode);
             var textureSize = this.getSize();
-            this.video = document.createElement("video");
+            this.video = (HTMLVideoElement)document.createElement("video");
             this.video.width = textureSize.width;
             this.video.height = textureSize.height;
             this.video.autoplay = false;
             this.video.loop = true;
             this.video.addEventListener("canplaythrough", () =>
             {
-                if (this._texture)
+                if (this._texture != null)
                 {
                     this._texture.isReady = true;
                 }

@@ -174,8 +174,8 @@ namespace BABYLON.Internals
         {
             var header = new Int32Array(arrayBuffer, 0, headerLengthInt);
             int fourCC;
-            int blockBytes;
-            int internalFormat;
+            int blockBytes = 0;
+            int internalFormat = 0;
             int width;
             int height;
             int dataLength;

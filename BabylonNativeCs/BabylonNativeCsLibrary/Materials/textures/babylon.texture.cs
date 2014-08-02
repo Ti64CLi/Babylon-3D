@@ -43,7 +43,7 @@ namespace BABYLON
         private double _cachedVAng;
         private double _cachedWAng;
         private double _cachedCoordinatesMode;
-        private double _samplingMode;
+        private int _samplingMode;
         public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, double samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(scene)
         {
@@ -52,12 +52,12 @@ namespace BABYLON
             this._noMipmap = noMipmap;
             this._invertY = invertY;
             this._samplingMode = samplingMode;
-            if (!url)
+            if (url == null)
             {
                 return;
             }
             this._texture = this._getFromCache(url, noMipmap);
-            if (!this._texture)
+            if (this._texture == null)
             {
                 if (!scene.useDelayedTextureLoading)
                 {
@@ -77,7 +77,7 @@ namespace BABYLON
             }
             this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADED;
             this._texture = this._getFromCache(this.url, this._noMipmap);
-            if (!this._texture)
+            if (this._texture == null)
             {
                 this._texture = this.getScene().getEngine().createTexture(this.url, this._noMipmap, this._invertY, this.getScene(), this._samplingMode);
             }
@@ -107,7 +107,7 @@ namespace BABYLON
             this._cachedUAng = this.uAng;
             this._cachedVAng = this.vAng;
             this._cachedWAng = this.wAng;
-            if (!this._cachedTextureMatrix)
+            if (this._cachedTextureMatrix == null)
             {
                 this._cachedTextureMatrix = BABYLON.Matrix.Zero();
                 this._rowGenerationMatrix = new BABYLON.Matrix();
@@ -139,7 +139,7 @@ namespace BABYLON
             {
                 return this._cachedTextureMatrix;
             }
-            if (!this._cachedTextureMatrix)
+            if (this._cachedTextureMatrix == null)
             {
                 this._cachedTextureMatrix = BABYLON.Matrix.Zero();
                 this._projectionModeMatrix = BABYLON.Matrix.Zero();
@@ -148,17 +148,17 @@ namespace BABYLON
             {
                 case BABYLON.Texture.SPHERICAL_MODE:
                     BABYLON.Matrix.IdentityToRef(this._cachedTextureMatrix);
-                    this._cachedTextureMatrix[0] = -0.5 * this.uScale;
-                    this._cachedTextureMatrix[5] = -0.5 * this.vScale;
-                    this._cachedTextureMatrix[12] = 0.5 + this.uOffset;
-                    this._cachedTextureMatrix[13] = 0.5 + this.vOffset;
+                    this._cachedTextureMatrix.m[0] = -0.5 * this.uScale;
+                    this._cachedTextureMatrix.m[5] = -0.5 * this.vScale;
+                    this._cachedTextureMatrix.m[12] = 0.5 + this.uOffset;
+                    this._cachedTextureMatrix.m[13] = 0.5 + this.vOffset;
                     break;
                 case BABYLON.Texture.PLANAR_MODE:
                     BABYLON.Matrix.IdentityToRef(this._cachedTextureMatrix);
-                    this._cachedTextureMatrix[0] = this.uScale;
-                    this._cachedTextureMatrix[5] = this.vScale;
-                    this._cachedTextureMatrix[12] = this.uOffset;
-                    this._cachedTextureMatrix[13] = this.vOffset;
+                    this._cachedTextureMatrix.m[0] = this.uScale;
+                    this._cachedTextureMatrix.m[5] = this.vScale;
+                    this._cachedTextureMatrix.m[12] = this.uOffset;
+                    this._cachedTextureMatrix.m[13] = this.vOffset;
                     break;
                 case BABYLON.Texture.PROJECTION_MODE:
                     BABYLON.Matrix.IdentityToRef(this._projectionModeMatrix);

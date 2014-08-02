@@ -9,7 +9,7 @@ namespace BABYLON
     {
         public System.Action<Effect> onApply;
         public System.Action onSizeChanged;
-        public System.Action<object> onActivate;
+        public System.Action<Camera> onActivate;
         public int width = -1;
         public int height = -1;
         public int renderTargetSamplingMode;

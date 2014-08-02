@@ -171,7 +171,7 @@ namespace BABYLON
                     particle.direction.addInPlace(this._scaledGravity);
                 }
             }
-            var worldMatrix;
+            Matrix worldMatrix;
             if (this.emitter is Mesh)
             {
                 worldMatrix = ((Mesh)this.emitter).getWorldMatrix();

@@ -315,7 +315,7 @@ namespace BABYLON
                 }
                 this._effect = scene.getEngine()
                                     .createEffect(
-                                        new EffectBaseName(shaderName),
+                                        new EffectBaseName { baseName = shaderName },
                                         attribs,
                                         new Array<string>(
                                             "world",

@@ -21,9 +21,9 @@ namespace BABYLON
         {
             this._engine = engine;
             this._name = name;
-            this._renderEffects = new Array<object>();
-            this._renderEffectsForIsolatedPass = new Array<object>();
-            this._cameras = new Array<object>();
+            this._renderEffects = new Array<PostProcessRenderEffect>();
+            this._renderEffectsForIsolatedPass = new Array<PostProcessRenderEffect>();
+            this._cameras = new Array<Camera>();
         }
         public virtual void addEffect(PostProcessRenderEffect renderEffect)
         {

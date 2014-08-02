@@ -10,6 +10,7 @@ namespace BABYLON
         Array<OctreeBlock<T>> blocks
         {
             get;
+            set;
         }
     }
     public partial class Octree<T> : IOctreeContainer<T>
@@ -25,7 +26,7 @@ namespace BABYLON
             this._selectionContent = new BABYLON.SmartArray<T>(1024);
             this._creationFunc = creationFunc;
         }
-        public Array<OctreeBlock<T>> blocks { get; private set; }
+        public Array<OctreeBlock<T>> blocks { get; set; }
         public virtual void update(Vector3 worldMin, Vector3 worldMax, Array<T> entries)
         {
             Octree<T>._CreateBlocks(worldMin, worldMax, entries, this._maxBlockCapacity, 0, this.maxDepth, this, this._creationFunc);

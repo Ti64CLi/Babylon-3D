@@ -3,46 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class ShadowGenerator {
-        private
-        const int _FILTER_NONE = 0;
-        private
-        const int _FILTER_VARIANCESHADOWMAP = 1;
-        private
-        const int _FILTER_POISSONSAMPLING = 2;
-        public static int FILTER_NONE {
-            get {
-                return ShadowGenerator._FILTER_NONE;
-            }
-        }
-        public static int FILTER_VARIANCESHADOWMAP {
-            get {
-                return ShadowGenerator._FILTER_VARIANCESHADOWMAP;
-            }
-        }
-        public static int FILTER_POISSONSAMPLING {
-            get {
-                return ShadowGenerator._FILTER_POISSONSAMPLING;
-            }
-        }
-        public double filter = ShadowGenerator.FILTER_VARIANCESHADOWMAP;
-        public virtual bool useVarianceShadowMap {
-            get {
-                return this.filter == ShadowGenerator.FILTER_VARIANCESHADOWMAP;
-            }
-            set {
-                this.filter = ((value) ? ShadowGenerator.FILTER_VARIANCESHADOWMAP : ShadowGenerator.FILTER_NONE);
-            }
-        }
-        public virtual bool usePoissonSampling {
-            get {
-                return this.filter == ShadowGenerator.FILTER_POISSONSAMPLING;
-            }
-            set {
-                this.filter = ((value) ? ShadowGenerator.FILTER_POISSONSAMPLING : ShadowGenerator.FILTER_NONE);
-            }
-        }
+namespace BABYLON
+{
+    public partial class ShadowGenerator
+    {
+        public const int FILTER_NONE = 0;
+        public const int FILTER_VARIANCESHADOWMAP = 1;
+        public const int FILTER_POISSONSAMPLING = 2;
         private DirectionalLight _light;
         private Scene _scene;
         private RenderTargetTexture _shadowMap;
@@ -56,7 +23,9 @@ namespace BABYLON {
         private Vector3 _cachedPosition;
         private Vector3 _cachedDirection;
         private string _cachedDefines;
-        public ShadowGenerator(double mapSize, DirectionalLight light) {
+        private bool useVarianceShadowMap;
+        public ShadowGenerator(double mapSize, DirectionalLight light)
+        {
             this._light = light;
             this._scene = light.getScene();
             light._shadowGenerator = this;
@@ -64,90 +33,115 @@ namespace BABYLON {
             this._shadowMap.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._shadowMap.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._shadowMap.renderParticles = false;
-            var renderSubMesh = (SubMesh subMesh) => {
+            Action<SubMesh> renderSubMesh = (SubMesh subMesh) =>
+            {
                 var mesh = subMesh.getRenderingMesh();
                 var scene = this._scene;
                 var engine = scene.getEngine();
                 engine.setState(subMesh.getMaterial().backFaceCulling);
                 var batch = mesh._getInstancesRenderList(subMesh._id);
-                if (batch.mustReturn) {
+                if (batch.mustReturn)
+                {
                     return;
                 }
                 var hardwareInstancedRendering = (engine.getCaps().instancedArrays != null) && (batch.visibleInstances != null);
-                if (this.isReady(subMesh, hardwareInstancedRendering)) {
+                if (this.isReady(subMesh, hardwareInstancedRendering))
+                {
                     engine.enableEffect(this._effect);
                     mesh._bind(subMesh, this._effect, false);
                     var material = subMesh.getMaterial();
                     this._effect.setMatrix("viewProjection", this.getTransformMatrix());
-                    if (material && material.needAlphaTesting()) {
+                    if (material != null && material.needAlphaTesting())
+                    {
                         var alphaTexture = material.getAlphaTestTexture();
                         this._effect.setTexture("diffuseSampler", alphaTexture);
                         this._effect.setMatrix("diffuseMatrix", alphaTexture.getTextureMatrix());
                     }
-                    var useBones = mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind);
-                    if (useBones) {
+                    var useBones = mesh.skeleton != null && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind);
+                    if (useBones)
+                    {
                         this._effect.setMatrices("mBones", mesh.skeleton.getTransformMatrices());
                     }
-                    if (hardwareInstancedRendering) {
+                    if (hardwareInstancedRendering)
+                    {
                         mesh._renderWithInstances(subMesh, false, batch, this._effect, engine);
-                    } else {
-                        if (batch.renderSelf[subMesh._id]) {
+                    }
+                    else
+                    {
+                        if (batch.renderSelf[subMesh._id])
+                        {
                             this._effect.setMatrix("world", mesh.getWorldMatrix());
                             mesh._draw(subMesh, true);
                         }
-                        if (batch.visibleInstances[subMesh._id]) {
-                            for (var instanceIndex = 0; instanceIndex < batch.visibleInstances[subMesh._id].Length; instanceIndex++) {
+                        if (batch.visibleInstances[subMesh._id] != null)
+                        {
+                            for (var instanceIndex = 0; instanceIndex < batch.visibleInstances[subMesh._id].Length; instanceIndex++)
+                            {
                                 var instance = batch.visibleInstances[subMesh._id][instanceIndex];
                                 this._effect.setMatrix("world", instance.getWorldMatrix());
                                 mesh._draw(subMesh, true);
                             }
                         }
                     }
-                } else {
+                }
+                else
+                {
                     this._shadowMap.resetRefreshCounter();
                 }
             };
-            this._shadowMap.customRenderFunction = (SmartArray < SubMesh > opaqueSubMeshes, SmartArray < SubMesh > alphaTestSubMeshes, SmartArray < SubMesh > transparentSubMeshes) => {
+            this._shadowMap.customRenderFunction = (SmartArray<SubMesh> opaqueSubMeshes, SmartArray<SubMesh> alphaTestSubMeshes, SmartArray<SubMesh> transparentSubMeshes) =>
+            {
                 var index;
-                for (index = 0; index < opaqueSubMeshes.Length; index++) {
+                for (index = 0; index < opaqueSubMeshes.Length; index++)
+                {
                     renderSubMesh(opaqueSubMeshes.data[index]);
                 }
-                for (index = 0; index < alphaTestSubMeshes.Length; index++) {
+                for (index = 0; index < alphaTestSubMeshes.Length; index++)
+                {
                     renderSubMesh(alphaTestSubMeshes.data[index]);
                 }
-                if (this._transparencyShadow) {
-                    for (index = 0; index < transparentSubMeshes.Length; index++) {
+                if (this._transparencyShadow)
+                {
+                    for (index = 0; index < transparentSubMeshes.Length; index++)
+                    {
                         renderSubMesh(transparentSubMeshes.data[index]);
                     }
                 }
             };
         }
-        public virtual bool isReady(SubMesh subMesh, bool useInstances) {
-            var defines = new Array < object > ();
-            if (this.useVarianceShadowMap) {
+        public virtual bool isReady(SubMesh subMesh, bool useInstances)
+        {
+            var defines = new Array<string>();
+            if (this.useVarianceShadowMap)
+            {
                 defines.push("#define VSM");
             }
-            var attribs = new Array < object > (BABYLON.VertexBufferKind.PositionKind);
+            var attribs = new Array<object>(BABYLON.VertexBufferKind.PositionKind);
             var mesh = subMesh.getMesh();
             var material = subMesh.getMaterial();
-            if (material && material.needAlphaTesting()) {
+            if (material != null && material.needAlphaTesting())
+            {
                 defines.push("#define ALPHATEST");
-                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind)) {
+                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
+                {
                     attribs.push(BABYLON.VertexBufferKind.UVKind);
                     defines.push("#define UV1");
                 }
-                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind)) {
+                if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
+                {
                     attribs.push(BABYLON.VertexBufferKind.UV2Kind);
                     defines.push("#define UV2");
                 }
             }
-            if (mesh.skeleton && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind)) {
+            if (mesh.skeleton != null && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
+            {
                 attribs.push(BABYLON.VertexBufferKind.MatricesIndicesKind);
                 attribs.push(BABYLON.VertexBufferKind.MatricesWeightsKind);
                 defines.push("#define BONES");
                 defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
             }
-            if (useInstances) {
+            if (useInstances)
+            {
                 defines.push("#define INSTANCES");
                 attribs.push("world0");
                 attribs.push("world1");
@@ -155,25 +149,31 @@ namespace BABYLON {
                 attribs.push("world3");
             }
             var join = defines.join("\\n");
-            if (this._cachedDefines != join) {
+            if (this._cachedDefines != join)
+            {
                 this._cachedDefines = join;
-                this._effect = this._scene.getEngine().createEffect("shadowMap", attribs, new Array < object > ("world", "mBones", "viewProjection", "diffuseMatrix"), new Array < object > ("diffuseSampler"), join);
+                this._effect = this._scene.getEngine().createEffect(new EffectBaseName { baseName = "shadowMap" }, attribs, new Array<string>("world", "mBones", "viewProjection", "diffuseMatrix"), new Array<string>("diffuseSampler"), join);
             }
             return this._effect.isReady();
         }
-        public virtual RenderTargetTexture getShadowMap() {
+        public virtual RenderTargetTexture getShadowMap()
+        {
             return this._shadowMap;
         }
-        public virtual DirectionalLight getLight() {
+        public virtual DirectionalLight getLight()
+        {
             return this._light;
         }
-        public virtual Matrix getTransformMatrix() {
+        public virtual Matrix getTransformMatrix()
+        {
             var lightPosition = this._light.position;
             var lightDirection = this._light.direction;
-            if (this._light._computeTransformedPosition()) {
+            if (this._light._computeTransformedPosition())
+            {
                 lightPosition = this._light._transformedPosition;
             }
-            if (!this._cachedPosition || !this._cachedDirection || !lightPosition.equals(this._cachedPosition) || !lightDirection.equals(this._cachedDirection)) {
+            if (this._cachedPosition == null || this._cachedDirection == null || !lightPosition.equals(this._cachedPosition) || !lightDirection.equals(this._cachedDirection))
+            {
                 this._cachedPosition = lightPosition.clone();
                 this._cachedDirection = lightDirection.clone();
                 var activeCamera = this._scene.activeCamera;
@@ -183,22 +183,26 @@ namespace BABYLON {
             }
             return this._transformMatrix;
         }
-        public virtual double getDarkness() {
+        public virtual double getDarkness()
+        {
             return this._darkness;
         }
-        public virtual void setDarkness(double darkness) {
+        public virtual void setDarkness(double darkness)
+        {
             if (darkness >= 1.0)
                 this._darkness = 1.0;
             else
-            if (darkness <= 0.0)
-                this._darkness = 0.0;
-            else
-                this._darkness = darkness;
+                if (darkness <= 0.0)
+                    this._darkness = 0.0;
+                else
+                    this._darkness = darkness;
         }
-        public virtual void setTransparencyShadow(bool hasShadow) {
+        public virtual void setTransparencyShadow(bool hasShadow)
+        {
             this._transparencyShadow = hasShadow;
         }
-        public virtual void dispose() {
+        public virtual void dispose()
+        {
             this._shadowMap.dispose();
         }
     }

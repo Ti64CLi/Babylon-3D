@@ -429,7 +429,7 @@ namespace BABYLON
                 {
                     sum += previousFramesDuration[id + 1] - previousFramesDuration[id];
                 }
-                fps = 1000.0 / (sum / (Length - 1));
+                fps = (int) (1000.0 / (sum / (Length - 1)));
             }
         }
         public static void CreateScreenshot(Engine engine, Camera camera, object size)

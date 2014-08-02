@@ -417,7 +417,7 @@ namespace BABYLON
             for (var index = 0; index < this.getScene().particleSystems.Length; index++)
             {
                 var particleSystem = this.getScene().particleSystems[index];
-                if (descendants.indexOf(particleSystem.emitter) != -1)
+                if (descendants.indexOf(particleSystem.emitter as Mesh) != -1)
                 {
                     results.push(particleSystem);
                 }

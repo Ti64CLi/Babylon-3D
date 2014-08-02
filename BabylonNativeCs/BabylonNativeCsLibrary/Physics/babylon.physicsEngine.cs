@@ -56,7 +56,8 @@ namespace BABYLON
         private IPhysicsEnginePlugin _currentPlugin;
         public PhysicsEngine(IPhysicsEnginePlugin plugin = null)
         {
-            this._currentPlugin = plugin ?? new CannonJSPlugin();
+            // TODO: finish
+            ////this._currentPlugin = plugin ?? new CannonJSPlugin();
         }
 
         public virtual void _initialize(Vector3 gravity = null)

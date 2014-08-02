@@ -42,12 +42,12 @@ namespace BABYLON
         {
             var engine = this.getScene().getEngine();
             var indexToBind = this._geometry.getIndexBuffer();
-            engine.bindBuffers(this._geometry.getVertexBuffer(VertexBuffer.PositionKind).getBuffer(), indexToBind, new Array<object>(3), 3 * 4, this._colorShader.getEffect());
+            engine.bindBuffers(this._geometry.getVertexBuffer(VertexBufferKind.PositionKind).getBuffer(), indexToBind, new Array<VertexBufferKind>(VertexBufferKind.UVKind), 3 * 4, this._colorShader.getEffect());
             this._colorShader.setColor3("color", this.color);
         }
         public virtual void _draw(SubMesh subMesh, bool useTriangles, double instancesCount = 0.0)
         {
-            if (!this._geometry || !this._geometry.getVertexBuffers() || !this._geometry.getIndexBuffer())
+            if (this._geometry == null || this._geometry.getVertexBuffers() == null || this._geometry.getIndexBuffer() == null)
             {
                 return;
             }
@@ -56,7 +56,6 @@ namespace BABYLON
         }
         public virtual void intersects(Ray ray, bool fastCheck = false)
         {
-            return null;
         }
         public virtual void dispose(bool doNotRecurse = false)
         {

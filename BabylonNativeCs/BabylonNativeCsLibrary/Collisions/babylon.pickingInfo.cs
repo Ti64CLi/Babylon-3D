@@ -3,24 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Web;
-namespace BABYLON {
-    public partial class IntersectionInfo {
-        public double faceId = 0;
+namespace BABYLON
+{
+    public partial class IntersectionInfo
+    {
+        public int faceId = 0;
         public double bu;
         public double bv;
         public double distance;
-        public IntersectionInfo(double bu, double bv, double distance) {}
+        public IntersectionInfo(double bu, double bv, double distance) { }
     }
-    public partial class PickingInfo {
+    public partial class PickingInfo
+    {
         public bool hit = false;
         public double distance = 0;
         public Vector3 pickedPoint = null;
         public AbstractMesh pickedMesh = null;
         public double bu = 0;
         public double bv = 0;
-        public double faceId = -1;
-        public virtual Vector3 getNormal() {
-            if (!this.pickedMesh || !this.pickedMesh.isVerticesDataPresent(BABYLON.VertexBufferKind.NormalKind)) {
+        public int faceId = -1;
+        public virtual Vector3 getNormal()
+        {
+            if (this.pickedMesh == null || !this.pickedMesh.isVerticesDataPresent(BABYLON.VertexBufferKind.NormalKind))
+            {
                 return null;
             }
             var indices = this.pickedMesh.getIndices();
@@ -33,8 +38,10 @@ namespace BABYLON {
             normal2 = normal2.scale(1.0 - this.bu - this.bv);
             return new BABYLON.Vector3(normal0.x + normal1.x + normal2.x, normal0.y + normal1.y + normal2.y, normal0.z + normal1.z + normal2.z);
         }
-        public virtual Vector2 getTextureCoordinates() {
-            if (!this.pickedMesh || !this.pickedMesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind)) {
+        public virtual Vector2 getTextureCoordinates()
+        {
+            if (this.pickedMesh == null|| !this.pickedMesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
+            {
                 return null;
             }
             var indices = this.pickedMesh.getIndices();

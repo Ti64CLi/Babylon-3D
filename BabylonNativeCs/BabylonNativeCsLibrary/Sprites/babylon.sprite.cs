@@ -9,17 +9,17 @@ namespace BABYLON {
         public BABYLON.Color4 color = new BABYLON.Color4(1.0, 1.0, 1.0, 1.0);
         public double size = 1.0;
         public double angle = 0;
-        public double cellIndex = 0;
-        public double invertU = 0;
-        public double invertV = 0;
+        public int cellIndex = 0;
+        public bool invertU = false;
+        public bool invertV = false;
         public System.Action disposeWhenFinishedAnimating;
         public Array < Animation > animations = new Array < Animation > ();
         private bool _animationStarted = false;
         private bool _loopAnimation = false;
-        private double _fromIndex = 0;
-        private double _toIndex = 0;
+        private int _fromIndex = 0;
+        private int _toIndex = 0;
         private double _delay = 0;
-        private double _direction = 1;
+        private int _direction = 1;
         private double _frameCount = 0;
         private SpriteManager _manager;
         private double _time = 0;
@@ -29,7 +29,7 @@ namespace BABYLON {
             this._manager.sprites.push(this);
             this.position = BABYLON.Vector3.Zero();
         }
-        public virtual void playAnimation(double from, double to, bool loop, double delay) {
+        public virtual void playAnimation(int from, int to, bool loop, double delay) {
             this._fromIndex = from;
             this._toIndex = to;
             this._loopAnimation = loop;
@@ -54,7 +54,7 @@ namespace BABYLON {
                         this.cellIndex = this._fromIndex;
                     } else {
                         this._animationStarted = false;
-                        if (this.disposeWhenFinishedAnimating) {
+                        if (this.disposeWhenFinishedAnimating != null) {
                             this.dispose();
                         }
                     }

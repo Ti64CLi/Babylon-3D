@@ -12,7 +12,7 @@ namespace BABYLON
         public System.Func<AbstractMesh, bool> meshesSelectionPredicate;
         private Scene _scene;
         private object _emitter;
-        private Array<VertexBufferKind> _vertexDeclaration = new Array<object>(VertexBufferKind.NormalKind);
+        private Array<VertexBufferKind> _vertexDeclaration = new Array<VertexBufferKind>(VertexBufferKind.NormalKind);
         private int _vertexStrideSize = 2 * 4;
         private WebGLBuffer _vertexBuffer;
         private WebGLBuffer _indexBuffer;
