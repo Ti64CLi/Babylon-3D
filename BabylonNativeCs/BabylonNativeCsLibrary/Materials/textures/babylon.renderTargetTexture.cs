@@ -14,14 +14,14 @@ namespace BABYLON
         public System.Action onBeforeRender;
         public System.Action onAfterRender;
         public System.Action<SmartArray<SubMesh>, SmartArray<SubMesh>, SmartArray<SubMesh>, System.Action> customRenderFunction;
-        private double _size;
+        private Size _size;
         public bool _generateMipMaps;
         private RenderingManager _renderingManager;
         public Array<string> _waitingRenderList;
         private bool _doNotChangeAspectRatio;
         private double _currentRefreshId = -1;
         private double _refreshRate = 1;
-        public RenderTargetTexture(string name, object size, Scene scene, bool generateMipMaps = false, bool doNotChangeAspectRatio = true)
+        public RenderTargetTexture(string name, Size size, Scene scene, bool generateMipMaps = false, bool doNotChangeAspectRatio = true)
             : base(null, scene, !generateMipMaps)
         {
             this.name = name;
@@ -63,22 +63,22 @@ namespace BABYLON
             this._currentRefreshId++;
             return false;
         }
-        public virtual double getRenderSize()
+        public virtual Size getRenderSize()
         {
             return this._size;
         }
-        public virtual void resize(object size, object generateMipMaps)
+        public virtual void resize(Size size, bool generateMipMaps)
         {
             this.releaseInternalTexture();
-            this._texture = this.getScene().getEngine().createRenderTargetTexture(size, generateMipMaps);
+            this._texture = this.getScene().getEngine().createRenderTargetTexture(size, generateMipMaps: generateMipMaps);
         }
         public virtual void render(bool useCameraPostProcess = false)
         {
             var scene = this.getScene();
             var engine = scene.getEngine();
-            if (this._waitingRenderList)
+            if (this._waitingRenderList != null)
             {
-                this.renderList = new Array<object>();
+                this.renderList = new Array<AbstractMesh>();
                 for (var index = 0; index < this._waitingRenderList.Length; index++)
                 {
                     var id = this._waitingRenderList[index];
@@ -86,7 +86,7 @@ namespace BABYLON
                 }
                 this._waitingRenderList = null;
             }
-            if (!this.renderList || this.renderList.Length == 0)
+            if (this.renderList == null || this.renderList.Length == 0)
             {
                 return;
             }
@@ -101,12 +101,12 @@ namespace BABYLON
                 var mesh = this.renderList[meshIndex];
                 if (mesh != null)
                 {
-                    if (!mesh.isReady() || (mesh.material && !mesh.material.isReady()))
+                    if (!mesh.isReady() || (mesh.material != null && !mesh.material.isReady()))
                     {
                         this.resetRefreshCounter();
                         continue;
                     }
-                    if (mesh.isEnabled() && mesh.isVisible && mesh.subMeshes && ((mesh.layerMask & scene.activeCamera.layerMask) != 0))
+                    if (mesh.isEnabled() && mesh.isVisible && mesh.subMeshes != null && ((mesh.layerMask & scene.activeCamera.layerMask) != 0))
                     {
                         mesh._activate(scene.getRenderId());
                         for (var subIndex = 0; subIndex < mesh.subMeshes.Length; subIndex++)
@@ -144,7 +144,7 @@ namespace BABYLON
         public virtual RenderTargetTexture clone()
         {
             var textureSize = this.getSize();
-            var newTexture = new BABYLON.RenderTargetTexture(this.name, textureSize.width, this.getScene(), this._generateMipMaps);
+            var newTexture = new BABYLON.RenderTargetTexture(this.name, textureSize, this.getScene(), this._generateMipMaps);
             newTexture.hasAlpha = this.hasAlpha;
             newTexture.level = this.level;
             newTexture.coordinatesMode = this.coordinatesMode;

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    public partial class Bone, IAnimatable
+    public partial class Bone : IAnimatable
     {
         public Array<Bone> children = new Array<Bone>();
         public Array<Animation> animations = new Array<Animation>();
@@ -90,6 +90,53 @@ namespace BABYLON
         public virtual void markAsDirty()
         {
             this._skeleton._markAsDirty();
+        }
+
+        public IAnimatableProperty this[string propertyName]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Array<Animation> IAnimatable.animations
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Array<IAnimatable> getAnimatables()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void markAsDirty(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public object value
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

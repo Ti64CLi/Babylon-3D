@@ -15,17 +15,6 @@ namespace BABYLON
 
         void markAsDirty(string propertyName);
     }
-    public partial interface ISize
-    {
-        int width
-        {
-            get;
-        }
-        int height
-        {
-            get;
-        }
-    }
     public partial class Tools
     {
         public static Web.Window window;

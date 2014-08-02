@@ -13,7 +13,7 @@ namespace BABYLON
         private Scene _scene;
         private double _refCount = 0;
         public string _name;
-        public PostProcessRenderPass(Scene scene, string name, double size, Array<AbstractMesh> renderList, System.Action beforeRender, System.Action afterRender)
+        public PostProcessRenderPass(Scene scene, string name, Size size, Array<AbstractMesh> renderList, System.Action beforeRender, System.Action afterRender)
         {
             this._name = name;
             this._renderTexture = new RenderTargetTexture(name, size, scene);

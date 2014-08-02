@@ -229,7 +229,7 @@ namespace BABYLON
             if (!this._started)
                 return;
             var effect = this._getEffect();
-            if (this.emitter == null || !effect.isReady() || this.particleTexture == null|| !this.particleTexture.isReady())
+            if (this.emitter == null || !effect.isReady() || this.particleTexture == null || !this.particleTexture.isReady())
                 return;
             if (this._currentRenderId == this._scene.getRenderId())
             {
@@ -289,10 +289,10 @@ namespace BABYLON
             var engine = this._scene.getEngine();
             engine.updateDynamicVertexBuffer(this._vertexBuffer, this._vertices, this.particles.Length * this._vertexStrideSize);
         }
-        public virtual double render()
+        public virtual int render()
         {
             var effect = this._getEffect();
-            if (this.emitter == null || !effect.isReady() || this.particleTexture == null|| !this.particleTexture.isReady() || this.particles.Length == 0)
+            if (this.emitter == null || !effect.isReady() || this.particleTexture == null || !this.particleTexture.isReady() || this.particles.Length == 0)
                 return 0;
             var engine = this._scene.getEngine();
             engine.enableEffect(effect);

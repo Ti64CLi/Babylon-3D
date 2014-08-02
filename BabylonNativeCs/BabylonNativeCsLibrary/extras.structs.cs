@@ -28,7 +28,7 @@ namespace BABYLON
         public double distance { get; set; }
     }
 
-    public struct Size : ISize
+    public struct Size
     {
         public int width { get; set; }
 

@@ -1063,20 +1063,8 @@ namespace BABYLON
             this._activeTexturesCache = new Array<BaseTexture>();
             texture.isReady = true;
         }
-        public virtual WebGLTexture createRenderTargetTexture(Size size, RenderTargetTextureOptions options)
+        public virtual WebGLTexture createRenderTargetTexture(Size size, bool generateMipMaps = false, bool generateDepthBuffer = false, int samplingMode = BABYLON.Texture.TRILINEAR_SAMPLINGMODE)
         {
-            var generateMipMaps = false;
-            var generateDepthBuffer = true;
-            var samplingMode = BABYLON.Texture.TRILINEAR_SAMPLINGMODE;
-            if (options != null)
-            {
-                generateMipMaps = (options.generateMipMaps.HasValue) && options.generateMipMaps.Value;
-                generateDepthBuffer = (!options.generateDepthBuffer.HasValue) || options.generateDepthBuffer.Value;
-                if (options.samplingMode.HasValue)
-                {
-                    samplingMode = options.samplingMode.Value;
-                }
-            }
             var gl = this._gl;
             var texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);

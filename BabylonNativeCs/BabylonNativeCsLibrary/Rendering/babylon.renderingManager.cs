@@ -31,7 +31,7 @@ namespace BABYLON
                     continue;
                 }
                 this._clearDepthBuffer();
-                if (!particleSystem.emitter.position || !activeMeshes || activeMeshes.indexOf(particleSystem.emitter) != -1)
+                if (((Mesh)particleSystem.emitter).position == null || activeMeshes == null || activeMeshes.indexOf((Mesh)particleSystem.emitter) != -1)
                 {
                     this._scene._activeParticles += particleSystem.render();
                 }
@@ -62,7 +62,7 @@ namespace BABYLON
             {
                 return;
             }
-            this._scene.getEngine().clear(0, false, true);
+            this._scene.getEngine().clear(new Color3(0, 0, 0), false, true);
             this._depthBufferAlreadyCleaned = true;
         }
         public virtual void render(System.Action<SmartArray<SubMesh>, SmartArray<SubMesh>, SmartArray<SubMesh>, System.Action> customRenderFunction, Array<AbstractMesh> activeMeshes, bool renderParticles, bool renderSprites)
@@ -107,8 +107,8 @@ namespace BABYLON
         public virtual void dispatch(SubMesh subMesh)
         {
             var mesh = subMesh.getMesh();
-            var renderingGroupId = mesh.renderingGroupId || 0;
-            if (!this._renderingGroups[renderingGroupId])
+            var renderingGroupId = mesh.renderingGroupId;
+            if (this._renderingGroups[renderingGroupId] == null)
             {
                 this._renderingGroups[renderingGroupId] = new BABYLON.RenderingGroup(renderingGroupId, this._scene);
             }

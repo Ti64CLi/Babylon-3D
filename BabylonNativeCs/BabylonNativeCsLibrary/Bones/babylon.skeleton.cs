@@ -70,12 +70,12 @@ namespace BABYLON
         }
         public virtual Skeleton clone(string name, string id)
         {
-            var result = new BABYLON.Skeleton(name, id || name, this._scene);
+            var result = new BABYLON.Skeleton(name, id ?? name, this._scene);
             for (var index = 0; index < this.bones.Length; index++)
             {
                 var source = this.bones[index];
-                var parentBone = null;
-                if (source.getParent())
+                Bone parentBone = null;
+                if (source.getParent() != null)
                 {
                     var parentIndex = this.bones.indexOf(source.getParent());
                     parentBone = result.bones[parentIndex];

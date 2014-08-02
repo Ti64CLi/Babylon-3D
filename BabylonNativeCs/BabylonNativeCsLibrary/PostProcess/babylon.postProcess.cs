@@ -64,10 +64,10 @@ namespace BABYLON
                 }
                 this.width = (int)desiredWidth;
                 this.height = (int)desiredHeight;
-                this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, new RenderTargetTextureOptions { generateMipMaps = false, generateDepthBuffer = camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode = this.renderTargetSamplingMode }));
+                this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
                 if (this._reusable)
                 {
-                    this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, new RenderTargetTextureOptions  { generateMipMaps = false, generateDepthBuffer = camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode = this.renderTargetSamplingMode }));
+                    this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
                 }
                 if (this.onSizeChanged != null)
                 {

@@ -25,7 +25,7 @@ namespace BABYLON
         private string _cachedDefines;
         public bool useVarianceShadowMap;
         public bool usePoissonSampling;
-        public ShadowGenerator(double mapSize, DirectionalLight light)
+        public ShadowGenerator(Size mapSize, DirectionalLight light)
         {
             this._light = light;
             this._scene = light.getScene();
@@ -90,20 +90,19 @@ namespace BABYLON
                     this._shadowMap.resetRefreshCounter();
                 }
             };
-            this._shadowMap.customRenderFunction = (SmartArray<SubMesh> opaqueSubMeshes, SmartArray<SubMesh> alphaTestSubMeshes, SmartArray<SubMesh> transparentSubMeshes) =>
+            this._shadowMap.customRenderFunction = (SmartArray<SubMesh> opaqueSubMeshes, SmartArray<SubMesh> alphaTestSubMeshes, SmartArray<SubMesh> transparentSubMeshes, System.Action beforeTransform) =>
             {
-                var index;
-                for (index = 0; index < opaqueSubMeshes.Length; index++)
+                for (var index = 0; index < opaqueSubMeshes.Length; index++)
                 {
                     renderSubMesh(opaqueSubMeshes.data[index]);
                 }
-                for (index = 0; index < alphaTestSubMeshes.Length; index++)
+                for (var index = 0; index < alphaTestSubMeshes.Length; index++)
                 {
                     renderSubMesh(alphaTestSubMeshes.data[index]);
                 }
                 if (this._transparencyShadow)
                 {
-                    for (index = 0; index < transparentSubMeshes.Length; index++)
+                    for (var index = 0; index < transparentSubMeshes.Length; index++)
                     {
                         renderSubMesh(transparentSubMeshes.data[index]);
                     }
@@ -117,7 +116,7 @@ namespace BABYLON
             {
                 defines.push("#define VSM");
             }
-            var attribs = new Array<object>(BABYLON.VertexBufferKind.PositionKind);
+            var attribs = new Array<string>(BABYLON.VertexBuffer.PositionKind);
             var mesh = subMesh.getMesh();
             var material = subMesh.getMaterial();
             if (material != null && material.needAlphaTesting())
@@ -125,19 +124,19 @@ namespace BABYLON
                 defines.push("#define ALPHATEST");
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
                 {
-                    attribs.push(BABYLON.VertexBufferKind.UVKind);
+                    attribs.push(BABYLON.VertexBuffer.UVKind);
                     defines.push("#define UV1");
                 }
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
                 {
-                    attribs.push(BABYLON.VertexBufferKind.UV2Kind);
+                    attribs.push(BABYLON.VertexBuffer.UV2Kind);
                     defines.push("#define UV2");
                 }
             }
             if (mesh.skeleton != null && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
             {
-                attribs.push(BABYLON.VertexBufferKind.MatricesIndicesKind);
-                attribs.push(BABYLON.VertexBufferKind.MatricesWeightsKind);
+                attribs.push(BABYLON.VertexBuffer.MatricesIndicesKind);
+                attribs.push(BABYLON.VertexBuffer.MatricesWeightsKind);
                 defines.push("#define BONES");
                 defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
             }

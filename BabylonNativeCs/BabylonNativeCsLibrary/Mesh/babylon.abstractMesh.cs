@@ -27,7 +27,7 @@ namespace BABYLON
         public System.Action onDispose = null;
         public bool checkCollisions = false;
         public Skeleton skeleton;
-        public double renderingGroupId = 0;
+        public int renderingGroupId = 0;
         public Material material;
         public bool receiveShadows = false;
         public ActionManager actionManager;

@@ -56,7 +56,7 @@ namespace BABYLON
             }
             return false;
         }
-        public virtual ISize getSize()
+        public virtual Size getSize()
         {
             if (this._texture._width > 0)
             {
@@ -68,7 +68,7 @@ namespace BABYLON
             }
             return new Size { width = 0, height = 0 };
         }
-        public virtual ISize getBaseSize()
+        public virtual Size getBaseSize()
         {
             if (!this.isReady())
                 return new Size { width = 0, height = 0 };
