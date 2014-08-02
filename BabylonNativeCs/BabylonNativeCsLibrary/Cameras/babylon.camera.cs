@@ -113,7 +113,7 @@ namespace BABYLON
         public virtual void attachControl(HTMLElement element) { }
         public virtual void detachControl(HTMLElement element) { }
         public virtual void _update() { }
-        public virtual double attachPostProcess(PostProcess postProcess, int insertAt = -1)
+        public virtual int attachPostProcess(PostProcess postProcess, int insertAt = -1)
         {
             if (!postProcess.isReusable() && this._postProcesses.indexOf(postProcess) > -1)
             {

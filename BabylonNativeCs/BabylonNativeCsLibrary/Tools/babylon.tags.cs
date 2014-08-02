@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    /*
     public partial class Tags
     {
+        /*
         public static void EnableFor(object obj)
         {
             obj._tags = obj._tags || new { };
@@ -54,11 +54,11 @@ namespace BABYLON
         }
         public static void AddTagsTo(object obj, string tagsString)
         {
-            if (!tagsString)
+            if (tagsString == null)
             {
                 return;
             }
-            var tags = tagsString.Split(" ");
+            var tags = tagsString.Split(' ');
             foreach (var t in tags)
             {
                 Tags._AddTagTo(obj, tags[t]);
@@ -66,7 +66,7 @@ namespace BABYLON
         }
         public static void _AddTagTo(object obj, string tag)
         {
-            tag = tag.trim();
+            tag = tag.Trim();
             if (tag == "" || tag == "true" || tag == "false")
             {
                 return;
@@ -106,6 +106,6 @@ namespace BABYLON
             }
             return Internals.AndOrNotEvaluator.Eval(tagsQuery, (r) => Tags.HasTags(obj) && obj._tags[r]);
         }
+        */
     }
-    */
 }

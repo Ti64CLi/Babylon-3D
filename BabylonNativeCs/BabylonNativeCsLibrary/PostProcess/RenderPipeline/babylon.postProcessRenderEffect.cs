@@ -7,88 +7,41 @@ namespace BABYLON
 {
     public partial class PostProcessRenderEffect
     {
-        /*
         private Engine _engine;
-        private Array<PostProcess> _postProcesses;
-        private dynamic _postProcessType;
+        private Map<string, PostProcess> _postProcesses;
+        private PostProcess _postProcessType;
         private double _ratio;
-        private double _samplingMode;
-        private bool _singleInstance;
-        private Array<Camera> _cameras;
-        private Array<Array<double>> _indicesForCamera;
-        private Array<PostProcessRenderPass> _renderPasses;
-        private Array<PostProcessRenderEffect> _renderEffectAsPasses;
+        private int _samplingMode;
+        private Map<string, Camera> _cameras;
+        private Map<string, Array<int>> _indicesForCamera;
+        private Map<string, PostProcessRenderPass> _renderPasses;
+        private Map<string, PostProcessRenderEffect> _renderEffectAsPasses;
         public string _name;
         public System.Action<Effect> parameters;
-        public PostProcessRenderEffect(Engine engine, string name, object postProcessType, double ratio = 1.0, int samplingMode = 0, bool singleInstance = false)
+        public PostProcessRenderEffect(Engine engine, string name, PostProcess postProcessType, double ratio = 1.0, int samplingMode = 0)
         {
             this._engine = engine;
             this._name = name;
             this._postProcessType = postProcessType;
             this._ratio = ratio;
             this._samplingMode = samplingMode;
-            this._singleInstance = singleInstance || true;
-            this._cameras = new Array<Camera>();
-            this._postProcesses = new Array<PostProcess>();
-            this._indicesForCamera = new Array<Array<double>>();
-            this._renderPasses = new Array<PostProcessRenderPass>();
-            this._renderEffectAsPasses = new Array<PostProcessRenderEffect>();
+            this._cameras = new Map<string, Camera>();
+            this._postProcesses = new Map<string, PostProcess>();
+            this._indicesForCamera = new Map<string, Array<int>>();
+            this._renderPasses = new Map<string, PostProcessRenderPass>();
+            this._renderEffectAsPasses = new Map<string, PostProcessRenderEffect>();
             this.parameters = (Effect effect) => { };
         }
-        private static PostProcess _GetInstance(Engine engine, object postProcessType, double ratio, int samplingMode)
-        {
-            System.Action postProcess;
-            PostProcess instance;
-            var args = new Array<object>();
-            var parameters = PostProcessRenderEffect._GetParametersNames(postProcessType);
-            for (var i = 0; i < parameters.Length; i++)
-            {
-                switch (parameters[i])
-                {
-                    case "name":
-                        args[i] = postProcessType.ToString();
-                        break;
-                    case "ratio":
-                        args[i] = ratio;
-                        break;
-                    case "camera":
-                        args[i] = null;
-                        break;
-                    case "samplingMode":
-                        args[i] = samplingMode;
-                        break;
-                    case "engine":
-                        args[i] = engine;
-                        break;
-                    case "reusable":
-                        args[i] = true;
-                        break;
-                    default:
-                        args[i] = null;
-                        break;
-                }
-            }
 
-            // TODO: finish it
-            postProcess = () => { };
-            ////postProcess.prototype = postProcessType.prototype;
-            ////instance = new postProcess();
-            ////postProcessType.apply(instance, args);
-            return instance;
-        }
-        private static Array<string> _GetParametersNames(System.Func<string> func)
+        private static PostProcess _GetInstance(Engine engine, PostProcess postProcessType, double ratio = 1.0, int samplingMode = 0)
         {
             // TODO: finish it
-            ////var commentsRegex = new Regex(@"((\/\/.*$)|(\/\*[\s\S]*?\*\/))", RegexOptions.Multiline);
-            ////var functWithoutComments = func().Replace(commentsRegex, string.Empty);
-            Array<string> parameters = null; // functWithoutComments.slice(functWithoutComments.IndexOf('(') + 1, functWithoutComments.IndexOf(')')).match(new Regex(@"([^\s,]+)"));
-            if (parameters == null)
-                parameters = new Array<string>();
-            return parameters;
+            return null;
         }
+
         public virtual void _update()
         {
-            foreach (var renderPassName in this._renderPasses)
+            foreach (var renderPassName in this._renderPasses.Keys)
             {
                 this._renderPasses[renderPassName]._update();
             }
@@ -108,81 +61,79 @@ namespace BABYLON
             this._renderEffectAsPasses[renderEffect._name] = renderEffect;
             this._linkParameters();
         }
-        public virtual void getPass(string passName)
+        public virtual PostProcessRenderPass getPass(string passName)
         {
-            foreach (var renderPassName in this._renderPasses)
+            foreach (var renderPassName in this._renderPasses.Keys)
             {
                 if (renderPassName == passName)
                 {
                     return this._renderPasses[passName];
                 }
             }
+
+            return null;
         }
         public virtual void emptyPasses()
         {
-            this._renderPasses.Length = 0;
+            this._renderPasses.Clear();
             this._linkParameters();
         }
-        public virtual void _attachCameras(Camera cameras) { }
-        public virtual void _attachCameras(Array<Camera> cameras) { }
-        public virtual void _attachCameras(object cameras)
+        public virtual void _attachCameras(Camera camera)
         {
-            var cameraKey;
-            var _cam = Tools.MakeArray(cameras ?? this._cameras);
+            _attachCameras(new Array<Camera>(camera));
+        }
+        public virtual void _attachCameras(Array<Camera> cameras)
+        {
+            string cameraKey;
+            var _cam = cameras;
             for (var i = 0; i < _cam.Length; i++)
             {
                 var camera = _cam[i];
                 var cameraName = camera.name;
-                if (this._singleInstance)
-                {
-                    cameraKey = 0;
-                }
-                else
-                {
-                    cameraKey = cameraName;
-                }
-                this._postProcesses[cameraKey] = this._postProcesses[cameraKey] || PostProcessRenderEffect._GetInstance(this._engine, this._postProcessType, this._ratio, this._samplingMode);
+                cameraKey = cameraName;
+                this._postProcesses[cameraKey] = this._postProcesses[cameraKey]
+                    ?? PostProcessRenderEffect._GetInstance(this._engine, this._postProcessType, this._ratio, this._samplingMode);
                 var index = camera.attachPostProcess(this._postProcesses[cameraKey]);
                 if (this._indicesForCamera[cameraName] == null)
                 {
-                    this._indicesForCamera[cameraName] = new Array<object>();
+                    this._indicesForCamera[cameraName] = new Array<int>();
                 }
                 this._indicesForCamera[cameraName].push(index);
-                if (this._cameras.indexOf(camera) == -1)
-                {
-                    this._cameras[cameraName] = camera;
-                }
-                foreach (var passName in this._renderPasses)
+                this._cameras[cameraName] = camera;
+                foreach (var passName in this._renderPasses.Keys)
                 {
                     this._renderPasses[passName]._incRefCount();
                 }
             }
             this._linkParameters();
         }
-        public virtual void _detachCameras(Camera cameras) { }
-        public virtual void _detachCameras(Array<Camera> cameras) { }
-        public virtual void _detachCameras(object cameras)
+        public virtual void _detachCameras(Camera camera)
         {
-            var _cam = Tools.MakeArray(cameras || this._cameras);
+            _detachCameras(new Array<Camera>(camera));
+        }
+        public virtual void _detachCameras(Array<Camera> cameras)
+        {
+            var _cam = cameras;
             for (var i = 0; i < _cam.Length; i++)
             {
                 var camera = _cam[i];
                 var cameraName = camera.name;
-                camera.detachPostProcess(this._postProcesses[(this._singleInstance) ? 0 : cameraName], this._indicesForCamera[cameraName]);
-                var index = this._cameras.indexOf(cameraName);
-                this._indicesForCamera.splice(index, 1);
-                this._cameras.splice(index, 1);
-                foreach (var passName in this._renderPasses)
+                camera.detachPostProcess(this._postProcesses[cameraName], this._indicesForCamera[cameraName]);
+                this._indicesForCamera.Remove(cameraName);
+                this._cameras.Remove(cameraName);
+                foreach (var passName in this._renderPasses.Keys)
                 {
                     this._renderPasses[passName]._decRefCount();
                 }
             }
         }
-        public virtual void _enable(Camera cameras) { }
-        public virtual void _enable(Array<Camera> cameras) { }
-        public virtual void _enable(object cameras)
+        public virtual void _enable(Camera cameras)
         {
-            var _cam = Tools.MakeArray(cameras || this._cameras);
+            _enable(new Array<Camera>(cameras));
+        }
+        public virtual void _enable(Array<Camera> cameras)
+        {
+            var _cam = cameras;
             for (var i = 0; i < _cam.Length; i++)
             {
                 var camera = _cam[i];
@@ -191,26 +142,28 @@ namespace BABYLON
                 {
                     if (camera._postProcesses[this._indicesForCamera[cameraName][j]] == null)
                     {
-                        cameras[i].attachPostProcess(this._postProcesses[(this._singleInstance) ? 0 : cameraName], this._indicesForCamera[cameraName][j]);
+                        cameras[i].attachPostProcess(this._postProcesses[cameraName], this._indicesForCamera[cameraName][j]);
                     }
                 }
-                foreach (var passName in this._renderPasses)
+                foreach (var passName in this._renderPasses.Keys)
                 {
                     this._renderPasses[passName]._incRefCount();
                 }
             }
         }
-        public virtual void _disable(Camera cameras) { }
-        public virtual void _disable(Array<Camera> cameras) { }
-        public virtual void _disable(object cameras)
+        public virtual void _disable(Camera cameras)
         {
-            var _cam = Tools.MakeArray(cameras || this._cameras);
+            _disable(new Array<Camera>(cameras));
+        }
+        public virtual void _disable(Array<Camera> cameras)
+        {
+            var _cam = cameras;
             for (var i = 0; i < _cam.Length; i++)
             {
                 var camera = _cam[i];
-                var cameraName = camera.Name;
-                camera.detachPostProcess(this._postProcesses[(this._singleInstance) ? 0 : cameraName], this._indicesForCamera[cameraName]);
-                foreach (var passName in this._renderPasses)
+                var cameraName = camera.name;
+                camera.detachPostProcess(this._postProcesses[cameraName], this._indicesForCamera[cameraName]);
+                foreach (var passName in this._renderPasses.Keys)
                 {
                     this._renderPasses[passName]._decRefCount();
                 }
@@ -218,18 +171,11 @@ namespace BABYLON
         }
         public virtual PostProcess getPostProcess(Camera camera = null)
         {
-            if (this._singleInstance)
-            {
-                return this._postProcesses[0];
-            }
-            else
-            {
-                return this._postProcesses[camera.name];
-            }
+            return this._postProcesses[camera.name];
         }
         private void _linkParameters()
         {
-            foreach (var index in this._postProcesses)
+            foreach (var index in this._postProcesses.Keys)
             {
                 this._postProcesses[index].onApply = (Effect effect) =>
                 {
@@ -238,17 +184,16 @@ namespace BABYLON
                 };
             }
         }
-        private void _linkTextures(object effect)
+        private void _linkTextures(Effect effect)
         {
-            foreach (var renderPassName in this._renderPasses)
+            foreach (var renderPassName in this._renderPasses.Keys)
             {
                 effect.setTexture(renderPassName, this._renderPasses[renderPassName].getRenderTexture());
             }
-            foreach (var renderEffectName in this._renderEffectAsPasses)
+            foreach (var renderEffectName in this._renderEffectAsPasses.Keys)
             {
                 effect.setTextureFromPostProcess(renderEffectName + "Sampler", this._renderEffectAsPasses[renderEffectName].getPostProcess());
             }
         }
-        */
     }
 }

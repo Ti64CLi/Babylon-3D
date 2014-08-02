@@ -109,12 +109,6 @@ namespace BABYLON
             }
             return new MinMax { minimum = minimum, maximum = maximum };
         }
-        public static Array<T> MakeArray<T>(T obj, bool allowsNullUndefined = false)
-        {
-            if (allowsNullUndefined != true && (obj == null || obj == null))
-                return null;
-            return new Array<T>(obj);
-        }
         public static string GetPointerPrefix()
         {
             var eventPrefix = "pointer";

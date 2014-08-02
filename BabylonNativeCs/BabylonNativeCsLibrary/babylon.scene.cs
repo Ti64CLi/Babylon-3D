@@ -1274,14 +1274,15 @@ namespace BABYLON
                 return list;
             }
             var listByTags = new Array<T>();
-            for (var i = 0; i < list.Length; i++)
-            {
-                var item = list[i];
-                if (BABYLON.Tags.MatchesQuery(item, tagsQuery))
-                {
-                    listByTags.push(item);
-                }
-            }
+            // TODO: finish it
+            ////for (var i = 0; i < list.Length; i++)
+            ////{
+            ////    var item = list[i];
+            ////    if (BABYLON.Tags.MatchesQuery(item, tagsQuery))
+            ////    {
+            ////        listByTags.push(item);
+            ////    }
+            ////}
             return listByTags;
         }
         public virtual Array<AbstractMesh> getMeshesByTags(string tagsQuery)
