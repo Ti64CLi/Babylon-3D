@@ -262,7 +262,7 @@ namespace BABYLON
             var index = this._onBeforeRenderCallbacks.indexOf(func);
             if (index > -1)
             {
-                this._onBeforeRenderCallbacks.splice(index, 1);
+                this._onBeforeRenderCallbacks.RemoveAt(index);
             }
         }
         public virtual _InstancesBatch _getInstancesRenderList(int subMeshId)
@@ -610,7 +610,7 @@ namespace BABYLON
                 if (kind == BABYLON.VertexBufferKind.NormalKind)
                 {
                     updatableNormals = vertexBuffer.isUpdatable();
-                    kinds.splice(kindIndex, 1);
+                    kinds.RemoveAt(kindIndex);
                     kindIndex--;
                     continue;
                 }

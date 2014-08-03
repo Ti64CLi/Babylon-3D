@@ -609,12 +609,12 @@ namespace BABYLON
             {
                 var other = this._intersectionsInProgress[index];
                 var pos = other._intersectionsInProgress.indexOf(this);
-                other._intersectionsInProgress.splice(pos, 1);
+                other._intersectionsInProgress.RemoveAt(pos);
             }
             this._intersectionsInProgress = new Array<AbstractMesh>();
             this.releaseSubMeshes();
             index = this.getScene().meshes.indexOf(this);
-            this.getScene().meshes.splice(index, 1);
+            this.getScene().meshes.RemoveAt(index);
             if (!doNotRecurse)
             {
                 for (index = 0; index < this.getScene().particleSystems.Length; index++)

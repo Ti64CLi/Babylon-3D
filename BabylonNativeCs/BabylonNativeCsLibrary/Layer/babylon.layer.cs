@@ -74,7 +74,7 @@ namespace BABYLON
                 this.texture = null;
             }
             var index = this._scene.layers.indexOf(this);
-            this._scene.layers.splice(index, 1);
+            this._scene.layers.RemoveAt(index);
             if (this.onDispose != null)
             {
                 this.onDispose();

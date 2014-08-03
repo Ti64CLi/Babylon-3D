@@ -52,7 +52,7 @@ namespace BABYLON
                 this._shadowGenerator = null;
             }
             var index = this.getScene().lights.indexOf(this);
-            this.getScene().lights.splice(index, 1);
+            this.getScene().lights.RemoveAt(index);
         }
     }
 }

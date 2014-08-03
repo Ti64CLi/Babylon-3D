@@ -241,7 +241,7 @@ namespace BABYLON
             {
                 this._indexBuffer = null;
             }
-            meshes.splice(index, 1);
+            meshes.RemoveAt(index);
             mesh._geometry = null;
             if (meshes.Length == 0 && shouldDispose)
             {
@@ -363,7 +363,7 @@ namespace BABYLON
             var index2 = geometries.indexOf(this);
             if (index2 > -1)
             {
-                geometries.splice(index2, 1);
+                geometries.RemoveAt(index2);
             }
         }
         public virtual Geometry copy(int id)

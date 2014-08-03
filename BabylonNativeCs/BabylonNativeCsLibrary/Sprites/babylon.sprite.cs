@@ -64,7 +64,7 @@ namespace BABYLON {
         public virtual void dispose() {
             for (var i = 0; i < this._manager.sprites.Length; i++) {
                 if (this._manager.sprites[i] == this) {
-                    this._manager.sprites.splice(i, 1);
+                    this._manager.sprites.RemoveAt(i);
                 }
             }
         }

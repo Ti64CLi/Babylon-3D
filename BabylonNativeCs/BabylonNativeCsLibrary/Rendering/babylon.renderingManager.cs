@@ -82,7 +82,7 @@ namespace BABYLON
                         }
                     }))
                     {
-                        this._renderingGroups.splice(index, 1);
+                        this._renderingGroups.RemoveAt(index);
                     }
                 }
                 else

@@ -747,7 +747,7 @@ namespace BabylonWpf
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
-            throw new NotImplementedException();
+            this.openGl.DeleteBuffers(1, new uint[] { buffer.Value });
         }
 
         public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height)

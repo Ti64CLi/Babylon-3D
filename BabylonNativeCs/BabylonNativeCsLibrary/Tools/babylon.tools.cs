@@ -404,7 +404,7 @@ namespace BABYLON
             {
                 if (Length > fpsRange)
                 {
-                    previousFramesDuration.splice(0, 1);
+                    previousFramesDuration.RemoveAt(0);
                     Length = previousFramesDuration.Length;
                 }
                 var sum = 0;

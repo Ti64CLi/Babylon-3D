@@ -235,7 +235,7 @@ namespace BABYLON
                         var index = this._keys.indexOf(evt.keyCode);
                         if (index >= 0)
                         {
-                            this._keys.splice(index, 1);
+                            this._keys.RemoveAt(index);
                         }
                         if (!noPreventDefault)
                         {

@@ -35,7 +35,7 @@ namespace BABYLON
             this._refCount--;
             if (this._refCount <= 0)
             {
-                this._scene.customRenderTargets.splice(this._scene.customRenderTargets.indexOf(this._renderTexture), 1);
+                this._scene.customRenderTargets.RemoveAt(this._scene.customRenderTargets.indexOf(this._renderTexture));
             }
             return this._refCount;
         }

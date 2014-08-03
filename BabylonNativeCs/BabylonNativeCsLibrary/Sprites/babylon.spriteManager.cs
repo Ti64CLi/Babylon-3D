@@ -150,7 +150,7 @@ namespace BABYLON
                 this._spriteTexture = null;
             }
             var index = this._scene.spriteManagers.indexOf(this);
-            this._scene.spriteManagers.splice(index, 1);
+            this._scene.spriteManagers.RemoveAt(index);
             if (this.onDispose != null)
             {
                 this.onDispose();

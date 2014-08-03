@@ -199,7 +199,7 @@ namespace BABYLON
                 this.lensFlares[0].dispose();
             }
             var index = this._scene.lensFlareSystems.indexOf(this);
-            this._scene.lensFlareSystems.splice(index, 1);
+            this._scene.lensFlareSystems.RemoveAt(index);
         }
     }
 }

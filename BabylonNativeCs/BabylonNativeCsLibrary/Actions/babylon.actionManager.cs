@@ -42,7 +42,7 @@ namespace BABYLON
             var index = this._scene._actionManagers.indexOf(this);
             if (index > -1)
             {
-                this._scene._actionManagers.splice(index, 1);
+                this._scene._actionManagers.RemoveAt(index);
             }
         }
         public virtual Scene getScene()

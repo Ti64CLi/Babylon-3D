@@ -26,7 +26,7 @@ namespace BABYLON
                 this.texture.dispose();
             }
             var index = this._system.lensFlares.indexOf(this);
-            this._system.lensFlares.splice(index, 1);
+            this._system.lensFlares.RemoveAt(index);
         }
 
     }

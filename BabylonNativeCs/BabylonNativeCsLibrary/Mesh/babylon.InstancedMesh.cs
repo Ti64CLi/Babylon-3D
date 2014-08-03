@@ -135,7 +135,7 @@ namespace BABYLON
         public override void dispose(bool doNotRecurse = false)
         {
             var index = this._sourceMesh.instances.indexOf(this);
-            this._sourceMesh.instances.splice(index, 1);
+            this._sourceMesh.instances.RemoveAt(index);
             base.dispose(doNotRecurse);
         }
     }

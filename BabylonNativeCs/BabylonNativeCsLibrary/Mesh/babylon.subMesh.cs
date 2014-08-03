@@ -156,7 +156,7 @@ namespace BABYLON
                 this._linesIndexBuffer = null;
             }
             var index = this._mesh.subMeshes.indexOf(this);
-            this._mesh.subMeshes.splice(index, 1);
+            this._mesh.subMeshes.RemoveAt(index);
         }
         public static SubMesh CreateFromIndices(int materialIndex, int startIndex, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null)
         {

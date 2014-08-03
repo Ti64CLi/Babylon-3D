@@ -19,6 +19,9 @@ namespace BABYLON
         public Vector3 maximum;
         public BoundingBox(Vector3 minimum, Vector3 maximum)
         {
+            this.minimum = minimum;
+            this.maximum = maximum;
+
             this.vectors.push(this.minimum.clone());
             this.vectors.push(this.maximum.clone());
             this.vectors.push(this.minimum.clone());
@@ -36,9 +39,11 @@ namespace BABYLON
             this.center = this.maximum.add(this.minimum).scale(0.5);
             this.extends = this.maximum.subtract(this.minimum).scale(0.5);
             this.directions = new Array<Vector3>(BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
+
+            this.vectorsWorld.Capacity = this.vectors.Length;
             for (var index = 0; index < this.vectors.Length; index++)
             {
-                this.vectorsWorld[index] = BABYLON.Vector3.Zero();
+                this.vectorsWorld.Add(BABYLON.Vector3.Zero());
             }
             this.minimumWorld = BABYLON.Vector3.Zero();
             this.maximumWorld = BABYLON.Vector3.Zero();

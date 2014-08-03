@@ -76,7 +76,7 @@
     }
 
     public class Map<K, V> : Dictionary<K, V>
-    {        
+    {
     }
 
     public class Array<T> : List<T>
@@ -172,11 +172,6 @@
             throw new NotImplementedException();
         }
 
-        public Array<T> splice(int index, int size)
-        {
-            throw new NotImplementedException();
-        }
-
         public void splice(int index, int size, Array<T> newKeys)
         {
             throw new NotImplementedException();
@@ -214,7 +209,17 @@
 
         public int BYTES_PER_ELEMENT { get; set; }
 
-        public int Length { get; set; }
+        public int Length { 
+            get 
+            { 
+                return this.Count; 
+            }
+
+            set
+            {
+                Capacity = value;
+            }
+        }
 
         public T get(int index)
         {

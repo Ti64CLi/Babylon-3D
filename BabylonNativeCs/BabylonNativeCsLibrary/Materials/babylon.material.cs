@@ -75,7 +75,7 @@ namespace BABYLON
         public virtual void dispose(bool forceDisposeEffect = false)
         {
             var index = this._scene.materials.indexOf(this);
-            this._scene.materials.splice(index, 1);
+            this._scene.materials.RemoveAt(index);
             if (forceDisposeEffect && this._effect != null)
             {
                 this._scene.getEngine()._releaseEffect(this._effect);

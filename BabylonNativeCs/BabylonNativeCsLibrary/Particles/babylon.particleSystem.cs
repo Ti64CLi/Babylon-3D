@@ -154,7 +154,8 @@ namespace BABYLON
                 particle.age += this._scaledUpdateSpeed;
                 if (particle.age >= particle.lifeTime)
                 {
-                    this._stockParticles.push(this.particles.splice(index, 1)[0]);
+                    this.particles.RemoveAt(index);
+                    this._stockParticles.push(this.particles[0]);
                     index--;
                     continue;
                 }
@@ -344,7 +345,7 @@ namespace BABYLON
                 this.particleTexture = null;
             }
             var index = this._scene.particleSystems.indexOf(this);
-            this._scene.particleSystems.splice(index, 1);
+            this._scene.particleSystems.RemoveAt(index);
             if (this.onDispose != null)
             {
                 this.onDispose();

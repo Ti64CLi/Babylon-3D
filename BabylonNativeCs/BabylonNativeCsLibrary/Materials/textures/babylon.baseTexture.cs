@@ -104,7 +104,7 @@ namespace BABYLON
             if (this._texture.references == 0)
             {
                 var index = texturesCache.indexOf(this._texture);
-                texturesCache.splice(index, 1);
+                texturesCache.RemoveAt(index);
                 this._scene.getEngine()._releaseTexture(this._texture);
                 this._texture = null;
             }
@@ -118,7 +118,7 @@ namespace BABYLON
             var index = this._scene.textures.indexOf(this);
             if (index >= 0)
             {
-                this._scene.textures.splice(index, 1);
+                this._scene.textures.RemoveAt(index);
             }
             if (this._texture == null)
             {

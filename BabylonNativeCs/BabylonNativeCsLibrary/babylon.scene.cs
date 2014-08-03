@@ -321,7 +321,7 @@ namespace BABYLON
             var index = this._onBeforeRenderCallbacks.indexOf(func);
             if (index > -1)
             {
-                this._onBeforeRenderCallbacks.splice(index, 1);
+                this._onBeforeRenderCallbacks.RemoveAt(index);
             }
         }
         public virtual void _addPendingData(object data)
@@ -333,7 +333,7 @@ namespace BABYLON
             var index = this._pendingData.indexOf(data);
             if (index != -1)
             {
-                this._pendingData.splice(index, 1);
+                this._pendingData.RemoveAt(index);
             }
         }
         public virtual double getWaitingItemsCount()
@@ -436,7 +436,7 @@ namespace BABYLON
             {
                 if (!this._activeAnimatables[index]._animate(delay))
                 {
-                    this._activeAnimatables.splice(index, 1);
+                    this._activeAnimatables.RemoveAt(index);
                     index--;
                 }
             }
@@ -923,7 +923,7 @@ namespace BABYLON
                                 var indexOfOther = sourceMesh._intersectionsInProgress.indexOf(otherMesh);
                                 if (indexOfOther > -1)
                                 {
-                                    sourceMesh._intersectionsInProgress.splice(indexOfOther, 1);
+                                    sourceMesh._intersectionsInProgress.RemoveAt(indexOfOther);
                                 }
                             }
                     }
@@ -1051,7 +1051,7 @@ namespace BABYLON
                 this.disablePhysicsEngine();
             }
             var _index = this._engine.scenes.indexOf(this);
-            this._engine.scenes.splice(_index, 1);
+            this._engine.scenes.RemoveAt(_index);
             this._engine.wipeCaches();
         }
         public virtual void _getNewPosition(Vector3 position, Vector3 velocity, Collider collider, double maximumRetry, Vector3 finalPosition, AbstractMesh excludedMesh = null)

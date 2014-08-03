@@ -76,7 +76,7 @@ namespace BABYLON
             }
             for (var i = 0; i < indicesToDelete.Length; i++)
             {
-                cameras.splice(indicesToDelete[i], 1);
+                cameras.RemoveAt(indicesToDelete[i]);
             }
             foreach (var renderEffectName in this._renderEffects.Keys)
             {

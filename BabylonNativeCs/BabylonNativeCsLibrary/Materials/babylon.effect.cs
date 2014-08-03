@@ -163,7 +163,7 @@ namespace BABYLON
                     var sampler = this.getUniform(this._samplers[index]);
                     if (sampler == null)
                     {
-                        this._samplers.splice(index, 1);
+                        this._samplers.RemoveAt(index);
                         index--;
                     }
                 }

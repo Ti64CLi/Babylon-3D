@@ -172,7 +172,7 @@ namespace BABYLON
                     }
                     this._postProcesses[i] = null;
                     var index = this._postProcessesTakenIndices.indexOf(i);
-                    this._postProcessesTakenIndices.splice(index, 1);
+                    this._postProcessesTakenIndices.RemoveAt(index);
                 }
             }
             else
@@ -187,7 +187,7 @@ namespace BABYLON
                     }
                     this._postProcesses[atIndices[i]] = null;
                     var index = this._postProcessesTakenIndices.indexOf(atIndices[i]);
-                    this._postProcessesTakenIndices.splice(index, 1);
+                    this._postProcessesTakenIndices.RemoveAt(index);
                 }
             }
             return result;
@@ -260,7 +260,7 @@ namespace BABYLON
         public virtual void dispose()
         {
             var index = this.getScene().cameras.indexOf(this);
-            this.getScene().cameras.splice(index, 1);
+            this.getScene().cameras.RemoveAt(index);
             for (var i = 0; i < this._postProcessesTakenIndices.Length; ++i)
             {
                 this._postProcesses[this._postProcessesTakenIndices[i]].dispose(this);

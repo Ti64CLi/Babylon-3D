@@ -1201,7 +1201,7 @@ namespace BABYLON
             var index = this._loadedTexturesCache.indexOf(texture);
             if (index != -1)
             {
-                this._loadedTexturesCache.splice(index, 1);
+                this._loadedTexturesCache.RemoveAt(index);
             }
         }
         public virtual void bindSamplers(Effect effect)

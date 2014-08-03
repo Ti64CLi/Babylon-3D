@@ -61,7 +61,7 @@ namespace BABYLON
             var index = this._scene._activeAnimatables.indexOf(this);
             if (index > -1)
             {
-                this._scene._activeAnimatables.splice(index, 1);
+                this._scene._activeAnimatables.RemoveAt(index);
             }
             if (this.onAnimationEnd != null)
             {
