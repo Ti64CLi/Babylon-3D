@@ -573,7 +573,7 @@ namespace BABYLON
             }
             return results;
         }
-        public virtual void dispose(bool forceDisposeEffect = false)
+        public override void dispose(bool forceDisposeEffect = false)
         {
             if (this.diffuseTexture != null)
             {

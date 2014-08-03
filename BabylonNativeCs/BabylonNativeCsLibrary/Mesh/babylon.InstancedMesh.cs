@@ -132,7 +132,7 @@ namespace BABYLON
             result.computeWorldMatrix(true);
             return result;
         }
-        public virtual void dispose(bool doNotRecurse = false)
+        public override void dispose(bool doNotRecurse = false)
         {
             var index = this._sourceMesh.instances.indexOf(this);
             this._sourceMesh.instances.splice(index, 1);

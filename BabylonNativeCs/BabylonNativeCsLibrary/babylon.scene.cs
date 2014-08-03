@@ -545,7 +545,7 @@ namespace BABYLON
             }
             return null;
         }
-        public virtual Geometry getGeometryByID(string id)
+        public virtual Geometry getGeometryByID(int id)
         {
             for (var index = 0; index < this._geometries.Length; index++)
             {

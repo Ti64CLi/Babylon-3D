@@ -26,7 +26,7 @@ namespace BABYLON
                 effect.setTexture("refractionSampler", this._refRexture);
             };
         }
-        public virtual void dispose(Camera camera)
+        public override void dispose(Camera camera)
         {
             if (this._refRexture != null)
             {

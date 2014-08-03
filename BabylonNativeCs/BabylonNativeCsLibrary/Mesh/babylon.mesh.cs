@@ -99,7 +99,7 @@ namespace BABYLON
             }
             return this._geometry.getIndices();
         }
-        public virtual bool isReady()
+        public override bool isReady()
         {
             if (this.delayLoadState == BABYLON.Engine.DELAYLOADSTATE_LOADING)
             {
@@ -459,7 +459,7 @@ namespace BABYLON
                     }, (o) => { }, scene.database);
                 }
         }
-        public virtual bool isInFrustum(Array<Plane> frustumPlanes)
+        public override bool isInFrustum(Array<Plane> frustumPlanes)
         {
             if (this.delayLoadState == BABYLON.Engine.DELAYLOADSTATE_LOADING)
             {
@@ -579,7 +579,7 @@ namespace BABYLON
             result.computeWorldMatrix(true);
             return result;
         }
-        public virtual void dispose(bool doNotRecurse = false)
+        public override void dispose(bool doNotRecurse = false)
         {
             if (this._geometry != null)
             {

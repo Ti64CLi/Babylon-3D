@@ -7,7 +7,7 @@ namespace BABYLON
 {
     public partial class Geometry : IGetSetVerticesData
     {
-        public string id;
+        public int id;
         public double delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NONE;
         public string delayLoadingFile;
         private Scene _scene;
@@ -15,13 +15,16 @@ namespace BABYLON
         private Array<Mesh> _meshes;
         private int _totalVertices = 0;
         private Array<int> _indices = new Array<int>();
-        private Array<VertexBuffer> _vertexBuffers;
+        private Map<VertexBufferKind, VertexBuffer> _vertexBuffers;
         public Array<VertexBufferKind> _delayInfo;
         private WebGLBuffer _indexBuffer;
         public BoundingInfo _boundingInfo;
         public System.Action<object, object> _delayLoadingFunction;
         int currentCSGMeshId0;
-        public Geometry(string id, Scene scene, VertexData vertexData = null, bool updatable = false, Mesh mesh = null)
+
+        private static int nextId = 0;
+
+        public Geometry(int id, Scene scene, VertexData vertexData = null, bool updatable = false, Mesh mesh = null)
         {
             this.id = id;
             this._engine = scene.getEngine();
@@ -59,15 +62,15 @@ namespace BABYLON
         }
         public virtual void setVerticesData(VertexBufferKind kind, Array<double> data, bool updatable = false)
         {
-            this._vertexBuffers = this._vertexBuffers ?? new Array<VertexBuffer> { };
-            if (this._vertexBuffers[(int)kind] != null)
+            this._vertexBuffers = this._vertexBuffers ?? new Map<VertexBufferKind, VertexBuffer>();
+            if (this._vertexBuffers.ContainsKey(kind))
             {
-                this._vertexBuffers[(int)kind].dispose();
+                this._vertexBuffers[kind].dispose();
             }
-            this._vertexBuffers[(int)kind] = new VertexBuffer(this._engine, data, kind, updatable, this._meshes.Length == 0);
+            this._vertexBuffers[kind] = new VertexBuffer(this._engine, data, kind, updatable, this._meshes.Length == 0);
             if (kind == BABYLON.VertexBufferKind.PositionKind)
             {
-                var stride = this._vertexBuffers[(int)kind].getStrideSize();
+                var stride = this._vertexBuffers[kind].getStrideSize();
                 this._totalVertices = data.Length / stride;
                 var extend = BABYLON.Tools.ExtractMinAndMax(data, 0, this._totalVertices);
                 var meshes = this._meshes;
@@ -136,7 +139,7 @@ namespace BABYLON
             {
                 return null;
             }
-            return this._vertexBuffers[(int)kind];
+            return this._vertexBuffers[kind];
         }
         public virtual Array<VertexBuffer> getVertexBuffers()
         {
@@ -144,7 +147,10 @@ namespace BABYLON
             {
                 return null;
             }
-            return this._vertexBuffers;
+
+            var array = new Array<VertexBuffer>(this._vertexBuffers.Values.Count);
+            array.AddRange(this._vertexBuffers.Values);
+            return array;
         }
         public virtual bool isVerticesDataPresent(VertexBufferKind kind)
         {
@@ -156,7 +162,7 @@ namespace BABYLON
                 }
                 return false;
             }
-            return this._vertexBuffers[(int)kind] != null;
+            return this._vertexBuffers[kind] != null;
         }
         public virtual Array<VertexBufferKind> getVerticesDataKinds()
         {
@@ -170,9 +176,9 @@ namespace BABYLON
             }
             else
             {
-                foreach (var kind in this._vertexBuffers)
+                foreach (var kind in this._vertexBuffers.Keys)
                 {
-                    result.push(kind.Kind);
+                    result.push(kind);
                 }
             }
             return result;
@@ -227,9 +233,9 @@ namespace BABYLON
             {
                 return;
             }
-            foreach (var kind in this._vertexBuffers)
+            foreach (var kind in this._vertexBuffers.Keys)
             {
-                this._vertexBuffers[(int)kind.Kind].dispose();
+                this._vertexBuffers[kind].dispose();
             }
             if (this._indexBuffer != null && this._engine._releaseBuffer(this._indexBuffer))
             {
@@ -269,17 +275,17 @@ namespace BABYLON
         private void _applyToMesh(Mesh mesh)
         {
             var numOfMeshes = this._meshes.Length;
-            foreach (var kind in this._vertexBuffers)
+            foreach (var kind in this._vertexBuffers.Keys)
             {
                 if (numOfMeshes == 1)
                 {
-                    this._vertexBuffers[(int)kind.Kind].create();
+                    this._vertexBuffers[kind].create();
                 }
-                this._vertexBuffers[(int)kind.Kind]._buffer.references = numOfMeshes;
-                if (kind.Kind == BABYLON.VertexBufferKind.PositionKind)
+                this._vertexBuffers[kind]._buffer.references = numOfMeshes;
+                if (kind == BABYLON.VertexBufferKind.PositionKind)
                 {
                     mesh._resetPointsArrayCache();
-                    var extend = BABYLON.Tools.ExtractMinAndMax(this._vertexBuffers[(int)kind.Kind].getData(), 0, this._totalVertices);
+                    var extend = BABYLON.Tools.ExtractMinAndMax(this._vertexBuffers[kind].getData(), 0, this._totalVertices);
                     mesh._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);
                     mesh._createGlobalSubMesh();
                 }
@@ -336,11 +342,11 @@ namespace BABYLON
                 this.releaseForMesh(meshes[index]);
             }
             this._meshes = new Array<Mesh>();
-            foreach (var kind in this._vertexBuffers)
+            foreach (var kind in this._vertexBuffers.Keys)
             {
-                this._vertexBuffers[(int)kind.Kind].dispose();
+                this._vertexBuffers[kind].dispose();
             }
-            this._vertexBuffers = new Array<VertexBuffer>();
+            this._vertexBuffers.Clear();
             this._totalVertices = 0;
             if (this._indexBuffer != null)
             {
@@ -360,7 +366,7 @@ namespace BABYLON
                 geometries.splice(index2, 1);
             }
         }
-        public virtual Geometry copy(string id)
+        public virtual Geometry copy(int id)
         {
             var vertexData = new BABYLON.VertexData();
             vertexData.indices = new Array<int>();
@@ -371,12 +377,12 @@ namespace BABYLON
             }
             var updatable = false;
             var stopChecking = false;
-            foreach (var kind in this._vertexBuffers)
+            foreach (var kind in this._vertexBuffers.Keys)
             {
-                vertexData.set(this.getVerticesData(kind.Kind), kind.Kind);
+                vertexData.set(this.getVerticesData(kind), kind);
                 if (!stopChecking)
                 {
-                    updatable = this.getVertexBuffer(kind.Kind).isUpdatable();
+                    updatable = this.getVertexBuffer(kind).isUpdatable();
                     stopChecking = !updatable;
                 }
             }
@@ -393,7 +399,7 @@ namespace BABYLON
             geometry._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);
             return geometry;
         }
-        public static Geometry ExtractFromMesh(Mesh mesh, string id)
+        public static Geometry ExtractFromMesh(Mesh mesh, int id)
         {
             var geometry = mesh._geometry;
             if (geometry == null)
@@ -402,10 +408,9 @@ namespace BABYLON
             }
             return geometry.copy(id);
         }
-        public static string RandomId()
+        public static int RandomId()
         {
-            // "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
-            throw new NotImplementedException();
+            return ++nextId;
         }
     }
 }

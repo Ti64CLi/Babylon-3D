@@ -61,7 +61,7 @@ namespace BABYLON
         public virtual void intersects(Ray ray, bool fastCheck = false)
         {
         }
-        public virtual void dispose(bool doNotRecurse = false)
+        public override void dispose(bool doNotRecurse = false)
         {
             this._colorShader.dispose();
             base.dispose(doNotRecurse);

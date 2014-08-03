@@ -229,7 +229,7 @@ namespace BABYLON
                 return false;
             return true;
         }
-        public virtual void _initCache()
+        public override void _initCache()
         {
             base._initCache();
             this._cache.localMatrixUpdated = false;

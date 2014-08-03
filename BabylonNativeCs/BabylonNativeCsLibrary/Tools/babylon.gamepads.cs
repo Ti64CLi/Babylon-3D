@@ -322,7 +322,7 @@ namespace BABYLON
             }
             return newValue;
         }
-        public virtual void update()
+        public override void update()
         {
             base.update();
             for (var index = 0; index < this._buttons.Length; index++)
@@ -601,7 +601,7 @@ namespace BABYLON
                 this._dPadRight = this._setDPadValue(value, this._dPadRight, Xbox360Dpad.Right);
             }
         }
-        public virtual void update()
+        public override void update()
         {
             base.update();
             this.buttonA = this.browserGamepad.buttons[0].value;

@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="CanvasRenderingContext2DAdapter.cs" />
     <Compile Include="ConsoleAdapter.cs" />
+    <Compile Include="WebGLBufferAdapter.cs" />
     <Compile Include="WindowAdapter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

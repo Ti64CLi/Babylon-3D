@@ -263,7 +263,9 @@ namespace BabylonWpf
 
         public Web.WebGLBuffer createBuffer()
         {
-            throw new NotImplementedException();
+            uint[] buffers = new uint[1];
+            this.openGl.GenBuffers(1, buffers);
+            return new WebGLBufferAdapter(buffers[0]);
         }
 
         public void deleteTexture(Web.WebGLTexture texture)
@@ -470,7 +472,7 @@ namespace BabylonWpf
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            throw new NotImplementedException();
+            this.openGl.BindBuffer((uint)target, buffer != null ? buffer.Value : 0);
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
@@ -3627,7 +3629,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x8893;
             }
             set
             {
@@ -3759,7 +3761,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x88E4;
             }
             set
             {
@@ -4059,7 +4061,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x8892;
             }
             set
             {

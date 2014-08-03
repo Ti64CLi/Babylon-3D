@@ -61,7 +61,7 @@ namespace BABYLON
 
             return (Vector3)this.target;
         }
-        public virtual void _initCache()
+        public override void _initCache()
         {
             base._initCache();
             this._cache.target = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
@@ -69,7 +69,7 @@ namespace BABYLON
             this._cache.beta = null;
             this._cache.radius = null;
         }
-        public virtual void _updateCache(bool ignoreParentClass = false)
+        public override void _updateCache(bool ignoreParentClass = false)
         {
             if (!ignoreParentClass)
             {
@@ -80,7 +80,7 @@ namespace BABYLON
             this._cache.beta = this.beta;
             this._cache.radius = this.radius;
         }
-        public virtual bool _isSynchronizedViewMatrix()
+        public override bool _isSynchronizedViewMatrix()
         {
             if (!base._isSynchronizedViewMatrix())
                 return false;

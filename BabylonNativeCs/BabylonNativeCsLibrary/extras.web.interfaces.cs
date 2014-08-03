@@ -18995,6 +18995,8 @@ namespace Web
     public partial interface WebGLObject { }
     public partial interface WebGLBuffer : WebGLObject
     {
+        uint Value { get; }
+
         int references { get; set; }
 
         int capacity { get; set; }

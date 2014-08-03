@@ -59,13 +59,13 @@ namespace BABYLON
 
             return (Vector3)this.lockedTarget;
         }
-        public virtual void _initCache()
+        public override void _initCache()
         {
             base._initCache();
             this._cache.target = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
             this._cache.rotation = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
         }
-        public virtual void _updateCache(bool ignoreParentClass = false)
+        public override void _updateCache(bool ignoreParentClass = false)
         {
             if (!ignoreParentClass)
             {
@@ -89,7 +89,7 @@ namespace BABYLON
             }
             this._cache.rotation.copyFrom(this.rotation);
         }
-        public virtual bool _isSynchronizedViewMatrix()
+        public override bool _isSynchronizedViewMatrix()
         {
             if (!base._isSynchronizedViewMatrix())
             {

@@ -153,7 +153,7 @@ namespace BABYLON
                 this._effect.setMatrix(name, this._matrices[name]);
             }
         }
-        public virtual void dispose(bool forceDisposeEffect = false)
+        public override void dispose(bool forceDisposeEffect = false)
         {
             foreach (var name in this._textures.Keys)
             {

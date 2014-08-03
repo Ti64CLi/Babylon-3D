@@ -39,7 +39,7 @@ namespace BABYLON
                 scene.activeCamera = this;
             }
         }
-        public virtual void _initCache()
+        public override void _initCache()
         {
             base._initCache();
             this._cache.position = new BABYLON.Vector3(double.MaxValue, double.MaxValue, double.MaxValue);
@@ -56,7 +56,7 @@ namespace BABYLON
             this._cache.renderWidth = 0;
             this._cache.renderHeight = 0;
         }
-        public virtual void _updateCache(bool ignoreParentClass = false)
+        public override void _updateCache(bool ignoreParentClass = false)
         {
             if (!ignoreParentClass)
             {

@@ -8,6 +8,7 @@
             Name="openGLControl1" 
             OpenGLInitialized="OpenGLControl_OpenGLInitialized"
             OpenGLDraw="openGLControl1_OpenGLDraw" 
+            RenderContextType="FBO"
             Resized="openGLControl1_Resized" />
     </Grid>
 </Window>
