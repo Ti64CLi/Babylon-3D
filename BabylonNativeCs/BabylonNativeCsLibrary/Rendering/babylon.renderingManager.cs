@@ -70,7 +70,7 @@ namespace BABYLON
             for (var index = 0; index < BABYLON.RenderingManager.MAX_RENDERINGGROUPS; index++)
             {
                 this._depthBufferAlreadyCleaned = false;
-                var renderingGroup = this._renderingGroups[index];
+                var renderingGroup = index < this._renderingGroups.Length ? this._renderingGroups[index] : null;
                 if (renderingGroup != null)
                 {
                     this._clearDepthBuffer();

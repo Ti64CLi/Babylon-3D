@@ -6,7 +6,7 @@
     {
         public int getTime()
         {
-            throw new NotImplementedException();
+            return (int) (DateTime.Now.Ticks / 1000);
         }
 
         public int getHours()

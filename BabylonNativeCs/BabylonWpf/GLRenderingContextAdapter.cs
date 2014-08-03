@@ -492,7 +492,7 @@ namespace BabylonWpf
 
         public void clear(int mask)
         {
-            throw new NotImplementedException();
+            this.openGl.Clear((uint)mask);
         }
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
@@ -712,7 +712,7 @@ namespace BabylonWpf
 
         public void clearDepth(double depth)
         {
-            throw new NotImplementedException();
+            this.openGl.ClearDepth(depth);
         }
 
         public void activeTexture(int texture)
@@ -722,7 +722,7 @@ namespace BabylonWpf
 
         public void viewport(int x, int y, int width, int height)
         {
-            throw new NotImplementedException();
+            this.openGl.Viewport(x, y, width, height);
         }
 
         public void detachShader(Web.WebGLProgram program, Web.WebGLShader shader)
@@ -782,7 +782,7 @@ namespace BabylonWpf
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
-            throw new NotImplementedException();
+            this.openGl.ClearColor((float)red, (float)green, (float)blue, (float)alpha);
         }
 
         public bool isShader(Web.WebGLShader shader)
@@ -2225,7 +2225,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x00004000;
             }
             set
             {
@@ -2249,7 +2249,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x00000100;
             }
             set
             {
