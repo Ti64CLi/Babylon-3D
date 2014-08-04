@@ -10,22 +10,22 @@ namespace BabylonWpf
     {
         public void info(object message = null, params object[] optionalParams)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Trace.WriteLine(string.Format(message.ToString(), optionalParams));
         }
 
         public void warn(object message = null, params object[] optionalParams)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Trace.WriteLine(string.Format(message.ToString(), optionalParams));
         }
 
         public void error(object message = null, params object[] optionalParams)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Debug.Fail(string.Format(message.ToString(), optionalParams));
         }
 
         public void log(object message = null, params object[] optionalParams)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Trace.WriteLine(string.Format(message.ToString(), optionalParams));
         }
 
         public void profile(string reportName = null)

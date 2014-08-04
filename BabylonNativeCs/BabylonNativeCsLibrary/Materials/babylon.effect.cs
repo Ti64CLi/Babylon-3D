@@ -25,8 +25,6 @@ namespace BABYLON
         private Map<string, bool> _valueCacheBool = new Map<string, bool>();
         private Map<string, double> _valueCacheDouble = new Map<string, double>();
 
-        private Web.Document document;
-
         public Effect(EffectBaseName baseName, Array<string> attributesNames, Array<string> uniformsNames, Array<string> samplers, Engine engine, string defines = null, Array<string> optionalDefines = null, System.Action<Effect> onCompiled = null, System.Action<Effect, string> onError = null)
         {
             this._engine = engine;
@@ -41,8 +39,8 @@ namespace BABYLON
             string fragmentSource;
             if (!string.IsNullOrEmpty(baseName.vertexElement))
             {
-                vertexSource = document.getElementById(baseName.vertexElement).innerText;
-                fragmentSource = document.getElementById(baseName.fragmentElement).innerText;
+                vertexSource = Engine.document.getElementById(baseName.vertexElement).innerText;
+                fragmentSource = Engine.document.getElementById(baseName.fragmentElement).innerText;
             }
             else
             {
@@ -107,9 +105,10 @@ namespace BABYLON
 
         public virtual void _loadVertexShader(object vertex, System.Action<string> callback)
         {
-            if (BABYLON.Effect.ShadersStore[vertex + "VertexShader"] != null)
+            var key = vertex + "VertexShader";
+            if (BABYLON.Effect.ShadersStore[key] != null)
             {
-                callback(BABYLON.Effect.ShadersStore[vertex + "VertexShader"]);
+                callback(BABYLON.Effect.ShadersStore[key]);
                 return;
             }
             string vertexShaderUrl;
@@ -133,9 +132,10 @@ namespace BABYLON
 
         public virtual void _loadFragmentShader(object fragment, System.Action<string> callback)
         {
-            if (BABYLON.Effect.ShadersStore[fragment + "PixelShader"] != null)
+            var key = fragment + "PixelShader";
+            if (BABYLON.Effect.ShadersStore[key] != null)
             {
-                callback(BABYLON.Effect.ShadersStore[fragment + "PixelShader"]);
+                callback(BABYLON.Effect.ShadersStore[key]);
                 return;
             }
             string fragmentShaderUrl;

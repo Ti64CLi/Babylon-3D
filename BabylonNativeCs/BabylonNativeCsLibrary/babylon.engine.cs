@@ -22,62 +22,13 @@ namespace BABYLON
     }
     public partial class Engine
     {
-        private const int _ALPHA_DISABLE = 0;
-        private const int _ALPHA_ADD = 1;
-        private const int _ALPHA_COMBINE = 2;
-        private const int _DELAYLOADSTATE_NONE = 0;
-        private const int _DELAYLOADSTATE_LOADED = 1;
-        private const int _DELAYLOADSTATE_LOADING = 2;
-        private const int _DELAYLOADSTATE_NOTLOADED = 4;
-        public static int ALPHA_DISABLE
-        {
-            get
-            {
-                return Engine._ALPHA_DISABLE;
-            }
-        }
-        public static int ALPHA_ADD
-        {
-            get
-            {
-                return Engine._ALPHA_ADD;
-            }
-        }
-        public static int ALPHA_COMBINE
-        {
-            get
-            {
-                return Engine._ALPHA_COMBINE;
-            }
-        }
-        public static int DELAYLOADSTATE_NONE
-        {
-            get
-            {
-                return Engine._DELAYLOADSTATE_NONE;
-            }
-        }
-        public static int DELAYLOADSTATE_LOADED
-        {
-            get
-            {
-                return Engine._DELAYLOADSTATE_LOADED;
-            }
-        }
-        public static int DELAYLOADSTATE_LOADING
-        {
-            get
-            {
-                return Engine._DELAYLOADSTATE_LOADING;
-            }
-        }
-        public static int DELAYLOADSTATE_NOTLOADED
-        {
-            get
-            {
-                return Engine._DELAYLOADSTATE_NOTLOADED;
-            }
-        }
+        public const int ALPHA_DISABLE = 0;
+        public const int ALPHA_ADD = 1;
+        public const int ALPHA_COMBINE = 2;
+        public const int DELAYLOADSTATE_NONE = 0;
+        public const int DELAYLOADSTATE_LOADED = 1;
+        public const int DELAYLOADSTATE_LOADING = 2;
+        public const int DELAYLOADSTATE_NOTLOADED = 4;
         public static string Version
         {
             get
@@ -123,9 +74,9 @@ namespace BABYLON
         private HTMLCanvasElement _workingCanvas;
         private CanvasRenderingContext2D _workingContext;
 
-        private Web.Window window;
-        private Web.Document document;
-        private Web.Console console;
+        public static Web.Window window;
+        public static Web.Document document;
+        public static Web.Console console;
 
         public Engine(HTMLCanvasElement canvas, bool antialias = false, EngineOptions engineOptions = null)
         {
@@ -883,16 +834,16 @@ namespace BABYLON
         {
             switch (mode)
             {
-                case BABYLON.Engine._ALPHA_DISABLE:
+                case BABYLON.Engine.ALPHA_DISABLE:
                     this.setDepthWrite(true);
                     this._gl.disable(Gl.BLEND);
                     break;
-                case BABYLON.Engine._ALPHA_COMBINE:
+                case BABYLON.Engine.ALPHA_COMBINE:
                     this.setDepthWrite(false);
                     this._gl.blendFuncSeparate(Gl.SRC_ALPHA, Gl.ONE_MINUS_SRC_ALPHA, Gl.ONE, Gl.ONE);
                     this._gl.enable(Gl.BLEND);
                     break;
-                case BABYLON.Engine._ALPHA_ADD:
+                case BABYLON.Engine.ALPHA_ADD:
                     this.setDepthWrite(false);
                     this._gl.blendFuncSeparate(Gl.ONE, Gl.ONE, Gl.ZERO, Gl.ONE);
                     this._gl.enable(Gl.BLEND);

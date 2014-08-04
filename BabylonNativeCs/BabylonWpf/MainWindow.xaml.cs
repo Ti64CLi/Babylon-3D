@@ -34,6 +34,9 @@ namespace BabylonWpf
 
         private void OpenGLControl_OpenGLInitialized(object sender, OpenGLEventArgs args)
         {
+            BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+
             var canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
 
             this.engine = new Engine(canvas, true);

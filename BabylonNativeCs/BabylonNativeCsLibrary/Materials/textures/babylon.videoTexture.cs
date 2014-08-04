@@ -11,8 +11,6 @@ namespace BABYLON
         private bool _autoLaunch = true;
         private double _lastUpdate;
 
-        private static Web.Document document;
-
         public VideoTexture(string name, Array<string> urls, Size size, Scene scene, bool generateMipMaps, bool invertY, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(null, scene, !generateMipMaps, invertY)
         {
@@ -23,7 +21,7 @@ namespace BABYLON
             var requiredHeight = size.height;
             this._texture = scene.getEngine().createDynamicTexture(requiredWidth, requiredHeight, generateMipMaps, samplingMode);
             var textureSize = this.getSize();
-            this.video = (HTMLVideoElement)document.createElement("video");
+            this.video = (HTMLVideoElement)Engine.document.createElement("video");
             this.video.width = textureSize.width;
             this.video.height = textureSize.height;
             this.video.autoplay = false;
@@ -37,7 +35,7 @@ namespace BABYLON
             });
             urls.forEach((url) =>
             {
-                var source = (HTMLSourceElement) document.createElement("source");
+                var source = (HTMLSourceElement)Engine.document.createElement("source");
                 source.src = url;
                 this.video.appendChild(source);
             });

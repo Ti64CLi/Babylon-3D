@@ -107,8 +107,6 @@ namespace BABYLON
         private Octree<AbstractMesh> _selectionOctree;
         private AbstractMesh _pointerOverMesh;
 
-        private Web.Window window;
-
         public Scene(Engine engine)
         {
             defaultMaterial = new BABYLON.StandardMaterial("default material", this);

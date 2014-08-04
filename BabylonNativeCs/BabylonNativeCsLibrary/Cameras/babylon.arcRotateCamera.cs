@@ -47,6 +47,10 @@ namespace BABYLON
         public ArcRotateCamera(string name, double alpha, double beta, double radius, object target, Scene scene)
             : base(name, BABYLON.Vector3.Zero(), scene)
         {
+            this.alpha = alpha;
+            this.beta = beta;
+            this.radius = radius;
+            this.target = target;
             this.getViewMatrix();
         }
 

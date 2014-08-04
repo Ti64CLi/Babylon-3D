@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
-    public partial interface IAnimatable: IAnimatableProperty
+    public partial interface IAnimatable : IAnimatableProperty
     {
         Array<Animation> animations { get; set; }
 
@@ -15,9 +15,6 @@ namespace BABYLON
     }
     public partial class Tools
     {
-        public static Web.Window window;
-        public static Web.Console console;
-
         // Screenshots
         private static HTMLCanvasElement screenshotCanvas;
 
@@ -120,7 +117,7 @@ namespace BABYLON
         }
         public static void QueueNewFrame(FrameRequestCallback func)
         {
-            window.requestAnimationFrame(func);
+            Engine.window.requestAnimationFrame(func);
         }
         public static void RequestFullscreen(object element)
         {
@@ -355,12 +352,12 @@ namespace BABYLON
             for (var index = 0; index < events.Length; index++)
             {
                 var _event = events[index];
-                window.addEventListener(_event.name, _event.handler, false);
+                Engine.window.addEventListener(_event.name, _event.handler, false);
                 try
                 {
-                    if (window.parent != null)
+                    if (Engine.window.parent != null)
                     {
-                        window.parent.addEventListener(_event.name, _event.handler, false);
+                        Engine.window.parent.addEventListener(_event.name, _event.handler, false);
                     }
                 }
                 catch (Exception) { }
@@ -371,12 +368,12 @@ namespace BABYLON
             for (var index = 0; index < events.Length; index++)
             {
                 var _event = events[index];
-                window.removeEventListener(_event.name, _event.handler);
+                Engine.window.removeEventListener(_event.name, _event.handler);
                 try
                 {
-                    if (window.parent != null)
+                    if (Engine.window.parent != null)
                     {
-                        window.parent.removeEventListener(_event.name, _event.handler);
+                        Engine.window.parent.removeEventListener(_event.name, _event.handler);
                     }
                 }
                 catch (Exception) { }
@@ -410,7 +407,7 @@ namespace BABYLON
                 {
                     sum += previousFramesDuration[id + 1] - previousFramesDuration[id];
                 }
-                fps = (int) (1000.0 / (sum / (Length - 1)));
+                fps = (int)(1000.0 / (sum / (Length - 1)));
             }
         }
         public static void CreateScreenshot(Engine engine, Camera camera, object size)
@@ -601,19 +598,19 @@ namespace BABYLON
         private static void _LogDisabled(string message) { }
         private static void _LogEnabled(string message)
         {
-            console.log(Tools._FormatMessage(message));
+            Engine.console.log(Tools._FormatMessage(message));
         }
         public static System.Action<string> Warn = Tools._WarnEnabled;
         private static void _WarnDisabled(string message) { }
         private static void _WarnEnabled(string message)
         {
-            console.warn(Tools._FormatMessage(message));
+            Engine.console.warn(Tools._FormatMessage(message));
         }
         public static System.Action<string> Error = Tools._ErrorEnabled;
         private static void _ErrorDisabled(string message) { }
         private static void _ErrorEnabled(string message)
         {
-            console.error(Tools._FormatMessage(message));
+            Engine.console.error(Tools._FormatMessage(message));
         }
         public static int LogLevels
         {

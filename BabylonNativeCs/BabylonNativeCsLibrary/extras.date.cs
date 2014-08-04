@@ -11,17 +11,17 @@
 
         public int getHours()
         {
-            throw new NotImplementedException();
+            return DateTime.Now.Hour;
         }
 
         public int getMinutes()
         {
-            throw new NotImplementedException();
+            return DateTime.Now.Minute;
         }
 
         public int getSeconds()
         {
-            throw new NotImplementedException();
+            return DateTime.Now.Second;
         }
     }
 }

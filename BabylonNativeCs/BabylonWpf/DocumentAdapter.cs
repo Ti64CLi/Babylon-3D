@@ -8,7 +8,6 @@ namespace BabylonWpf
 {
     public class DocumentAdapter : Web.Document
     {
-        private Web.Window window;
         private CanvasAdapter canvasAdapter;
         private Dictionary<string, Web.EventListener> listeners;
 

@@ -97,8 +97,6 @@ namespace BABYLON.Internals
         public const int FOURCC_DXT3 = 'D' + ('X' << 8) + ('T' << 16) + ('3' << 24);
         public const int FOURCC_DXT5 = 'D' + ('X' << 8) + ('T' << 16) + ('5' << 24);
 
-        private static Web.Console console;
-
         public static DDSInfo GetDDSInfo(byte[] arrayBuffer)
         {
             var header = ArrayConvert.AsInt(arrayBuffer, 0, headerLengthInt);
@@ -213,7 +211,7 @@ namespace BABYLON.Internals
                         internalFormat = ext.COMPRESSED_RGBA_S3TC_DXT5_EXT;
                         break;
                     default:
-                        console.error("Unsupported FourCC code:", fourCC);
+                        Engine.console.error("Unsupported FourCC code:", fourCC);
                         return;
                 }
             }

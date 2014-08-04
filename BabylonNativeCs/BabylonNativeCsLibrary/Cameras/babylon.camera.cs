@@ -33,6 +33,7 @@ namespace BABYLON
         public Camera(string name, Vector3 position, Scene scene)
             : base(name, scene)
         {
+            this.position = position;
             scene.cameras.push(this);
             if (scene.activeCamera == null)
             {

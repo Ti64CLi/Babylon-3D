@@ -11,8 +11,6 @@ namespace BABYLON
         private HTMLCanvasElement _canvas;
         private CanvasRenderingContext2D _context;
 
-        Web.Document document;
-
         public DynamicTexture(string name, int options, Scene scene, bool generateMipMaps, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(null, scene, !generateMipMaps)
         {
@@ -20,7 +18,7 @@ namespace BABYLON
             this.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._generateMipMaps = generateMipMaps;
-            this._canvas = (HTMLCanvasElement)document.createElement("canvas");
+            this._canvas = (HTMLCanvasElement)Engine.document.createElement("canvas");
             this._texture = scene.getEngine().createDynamicTexture(options, options, generateMipMaps, samplingMode);
             var textureSize = this.getSize();
             this._canvas.width = textureSize.width;

@@ -77,6 +77,23 @@
 
     public class Map<K, V> : Dictionary<K, V>
     {
+        public new V this[K k]
+        {
+            get
+            {
+                if (!this.ContainsKey(k))
+                {
+                    return default(V);
+                }
+
+                return base[k];
+            }
+
+            set
+            {
+                base[k] = value;
+            }
+        }
     }
 
     public class Array<T> : List<T>

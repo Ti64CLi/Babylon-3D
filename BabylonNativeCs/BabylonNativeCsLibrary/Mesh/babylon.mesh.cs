@@ -28,8 +28,6 @@ namespace BABYLON
         private int _instancesBufferSize = 32 * 16 * 4;
         public bool _shouldGenerateFlatShading;
 
-        private static  Web.Document document;
-
         public Mesh(string name, Scene scene) : base(name, scene) { }
         public override int getTotalVertices()
         {
@@ -754,7 +752,7 @@ namespace BABYLON
             ground._setReady(false);
             Action<HTMLImageElement> onload = (img) =>
             {
-                var canvas = (HTMLCanvasElement)document.createElement("canvas");
+                var canvas = (HTMLCanvasElement)Engine.document.createElement("canvas");
                 var context = (CanvasRenderingContext2D)canvas.getContext("2d");
                 var heightMapWidth = img.width;
                 var heightMapHeight = img.height;
