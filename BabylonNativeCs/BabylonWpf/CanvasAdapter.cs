@@ -45,7 +45,7 @@ namespace BabylonWpf
         {
             if (contextId == "webgl")
             {
-                return new GLRenderingContextAdapter(this.openGl);
+                return new GlRenderingContextAdapter(this.openGl);
             }
 
             if (contextId == "2d")

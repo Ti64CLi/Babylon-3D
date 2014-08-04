@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BabylonWpf
 {
-    public class WebGLBufferAdapter : Web.WebGLBuffer
+    public class GlBufferAdapter : Web.WebGLBuffer
     {
-        public WebGLBufferAdapter(uint value)
+        public GlBufferAdapter(uint value)
         {
             this.Value = value;
         }

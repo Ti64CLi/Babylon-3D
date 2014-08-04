@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BabylonWpf
+﻿namespace BabylonWpf
 {
-    class GLRenderingContextAdapter : Web.WebGLRenderingContext
+    using System;
+    using System.Text;
+
+    using Web;
+
+    public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {
         private SharpGL.OpenGL openGl;
 
-        public GLRenderingContextAdapter(SharpGL.OpenGL openGl)
+        public GlRenderingContextAdapter(SharpGL.OpenGL openGl)
         {
             this.openGl = openGl;
         }
@@ -21,6 +20,7 @@ namespace BabylonWpf
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -33,6 +33,7 @@ namespace BabylonWpf
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -45,6 +46,7 @@ namespace BabylonWpf
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -53,7 +55,7 @@ namespace BabylonWpf
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            throw new NotImplementedException();
+            return new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
         }
 
         public void bindTexture(int target, Web.WebGLTexture texture)
@@ -98,7 +100,7 @@ namespace BabylonWpf
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            throw new NotImplementedException();
+            this.openGl.LinkProgram(program.Value);
         }
 
         public BABYLON.Array<string> getSupportedExtensions()
@@ -148,7 +150,7 @@ namespace BabylonWpf
 
         public void enableVertexAttribArray(int index)
         {
-            throw new NotImplementedException();
+            this.openGl.EnableVertexAttribArray((uint)index);
         }
 
         public void depthRange(double zNear, double zFar)
@@ -213,12 +215,12 @@ namespace BabylonWpf
 
         public Web.WebGLProgram createProgram()
         {
-            throw new NotImplementedException();
+            return new GlProgramAdapter(this.openGl.CreateProgram());
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            throw new NotImplementedException();
+            this.openGl.DeleteShader(shader.Value);
         }
 
         public BABYLON.Array<Web.WebGLShader> getAttachedShaders(Web.WebGLProgram program)
@@ -265,7 +267,7 @@ namespace BabylonWpf
         {
             uint[] buffers = new uint[1];
             this.openGl.GenBuffers(1, buffers);
-            return new WebGLBufferAdapter(buffers[0]);
+            return new GlBufferAdapter(buffers[0]);
         }
 
         public void deleteTexture(Web.WebGLTexture texture)
@@ -275,7 +277,7 @@ namespace BabylonWpf
 
         public void useProgram(Web.WebGLProgram program)
         {
-            throw new NotImplementedException();
+            this.openGl.UseProgram(program.Value);
         }
 
         public void vertexAttrib2fv(int indx, float[] values)
@@ -375,7 +377,22 @@ namespace BabylonWpf
 
         public string getShaderInfoLog(Web.WebGLShader shader)
         {
-            throw new NotImplementedException();
+            var GL_INFO_LOG_LENGTH = 35716U;
+            var k = new int[1];
+            this.openGl.GetShader(shader.Value, GL_INFO_LOG_LENGTH, k);
+            if (k[0] == -1)
+            {
+                return string.Empty;
+            }
+
+            if (k[0] == 0)
+            {
+                return string.Empty;
+            }
+
+            var result = new StringBuilder();
+            this.openGl.GetShaderInfoLog(shader.Value, 0, new IntPtr(0), result);
+            return result.ToString();
         }
 
         public object getTexParameter(int target, int pname)
@@ -457,7 +474,7 @@ namespace BabylonWpf
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
-            throw new NotImplementedException();
+            this.openGl.ShaderSource(shader.Value, source);
         }
 
         public void deleteRenderbuffer(Web.WebGLRenderbuffer renderbuffer)
@@ -477,7 +494,7 @@ namespace BabylonWpf
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            throw new NotImplementedException();
+            return this.openGl.GetAttribLocation(program.Value, name);
         }
 
         public void uniform3i(Web.WebGLUniformLocation location, double x, double y, double z)
@@ -607,12 +624,14 @@ namespace BabylonWpf
 
         public void uniform1i(Web.WebGLUniformLocation location, double x)
         {
-            throw new NotImplementedException();
+            this.openGl.Uniform1(location.Value, (float)x);
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
-            throw new NotImplementedException();
+            var i = new int[1];
+            this.openGl.GetProgram(program.Value, (uint)pname, i);
+            return i;
         }
 
         public Web.WebGLActiveInfo getActiveUniform(Web.WebGLProgram program, int index)
@@ -707,7 +726,9 @@ namespace BabylonWpf
 
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
-            throw new NotImplementedException();
+            var i = new int[1];
+            this.openGl.GetShader(shader.Value, (uint)pname, i);
+            return i;
         }
 
         public void clearDepth(double depth)
@@ -772,12 +793,12 @@ namespace BabylonWpf
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
-            throw new NotImplementedException();
+            this.openGl.AttachShader(program.Value, shader.Value);
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
-            throw new NotImplementedException();
+            this.openGl.CompileShader(shader.Value);
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
@@ -847,7 +868,8 @@ namespace BabylonWpf
 
         public Web.WebGLShader createShader(int type)
         {
-            throw new NotImplementedException();
+            var shader = this.openGl.CreateShader((uint)type);
+            return new GlShaderAdapter(shader);
         }
 
         public void bindRenderbuffer(int target, Web.WebGLRenderbuffer renderbuffer)

@@ -53,6 +53,11 @@ namespace BABYLON
         public string fragmentElement { get; set; }
 
         public string fragment { get; set; }
+
+        public override string ToString()
+        {
+            return baseName;
+        }
     }
 
     public struct MinMagFilter

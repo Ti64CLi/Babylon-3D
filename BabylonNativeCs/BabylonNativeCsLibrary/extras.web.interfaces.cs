@@ -17120,7 +17120,13 @@ namespace Web
         }
     }
     public partial interface WebGLRenderbuffer : WebGLObject { }
-    public partial interface WebGLUniformLocation { }
+    public partial interface WebGLUniformLocation
+    {
+        int Value
+        {
+            get;
+        }        
+    }
     public partial interface WebGLActiveInfo
     {
         string name
@@ -17350,11 +17356,12 @@ namespace Web
     public partial interface WebGLFramebuffer : WebGLObject { }
     public partial interface WebGLShader : WebGLObject { }
     public partial interface OES_texture_float_linear { }
-    public partial interface WebGLObject { }
+    public partial interface WebGLObject
+    {
+        uint Value { get; }       
+    }
     public partial interface WebGLBuffer : WebGLObject
     {
-        uint Value { get; }
-
         int references { get; set; }
 
         int capacity { get; set; }
