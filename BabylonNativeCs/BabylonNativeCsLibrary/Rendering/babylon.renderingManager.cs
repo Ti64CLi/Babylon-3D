@@ -108,6 +108,7 @@ namespace BABYLON
         {
             var mesh = subMesh.getMesh();
             var renderingGroupId = mesh.renderingGroupId;
+            
             if (this._renderingGroups[renderingGroupId] == null)
             {
                 this._renderingGroups[renderingGroupId] = new BABYLON.RenderingGroup(renderingGroupId, this._scene);

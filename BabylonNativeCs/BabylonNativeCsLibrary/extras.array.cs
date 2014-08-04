@@ -108,6 +108,29 @@
             this.AddRange(items);
         }
 
+        public T this[int i]
+        {
+            get
+            {
+                if (i >= Count)
+                {
+                    return default(T);
+                }
+
+                return base[i];
+            }
+
+            set
+            {
+                while (i >= Count)
+                {
+                    this.Add(default(T));
+                }
+
+                base[i] = value;
+            }
+        }
+
         public void push(T v1)
         {
             this.Add(v1);
@@ -194,16 +217,6 @@
             this.Sort(new ComparerAdapter(compareFn));
         }
 
-        #region Web Array
-
-        public ArrayBuffer buffer { get; set; }
-
-        public int byteOffset { get; set; }
-
-        public int byteLength { get; set; }
-
-        public int BYTES_PER_ELEMENT { get; set; }
-
         public int Length { 
             get 
             { 
@@ -230,8 +243,6 @@
         {
             throw new NotImplementedException();
         }
-
-        #endregion
 
         public T pop()
         {

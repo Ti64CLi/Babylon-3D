@@ -158,7 +158,7 @@ namespace BabylonWpf
 
         public void cullFace(int mode)
         {
-            throw new NotImplementedException();
+            this.openGl.CullFace((uint)mode);
         }
 
         public Web.WebGLFramebuffer createFramebuffer()
@@ -1097,7 +1097,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x0405;
             }
             set
             {
@@ -1613,7 +1613,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x0408;
             }
             set
             {
@@ -1661,7 +1661,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x0B44;
             }
             set
             {
@@ -1697,7 +1697,7 @@ namespace BabylonWpf
         {
             get
             {
-                throw new NotImplementedException();
+                return 0x0404;
             }
             set
             {
