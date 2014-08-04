@@ -42,7 +42,6 @@ namespace BABYLON
         private double _cachedUAng;
         private double _cachedVAng;
         private double _cachedWAng;
-        private double _cachedCoordinatesMode;
         private int _samplingMode;
         public Texture(string url, Scene scene, bool noMipmap = false, bool invertY = false, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(scene)
@@ -69,7 +68,7 @@ namespace BABYLON
                 }
             }
         }
-        public virtual void delayLoad()
+        public override void delayLoad()
         {
             if (this.delayLoadState != BABYLON.Engine.DELAYLOADSTATE_NOTLOADED)
             {
@@ -94,7 +93,7 @@ namespace BABYLON
             t.y += 0.5;
             t.z += 0.5;
         }
-        public virtual Matrix getTextureMatrix()
+        public override Matrix getTextureMatrix()
         {
             if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.uAng == this._cachedUAng && this.vAng == this._cachedVAng && this.wAng == this._cachedWAng)
             {
@@ -133,9 +132,9 @@ namespace BABYLON
             this._cachedTextureMatrix.m[10] = this._t0.z;
             return this._cachedTextureMatrix;
         }
-        public virtual Matrix getReflectionTextureMatrix()
+        public override Matrix getReflectionTextureMatrix()
         {
-            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale && this.coordinatesMode == this._cachedCoordinatesMode)
+            if (this.uOffset == this._cachedUOffset && this.vOffset == this._cachedVOffset && this.uScale == this._cachedUScale && this.vScale == this._cachedVScale)
             {
                 return this._cachedTextureMatrix;
             }
@@ -177,7 +176,7 @@ namespace BABYLON
             }
             return this._cachedTextureMatrix;
         }
-        public virtual Texture clone()
+        public override BaseTexture clone()
         {
             var newTexture = new BABYLON.Texture(this._texture.url, this.getScene(), this._noMipmap, this._invertY);
             newTexture.hasAlpha = this.hasAlpha;

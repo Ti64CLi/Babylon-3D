@@ -11,8 +11,7 @@ namespace BABYLON
         private bool _autoLaunch = true;
         private double _lastUpdate;
 
-        Web.Window window;
-        Web.Document document;
+        private static Web.Document document;
 
         public VideoTexture(string name, Array<string> urls, Size size, Scene scene, bool generateMipMaps, bool invertY, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
             : base(null, scene, !generateMipMaps, invertY)

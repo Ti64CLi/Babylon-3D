@@ -20,7 +20,6 @@ namespace BABYLON {
         private int _toIndex = 0;
         private double _delay = 0;
         private int _direction = 1;
-        private double _frameCount = 0;
         private SpriteManager _manager;
         private double _time = 0;
         public string name;

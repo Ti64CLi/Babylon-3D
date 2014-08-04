@@ -135,7 +135,7 @@ namespace BABYLON
             {
                 this._gl = (WebGLRenderingContext)(canvas.getContext("webgl", engineOptions) ?? canvas.getContext("experimental-webgl", engineOptions));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Error("WebGL not supported");
             }
@@ -745,7 +745,7 @@ namespace BABYLON
                 {
                     results.push((VertexBufferKind)this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     results.push((VertexBufferKind)(-1));
                 }

@@ -44,8 +44,6 @@ namespace BABYLON
         public object target;
         private string eventPrefix = Tools.GetPointerPrefix();
 
-        private static Web.Window window;
-
         public ArcRotateCamera(string name, double alpha, double beta, double radius, object target, Scene scene)
             : base(name, BABYLON.Vector3.Zero(), scene)
         {
@@ -269,7 +267,7 @@ namespace BABYLON
                 new EventDts { name = "keyup", handler = this._onKeyUp }, 
                 new EventDts { name = "blur", handler = this._onLostFocus}));
         }
-        public virtual void detachControl(HTMLElement element)
+        public override void detachControl(HTMLElement element)
         {
             if (this._attachedElement != element)
             {
@@ -295,7 +293,7 @@ namespace BABYLON
                 this._reset();
             }
         }
-        public virtual void _update()
+        public override void _update()
         {
             for (var index = 0; index < this._keys.Length; index++)
             {
@@ -371,7 +369,7 @@ namespace BABYLON
             }
             this.beta = Math.Acos(radiusv3.y / this.radius);
         }
-        public virtual Matrix _getViewMatrix()
+        public override Matrix _getViewMatrix()
         {
             var cosa = Math.Cos(this.alpha);
             var sina = Math.Sin(this.alpha);

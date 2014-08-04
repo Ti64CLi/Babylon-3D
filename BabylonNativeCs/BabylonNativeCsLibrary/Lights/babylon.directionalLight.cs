@@ -49,7 +49,7 @@ namespace BABYLON
             }
             effect.setFloat4(directionUniformName, this.direction.x, this.direction.y, this.direction.z, 1);
         }
-        public virtual Matrix _getWorldMatrix()
+        public override Matrix _getWorldMatrix()
         {
             if (this._worldMatrix == null)
             {

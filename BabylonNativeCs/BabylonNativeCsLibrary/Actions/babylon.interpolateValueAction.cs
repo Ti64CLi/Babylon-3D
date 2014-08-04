@@ -18,7 +18,7 @@ namespace BABYLON
         {
             this._target = target;
         }
-        public virtual void _prepare()
+        public override void _prepare()
         {
             this._target = this._getEffectiveTarget(this._target, this.propertyPath);
             this._property = this._getProperty(this.propertyPath);

@@ -16,16 +16,12 @@ namespace BABYLON
             this.g = g;
             this.b = b;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + "}";
         }
         public virtual void toArray(Array<double> array, int index = 0)
         {
-            if (index == null)
-            {
-                index = 0;
-            }
             array[index] = this.r;
             array[index + 1] = this.g;
             array[index + 2] = this.b;
@@ -176,10 +172,6 @@ namespace BABYLON
         }
         public virtual void toArray(Array<double> array, int index = 0)
         {
-            if (index == null)
-            {
-                index = 0;
-            }
             array[index] = this.r;
             array[index + 1] = this.g;
             array[index + 2] = this.b;
@@ -211,7 +203,7 @@ namespace BABYLON
             result.b = this.b * scale;
             result.a = this.a * scale;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + " A:" + this.a + "}";
         }
@@ -250,16 +242,12 @@ namespace BABYLON
             this.x = x;
             this.y = y;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + "}";
         }
         public virtual void toArray(Array<double> array, int index = 0)
         {
-            if (index == null)
-            {
-                index = 0;
-            }
             array[index] = this.x;
             array[index + 1] = this.y;
         }
@@ -414,7 +402,7 @@ namespace BABYLON
             this.y = y;
             this.z = z;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + "}";
         }
@@ -426,10 +414,6 @@ namespace BABYLON
         }
         public virtual void toArray(Array<double> array, int index = 0)
         {
-            if (index == null)
-            {
-                index = 0;
-            }
             array[index] = this.x;
             array[index + 1] = this.y;
             array[index + 2] = this.z;
@@ -796,7 +780,7 @@ namespace BABYLON
             this.z = z;
             this.w = w;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + " W:" + this.w + "}";
         }

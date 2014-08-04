@@ -29,7 +29,7 @@ namespace BABYLON
         {
             return Matrix.Identity();
         }
-        public virtual Matrix getWorldMatrix()
+        public override Matrix getWorldMatrix()
         {
             this._currentRenderId = this.getScene().getRenderId();
             var worldMatrix = this._getWorldMatrix();

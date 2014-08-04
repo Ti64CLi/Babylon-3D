@@ -8,7 +8,6 @@ namespace BABYLON
     public partial class CubeTexture : BaseTexture
     {
         public string url;
-        public double coordinatesMode = BABYLON.Texture.CUBIC_MODE;
         private bool _noMipmap;
         private Array<string> _extensions;
         private Matrix _textureMatrix;
@@ -39,7 +38,7 @@ namespace BABYLON
             this.isCube = true;
             this._textureMatrix = BABYLON.Matrix.Identity();
         }
-        public virtual CubeTexture clone()
+        public override BaseTexture clone()
         {
             var newTexture = new BABYLON.CubeTexture(this.url, this.getScene(), this._extensions, this._noMipmap);
             newTexture.level = this.level;
@@ -49,7 +48,7 @@ namespace BABYLON
             newTexture.coordinatesMode = this.coordinatesMode;
             return newTexture;
         }
-        public virtual void delayLoad()
+        public override void delayLoad()
         {
             if (this.delayLoadState != BABYLON.Engine.DELAYLOADSTATE_NOTLOADED)
             {
@@ -62,7 +61,7 @@ namespace BABYLON
                 this._texture = this.getScene().getEngine().createCubeTexture(this.url, this.getScene(), this._extensions);
             }
         }
-        public virtual Matrix getReflectionTextureMatrix()
+        public override Matrix getReflectionTextureMatrix()
         {
             return this._textureMatrix;
         }

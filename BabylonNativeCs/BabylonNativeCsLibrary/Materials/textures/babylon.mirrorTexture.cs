@@ -30,7 +30,7 @@ namespace BABYLON
                 scene.clipPlane = null;
             };
         }
-        public virtual MirrorTexture clone()
+        public override BaseTexture clone()
         {
             var textureSize = this.getSize();
             var newTexture = new BABYLON.MirrorTexture(this.name, textureSize, this.getScene(), this._generateMipMaps);

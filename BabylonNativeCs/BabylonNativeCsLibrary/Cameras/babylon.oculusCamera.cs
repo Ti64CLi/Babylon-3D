@@ -59,7 +59,7 @@ namespace BABYLON {
             this._deviceOrientationHandler = this._onOrientationEvent.bind(this);
         }
         void OculusRiftDevKit2013_Metricnew {};
-        public override void _update() {
+        public virtual void _update() {
             this._leftCamera.position.copyFrom(this.position);
             this._rightCamera.position.copyFrom(this.position);
             this._updateCamera(this._leftCamera);
@@ -89,11 +89,11 @@ namespace BABYLON {
                 this._offsetOrientation.roll = roll;
             }
         }
-        public override void attachControl(HTMLElement element, bool noPreventDefault = false) {
+        public virtual void attachControl(HTMLElement element, bool noPreventDefault = false) {
             base.attachControl(element, noPreventDefault);
             window.addEventListener("deviceorientation", this._deviceOrientationHandler);
         }
-        public override void detachControl(HTMLElement element) {
+        public virtual void detachControl(HTMLElement element) {
             base.detachControl(element);
             window.removeEventListener("deviceorientation", this._deviceOrientationHandler);
         }

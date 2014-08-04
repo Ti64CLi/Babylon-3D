@@ -28,10 +28,10 @@ namespace BABYLON
         private int _instancesBufferSize = 32 * 16 * 4;
         public bool _shouldGenerateFlatShading;
 
-        private static Web.Document document;
+        private static  Web.Document document;
 
         public Mesh(string name, Scene scene) : base(name, scene) { }
-        public virtual int getTotalVertices()
+        public override int getTotalVertices()
         {
             if (this._geometry == null)
             {
@@ -39,7 +39,7 @@ namespace BABYLON
             }
             return this._geometry.getTotalVertices();
         }
-        public virtual Array<double> getVerticesData(VertexBufferKind kind)
+        public override Array<double> getVerticesData(VertexBufferKind kind)
         {
             if (this._geometry == null)
             {
@@ -55,7 +55,7 @@ namespace BABYLON
             }
             return this._geometry.getVertexBuffer(kind);
         }
-        public virtual bool isVerticesDataPresent(VertexBufferKind kind)
+        public override bool isVerticesDataPresent(VertexBufferKind kind)
         {
             if (this._geometry == null)
             {
@@ -91,7 +91,7 @@ namespace BABYLON
             }
             return this._geometry.getTotalIndices();
         }
-        public virtual Array<int> getIndices()
+        public override Array<int> getIndices()
         {
             if (this._geometry == null)
             {
@@ -111,7 +111,7 @@ namespace BABYLON
         {
             return this._isDisposed;
         }
-        public virtual void _preActivate()
+        public override void _preActivate()
         {
             this._visibleInstances = null;
         }
@@ -149,7 +149,7 @@ namespace BABYLON
         public virtual SubMesh _createGlobalSubMesh()
         {
             var totalVertices = this.getTotalVertices();
-            if (totalVertices == null || this.getIndices() == null)
+            if (totalVertices == 0 || this.getIndices() == null)
             {
                 return null;
             }
@@ -531,7 +531,7 @@ namespace BABYLON
         {
             this._positions = null;
         }
-        public virtual bool _generatePointsArray()
+        public override bool _generatePointsArray()
         {
             if (this._positions != null)
                 return true;
@@ -547,7 +547,7 @@ namespace BABYLON
             }
             return true;
         }
-        public virtual Mesh clone(string name, Node newParent, bool doNotCloneChildren = false)
+        public override AbstractMesh clone(string name, Node newParent, bool doNotCloneChildren = false)
         {
             var result = new BABYLON.Mesh(name, this.getScene());
             this._geometry.applyToMesh(result);
@@ -718,7 +718,7 @@ namespace BABYLON
         }
         public static LinesMesh CreateLines(string name, Array<Vector3> points, Scene scene, bool updatable = false)
         {
-            var lines = new LinesMesh(name, scene, updatable);
+            var lines = new LinesMesh(name, scene);
             var vertexData = BABYLON.VertexData.CreateLines(points);
             vertexData.applyToMesh(lines, updatable);
             return lines;

@@ -124,7 +124,7 @@ namespace BABYLON
             }
         }
 
-        public Array<IAnimatable> getAnimatables()
+        public virtual Array<IAnimatable> getAnimatables()
         {
             throw new NotImplementedException();
         }

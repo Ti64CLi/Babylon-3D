@@ -7,8 +7,7 @@ namespace BABYLON
 {
     public partial class PostProcessRenderPass
     {
-        private bool _enabled = true;
-        private Array<AbstractMesh> _renderList;
+        private Array<AbstractMesh> _renderList = new Array<AbstractMesh>();
         private RenderTargetTexture _renderTexture;
         private Scene _scene;
         private double _refCount = 0;

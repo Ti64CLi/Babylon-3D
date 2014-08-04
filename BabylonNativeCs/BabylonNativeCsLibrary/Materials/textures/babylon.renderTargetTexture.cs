@@ -10,7 +10,6 @@ namespace BABYLON
         public Array<AbstractMesh> renderList = new Array<AbstractMesh>();
         public bool renderParticles = true;
         public bool renderSprites = false;
-        public double coordinatesMode = BABYLON.Texture.PROJECTION_MODE;
         public System.Action onBeforeRender;
         public System.Action onAfterRender;
         public System.Action<SmartArray<SubMesh>, SmartArray<SubMesh>, SmartArray<SubMesh>, System.Action> customRenderFunction;
@@ -24,6 +23,7 @@ namespace BABYLON
         public RenderTargetTexture(string name, Size size, Scene scene, bool generateMipMaps = false, bool doNotChangeAspectRatio = true)
             : base(null, scene, !generateMipMaps)
         {
+            coordinatesMode = BABYLON.Texture.PROJECTION_MODE;
             this.name = name;
             this.isRenderTarget = true;
             this._size = size;
@@ -141,7 +141,7 @@ namespace BABYLON
                 scene.updateTransformMatrix(true);
             }
         }
-        public virtual RenderTargetTexture clone()
+        public override BaseTexture clone()
         {
             var textureSize = this.getSize();
             var newTexture = new BABYLON.RenderTargetTexture(this.name, textureSize, this.getScene(), this._generateMipMaps);

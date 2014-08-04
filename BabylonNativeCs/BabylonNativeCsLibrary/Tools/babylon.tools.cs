@@ -7,8 +7,6 @@ namespace BABYLON
 {
     public partial interface IAnimatable: IAnimatableProperty
     {
-        IAnimatableProperty this[string propertyName] { get; set; }
-
         Array<Animation> animations { get; set; }
 
         Array<IAnimatable> getAnimatables();
@@ -365,7 +363,7 @@ namespace BABYLON
                         window.parent.addEventListener(_event.name, _event.handler, false);
                     }
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
             }
         }
         public static void UnregisterTopRootEvents(Array<EventDts> events)
@@ -381,7 +379,7 @@ namespace BABYLON
                         window.parent.removeEventListener(_event.name, _event.handler);
                     }
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
             }
         }
         public static int GetFps()

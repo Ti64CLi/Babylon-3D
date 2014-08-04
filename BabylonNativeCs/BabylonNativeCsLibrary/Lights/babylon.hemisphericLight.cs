@@ -16,17 +16,17 @@ namespace BABYLON
             this.direction = BABYLON.Vector3.Normalize(target.subtract(Vector3.Zero()));
             return this.direction;
         }
-        public virtual ShadowGenerator getShadowGenerator()
+        public override ShadowGenerator getShadowGenerator()
         {
             return null;
         }
-        public virtual void transferToEffect(Effect effect, string directionUniformName, string groundColorUniformName)
+        public override void transferToEffect(Effect effect, string directionUniformName, string groundColorUniformName)
         {
             var normalizeDirection = BABYLON.Vector3.Normalize(this.direction);
             effect.setFloat4(directionUniformName, normalizeDirection.x, normalizeDirection.y, normalizeDirection.z, 0);
             effect.setColor3(groundColorUniformName, this.groundColor.scale(this.intensity));
         }
-        public virtual Matrix _getWorldMatrix()
+        public override Matrix _getWorldMatrix()
         {
             if (this._worldMatrix == null)
             {

@@ -259,7 +259,7 @@ namespace BABYLON
             if (!this._stopped)
             {
                 this._actualFrame += this._scaledUpdateSpeed;
-                if (this.targetStopDuration != null && this._actualFrame >= this.targetStopDuration)
+                if (this.targetStopDuration != 0.0 && this._actualFrame >= this.targetStopDuration)
                     this.stop();
             }
             else

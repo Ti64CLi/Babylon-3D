@@ -630,17 +630,6 @@ namespace Web
     }
     public partial interface NodeListOf<TNode> : NodeList
     {
-        int Length
-        {
-            get;
-            set;
-        }
-        TNode item(int index);
-        TNode this[int index]
-        {
-            get;
-            set;
-        }
     }
     public partial interface HTMLElement : Element, ElementCSSInlineStyle, MSEventAttachmentTarget, MSNodeExtensions
     {
@@ -1363,7 +1352,6 @@ namespace Web
         int addBehavior(string bstrUrl, object factory = null);
         void insertAdjacentHTML(string where, string html);
         MSInputMethodContext msGetInputContext();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface Document : Node, NodeSelector, MSEventAttachmentTarget, DocumentEvent, MSResourceMetadata, MSNodeExtensions, MSDocumentExtensions, GlobalEventHandlers
     {
@@ -2201,7 +2189,6 @@ namespace Web
         NodeList msElementsFromRect(int left, int top, int width, int height);
         void clear();
         void msExitFullscreen();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface Console
     {
@@ -2323,11 +2310,6 @@ namespace Web
             get;
             set;
         }
-        bool cancelBubble
-        {
-            get;
-            set;
-        }
         bool altLeft
         {
             get;
@@ -2343,17 +2325,7 @@ namespace Web
             get;
             set;
         }
-        string type
-        {
-            get;
-            set;
-        }
         bool repeat
-        {
-            get;
-            set;
-        }
-        Element srcElement
         {
             get;
             set;
@@ -3053,7 +3025,6 @@ namespace Web
         MediaQueryList msMatchMedia(string mediaQuery);
         int requestAnimationFrame(FrameRequestCallback callback);
         int msRequestAnimationFrame(FrameRequestCallback callback);
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface NavigatorID
     {
@@ -5272,7 +5243,6 @@ namespace Web
         ClientRect msGetUntransformedBounds();
         void releasePointerCapture(int pointerId);
         void msRequestFullscreen();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface HTMLNextIdElement : HTMLElement
     {
@@ -6096,11 +6066,6 @@ namespace Web
             get;
             set;
         }
-        string href
-        {
-            get;
-            set;
-        }
         CSSRuleList cssRules
         {
             get;
@@ -6743,11 +6708,6 @@ namespace Web
             get;
             set;
         }
-        string filter
-        {
-            get;
-            set;
-        }
         string zoom
         {
             get;
@@ -7357,7 +7317,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface HTMLScriptElement : HTMLElement
     {
@@ -7743,17 +7702,11 @@ namespace Web
             get;
             set;
         }
-        System.Func<Event, object> onload
-        {
-            get;
-            set;
-        }
         object security
         {
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface SVGAnimatedLength
     {
@@ -7958,15 +7911,9 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface HTMLTableHeaderCellElement : HTMLTableCellElement
     {
-        string scope
-        {
-            get;
-            set;
-        }
     }
     public partial interface HTMLDListElement : HTMLElement, DOML2DeprecatedListSpaceReduction { }
     public partial interface MSDataBindingExtensions
@@ -8069,17 +8016,7 @@ namespace Web
             get;
             set;
         }
-        System.Func<FocusEvent, object> onblur
-        {
-            get;
-            set;
-        }
         object frameSpacing
-        {
-            get;
-            set;
-        }
-        System.Func<FocusEvent, object> onfocus
         {
             get;
             set;
@@ -8089,17 +8026,7 @@ namespace Web
             get;
             set;
         }
-        System.Func<ErrorEvent, object> onerror
-        {
-            get;
-            set;
-        }
         string frameBorder
-        {
-            get;
-            set;
-        }
-        System.Func<UIEvent, object> onresize
         {
             get;
             set;
@@ -8139,11 +8066,6 @@ namespace Web
             get;
             set;
         }
-        System.Func<Event, object> onload
-        {
-            get;
-            set;
-        }
         System.Func<BeforeUnloadEvent, object> onbeforeunload
         {
             get;
@@ -8164,7 +8086,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface Screen : EventTarget
     {
@@ -8256,7 +8177,6 @@ namespace Web
         bool msLockOrientation(string orientation);
         bool msLockOrientation(Array<string> orientations);
         void msUnlockOrientation();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface Coordinates
     {
@@ -8584,7 +8504,6 @@ namespace Web
         SVGTransform createSVGTransformFromMatrix(SVGMatrix matrix);
         CSSStyleDeclaration getComputedStyle(Element elt, string pseudoElt = null);
         Element getElementById(string elementId);
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface HTMLLabelElement : HTMLElement, MSDataBindingExtensions
     {
@@ -8861,17 +8780,11 @@ namespace Web
             get;
             set;
         }
-        System.Func<Event, object> onload
-        {
-            get;
-            set;
-        }
         DOMSettableTokenList sandbox
         {
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface TextRangeCollection
     {
@@ -8899,17 +8812,7 @@ namespace Web
             get;
             set;
         }
-        System.Func<FocusEvent, object> onblur
-        {
-            get;
-            set;
-        }
         bool noWrap
-        {
-            get;
-            set;
-        }
-        System.Func<FocusEvent, object> onfocus
         {
             get;
             set;
@@ -8924,17 +8827,7 @@ namespace Web
             get;
             set;
         }
-        System.Func<ErrorEvent, object> onerror
-        {
-            get;
-            set;
-        }
         string bgProperties
-        {
-            get;
-            set;
-        }
-        System.Func<UIEvent, object> onresize
         {
             get;
             set;
@@ -8989,11 +8882,6 @@ namespace Web
             get;
             set;
         }
-        System.Func<Event, object> onload
-        {
-            get;
-            set;
-        }
         object rightMargin
         {
             get;
@@ -9030,7 +8918,6 @@ namespace Web
             set;
         }
         TextRange createTextRange();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface DocumentType : Node
     {
@@ -11809,7 +11696,6 @@ namespace Web
         void showHelp(string url, object helpArg = null, string features = null);
         void captureEvents();
         void releaseEvents();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface MSBehaviorUrnsCollection
     {
@@ -12159,11 +12045,6 @@ namespace Web
             get;
             set;
         }
-        object readyState
-        {
-            get;
-            set;
-        }
         bool autobuffer
         {
             get;
@@ -12373,7 +12254,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface ElementCSSInlineStyle
     {
@@ -12955,11 +12835,6 @@ namespace Web
             get;
             set;
         }
-        int readyState
-        {
-            get;
-            set;
-        }
         object msPlayToSource
         {
             get;
@@ -12990,11 +12865,6 @@ namespace Web
             get;
             set;
         }
-        string hidden
-        {
-            get;
-            set;
-        }
         string pluginspage
         {
             get;
@@ -13021,11 +12891,6 @@ namespace Web
             set;
         }
         bool msPlayToDisabled
-        {
-            get;
-            set;
-        }
-        string readyState
         {
             get;
             set;
@@ -13605,7 +13470,6 @@ namespace Web
         void msSetVideoRectangle(int left, int top, int right, int bottom);
         void msFrameStep(bool forward);
         VideoPlaybackQuality getVideoPlaybackQuality();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface ClientRectList
     {
@@ -13912,7 +13776,6 @@ namespace Web
             set;
         }
         DocumentFragment getCueAsHTML();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface MSStreamReader : MSBaseReader
     {
@@ -14147,7 +14010,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface SVGFEPointLightElement : SVGElement
     {
@@ -14456,7 +14318,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface IDBEnvironment
     {
@@ -14500,7 +14361,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface MSBaseReader : EventTarget
     {
@@ -14560,7 +14420,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface SVGFEMorphologyElement : SVGElement, SVGFilterPrimitiveStandardAttributes
     {
@@ -14851,7 +14710,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface AudioTrack
     {
@@ -15081,7 +14939,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface SVGFEFuncGElement : SVGComponentTransferFunctionElement { }
     public partial interface SVGFEColorMatrixElement : SVGElement, SVGFilterPrimitiveStandardAttributes
@@ -15206,7 +15063,6 @@ namespace Web
         void close();
         IDBTransaction transaction(object storeNames, string mode = null);
         void deleteObjectStore(string name);
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface DOMStringList
     {
@@ -15235,7 +15091,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface HTMLProgressElement : HTMLElement
     {
@@ -15369,7 +15224,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public delegate void MediaQueryListListener(MediaQueryList mql);
     public partial interface IDBRequest : EventTarget
@@ -15409,7 +15263,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface MessagePort : EventTarget
     {
@@ -15421,7 +15274,6 @@ namespace Web
         void close();
         void postMessage(object message = null, object ports = null);
         void start();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface FileReader : MSBaseReader
     {
@@ -15530,7 +15382,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public delegate void FrameRequestCallback(int time);
     public partial interface PopStateEvent : Event
@@ -15751,7 +15602,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface SVGFECompositeElement : SVGElement, SVGFilterPrimitiveStandardAttributes
     {
@@ -15902,11 +15752,6 @@ namespace Web
             set;
         }
         bool _default
-        {
-            get;
-            set;
-        }
-        int readyState
         {
             get;
             set;
@@ -16131,7 +15976,6 @@ namespace Web
         }
         void postMessage(object message, object ports = null);
         void terminate();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public delegate object MSExecAtPriorityFunctionCallback(params object[] args);
     public partial interface MSGraphicsTrust
@@ -16234,7 +16078,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface Key
     {
@@ -16279,7 +16122,6 @@ namespace Web
     }
     public partial interface HTMLAllCollection : HTMLCollection
     {
-        Element namedItem(string name);
     }
     public partial interface AesGcmEncryptResult
     {
@@ -16387,7 +16229,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface DOMStringMap { }
     public partial interface DeviceOrientationEvent : Event
@@ -16566,7 +16407,6 @@ namespace Web
         ClientRect getCandidateWindowClientRect();
         bool hasComposition();
         bool isCandidateWindowVisible();
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface DeviceRotationRate
     {
@@ -16913,7 +16753,6 @@ namespace Web
             get;
             set;
         }
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface ScriptNotifyEvent : Event
     {
@@ -17231,7 +17070,6 @@ namespace Web
         void abort();
         void finish();
         void process(ArrayBufferView buffer);
-        void addEventListener(string type, EventListener listener, bool useCapture = false);
     }
     public partial interface WebGLTexture : WebGLObject
     {

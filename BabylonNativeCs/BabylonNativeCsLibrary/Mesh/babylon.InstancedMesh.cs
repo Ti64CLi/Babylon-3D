@@ -25,35 +25,35 @@ namespace BABYLON
             this.refreshBoundingInfo();
             this._syncSubMeshes();
         }
-        public virtual bool receiveShadows
+        public override bool receiveShadows
         {
             get
             {
                 return this._sourceMesh.receiveShadows;
             }
         }
-        public virtual Material material
+        public override Material material
         {
             get
             {
                 return this._sourceMesh.material;
             }
         }
-        public virtual double visibility
+        public override double visibility
         {
             get
             {
                 return this._sourceMesh.visibility;
             }
         }
-        public virtual Skeleton skeleton
+        public override Skeleton skeleton
         {
             get
             {
                 return this._sourceMesh.skeleton;
             }
         }
-        public virtual double getTotalVertices()
+        public override int getTotalVertices()
         {
             return this._sourceMesh.getTotalVertices();
         }
@@ -64,19 +64,19 @@ namespace BABYLON
                 return this._sourceMesh;
             }
         }
-        public virtual Array<double> getVerticesData(VertexBufferKind kind)
+        public override Array<double> getVerticesData(VertexBufferKind kind)
         {
             return this._sourceMesh.getVerticesData(kind);
         }
-        public virtual bool isVerticesDataPresent(VertexBufferKind kind)
+        public override bool isVerticesDataPresent(VertexBufferKind kind)
         {
             return this._sourceMesh.isVerticesDataPresent(kind);
         }
-        public virtual Array<int> getIndices()
+        public override Array<int> getIndices()
         {
             return this._sourceMesh.getIndices();
         }
-        public virtual Array<Vector3> _positions
+        public override Array<Vector3> _positions
         {
             get
             {
@@ -93,7 +93,7 @@ namespace BABYLON
             }
             this._updateBoundingInfo();
         }
-        public virtual void _activate(int renderId)
+        public override void _activate(int renderId)
         {
             this.sourceMesh._registerInstanceForRenderId(this, renderId);
         }
@@ -105,11 +105,11 @@ namespace BABYLON
                 this._sourceMesh.subMeshes[index].clone(this, this._sourceMesh);
             }
         }
-        public virtual bool _generatePointsArray()
+        public override bool _generatePointsArray()
         {
             return this._sourceMesh._generatePointsArray();
         }
-        public virtual InstancedMesh clone(string name, Node newParent, bool doNotCloneChildren = false)
+        public override AbstractMesh clone(string name, Node newParent, bool doNotCloneChildren = false)
         {
             var result = this._sourceMesh.createInstance(name);
             BABYLON.Tools.DeepCopy(this, result, new Array<string>("name"), new Array<string>());

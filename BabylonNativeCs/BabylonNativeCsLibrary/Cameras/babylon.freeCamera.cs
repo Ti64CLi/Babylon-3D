@@ -264,7 +264,7 @@ namespace BABYLON
                 new EventDts { name = "keyup", handler = this._onKeyUp },
                 new EventDts { name = "blur", handler = this._onLostFocus }));
         }
-        public virtual void detachControl(HTMLElement element)
+        public override void detachControl(HTMLElement element)
         {
             if (this._attachedElement != element)
             {
@@ -343,7 +343,7 @@ namespace BABYLON
                 this.cameraDirection.addInPlace(this._transformedDirection);
             }
         }
-        public virtual void _update()
+        public override void _update()
         {
             this._checkInputs();
             var needToMove = this._needMoveForGravity || Math.Abs(this.cameraDirection.x) > 0 || Math.Abs(this.cameraDirection.y) > 0 || Math.Abs(this.cameraDirection.z) > 0;
@@ -407,7 +407,7 @@ namespace BABYLON
                 this.cameraRotation.scaleInPlace(this.inertia);
             }
         }
-        public virtual Matrix _getViewMatrix()
+        public override Matrix _getViewMatrix()
         {
             if (this.lockedTarget == null)
             {

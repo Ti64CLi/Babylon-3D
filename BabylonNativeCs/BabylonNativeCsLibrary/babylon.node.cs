@@ -13,7 +13,6 @@ namespace BABYLON
         public string state = "";
         public Array<Animation> animations = new Array<Animation>();
         public System.Action<Node> onReady;
-        private double _childrenFlag = -1;
         private bool _isEnabled = true;
         private bool _isReady = true;
         public double _currentRenderId = -1;

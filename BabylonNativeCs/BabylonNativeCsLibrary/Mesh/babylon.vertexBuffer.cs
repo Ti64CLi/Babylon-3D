@@ -7,7 +7,6 @@ namespace BABYLON
 {
     public partial class VertexBuffer
     {
-        private Mesh _mesh;
         private Engine _engine;
         public WebGLBuffer _buffer;
         private Array<double> _data;

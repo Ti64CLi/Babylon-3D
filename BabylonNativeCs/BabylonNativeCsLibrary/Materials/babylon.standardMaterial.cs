@@ -43,11 +43,11 @@ namespace BABYLON
                 return this._renderTargets;
             };
         }
-        public virtual bool needAlphaBlending()
+        public override bool needAlphaBlending()
         {
             return (this.alpha < 1.0) || (this.opacityTexture != null) || this._shouldUseAlphaFromDiffuseTexture();
         }
-        public virtual bool needAlphaTesting()
+        public override bool needAlphaTesting()
         {
             return this.diffuseTexture != null && this.diffuseTexture.hasAlpha && !this.diffuseTexture.getAlphaFromRGB;
         }
@@ -55,11 +55,11 @@ namespace BABYLON
         {
             return this.diffuseTexture != null && this.diffuseTexture.hasAlpha && this.useAlphaFromDiffuseTexture;
         }
-        public virtual BaseTexture getAlphaTestTexture()
+        public override BaseTexture getAlphaTestTexture()
         {
             return this.diffuseTexture;
         }
-        public virtual bool isReady(AbstractMesh mesh = null, bool useInstances = false)
+        public override bool isReady(AbstractMesh mesh = null, bool useInstances = false)
         {
             if (this.checkReadyOnlyOnce)
             {
@@ -399,18 +399,18 @@ namespace BABYLON
             this._wasPreviouslyReady = true;
             return true;
         }
-        public virtual void unbind()
+        public override void unbind()
         {
             if (this.reflectionTexture != null && this.reflectionTexture.isRenderTarget)
             {
                 this._effect.setTexture("reflection2DSampler", null);
             }
         }
-        public virtual void bindOnlyWorldMatrix(Matrix world)
+        public override void bindOnlyWorldMatrix(Matrix world)
         {
             this._effect.setMatrix("world", world);
         }
-        public virtual void bind(Matrix world, Mesh mesh)
+        public override void bind(Matrix world, Mesh mesh)
         {
             var scene = this.getScene();
             this._baseColor.copyFrom(this.diffuseColor);
@@ -540,7 +540,7 @@ namespace BABYLON
                 this._effect.setColor3("vFogColor", scene.fogColor);
             }
         }
-        public virtual Array<IAnimatable> getAnimatables()
+        public override Array<IAnimatable> getAnimatables()
         {
             var results = new Array<IAnimatable>();
             if (this.diffuseTexture != null && this.diffuseTexture.animations != null && this.diffuseTexture.animations.Length > 0)

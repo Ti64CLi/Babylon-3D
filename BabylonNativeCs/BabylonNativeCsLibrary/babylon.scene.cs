@@ -371,12 +371,8 @@ namespace BABYLON
             ////}, 150);
             this._checkIsReady();
         }
-        public virtual Animatable beginAnimation(IAnimatable target, int from, int to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null, Animatable animatable = null)
+        public virtual Animatable beginAnimation(IAnimatable target, int from, int to, bool loop = false, double speedRatio = 1.0, System.Action onAnimationEnd = null, Animatable animatable = null)
         {
-            if (speedRatio == null)
-            {
-                speedRatio = 1.0;
-            }
             this.stopAnimation(target);
             if (animatable == null)
             {
@@ -396,12 +392,8 @@ namespace BABYLON
             }
             return animatable;
         }
-        public virtual Animatable beginDirectAnimation(IAnimatable target, Array<Animation> animations, int from, int to, bool loop = false, double speedRatio = 0.0, System.Action onAnimationEnd = null)
+        public virtual Animatable beginDirectAnimation(IAnimatable target, Array<Animation> animations, int from, int to, bool loop = false, double speedRatio = 1.0, System.Action onAnimationEnd = null)
         {
-            if (speedRatio == null)
-            {
-                speedRatio = 1.0;
-            }
             var animatable = new BABYLON.Animatable(this, target, from, to, loop, speedRatio, onAnimationEnd, animations);
             return animatable;
         }

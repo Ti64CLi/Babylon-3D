@@ -23,13 +23,13 @@ namespace BABYLON
         private Effect _effectFog;
         public string name;
         public int cellSize;
-        public SpriteManager(string name, string imgUrl, int capacity, int cellSize, Scene scene, double epsilon = 0.0)
+        public SpriteManager(string name, string imgUrl, int capacity, int cellSize, Scene scene, double epsilon = 0.01)
         {
             this._capacity = capacity;
             this._spriteTexture = new BABYLON.Texture(imgUrl, scene, true, false);
             this._spriteTexture.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._spriteTexture.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
-            this._epsilon = (epsilon == null) ? 0.01 : epsilon;
+            this._epsilon = epsilon;
             this._scene = scene;
             this._scene.spriteManagers.push(this);
             this._vertexDeclaration = new Array<VertexBufferKind>(VertexBufferKind.UVKind, VertexBufferKind.UV2Kind, VertexBufferKind.UV2Kind, VertexBufferKind.UV2Kind);

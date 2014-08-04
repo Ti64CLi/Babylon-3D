@@ -201,6 +201,13 @@ namespace BABYLON
         public bool isCube { get; set; }
     }
 
+    public class TriggerOptions
+    {
+        public AbstractMesh parameter { get; set; }
+
+        public int trigger { get; set; }
+    }
+
     public class InstancedMeshes
     {
         private Map<int, Array<InstancedMesh>> items;

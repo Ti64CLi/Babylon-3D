@@ -20,7 +20,6 @@ namespace BABYLON
         private WebGLBuffer _indexBuffer;
         public BoundingInfo _boundingInfo;
         public System.Action<object, object> _delayLoadingFunction;
-        int currentCSGMeshId0;
 
         private static int nextId = 0;
 

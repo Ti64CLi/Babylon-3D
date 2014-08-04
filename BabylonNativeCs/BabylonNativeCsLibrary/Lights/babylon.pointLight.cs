@@ -25,11 +25,11 @@ namespace BABYLON
             }
             effect.setFloat4(positionUniformName, this.position.x, this.position.y, this.position.z, 0);
         }
-        public virtual ShadowGenerator getShadowGenerator()
+        public override ShadowGenerator getShadowGenerator()
         {
             return null;
         }
-        public virtual Matrix _getWorldMatrix()
+        public override Matrix _getWorldMatrix()
         {
             if (this._worldMatrix == null)
             {

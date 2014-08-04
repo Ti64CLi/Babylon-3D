@@ -27,11 +27,11 @@ namespace BABYLON
             options.samplers = options.samplers ?? new Array<string>();
             this._options = options;
         }
-        public virtual bool needAlphaBlending()
+        public override bool needAlphaBlending()
         {
             return this._options.needAlphaBlending;
         }
-        public virtual bool needAlphaTesting()
+        public override bool needAlphaTesting()
         {
             return this._options.needAlphaTesting;
         }

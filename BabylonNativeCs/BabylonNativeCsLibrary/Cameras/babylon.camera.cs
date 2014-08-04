@@ -82,7 +82,7 @@ namespace BABYLON
             this.updateCache();
             this._update();
         }
-        public virtual bool _isSynchronized()
+        public override bool _isSynchronized()
         {
             return this._isSynchronizedViewMatrix() && this._isSynchronizedProjectionMatrix();
         }
@@ -192,7 +192,7 @@ namespace BABYLON
             }
             return result;
         }
-        public virtual Matrix getWorldMatrix()
+        public override Matrix getWorldMatrix()
         {
             if (this._worldMatrix == null)
             {

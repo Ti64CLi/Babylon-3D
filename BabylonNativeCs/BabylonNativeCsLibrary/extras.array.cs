@@ -108,7 +108,7 @@
             this.AddRange(items);
         }
 
-        public T this[int i]
+        public new T this[int i]
         {
             get
             {

@@ -47,7 +47,7 @@ namespace BABYLON
         }
         public virtual void update(bool invertY = false)
         {
-            this.getScene().getEngine().updateDynamicTexture(this._texture, this._canvas, (invertY == null) ? true : invertY);
+            this.getScene().getEngine().updateDynamicTexture(this._texture, this._canvas, invertY);
         }
         public virtual void drawText(string text, double x, double y, string font, string color, string clearColor, bool invertY = false)
         {
@@ -58,16 +58,12 @@ namespace BABYLON
                 this._context.fillRect(0, 0, size.width, size.height);
             }
             this._context.font = font;
-            if (x == null)
-            {
-                var textSize = this._context.measureText(text);
-                x = (size.width - textSize.width) / 2;
-            }
             this._context.fillStyle = color;
             this._context.fillText(text, x, y);
             this.update(invertY);
         }
-        public virtual DynamicTexture clone()
+
+        public override BaseTexture clone()
         {
             var textureSize = this.getSize();
             var newTexture = new BABYLON.DynamicTexture(this.name, textureSize.width, this.getScene(), this._generateMipMaps);

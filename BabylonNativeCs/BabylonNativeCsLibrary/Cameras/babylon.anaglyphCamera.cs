@@ -19,7 +19,7 @@ namespace BABYLON
             this._rightCamera = new BABYLON.ArcRotateCamera(name + "_right", alpha + this._eyeSpace, beta, radius, target, scene);
             buildCamera(this, name);
         }
-        public override void _update()
+        public virtual void _update()
         {
             this._updateCamera(this._leftCamera);
             this._updateCamera(this._rightCamera);
@@ -72,7 +72,7 @@ namespace BABYLON
             this._transformMatrix = this._transformMatrix.multiply(BABYLON.Matrix.Translation(target.x, target.y, target.z));
             BABYLON.Vector3.TransformCoordinatesToRef(this.position, this._transformMatrix, result);
         }
-        public override void _update()
+        public virtual void _update()
         {
             this._getSubCameraPosition(-this._eyeSpace, this._leftCamera.position);
             this._getSubCameraPosition(this._eyeSpace, this._rightCamera.position);

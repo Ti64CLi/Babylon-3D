@@ -20,7 +20,7 @@ namespace BABYLON
             this.direction = BABYLON.Vector3.Normalize(target.subtract(this.position));
             return this.direction;
         }
-        public virtual void transferToEffect(Effect effect, string positionUniformName, string directionUniformName)
+        public override void transferToEffect(Effect effect, string positionUniformName, string directionUniformName)
         {
             Vector3 normalizeDirection = null;
             if (this.parent != null)
@@ -46,7 +46,7 @@ namespace BABYLON
             }
             effect.setFloat4(directionUniformName, normalizeDirection.x, normalizeDirection.y, normalizeDirection.z, Math.Cos(this.angle * 0.5));
         }
-        public virtual Matrix _getWorldMatrix()
+        public override Matrix _getWorldMatrix()
         {
             if (this._worldMatrix == null)
             {

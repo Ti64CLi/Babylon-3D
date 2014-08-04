@@ -20,14 +20,13 @@ namespace BABYLON
             this._nextActiveAction = this;
             this._condition = condition;
         }
-        // TODOL finish
-        ////public Action(object triggerOptions, Condition condition = null)
-        ////{
-        ////    this.trigger = triggeroptions.trigger;
-        ////    this._triggerparameter = triggeroptions.parameter;
-        ////    this._nextActiveAction = this;
-        ////    this._condition = condition;
-        ////}
+        public Action(TriggerOptions triggerOptions, Condition condition = null)
+        {
+            this.trigger = triggerOptions.trigger;
+            this._triggerParameter = triggerOptions.parameter;
+            this._nextActiveAction = this;
+            this._condition = condition;
+        }
         public virtual void _prepare() { }
         public virtual AbstractMesh getTriggerParameter()
         {

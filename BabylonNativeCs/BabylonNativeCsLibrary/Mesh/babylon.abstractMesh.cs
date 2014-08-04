@@ -18,18 +18,76 @@ namespace BABYLON
         public Quaternion rotationQuaternion;
         public BABYLON.Vector3 scaling = new BABYLON.Vector3(1, 1, 1);
         public int billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_NONE;
-        public double visibility = 1.0;
+        public double _visibility = 1.0;
+        public virtual double visibility
+        {
+            get
+            {
+                return _visibility;
+            }
+        }
         public bool infiniteDistance = false;
         public bool isVisible = true;
-        public bool isPickable = true;
+        private bool _isPickable = true;
+        public virtual bool isPickable
+        {
+            get
+            {
+                return _isPickable;
+            }
+            set
+            {
+                _isPickable = value;
+            }
+        }
         public bool showBoundingBox = false;
         public bool showSubMeshesBoundingBox = false;
         public System.Action onDispose = null;
-        public bool checkCollisions = false;
-        public Skeleton skeleton;
+        public bool _checkCollisions = false;
+        public virtual bool checkCollisions
+        {
+            get
+            {
+                return _checkCollisions;
+            }
+            set
+            {
+                _checkCollisions = value;
+            }
+        }
+        public Skeleton _skeleton;
+        public virtual Skeleton skeleton
+        {
+            get
+            {
+                return _skeleton;
+            }
+            set
+            {
+                _skeleton = value;
+            }
+        }
         public int renderingGroupId = 0;
-        public Material material;
-        public bool receiveShadows = false;
+        public Material _material;
+        public virtual Material material
+        {
+            get
+            {
+                return _material;
+            }
+            set
+            {
+                _material = value;
+            }
+        }
+        private bool _receiveShadows = false;
+        public virtual bool receiveShadows
+        {
+            get
+            {
+                return _receiveShadows;
+            }
+        }
         public ActionManager actionManager;
         public bool useOctreeForRenderingSelection = true;
         public bool useOctreeForPicking = true;
@@ -57,7 +115,19 @@ namespace BABYLON
         private BABYLON.Vector3 _absolutePosition = BABYLON.Vector3.Zero();
         private BABYLON.Matrix _collisionsTransformMatrix = BABYLON.Matrix.Zero();
         private BABYLON.Matrix _collisionsScalingMatrix = BABYLON.Matrix.Zero();
-        public Array<Vector3> _positions;
+
+        private Array<Vector3> __positions;
+        public virtual Array<Vector3> _positions
+        {
+            get
+            {
+                return __positions;
+            }
+            set
+            {
+                __positions = value;
+            }
+        }
         private bool _isDirty = false;
         public BoundingInfo _boundingInfo;
         private BABYLON.Matrix _pivotMatrix = BABYLON.Matrix.Identity();
@@ -100,7 +170,7 @@ namespace BABYLON
         {
             this._renderId = renderId;
         }
-        public virtual Matrix getWorldMatrix()
+        public override Matrix getWorldMatrix()
         {
             if (this._currentRenderId != this.getScene().getRenderId())
             {
@@ -129,7 +199,7 @@ namespace BABYLON
                 this.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(this.rotation.y, this.rotation.x, this.rotation.z);
                 this.rotation = BABYLON.Vector3.Zero();
             }
-            if (space == null || space == BABYLON.Space.LOCAL)
+            if (space == BABYLON.Space.LOCAL)
             {
                 var rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, amount);
                 this.rotationQuaternion = this.rotationQuaternion.multiply(rotationQuaternion);
@@ -149,7 +219,7 @@ namespace BABYLON
         public virtual void translate(Vector3 axis, double distance, Space space)
         {
             var displacementVector = axis.scale(distance);
-            if (space == null || space == BABYLON.Space.LOCAL)
+            if (space == BABYLON.Space.LOCAL)
             {
                 var tempV3 = this.getPositionExpressedInLocalSpace().add(displacementVector);
                 this.setPositionWithLocalVector(tempV3);
@@ -197,7 +267,7 @@ namespace BABYLON
         {
             return this._pivotMatrix;
         }
-        public virtual bool _isSynchronized()
+        public override bool _isSynchronized()
         {
             if (this._isDirty)
             {
