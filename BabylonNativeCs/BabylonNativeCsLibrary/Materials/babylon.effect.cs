@@ -17,7 +17,7 @@ namespace BABYLON
         private bool _isReady = false;
         private string _compilationError = "";
         private Array<string> _attributesNames;
-        private Array<VertexBufferKind> _attributes;
+        private Array<int> _attributeLocations;
         private Array<WebGLUniformLocation> _uniforms;
         public string _key;
         public WebGLProgram _program;
@@ -67,18 +67,18 @@ namespace BABYLON
         {
             return this._attributesNames;
         }
-        public virtual Array<VertexBufferKind> getAttributes()
+        public virtual Array<int> getAttributeLocations()
         {
-            return this._attributes;
+            return this._attributeLocations;
         }
-        public virtual VertexBufferKind getAttributeLocationByName(string name)
+        public virtual int getAttributeLocationByName(string name)
         {
             var index = this._attributesNames.indexOf(name);
-            return this._attributes[index];
+            return this._attributeLocations[index];
         }
         public virtual int getAttributesCount()
         {
-            return this._attributes.Length;
+            return this._attributeLocations.Length;
         }
         public virtual int getUniformIndex(string uniformName)
         {
@@ -157,7 +157,7 @@ namespace BABYLON
                 var engine = this._engine;
                 this._program = engine.createShaderProgram(vertexSourceCode, fragmentSourceCode, defines);
                 this._uniforms = engine.getUniforms(this._program, this._uniformsNames);
-                this._attributes = engine.getAttributes(this._program, attributesNames);
+                this._attributeLocations = engine.getAttributes(this._program, attributesNames);
                 for (var index = 0; index < this._samplers.Length; index++)
                 {
                     var sampler = this.getUniform(this._samplers[index]);

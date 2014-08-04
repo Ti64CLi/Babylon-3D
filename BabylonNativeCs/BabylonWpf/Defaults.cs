@@ -8,7 +8,8 @@ namespace BabylonWpf
 {
     public class Defaults
     {
-        public const string LegacyVertexShader = @"#ifdef GL_ES
+        public const string LegacyVertexShader = @"
+#ifdef GL_ES
 precision mediump float;
 #endif
 
@@ -295,7 +296,8 @@ void main(void) {
 #endif
 }";
 
-        public const string LegacyPixelShader = @"#ifdef GL_ES
+        public const string LegacyPixelShader = @"
+#ifdef GL_ES
 precision mediump float;
 #endif
 

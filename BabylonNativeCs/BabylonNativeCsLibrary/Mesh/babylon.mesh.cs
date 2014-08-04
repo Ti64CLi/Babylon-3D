@@ -337,7 +337,7 @@ namespace BABYLON
             var offsetLocation1 = effect.getAttributeLocationByName("world1");
             var offsetLocation2 = effect.getAttributeLocationByName("world2");
             var offsetLocation3 = effect.getAttributeLocationByName("world3");
-            var offsetLocations = new Array<VertexBufferKind>(offsetLocation0, offsetLocation1, offsetLocation2, offsetLocation3);
+            var offsetLocations = new Array<int>(offsetLocation0, offsetLocation1, offsetLocation2, offsetLocation3);
             engine.updateAndBindInstancesBuffer(this._worldMatricesInstancesBuffer, this._worldMatricesInstancesArray, offsetLocations);
             this._draw(subMesh, !wireFrame, instancesCount);
             engine.unBindInstancesBuffer(this._worldMatricesInstancesBuffer, offsetLocations);

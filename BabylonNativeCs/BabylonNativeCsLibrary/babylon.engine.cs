@@ -557,13 +557,13 @@ namespace BABYLON
             {
                 this._cachedVertexBuffers = vertexBuffers;
                 this._cachedEffectForVertexBuffers = effect;
-                var attributes = effect.getAttributes();
-                for (var index = 0; index < attributes.Length; index++)
+                var attributeLocations = effect.getAttributeLocations();
+                for (var index = 0; index < attributeLocations.Length; index++)
                 {
-                    var order = index;
+                    var order = attributeLocations[index];
                     if (order >= 0)
                     {
-                        var vertexBuffer = vertexBuffers[(int)attributes[index]];
+                        var vertexBuffer = vertexBuffers[order];
                         if (vertexBuffer == null)
                         {
                             continue;
@@ -602,7 +602,7 @@ namespace BABYLON
         {
             this._gl.deleteBuffer(buffer);
         }
-        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, double[] data, Array<VertexBufferKind> offsetLocations)
+        public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, double[] data, Array<int> offsetLocations)
         {
             this._gl.bindBuffer(Gl.ARRAY_BUFFER, instancesBuffer);
             this._gl.bufferSubData(Gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(data));
@@ -614,7 +614,7 @@ namespace BABYLON
                 this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 1);
             }
         }
-        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<VertexBufferKind> offsetLocations)
+        public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<int> offsetLocations)
         {
             this._gl.bindBuffer(Gl.ARRAY_BUFFER, instancesBuffer);
             for (var index = 0; index < 4; index++)
@@ -689,18 +689,18 @@ namespace BABYLON
             }
             return results;
         }
-        public virtual Array<VertexBufferKind> getAttributes(WebGLProgram shaderProgram, Array<string> attributesNames)
+        public virtual Array<int> getAttributes(WebGLProgram shaderProgram, Array<string> attributesNames)
         {
-            var results = new Array<VertexBufferKind>();
+            var results = new Array<int>();
             for (var index = 0; index < attributesNames.Length; index++)
             {
                 try
                 {
-                    results.push((VertexBufferKind)this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
+                    results.push(this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
                 }
                 catch (Exception)
                 {
-                    results.push((VertexBufferKind)(-1));
+                    results.push(-1);
                 }
             }
             return results;

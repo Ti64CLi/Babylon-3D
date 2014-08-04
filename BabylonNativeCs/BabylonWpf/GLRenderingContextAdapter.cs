@@ -120,7 +120,7 @@
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
-            throw new NotImplementedException();
+            this.openGl.VertexAttribPointer((uint)indx, size, (uint)type, normalized, stride, new IntPtr(offset));
         }
 
         public void polygonOffset(int factor, int units)
@@ -170,7 +170,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            throw new NotImplementedException();
+            this.openGl.UniformMatrix4(location.Value, value.Length, transpose, value);
         }
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
@@ -352,7 +352,7 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
-            throw new NotImplementedException();
+            this.openGl.DrawElements((uint)mode, count, (uint)type, new IntPtr(offset));
         }
 
         public bool isFramebuffer(Web.WebGLFramebuffer framebuffer)
@@ -622,7 +622,7 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
-            throw new NotImplementedException();
+            this.openGl.Uniform4(location.Value, (float)x, (float)y, (float)z, (float)w);
         }
 
         public void deleteProgram(Web.WebGLProgram program)
@@ -851,7 +851,7 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
-            throw new NotImplementedException();
+            this.openGl.Uniform3(location.Value, (float)x, (float)y, (float)z);
         }
 
         public string getProgramInfoLog(Web.WebGLProgram program)
