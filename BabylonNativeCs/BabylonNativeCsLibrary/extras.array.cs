@@ -85,11 +85,6 @@
         {
         }
 
-        public Array(int capacity)
-        {
-            this.Capacity = capacity;
-        }
-
         public Array(T item)
         {
             this.Add(item);

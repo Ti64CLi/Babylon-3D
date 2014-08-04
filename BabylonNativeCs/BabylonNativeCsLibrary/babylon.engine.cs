@@ -1223,7 +1223,7 @@ namespace BABYLON
         }
         public virtual void setTextureFromPostProcess(int channel, PostProcess postProcess)
         {
-            this._bindTexture(channel, postProcess._textures.data[postProcess._currentRenderTextureInd]);
+            this._bindTexture(channel, postProcess._textures[postProcess._currentRenderTextureInd]);
         }
         public virtual void setTexture(int channel, BaseTexture texture)
         {

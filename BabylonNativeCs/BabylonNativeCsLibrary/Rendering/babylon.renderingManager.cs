@@ -25,7 +25,7 @@ namespace BABYLON
             var beforeParticlesDate = new Date().getTime();
             for (var particleIndex = 0; particleIndex < this._scene._activeParticleSystems.Length; particleIndex++)
             {
-                var particleSystem = this._scene._activeParticleSystems.data[particleIndex];
+                var particleSystem = this._scene._activeParticleSystems[particleIndex];
                 if (particleSystem.renderingGroupId != index)
                 {
                     continue;

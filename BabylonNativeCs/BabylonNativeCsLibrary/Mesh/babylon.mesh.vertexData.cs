@@ -344,7 +344,7 @@ namespace BABYLON
         }
         public static VertexData CreateSphere(int segments = 32, double diameter = 1.0)
         {
-            var radius = diameter / 2;
+            var radius = diameter / 2.0;
             var totalZRotationSteps = 2 + segments;
             var totalYRotationSteps = 2 * totalZRotationSteps;
             var indices = new Array<int>();
@@ -353,12 +353,12 @@ namespace BABYLON
             var uvs = new Array<double>();
             for (var zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++)
             {
-                var normalizedZ = zRotationStep / totalZRotationSteps;
+                var normalizedZ = (double)zRotationStep / (double)totalZRotationSteps;
                 var angleZ = (normalizedZ * Math.PI);
                 for (var yRotationStep = 0; yRotationStep <= totalYRotationSteps; yRotationStep++)
                 {
-                    var normalizedY = yRotationStep / totalYRotationSteps;
-                    var angleY = normalizedY * Math.PI * 2;
+                    var normalizedY = (double)yRotationStep / (double)totalYRotationSteps;
+                    var angleY = normalizedY * Math.PI * 2.0;
                     var rotationZ = BABYLON.Matrix.RotationZ(-angleZ);
                     var rotationY = BABYLON.Matrix.RotationY(angleY);
                     var afterRotZ = BABYLON.Vector3.TransformCoordinates(BABYLON.Vector3.Up(), rotationZ);
@@ -375,12 +375,12 @@ namespace BABYLON
                     for (var firstIndex = verticesCount - 2 * (totalYRotationSteps + 1);
                         (firstIndex + totalYRotationSteps + 2) < verticesCount; firstIndex++)
                     {
-                        indices.push((firstIndex));
-                        indices.push((firstIndex + 1));
+                        indices.push(firstIndex);
+                        indices.push(firstIndex + 1);
                         indices.push(firstIndex + totalYRotationSteps + 1);
-                        indices.push((firstIndex + totalYRotationSteps + 1));
-                        indices.push((firstIndex + 1));
-                        indices.push((firstIndex + totalYRotationSteps + 2));
+                        indices.push(firstIndex + totalYRotationSteps + 1);
+                        indices.push(firstIndex + 1);
+                        indices.push(firstIndex + totalYRotationSteps + 2);
                     }
                 }
             }
@@ -672,7 +672,7 @@ namespace BABYLON
                     var position = new BABYLON.Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
                     var heightMapX = (((position.x + width / 2) / width) * (bufferWidth - 1));
                     var heightMapY = ((1.0 - (position.z + height / 2) / height) * (bufferHeight - 1));
-                    var pos = (int) (heightMapX + heightMapY * bufferWidth) * 4;
+                    var pos = (int)(heightMapX + heightMapY * bufferWidth) * 4;
                     var r = buffer[pos] / 255.0;
                     var g = buffer[pos + 1] / 255.0;
                     var b = buffer[pos + 2] / 255.0;

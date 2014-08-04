@@ -43,7 +43,7 @@ namespace BABYLON
             this._colorShader._preBind();
             for (var boundingBoxIndex = 0; boundingBoxIndex < this.renderList.Length; boundingBoxIndex++)
             {
-                var boundingBox = this.renderList.data[boundingBoxIndex];
+                var boundingBox = this.renderList[boundingBoxIndex];
                 var min = boundingBox.minimum;
                 var Max = boundingBox.maximum;
                 var diff = Max.subtract(min);

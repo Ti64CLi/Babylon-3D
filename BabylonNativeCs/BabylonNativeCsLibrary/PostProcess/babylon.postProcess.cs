@@ -58,7 +58,7 @@ namespace BABYLON
                 {
                     for (var i = 0; i < this._textures.Length; i++)
                     {
-                        this._engine._releaseTexture(this._textures.data[i]);
+                        this._engine._releaseTexture(this._textures[i]);
                     }
                     this._textures.reset();
                 }
@@ -74,7 +74,7 @@ namespace BABYLON
                     this.onSizeChanged();
                 }
             }
-            this._engine.bindFramebuffer(this._textures.data[this._currentRenderTextureInd]);
+            this._engine.bindFramebuffer(this._textures[this._currentRenderTextureInd]);
             if (this.onActivate != null)
             {
                 this.onActivate(camera);
@@ -94,7 +94,7 @@ namespace BABYLON
             this._engine.setAlphaMode(BABYLON.Engine.ALPHA_DISABLE);
             this._engine.setDepthBuffer(false);
             this._engine.setDepthWrite(false);
-            this._effect._bindTexture("textureSampler", this._textures.data[this._currentRenderTextureInd]);
+            this._effect._bindTexture("textureSampler", this._textures[this._currentRenderTextureInd]);
             if (this.onApply != null)
             {
                 this.onApply(this._effect);
@@ -108,7 +108,7 @@ namespace BABYLON
             {
                 for (var i = 0; i < this._textures.Length; i++)
                 {
-                    this._engine._releaseTexture(this._textures.data[i]);
+                    this._engine._releaseTexture(this._textures[i]);
                 }
                 this._textures.reset();
             }

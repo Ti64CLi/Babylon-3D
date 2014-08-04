@@ -709,7 +709,7 @@ namespace BABYLON
             if (this._selectionOctree != null)
             {
                 var selection = this._selectionOctree.select(this._frustumPlanes);
-                meshes = selection.data;
+                meshes = selection;
                 len = selection.Length;
             }
             else
@@ -775,7 +775,7 @@ namespace BABYLON
                 {
                     var intersections = mesh._submeshesOctree.select(this._frustumPlanes);
                     len = intersections.Length;
-                    subMeshes = intersections.data;
+                    subMeshes = intersections;
                 }
                 else
                 {
@@ -811,7 +811,7 @@ namespace BABYLON
             this._evaluateActiveMeshesDuration += new Date().getTime() - beforeEvaluateActiveMeshesDate;
             for (var skeletonIndex = 0; skeletonIndex < this._activeSkeletons.Length; skeletonIndex++)
             {
-                var skeleton = this._activeSkeletons.data[skeletonIndex];
+                var skeleton = this._activeSkeletons[skeletonIndex];
                 skeleton.prepare();
             }
             for (var customIndex = 0; customIndex < this.customRenderTargets.Length; customIndex++)
@@ -824,7 +824,7 @@ namespace BABYLON
             {
                 for (var renderIndex = 0; renderIndex < this._renderTargets.Length; renderIndex++)
                 {
-                    var renderTarget = this._renderTargets.data[renderIndex];
+                    var renderTarget = this._renderTargets[renderIndex];
                     if (renderTarget._shouldRender())
                     {
                         this._renderId++;
@@ -902,7 +902,7 @@ namespace BABYLON
         {
             for (var index = 0; index < this._meshesForIntersections.Length; index++)
             {
-                var sourceMesh = this._meshesForIntersections.data[index];
+                var sourceMesh = this._meshesForIntersections[index];
                 for (var actionIndex = 0; actionIndex < sourceMesh.actionManager.actions.Length; actionIndex++)
                 {
                     var action = sourceMesh.actionManager.actions[actionIndex];
@@ -991,8 +991,8 @@ namespace BABYLON
             }
             for (var index = 0; index < this._toBeDisposed.Length; index++)
             {
-                this._toBeDisposed.data[index].dispose();
-                this._toBeDisposed.data[index] = null;
+                this._toBeDisposed[index].dispose();
+                this._toBeDisposed[index] = null;
             }
             this._toBeDisposed.reset();
             this._lastFrameDuration = new Date().getTime() - startDate;

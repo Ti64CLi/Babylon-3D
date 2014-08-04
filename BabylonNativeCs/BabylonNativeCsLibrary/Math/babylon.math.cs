@@ -10,7 +10,12 @@ namespace BABYLON
         public double r;
         public double g;
         public double b;
-        public Color3(double r = 0, double g = 0, double b = 0) { }
+        public Color3(double r = 0, double g = 0, double b = 0)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+        }
         public virtual string ToString()
         {
             return "{R: " + this.r + " G:" + this.g + " B:" + this.b + "}";
@@ -149,7 +154,13 @@ namespace BABYLON
         public double g;
         public double b;
         public double a;
-        public Color4(double r, double g, double b, double a) { }
+        public Color4(double r, double g, double b, double a)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
+        }
         public virtual void addInPlace(Color4 right)
         {
             this.r += right.r;
@@ -234,7 +245,11 @@ namespace BABYLON
     {
         public double x;
         public double y;
-        public Vector2(double x, double y) { }
+        public Vector2(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
         public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + "}";
@@ -393,7 +408,12 @@ namespace BABYLON
         public double x;
         public double y;
         public double z;
-        public Vector3(double x, double y, double z) { }
+        public Vector3(double x, double y, double z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
         public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + "}";
@@ -769,7 +789,13 @@ namespace BABYLON
         public double y;
         public double z;
         public double w;
-        public Quaternion(double x = 0, double y = 0, double z = 0, double w = 0) { }
+        public Quaternion(double x = 0, double y = 0, double z = 0, double w = 0)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
         public virtual string ToString()
         {
             return "{X: " + this.x + " Y:" + this.y + " Z:" + this.z + " W:" + this.w + "}";
@@ -1599,7 +1625,13 @@ namespace BABYLON
         public double y;
         public double width;
         public double height;
-        public Viewport(double x, double y, double width, double height) { }
+        public Viewport(double x, double y, double width, double height)
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
         public virtual Viewport toGlobal(Engine engine)
         {
             var width = engine.getRenderWidth();
@@ -1662,7 +1694,11 @@ namespace BABYLON
         private Vector3 _qvec;
         public Vector3 origin;
         public Vector3 direction;
-        public Ray(Vector3 origin, Vector3 direction) { }
+        public Ray(Vector3 origin, Vector3 direction)
+        {
+            this.origin = origin;
+            this.direction = direction;
+        }
         public virtual bool intersectsBoxMinMax(Vector3 minimum, Vector3 maximum)
         {
             var d = 0.0;

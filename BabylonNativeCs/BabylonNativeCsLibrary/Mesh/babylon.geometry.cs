@@ -148,7 +148,8 @@ namespace BABYLON
                 return null;
             }
 
-            var array = new Array<VertexBuffer>(this._vertexBuffers.Values.Count);
+            var array = new Array<VertexBuffer>();
+            array.Capacity = this._vertexBuffers.Values.Count;
             array.AddRange(this._vertexBuffers.Values);
             return array;
         }

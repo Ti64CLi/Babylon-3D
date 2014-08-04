@@ -32,14 +32,14 @@ namespace BABYLON
             SubMesh submesh;
             for (var subIndex = 0; subIndex < this._opaqueSubMeshes.Length; subIndex++)
             {
-                submesh = this._opaqueSubMeshes.data[subIndex];
+                submesh = this._opaqueSubMeshes[subIndex];
                 this._activeVertices += submesh.verticesCount;
                 submesh.render();
             }
             engine.setAlphaTesting(true);
             for (var subIndex = 0; subIndex < this._alphaTestSubMeshes.Length; subIndex++)
             {
-                submesh = this._alphaTestSubMeshes.data[subIndex];
+                submesh = this._alphaTestSubMeshes[subIndex];
                 this._activeVertices += submesh.verticesCount;
                 submesh.render();
             }
@@ -52,10 +52,10 @@ namespace BABYLON
             {
                 for (var subIndex = 0; subIndex < this._transparentSubMeshes.Length; subIndex++)
                 {
-                    submesh = this._transparentSubMeshes.data[subIndex];
+                    submesh = this._transparentSubMeshes[subIndex];
                     submesh._distanceToCamera = submesh.getBoundingInfo().boundingSphere.centerWorld.subtract(this._scene.activeCamera.position).Length();
                 }
-                var sortedArray = this._transparentSubMeshes.data.slice(0, this._transparentSubMeshes.Length);
+                var sortedArray = this._transparentSubMeshes.slice(0, this._transparentSubMeshes.Length);
                 sortedArray.sort((SubMesh a, SubMesh b) =>
                 {
                     if (a._distanceToCamera < b._distanceToCamera)

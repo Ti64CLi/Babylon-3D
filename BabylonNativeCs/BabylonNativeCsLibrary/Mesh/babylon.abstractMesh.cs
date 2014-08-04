@@ -489,7 +489,7 @@ namespace BABYLON
                 var radius = collider.velocityWorldLength + Math.Max(Math.Max(collider.radius.x, collider.radius.y), collider.radius.z);
                 var intersections = this._submeshesOctree.intersects(collider.basePointWorld, radius);
                 len = intersections.Length;
-                subMeshes = intersections.data;
+                subMeshes = intersections;
             }
             else
             {
@@ -535,7 +535,7 @@ namespace BABYLON
                 var worldRay = Ray.Transform(ray, this.getWorldMatrix());
                 var intersections = this._submeshesOctree.intersectsRay(worldRay);
                 len = intersections.Length;
-                subMeshes = intersections.data;
+                subMeshes = intersections;
             }
             else
             {

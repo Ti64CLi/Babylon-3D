@@ -94,17 +94,17 @@ namespace BABYLON
             {
                 for (var index = 0; index < opaqueSubMeshes.Length; index++)
                 {
-                    renderSubMesh(opaqueSubMeshes.data[index]);
+                    renderSubMesh(opaqueSubMeshes[index]);
                 }
                 for (var index = 0; index < alphaTestSubMeshes.Length; index++)
                 {
-                    renderSubMesh(alphaTestSubMeshes.data[index]);
+                    renderSubMesh(alphaTestSubMeshes[index]);
                 }
                 if (this._transparencyShadow)
                 {
                     for (var index = 0; index < transparentSubMeshes.Length; index++)
                     {
-                        renderSubMesh(transparentSubMeshes.data[index]);
+                        renderSubMesh(transparentSubMeshes[index]);
                     }
                 }
             };
