@@ -94,6 +94,7 @@
     <Compile Include="Culling\Octrees\babylon.octreeBlock.cs" />
     <Compile Include="extras.animation.cs" />
     <Compile Include="extras.array.cs" />
+    <Compile Include="extras.const.cs" />
     <Compile Include="extras.date.cs" />
     <Compile Include="extras.enum.cs" />
     <Compile Include="extras.error.cs" />

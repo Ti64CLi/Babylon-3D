@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON
 {
+    using BabylonNativeCsLibrary;
+
     public partial class EngineCapabilities
     {
         public int maxTexturesImageUnits;
@@ -163,15 +165,15 @@ namespace BABYLON
             this._hardwareScalingLevel = 1.0 / (window.devicePixelRatio == 0.0 ? 1.0 : window.devicePixelRatio);
             this.resize();
             this._caps = new EngineCapabilities();
-            this._caps.maxTexturesImageUnits = (int)this._gl.getParameter(this._gl.MAX_TEXTURE_IMAGE_UNITS);
-            this._caps.maxTextureSize = (int)this._gl.getParameter(this._gl.MAX_TEXTURE_SIZE);
-            this._caps.maxCubemapTextureSize = (int)this._gl.getParameter(this._gl.MAX_CUBE_MAP_TEXTURE_SIZE);
-            this._caps.maxRenderTextureSize = (int)this._gl.getParameter(this._gl.MAX_RENDERBUFFER_SIZE);
+            this._caps.maxTexturesImageUnits = (int)this._gl.getParameter(Gl.MAX_TEXTURE_IMAGE_UNITS);
+            this._caps.maxTextureSize = (int)this._gl.getParameter(Gl.MAX_TEXTURE_SIZE);
+            this._caps.maxCubemapTextureSize = (int)this._gl.getParameter(Gl.MAX_CUBE_MAP_TEXTURE_SIZE);
+            this._caps.maxRenderTextureSize = (int)this._gl.getParameter(Gl.MAX_RENDERBUFFER_SIZE);
             this._caps.standardDerivatives = (this._gl.getExtension("OES_standard_derivatives") != null);
             this._caps.s3tc = (WEBGL_compressed_texture_s3tc)this._gl.getExtension("WEBGL_compressed_texture_s3tc");
             this._caps.textureFloat = (this._gl.getExtension("OES_texture_float") != null);
             this._caps.textureAnisotropicFilterExtension = (EXT_texture_filter_anisotropic)(this._gl.getExtension("EXT_texture_filter_anisotropic"));
-            this._caps.maxAnisotropy = (int)((this._caps.textureAnisotropicFilterExtension != null) ? this._gl.getParameter(this._caps.textureAnisotropicFilterExtension.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0);
+            this._caps.maxAnisotropy = (int)((this._caps.textureAnisotropicFilterExtension != null) ? this._gl.getParameter(Gl.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0);
             this._caps.instancedArrays = (ANGLE_instanced_arrays)this._gl.getExtension("ANGLE_instanced_arrays");
             this.setDepthBuffer(true);
             this.setDepthFunctionToLessOrEqual();
@@ -214,10 +216,10 @@ namespace BABYLON
         }
         private WebGLShader compileShader(WebGLRenderingContext gl, string source, string type, string defines)
         {
-            var shader = gl.createShader((type == "vertex") ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
+            var shader = gl.createShader((type == "vertex") ? Gl.VERTEX_SHADER : Gl.FRAGMENT_SHADER);
             gl.shaderSource(shader, ((!string.IsNullOrEmpty(defines)) ? defines + "\\n" : string.Empty) + source);
             gl.compileShader(shader);
-            if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == null)
+            if (gl.getShaderParameter(shader, Gl.COMPILE_STATUS) == null)
             {
                 throw new Error(gl.getShaderInfoLog(shader));
             }
@@ -225,44 +227,44 @@ namespace BABYLON
         }
         private MinMagFilter getSamplingParameters(int samplingMode, bool generateMipMaps, WebGLRenderingContext gl)
         {
-            var magFilter = gl.NEAREST;
-            var minFilter = gl.NEAREST;
+            var magFilter = Gl.NEAREST;
+            var minFilter = Gl.NEAREST;
             if (samplingMode == BABYLON.Texture.BILINEAR_SAMPLINGMODE)
             {
-                magFilter = gl.LINEAR;
+                magFilter = Gl.LINEAR;
                 if (generateMipMaps)
                 {
-                    minFilter = gl.LINEAR_MIPMAP_NEAREST;
+                    minFilter = Gl.LINEAR_MIPMAP_NEAREST;
                 }
                 else
                 {
-                    minFilter = gl.LINEAR;
+                    minFilter = Gl.LINEAR;
                 }
             }
             else
                 if (samplingMode == BABYLON.Texture.TRILINEAR_SAMPLINGMODE)
                 {
-                    magFilter = gl.LINEAR;
+                    magFilter = Gl.LINEAR;
                     if (generateMipMaps)
                     {
-                        minFilter = gl.LINEAR_MIPMAP_LINEAR;
+                        minFilter = Gl.LINEAR_MIPMAP_LINEAR;
                     }
                     else
                     {
-                        minFilter = gl.LINEAR;
+                        minFilter = Gl.LINEAR;
                     }
                 }
                 else
                     if (samplingMode == BABYLON.Texture.NEAREST_SAMPLINGMODE)
                     {
-                        magFilter = gl.NEAREST;
+                        magFilter = Gl.NEAREST;
                         if (generateMipMaps)
                         {
-                            minFilter = gl.NEAREST_MIPMAP_LINEAR;
+                            minFilter = Gl.NEAREST_MIPMAP_LINEAR;
                         }
                         else
                         {
-                            minFilter = gl.NEAREST;
+                            minFilter = Gl.NEAREST;
                         }
                     }
 
@@ -285,17 +287,17 @@ namespace BABYLON
             var engine = scene.getEngine();
             var potWidth = getExponantOfTwo(width, engine.getCaps().maxTextureSize);
             var potHeight = getExponantOfTwo(height, engine.getCaps().maxTextureSize);
-            gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, invertY ? 1 : 0);
+            gl.bindTexture(Gl.TEXTURE_2D, texture);
+            gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, invertY ? 1 : 0);
             processFunction(potWidth, potHeight);
             var filters = getSamplingParameters(samplingMode, !noMipmap, gl);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filters.min);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MAG_FILTER, filters.mag);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MIN_FILTER, filters.min);
             if (!noMipmap && !isCompressed)
             {
-                gl.generateMipmap(gl.TEXTURE_2D);
+                gl.generateMipmap(Gl.TEXTURE_2D);
             }
-            gl.bindTexture(gl.TEXTURE_2D, null);
+            gl.bindTexture(Gl.TEXTURE_2D, null);
             engine._activeTexturesCache = new Array<BaseTexture>();
             texture._baseWidth = width;
             texture._baseHeight = height;
@@ -375,19 +377,19 @@ namespace BABYLON
         }
         public virtual void setDepthFunctionToGreater()
         {
-            this._gl.depthFunc(this._gl.GREATER);
+            this._gl.depthFunc(Gl.GREATER);
         }
         public virtual void setDepthFunctionToGreaterOrEqual()
         {
-            this._gl.depthFunc(this._gl.GEQUAL);
+            this._gl.depthFunc(Gl.GEQUAL);
         }
         public virtual void setDepthFunctionToLess()
         {
-            this._gl.depthFunc(this._gl.LESS);
+            this._gl.depthFunc(Gl.LESS);
         }
         public virtual void setDepthFunctionToLessOrEqual()
         {
-            this._gl.depthFunc(this._gl.LEQUAL);
+            this._gl.depthFunc(Gl.LEQUAL);
         }
         public virtual void stopRenderLoop()
         {
@@ -448,9 +450,9 @@ namespace BABYLON
             }
             var mode = 0;
             if (backBuffer)
-                mode |= this._gl.COLOR_BUFFER_BIT;
+                mode |= Gl.COLOR_BUFFER_BIT;
             if (depthStencil && this._depthMask)
-                mode |= this._gl.DEPTH_BUFFER_BIT;
+                mode |= Gl.DEPTH_BUFFER_BIT;
             this._gl.clear(mode);
         }
         public virtual void clear(Color4 color, bool backBuffer, bool depthStencil)
@@ -462,9 +464,9 @@ namespace BABYLON
             }
             var mode = 0;
             if (backBuffer)
-                mode |= this._gl.COLOR_BUFFER_BIT;
+                mode |= Gl.COLOR_BUFFER_BIT;
             if (depthStencil && this._depthMask)
-                mode |= this._gl.DEPTH_BUFFER_BIT;
+                mode |= Gl.DEPTH_BUFFER_BIT;
             this._gl.clear(mode);
         }
         public virtual void setViewport(Viewport viewport, int requiredWidth = 0, int requiredHeight = 0)
@@ -499,7 +501,7 @@ namespace BABYLON
         {
             this._currentRenderTarget = texture;
             var gl = this._gl;
-            gl.bindFramebuffer(gl.FRAMEBUFFER, texture._framebuffer);
+            gl.bindFramebuffer(Gl.FRAMEBUFFER, texture._framebuffer);
             this._gl.viewport(0, 0, texture._width, texture._height);
             this.wipeCaches();
         }
@@ -509,11 +511,11 @@ namespace BABYLON
             if (texture.generateMipMaps)
             {
                 var gl = this._gl;
-                gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.generateMipmap(gl.TEXTURE_2D);
-                gl.bindTexture(gl.TEXTURE_2D, null);
+                gl.bindTexture(Gl.TEXTURE_2D, texture);
+                gl.generateMipmap(Gl.TEXTURE_2D);
+                gl.bindTexture(Gl.TEXTURE_2D, null);
             }
-            this._gl.bindFramebuffer(this._gl.FRAMEBUFFER, null);
+            this._gl.bindFramebuffer(Gl.FRAMEBUFFER, null);
         }
         public virtual void flushFramebuffer()
         {
@@ -521,20 +523,20 @@ namespace BABYLON
         }
         public virtual void restoreDefaultFramebuffer()
         {
-            this._gl.bindFramebuffer(this._gl.FRAMEBUFFER, null);
+            this._gl.bindFramebuffer(Gl.FRAMEBUFFER, null);
             this.setViewport(this._cachedViewport);
             this.wipeCaches();
         }
         private void _resetVertexBufferBinding()
         {
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, null);
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, null);
             this._cachedVertexBuffers = null;
         }
         public virtual WebGLBuffer createVertexBuffer(Array<double> vertices)
         {
             var vbo = this._gl.createBuffer();
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);
-            this._gl.bufferData(this._gl.ARRAY_BUFFER, ArrayConvert.AsFloat(vertices), this._gl.STATIC_DRAW);
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, vbo);
+            this._gl.bufferData(Gl.ARRAY_BUFFER, ArrayConvert.AsFloat(vertices), Gl.STATIC_DRAW);
             this._resetVertexBufferBinding();
             vbo.references = 1;
             return vbo;
@@ -542,34 +544,34 @@ namespace BABYLON
         public virtual WebGLBuffer createDynamicVertexBuffer(int capacity)
         {
             var vbo = this._gl.createBuffer();
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vbo);
-            this._gl.bufferData(this._gl.ARRAY_BUFFER, capacity, this._gl.DYNAMIC_DRAW);
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, vbo);
+            this._gl.bufferData(Gl.ARRAY_BUFFER, capacity, Gl.DYNAMIC_DRAW);
             this._resetVertexBufferBinding();
             vbo.references = 1;
             return vbo;
         }
         public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, Array<double> vertices, int length = 0)
         {
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, vertexBuffer);
+            this._gl.bufferSubData(Gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
             this._resetVertexBufferBinding();
         }
         public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, double[] vertices, int length = 0)
         {
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, vertexBuffer);
+            this._gl.bufferSubData(Gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
             this._resetVertexBufferBinding();
         }
         private void _resetIndexBufferBinding()
         {
-            this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, null);
+            this._gl.bindBuffer(Gl.ELEMENT_ARRAY_BUFFER, null);
             this._cachedIndexBuffer = null;
         }
         public virtual WebGLBuffer createIndexBuffer(Array<int> indices)
         {
             var vbo = this._gl.createBuffer();
-            this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, vbo);
-            this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, ArrayConvert.AsUshort(indices), this._gl.STATIC_DRAW);
+            this._gl.bindBuffer(Gl.ELEMENT_ARRAY_BUFFER, vbo);
+            this._gl.bufferData(Gl.ELEMENT_ARRAY_BUFFER, ArrayConvert.AsUshort(indices), Gl.STATIC_DRAW);
             this._resetIndexBufferBinding();
             vbo.references = 1;
             return vbo;
@@ -580,14 +582,14 @@ namespace BABYLON
             {
                 this._cachedVertexBuffers = vertexBuffer;
                 this._cachedEffectForVertexBuffers = effect;
-                this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer);
+                this._gl.bindBuffer(Gl.ARRAY_BUFFER, vertexBuffer);
                 var offset = 0;
                 for (var index = 0; index < vertexDeclaration.Length; index++)
                 {
                     var order = index;
                     if (order >= 0)
                     {
-                        this._gl.vertexAttribPointer(order, (int)vertexDeclaration[index], this._gl.FLOAT, false, vertexStrideSize, offset);
+                        this._gl.vertexAttribPointer(order, (int)vertexDeclaration[index], Gl.FLOAT, false, vertexStrideSize, offset);
                     }
                     offset += (int)vertexDeclaration[index] * 4;
                 }
@@ -595,7 +597,7 @@ namespace BABYLON
             if (this._cachedIndexBuffer != indexBuffer)
             {
                 this._cachedIndexBuffer = indexBuffer;
-                this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+                this._gl.bindBuffer(Gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
             }
         }
         public virtual void bindMultiBuffers(Array<VertexBuffer> vertexBuffers, WebGLBuffer indexBuffer, Effect effect)
@@ -616,15 +618,15 @@ namespace BABYLON
                             continue;
                         }
                         var stride = vertexBuffer.getStrideSize();
-                        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, vertexBuffer.getBuffer());
-                        this._gl.vertexAttribPointer(order, stride, this._gl.FLOAT, false, (int)stride * 4, 0);
+                        this._gl.bindBuffer(Gl.ARRAY_BUFFER, vertexBuffer.getBuffer());
+                        this._gl.vertexAttribPointer(order, stride, Gl.FLOAT, false, (int)stride * 4, 0);
                     }
                 }
             }
             if (this._cachedIndexBuffer != indexBuffer)
             {
                 this._cachedIndexBuffer = indexBuffer;
-                this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+                this._gl.bindBuffer(Gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
             }
         }
         public virtual bool _releaseBuffer(WebGLBuffer buffer)
@@ -641,8 +643,8 @@ namespace BABYLON
         {
             var buffer = this._gl.createBuffer();
             buffer.capacity = capacity;
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, buffer);
-            this._gl.bufferData(this._gl.ARRAY_BUFFER, capacity, this._gl.DYNAMIC_DRAW);
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, buffer);
+            this._gl.bufferData(Gl.ARRAY_BUFFER, capacity, Gl.DYNAMIC_DRAW);
             return buffer;
         }
         public virtual void deleteInstancesBuffer(WebGLBuffer buffer)
@@ -651,19 +653,19 @@ namespace BABYLON
         }
         public virtual void updateAndBindInstancesBuffer(WebGLBuffer instancesBuffer, double[] data, Array<VertexBufferKind> offsetLocations)
         {
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
-            this._gl.bufferSubData(this._gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(data));
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, instancesBuffer);
+            this._gl.bufferSubData(Gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(data));
             for (var index = 0; index < 4; index++)
             {
                 var offsetLocation = offsetLocations[index];
                 this._gl.enableVertexAttribArray((int)offsetLocation);
-                this._gl.vertexAttribPointer((int)offsetLocation, (int)VertexBufferKind.UV2Kind, this._gl.FLOAT, false, 64, index * 16);
+                this._gl.vertexAttribPointer((int)offsetLocation, (int)VertexBufferKind.UV2Kind, Gl.FLOAT, false, 64, index * 16);
                 this._caps.instancedArrays.vertexAttribDivisorANGLE((uint)offsetLocation, 1);
             }
         }
         public virtual void unBindInstancesBuffer(WebGLBuffer instancesBuffer, Array<VertexBufferKind> offsetLocations)
         {
-            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, instancesBuffer);
+            this._gl.bindBuffer(Gl.ARRAY_BUFFER, instancesBuffer);
             for (var index = 0; index < 4; index++)
             {
                 var offsetLocation = offsetLocations[index];
@@ -676,10 +678,10 @@ namespace BABYLON
             if (instancesCount > 0)
             {
                 this._caps.instancedArrays.drawElementsInstancedANGLE(
-                    (useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, new IntPtr(indexStart * 2), instancesCount);
+                    (useTriangles) ? Gl.TRIANGLES : Gl.LINES, indexCount, Gl.UNSIGNED_SHORT, new IntPtr(indexStart * 2), instancesCount);
                 return;
             }
-            this._gl.drawElements((useTriangles) ? this._gl.TRIANGLES : this._gl.LINES, indexCount, this._gl.UNSIGNED_SHORT, indexStart * 2);
+            this._gl.drawElements((useTriangles) ? Gl.TRIANGLES : Gl.LINES, indexCount, Gl.UNSIGNED_SHORT, indexStart * 2);
         }
         public virtual void _releaseEffect(Effect effect)
         {
@@ -714,7 +716,7 @@ namespace BABYLON
             this._gl.attachShader(shaderProgram, vertexShader);
             this._gl.attachShader(shaderProgram, fragmentShader);
             this._gl.linkProgram(shaderProgram);
-            var linked = this._gl.getProgramParameter(shaderProgram, this._gl.LINK_STATUS);
+            var linked = this._gl.getProgramParameter(shaderProgram, Gl.LINK_STATUS);
             if (linked == null)
             {
                 var error = this._gl.getProgramInfoLog(shaderProgram);
@@ -762,7 +764,7 @@ namespace BABYLON
             this._gl.useProgram(effect.getProgram());
             for (var i = 0; i < this._vertexAttribArrays.Length; i++)
             {
-                if (i > this._gl.VERTEX_ATTRIB_ARRAY_ENABLED || !this._vertexAttribArrays[i])
+                if (i > Gl.VERTEX_ATTRIB_ARRAY_ENABLED || !this._vertexAttribArrays[i])
                 {
                     continue;
                 }
@@ -847,12 +849,12 @@ namespace BABYLON
             {
                 if (culling)
                 {
-                    this._gl.cullFace((this.cullBackFaces) ? this._gl.BACK : this._gl.FRONT);
-                    this._gl.enable(this._gl.CULL_FACE);
+                    this._gl.cullFace((this.cullBackFaces) ? Gl.BACK : Gl.FRONT);
+                    this._gl.enable(Gl.CULL_FACE);
                 }
                 else
                 {
-                    this._gl.disable(this._gl.CULL_FACE);
+                    this._gl.disable(Gl.CULL_FACE);
                 }
                 this._cullingState = culling;
             }
@@ -861,11 +863,11 @@ namespace BABYLON
         {
             if (enable)
             {
-                this._gl.enable(this._gl.DEPTH_TEST);
+                this._gl.enable(Gl.DEPTH_TEST);
             }
             else
             {
-                this._gl.disable(this._gl.DEPTH_TEST);
+                this._gl.disable(Gl.DEPTH_TEST);
             }
         }
         public virtual void setDepthWrite(bool enable)
@@ -883,17 +885,17 @@ namespace BABYLON
             {
                 case BABYLON.Engine._ALPHA_DISABLE:
                     this.setDepthWrite(true);
-                    this._gl.disable(this._gl.BLEND);
+                    this._gl.disable(Gl.BLEND);
                     break;
                 case BABYLON.Engine._ALPHA_COMBINE:
                     this.setDepthWrite(false);
-                    this._gl.blendFuncSeparate(this._gl.SRC_ALPHA, this._gl.ONE_MINUS_SRC_ALPHA, this._gl.ONE, this._gl.ONE);
-                    this._gl.enable(this._gl.BLEND);
+                    this._gl.blendFuncSeparate(Gl.SRC_ALPHA, Gl.ONE_MINUS_SRC_ALPHA, Gl.ONE, Gl.ONE);
+                    this._gl.enable(Gl.BLEND);
                     break;
                 case BABYLON.Engine._ALPHA_ADD:
                     this.setDepthWrite(false);
-                    this._gl.blendFuncSeparate(this._gl.ONE, this._gl.ONE, this._gl.ZERO, this._gl.ONE);
-                    this._gl.enable(this._gl.BLEND);
+                    this._gl.blendFuncSeparate(Gl.ONE, Gl.ONE, Gl.ZERO, Gl.ONE);
+                    this._gl.enable(Gl.BLEND);
                     break;
             }
         }
@@ -917,23 +919,23 @@ namespace BABYLON
         public virtual void setSamplingMode(WebGLTexture texture, double samplingMode)
         {
             var gl = this._gl;
-            gl.bindTexture(gl.TEXTURE_2D, texture);
-            var magFilter = gl.NEAREST;
-            var minFilter = gl.NEAREST;
+            gl.bindTexture(Gl.TEXTURE_2D, texture);
+            var magFilter = Gl.NEAREST;
+            var minFilter = Gl.NEAREST;
             if (samplingMode == BABYLON.Texture.BILINEAR_SAMPLINGMODE)
             {
-                magFilter = gl.LINEAR;
-                minFilter = gl.LINEAR;
+                magFilter = Gl.LINEAR;
+                minFilter = Gl.LINEAR;
             }
             else
                 if (samplingMode == BABYLON.Texture.TRILINEAR_SAMPLINGMODE)
                 {
-                    magFilter = gl.LINEAR;
-                    minFilter = gl.LINEAR_MIPMAP_LINEAR;
+                    magFilter = Gl.LINEAR;
+                    minFilter = Gl.LINEAR_MIPMAP_LINEAR;
                 }
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
-            gl.bindTexture(gl.TEXTURE_2D, null);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MAG_FILTER, magFilter);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MIN_FILTER, minFilter);
+            gl.bindTexture(Gl.TEXTURE_2D, null);
         }
         public virtual WebGLTexture createTexture(string url, bool noMipmap, bool invertY, Scene scene, int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
         {
@@ -989,12 +991,12 @@ namespace BABYLON
                             if (isPot)
                             {
                                 this._gl.texImage2D(
-                                    this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, img);
+                                    Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, img);
                             }
                             else
                             {
                                 this._gl.texImage2D(
-                                    this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._workingCanvas);
+                                    Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
                             }
                         }, samplingMode);
                     };
@@ -1011,11 +1013,11 @@ namespace BABYLON
             var texture = this._gl.createTexture();
             width = getExponantOfTwo(width, this._caps.maxTextureSize);
             height = getExponantOfTwo(height, this._caps.maxTextureSize);
-            this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
+            this._gl.bindTexture(Gl.TEXTURE_2D, texture);
             var filters = getSamplingParameters(samplingMode, generateMipMaps, this._gl);
-            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MAG_FILTER, filters.mag);
-            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, filters.min);
-            this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MAG_FILTER, filters.mag);
+            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MIN_FILTER, filters.min);
+            this._gl.bindTexture(Gl.TEXTURE_2D, null);
             this._activeTexturesCache = new Array<BaseTexture>();
             texture._baseWidth = width;
             texture._baseHeight = height;
@@ -1029,21 +1031,21 @@ namespace BABYLON
         }
         public virtual void updateDynamicTexture(WebGLTexture texture, HTMLCanvasElement canvas, bool invertY)
         {
-            this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
-            this._gl.pixelStorei(this._gl.UNPACK_FLIP_Y_WEBGL, (invertY) ? 1 : 0);
-            this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, canvas);
+            this._gl.bindTexture(Gl.TEXTURE_2D, texture);
+            this._gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, (invertY) ? 1 : 0);
+            this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, canvas);
             if (texture.generateMipMaps)
             {
-                this._gl.generateMipmap(this._gl.TEXTURE_2D);
+                this._gl.generateMipmap(Gl.TEXTURE_2D);
             }
-            this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+            this._gl.bindTexture(Gl.TEXTURE_2D, null);
             this._activeTexturesCache = new Array<BaseTexture>();
             texture.isReady = true;
         }
         public virtual void updateVideoTexture(WebGLTexture texture, HTMLVideoElement video, bool invertY)
         {
-            this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
-            this._gl.pixelStorei(this._gl.UNPACK_FLIP_Y_WEBGL, (invertY) ? 0 : 1);
+            this._gl.bindTexture(Gl.TEXTURE_2D, texture);
+            this._gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, (invertY) ? 0 : 1);
             if (video.videoWidth != texture._width || video.videoHeight != texture._height)
             {
                 if (texture._workingCanvas == null)
@@ -1054,17 +1056,17 @@ namespace BABYLON
                     texture._workingCanvas.height = texture._height;
                 }
                 texture._workingContext.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, texture._width, texture._height);
-                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, texture._workingCanvas);
+                this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, texture._workingCanvas);
             }
             else
             {
-                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, video);
+                this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, video);
             }
             if (texture.generateMipMaps)
             {
-                this._gl.generateMipmap(this._gl.TEXTURE_2D);
+                this._gl.generateMipmap(Gl.TEXTURE_2D);
             }
-            this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+            this._gl.bindTexture(Gl.TEXTURE_2D, null);
             this._activeTexturesCache = new Array<BaseTexture>();
             texture.isReady = true;
         }
@@ -1072,32 +1074,32 @@ namespace BABYLON
         {
             var gl = this._gl;
             var texture = gl.createTexture();
-            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.bindTexture(Gl.TEXTURE_2D, texture);
             var width = size.width;
             var height = size.height;
             var filters = getSamplingParameters(samplingMode, generateMipMaps, gl);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filters.min);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MAG_FILTER, filters.mag);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MIN_FILTER, filters.min);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
+            gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
+            gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, width, height, 0, Gl.RGBA, Gl.UNSIGNED_BYTE, null);
             WebGLRenderbuffer depthBuffer = null;
             if (generateDepthBuffer)
             {
                 depthBuffer = gl.createRenderbuffer();
-                gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
-                gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+                gl.bindRenderbuffer(Gl.RENDERBUFFER, depthBuffer);
+                gl.renderbufferStorage(Gl.RENDERBUFFER, Gl.DEPTH_COMPONENT16, width, height);
             }
             var framebuffer = gl.createFramebuffer();
-            gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+            gl.bindFramebuffer(Gl.FRAMEBUFFER, framebuffer);
+            gl.framebufferTexture2D(Gl.FRAMEBUFFER, Gl.COLOR_ATTACHMENT0, Gl.TEXTURE_2D, texture, 0);
             if (generateDepthBuffer)
             {
-                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
+                gl.framebufferRenderbuffer(Gl.FRAMEBUFFER, Gl.DEPTH_ATTACHMENT, Gl.RENDERBUFFER, depthBuffer);
             }
-            gl.bindTexture(gl.TEXTURE_2D, null);
-            gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            gl.bindTexture(Gl.TEXTURE_2D, null);
+            gl.bindRenderbuffer(Gl.RENDERBUFFER, null);
+            gl.bindFramebuffer(Gl.FRAMEBUFFER, null);
             texture._framebuffer = framebuffer;
             if (generateDepthBuffer)
             {
@@ -1128,18 +1130,18 @@ namespace BABYLON
                 {
                     var info = BABYLON.Internals.DDSTools.GetDDSInfo(data);
                     var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap;
-                    gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
-                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+                    gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
+                    gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 1);
                     Internals.DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 6);
                     if (!noMipmap && !info.isFourCC && info.mipmapCount == 1)
                     {
-                        gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+                        gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
                     }
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, (loadMipmap) ? gl.LINEAR_MIPMAP_LINEAR : gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                    gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, (loadMipmap) ? Gl.LINEAR_MIPMAP_LINEAR : Gl.LINEAR);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
+                    gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
                     this._activeTexturesCache = new Array<BaseTexture>();
                     texture._width = info.width;
                     texture._height = info.height;
@@ -1154,23 +1156,23 @@ namespace BABYLON
                     var height = width;
                     this._workingCanvas.width = width;
                     this._workingCanvas.height = height;
-                    var faces = new Array<int>(gl.TEXTURE_CUBE_MAP_POSITIVE_X, gl.TEXTURE_CUBE_MAP_POSITIVE_Y, gl.TEXTURE_CUBE_MAP_POSITIVE_Z, gl.TEXTURE_CUBE_MAP_NEGATIVE_X, gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, gl.TEXTURE_CUBE_MAP_NEGATIVE_Z);
-                    gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
-                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
+                    var faces = new Array<int>(Gl.TEXTURE_CUBE_MAP_POSITIVE_X, Gl.TEXTURE_CUBE_MAP_POSITIVE_Y, Gl.TEXTURE_CUBE_MAP_POSITIVE_Z, Gl.TEXTURE_CUBE_MAP_NEGATIVE_X, Gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, Gl.TEXTURE_CUBE_MAP_NEGATIVE_Z);
+                    gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
+                    gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
                     for (var index = 0; index < faces.Length; index++)
                     {
                         this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
-                        gl.texImage2D(faces[index], 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this._workingCanvas);
+                        gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
                     }
                     if (!noMipmap)
                     {
-                        gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+                        gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
                     }
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, (noMipmap) ? gl.LINEAR : gl.LINEAR_MIPMAP_LINEAR);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                    gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, (noMipmap) ? Gl.LINEAR : Gl.LINEAR_MIPMAP_LINEAR);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
+                    gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
                     this._activeTexturesCache = new Array<BaseTexture>();
                     texture._width = width;
                     texture._height = height;
@@ -1194,8 +1196,8 @@ namespace BABYLON
             for (var channel = 0; channel < this._caps.maxTexturesImageUnits; channel++)
             {
                 this._gl.activeTexture(this._gl["TEXTURE" + channel]);
-                this._gl.bindTexture(this._gl.TEXTURE_2D, null);
-                this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, null);
+                this._gl.bindTexture(Gl.TEXTURE_2D, null);
+                this._gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
                 this._activeTexturesCache[channel] = null;
             }
             var index = this._loadedTexturesCache.indexOf(texture);
@@ -1218,7 +1220,7 @@ namespace BABYLON
         public virtual void _bindTexture(int channel, WebGLTexture texture)
         {
             this._gl.activeTexture(this._gl["TEXTURE" + channel]);
-            this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
+            this._gl.bindTexture(Gl.TEXTURE_2D, texture);
             this._activeTexturesCache[channel] = null;
         }
         public virtual void setTextureFromPostProcess(int channel, PostProcess postProcess)
@@ -1236,8 +1238,8 @@ namespace BABYLON
                 if (this._activeTexturesCache[channel] != null)
                 {
                     this._gl.activeTexture(this._gl["TEXTURE" + channel]);
-                    this._gl.bindTexture(this._gl.TEXTURE_2D, null);
-                    this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, null);
+                    this._gl.bindTexture(Gl.TEXTURE_2D, null);
+                    this._gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
                     this._activeTexturesCache[channel] = null;
                 }
                 return;
@@ -1264,32 +1266,32 @@ namespace BABYLON
             this._gl.activeTexture(this._gl["TEXTURE" + channel]);
             if (internalTexture.isCube)
             {
-                this._gl.bindTexture(this._gl.TEXTURE_CUBE_MAP, internalTexture);
+                this._gl.bindTexture(Gl.TEXTURE_CUBE_MAP, internalTexture);
                 if (internalTexture._cachedCoordinatesMode != texture.coordinatesMode)
                 {
                     internalTexture._cachedCoordinatesMode = texture.coordinatesMode;
-                    var textureWrapMode = ((texture.coordinatesMode != BABYLON.Texture.CUBIC_MODE && texture.coordinatesMode != BABYLON.Texture.SKYBOX_MODE)) ? this._gl.REPEAT : this._gl.CLAMP_TO_EDGE;
-                    this._gl.texParameteri(this._gl.TEXTURE_CUBE_MAP, this._gl.TEXTURE_WRAP_S, textureWrapMode);
-                    this._gl.texParameteri(this._gl.TEXTURE_CUBE_MAP, this._gl.TEXTURE_WRAP_T, textureWrapMode);
+                    var textureWrapMode = ((texture.coordinatesMode != BABYLON.Texture.CUBIC_MODE && texture.coordinatesMode != BABYLON.Texture.SKYBOX_MODE)) ? Gl.REPEAT : Gl.CLAMP_TO_EDGE;
+                    this._gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, textureWrapMode);
+                    this._gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, textureWrapMode);
                 }
-                this._setAnisotropicLevel(this._gl.TEXTURE_CUBE_MAP, texture);
+                this._setAnisotropicLevel(Gl.TEXTURE_CUBE_MAP, texture);
             }
             else
             {
-                this._gl.bindTexture(this._gl.TEXTURE_2D, internalTexture);
+                this._gl.bindTexture(Gl.TEXTURE_2D, internalTexture);
                 if (internalTexture._cachedWrapU != texture.wrapU)
                 {
                     internalTexture._cachedWrapU = texture.wrapU;
                     switch (texture.wrapU)
                     {
                         case BABYLON.Texture.WRAP_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._gl.REPEAT);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_S, Gl.REPEAT);
                             break;
                         case BABYLON.Texture.CLAMP_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._gl.CLAMP_TO_EDGE);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
                             break;
                         case BABYLON.Texture.MIRROR_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._gl.MIRRORED_REPEAT);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_S, Gl.MIRRORED_REPEAT);
                             break;
                     }
                 }
@@ -1299,17 +1301,17 @@ namespace BABYLON
                     switch (texture.wrapV)
                     {
                         case BABYLON.Texture.WRAP_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._gl.REPEAT);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_T, Gl.REPEAT);
                             break;
                         case BABYLON.Texture.CLAMP_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._gl.CLAMP_TO_EDGE);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
                             break;
                         case BABYLON.Texture.MIRROR_ADDRESSMODE:
-                            this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._gl.MIRRORED_REPEAT);
+                            this._gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_WRAP_T, Gl.MIRRORED_REPEAT);
                             break;
                     }
                 }
-                this._setAnisotropicLevel(this._gl.TEXTURE_2D, texture);
+                this._setAnisotropicLevel(Gl.TEXTURE_2D, texture);
             }
         }
         public virtual void _setAnisotropicLevel(int key, BaseTexture texture)
@@ -1317,14 +1319,14 @@ namespace BABYLON
             var anisotropicFilterExtension = this._caps.textureAnisotropicFilterExtension;
             if (anisotropicFilterExtension != null && texture._cachedAnisotropicFilteringLevel != texture.anisotropicFilteringLevel)
             {
-                this._gl.texParameterf(key, anisotropicFilterExtension.TEXTURE_MAX_ANISOTROPY_EXT, Math.Min(texture.anisotropicFilteringLevel, this._caps.maxAnisotropy));
+                this._gl.texParameterf(key, Gl.TEXTURE_MAX_ANISOTROPY_EXT, Math.Min(texture.anisotropicFilteringLevel, this._caps.maxAnisotropy));
                 texture._cachedAnisotropicFilteringLevel = texture.anisotropicFilteringLevel;
             }
         }
         public virtual byte[] readPixels(int x, int y, int width, int height)
         {
             var data = new byte[height * width * 4];
-            this._gl.readPixels(0, 0, width, height, this._gl.RGBA, this._gl.UNSIGNED_BYTE, data);
+            this._gl.readPixels(0, 0, width, height, Gl.RGBA, Gl.UNSIGNED_BYTE, data);
             return data;
         }
         public virtual void dispose()
@@ -1340,7 +1342,7 @@ namespace BABYLON
             }
             for (var i = 0; i < this._vertexAttribArrays.Length; i++)
             {
-                if (i > this._gl.VERTEX_ATTRIB_ARRAY_ENABLED || !this._vertexAttribArrays[i])
+                if (i > Gl.VERTEX_ATTRIB_ARRAY_ENABLED || !this._vertexAttribArrays[i])
                 {
                     continue;
                 }

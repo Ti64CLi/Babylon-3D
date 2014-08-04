@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON.Internals
 {
+    using BabylonNativeCsLibrary;
+
     public partial class TGATools
     {
         private const int _TYPE_NO_DATA = 0;
@@ -212,7 +214,7 @@ namespace BABYLON.Internals
                 }
             }
 
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, header.width, header.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, imageData);
+            gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, header.width, header.height, 0, Gl.RGBA, Gl.UNSIGNED_BYTE, imageData);
         }
         static byte[] _getImageData8bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {

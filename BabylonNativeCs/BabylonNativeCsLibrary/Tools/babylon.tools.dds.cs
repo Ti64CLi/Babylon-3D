@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using Web;
 namespace BABYLON.Internals
 {
+    using BabylonNativeCsLibrary;
+
     public partial interface DDSInfo
     {
         int width
@@ -223,7 +225,7 @@ namespace BABYLON.Internals
             var bpp = header[off_RGBbpp];
             for (var face = 0; face < faces; face++)
             {
-                var sampler = (faces == 1) ? gl.TEXTURE_2D : (gl.TEXTURE_CUBE_MAP_POSITIVE_X + face);
+                var sampler = (faces == 1) ? Gl.TEXTURE_2D : (Gl.TEXTURE_CUBE_MAP_POSITIVE_X + face);
                 width = header[off_width];
                 height = header[off_height];
                 dataOffset = header[off_size] + 4;
@@ -235,24 +237,24 @@ namespace BABYLON.Internals
                         {
                             dataLength = width * height * 3;
                             byteArray = DDSTools.GetRGBArrayBuffer(width, height, dataOffset, dataLength, arrayBuffer);
-                            gl.texImage2D(sampler, i, gl.RGB, width, height, 0, gl.RGB, gl.UNSIGNED_BYTE, byteArray);
+                            gl.texImage2D(sampler, i, Gl.RGB, width, height, 0, Gl.RGB, Gl.UNSIGNED_BYTE, byteArray);
                         }
                         else
                         {
                             dataLength = width * height * 4;
                             byteArray = DDSTools.GetRGBAArrayBuffer(width, height, dataOffset, dataLength, arrayBuffer);
-                            gl.texImage2D(sampler, i, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, byteArray);
+                            gl.texImage2D(sampler, i, Gl.RGBA, width, height, 0, Gl.RGBA, Gl.UNSIGNED_BYTE, byteArray);
                         }
                     }
                     else
                         if (info.isLuminance)
                         {
-                            var unpackAlignment = (int)gl.getParameter(gl.UNPACK_ALIGNMENT);
+                            var unpackAlignment = (int)gl.getParameter(Gl.UNPACK_ALIGNMENT);
                             var unpaddedRowSize = width;
                             var paddedRowSize = (int)Math.Floor((width + unpackAlignment - 1) / unpackAlignment) * unpackAlignment;
                             dataLength = paddedRowSize * (height - 1) + unpaddedRowSize;
                             byteArray = DDSTools.GetLuminanceArrayBuffer(width, height, dataOffset, dataLength, arrayBuffer);
-                            gl.texImage2D(sampler, i, gl.LUMINANCE, width, height, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, byteArray);
+                            gl.texImage2D(sampler, i, Gl.LUMINANCE, width, height, 0, Gl.LUMINANCE, Gl.UNSIGNED_BYTE, byteArray);
                         }
                         else
                         {
