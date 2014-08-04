@@ -378,6 +378,7 @@
         public string getShaderInfoLog(Web.WebGLShader shader)
         {
             var GL_INFO_LOG_LENGTH = 35716U;
+            var GL_SHADING_LANGUAGE_VERSION = 35724U;
             var k = new int[1];
             this.openGl.GetShader(shader.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
@@ -391,7 +392,19 @@
             }
 
             var result = new StringBuilder();
-            this.openGl.GetShaderInfoLog(shader.Value, 0, new IntPtr(0), result);
+            result.Capacity = k[0];
+            unsafe
+            {
+                fixed (void* p = k)
+                {
+                    this.openGl.GetShaderInfoLog(shader.Value, k[0], new IntPtr(p), result);
+                }
+            }
+
+            var version = this.openGl.GetString(GL_SHADING_LANGUAGE_VERSION);
+
+            result.AppendFormat("GL VERSION: {0}", version);
+
             return result.ToString();
         }
 
@@ -402,9 +415,9 @@
 
         public object getParameter(int pname)
         {
-            var ints = new int[1];
-            this.openGl.GetInteger((uint)pname, ints);
-            return ints[0];
+            var i = new int[1];
+            this.openGl.GetInteger((uint)pname, i);
+            return i[0] == 0 ? (object)null : i[0];
         }
 
         public Web.WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype)
@@ -631,7 +644,7 @@
         {
             var i = new int[1];
             this.openGl.GetProgram(program.Value, (uint)pname, i);
-            return i;
+            return i[0] == 0 ? (object)null : i[0];
         }
 
         public Web.WebGLActiveInfo getActiveUniform(Web.WebGLProgram program, int index)
@@ -728,7 +741,7 @@
         {
             var i = new int[1];
             this.openGl.GetShader(shader.Value, (uint)pname, i);
-            return i;
+            return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
