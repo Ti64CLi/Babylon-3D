@@ -21,6 +21,8 @@ namespace BABYLON
         public int loopMode;
         public Animation(string name, string targetProperty, double framePerSecond, int dataType, int loopMode = 0)
         {
+            this.name = name;
+            this.framePerSecond = framePerSecond;
             this.targetPropertyPath = targetProperty.Split('.');
             this.dataType = dataType;
             this.loopMode = (loopMode == 0) ? Animation.ANIMATIONLOOPMODE_CYCLE : loopMode;

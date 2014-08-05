@@ -23,6 +23,7 @@ namespace BABYLON
         public string name;
         public LensFlareSystem(string name, object emitter, Scene scene)
         {
+            this.name = name;
             this._scene = scene;
             this._emitter = emitter;
             scene.lensFlareSystems.push(this);

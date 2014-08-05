@@ -26,7 +26,8 @@ namespace BABYLON
         public SubMesh(int materialIndex, int verticesStart, int verticesCount, int indexStart, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
         {
             this.materialIndex = materialIndex;
-            this.verticesStart = verticesCount;
+            this.verticesStart = verticesStart;
+            this.verticesCount = verticesCount;
             this.indexStart = indexStart;
             this.indexCount = indexCount;
 

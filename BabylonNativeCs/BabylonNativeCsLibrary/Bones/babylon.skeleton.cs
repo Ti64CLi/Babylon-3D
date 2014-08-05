@@ -17,6 +17,8 @@ namespace BABYLON
         public string id;
         public Skeleton(string name, string id, Scene scene)
         {
+            this.name = name;
+            this.id = id;
             this.bones = new Array<Bone>();
             this._scene = scene;
             scene.skeletons.push(this);

@@ -214,7 +214,10 @@ namespace BABYLON
     {
         public dynamic x;
         public dynamic y;
-        public StickValues(object x, object y) { }
+        public StickValues(object x, object y) {
+            this.x = x;
+            this.y = y;
+        }
     }
     public partial class Gamepad
     {
@@ -227,6 +230,10 @@ namespace BABYLON
         public dynamic browserGamepad;
         public Gamepad(string id, double index, object browserGamepad)
         {
+            this.id = id;
+            this.index = index;
+            this.broeserGamepad = browserGamepad;
+     
             if (this.browserGamepad.axes.Length >= 2)
             {
                 this._leftStick = new { };
@@ -305,6 +312,9 @@ namespace BABYLON
         public GenericPad(string id, double index, object gamepad)
             : base(id, index, gamepad)
         {
+            this.id = id;
+            this.index = index;
+            this.gamepad = gamepad;
             this._buttons = new Array(gamepad.buttons.Length);
         }
         private double _setButtonValue(double newValue, double currentValue, double buttonIndex)

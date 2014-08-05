@@ -23,7 +23,9 @@ namespace BABYLON {
         private SpriteManager _manager;
         private double _time = 0;
         public string name;
-        public Sprite(string name, SpriteManager manager) {
+        public Sprite(string name, SpriteManager manager)
+        {
+            this.name = name;
             this._manager = manager;
             this._manager.sprites.push(this);
             this.position = BABYLON.Vector3.Zero();

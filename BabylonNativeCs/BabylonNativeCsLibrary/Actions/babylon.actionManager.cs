@@ -11,7 +11,12 @@ namespace BABYLON
         public double pointerX;
         public double pointerY;
         public AbstractMesh meshUnderPointer;
-        public ActionEvent(AbstractMesh source, double pointerX, double pointerY, AbstractMesh meshUnderPointer) { }
+        public ActionEvent(AbstractMesh source, double pointerX, double pointerY, AbstractMesh meshUnderPointer)
+        {
+            this.source = source;
+            this.pointerX = pointerX;
+            this.pointerY = pointerY;
+        }
         public static ActionEvent CreateNew(AbstractMesh source)
         {
             var scene = source.getScene();

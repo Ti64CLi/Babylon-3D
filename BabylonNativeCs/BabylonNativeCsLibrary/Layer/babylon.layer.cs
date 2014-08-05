@@ -20,6 +20,7 @@ namespace BABYLON
         public string name;
         public Layer(string name, string imgUrl, Scene scene, bool isBackground = false, Color4 color = null)
         {
+            this.name = name;
             this.texture = (imgUrl != null) ? new BABYLON.Texture(imgUrl, scene, true) : null;
             this.isBackground = isBackground;
             this.color = (color == null) ? new BABYLON.Color4(1, 1, 1, 1) : color;

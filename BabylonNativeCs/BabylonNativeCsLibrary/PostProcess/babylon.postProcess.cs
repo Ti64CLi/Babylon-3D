@@ -24,6 +24,7 @@ namespace BABYLON
         public string name;
         public PostProcess(string name, string fragmentUrl, Array<string> parameters, Array<string> samplers, double ratio, Camera camera, int samplingMode, Engine engine = null, bool reusable = false)
         {
+            this.name = name;
             if (camera != null)
             {
                 this._camera = camera;

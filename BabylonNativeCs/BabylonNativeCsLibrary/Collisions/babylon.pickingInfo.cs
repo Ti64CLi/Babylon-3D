@@ -11,7 +11,12 @@ namespace BABYLON
         public double bu;
         public double bv;
         public double distance;
-        public IntersectionInfo(double bu, double bv, double distance) { }
+        public IntersectionInfo(double bu, double bv, double distance)
+        {
+            this.bu = bu;
+            this.bv = bv;
+            this.distance = distance;
+        }
     }
     public partial class PickingInfo
     {

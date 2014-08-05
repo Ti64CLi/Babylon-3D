@@ -19,6 +19,7 @@ namespace BABYLON
         public string name;
         public Bone(string name, Skeleton skeleton, Bone parentBone, Matrix matrix)
         {
+            this.name = name;
             this._skeleton = skeleton;
             this._matrix = matrix;
             this._baseMatrix = matrix;

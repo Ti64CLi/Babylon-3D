@@ -15,6 +15,7 @@ namespace BABYLON
         public double index;
         public RenderingGroup(double index, Scene scene)
         {
+            this.index = index;
             this._scene = scene;
         }
         public virtual bool render(System.Action<SmartArray<SubMesh>, SmartArray<SubMesh>, SmartArray<SubMesh>, System.Action> customRenderFunction, System.Action beforeTransparents)

@@ -14,6 +14,8 @@ namespace BABYLON
         public double position;
         public LensFlare(double size, double position, Color3 color, string imgUrl, LensFlareSystem system)
         {
+            this.size = size;
+            this.position = position;
             this.color = color ?? new BABYLON.Color3(1, 1, 1);
             this.texture = (imgUrl != null) ? new BABYLON.Texture(imgUrl, system.getScene(), true) : null;
             this._system = system;

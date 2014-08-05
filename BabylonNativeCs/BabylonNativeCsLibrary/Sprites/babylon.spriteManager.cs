@@ -25,6 +25,8 @@ namespace BABYLON
         public int cellSize;
         public SpriteManager(string name, string imgUrl, int capacity, int cellSize, Scene scene, double epsilon = 0.01)
         {
+            this.name = name;
+            this.cellSize = cellSize;
             this._capacity = capacity;
             this._spriteTexture = new BABYLON.Texture(imgUrl, scene, true, false);
             this._spriteTexture.wrapU = BABYLON.Texture.CLAMP_ADDRESSMODE;
