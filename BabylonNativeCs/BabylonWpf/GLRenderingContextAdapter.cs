@@ -58,7 +58,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name), name);
+            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
             ErrorTest();
             return glUniformLocation;
         }

@@ -2,22 +2,15 @@
 {
     using System.Diagnostics;
 
-    [DebuggerDisplay("{Name}({Value})")]
+    [DebuggerDisplay("({Value})")]
     public class GlUniformLocation : Web.WebGLUniformLocation
     {
-        public GlUniformLocation(int value, string name)
+        public GlUniformLocation(int value)
         {
             this.Value = value;
-            this.Name = name;
         }
 
         public int Value
-        {
-            get;
-            private set;
-        }
-
-        public string Name
         {
             get;
             private set;
