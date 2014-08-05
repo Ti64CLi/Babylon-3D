@@ -1,7 +1,10 @@
 ﻿namespace BabylonWpf
 {
     using System;
+    using System.Diagnostics;
     using System.Text;
+
+    using SharpGL.Enumerations;
 
     using Web;
 
@@ -55,7 +58,9 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            return new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
+            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
+            ErrorTest();
+            return glUniformLocation;
         }
 
         public void bindTexture(int target, Web.WebGLTexture texture)
@@ -66,11 +71,13 @@
         public void bufferData(int target, float[] data, int usage)
         {
             this.openGl.BufferData((uint)target, data, (uint)usage);
+            ErrorTest();
         }
 
         public void bufferData(int target, ushort[] data, int usage)
         {
             this.openGl.BufferData((uint)target, data, (uint)usage);
+            ErrorTest();
         }
 
         public void bufferData(int target, int size, int usage)
@@ -81,6 +88,7 @@
         public void depthMask(bool flag)
         {
             this.openGl.DepthMask((byte)(flag ? 1 : 0));
+            ErrorTest();
         }
 
         public object getUniform(Web.WebGLProgram program, Web.WebGLUniformLocation location)
@@ -101,6 +109,7 @@
         public void linkProgram(Web.WebGLProgram program)
         {
             this.openGl.LinkProgram(program.Value);
+            ErrorTest();
         }
 
         public BABYLON.Array<string> getSupportedExtensions()
@@ -121,6 +130,7 @@
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
             this.openGl.VertexAttribPointer((uint)indx, size, (uint)type, normalized, stride, new IntPtr(offset));
+            ErrorTest();
         }
 
         public void polygonOffset(int factor, int units)
@@ -151,6 +161,7 @@
         public void enableVertexAttribArray(int index)
         {
             this.openGl.EnableVertexAttribArray((uint)index);
+            ErrorTest();
         }
 
         public void depthRange(double zNear, double zFar)
@@ -161,6 +172,7 @@
         public void cullFace(int mode)
         {
             this.openGl.CullFace((uint)mode);
+            ErrorTest();
         }
 
         public Web.WebGLFramebuffer createFramebuffer()
@@ -171,6 +183,7 @@
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
             this.openGl.UniformMatrix4(location.Value, value.Length, transpose, value);
+            ErrorTest();
         }
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
@@ -215,12 +228,15 @@
 
         public Web.WebGLProgram createProgram()
         {
-            return new GlProgramAdapter(this.openGl.CreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(this.openGl.CreateProgram());
+            ErrorTest();
+            return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
             this.openGl.DeleteShader(shader.Value);
+            ErrorTest();
         }
 
         public BABYLON.Array<Web.WebGLShader> getAttachedShaders(Web.WebGLProgram program)
@@ -231,6 +247,7 @@
         public void enable(int cap)
         {
             this.openGl.Enable((uint)cap);
+            ErrorTest();
         }
 
         public void blendEquation(int mode)
@@ -267,6 +284,7 @@
         {
             uint[] buffers = new uint[1];
             this.openGl.GenBuffers(1, buffers);
+            ErrorTest();
             return new GlBufferAdapter(buffers[0]);
         }
 
@@ -278,6 +296,7 @@
         public void useProgram(Web.WebGLProgram program)
         {
             this.openGl.UseProgram(program.Value);
+            ErrorTest();
         }
 
         public void vertexAttrib2fv(int indx, float[] values)
@@ -353,6 +372,7 @@
         public void drawElements(int mode, int count, int type, int offset)
         {
             this.openGl.DrawElements((uint)mode, count, (uint)type, new IntPtr(offset));
+            ErrorTest();
         }
 
         public bool isFramebuffer(Web.WebGLFramebuffer framebuffer)
@@ -417,6 +437,7 @@
         {
             var i = new int[1];
             this.openGl.GetInteger((uint)pname, i);
+            ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
@@ -488,6 +509,7 @@
         public void shaderSource(Web.WebGLShader shader, string source)
         {
             this.openGl.ShaderSource(shader.Value, source);
+            ErrorTest();
         }
 
         public void deleteRenderbuffer(Web.WebGLRenderbuffer renderbuffer)
@@ -503,11 +525,14 @@
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
             this.openGl.BindBuffer((uint)target, buffer != null ? buffer.Value : 0);
+            ErrorTest();
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            return this.openGl.GetAttribLocation(program.Value, name);
+            var attribLocation = this.openGl.GetAttribLocation(program.Value, name);
+            ErrorTest();
+            return attribLocation;
         }
 
         public void uniform3i(Web.WebGLUniformLocation location, double x, double y, double z)
@@ -523,6 +548,7 @@
         public void clear(int mask)
         {
             this.openGl.Clear((uint)mask);
+            ErrorTest();
         }
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
@@ -538,6 +564,7 @@
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
             this.openGl.ReadPixels(x, y, width, height, (uint)format, (uint)type, pixels);
+            ErrorTest();
         }
 
         public void scissor(int x, int y, int width, int height)
@@ -623,6 +650,7 @@
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
             this.openGl.Uniform4(location.Value, (float)x, (float)y, (float)z, (float)w);
+            ErrorTest();
         }
 
         public void deleteProgram(Web.WebGLProgram program)
@@ -638,12 +666,14 @@
         public void uniform1i(Web.WebGLUniformLocation location, double x)
         {
             this.openGl.Uniform1(location.Value, (float)x);
+            ErrorTest();
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
             var i = new int[1];
             this.openGl.GetProgram(program.Value, (uint)pname, i);
+            ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
@@ -710,6 +740,7 @@
         public void depthFunc(int func)
         {
             this.openGl.DepthFunc((uint)func);
+            ErrorTest();
         }
 
         public void texParameterf(int target, int pname, float param)
@@ -741,12 +772,14 @@
         {
             var i = new int[1];
             this.openGl.GetShader(shader.Value, (uint)pname, i);
+            ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
         {
             this.openGl.ClearDepth(depth);
+            ErrorTest();
         }
 
         public void activeTexture(int texture)
@@ -757,6 +790,7 @@
         public void viewport(int x, int y, int width, int height)
         {
             this.openGl.Viewport(x, y, width, height);
+            ErrorTest();
         }
 
         public void detachShader(Web.WebGLProgram program, Web.WebGLShader shader)
@@ -782,6 +816,7 @@
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
             this.openGl.DeleteBuffers(1, new uint[] { buffer.Value });
+            ErrorTest();
         }
 
         public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height)
@@ -807,16 +842,19 @@
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
             this.openGl.AttachShader(program.Value, shader.Value);
+            ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
             this.openGl.CompileShader(shader.Value);
+            ErrorTest();
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
             this.openGl.ClearColor((float)red, (float)green, (float)blue, (float)alpha);
+            ErrorTest();
         }
 
         public bool isShader(Web.WebGLShader shader)
@@ -852,6 +890,7 @@
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
             this.openGl.Uniform3(location.Value, (float)x, (float)y, (float)z);
+            ErrorTest();
         }
 
         public string getProgramInfoLog(Web.WebGLProgram program)
@@ -882,6 +921,7 @@
         public Web.WebGLShader createShader(int type)
         {
             var shader = this.openGl.CreateShader((uint)type);
+            ErrorTest();
             return new GlShaderAdapter(shader);
         }
 
@@ -903,6 +943,17 @@
         public int this[string enumName]
         {
             get { throw new NotImplementedException(); }
+        }
+
+        [Conditional("DEBUG")]
+        private void ErrorTest()
+        {
+            var error = this.openGl.GetErrorCode();
+            if (error != ErrorCode.NoError)
+            {
+                var message = string.Format("Error : {0}, {1}", error, this.openGl.GetErrorDescription((uint)error));
+                Debug.Fail(message);
+            }
         }
     }
 }
