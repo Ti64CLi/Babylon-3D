@@ -8,8 +8,23 @@ namespace BabylonWpf
 {
     public class Defaults
     {
-        public const string LegacyVertexShader = @"
-#ifdef GL_ES
+        public const string BasicVertexShader = @"attribute vec4 position;
+// Uniforms
+uniform mat4 world;
+
+void main() {
+	gl_Position = position * world;
+}";
+
+        public const string BasicPixelShader = @"#ifdef GL_ES
+precision mediump float;
+#endif
+
+void main(void) {
+    gl_FragColor = vec4(1.,1.,1.,1.);
+}";
+
+        public const string LegacyVertexShader = @"#ifdef GL_ES
 precision mediump float;
 #endif
 

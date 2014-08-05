@@ -161,7 +161,7 @@ namespace BABYLON
                 for (var index = 0; index < this._samplers.Length; index++)
                 {
                     var sampler = this.getUniform(this._samplers[index]);
-                    if (sampler == null)
+                    if (sampler == null || sampler.Value == -1)
                     {
                         this._samplers.RemoveAt(index);
                         index--;

@@ -10,8 +10,11 @@ namespace BABYLON
         private Matrix _worldMatrix;
         private Vector3 _transformedPosition;
         public Vector3 position;
-        public PointLight(string name, Vector3 position, Scene scene) : base(name, scene) { }
-        public virtual void transferToEffect(Effect effect, string positionUniformName)
+        public PointLight(string name, Vector3 position, Scene scene) : base(name, scene) 
+        {
+            this.position = position;
+        }
+        public override void transferToEffect(Effect effect, string positionUniformName, string positionUniformName2 = null)
         {
             if (this.parent != null)
             {

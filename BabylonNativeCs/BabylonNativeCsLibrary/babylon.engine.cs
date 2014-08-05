@@ -168,7 +168,7 @@ namespace BABYLON
         private WebGLShader compileShader(WebGLRenderingContext gl, string source, string type, string defines)
         {
             var shader = gl.createShader((type == "vertex") ? Gl.VERTEX_SHADER : Gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, ((!string.IsNullOrEmpty(defines)) ? defines + "\\n" : string.Empty) + source);
+            gl.shaderSource(shader, ((!string.IsNullOrEmpty(defines)) ? defines + "\n" : string.Empty) + source);
             gl.compileShader(shader);
             if (gl.getShaderParameter(shader, Gl.COMPILE_STATUS) == null)
             {

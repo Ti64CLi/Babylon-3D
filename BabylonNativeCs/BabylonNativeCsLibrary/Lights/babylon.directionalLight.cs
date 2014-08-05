@@ -16,6 +16,7 @@ namespace BABYLON
             : base(name, scene)
         {
             this.position = direction.scale(-1);
+            this.direction = direction;
         }
         public virtual Vector3 setDirectionToTarget(Vector3 target)
         {
@@ -35,7 +36,7 @@ namespace BABYLON
             }
             return false;
         }
-        public virtual void transferToEffect(Effect effect, string directionUniformName)
+        public override void transferToEffect(Effect effect, string directionUniformName, string directionUniformName2 = null)
         {
             if (this.parent != null)
             {

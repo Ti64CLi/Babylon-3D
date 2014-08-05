@@ -148,7 +148,7 @@ namespace BABYLON
                 attribs.push("world2");
                 attribs.push("world3");
             }
-            var join = defines.join("\\n");
+            var join = defines.join("\n");
             if (this._cachedDefines != join)
             {
                 this._cachedDefines = join;

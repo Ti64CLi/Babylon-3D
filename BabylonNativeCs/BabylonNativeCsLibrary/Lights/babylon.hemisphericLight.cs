@@ -10,7 +10,10 @@ namespace BABYLON
         public BABYLON.Color3 groundColor = new BABYLON.Color3(0.0, 0.0, 0.0);
         private Matrix _worldMatrix;
         public Vector3 direction;
-        public HemisphericLight(string name, Vector3 direction, Scene scene) : base(name, scene) { }
+        public HemisphericLight(string name, Vector3 direction, Scene scene) : base(name, scene) 
+        {
+            this.direction = direction;
+        }
         public virtual Vector3 setDirectionToTarget(Vector3 target)
         {
             this.direction = BABYLON.Vector3.Normalize(target.subtract(Vector3.Zero()));

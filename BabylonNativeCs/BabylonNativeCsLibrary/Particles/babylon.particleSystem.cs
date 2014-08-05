@@ -217,7 +217,7 @@ namespace BABYLON
             {
                 defines.push("#define CLIPPLANE");
             }
-            var join = defines.join("\\n");
+            var join = defines.join("\n");
             if (this._cachedDefines != join)
             {
                 this._cachedDefines = join;

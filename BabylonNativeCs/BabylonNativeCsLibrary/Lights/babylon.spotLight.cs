@@ -14,7 +14,13 @@ namespace BABYLON
         public Vector3 direction;
         public double angle;
         public double exponent;
-        public SpotLight(string name, Vector3 position, Vector3 direction, double angle, double exponent, Scene scene) : base(name, scene) { }
+        public SpotLight(string name, Vector3 position, Vector3 direction, double angle, double exponent, Scene scene) : base(name, scene) 
+        {
+            this.position = position;
+            this.direction = direction;
+            this.angle = angle;
+            this.exponent = exponent;
+        }
         public virtual Vector3 setDirectionToTarget(Vector3 target)
         {
             this.direction = BABYLON.Vector3.Normalize(target.subtract(this.position));
