@@ -58,7 +58,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
+            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name), name);
             ErrorTest();
             return glUniformLocation;
         }
@@ -182,7 +182,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            this.openGl.UniformMatrix4(location.Value, value.Length, transpose, value);
+            this.openGl.UniformMatrix4(location.Value, value.Length / 16, transpose, value);
             ErrorTest();
         }
 
