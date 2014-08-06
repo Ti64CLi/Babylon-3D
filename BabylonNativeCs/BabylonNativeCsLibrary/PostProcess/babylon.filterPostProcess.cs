@@ -37,6 +37,8 @@ namespace BABYLON
             string name, Matrix kernelMatrix, double ratio, Camera camera = null, int samplingMode = 0, Engine engine = null, bool reusable = false)
             : base(name, "filter", new Array<string>("kernelMatrix"), null, ratio, camera, samplingMode, engine, reusable)
         {
+            this.kernelMatrix = kernelMatrix;
+
             this.onApply = (Effect effect) => { effect.setMatrix("kernelMatrix", this.kernelMatrix); };
         }
     }

@@ -85,6 +85,12 @@ namespace BABYLON
             System.Action onAnimationEnd = null, 
             Array<Animation> animations = null)
         {
+            this.fromFrame = fromFrame;
+            this.toFrame = toFrame;
+            this.loopAnimation = loopAnimation;
+            this.speedRatio = speedRatio;
+            this.onAnimationEnd = onAnimationEnd;
+
             if (animations != null)
             {
                 this.appendAnimations(target, animations);

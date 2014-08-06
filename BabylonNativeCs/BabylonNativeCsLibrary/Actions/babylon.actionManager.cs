@@ -41,6 +41,7 @@ namespace BABYLON
         /// </param>
         public ActionEvent(AbstractMesh source, double pointerX, double pointerY, AbstractMesh meshUnderPointer)
         {
+            this.meshUnderPointer = meshUnderPointer;
             this.source = source;
             this.pointerX = pointerX;
             this.pointerY = pointerY;

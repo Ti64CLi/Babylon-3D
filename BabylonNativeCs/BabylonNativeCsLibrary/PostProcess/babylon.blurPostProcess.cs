@@ -50,6 +50,9 @@ namespace BABYLON
             bool reusable = false)
             : base(name, "blur", new Array<string>("screenSize", "direction", "blurWidth"), null, ratio, camera, samplingMode, engine, reusable)
         {
+            this.direction = direction;
+            this.blurWidth = blurWidth;
+
             this.onApply = (Effect effect) =>
                 {
                     effect.setFloat2("screenSize", this.width, this.height);

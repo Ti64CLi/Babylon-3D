@@ -73,6 +73,10 @@ namespace BABYLON
                 engine, 
                 reusable)
         {
+            this.color = color;
+            this.depth = depth;
+            this.colorLevel = colorLevel;
+
             this.onActivate = (Camera cam) => { this._refRexture = this._refRexture ?? new Texture(refractionTextureUrl, cam.getScene()); };
             this.onApply = (Effect effect) =>
                 {

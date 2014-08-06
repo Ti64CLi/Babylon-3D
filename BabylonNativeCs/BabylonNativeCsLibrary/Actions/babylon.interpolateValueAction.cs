@@ -63,6 +63,9 @@ namespace BABYLON
             bool stopOtherAnimations = false)
             : base(triggerOptions, condition)
         {
+            this.propertyPath = propertyPath;
+            this.value = value;
+            this.duration = duration;
             this._target = target;
         }
 

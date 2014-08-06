@@ -61,6 +61,8 @@ namespace BABYLON
             string name, Array<double> kernel, double ratio, Camera camera, int samplingMode = 0, Engine engine = null, bool reusable = false)
             : base(name, "convolution", new Array<string>("kernel", "screenSize"), null, ratio, camera, samplingMode, engine, reusable)
         {
+            this.kernel = kernel;
+
             this.onApply = (Effect effect) =>
                 {
                     effect.setFloat2("screenSize", this.width, this.height);

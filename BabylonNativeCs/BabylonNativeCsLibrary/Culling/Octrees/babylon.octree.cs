@@ -58,6 +58,7 @@ namespace BABYLON
         /// </param>
         public Octree(Action<T, OctreeBlock<T>> creationFunc, int maxBlockCapacity = 64, int maxDepth = 2)
         {
+            this.maxDepth = maxDepth;
             this._maxBlockCapacity = maxBlockCapacity;
             this._selectionContent = new SmartArray<T>(1024);
             this._creationFunc = creationFunc;
