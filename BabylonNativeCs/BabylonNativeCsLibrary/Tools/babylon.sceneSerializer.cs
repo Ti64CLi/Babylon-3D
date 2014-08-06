@@ -28,7 +28,7 @@ namespace BABYLON
             for (var index = 0; index < scene.lights.Length; index++)
             {
                 var light = scene.lights[index];
-                serializationObject.lights.push(serializeLight(light));
+                serializationObject.lights.Add(serializeLight(light));
             }
             serializationObject.cameras = new Array<object>();
             for (index = 0; index < scene.cameras.Length; index++)
@@ -36,7 +36,7 @@ namespace BABYLON
                 var camera = scene.cameras[index];
                 if (camera is BABYLON.FreeCamera)
                 {
-                    serializationObject.cameras.push(serializeCamera((FreeCamera)camera));
+                    serializationObject.cameras.Add(serializeCamera((FreeCamera)camera));
                 }
             }
             if (scene.activeCamera)
@@ -50,18 +50,18 @@ namespace BABYLON
                 var material = scene.materials[index];
                 if (material is BABYLON.StandardMaterial)
                 {
-                    serializationObject.materials.push(serializeMaterial((StandardMaterial)material));
+                    serializationObject.materials.Add(serializeMaterial((StandardMaterial)material));
                 }
                 else
                     if (material is BABYLON.MultiMaterial)
                     {
-                        serializationObject.multiMaterials.push(serializeMultiMaterial((MultiMaterial)material));
+                        serializationObject.multiMaterials.Add(serializeMultiMaterial((MultiMaterial)material));
                     }
             }
             serializationObject.skeletons = new Array<object>();
             for (index = 0; index < scene.skeletons.Length; index++)
             {
-                serializationObject.skeletons.push(serializeSkeleton(scene.skeletons[index]));
+                serializationObject.skeletons.Add(serializeSkeleton(scene.skeletons[index]));
             }
             serializationObject.geometries = new { };
             serializationObject.geometries.boxes = new Array<object>();
@@ -91,19 +91,19 @@ namespace BABYLON
                     var mesh = (Mesh)abstractMesh;
                     if (mesh.delayLoadState == BABYLON.Engine.DELAYLOADSTATE_LOADED || mesh.delayLoadState == BABYLON.Engine.DELAYLOADSTATE_NONE)
                     {
-                        serializationObject.meshes.push(serializeMesh(mesh, serializationObject));
+                        serializationObject.meshes.Add(serializeMesh(mesh, serializationObject));
                     }
                 }
             }
             serializationObject.particleSystems = new Array<object>();
             for (index = 0; index < scene.particleSystems.Length; index++)
             {
-                serializationObject.particleSystems.push(serializeParticleSystem(scene.particleSystems[index]));
+                serializationObject.particleSystems.Add(serializeParticleSystem(scene.particleSystems[index]));
             }
             serializationObject.lensFlareSystems = new Array<object>();
             for (index = 0; index < scene.lensFlareSystems.Length; index++)
             {
-                serializationObject.lensFlareSystems.push(serializeLensFlareSystem(scene.lensFlareSystems[index]));
+                serializationObject.lensFlareSystems.Add(serializeLensFlareSystem(scene.lensFlareSystems[index]));
             }
             serializationObject.shadowGenerators = new Array<object>();
             for (index = 0; index < scene.lights.Length; index++)
@@ -111,7 +111,7 @@ namespace BABYLON
                 light = scene.lights[index];
                 if (light.getShadowGenerator())
                 {
-                    serializationObject.shadowGenerators.push(serializeShadowGenerator(light));
+                    serializationObject.shadowGenerators.Add(serializeShadowGenerator(light));
                 }
             }
             return serializationObject;
@@ -202,7 +202,7 @@ namespace BABYLON
                 for (var animationIndex = 0; animationIndex < source.animations.Length; animationIndex++)
                 {
                     var animation = source.animations[animationIndex];
-                    destination.animations.push(serializeAnimation(animation));
+                    destination.animations.Add(serializeAnimation(animation));
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace BABYLON
                         key.values = animationKey.value.asArray();
                         break;
                 }
-                serializationObject.keys.push(key);
+                serializationObject.keys.Add(key);
             }
             return serializationObject;
         }
@@ -249,11 +249,11 @@ namespace BABYLON
                 var subMat = material.subMaterials[matIndex];
                 if (subMat)
                 {
-                    serializationObject.materials.push(subMat.id);
+                    serializationObject.materials.Add(subMat.id);
                 }
                 else
                 {
-                    serializationObject.materials.push(null);
+                    serializationObject.materials.Add(null);
                 }
             }
             return serializationObject;
@@ -323,7 +323,7 @@ namespace BABYLON
                 serializationObject.renderList = new Array<object>();
                 for (var index = 0; index < mirrorTexture.renderList.Length; index++)
                 {
-                    serializationObject.renderList.push(mirrorTexture.renderList[index].id);
+                    serializationObject.renderList.Add(mirrorTexture.renderList[index].id);
                 }
                 serializationObject.mirrorPlane = mirrorTexture.mirrorPlane.asArray();
             }
@@ -335,7 +335,7 @@ namespace BABYLON
                     serializationObject.renderList = new Array<object>();
                     for (index = 0; index < renderTargetTexture.renderList.Length; index++)
                     {
-                        serializationObject.renderList.push(renderTargetTexture.renderList[index].id);
+                        serializationObject.renderList.Add(renderTargetTexture.renderList[index].id);
                     }
                 }
             var regularTexture = (Texture)texture;
@@ -366,7 +366,7 @@ namespace BABYLON
             {
                 var bone = skeleton.bones[index];
                 var serializedBone = new { };
-                serializationObject.bones.push(serializedBone);
+                serializationObject.bones.Add(serializedBone);
                 if (bone.animations && bone.animations.Length > 0)
                 {
                     serializedBone.animation = serializeAnimation(bone.animations[0]);
@@ -413,7 +413,7 @@ namespace BABYLON
             for (var index = 0; index < lensFlareSystem.lensFlares.Length; index++)
             {
                 var flare = lensFlareSystem.lensFlares[index];
-                serializationObject.flares.push(new { });
+                serializationObject.flares.Add(new { });
             }
             return serializationObject;
         }
@@ -429,7 +429,7 @@ namespace BABYLON
             for (var meshIndex = 0; meshIndex < shadowGenerator.getShadowMap().renderList.Length; meshIndex++)
             {
                 var mesh = shadowGenerator.getShadowMap().renderList[meshIndex];
-                serializationObject.renderList.push(mesh.id);
+                serializationObject.renderList.Add(mesh.id);
             }
             return serializationObject;
         }
@@ -443,37 +443,37 @@ namespace BABYLON
             }
             if (geometry is Geometry.Primitives.Box)
             {
-                serializationGeometries.boxes.push(serializeBox((Geometry.Primitives.Box)geometry));
+                serializationGeometries.boxes.Add(serializeBox((Geometry.Primitives.Box)geometry));
             }
             else
                 if (geometry is Geometry.Primitives.Sphere)
                 {
-                    serializationGeometries.spheres.push(serializeSphere((Geometry.Primitives.Sphere)geometry));
+                    serializationGeometries.spheres.Add(serializeSphere((Geometry.Primitives.Sphere)geometry));
                 }
                 else
                     if (geometry is Geometry.Primitives.Cylinder)
                     {
-                        serializationGeometries.cylinders.push(serializeCylinder((Geometry.Primitives.Cylinder)geometry));
+                        serializationGeometries.cylinders.Add(serializeCylinder((Geometry.Primitives.Cylinder)geometry));
                     }
                     else
                         if (geometry is Geometry.Primitives.Torus)
                         {
-                            serializationGeometries.toruses.push(serializeTorus((Geometry.Primitives.Torus)geometry));
+                            serializationGeometries.toruses.Add(serializeTorus((Geometry.Primitives.Torus)geometry));
                         }
                         else
                             if (geometry is Geometry.Primitives.Ground)
                             {
-                                serializationGeometries.grounds.push(serializeGround((Geometry.Primitives.Ground)geometry));
+                                serializationGeometries.grounds.Add(serializeGround((Geometry.Primitives.Ground)geometry));
                             }
                             else
                                 if (geometry is Geometry.Primitives.Plane)
                                 {
-                                    serializationGeometries.planes.push(serializePlane((Geometry.Primitives.Plane)geometry));
+                                    serializationGeometries.planes.Add(serializePlane((Geometry.Primitives.Plane)geometry));
                                 }
                                 else
                                     if (geometry is Geometry.Primitives.TorusKnot)
                                     {
-                                        serializationGeometries.torusKnots.push(serializeTorusKnot((Geometry.Primitives.TorusKnot)geometry));
+                                        serializationGeometries.torusKnots.Add(serializeTorusKnot((Geometry.Primitives.TorusKnot)geometry));
                                     }
                                     else
                                         if (geometry is Geometry.Primitives._Primitive)
@@ -482,7 +482,7 @@ namespace BABYLON
                                         }
                                         else
                                         {
-                                            serializationGeometries.vertexData.push(serializeVertexData(geometry));
+                                            serializationGeometries.vertexData.Add(serializeVertexData(geometry));
                                         }
             serializedGeometries[geometry.id] = true;
         }
@@ -638,7 +638,7 @@ namespace BABYLON
                 for (var subIndex = 0; subIndex < mesh.subMeshes.Length; subIndex++)
                 {
                     var subMesh = mesh.subMeshes[subIndex];
-                    serializationObject.subMeshes.push(new { });
+                    serializationObject.subMeshes.Add(new { });
                 }
             }
             if (mesh.material)

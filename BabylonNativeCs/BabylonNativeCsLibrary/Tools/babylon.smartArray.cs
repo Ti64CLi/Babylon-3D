@@ -16,10 +16,11 @@ namespace BABYLON
         {
             this.Clear();
         }
+
         public virtual void pushNoDuplicate(T value)
         {
             // TODO: finish it
-            this.push(value);
+            this.Add(value);
         }
         public virtual void concatWithNoDuplicate(T[] array)
         {

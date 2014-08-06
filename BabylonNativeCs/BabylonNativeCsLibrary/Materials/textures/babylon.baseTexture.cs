@@ -26,7 +26,7 @@ namespace BABYLON
         public BaseTexture(Scene scene)
         {
             this._scene = scene;
-            this._scene.textures.push(this);
+            this._scene.textures.Add(this);
         }
         public virtual Scene getScene()
         {
@@ -103,7 +103,7 @@ namespace BABYLON
             this._texture.references--;
             if (this._texture.references == 0)
             {
-                var index = texturesCache.indexOf(this._texture);
+                var index = texturesCache.IndexOf(this._texture);
                 texturesCache.RemoveAt(index);
                 this._scene.getEngine()._releaseTexture(this._texture);
                 this._texture = null;
@@ -115,7 +115,7 @@ namespace BABYLON
         }
         public virtual void dispose()
         {
-            var index = this._scene.textures.indexOf(this);
+            var index = this._scene.textures.IndexOf(this);
             if (index >= 0)
             {
                 this._scene.textures.RemoveAt(index);

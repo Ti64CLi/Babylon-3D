@@ -57,7 +57,7 @@ namespace BABYLON
                     submesh._distanceToCamera = submesh.getBoundingInfo().boundingSphere.centerWorld.subtract(this._scene.activeCamera.position).Length();
                 }
                 var sortedArray = this._transparentSubMeshes.slice(0, this._transparentSubMeshes.Length);
-                sortedArray.sort((SubMesh a, SubMesh b) =>
+                sortedArray.Sort((SubMesh a, SubMesh b) =>
                 {
                     if (a._distanceToCamera < b._distanceToCamera)
                     {
@@ -95,17 +95,17 @@ namespace BABYLON
             {
                 if (material.alpha > 0 || mesh.visibility < 1.0)
                 {
-                    this._transparentSubMeshes.push(subMesh);
+                    this._transparentSubMeshes.Add(subMesh);
                 }
             }
             else
                 if (material.needAlphaTesting())
                 {
-                    this._alphaTestSubMeshes.push(subMesh);
+                    this._alphaTestSubMeshes.Add(subMesh);
                 }
                 else
                 {
-                    this._opaqueSubMeshes.push(subMesh);
+                    this._opaqueSubMeshes.Add(subMesh);
                 }
         }
     }

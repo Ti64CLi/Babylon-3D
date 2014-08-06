@@ -43,7 +43,7 @@ namespace BABYLON
             for (var index = 0; index < this._registeredPlugins.Length; index++)
             {
                 var plugin = this._registeredPlugins[index];
-                if (plugin.extensions.indexOf(extension) != -1)
+                if (plugin.extensions.IndexOf(extension) != -1)
                 {
                     return plugin;
                 }
@@ -53,7 +53,7 @@ namespace BABYLON
         public static void RegisterPlugin(ISceneLoaderPlugin plugin)
         {
             plugin.extensions = plugin.extensions.toLowerCase();
-            SceneLoader._registeredPlugins.push(plugin);
+            SceneLoader._registeredPlugins.Add(plugin);
         }
         public static void ImportMesh(object meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action progressCallBack = null, System.Action<Scene> onerror = null)
         {
@@ -76,7 +76,7 @@ namespace BABYLON
                     }
                     if (onsuccess)
                     {
-                        scene.importedMeshesFiles.push(rootUrl + sceneFilename);
+                        scene.importedMeshesFiles.Add(rootUrl + sceneFilename);
                         onsuccess(meshes, particleSystems, skeletons);
                     }
                 };
@@ -122,7 +122,7 @@ namespace BABYLON
                 loadSceneFromData(sceneFilename.substr(5));
                 return;
             }
-            if (rootUrl.indexOf("file:") == -1)
+            if (rootUrl.IndexOf("file:") == -1)
             {
                 database = new BABYLON.Database(rootUrl + sceneFilename, manifestChecked);
             }

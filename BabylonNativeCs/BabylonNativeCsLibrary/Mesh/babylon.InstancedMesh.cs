@@ -11,7 +11,7 @@ namespace BABYLON
         public InstancedMesh(string name, Mesh source)
             : base(name, source.getScene())
         {
-            source.instances.push(this);
+            source.instances.Add(this);
             this._sourceMesh = source;
             this.position.copyFrom(source.position);
             this.rotation.copyFrom(source.rotation);
@@ -134,7 +134,7 @@ namespace BABYLON
         }
         public override void dispose(bool doNotRecurse = false)
         {
-            var index = this._sourceMesh.instances.indexOf(this);
+            var index = this._sourceMesh.instances.IndexOf(this);
             this._sourceMesh.instances.RemoveAt(index);
             base.dispose(doNotRecurse);
         }

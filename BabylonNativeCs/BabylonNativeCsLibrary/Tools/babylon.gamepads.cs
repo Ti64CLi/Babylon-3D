@@ -123,7 +123,7 @@ namespace BABYLON
             {
                 newGamepad = new BABYLON.GenericPad(gamepad.id, gamepad.index, gamepad);
             }
-            this.babylonGamepads.push(newGamepad);
+            this.babylonGamepads.Add(newGamepad);
             return newGamepad;
         }
         private void _onGamepadDisconnected(object evt)

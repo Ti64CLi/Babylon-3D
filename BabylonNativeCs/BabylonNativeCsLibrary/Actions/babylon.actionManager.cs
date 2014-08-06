@@ -40,11 +40,11 @@ namespace BABYLON
         public ActionManager(Scene scene)
         {
             this._scene = scene;
-            scene._actionManagers.push(this);
+            scene._actionManagers.Add(this);
         }
         public virtual void dispose()
         {
-            var index = this._scene._actionManagers.indexOf(this);
+            var index = this._scene._actionManagers.IndexOf(this);
             if (index > -1)
             {
                 this._scene._actionManagers.RemoveAt(index);
@@ -59,7 +59,7 @@ namespace BABYLON
             for (var index = 0; index < this.actions.Length; index++)
             {
                 var action = this.actions[index];
-                if (triggers.indexOf(action.trigger) > -1)
+                if (triggers.IndexOf(action.trigger) > -1)
                 {
                     return true;
                 }
@@ -106,7 +106,7 @@ namespace BABYLON
                     return null;
                 }
             }
-            this.actions.push(action);
+            this.actions.Add(action);
             action._actionManager = this;
             action._prepare();
             return action;

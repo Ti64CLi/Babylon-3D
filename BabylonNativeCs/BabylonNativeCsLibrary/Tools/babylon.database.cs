@@ -40,13 +40,13 @@ namespace BABYLON
             var a = document.createElement("a");
             a.href = url;
             var fileName = url.Substring(url.LastIndexOf("/") + 1, url.Length);
-            var absLocation = url.Substring(0, url.indexOf(fileName, 0));
+            var absLocation = url.Substring(0, url.IndexOf(fileName, 0));
             return absLocation;
         }
 
         static string ReturnFullUrlLocation(object url)
         {
-            if (url.indexOf("http:/") == -1) {
+            if (url.IndexOf("http:/") == -1) {
                 return (BABYLON.Database.parseURL(window.location.href) + url);
             } else {
                 return url;
@@ -363,7 +363,7 @@ namespace BABYLON
         {
             if (this.isSupported) {
                 var targetStore;
-                if (url.indexOf(".babylon") != -1) {
+                if (url.IndexOf(".babylon") != -1) {
                     targetStore = "scenes";
                 } else {
                     targetStore = "textures";
@@ -397,7 +397,7 @@ namespace BABYLON
         {
             if (this.isSupported) {
                 var targetStore;
-                if (url.indexOf(".babylon") != -1) {
+                if (url.IndexOf(".babylon") != -1) {
                     targetStore = "scenes";
                 } else {
                     targetStore = "textures";

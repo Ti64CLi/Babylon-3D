@@ -30,7 +30,7 @@ namespace BABYLON
             this._engine = engine;
             this.name = baseName;
             this.defines = defines;
-            this._uniformsNames = uniformsNames.concat(samplers);
+            this._uniformsNames = uniformsNames.Append(samplers);
             this._samplers = samplers;
             this._attributesNames = attributesNames;
             this.onError = onError;
@@ -73,7 +73,7 @@ namespace BABYLON
         }
         public virtual int getAttributeLocationByName(string name)
         {
-            var index = this._attributesNames.indexOf(name);
+            var index = this._attributesNames.IndexOf(name);
             return this._attributeLocations[index];
         }
         public virtual int getAttributesCount()
@@ -82,11 +82,11 @@ namespace BABYLON
         }
         public virtual int getUniformIndex(string uniformName)
         {
-            return this._uniformsNames.indexOf(uniformName);
+            return this._uniformsNames.IndexOf(uniformName);
         }
         public virtual WebGLUniformLocation getUniform(string uniformName)
         {
-            return this._uniforms[this._uniformsNames.indexOf(uniformName)];
+            return this._uniforms[this._uniformsNames.IndexOf(uniformName)];
         }
         public virtual Array<string> getSamplers()
         {
@@ -200,15 +200,15 @@ namespace BABYLON
         }
         public virtual void _bindTexture(string channel, WebGLTexture texture)
         {
-            this._engine._bindTexture(this._samplers.indexOf(channel), texture);
+            this._engine._bindTexture(this._samplers.IndexOf(channel), texture);
         }
         public virtual void setTexture(string channel, BaseTexture texture)
         {
-            this._engine.setTexture(this._samplers.indexOf(channel), texture);
+            this._engine.setTexture(this._samplers.IndexOf(channel), texture);
         }
         public virtual void setTextureFromPostProcess(string channel, PostProcess postProcess)
         {
-            this._engine.setTextureFromPostProcess(this._samplers.indexOf(channel), postProcess);
+            this._engine.setTextureFromPostProcess(this._samplers.IndexOf(channel), postProcess);
         }
         public virtual void _cacheFloat2(string uniformName, double x, double y)
         {

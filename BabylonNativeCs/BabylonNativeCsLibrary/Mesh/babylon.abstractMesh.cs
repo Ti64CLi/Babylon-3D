@@ -139,7 +139,7 @@ namespace BABYLON
         public AbstractMesh(string name, Scene scene)
             : base(name, scene)
         {
-            scene.meshes.push(this);
+            scene.meshes.Add(this);
         }
         public virtual int getTotalVertices()
         {
@@ -545,7 +545,7 @@ namespace BABYLON
                 var end = (subMesh.verticesStart + subMesh.verticesCount);
                 for (var i = start; i < end; i++)
                 {
-                    subMesh._lastColliderWorldVertices.push(BABYLON.Vector3.TransformCoordinates(this._positions[i], transformMatrix));
+                    subMesh._lastColliderWorldVertices.Add(BABYLON.Vector3.TransformCoordinates(this._positions[i], transformMatrix));
                 }
             }
             collider._collide(subMesh, subMesh._lastColliderWorldVertices, this.getIndices(), subMesh.indexStart, subMesh.indexStart + subMesh.indexCount, subMesh.verticesStart);
@@ -678,12 +678,12 @@ namespace BABYLON
             for (index = 0; index < this._intersectionsInProgress.Length; index++)
             {
                 var other = this._intersectionsInProgress[index];
-                var pos = other._intersectionsInProgress.indexOf(this);
+                var pos = other._intersectionsInProgress.IndexOf(this);
                 other._intersectionsInProgress.RemoveAt(pos);
             }
             this._intersectionsInProgress = new Array<AbstractMesh>();
             this.releaseSubMeshes();
-            index = this.getScene().meshes.indexOf(this);
+            index = this.getScene().meshes.IndexOf(this);
             this.getScene().meshes.RemoveAt(index);
             if (!doNotRecurse)
             {

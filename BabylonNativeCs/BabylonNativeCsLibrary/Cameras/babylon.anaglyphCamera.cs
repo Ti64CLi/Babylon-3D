@@ -55,8 +55,8 @@ namespace BABYLON
         void buildCamera(object that, object name)
         {
             that._leftCamera.isIntermediate = true;
-            that.subCameras.push(that._leftCamera);
-            that.subCameras.push(that._rightCamera);
+            that.subCameras.Add(that._leftCamera);
+            that.subCameras.Add(that._rightCamera);
             that._leftTexture = new BABYLON.PassPostProcess(name + "_leftTexture", 1.0, that._leftCamera);
             that._anaglyphPostProcess = new BABYLON.AnaglyphPostProcess(name + "_anaglyph", 1.0, that._rightCamera);
             that._anaglyphPostProcess.onApply = (effect) =>

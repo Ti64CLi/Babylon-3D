@@ -188,7 +188,7 @@ namespace BABYLON
             if (database && database.enableTexturesOffline && BABYLON.Database.isUASupportingBlobStorage) {
                 database.openAsync(loadFromIndexedDB, noIndexedDB);
             } else {
-                if (url.indexOf("file:") == -1) {
+                if (url.IndexOf("file:") == -1) {
                     noIndexedDB();
                 } else {
                     try {
@@ -237,7 +237,7 @@ namespace BABYLON
             var loadFromIndexedDB = () => {
                 database.loadFileFromDB(url, callback, progressCallBack, noIndexedDB, useArrayBuffer);
             };
-            if (url.indexOf("file:") != -1) {
+            if (url.IndexOf("file:") != -1) {
                 var fileName = url.Substring(5);
                 BABYLON.Tools.ReadFile(BABYLON.FilesInput.FilesToLoad[fileName], callback, progressCallBack, true);
             } else {
@@ -299,10 +299,10 @@ namespace BABYLON
         {
             /*
             foreach(var prop in source) {
-                if (prop[0] == "_" && (!mustCopyList || mustCopyList.indexOf(prop) == -1)) {
+                if (prop[0] == "_" && (!mustCopyList || mustCopyList.IndexOf(prop) == -1)) {
                     continue;
                 }
-                if (doNotCopyList && doNotCopyList.indexOf(prop) != -1) {
+                if (doNotCopyList && doNotCopyList.IndexOf(prop) != -1) {
                     continue;
                 }
                 var sourceValue = source[prop];
@@ -317,8 +317,8 @@ namespace BABYLON
                             if (typeof(sourceValue[0]) == "object") {
                                 for (var index = 0; index < sourceValue.Length; index++) {
                                     var clonedValue = cloneValue(sourceValue[index], destination);
-                                    if (destination[prop].indexOf(clonedValue) == -1) {
-                                        destination[prop].push(clonedValue);
+                                    if (destination[prop].IndexOf(clonedValue) == -1) {
+                                        destination[prop].Add(clonedValue);
                                     }
                                 }
                             } else {
@@ -389,7 +389,7 @@ namespace BABYLON
         }
         public static void _MeasureFps()
         {
-            previousFramesDuration.push(new Date().getTime());
+            previousFramesDuration.Add(new Date().getTime());
             var Length = previousFramesDuration.Length;
             if (Length >= 2)
             {

@@ -23,11 +23,11 @@ namespace BABYLON
             this._skeleton = skeleton;
             this._matrix = matrix;
             this._baseMatrix = matrix;
-            skeleton.bones.push(this);
+            skeleton.bones.Add(this);
             if (parentBone != null)
             {
                 this._parent = parentBone;
-                parentBone.children.push(this);
+                parentBone.children.Add(this);
             }
             else
             {

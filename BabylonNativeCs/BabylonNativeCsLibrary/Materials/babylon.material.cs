@@ -28,7 +28,7 @@ namespace BABYLON
             this._scene = scene;
             if (!doNotAdd)
             {
-                scene.materials.push(this);
+                scene.materials.Add(this);
             }
         }
         public virtual Array<Animation> animations
@@ -74,7 +74,7 @@ namespace BABYLON
         public virtual void unbind() { }
         public virtual void dispose(bool forceDisposeEffect = false)
         {
-            var index = this._scene.materials.indexOf(this);
+            var index = this._scene.materials.IndexOf(this);
             this._scene.materials.RemoveAt(index);
             if (forceDisposeEffect && this._effect != null)
             {

@@ -33,7 +33,7 @@ namespace BABYLON
             this._spriteTexture.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
             this._epsilon = epsilon;
             this._scene = scene;
-            this._scene.spriteManagers.push(this);
+            this._scene.spriteManagers.Add(this);
             this._vertexDeclaration = new Array<VertexBufferKind>(VertexBufferKind.UVKind, VertexBufferKind.UV2Kind, VertexBufferKind.UV2Kind, VertexBufferKind.UV2Kind);
             this._vertexStrideSize = 15 * 4;
             this._vertexBuffer = scene.getEngine().createDynamicVertexBuffer(capacity * this._vertexStrideSize * 4);
@@ -41,12 +41,12 @@ namespace BABYLON
             var index = 0;
             for (var count = 0; count < capacity; count++)
             {
-                indices.push(index);
-                indices.push(index + 1);
-                indices.push(index + 2);
-                indices.push(index);
-                indices.push(index + 2);
-                indices.push(index + 3);
+                indices.Add(index);
+                indices.Add(index + 1);
+                indices.Add(index + 2);
+                indices.Add(index);
+                indices.Add(index + 2);
+                indices.Add(index + 3);
                 index += 4;
             }
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
@@ -151,7 +151,7 @@ namespace BABYLON
                 this._spriteTexture.dispose();
                 this._spriteTexture = null;
             }
-            var index = this._scene.spriteManagers.indexOf(this);
+            var index = this._scene.spriteManagers.IndexOf(this);
             this._scene.spriteManagers.RemoveAt(index);
             if (this.onDispose != null)
             {

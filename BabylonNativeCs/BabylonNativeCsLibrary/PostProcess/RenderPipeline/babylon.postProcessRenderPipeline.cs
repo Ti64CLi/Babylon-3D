@@ -71,7 +71,7 @@ namespace BABYLON
                 else
                     if (unique)
                     {
-                        indicesToDelete.push(i);
+                        indicesToDelete.Add(i);
                     }
             }
             for (var i = 0; i < indicesToDelete.Length; i++)

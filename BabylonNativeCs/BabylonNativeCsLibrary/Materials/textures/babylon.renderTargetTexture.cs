@@ -82,7 +82,7 @@ namespace BABYLON
                 for (var index = 0; index < this._waitingRenderList.Length; index++)
                 {
                     var id = this._waitingRenderList[index];
-                    this.renderList.push(scene.getMeshByID(id));
+                    this.renderList.Add(scene.getMeshByID(id));
                 }
                 this._waitingRenderList = null;
             }

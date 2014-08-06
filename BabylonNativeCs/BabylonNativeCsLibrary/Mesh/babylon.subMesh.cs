@@ -33,7 +33,7 @@ namespace BABYLON
 
             this._mesh = mesh;
             this._renderingMesh = renderingMesh ?? (Mesh)mesh;
-            mesh.subMeshes.push(this);
+            mesh.subMeshes.Add(this);
             this._id = mesh.subMeshes.Length - 1;
             if (createBoundingBox)
             {
@@ -113,7 +113,7 @@ namespace BABYLON
                 var linesIndices = new Array<int>();
                 for (var index = this.indexStart; index < this.indexStart + this.indexCount; index += 3)
                 {
-                    linesIndices.push(indices[index], indices[index + 1], indices[index + 1], indices[index + 2], indices[index + 2], indices[index]);
+                    linesIndices.Add(indices[index], indices[index + 1], indices[index + 1], indices[index + 2], indices[index + 2], indices[index]);
                 }
                 this._linesIndexBuffer = engine.createIndexBuffer(linesIndices);
                 this.linesIndexCount = linesIndices.Length;
@@ -161,7 +161,7 @@ namespace BABYLON
                 this._mesh.getScene().getEngine()._releaseBuffer(this._linesIndexBuffer);
                 this._linesIndexBuffer = null;
             }
-            var index = this._mesh.subMeshes.indexOf(this);
+            var index = this._mesh.subMeshes.IndexOf(this);
             this._mesh.subMeshes.RemoveAt(index);
         }
         public static SubMesh CreateFromIndices(int materialIndex, int startIndex, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null)

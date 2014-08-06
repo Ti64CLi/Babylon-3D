@@ -54,8 +54,8 @@ namespace BABYLON {
         public OculusCamera(string name, Vector3 position, Scene scene): base(name, position, scene) {
             this._leftCamera = new _OculusInnerCamera(name + "_left", position.clone(), scene, true);
             this._rightCamera = new _OculusInnerCamera(name + "_right", position.clone(), scene, false);
-            this.subCameras.push(this._leftCamera);
-            this.subCameras.push(this._rightCamera);
+            this.subCameras.Add(this._leftCamera);
+            this.subCameras.Add(this._rightCamera);
             this._deviceOrientationHandler = this._onOrientationEvent.bind(this);
         }
         void OculusRiftDevKit2013_Metricnew {};

@@ -18,7 +18,7 @@ namespace BABYLON
         public Light(string name, Scene scene)
             : base(name, scene)
         {
-            scene.lights.push(this);
+            scene.lights.Add(this);
         }
         public virtual ShadowGenerator getShadowGenerator()
         {
@@ -51,7 +51,7 @@ namespace BABYLON
                 this._shadowGenerator.dispose();
                 this._shadowGenerator = null;
             }
-            var index = this.getScene().lights.indexOf(this);
+            var index = this.getScene().lights.IndexOf(this);
             this.getScene().lights.RemoveAt(index);
         }
     }

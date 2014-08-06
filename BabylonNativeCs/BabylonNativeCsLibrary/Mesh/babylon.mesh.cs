@@ -59,7 +59,7 @@ namespace BABYLON
             {
                 if (this._delayInfo != null)
                 {
-                    return this._delayInfo.indexOf(kind) != -1;
+                    return this._delayInfo.IndexOf(kind) != -1;
                 }
                 return false;
             }
@@ -74,7 +74,7 @@ namespace BABYLON
                 {
                     foreach (var kind in this._delayInfo)
                     {
-                        result.push(kind);
+                        result.Add(kind);
                     }
                 }
                 return result;
@@ -125,7 +125,7 @@ namespace BABYLON
             {
                 this._visibleInstances[renderId] = new Array<InstancedMesh>();
             }
-            this._visibleInstances[renderId].push(instance);
+            this._visibleInstances[renderId].Add(instance);
         }
         public virtual void refreshBoundingInfo()
         {
@@ -253,11 +253,11 @@ namespace BABYLON
         }
         public virtual void registerBeforeRender(System.Action func)
         {
-            this._onBeforeRenderCallbacks.push(func);
+            this._onBeforeRenderCallbacks.Add(func);
         }
         public virtual void unregisterBeforeRender(System.Action func)
         {
-            var index = this._onBeforeRenderCallbacks.indexOf(func);
+            var index = this._onBeforeRenderCallbacks.IndexOf(func);
             if (index > -1)
             {
                 this._onBeforeRenderCallbacks.RemoveAt(index);
@@ -402,7 +402,7 @@ namespace BABYLON
                 var particleSystem = this.getScene().particleSystems[index];
                 if (particleSystem.emitter == this)
                 {
-                    results.push(particleSystem);
+                    results.Add(particleSystem);
                 }
             }
             return results;
@@ -411,13 +411,13 @@ namespace BABYLON
         {
             var results = new Array<ParticleSystem>();
             var descendants = this.getDescendants();
-            descendants.push(this);
+            descendants.Add(this);
             for (var index = 0; index < this.getScene().particleSystems.Length; index++)
             {
                 var particleSystem = this.getScene().particleSystems[index];
-                if (descendants.indexOf(particleSystem.emitter as Mesh) != -1)
+                if (descendants.IndexOf(particleSystem.emitter as Mesh) != -1)
                 {
-                    results.push(particleSystem);
+                    results.Add(particleSystem);
                 }
             }
             return results;
@@ -430,7 +430,7 @@ namespace BABYLON
                 var mesh = this.getScene().meshes[index];
                 if (mesh.parent == this)
                 {
-                    results.push(mesh);
+                    results.Add(mesh);
                 }
             }
             return results;
@@ -496,7 +496,7 @@ namespace BABYLON
             var results = new Array<IAnimatable>();
             if (this.material != null)
             {
-                results.push(this.material);
+                results.Add(this.material);
             }
             return results;
         }
@@ -541,7 +541,7 @@ namespace BABYLON
             }
             for (var index = 0; index < data.Length; index += 3)
             {
-                this._positions.push(BABYLON.Vector3.FromArray(data, index));
+                this._positions.Add(BABYLON.Vector3.FromArray(data, index));
             }
             return true;
         }
@@ -628,7 +628,7 @@ namespace BABYLON
                     var stride = vbs[(int)kind].getStrideSize();
                     for (var offset = 0; offset < stride; offset++)
                     {
-                        newdata[(int)kind].push(data[(int)kind][vertexIndex * stride + offset]);
+                        newdata[(int)kind].Add(data[(int)kind][vertexIndex * stride + offset]);
                     }
                 }
             }
@@ -647,9 +647,9 @@ namespace BABYLON
                 var normal = BABYLON.Vector3.Normalize(BABYLON.Vector3.Cross(p1p2, p3p2));
                 for (var localIndex = 0; localIndex < 3; localIndex++)
                 {
-                    normals.push(normal.x);
-                    normals.push(normal.y);
-                    normals.push(normal.z);
+                    normals.Add(normal.x);
+                    normals.Add(normal.y);
+                    normals.Add(normal.z);
                 }
             }
             this.setIndices(indices);

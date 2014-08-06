@@ -38,7 +38,7 @@ namespace BABYLON
                 this._renderTargets.reset();
                 if (this.reflectionTexture != null && this.reflectionTexture.isRenderTarget)
                 {
-                    this._renderTargets.push((RenderTargetTexture)this.reflectionTexture);
+                    this._renderTargets.Add((RenderTargetTexture)this.reflectionTexture);
                 }
                 return this._renderTargets;
             };
@@ -89,7 +89,7 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define DIFFUSE");
+                        defines.Add("#define DIFFUSE");
                     }
                 }
                 if (this.ambientTexture != null && BABYLON.StandardMaterial.AmbientTextureEnabled)
@@ -100,7 +100,7 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define AMBIENT");
+                        defines.Add("#define AMBIENT");
                     }
                 }
                 if (this.opacityTexture != null && BABYLON.StandardMaterial.OpacityTextureEnabled)
@@ -111,10 +111,10 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define OPACITY");
+                        defines.Add("#define OPACITY");
                         if (this.opacityTexture.getAlphaFromRGB)
                         {
-                            defines.push("#define OPACITYRGB");
+                            defines.Add("#define OPACITYRGB");
                         }
                     }
                 }
@@ -126,7 +126,7 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define REFLECTION");
+                        defines.Add("#define REFLECTION");
                     }
                 }
                 if (this.emissiveTexture != null && BABYLON.StandardMaterial.EmissiveTextureEnabled)
@@ -137,7 +137,7 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define EMISSIVE");
+                        defines.Add("#define EMISSIVE");
                     }
                 }
                 if (this.specularTexture != null && BABYLON.StandardMaterial.SpecularTextureEnabled)
@@ -148,8 +148,8 @@ namespace BABYLON
                     }
                     else
                     {
-                        defines.push("#define SPECULAR");
-                        optionalDefines.push(defines[defines.Length - 1]);
+                        defines.Add("#define SPECULAR");
+                        optionalDefines.Add(defines[defines.Length - 1]);
                     }
                 }
             }
@@ -161,26 +161,26 @@ namespace BABYLON
                 }
                 else
                 {
-                    defines.push("#define BUMP");
-                    optionalDefines.push(defines[defines.Length - 1]);
+                    defines.Add("#define BUMP");
+                    optionalDefines.Add(defines[defines.Length - 1]);
                 }
             }
             if (scene.clipPlane != null)
             {
-                defines.push("#define CLIPPLANE");
+                defines.Add("#define CLIPPLANE");
             }
             if (engine.getAlphaTesting())
             {
-                defines.push("#define ALPHATEST");
+                defines.Add("#define ALPHATEST");
             }
             if (this._shouldUseAlphaFromDiffuseTexture())
             {
-                defines.push("#define ALPHAFROMDIFFUSE");
+                defines.Add("#define ALPHAFROMDIFFUSE");
             }
             if (scene.fogMode != BABYLON.Scene.FOGMODE_NONE)
             {
-                defines.push("#define FOG");
-                optionalDefines.push(defines[defines.Length - 1]);
+                defines.Add("#define FOG");
+                optionalDefines.Add(defines[defines.Length - 1]);
             }
             var shadowsActivated = false;
             var lightIndex = 0;
@@ -200,19 +200,19 @@ namespace BABYLON
                             var excludedMesh = scene.getMeshByID(light._excludedMeshesIds[excludedIndex]);
                             if (excludedMesh != null)
                             {
-                                light.excludedMeshes.push(excludedMesh);
+                                light.excludedMeshes.Add(excludedMesh);
                             }
                         }
                         light._excludedMeshesIds = new Array<string>();
                     }
-                    if (mesh != null && light.excludedMeshes.indexOf(mesh) != -1)
+                    if (mesh != null && light.excludedMeshes.IndexOf(mesh) != -1)
                     {
                         continue;
                     }
-                    defines.push("#define LIGHT" + lightIndex);
+                    defines.Add("#define LIGHT" + lightIndex);
                     if (lightIndex > 0)
                     {
-                        optionalDefines.push(defines[defines.Length - 1]);
+                        optionalDefines.Add(defines[defines.Length - 1]);
                     }
                     string type;
                     if (light is BABYLON.SpotLight)
@@ -228,38 +228,38 @@ namespace BABYLON
                         {
                             type = "#define POINTDIRLIGHT" + lightIndex;
                         }
-                    defines.push(type);
+                    defines.Add(type);
                     if (lightIndex > 0)
                     {
-                        optionalDefines.push(defines[defines.Length - 1]);
+                        optionalDefines.Add(defines[defines.Length - 1]);
                     }
                     var shadowGenerator = light.getShadowGenerator();
                     if (mesh != null && mesh.receiveShadows && shadowGenerator != null)
                     {
-                        defines.push("#define SHADOW" + lightIndex);
+                        defines.Add("#define SHADOW" + lightIndex);
                         if (lightIndex > 0)
                         {
-                            optionalDefines.push(defines[defines.Length - 1]);
+                            optionalDefines.Add(defines[defines.Length - 1]);
                         }
                         if (!shadowsActivated)
                         {
-                            defines.push("#define SHADOWS");
+                            defines.Add("#define SHADOWS");
                             shadowsActivated = true;
                         }
                         if (shadowGenerator.useVarianceShadowMap)
                         {
-                            defines.push("#define SHADOWVSM" + lightIndex);
+                            defines.Add("#define SHADOWVSM" + lightIndex);
                             if (lightIndex > 0)
                             {
-                                optionalDefines.push(defines[defines.Length - 1]);
+                                optionalDefines.Add(defines[defines.Length - 1]);
                             }
                         }
                         if (shadowGenerator.usePoissonSampling)
                         {
-                            defines.push("#define SHADOWPCF" + lightIndex);
+                            defines.Add("#define SHADOWPCF" + lightIndex);
                             if (lightIndex > 0)
                             {
-                                optionalDefines.push(defines[defines.Length - 1]);
+                                optionalDefines.Add(defines[defines.Length - 1]);
                             }
                         }
                     }
@@ -273,38 +273,38 @@ namespace BABYLON
             {
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.UVKind);
-                    defines.push("#define UV1");
+                    attribs.Add(BABYLON.VertexBuffer.UVKind);
+                    defines.Add("#define UV1");
                 }
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.UV2Kind);
-                    defines.push("#define UV2");
+                    attribs.Add(BABYLON.VertexBuffer.UV2Kind);
+                    defines.Add("#define UV2");
                 }
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.ColorKind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.ColorKind);
-                    defines.push("#define VERTEXCOLOR");
+                    attribs.Add(BABYLON.VertexBuffer.ColorKind);
+                    defines.Add("#define VERTEXCOLOR");
                 }
                 if (mesh.skeleton != null && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.MatricesIndicesKind);
-                    attribs.push(BABYLON.VertexBuffer.MatricesWeightsKind);
-                    defines.push("#define BONES");
-                    defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
-                    defines.push("#define BONES4");
-                    optionalDefines.push(defines[defines.Length - 1]);
+                    attribs.Add(BABYLON.VertexBuffer.MatricesIndicesKind);
+                    attribs.Add(BABYLON.VertexBuffer.MatricesWeightsKind);
+                    defines.Add("#define BONES");
+                    defines.Add("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
+                    defines.Add("#define BONES4");
+                    optionalDefines.Add(defines[defines.Length - 1]);
                 }
                 if (useInstances)
                 {
-                    defines.push("#define INSTANCES");
-                    attribs.push("world0");
-                    attribs.push("world1");
-                    attribs.push("world2");
-                    attribs.push("world3");
+                    defines.Add("#define INSTANCES");
+                    attribs.Add("world0");
+                    attribs.Add("world1");
+                    attribs.Add("world2");
+                    attribs.Add("world3");
                 }
             }
-            var join = defines.join("\n");
+            var join = defines.Concat("\n");
             if (this._cachedDefines != join)
             {
                 this._cachedDefines = join;
@@ -486,7 +486,7 @@ namespace BABYLON
                     {
                         continue;
                     }
-                    if (mesh != null && light.excludedMeshes.indexOf(mesh) != -1)
+                    if (mesh != null && light.excludedMeshes.IndexOf(mesh) != -1)
                     {
                         continue;
                     }
@@ -545,31 +545,31 @@ namespace BABYLON
             var results = new Array<IAnimatable>();
             if (this.diffuseTexture != null && this.diffuseTexture.animations != null && this.diffuseTexture.animations.Length > 0)
             {
-                results.push(this.diffuseTexture);
+                results.Add(this.diffuseTexture);
             }
             if (this.ambientTexture != null && this.ambientTexture.animations != null && this.ambientTexture.animations.Length > 0)
             {
-                results.push(this.ambientTexture);
+                results.Add(this.ambientTexture);
             }
             if (this.opacityTexture != null && this.opacityTexture.animations != null && this.opacityTexture.animations.Length > 0)
             {
-                results.push(this.opacityTexture);
+                results.Add(this.opacityTexture);
             }
             if (this.reflectionTexture != null && this.reflectionTexture.animations != null && this.reflectionTexture.animations.Length > 0)
             {
-                results.push(this.reflectionTexture);
+                results.Add(this.reflectionTexture);
             }
             if (this.emissiveTexture != null && this.emissiveTexture.animations != null && this.emissiveTexture.animations.Length > 0)
             {
-                results.push(this.emissiveTexture);
+                results.Add(this.emissiveTexture);
             }
             if (this.specularTexture != null && this.specularTexture.animations != null && this.specularTexture.animations.Length > 0)
             {
-                results.push(this.specularTexture);
+                results.Add(this.specularTexture);
             }
             if (this.bumpTexture != null && this.bumpTexture.animations != null && this.bumpTexture.animations.Length > 0)
             {
-                results.push(this.bumpTexture);
+                results.Add(this.bumpTexture);
             }
             return results;
         }

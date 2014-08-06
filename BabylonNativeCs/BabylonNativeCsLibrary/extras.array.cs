@@ -96,7 +96,7 @@
         }
     }
 
-    public class Array<T> : List<T>
+    public class Array<T> : IEnumerable<T>
     {
         public Array()
         {
@@ -134,7 +134,8 @@
                     return default(T);
                 }
 
-                return base[i];
+                //return base[i];
+                return default(T);
             }
 
             set
@@ -144,36 +145,26 @@
                     this.Add(default(T));
                 }
 
-                base[i] = value;
+                //base[i] = value;
             }
         }
 
-        public void push(T v1)
-        {
-            this.Add(v1);
-        }
-
-        public void push(T v1, T v2)
+        public void Add(T v1, T v2)
         {
             this.Add(v1);
             this.Add(v2);
         }
 
-        public void push(T v1, T v2, T v3)
+        public void Add(T v1, T v2, T v3)
         {
             this.Add(v1);
             this.Add(v2);
             this.Add(v3);
         }
 
-        public void push(params T[] items)
+        public void Add(params T[] items)
         {
             this.AddRange(items);
-        }
-
-        public int indexOf(T t)
-        {
-            return this.IndexOf(t);
         }
 
         public Array<T> slice(int index, int length = 0)
@@ -181,7 +172,7 @@
             throw new NotImplementedException();
         }
 
-        public string join(string joinSubstring)
+        public string Concat(string joinSubstring)
         {
             var sb = new StringBuilder();
             var first = true;
@@ -202,34 +193,22 @@
             return sb.ToString();
         }
 
-        public void splice(int index)
-        {
-            throw new NotImplementedException();
-        }
-
         public void splice(int index, int size, Array<T> newKeys)
         {
             throw new NotImplementedException();
         }
 
-        public void forEach(System.Action<T> func)
-        {
-            foreach (var item in this)
-            {
-                func(item);
-            }
-        }
-
-        public Array<T> concat(Array<T> other)
+        public Array<T> Append(Array<T> other)
         {
             foreach (var item in other)
             {
                 this.Add(item);
             }
+
             return this;
         }
 
-        public void sort(Func<T, T, int> compareFn)
+        public void Sort(Func<T, T, int> compareFn)
         {
             this.Sort(new ComparerAdapter(compareFn));
         }
@@ -246,22 +225,7 @@
             }
         }
 
-        public T get(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(int index, T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void set(Array<T> array, int offset = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T pop()
+        public T Pop()
         {
             var t = this[Length - 1];
             this.RemoveAt(Length - 1);
@@ -281,5 +245,73 @@
                 return compareFn(x, y);
             }
         }
+
+        #region implementation
+
+        public int Capacity
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Add(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<T> items)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int IndexOf(T t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public void Sort(ComparerAdapter comparerAdapter)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

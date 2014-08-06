@@ -27,7 +27,7 @@ namespace BABYLON {
         {
             this.name = name;
             this._manager = manager;
-            this._manager.sprites.push(this);
+            this._manager.sprites.Add(this);
             this.position = BABYLON.Vector3.Zero();
         }
         public virtual void playAnimation(int from, int to, bool loop, double delay) {

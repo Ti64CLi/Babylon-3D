@@ -88,7 +88,7 @@ namespace BABYLON {
                             BABYLON.FilesInput.FilesToLoad[filesToLoad[i].name] = filesToLoad[i];
                             break;
                         default:
-                            if (filesToLoad[i].name.indexOf(".babylon") != -1 && filesToLoad[i].name.indexOf(".manifest") == -1 && filesToLoad[i].name.indexOf(".incremental") == -1 && filesToLoad[i].name.indexOf(".babylonmeshdata") == -1 && filesToLoad[i].name.indexOf(".babylongeometrydata") == -1) {
+                            if (filesToLoad[i].name.IndexOf(".babylon") != -1 && filesToLoad[i].name.IndexOf(".manifest") == -1 && filesToLoad[i].name.IndexOf(".incremental") == -1 && filesToLoad[i].name.IndexOf(".babylonmeshdata") == -1 && filesToLoad[i].name.IndexOf(".babylongeometrydata") == -1) {
                                 sceneFileToLoad = filesToLoad[i];
                             }
                             break;

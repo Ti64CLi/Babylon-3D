@@ -49,7 +49,7 @@ namespace BABYLON
             }
             if (allowDuplicate)
             {
-                this._selectionContent.concat(this.dynamicContent);
+                this._selectionContent.Append(this.dynamicContent);
             }
             else
             {
@@ -67,7 +67,7 @@ namespace BABYLON
             }
             if (allowDuplicate)
             {
-                this._selectionContent.concat(this.dynamicContent);
+                this._selectionContent.Append(this.dynamicContent);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace BABYLON
                         var localMax = worldMin.add(blockSize.multiplyByFloats(x + 1, y + 1, z + 1));
                         var block = new BABYLON.OctreeBlock<T>(localMin, localMax, maxBlockCapacity, currentDepth + 1, maxDepth, creationFunc);
                         block.addEntries(entries);
-                        target.blocks.push(block);
+                        target.blocks.Add(block);
                     }
                 }
             }
@@ -109,14 +109,14 @@ namespace BABYLON
         {
             if (entry.getBoundingInfo().boundingBox.intersectsMinMax(block.minPoint, block.maxPoint))
             {
-                block.entries.push(entry);
+                block.entries.Add(entry);
             }
         }
         public static void CreationFuncForSubMeshes(SubMesh entry, OctreeBlock<SubMesh> block)
         {
             if (entry.getBoundingInfo().boundingBox.intersectsMinMax(block.minPoint, block.maxPoint))
             {
-                block.entries.push(entry);
+                block.entries.Add(entry);
             }
         }
     }

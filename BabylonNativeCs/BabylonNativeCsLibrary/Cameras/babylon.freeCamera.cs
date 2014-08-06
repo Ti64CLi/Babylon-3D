@@ -213,12 +213,12 @@ namespace BABYLON
                 {
                     var evt = (KeyboardEvent)e;
 
-                    if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1)
+                    if (this.keysUp.IndexOf(evt.keyCode) != -1 || this.keysDown.IndexOf(evt.keyCode) != -1 || this.keysLeft.IndexOf(evt.keyCode) != -1 || this.keysRight.IndexOf(evt.keyCode) != -1)
                     {
-                        var index = this._keys.indexOf(evt.keyCode);
+                        var index = this._keys.IndexOf(evt.keyCode);
                         if (index == -1)
                         {
-                            this._keys.push(evt.keyCode);
+                            this._keys.Add(evt.keyCode);
                         }
                         if (!noPreventDefault)
                         {
@@ -230,9 +230,9 @@ namespace BABYLON
                 {
                     var evt = (KeyboardEvent)e;
 
-                    if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1)
+                    if (this.keysUp.IndexOf(evt.keyCode) != -1 || this.keysDown.IndexOf(evt.keyCode) != -1 || this.keysLeft.IndexOf(evt.keyCode) != -1 || this.keysRight.IndexOf(evt.keyCode) != -1)
                     {
-                        var index = this._keys.indexOf(evt.keyCode);
+                        var index = this._keys.IndexOf(evt.keyCode);
                         if (index >= 0)
                         {
                             this._keys.RemoveAt(index);
@@ -319,22 +319,22 @@ namespace BABYLON
             {
                 var keyCode = this._keys[index];
                 var speed = this._computeLocalCameraSpeed();
-                if (this.keysLeft.indexOf(keyCode) != -1)
+                if (this.keysLeft.IndexOf(keyCode) != -1)
                 {
                     this._localDirection.copyFromFloats(-speed, 0, 0);
                 }
                 else
-                    if (this.keysUp.indexOf(keyCode) != -1)
+                    if (this.keysUp.IndexOf(keyCode) != -1)
                     {
                         this._localDirection.copyFromFloats(0, 0, speed);
                     }
                     else
-                        if (this.keysRight.indexOf(keyCode) != -1)
+                        if (this.keysRight.IndexOf(keyCode) != -1)
                         {
                             this._localDirection.copyFromFloats(speed, 0, 0);
                         }
                         else
-                            if (this.keysDown.indexOf(keyCode) != -1)
+                            if (this.keysDown.IndexOf(keyCode) != -1)
                             {
                                 this._localDirection.copyFromFloats(0, 0, -speed);
                             }

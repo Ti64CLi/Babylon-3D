@@ -33,12 +33,13 @@ namespace BABYLON
                     this._texture.isReady = true;
                 }
             });
-            urls.forEach((url) =>
+            foreach(var url in urls)
             {
                 var source = (HTMLSourceElement)Engine.document.createElement("source");
                 source.src = url;
                 this.video.appendChild(source);
-            });
+            }
+
             this._lastUpdate = new Date().getTime();
         }
         public virtual bool update()

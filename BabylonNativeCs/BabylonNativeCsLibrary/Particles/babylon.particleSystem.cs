@@ -68,18 +68,18 @@ namespace BABYLON
             this.id = name;
             this._capacity = capacity;
             this._scene = scene;
-            scene.particleSystems.push(this);
+            scene.particleSystems.Add(this);
             this._vertexBuffer = scene.getEngine().createDynamicVertexBuffer(capacity * this._vertexStrideSize * 4);
             var indices = new Array<int>();
             var index = 0;
             for (var count = 0; count < capacity; count++)
             {
-                indices.push(index);
-                indices.push(index + 1);
-                indices.push(index + 2);
-                indices.push(index);
-                indices.push(index + 2);
-                indices.push(index + 3);
+                indices.Add(index);
+                indices.Add(index + 1);
+                indices.Add(index + 2);
+                indices.Add(index);
+                indices.Add(index + 2);
+                indices.Add(index + 3);
                 index += 4;
             }
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
@@ -155,7 +155,7 @@ namespace BABYLON
                 if (particle.age >= particle.lifeTime)
                 {
                     this.particles.RemoveAt(index);
-                    this._stockParticles.push(this.particles[0]);
+                    this._stockParticles.Add(this.particles[0]);
                     index--;
                     continue;
                 }
@@ -190,14 +190,15 @@ namespace BABYLON
                 }
                 if (this._stockParticles.Length != 0)
                 {
-                    particle = this._stockParticles.pop();
+                    particle = this._stockParticles.Pop();
                     particle.age = 0;
                 }
                 else
                 {
                     particle = new BABYLON.Particle();
                 }
-                this.particles.push(particle);
+
+                this.particles.Add(particle);
                 var emitPower = randomNumber(this.minEmitPower, this.maxEmitPower);
                 this.startDirectionFunction(emitPower, worldMatrix, particle.direction);
                 particle.lifeTime = randomNumber(this.minLifeTime, this.maxLifeTime);
@@ -215,9 +216,9 @@ namespace BABYLON
             var defines = new Array<object>();
             if (this._scene.clipPlane != null)
             {
-                defines.push("#define CLIPPLANE");
+                defines.Add("#define CLIPPLANE");
             }
-            var join = defines.join("\n");
+            var join = defines.Concat("\n");
             if (this._cachedDefines != join)
             {
                 this._cachedDefines = join;
@@ -274,7 +275,7 @@ namespace BABYLON
                     this._started = false;
                     if (this.disposeOnStop)
                     {
-                        this._scene._toBeDisposed.push(this);
+                        this._scene._toBeDisposed.Add(this);
                     }
                 }
             }
@@ -344,7 +345,7 @@ namespace BABYLON
                 this.particleTexture.dispose();
                 this.particleTexture = null;
             }
-            var index = this._scene.particleSystems.indexOf(this);
+            var index = this._scene.particleSystems.IndexOf(this);
             this._scene.particleSystems.RemoveAt(index);
             if (this.onDispose != null)
             {

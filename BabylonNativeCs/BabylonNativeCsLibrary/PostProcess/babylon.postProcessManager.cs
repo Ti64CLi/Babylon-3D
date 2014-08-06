@@ -16,18 +16,18 @@ namespace BABYLON
         {
             this._scene = scene;
             var vertices = new Array<double>();
-            vertices.push(1, 1);
-            vertices.push(-1, 1);
-            vertices.push(-1, -1);
-            vertices.push(1, -1);
+            vertices.Add(1, 1);
+            vertices.Add(-1, 1);
+            vertices.Add(-1, -1);
+            vertices.Add(1, -1);
             this._vertexBuffer = scene.getEngine().createVertexBuffer(vertices);
             var indices = new Array<int>();
-            indices.push(0);
-            indices.push(1);
-            indices.push(2);
-            indices.push(0);
-            indices.push(2);
-            indices.push(3);
+            indices.Add(0);
+            indices.Add(1);
+            indices.Add(2);
+            indices.Add(0);
+            indices.Add(2);
+            indices.Add(3);
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
         }
         public virtual bool _prepareFrame(WebGLTexture sourceTexture = null)

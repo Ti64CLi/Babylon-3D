@@ -158,7 +158,7 @@ namespace BABYLON
             {
                 if (this._delayInfo != null)
                 {
-                    return this._delayInfo.indexOf(kind) != -1;
+                    return this._delayInfo.IndexOf(kind) != -1;
                 }
                 return false;
             }
@@ -171,14 +171,14 @@ namespace BABYLON
             {
                 foreach (var kind in this._delayInfo)
                 {
-                    result.push(kind);
+                    result.Add(kind);
                 }
             }
             else
             {
                 foreach (var kind in this._vertexBuffers.Keys)
                 {
-                    result.push(kind);
+                    result.Add(kind);
                 }
             }
             return result;
@@ -228,7 +228,7 @@ namespace BABYLON
         public virtual void releaseForMesh(Mesh mesh, bool shouldDispose = false)
         {
             var meshes = this._meshes;
-            var index = meshes.indexOf(mesh);
+            var index = meshes.IndexOf(mesh);
             if (index == -1)
             {
                 return;
@@ -262,7 +262,7 @@ namespace BABYLON
             var meshes = this._meshes;
             mesh._geometry = this;
             this._scene.pushGeometry(this);
-            meshes.push(mesh);
+            meshes.Add(mesh);
             if (this.isReady())
             {
                 this._applyToMesh(mesh);
@@ -360,7 +360,7 @@ namespace BABYLON
             this._delayInfo = new Array<VertexBufferKind>();
             this._boundingInfo = null;
             var geometries = this._scene.getGeometries();
-            var index2 = geometries.indexOf(this);
+            var index2 = geometries.IndexOf(this);
             if (index2 > -1)
             {
                 geometries.RemoveAt(index2);
@@ -373,7 +373,7 @@ namespace BABYLON
             var indices = this.getIndices();
             for (var index = 0; index < indices.Length; index++)
             {
-                vertexData.indices.push(indices[index]);
+                vertexData.indices.Add(indices[index]);
             }
             var updatable = false;
             var stopChecking = false;
@@ -393,7 +393,7 @@ namespace BABYLON
             foreach (var kind in this._delayInfo)
             {
                 geometry._delayInfo = geometry._delayInfo ?? new Array<VertexBufferKind>();
-                geometry._delayInfo.push(kind);
+                geometry._delayInfo.Add(kind);
             }
             var extend = BABYLON.Tools.ExtractMinAndMax(this.getVerticesData(BABYLON.VertexBufferKind.PositionKind), 0, this.getTotalVertices());
             geometry._boundingInfo = new BABYLON.BoundingInfo(extend.minimum, extend.maximum);

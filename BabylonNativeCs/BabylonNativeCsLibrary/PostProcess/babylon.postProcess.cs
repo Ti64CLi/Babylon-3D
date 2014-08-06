@@ -40,7 +40,7 @@ namespace BABYLON
             this.renderTargetSamplingMode = (samplingMode > 0) ? samplingMode : BABYLON.Texture.NEAREST_SAMPLINGMODE;
             this._reusable = reusable || false;
             samplers = samplers ?? new Array<string>();
-            samplers.push("textureSampler");
+            samplers.Add("textureSampler");
             this._effect = this._engine.createEffect(new EffectBaseName { vertex = "postprocess", fragment = fragmentUrl }, new Array<string>("position"), parameters ?? new Array<string>(), samplers, string.Empty);
         }
         public virtual bool isReusable()
@@ -65,10 +65,10 @@ namespace BABYLON
                 }
                 this.width = (int)desiredWidth;
                 this.height = (int)desiredHeight;
-                this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
+                this._textures.Add(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.IndexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
                 if (this._reusable)
                 {
-                    this._textures.push(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.indexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
+                    this._textures.Add(this._engine.createRenderTargetTexture(new Size { width = this.width, height = this.height }, generateMipMaps: false, generateDepthBuffer: camera._postProcesses.IndexOf(this) == camera._postProcessesTakenIndices[0], samplingMode: this.renderTargetSamplingMode));
                 }
                 if (this.onSizeChanged != null)
                 {
@@ -114,7 +114,7 @@ namespace BABYLON
                 this._textures.reset();
             }
             camera.detachPostProcess(this);
-            var index = camera._postProcesses.indexOf(this);
+            var index = camera._postProcesses.IndexOf(this);
             if (index == camera._postProcessesTakenIndices[0] && camera._postProcessesTakenIndices.Length > 0)
             {
                 this._camera._postProcesses[camera._postProcessesTakenIndices[0]].width = -1;

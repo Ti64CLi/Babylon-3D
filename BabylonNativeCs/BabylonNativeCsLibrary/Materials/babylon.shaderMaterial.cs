@@ -37,16 +37,16 @@ namespace BABYLON
         }
         private void _checkUniform(string uniformName)
         {
-            if (this._options.uniforms.indexOf(uniformName) == -1)
+            if (this._options.uniforms.IndexOf(uniformName) == -1)
             {
-                this._options.uniforms.push(uniformName);
+                this._options.uniforms.Add(uniformName);
             }
         }
         public virtual ShaderMaterial setTexture(string name, Texture texture)
         {
-            if (this._options.samplers.indexOf(name) == -1)
+            if (this._options.samplers.IndexOf(name) == -1)
             {
-                this._options.samplers.push(name);
+                this._options.samplers.Add(name);
             }
             this._textures[name] = texture;
             return this;
@@ -104,20 +104,20 @@ namespace BABYLON
             return true;
         }
         public virtual void bind(Matrix world) {
-            if (this._options.uniforms.indexOf("world") != -1) {
+            if (this._options.uniforms.IndexOf("world") != -1) {
                 this._effect.setMatrix("world", world);
             }
-            if (this._options.uniforms.indexOf("view") != -1) {
+            if (this._options.uniforms.IndexOf("view") != -1) {
                 this._effect.setMatrix("view", this.getScene().getViewMatrix());
             }
-            if (this._options.uniforms.indexOf("worldView") != -1) {
+            if (this._options.uniforms.IndexOf("worldView") != -1) {
                 world.multiplyToRef(this.getScene().getViewMatrix(), this._cachedWorldViewMatrix);
                 this._effect.setMatrix("worldView", this._cachedWorldViewMatrix);
             }
-            if (this._options.uniforms.indexOf("projection") != -1) {
+            if (this._options.uniforms.IndexOf("projection") != -1) {
                 this._effect.setMatrix("projection", this.getScene().getProjectionMatrix());
             }
-            if (this._options.uniforms.indexOf("worldViewProjection") != -1) {
+            if (this._options.uniforms.IndexOf("worldViewProjection") != -1) {
                 this._effect.setMatrix("worldViewProjection", world.multiply(this.getScene().getTransformMatrix()));
             }
             foreach(var name in this._textures.Keys) {

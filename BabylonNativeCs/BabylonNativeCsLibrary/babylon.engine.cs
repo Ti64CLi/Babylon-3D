@@ -262,7 +262,7 @@ namespace BABYLON
             HTMLImageElement img = null;
             Action<HTMLImageElement> onload = (HTMLImageElement imageElement) =>
             {
-                loadedImages.push(imageElement);
+                loadedImages.Add(imageElement);
                 scene._removePendingData(imageElement);
                 if (index != extensions.Length - 1)
                 {
@@ -685,7 +685,7 @@ namespace BABYLON
             var results = new Array<WebGLUniformLocation>();
             for (var index = 0; index < uniformsNames.Length; index++)
             {
-                results.push(this._gl.getUniformLocation(shaderProgram, uniformsNames[index]));
+                results.Add(this._gl.getUniformLocation(shaderProgram, uniformsNames[index]));
             }
             return results;
         }
@@ -696,11 +696,11 @@ namespace BABYLON
             {
                 try
                 {
-                    results.push(this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
+                    results.Add(this._gl.getAttribLocation(shaderProgram, attributesNames[index]));
                 }
                 catch (Exception)
                 {
-                    results.push(-1);
+                    results.Add(-1);
                 }
             }
             return results;
@@ -898,7 +898,7 @@ namespace BABYLON
             texture.url = url;
             texture.noMipmap = noMipmap;
             texture.references = 1;
-            this._loadedTexturesCache.push(texture);
+            this._loadedTexturesCache.Add(texture);
             if (isTGA)
             {
                 BABYLON.Tools.LoadFile(url, (arrayBuffer) =>
@@ -977,7 +977,7 @@ namespace BABYLON
             texture.isReady = false;
             texture.generateMipMaps = generateMipMaps;
             texture.references = 1;
-            this._loadedTexturesCache.push(texture);
+            this._loadedTexturesCache.Add(texture);
             return texture;
         }
         public virtual void updateDynamicTexture(WebGLTexture texture, HTMLCanvasElement canvas, bool invertY)
@@ -1062,7 +1062,7 @@ namespace BABYLON
             texture.generateMipMaps = generateMipMaps;
             texture.references = 1;
             this._activeTexturesCache = new Array<BaseTexture>();
-            this._loadedTexturesCache.push(texture);
+            this._loadedTexturesCache.Add(texture);
             return texture;
         }
         public virtual WebGLTexture createCubeTexture(string rootUrl, Scene scene, Array<string> extensions, bool noMipmap = false)
@@ -1072,7 +1072,7 @@ namespace BABYLON
             texture.isCube = true;
             texture.url = rootUrl;
             texture.references = 1;
-            this._loadedTexturesCache.push(texture);
+            this._loadedTexturesCache.Add(texture);
             var extension = rootUrl.Substring(rootUrl.Length - 4, 4).ToLower();
             var isDDS = this.getCaps().s3tc != null && (extension == ".dds");
             if (isDDS)
@@ -1151,7 +1151,7 @@ namespace BABYLON
                 this._gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
                 this._activeTexturesCache[channel] = null;
             }
-            var index = this._loadedTexturesCache.indexOf(texture);
+            var index = this._loadedTexturesCache.IndexOf(texture);
             if (index != -1)
             {
                 this._loadedTexturesCache.RemoveAt(index);

@@ -21,7 +21,7 @@ namespace BABYLON
             this.id = id;
             this.bones = new Array<Bone>();
             this._scene = scene;
-            scene.skeletons.push(this);
+            scene.skeletons.Add(this);
         }
         public virtual double[] getTransformMatrices()
         {
@@ -65,7 +65,7 @@ namespace BABYLON
                 this._animatables = new Array<IAnimatable>();
                 for (var index = 0; index < this.bones.Length; index++)
                 {
-                    this._animatables.push(this.bones[index]);
+                    this._animatables.Add(this.bones[index]);
                 }
             }
             return this._animatables;
@@ -79,7 +79,7 @@ namespace BABYLON
                 Bone parentBone = null;
                 if (source.getParent() != null)
                 {
-                    var parentIndex = this.bones.indexOf(source.getParent());
+                    var parentIndex = this.bones.IndexOf(source.getParent());
                     parentBone = result.bones[parentIndex];
                 }
                 var bone = new BABYLON.Bone(source.name, result, parentBone, source.getBaseMatrix());

@@ -11,7 +11,7 @@ namespace BABYLON
         public MultiMaterial(string name, Scene scene)
             : base(name, scene, true)
         {
-            scene.multiMaterials.push(this);
+            scene.multiMaterials.Add(this);
         }
         public virtual Material getSubMaterial(int index)
         {

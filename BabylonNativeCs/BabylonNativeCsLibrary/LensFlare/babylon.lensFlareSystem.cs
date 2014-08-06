@@ -26,21 +26,21 @@ namespace BABYLON
             this.name = name;
             this._scene = scene;
             this._emitter = emitter;
-            scene.lensFlareSystems.push(this);
+            scene.lensFlareSystems.Add(this);
             this.meshesSelectionPredicate = (m) => m.material != null && m.isVisible && m.isEnabled() && m.checkCollisions && ((m.layerMask & scene.activeCamera.layerMask) != 0);
             var vertices = new Array<double>();
-            vertices.push(1, 1);
-            vertices.push(-1, 1);
-            vertices.push(-1, -1);
-            vertices.push(1, -1);
+            vertices.Add(1, 1);
+            vertices.Add(-1, 1);
+            vertices.Add(-1, -1);
+            vertices.Add(1, -1);
             this._vertexBuffer = scene.getEngine().createVertexBuffer(vertices);
             var indices = new Array<int>();
-            indices.push(0);
-            indices.push(1);
-            indices.push(2);
-            indices.push(0);
-            indices.push(2);
-            indices.push(3);
+            indices.Add(0);
+            indices.Add(1);
+            indices.Add(2);
+            indices.Add(0);
+            indices.Add(2);
+            indices.Add(3);
             this._indexBuffer = scene.getEngine().createIndexBuffer(indices);
             this._effect = this._scene.getEngine().createEffect(new EffectBaseName { baseName = "lensFlare" }, new Array<string>("position"), new Array<string>("color", "viewportMatrix"), new Array<string>("textureSampler"), "");
         }
@@ -199,7 +199,7 @@ namespace BABYLON
             {
                 this.lensFlares[0].dispose();
             }
-            var index = this._scene.lensFlareSystems.indexOf(this);
+            var index = this._scene.lensFlareSystems.IndexOf(this);
             this._scene.lensFlareSystems.RemoveAt(index);
         }
     }

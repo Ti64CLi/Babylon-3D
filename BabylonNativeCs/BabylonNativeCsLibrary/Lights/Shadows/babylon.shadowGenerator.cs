@@ -114,41 +114,41 @@ namespace BABYLON
             var defines = new Array<string>();
             if (this.useVarianceShadowMap)
             {
-                defines.push("#define VSM");
+                defines.Add("#define VSM");
             }
             var attribs = new Array<string>(BABYLON.VertexBuffer.PositionKind);
             var mesh = subMesh.getMesh();
             var material = subMesh.getMaterial();
             if (material != null && material.needAlphaTesting())
             {
-                defines.push("#define ALPHATEST");
+                defines.Add("#define ALPHATEST");
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UVKind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.UVKind);
-                    defines.push("#define UV1");
+                    attribs.Add(BABYLON.VertexBuffer.UVKind);
+                    defines.Add("#define UV1");
                 }
                 if (mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.UV2Kind))
                 {
-                    attribs.push(BABYLON.VertexBuffer.UV2Kind);
-                    defines.push("#define UV2");
+                    attribs.Add(BABYLON.VertexBuffer.UV2Kind);
+                    defines.Add("#define UV2");
                 }
             }
             if (mesh.skeleton != null && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesIndicesKind) && mesh.isVerticesDataPresent(BABYLON.VertexBufferKind.MatricesWeightsKind))
             {
-                attribs.push(BABYLON.VertexBuffer.MatricesIndicesKind);
-                attribs.push(BABYLON.VertexBuffer.MatricesWeightsKind);
-                defines.push("#define BONES");
-                defines.push("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
+                attribs.Add(BABYLON.VertexBuffer.MatricesIndicesKind);
+                attribs.Add(BABYLON.VertexBuffer.MatricesWeightsKind);
+                defines.Add("#define BONES");
+                defines.Add("#define BonesPerMesh " + (mesh.skeleton.bones.Length + 1));
             }
             if (useInstances)
             {
-                defines.push("#define INSTANCES");
-                attribs.push("world0");
-                attribs.push("world1");
-                attribs.push("world2");
-                attribs.push("world3");
+                defines.Add("#define INSTANCES");
+                attribs.Add("world0");
+                attribs.Add("world1");
+                attribs.Add("world2");
+                attribs.Add("world3");
             }
-            var join = defines.join("\n");
+            var join = defines.Concat("\n");
             if (this._cachedDefines != join)
             {
                 this._cachedDefines = join;

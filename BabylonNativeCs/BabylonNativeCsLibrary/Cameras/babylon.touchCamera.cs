@@ -35,7 +35,7 @@ namespace BABYLON
                     {
                         evt.preventDefault();
                     }
-                    this._pointerPressed.push(evt.pointerId);
+                    this._pointerPressed.Add(evt.pointerId);
                     if (this._pointerPressed.Length != 1)
                     {
                         return;
@@ -48,7 +48,7 @@ namespace BABYLON
                     {
                         evt.preventDefault();
                     }
-                    var index = this._pointerPressed.indexOf(evt.pointerId);
+                    var index = this._pointerPressed.IndexOf(evt.pointerId);
                     if (index == -1)
                     {
                         return;
@@ -72,7 +72,7 @@ namespace BABYLON
                     {
                         return;
                     }
-                    var index = this._pointerPressed.indexOf(evt.pointerId);
+                    var index = this._pointerPressed.IndexOf(evt.pointerId);
                     if (index != 0)
                     {
                         return;

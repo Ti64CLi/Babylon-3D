@@ -22,19 +22,19 @@ namespace BABYLON
             this.minimum = minimum;
             this.maximum = maximum;
 
-            this.vectors.push(this.minimum.clone());
-            this.vectors.push(this.maximum.clone());
-            this.vectors.push(this.minimum.clone());
+            this.vectors.Add(this.minimum.clone());
+            this.vectors.Add(this.maximum.clone());
+            this.vectors.Add(this.minimum.clone());
             this.vectors[2].x = this.maximum.x;
-            this.vectors.push(this.minimum.clone());
+            this.vectors.Add(this.minimum.clone());
             this.vectors[3].y = this.maximum.y;
-            this.vectors.push(this.minimum.clone());
+            this.vectors.Add(this.minimum.clone());
             this.vectors[4].z = this.maximum.z;
-            this.vectors.push(this.maximum.clone());
+            this.vectors.Add(this.maximum.clone());
             this.vectors[5].z = this.minimum.z;
-            this.vectors.push(this.maximum.clone());
+            this.vectors.Add(this.maximum.clone());
             this.vectors[6].x = this.minimum.x;
-            this.vectors.push(this.maximum.clone());
+            this.vectors.Add(this.maximum.clone());
             this.vectors[7].y = this.minimum.y;
             this.center = this.maximum.add(this.minimum).scale(0.5);
             this.extends = this.maximum.subtract(this.minimum).scale(0.5);

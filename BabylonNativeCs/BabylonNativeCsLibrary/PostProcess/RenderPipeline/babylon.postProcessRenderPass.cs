@@ -25,7 +25,7 @@ namespace BABYLON
         {
             if (this._refCount == 0)
             {
-                this._scene.customRenderTargets.push(this._renderTexture);
+                this._scene.customRenderTargets.Add(this._renderTexture);
             }
             return ++this._refCount;
         }
@@ -34,7 +34,7 @@ namespace BABYLON
             this._refCount--;
             if (this._refCount <= 0)
             {
-                this._scene.customRenderTargets.RemoveAt(this._scene.customRenderTargets.indexOf(this._renderTexture));
+                this._scene.customRenderTargets.RemoveAt(this._scene.customRenderTargets.IndexOf(this._renderTexture));
             }
             return this._refCount;
         }

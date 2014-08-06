@@ -94,10 +94,10 @@ namespace BABYLON {
             for (var i = 0; i < rawVerts.Length; i += 3) {
                 var transformed = BABYLON.Vector3.Zero();
                 BABYLON.Vector3.TransformNormalFromFloatsToRef(rawVerts[i], rawVerts[i + 1], rawVerts[i + 2], mesh.getWorldMatrix(), transformed);
-                verts.push(new CANNON.Vec3(transformed.x, transformed.z, transformed.y));
+                verts.Add(new CANNON.Vec3(transformed.x, transformed.z, transformed.y));
             }
             for (var j = 0; j < rawFaces.Length; j += 3) {
-                faces.push(new Array < object > (rawFaces[j], rawFaces[j + 2], rawFaces[j + 1]));
+                faces.Add(new Array < object > (rawFaces[j], rawFaces[j + 2], rawFaces[j + 1]));
             }
             var shape = new CANNON.ConvexPolyhedron(verts, faces);
             if (!options) {
@@ -117,7 +117,7 @@ namespace BABYLON {
             var currentMat = new CANNON.Material();
             currentMat.friction = friction;
             currentMat.restitution = restitution;
-            this._physicsMaterials.push(currentMat);
+            this._physicsMaterials.Add(currentMat);
             for (index = 0; index < this._physicsMaterials.Length; index++) {
                 mat = this._physicsMaterials[index];
                 var contactMaterial = new CANNON.ContactMaterial(mat, currentMat, mat.friction * currentMat.friction, mat.restitution * currentMat.restitution);
@@ -143,7 +143,7 @@ namespace BABYLON {
             }
             body.position.set(mesh.position.x, mesh.position.z, mesh.position.y);
             this._world.add(body);
-            this._registeredMeshes.push(new {});
+            this._registeredMeshes.Add(new {});
             return body;
         }
         public virtual object registerMeshesAsCompound(Array < PhysicsCompoundBodyPart > parts, PhysicsBodyCreationOptions options) {

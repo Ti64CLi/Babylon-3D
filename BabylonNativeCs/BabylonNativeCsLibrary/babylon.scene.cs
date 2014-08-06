@@ -112,7 +112,7 @@ namespace BABYLON
             defaultMaterial = new BABYLON.StandardMaterial("default material", this);
 
             this._engine = engine;
-            engine.scenes.push(this);
+            engine.scenes.Add(this);
             this._renderingManager = new RenderingManager(this);
             this.postProcessManager = new PostProcessManager(this);
             this.postProcessRenderPipelineManager = new PostProcessRenderPipelineManager();
@@ -312,11 +312,11 @@ namespace BABYLON
         }
         public virtual void registerBeforeRender(System.Action func)
         {
-            this._onBeforeRenderCallbacks.push(func);
+            this._onBeforeRenderCallbacks.Add(func);
         }
         public virtual void unregisterBeforeRender(System.Action func)
         {
-            var index = this._onBeforeRenderCallbacks.indexOf(func);
+            var index = this._onBeforeRenderCallbacks.IndexOf(func);
             if (index > -1)
             {
                 this._onBeforeRenderCallbacks.RemoveAt(index);
@@ -324,11 +324,11 @@ namespace BABYLON
         }
         public virtual void _addPendingData(object data)
         {
-            this._pendingData.push(data);
+            this._pendingData.Add(data);
         }
         public virtual void _removePendingData(object data)
         {
-            var index = this._pendingData.indexOf(data);
+            var index = this._pendingData.IndexOf(data);
             if (index != -1)
             {
                 this._pendingData.RemoveAt(index);
@@ -340,7 +340,7 @@ namespace BABYLON
         }
         public virtual void executeWhenReady(System.Action func)
         {
-            this._onReadyCallbacks.push(func);
+            this._onReadyCallbacks.Add(func);
             if (this._executeWhenReadyTimeoutId != -1)
             {
                 return;
@@ -355,10 +355,11 @@ namespace BABYLON
         {
             if (this.isReady())
             {
-                this._onReadyCallbacks.forEach((func) =>
+                foreach (var func in this._onReadyCallbacks)
                 {
                     func();
-                });
+                };
+
                 this._onReadyCallbacks = new Array<System.Action>();
                 this._executeWhenReadyTimeoutId = -1;
                 return;
@@ -552,7 +553,7 @@ namespace BABYLON
             {
                 return false;
             }
-            this._geometries.push(geometry);
+            this._geometries.Add(geometry);
             return true;
         }
         public virtual Array<Geometry> getGeometries()
@@ -652,7 +653,7 @@ namespace BABYLON
         }
         public virtual bool isActiveMesh(Mesh mesh)
         {
-            return (this._activeMeshes.indexOf(mesh) != -1);
+            return (this._activeMeshes.IndexOf(mesh) != -1);
         }
         private void _evaluateSubMesh(SubMesh subMesh, AbstractMesh mesh)
         {
@@ -661,16 +662,16 @@ namespace BABYLON
                 var material = subMesh.getMaterial();
                 if (mesh.showSubMeshesBoundingBox)
                 {
-                    this._boundingBoxRenderer.renderList.push(subMesh.getBoundingInfo().boundingBox);
+                    this._boundingBoxRenderer.renderList.Add(subMesh.getBoundingInfo().boundingBox);
                 }
                 if (material != null)
                 {
                     if (material.getRenderTargetTextures != null)
                     {
-                        if (this._processedMaterials.indexOf(material) == -1)
+                        if (this._processedMaterials.IndexOf(material) == -1)
                         {
-                            this._processedMaterials.push(material);
-                            this._renderTargets.concat(material.getRenderTargetTextures());
+                            this._processedMaterials.Add(material);
+                            this._renderTargets.Append(material.getRenderTargetTextures());
                         }
                     }
                     this._activeVertices += subMesh.verticesCount;
@@ -723,7 +724,7 @@ namespace BABYLON
                 }
                 if (mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0 && ((mesh.layerMask & this.activeCamera.layerMask) != 0) && mesh.isInFrustum(this._frustumPlanes))
                 {
-                    this._activeMeshes.push(mesh);
+                    this._activeMeshes.Add(mesh);
                     mesh._activate(this._renderId);
                     this._activeMesh(mesh);
                 }
@@ -740,7 +741,7 @@ namespace BABYLON
                     }
                     if (((Mesh)particleSystem.emitter).position == null || (particleSystem.emitter != null && ((Mesh)particleSystem.emitter).isEnabled()))
                     {
-                        this._activeParticleSystems.push(particleSystem);
+                        this._activeParticleSystems.Add(particleSystem);
                         particleSystem.animate();
                     }
                 }
@@ -755,7 +756,7 @@ namespace BABYLON
             }
             if (mesh.showBoundingBox)
             {
-                this._boundingBoxRenderer.renderList.push(mesh.getBoundingInfo().boundingBox);
+                this._boundingBoxRenderer.renderList.Add(mesh.getBoundingInfo().boundingBox);
             }
             if (mesh.subMeshes != null)
             {
@@ -807,7 +808,7 @@ namespace BABYLON
             for (var customIndex = 0; customIndex < this.customRenderTargets.Length; customIndex++)
             {
                 var renderTarget = this.customRenderTargets[customIndex];
-                this._renderTargets.push(renderTarget);
+                this._renderTargets.Add(renderTarget);
             }
             var beforeRenderTargetDate = new Date().getTime();
             if (this.renderTargetsEnabled)
@@ -900,17 +901,17 @@ namespace BABYLON
                     {
                         var otherMesh = action.getTriggerParameter();
                         var areIntersecting = otherMesh.intersectsMesh(sourceMesh, false);
-                        var currentIntersectionInProgress = sourceMesh._intersectionsInProgress.indexOf(otherMesh);
+                        var currentIntersectionInProgress = sourceMesh._intersectionsInProgress.IndexOf(otherMesh);
                         if (areIntersecting && currentIntersectionInProgress == -1 && action.trigger == ActionManager.OnIntersectionEnterTrigger)
                         {
                             sourceMesh.actionManager.processTrigger(ActionManager.OnIntersectionEnterTrigger, ActionEvent.CreateNew(sourceMesh));
-                            sourceMesh._intersectionsInProgress.push(otherMesh);
+                            sourceMesh._intersectionsInProgress.Add(otherMesh);
                         }
                         else
                             if (!areIntersecting && currentIntersectionInProgress > -1 && action.trigger == ActionManager.OnIntersectionExitTrigger)
                             {
                                 sourceMesh.actionManager.processTrigger(ActionManager.OnIntersectionExitTrigger, ActionEvent.CreateNew(sourceMesh));
-                                var indexOfOther = sourceMesh._intersectionsInProgress.indexOf(otherMesh);
+                                var indexOfOther = sourceMesh._intersectionsInProgress.IndexOf(otherMesh);
                                 if (indexOfOther > -1)
                                 {
                                     sourceMesh._intersectionsInProgress.RemoveAt(indexOfOther);
@@ -955,9 +956,9 @@ namespace BABYLON
             {
                 var light = this.lights[lightIndex];
                 var shadowGenerator = light.getShadowGenerator();
-                if (light.isEnabled() && shadowGenerator != null && shadowGenerator.getShadowMap().getScene().textures.indexOf(shadowGenerator.getShadowMap()) != -1)
+                if (light.isEnabled() && shadowGenerator != null && shadowGenerator.getShadowMap().getScene().textures.IndexOf(shadowGenerator.getShadowMap()) != -1)
                 {
-                    this._renderTargets.push(shadowGenerator.getShadowMap());
+                    this._renderTargets.Add(shadowGenerator.getShadowMap());
                 }
             }
             this.postProcessRenderPipelineManager.update();
@@ -1040,7 +1041,7 @@ namespace BABYLON
             {
                 this.disablePhysicsEngine();
             }
-            var _index = this._engine.scenes.indexOf(this);
+            var _index = this._engine.scenes.IndexOf(this);
             this._engine.scenes.RemoveAt(_index);
             this._engine.wipeCaches();
         }
@@ -1270,7 +1271,7 @@ namespace BABYLON
             ////    var item = list[i];
             ////    if (BABYLON.Tags.MatchesQuery(item, tagsQuery))
             ////    {
-            ////        listByTags.push(item);
+            ////        listByTags.Add(item);
             ////    }
             ////}
             return listByTags;

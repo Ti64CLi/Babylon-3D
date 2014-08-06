@@ -31,7 +31,7 @@ namespace BABYLON
                     continue;
                 }
                 this._clearDepthBuffer();
-                if (((Mesh)particleSystem.emitter).position == null || activeMeshes == null || activeMeshes.indexOf((Mesh)particleSystem.emitter) != -1)
+                if (((Mesh)particleSystem.emitter).position == null || activeMeshes == null || activeMeshes.IndexOf((Mesh)particleSystem.emitter) != -1)
                 {
                     this._scene._activeParticles += particleSystem.render();
                 }

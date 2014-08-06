@@ -23,19 +23,19 @@ namespace BABYLON
             this._creationFunc = creationFunc;
             this._minPoint = minPoint;
             this._maxPoint = maxPoint;
-            this._boundingVectors.push(minPoint.clone());
-            this._boundingVectors.push(maxPoint.clone());
-            this._boundingVectors.push(minPoint.clone());
+            this._boundingVectors.Add(minPoint.clone());
+            this._boundingVectors.Add(maxPoint.clone());
+            this._boundingVectors.Add(minPoint.clone());
             this._boundingVectors[2].x = maxPoint.x;
-            this._boundingVectors.push(minPoint.clone());
+            this._boundingVectors.Add(minPoint.clone());
             this._boundingVectors[3].y = maxPoint.y;
-            this._boundingVectors.push(minPoint.clone());
+            this._boundingVectors.Add(minPoint.clone());
             this._boundingVectors[4].z = maxPoint.z;
-            this._boundingVectors.push(maxPoint.clone());
+            this._boundingVectors.Add(maxPoint.clone());
             this._boundingVectors[5].z = minPoint.z;
-            this._boundingVectors.push(maxPoint.clone());
+            this._boundingVectors.Add(maxPoint.clone());
             this._boundingVectors[6].x = minPoint.x;
-            this._boundingVectors.push(maxPoint.clone());
+            this._boundingVectors.Add(maxPoint.clone());
             this._boundingVectors[7].y = minPoint.y;
         }
         public Array<OctreeBlock<T>> blocks { get; set; }
@@ -100,7 +100,7 @@ namespace BABYLON
                 }
                 if (allowDuplicate)
                 {
-                    selection.concat(this.entries);
+                    selection.Append(this.entries);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace BABYLON
                 }
                 if (allowDuplicate)
                 {
-                    selection.concat(this.entries);
+                    selection.Append(this.entries);
                 }
                 else
                 {

@@ -114,7 +114,7 @@ namespace BABYLON
                 var item = list[index];
                 if (item.isDescendantOf(this))
                 {
-                    results.push(item);
+                    results.Add(item);
                 }
             }
         }

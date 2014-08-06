@@ -25,7 +25,7 @@ namespace BABYLON
                 this.appendAnimations(target, animations);
             }
             this._scene = scene;
-            scene._activeAnimatables.push(this);
+            scene._activeAnimatables.Add(this);
         }
         public virtual void appendAnimations(IAnimatable target, Array<Animation> animations)
         {
@@ -33,7 +33,7 @@ namespace BABYLON
             {
                 var animation = animations[index];
                 animation._target = target;
-                this._animations.push(animation);
+                this._animations.Add(animation);
             }
         }
         public virtual Animation getAnimationByTargetProperty(string property)
@@ -58,7 +58,7 @@ namespace BABYLON
         }
         public virtual void stop()
         {
-            var index = this._scene._activeAnimatables.indexOf(this);
+            var index = this._scene._activeAnimatables.IndexOf(this);
             if (index > -1)
             {
                 this._scene._activeAnimatables.RemoveAt(index);

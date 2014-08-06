@@ -34,7 +34,7 @@ namespace BABYLON
             : base(name, scene)
         {
             this.position = position;
-            scene.cameras.push(this);
+            scene.cameras.Add(this);
             if (scene.activeCamera == null)
             {
                 scene.activeCamera = this;
@@ -116,15 +116,15 @@ namespace BABYLON
         public virtual void _update() { }
         public virtual int attachPostProcess(PostProcess postProcess, int insertAt = -1)
         {
-            if (!postProcess.isReusable() && this._postProcesses.indexOf(postProcess) > -1)
+            if (!postProcess.isReusable() && this._postProcesses.IndexOf(postProcess) > -1)
             {
                 Tools.Error("You're trying to reuse a post process not defined as reusable.");
                 return 0;
             }
             if (insertAt < 0)
             {
-                this._postProcesses.push(postProcess);
-                this._postProcessesTakenIndices.push(this._postProcesses.Length - 1);
+                this._postProcesses.Add(postProcess);
+                this._postProcessesTakenIndices.Add(this._postProcesses.Length - 1);
                 return this._postProcesses.Length - 1;
             }
             var add = 0;
@@ -151,9 +151,9 @@ namespace BABYLON
                 this._postProcessesTakenIndices[i] = insertAt;
                 break;
             }
-            if (add == 0 && this._postProcessesTakenIndices.indexOf(insertAt) == -1)
+            if (add == 0 && this._postProcessesTakenIndices.IndexOf(insertAt) == -1)
             {
-                this._postProcessesTakenIndices.push(insertAt);
+                this._postProcessesTakenIndices.Add(insertAt);
             }
             var result = insertAt + add;
             this._postProcesses[result] = postProcess;
@@ -172,7 +172,7 @@ namespace BABYLON
                         continue;
                     }
                     this._postProcesses[i] = null;
-                    var index = this._postProcessesTakenIndices.indexOf(i);
+                    var index = this._postProcessesTakenIndices.IndexOf(i);
                     this._postProcessesTakenIndices.RemoveAt(index);
                 }
             }
@@ -183,11 +183,11 @@ namespace BABYLON
                     var foundPostProcess = this._postProcesses[atIndices[i]];
                     if (foundPostProcess != postProcess)
                     {
-                        result.push(i);
+                        result.Add(i);
                         continue;
                     }
                     this._postProcesses[atIndices[i]] = null;
-                    var index = this._postProcessesTakenIndices.indexOf(atIndices[i]);
+                    var index = this._postProcessesTakenIndices.IndexOf(atIndices[i]);
                     this._postProcessesTakenIndices.RemoveAt(index);
                 }
             }
@@ -260,7 +260,7 @@ namespace BABYLON
         }
         public virtual void dispose()
         {
-            var index = this.getScene().cameras.indexOf(this);
+            var index = this.getScene().cameras.IndexOf(this);
             this.getScene().cameras.RemoveAt(index);
             for (var i = 0; i < this._postProcessesTakenIndices.Length; ++i)
             {

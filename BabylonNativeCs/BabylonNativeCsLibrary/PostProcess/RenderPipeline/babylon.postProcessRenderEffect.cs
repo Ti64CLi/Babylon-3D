@@ -98,7 +98,7 @@ namespace BABYLON
                 {
                     this._indicesForCamera[cameraName] = new Array<int>();
                 }
-                this._indicesForCamera[cameraName].push(index);
+                this._indicesForCamera[cameraName].Add(index);
                 this._cameras[cameraName] = camera;
                 foreach (var passName in this._renderPasses.Keys)
                 {

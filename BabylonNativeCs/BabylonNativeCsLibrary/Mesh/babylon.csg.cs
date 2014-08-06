@@ -64,18 +64,18 @@ namespace BABYLON.CSG
                 var t = Vector3.Dot(this.normal, polygon.vertices[i].pos) - this.w;
                 var type = ((t < -Plane.EPSILON)) ? BACK : ((t > Plane.EPSILON)) ? FRONT : COPLANAR;
                 polygonType |= type;
-                types.push(type);
+                types.Add(type);
             }
             switch (polygonType)
             {
                 case COPLANAR:
-                    ((Vector3.Dot(this.normal, polygon.plane.normal) > 0) ? coplanarFront : coplanarBack).push(polygon);
+                    ((Vector3.Dot(this.normal, polygon.plane.normal) > 0) ? coplanarFront : coplanarBack).Add(polygon);
                     break;
                 case FRONT:
-                    front.push(polygon);
+                    front.Add(polygon);
                     break;
                 case BACK:
-                    back.push(polygon);
+                    back.Add(polygon);
                     break;
                 case SPANNING:
                     var f = new Array<object>();
@@ -88,28 +88,28 @@ namespace BABYLON.CSG
                         var vi = polygon.vertices[i];
                         var vj = polygon.vertices[j];
                         if (ti != BACK)
-                            f.push(vi);
+                            f.Add(vi);
                         if (ti != FRONT)
-                            b.push((ti != BACK) ? vi.clone() : vi);
+                            b.Add((ti != BACK) ? vi.clone() : vi);
                         if ((ti | tj) == SPANNING)
                         {
                             t = (this.w - Vector3.Dot(this.normal, vi.pos)) / Vector3.Dot(this.normal, vj.pos.subtract(vi.pos));
                             var v = vi.interpolate(vj, t);
-                            f.push(v);
-                            b.push(v.clone());
+                            f.Add(v);
+                            b.Add(v.clone());
                         }
                     }
                     if (f.Length >= 3)
                     {
                         var poly = new Polygon(f, polygon.shared);
                         if (poly.plane)
-                            front.push(poly);
+                            front.Add(poly);
                     }
                     if (b.Length >= 3)
                     {
                         poly = new Polygon(b, polygon.shared);
                         if (poly.plane)
-                            back.push(poly);
+                            back.Add(poly);
                     }
                     break;
             }
@@ -292,11 +292,11 @@ namespace BABYLON.CSG
                         BABYLON.Vector3.TransformCoordinatesToRef(position, matrix, position);
                         BABYLON.Vector3.TransformNormalToRef(normal, matrix, normal);
                         vertex = new Vertex(position, normal, uv);
-                        vertices.push(vertex);
+                        vertices.Add(vertex);
                     }
                     polygon = new Polygon(vertices, new {});
                     if (polygon.plane)
-                        polygons.push(polygon);
+                        polygons.Add(polygon);
                 }
             }
             var csg = CSG.FromPolygons(polygons);
@@ -474,12 +474,12 @@ namespace BABYLON.CSG
                         BABYLON.Vector3.TransformNormalToRef(normal, matrix, normal);
                         vertex_idx = vertice_dict[vertex.x + "," + vertex.y + "," + vertex.z];
                         if (!(typeof(vertex_idx) != "undefined" && normals[vertex_idx * 3] == normal.x && normals[vertex_idx * 3 + 1] == normal.y && normals[vertex_idx * 3 + 2] == normal.z && uvs[vertex_idx * 2] == uv.x && uvs[vertex_idx * 2 + 1] == uv.y)) {
-                            vertices.push(vertex.x, vertex.y, vertex.z);
-                            uvs.push(uv.x, uv.y);
-                            normals.push(normal.x, normal.y, normal.z);
+                            vertices.Add(vertex.x, vertex.y, vertex.z);
+                            uvs.Add(uv.x, uv.y);
+                            normals.Add(normal.x, normal.y, normal.z);
                             vertex_idx = vertice_dict[vertex.x + "," + vertex.y + "," + vertex.z] = (vertices.Length / 3) - 1;
                         }
-                        indices.push(vertex_idx);
+                        indices.Add(vertex_idx);
                         subMesh_obj.indexStart = Math.min(currentIndex, subMesh_obj.indexStart);
                         subMesh_obj.indexEnd = Math.Max(currentIndex, subMesh_obj.indexEnd);
                         currentIndex++;

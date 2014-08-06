@@ -19,7 +19,7 @@ namespace BABYLON
             this.color = color ?? new BABYLON.Color3(1, 1, 1);
             this.texture = (imgUrl != null) ? new BABYLON.Texture(imgUrl, system.getScene(), true) : null;
             this._system = system;
-            system.lensFlares.push(this);
+            system.lensFlares.Add(this);
         }
         public void dispose()
         {
@@ -27,7 +27,7 @@ namespace BABYLON
             {
                 this.texture.dispose();
             }
-            var index = this._system.lensFlares.indexOf(this);
+            var index = this._system.lensFlares.IndexOf(this);
             this._system.lensFlares.RemoveAt(index);
         }
 

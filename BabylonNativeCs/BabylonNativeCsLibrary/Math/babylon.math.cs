@@ -1630,7 +1630,7 @@ namespace BABYLON
             var frustumPlanes = new Array<Plane>();
             for (var index = 0; index < 6; index++)
             {
-                frustumPlanes.push(new Plane(0, 0, 0, 0));
+                frustumPlanes.Add(new Plane(0, 0, 0, 0));
             }
             Frustum.GetPlanesToRef(transform, frustumPlanes);
             return frustumPlanes;

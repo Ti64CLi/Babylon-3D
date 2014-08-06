@@ -192,12 +192,12 @@ namespace BABYLON
                 {
                     var evt = (KeyboardEvent)e;
 
-                    if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1)
+                    if (this.keysUp.IndexOf(evt.keyCode) != -1 || this.keysDown.IndexOf(evt.keyCode) != -1 || this.keysLeft.IndexOf(evt.keyCode) != -1 || this.keysRight.IndexOf(evt.keyCode) != -1)
                     {
-                        var index = this._keys.indexOf(evt.keyCode);
+                        var index = this._keys.IndexOf(evt.keyCode);
                         if (index == -1)
                         {
-                            this._keys.push(evt.keyCode);
+                            this._keys.Add(evt.keyCode);
                         }
 
                         evt.preventDefault();
@@ -207,9 +207,9 @@ namespace BABYLON
                 {
                     var evt = (KeyboardEvent)e;
 
-                    if (this.keysUp.indexOf(evt.keyCode) != -1 || this.keysDown.indexOf(evt.keyCode) != -1 || this.keysLeft.indexOf(evt.keyCode) != -1 || this.keysRight.indexOf(evt.keyCode) != -1)
+                    if (this.keysUp.IndexOf(evt.keyCode) != -1 || this.keysDown.IndexOf(evt.keyCode) != -1 || this.keysLeft.IndexOf(evt.keyCode) != -1 || this.keysRight.IndexOf(evt.keyCode) != -1)
                     {
-                        var index = this._keys.indexOf(evt.keyCode);
+                        var index = this._keys.IndexOf(evt.keyCode);
                         if (index >= 0)
                         {
                             this._keys.RemoveAt(index);
@@ -302,22 +302,22 @@ namespace BABYLON
             for (var index = 0; index < this._keys.Length; index++)
             {
                 var keyCode = this._keys[index];
-                if (this.keysLeft.indexOf(keyCode) != -1)
+                if (this.keysLeft.IndexOf(keyCode) != -1)
                 {
                     this.inertialAlphaOffset -= 0.01;
                 }
                 else
-                    if (this.keysUp.indexOf(keyCode) != -1)
+                    if (this.keysUp.IndexOf(keyCode) != -1)
                     {
                         this.inertialBetaOffset -= 0.01;
                     }
                     else
-                        if (this.keysRight.indexOf(keyCode) != -1)
+                        if (this.keysRight.IndexOf(keyCode) != -1)
                         {
                             this.inertialAlphaOffset += 0.01;
                         }
                         else
-                            if (this.keysDown.indexOf(keyCode) != -1)
+                            if (this.keysDown.IndexOf(keyCode) != -1)
                             {
                                 this.inertialBetaOffset += 0.01;
                             }
