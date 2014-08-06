@@ -1,32 +1,73 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.condition.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
+    /// <summary>
+    /// </summary>
     public partial class Condition
     {
+        /// <summary>
+        /// </summary>
         public ActionManager _actionManager;
-        public double _evaluationId;
+
+        /// <summary>
+        /// </summary>
         public bool _currentResult;
+
+        /// <summary>
+        /// </summary>
+        public double _evaluationId;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="actionManager">
+        /// </param>
         public Condition(ActionManager actionManager)
         {
             this._actionManager = actionManager;
         }
-        public virtual bool isValid()
-        {
-            return true;
-        }
-        public virtual string _getProperty(string propertyPath)
-        {
-            return this._actionManager._getProperty(propertyPath);
-        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="target">
+        /// </param>
+        /// <param name="propertyPath">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public virtual object _getEffectiveTarget(IAnimatable target, string propertyPath)
         {
             return this._actionManager._getEffectiveTarget(target, propertyPath);
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="propertyPath">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual string _getProperty(string propertyPath)
+        {
+            return this._actionManager._getProperty(propertyPath);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual bool isValid()
+        {
+            return true;
+        }
     }
+
     /*
     public partial class ValueCondition : Condition
     {

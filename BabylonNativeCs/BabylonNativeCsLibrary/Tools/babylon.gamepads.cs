@@ -1,8 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.gamepads.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
     /*
@@ -634,10 +638,40 @@ namespace BABYLON
     }
      */
 }
+
+/// <summary>
+/// </summary>
 public partial interface Navigator
 {
+    /// <summary>
+    /// </summary>
+    /// <param name="func">
+    /// </param>
+    /// <returns>
+    /// </returns>
     object getGamepads(object func = null);
-    object webkitGetGamepads(object func = null);
+
+    /// <summary>
+    /// </summary>
+    /// <param name="func">
+    /// </param>
+    /// <returns>
+    /// </returns>
     object msGetGamepads(object func = null);
+
+    /// <summary>
+    /// </summary>
+    /// <param name="func">
+    /// </param>
+    /// <returns>
+    /// </returns>
     object webkitGamepads(object func = null);
+
+    /// <summary>
+    /// </summary>
+    /// <param name="func">
+    /// </param>
+    /// <returns>
+    /// </returns>
+    object webkitGetGamepads(object func = null);
 }

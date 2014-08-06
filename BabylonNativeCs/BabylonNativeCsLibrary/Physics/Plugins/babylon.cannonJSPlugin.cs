@@ -1,10 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
-namespace BABYLON {
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.cannonJSPlugin.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
+namespace BABYLON
+{
     /*
     public partial class CannonJSPlugin: IPhysicsEnginePlugin {
         public System.Func < double, double > checkWithEpsilon;

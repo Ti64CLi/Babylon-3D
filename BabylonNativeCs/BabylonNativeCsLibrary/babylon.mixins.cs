@@ -1,10 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.mixins.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-/*
+ /*
 public partial interface Window {
     object mozIndexedDB(object func);
     object webkitIndexedDB(object func);

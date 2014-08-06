@@ -1,52 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.tools.tga.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON.Internals
 {
     using BabylonNativeCsLibrary;
 
+    using Web;
+
+    /// <summary>
+    /// </summary>
     public partial class TGATools
     {
-        private const int _TYPE_NO_DATA = 0;
-        private const int _TYPE_INDEXED = 1;
-        private const int _TYPE_RGB = 2;
-        private const int _TYPE_GREY = 3;
-        private const int _TYPE_RLE_INDEXED = 9;
-        private const int _TYPE_RLE_RGB = 10;
-        private const int _TYPE_RLE_GREY = 11;
-        private const int _ORIGIN_MASK = 0x30;
-        private const int _ORIGIN_SHIFT = 0x04;
-        private const int _ORIGIN_BL = 0x00;
-        private const int _ORIGIN_BR = 0x01;
-        private const int _ORIGIN_UL = 0x02;
-        private const int _ORIGIN_UR = 0x03;
+        /// <summary>
+        /// </summary>
+        /// <param name="data">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static TGAHeader GetTGAHeader(byte[] data)
         {
             var offset = 0;
 
             var header = new TGAHeader
-            {
-                id_length = data[offset++],
-                colormap_type = data[offset++],
-                image_type = data[offset++],
-                colormap_index = data[offset++] | data[offset++] << 8,
-                colormap_length = data[offset++] | data[offset++] << 8,
-                colormap_size = data[offset++],
-                origin = new Array<int>(
-                    data[offset++] | data[offset++] << 8,
-                    data[offset++] | data[offset++] << 8
-                ),
-                width = data[offset++] | data[offset++] << 8,
-                height = data[offset++] | data[offset++] << 8,
-                pixel_size = data[offset++],
-                flags = data[offset++]
-            };
+                             {
+                                 id_length = data[offset++], 
+                                 colormap_type = data[offset++], 
+                                 image_type = data[offset++], 
+                                 colormap_index = data[offset++] | data[offset++] << 8, 
+                                 colormap_length = data[offset++] | data[offset++] << 8, 
+                                 colormap_size = data[offset++], 
+                                 origin = new Array<int>(data[offset++] | data[offset++] << 8, data[offset++] | data[offset++] << 8), 
+                                 width = data[offset++] | data[offset++] << 8, 
+                                 height = data[offset++] | data[offset++] << 8, 
+                                 pixel_size = data[offset++], 
+                                 flags = data[offset++]
+                             };
 
             return header;
-
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="gl">
+        /// </param>
+        /// <param name="data">
+        /// </param>
         public static void UploadContent(WebGLRenderingContext gl, byte[] data)
         {
             if (data.Length < 19)
@@ -54,13 +58,15 @@ namespace BABYLON.Internals
                 Tools.Error("Unable to load TGA file - Not enough data to contain header");
                 return;
             }
+
             var offset = 18;
-            var header = TGATools.GetTGAHeader(data);
+            var header = GetTGAHeader(data);
             if (header.id_length + offset > data.Length)
             {
                 Tools.Error("Unable to load TGA file - Not enough data");
                 return;
             }
+
             offset += header.id_length;
             var use_rle = false;
             var use_pal = false;
@@ -68,28 +74,29 @@ namespace BABYLON.Internals
             var use_grey = false;
             switch (header.image_type)
             {
-                case TGATools._TYPE_RLE_INDEXED:
+                case _TYPE_RLE_INDEXED:
                     use_rle = true;
                     use_pal = true;
                     break;
-                case TGATools._TYPE_INDEXED:
+                case _TYPE_INDEXED:
                     use_pal = true;
                     break;
-                case TGATools._TYPE_RLE_RGB:
+                case _TYPE_RLE_RGB:
                     use_rle = true;
                     use_rgb = true;
                     break;
-                case TGATools._TYPE_RGB:
+                case _TYPE_RGB:
                     use_rgb = true;
                     break;
-                case TGATools._TYPE_RLE_GREY:
+                case _TYPE_RLE_GREY:
                     use_rle = true;
                     use_grey = true;
                     break;
-                case TGATools._TYPE_GREY:
+                case _TYPE_GREY:
                     use_grey = true;
                     break;
             }
+
             byte[] pixel_data;
             var numAlphaBits = header.flags & 0xf;
             var pixel_size = header.pixel_size << 3;
@@ -99,6 +106,7 @@ namespace BABYLON.Internals
             {
                 palettes = ArrayConvert.AsByte(data, offset, header.colormap_length * (header.colormap_size << 3));
             }
+
             if (use_rle)
             {
                 pixel_data = new byte[pixel_total];
@@ -117,10 +125,12 @@ namespace BABYLON.Internals
                         {
                             pixels[i] = data[offset++];
                         }
+
                         for (i = 0; i < count; ++i)
                         {
                             pixel_data = ArrayConvert.AsByte(pixels, localOffset, i * pixel_size);
                         }
+
                         localOffset += pixel_size * count;
                     }
                     else
@@ -130,24 +140,26 @@ namespace BABYLON.Internals
                         {
                             pixel_data[localOffset + i] = data[offset++];
                         }
+
                         localOffset += count;
                     }
                 }
             }
             else
             {
-                pixel_data = ArrayConvert.AsByte(data, offset, ((use_pal) ? header.width * header.height : pixel_total));
+                pixel_data = ArrayConvert.AsByte(data, offset, (use_pal) ? header.width * header.height : pixel_total);
             }
+
             int x_start;
             int y_start;
             int x_step;
             int y_step;
             int y_end;
             int x_end;
-            switch ((header.flags & TGATools._ORIGIN_MASK) << TGATools._ORIGIN_SHIFT)
+            switch ((header.flags & _ORIGIN_MASK) << _ORIGIN_SHIFT)
             {
                 default:
-                case TGATools._ORIGIN_UL:
+                case _ORIGIN_UL:
                     x_start = 0;
                     x_step = 1;
                     x_end = header.width;
@@ -155,7 +167,7 @@ namespace BABYLON.Internals
                     y_step = 1;
                     y_end = header.height;
                     break;
-                case TGATools._ORIGIN_BL:
+                case _ORIGIN_BL:
                     x_start = 0;
                     x_step = 1;
                     x_end = header.width;
@@ -163,7 +175,7 @@ namespace BABYLON.Internals
                     y_step = -1;
                     y_end = -1;
                     break;
-                case TGATools._ORIGIN_UR:
+                case _ORIGIN_UR:
                     x_start = header.width - 1;
                     x_step = -1;
                     x_end = -1;
@@ -171,7 +183,7 @@ namespace BABYLON.Internals
                     y_step = 1;
                     y_end = header.height;
                     break;
-                case TGATools._ORIGIN_BR:
+                case _ORIGIN_BR:
                     x_start = header.width - 1;
                     x_step = -1;
                     x_end = -1;
@@ -195,7 +207,7 @@ namespace BABYLON.Internals
                         break;
                 }
             }
-            else 
+            else
             {
                 switch (header.pixel_size)
                 {
@@ -216,7 +228,171 @@ namespace BABYLON.Internals
 
             gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, header.width, header.height, 0, Gl.RGBA, Gl.UNSIGNED_BYTE, imageData);
         }
-        static byte[] _getImageData8bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageData16bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        {
+            var image = pixel_data;
+            var width = header.width;
+            var height = header.height;
+            int color;
+            var i = 0;
+            int x;
+            int y;
+            var imageData = new byte[width * height * 4];
+            for (y = y_start; y != y_end; y += y_step)
+            {
+                for (x = x_start; x != x_end; x += x_step, i += 2)
+                {
+                    color = image[i + 0] + (image[i + 1] >> 8);
+                    imageData[(x + width * y) * 4 + 0] = (byte)((color & 0x7C00) << 7);
+                    imageData[(x + width * y) * 4 + 1] = (byte)((color & 0x03E0) << 2);
+                    imageData[(x + width * y) * 4 + 2] = (byte)((color & 0x001F) << 3);
+                    imageData[(x + width * y) * 4 + 3] = (byte)(((color & 0x8000) > 0) ? 0 : 255);
+                }
+            }
+
+            return imageData;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageData24bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        {
+            var image = pixel_data;
+            var width = header.width;
+            var height = header.height;
+            var i = 0;
+            int x;
+            int y;
+            var imageData = new byte[width * height * 4];
+            for (y = y_start; y != y_end; y += y_step)
+            {
+                for (x = x_start; x != x_end; x += x_step, i += 3)
+                {
+                    imageData[(x + width * y) * 4 + 3] = 255;
+                    imageData[(x + width * y) * 4 + 2] = image[i + 0];
+                    imageData[(x + width * y) * 4 + 1] = image[i + 1];
+                    imageData[(x + width * y) * 4 + 0] = image[i + 2];
+                }
+            }
+
+            return imageData;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageData32bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+        {
+            var image = pixel_data;
+            var width = header.width;
+            var height = header.height;
+            var i = 0;
+            int x;
+            int y;
+            var imageData = new byte[width * height * 4];
+            for (y = y_start; y != y_end; y += y_step)
+            {
+                for (x = x_start; x != x_end; x += x_step, i += 4)
+                {
+                    imageData[(x + width * y) * 4 + 2] = image[i + 0];
+                    imageData[(x + width * y) * 4 + 1] = image[i + 1];
+                    imageData[(x + width * y) * 4 + 0] = image[i + 2];
+                    imageData[(x + width * y) * 4 + 3] = image[i + 3];
+                }
+            }
+
+            return imageData;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageData8bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var colormap = palettes;
@@ -238,14 +414,38 @@ namespace BABYLON.Internals
                     imageData[(x + width * y) * 4 + 0] = colormap[(color * 3) + 2];
                 }
             }
+
             return imageData;
         }
-        static byte[] _getImageData16bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageDataGrey16bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
             var height = header.height;
-            int color;
             var i = 0;
             int x;
             int y;
@@ -254,58 +454,40 @@ namespace BABYLON.Internals
             {
                 for (x = x_start; x != x_end; x += x_step, i += 2)
                 {
-                    color = image[i + 0] + (image[i + 1] >> 8);
-                    imageData[(x + width * y) * 4 + 0] = (byte) ((color & 0x7C00) << 7);
-                    imageData[(x + width * y) * 4 + 1] = (byte) ((color & 0x03E0) << 2);
-                    imageData[(x + width * y) * 4 + 2] = (byte) ((color & 0x001F) << 3);
-                    imageData[(x + width * y) * 4 + 3] = (byte) (((color & 0x8000) > 0) ? 0 : 255);
-                }
-            }
-            return imageData;
-        }
-        static byte[] _getImageData24bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
-        {
-            var image = pixel_data;
-            var width = header.width;
-            var height = header.height;
-            var i = 0;
-            int x;
-            int y;
-            var imageData = new byte[width * height * 4];
-            for (y = y_start; y != y_end; y += y_step)
-            {
-                for (x = x_start; x != x_end; x += x_step, i += 3)
-                {
-                    imageData[(x + width * y) * 4 + 3] = 255;
+                    imageData[(x + width * y) * 4 + 0] = image[i + 0];
+                    imageData[(x + width * y) * 4 + 1] = image[i + 0];
                     imageData[(x + width * y) * 4 + 2] = image[i + 0];
-                    imageData[(x + width * y) * 4 + 1] = image[i + 1];
-                    imageData[(x + width * y) * 4 + 0] = image[i + 2];
+                    imageData[(x + width * y) * 4 + 3] = image[i + 1];
                 }
             }
+
             return imageData;
         }
-        static byte[] _getImageData32bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
-        {
-            var image = pixel_data;
-            var width = header.width;
-            var height = header.height;
-            var i = 0;
-            int x;
-            int y;
-            var imageData = new byte[width * height * 4];
-            for (y = y_start; y != y_end; y += y_step)
-            {
-                for (x = x_start; x != x_end; x += x_step, i += 4)
-                {
-                    imageData[(x + width * y) * 4 + 2] = image[i + 0];
-                    imageData[(x + width * y) * 4 + 1] = image[i + 1];
-                    imageData[(x + width * y) * 4 + 0] = image[i + 2];
-                    imageData[(x + width * y) * 4 + 3] = image[i + 3];
-                }
-            }
-            return imageData;
-        }
-        static byte[] _getImageDataGrey8bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="header">
+        /// </param>
+        /// <param name="palettes">
+        /// </param>
+        /// <param name="pixel_data">
+        /// </param>
+        /// <param name="y_start">
+        /// </param>
+        /// <param name="y_step">
+        /// </param>
+        /// <param name="y_end">
+        /// </param>
+        /// <param name="x_start">
+        /// </param>
+        /// <param name="x_step">
+        /// </param>
+        /// <param name="x_end">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private static byte[] _getImageDataGrey8bits(
+            TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
         {
             var image = pixel_data;
             var width = header.width;
@@ -326,28 +508,60 @@ namespace BABYLON.Internals
                     imageData[(x + width * y) * 4 + 3] = 255;
                 }
             }
+
             return imageData;
         }
-        static byte[] _getImageDataGrey16bits(TGAHeader header, byte[] palettes, byte[] pixel_data, int y_start, int y_step, int y_end, int x_start, int x_step, int x_end)
-        {
-            var image = pixel_data;
-            var width = header.width;
-            var height = header.height;
-            var i = 0;
-            int x;
-            int y;
-            var imageData = new byte[width * height * 4];
-            for (y = y_start; y != y_end; y += y_step)
-            {
-                for (x = x_start; x != x_end; x += x_step, i += 2)
-                {
-                    imageData[(x + width * y) * 4 + 0] = image[i + 0];
-                    imageData[(x + width * y) * 4 + 1] = image[i + 0];
-                    imageData[(x + width * y) * 4 + 2] = image[i + 0];
-                    imageData[(x + width * y) * 4 + 3] = image[i + 1];
-                }
-            }
-            return imageData;
-        }
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_NO_DATA = 0;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_INDEXED = 1;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_RGB = 2;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_GREY = 3;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_RLE_INDEXED = 9;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_RLE_RGB = 10;
+
+        /// <summary>
+        /// </summary>
+        private const int _TYPE_RLE_GREY = 11;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_MASK = 0x30;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_SHIFT = 0x04;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_BL = 0x00;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_BR = 0x01;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_UL = 0x02;
+
+        /// <summary>
+        /// </summary>
+        private const int _ORIGIN_UR = 0x03;
     }
 }

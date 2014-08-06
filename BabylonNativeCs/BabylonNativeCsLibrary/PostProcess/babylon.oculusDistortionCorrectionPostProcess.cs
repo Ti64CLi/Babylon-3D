@@ -1,8 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.oculusDistortionCorrectionPostProcess.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
     /*

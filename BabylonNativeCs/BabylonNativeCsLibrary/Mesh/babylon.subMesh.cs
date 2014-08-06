@@ -1,29 +1,111 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.subMesh.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
+    using Web;
+
+    /// <summary>
+    /// </summary>
     public partial class SubMesh
     {
-        public int linesIndexCount;
-        private AbstractMesh _mesh;
-        private Mesh _renderingMesh;
-        private BoundingInfo _boundingInfo;
-        private WebGLBuffer _linesIndexBuffer;
-        public Array<Vector3> _lastColliderWorldVertices;
-        public Array<Plane> _trianglePlanes;
-        public Matrix _lastColliderTransformMatrix;
-        public double _renderId = 0;
+        /// <summary>
+        /// </summary>
         public double _distanceToCamera;
+
+        /// <summary>
+        /// </summary>
         public int _id;
-        public int materialIndex;
-        public int verticesStart;
-        public int verticesCount;
-        public int indexStart;
+
+        /// <summary>
+        /// </summary>
+        public Matrix _lastColliderTransformMatrix;
+
+        /// <summary>
+        /// </summary>
+        public Array<Vector3> _lastColliderWorldVertices;
+
+        /// <summary>
+        /// </summary>
+        public double _renderId = 0;
+
+        /// <summary>
+        /// </summary>
+        public Array<Plane> _trianglePlanes;
+
+        /// <summary>
+        /// </summary>
         public int indexCount;
-        public SubMesh(int materialIndex, int verticesStart, int verticesCount, int indexStart, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null, bool createBoundingBox = true)
+
+        /// <summary>
+        /// </summary>
+        public int indexStart;
+
+        /// <summary>
+        /// </summary>
+        public int linesIndexCount;
+
+        /// <summary>
+        /// </summary>
+        public int materialIndex;
+
+        /// <summary>
+        /// </summary>
+        public int verticesCount;
+
+        /// <summary>
+        /// </summary>
+        public int verticesStart;
+
+        /// <summary>
+        /// </summary>
+        private BoundingInfo _boundingInfo;
+
+        /// <summary>
+        /// </summary>
+        private WebGLBuffer _linesIndexBuffer;
+
+        /// <summary>
+        /// </summary>
+        private readonly AbstractMesh _mesh;
+
+        /// <summary>
+        /// </summary>
+        private readonly Mesh _renderingMesh;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="materialIndex">
+        /// </param>
+        /// <param name="verticesStart">
+        /// </param>
+        /// <param name="verticesCount">
+        /// </param>
+        /// <param name="indexStart">
+        /// </param>
+        /// <param name="indexCount">
+        /// </param>
+        /// <param name="mesh">
+        /// </param>
+        /// <param name="renderingMesh">
+        /// </param>
+        /// <param name="createBoundingBox">
+        /// </param>
+        public SubMesh(
+            int materialIndex, 
+            int verticesStart, 
+            int verticesCount, 
+            int indexStart, 
+            int indexCount, 
+            AbstractMesh mesh, 
+            Mesh renderingMesh = null, 
+            bool createBoundingBox = true)
         {
             this.materialIndex = materialIndex;
             this.verticesStart = verticesStart;
@@ -40,72 +122,113 @@ namespace BABYLON
                 this.refreshBoundingInfo();
             }
         }
-        public virtual BoundingInfo getBoundingInfo()
+
+        /// <summary>
+        /// </summary>
+        /// <param name="materialIndex">
+        /// </param>
+        /// <param name="startIndex">
+        /// </param>
+        /// <param name="indexCount">
+        /// </param>
+        /// <param name="mesh">
+        /// </param>
+        /// <param name="renderingMesh">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static SubMesh CreateFromIndices(int materialIndex, int startIndex, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null)
         {
-            return this._boundingInfo;
-        }
-        public virtual AbstractMesh getMesh()
-        {
-            return this._mesh;
-        }
-        public virtual Mesh getRenderingMesh()
-        {
-            return this._renderingMesh;
-        }
-        public virtual Material getMaterial()
-        {
-            var rootMaterial = this._renderingMesh.material;
-            if (rootMaterial != null && rootMaterial is MultiMaterial)
+            var minVertexIndex = int.MaxValue;
+            var maxVertexIndex = -int.MaxValue;
+            renderingMesh = renderingMesh ?? (Mesh)mesh;
+            var indices = renderingMesh.getIndices();
+            for (var index = startIndex; index < startIndex + indexCount; index++)
             {
-                var multiMaterial = (MultiMaterial)rootMaterial;
-                return multiMaterial.getSubMaterial(this.materialIndex);
+                var vertexIndex = indices[index];
+                if (vertexIndex < minVertexIndex)
+                {
+                    minVertexIndex = vertexIndex;
+                }
+
+                if (vertexIndex > maxVertexIndex)
+                {
+                    maxVertexIndex = vertexIndex;
+                }
             }
-            if (rootMaterial == null)
-            {
-                return this._mesh.getScene().defaultMaterial;
-            }
-            return rootMaterial;
+
+            return new SubMesh(materialIndex, minVertexIndex, maxVertexIndex - minVertexIndex + 1, startIndex, indexCount, mesh, renderingMesh);
         }
-        public virtual void refreshBoundingInfo()
-        {
-            var data = this._renderingMesh.getVerticesData(VertexBufferKind.PositionKind);
-            if (data == null)
-            {
-                this._boundingInfo = this._mesh._boundingInfo;
-                return;
-            }
-            var indices = this._renderingMesh.getIndices();
-            MinMax extend = null;
-            if (this.indexStart == 0 && this.indexCount == indices.Length)
-            {
-                extend = BABYLON.Tools.ExtractMinAndMax(data, this.verticesStart, this.verticesCount);
-            }
-            else
-            {
-                extend = BABYLON.Tools.ExtractMinAndMaxIndexed(data, indices, this.indexStart, this.indexCount);
-            }
-            this._boundingInfo = new BoundingInfo(extend.minimum, extend.maximum);
-        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="collider">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public virtual bool _checkCollision(Collider collider)
         {
             return this._boundingInfo._checkCollision(collider);
         }
-        public virtual void updateBoundingInfo(Matrix world)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="ray">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual bool canIntersects(Ray ray)
         {
-            if (this._boundingInfo == null)
+            return ray.intersectsBox(this._boundingInfo.boundingBox);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="newMesh">
+        /// </param>
+        /// <param name="newRenderingMesh">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual SubMesh clone(AbstractMesh newMesh, Mesh newRenderingMesh = null)
+        {
+            var result = new SubMesh(
+                this.materialIndex, this.verticesStart, this.verticesCount, this.indexStart, this.indexCount, newMesh, newRenderingMesh, false);
+            result._boundingInfo = new BoundingInfo(this._boundingInfo.minimum, this._boundingInfo.maximum);
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual void dispose()
+        {
+            if (this._linesIndexBuffer != null)
             {
-                this.refreshBoundingInfo();
+                this._mesh.getScene().getEngine()._releaseBuffer(this._linesIndexBuffer);
+                this._linesIndexBuffer = null;
             }
-            this._boundingInfo._update(world);
+
+            var index = this._mesh.subMeshes.IndexOf(this);
+            this._mesh.subMeshes.RemoveAt(index);
         }
-        public virtual bool isInFrustum(Array<Plane> frustumPlanes)
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual BoundingInfo getBoundingInfo()
         {
-            return this._boundingInfo.isInFrustum(frustumPlanes);
+            return this._boundingInfo;
         }
-        public virtual void render()
-        {
-            this._renderingMesh.render(this);
-        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="indices">
+        /// </param>
+        /// <param name="engine">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public virtual WebGLBuffer getLinesIndexBuffer(Array<int> indices, Engine engine)
         {
             if (this._linesIndexBuffer == null)
@@ -115,15 +238,65 @@ namespace BABYLON
                 {
                     linesIndices.Add(indices[index], indices[index + 1], indices[index + 1], indices[index + 2], indices[index + 2], indices[index]);
                 }
+
                 this._linesIndexBuffer = engine.createIndexBuffer(linesIndices);
                 this.linesIndexCount = linesIndices.Length;
             }
+
             return this._linesIndexBuffer;
         }
-        public virtual bool canIntersects(Ray ray)
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual Material getMaterial()
         {
-            return ray.intersectsBox(this._boundingInfo.boundingBox);
+            var rootMaterial = this._renderingMesh.material;
+            if (rootMaterial != null && rootMaterial is MultiMaterial)
+            {
+                var multiMaterial = (MultiMaterial)rootMaterial;
+                return multiMaterial.getSubMaterial(this.materialIndex);
+            }
+
+            if (rootMaterial == null)
+            {
+                return this._mesh.getScene().defaultMaterial;
+            }
+
+            return rootMaterial;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual AbstractMesh getMesh()
+        {
+            return this._mesh;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual Mesh getRenderingMesh()
+        {
+            return this._renderingMesh;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="ray">
+        /// </param>
+        /// <param name="positions">
+        /// </param>
+        /// <param name="indices">
+        /// </param>
+        /// <param name="fastCheck">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public virtual IntersectionInfo intersects(Ray ray, Array<Vector3> positions, Array<int> indices, bool fastCheck = false)
         {
             IntersectionInfo intersectInfo = null;
@@ -146,39 +319,65 @@ namespace BABYLON
                     }
                 }
             }
+
             return intersectInfo;
         }
-        public virtual SubMesh clone(AbstractMesh newMesh, Mesh newRenderingMesh = null)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="frustumPlanes">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual bool isInFrustum(Array<Plane> frustumPlanes)
         {
-            var result = new SubMesh(this.materialIndex, this.verticesStart, this.verticesCount, this.indexStart, this.indexCount, newMesh, newRenderingMesh, false);
-            result._boundingInfo = new BoundingInfo(this._boundingInfo.minimum, this._boundingInfo.maximum);
-            return result;
+            return this._boundingInfo.isInFrustum(frustumPlanes);
         }
-        public virtual void dispose()
+
+        /// <summary>
+        /// </summary>
+        public virtual void refreshBoundingInfo()
         {
-            if (this._linesIndexBuffer != null)
+            var data = this._renderingMesh.getVerticesData(VertexBufferKind.PositionKind);
+            if (data == null)
             {
-                this._mesh.getScene().getEngine()._releaseBuffer(this._linesIndexBuffer);
-                this._linesIndexBuffer = null;
+                this._boundingInfo = this._mesh._boundingInfo;
+                return;
             }
-            var index = this._mesh.subMeshes.IndexOf(this);
-            this._mesh.subMeshes.RemoveAt(index);
+
+            var indices = this._renderingMesh.getIndices();
+            MinMax extend = null;
+            if (this.indexStart == 0 && this.indexCount == indices.Length)
+            {
+                extend = Tools.ExtractMinAndMax(data, this.verticesStart, this.verticesCount);
+            }
+            else
+            {
+                extend = Tools.ExtractMinAndMaxIndexed(data, indices, this.indexStart, this.indexCount);
+            }
+
+            this._boundingInfo = new BoundingInfo(extend.minimum, extend.maximum);
         }
-        public static SubMesh CreateFromIndices(int materialIndex, int startIndex, int indexCount, AbstractMesh mesh, Mesh renderingMesh = null)
+
+        /// <summary>
+        /// </summary>
+        public virtual void render()
         {
-            var minVertexIndex = int.MaxValue;
-            var maxVertexIndex = -int.MaxValue;
-            renderingMesh = renderingMesh ?? (Mesh)mesh;
-            var indices = renderingMesh.getIndices();
-            for (var index = startIndex; index < startIndex + indexCount; index++)
+            this._renderingMesh.render(this);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="world">
+        /// </param>
+        public virtual void updateBoundingInfo(Matrix world)
+        {
+            if (this._boundingInfo == null)
             {
-                var vertexIndex = indices[index];
-                if (vertexIndex < minVertexIndex)
-                    minVertexIndex = vertexIndex;
-                if (vertexIndex > maxVertexIndex)
-                    maxVertexIndex = vertexIndex;
+                this.refreshBoundingInfo();
             }
-            return new BABYLON.SubMesh(materialIndex, minVertexIndex, maxVertexIndex - minVertexIndex + 1, startIndex, indexCount, mesh, renderingMesh);
+
+            this._boundingInfo._update(world);
         }
     }
 }

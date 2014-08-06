@@ -1,9 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
-namespace BABYLON {
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.filesInput.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BABYLON
+{
     /*
     public partial class FilesInput {
         private BABYLON.Engine engine;

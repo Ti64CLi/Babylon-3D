@@ -1,10 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.andOrNotEvaluator.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON.Internals
 {
+    /// <summary>
+    /// </summary>
     public partial class AndOrNotEvaluator
     {
         /*

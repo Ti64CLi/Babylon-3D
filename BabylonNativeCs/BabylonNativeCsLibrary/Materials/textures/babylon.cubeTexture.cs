@@ -1,16 +1,44 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.cubeTexture.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
+    /// <summary>
+    /// </summary>
     public partial class CubeTexture : BaseTexture
     {
+        /// <summary>
+        /// </summary>
         public string url;
-        private bool _noMipmap;
-        private Array<string> _extensions;
-        private Matrix _textureMatrix;
+
+        /// <summary>
+        /// </summary>
+        private readonly Array<string> _extensions;
+
+        /// <summary>
+        /// </summary>
+        private readonly bool _noMipmap;
+
+        /// <summary>
+        /// </summary>
+        private readonly Matrix _textureMatrix;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="rootUrl">
+        /// </param>
+        /// <param name="scene">
+        /// </param>
+        /// <param name="extensions">
+        /// </param>
+        /// <param name="noMipmap">
+        /// </param>
         public CubeTexture(string rootUrl, Scene scene, Array<string> extensions = null, bool noMipmap = false)
             : base(scene)
         {
@@ -23,6 +51,7 @@ namespace BABYLON
             {
                 extensions = new Array<string>("_px.jpg", "_py.jpg", "_pz.jpg", "_nx.jpg", "_ny.jpg", "_nz.jpg");
             }
+
             this._extensions = extensions;
             if (this._texture == null)
             {
@@ -32,15 +61,21 @@ namespace BABYLON
                 }
                 else
                 {
-                    this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NOTLOADED;
+                    this.delayLoadState = Engine.DELAYLOADSTATE_NOTLOADED;
                 }
             }
+
             this.isCube = true;
-            this._textureMatrix = BABYLON.Matrix.Identity();
+            this._textureMatrix = Matrix.Identity();
         }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         public override BaseTexture clone()
         {
-            var newTexture = new BABYLON.CubeTexture(this.url, this.getScene(), this._extensions, this._noMipmap);
+            var newTexture = new CubeTexture(this.url, this.getScene(), this._extensions, this._noMipmap);
             newTexture.level = this.level;
             newTexture.wrapU = this.wrapU;
             newTexture.wrapV = this.wrapV;
@@ -48,19 +83,28 @@ namespace BABYLON
             newTexture.coordinatesMode = this.coordinatesMode;
             return newTexture;
         }
+
+        /// <summary>
+        /// </summary>
         public override void delayLoad()
         {
-            if (this.delayLoadState != BABYLON.Engine.DELAYLOADSTATE_NOTLOADED)
+            if (this.delayLoadState != Engine.DELAYLOADSTATE_NOTLOADED)
             {
                 return;
             }
-            this.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_LOADED;
+
+            this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
             this._texture = this._getFromCache(this.url, this._noMipmap);
             if (this._texture == null)
             {
                 this._texture = this.getScene().getEngine().createCubeTexture(this.url, this.getScene(), this._extensions);
             }
         }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         public override Matrix getReflectionTextureMatrix()
         {
             return this._textureMatrix;

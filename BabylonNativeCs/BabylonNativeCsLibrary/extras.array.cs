@@ -1,35 +1,50 @@
-﻿namespace BABYLON
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="extras.array.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BABYLON
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Text;
-    using Web;
 
+    /// <summary>
+    /// </summary>
     public class ArrayConvert
     {
-        public static ushort[] AsUshort(int[] array)
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <param name="start">
+        /// </param>
+        /// <param name="length">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static byte[] AsByte(byte[] array, int start, int length)
         {
-            var newArray = new ushort[array.Length];
-            for (var index = 0; index < array.Length; index++)
+            var newArray = new byte[length];
+            for (var index = 0; index < length; index++)
             {
-                newArray[index] = (ushort)array[index];
+                newArray[index] = array[start + index];
             }
 
             return newArray;
         }
 
-        public static ushort[] AsUshort(Array<int> array)
-        {
-            var newArray = new ushort[array.Length];
-            for (var index = 0; index < array.Length; index++)
-            {
-                newArray[index] = (ushort)array[index];
-            }
-
-            return newArray;
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static float[] AsFloat(double[] array)
         {
             var newArray = new float[array.Length];
@@ -41,6 +56,12 @@
             return newArray;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static float[] AsFloat(Array<double> array)
         {
             var newArray = new float[array.Length];
@@ -52,31 +73,76 @@
             return newArray;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <param name="start">
+        /// </param>
+        /// <param name="length">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static int[] AsInt(byte[] array, int start, int length)
         {
             var newArray = new int[length];
             for (var index = 0; index < length; index++)
             {
-                newArray[index] = (byte)array[start + index];
+                newArray[index] = array[start + index];
             }
 
             return newArray;
         }
 
-        public static byte[] AsByte(byte[] array, int start, int length)
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static ushort[] AsUshort(int[] array)
         {
-            var newArray = new byte[length];
-            for (var index = 0; index < length; index++)
+            var newArray = new ushort[array.Length];
+            for (var index = 0; index < array.Length; index++)
             {
-                newArray[index] = (byte)array[start + index];
+                newArray[index] = (ushort)array[index];
+            }
+
+            return newArray;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static ushort[] AsUshort(Array<int> array)
+        {
+            var newArray = new ushort[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (ushort)array[index];
             }
 
             return newArray;
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="K">
+    /// </typeparam>
+    /// <typeparam name="V">
+    /// </typeparam>
     public class Map<K, V> : Dictionary<K, V>
     {
+        /// <summary>
+        /// </summary>
+        /// <param name="k">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public new V this[K k]
         {
             get
@@ -96,23 +162,47 @@
         }
     }
 
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T">
+    /// </typeparam>
     public class Array<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// </summary>
         public Array()
         {
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="item">
+        /// </param>
         public Array(T item)
         {
             this.Add(item);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="item1">
+        /// </param>
+        /// <param name="item2">
+        /// </param>
         public Array(T item1, T item2)
         {
             this.Add(item1);
             this.Add(item2);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="item1">
+        /// </param>
+        /// <param name="item2">
+        /// </param>
+        /// <param name="item3">
+        /// </param>
         public Array(T item1, T item2, T item3)
         {
             this.Add(item1);
@@ -120,41 +210,80 @@
             this.Add(item3);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="items">
+        /// </param>
         public Array(params T[] items)
         {
             this.AddRange(items);
         }
 
-        public new T this[int i]
+        /// <summary>
+        /// </summary>
+        /// <param name="i">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public T this[int i]
         {
             get
             {
-                if (i >= Count)
+                if (i >= this.Count)
                 {
                     return default(T);
                 }
 
-                //return base[i];
+                // return base[i];
                 return default(T);
             }
 
             set
             {
-                while (i >= Count)
+                while (i >= this.Count)
                 {
                     this.Add(default(T));
                 }
 
-                //base[i] = value;
+                // base[i] = value;
             }
         }
 
+        /// <summary>
+        /// </summary>
+        public int Length
+        {
+            get
+            {
+                return this.Count;
+            }
+
+            set
+            {
+                this.Capacity = value;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="v1">
+        /// </param>
+        /// <param name="v2">
+        /// </param>
         public void Add(T v1, T v2)
         {
             this.Add(v1);
             this.Add(v2);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="v1">
+        /// </param>
+        /// <param name="v2">
+        /// </param>
+        /// <param name="v3">
+        /// </param>
         public void Add(T v1, T v2, T v3)
         {
             this.Add(v1);
@@ -162,16 +291,37 @@
             this.Add(v3);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="items">
+        /// </param>
         public void Add(params T[] items)
         {
             this.AddRange(items);
         }
 
-        public Array<T> slice(int index, int length = 0)
+        /// <summary>
+        /// </summary>
+        /// <param name="other">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public Array<T> Append(Array<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                this.Add(item);
+            }
+
+            return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="joinSubstring">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public string Concat(string joinSubstring)
         {
             var sb = new StringBuilder();
@@ -187,129 +337,213 @@
                     sb.Append(joinSubstring);
                 }
 
-                sb.Append(item.ToString());
+                sb.Append(item);
             }
 
             return sb.ToString();
         }
 
-        public void splice(int index, int size, Array<T> newKeys)
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public T Pop()
         {
-            throw new NotImplementedException();
+            var t = this[this.Length - 1];
+            this.RemoveAt(this.Length - 1);
+            return t;
         }
 
-        public Array<T> Append(Array<T> other)
-        {
-            foreach (var item in other)
-            {
-                this.Add(item);
-            }
-
-            return this;
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="compareFn">
+        /// </param>
         public void Sort(Func<T, T, int> compareFn)
         {
             this.Sort(new ComparerAdapter(compareFn));
         }
 
-        public int Length { 
-            get 
-            { 
-                return this.Count; 
-            }
-
-            set
-            {
-                Capacity = value;
-            }
-        }
-
-        public T Pop()
+        /// <summary>
+        /// </summary>
+        /// <param name="index">
+        /// </param>
+        /// <param name="length">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public Array<T> slice(int index, int length = 0)
         {
-            var t = this[Length - 1];
-            this.RemoveAt(Length - 1);
-            return t;
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="index">
+        /// </param>
+        /// <param name="size">
+        /// </param>
+        /// <param name="newKeys">
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public void splice(int index, int size, Array<T> newKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
         public class ComparerAdapter : IComparer<T>
         {
-            private Func<T, T, int> compareFn;
+            /// <summary>
+            /// </summary>
+            private readonly Func<T, T, int> compareFn;
+
+            /// <summary>
+            /// </summary>
+            /// <param name="compareFn">
+            /// </param>
             public ComparerAdapter(Func<T, T, int> compareFn)
             {
                 this.compareFn = compareFn;
             }
 
+            /// <summary>
+            /// </summary>
+            /// <param name="x">
+            /// </param>
+            /// <param name="y">
+            /// </param>
+            /// <returns>
+            /// </returns>
             public int Compare(T x, T y)
             {
-                return compareFn(x, y);
+                return this.compareFn(x, y);
             }
         }
 
         #region implementation
 
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public int Capacity
         {
             get
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public int Count
         {
             get
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="item">
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public void Add(T item)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="items">
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public void AddRange(IEnumerable<T> items)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public void Clear()
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(int i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int IndexOf(T t)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        /// <summary>
+        /// </summary>
+        /// <param name="t">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public int IndexOf(T t)
         {
-            return this.GetEnumerator();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="i">
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public void RemoveAt(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="comparerAdapter">
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
         public void Sort(ComparerAdapter comparerAdapter)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         #endregion

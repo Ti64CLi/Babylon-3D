@@ -1,10 +1,26 @@
-﻿namespace BABYLON
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="extras.error.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BABYLON
 {
     using System;
 
+    /// <summary>
+    /// </summary>
     public class Error : Exception
     {
-        public Error(string msg) : base(msg)
+        /// <summary>
+        /// </summary>
+        /// <param name="msg">
+        /// </param>
+        public Error(string msg)
+            : base(msg)
         {
         }
     }

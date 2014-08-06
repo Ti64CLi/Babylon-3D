@@ -1,25 +1,65 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.action.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BABYLON
 {
+    /// <summary>
+    /// </summary>
     public partial class Action
     {
-        public int trigger;
+        /// <summary>
+        /// </summary>
         public ActionManager _actionManager;
-        private Action _nextActiveAction;
-        private Action _child;
-        private Condition _condition;
-        private AbstractMesh _triggerParameter;
+
+        /// <summary>
+        /// </summary>
+        public int trigger;
+
+        /// <summary>
+        /// </summary>
         public object triggerOptions;
+
+        /// <summary>
+        /// </summary>
+        private Action _child;
+
+        /// <summary>
+        /// </summary>
+        private readonly Condition _condition;
+
+        /// <summary>
+        /// </summary>
+        private Action _nextActiveAction;
+
+        /// <summary>
+        /// </summary>
+        private readonly AbstractMesh _triggerParameter;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="triggerOptions">
+        /// </param>
+        /// <param name="condition">
+        /// </param>
         public Action(int triggerOptions, Condition condition = null)
         {
             this.trigger = triggerOptions;
             this._nextActiveAction = this;
             this._condition = condition;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="triggerOptions">
+        /// </param>
+        /// <param name="condition">
+        /// </param>
         public Action(TriggerOptions triggerOptions, Condition condition = null)
         {
             this.trigger = triggerOptions.trigger;
@@ -27,11 +67,11 @@ namespace BABYLON
             this._nextActiveAction = this;
             this._condition = condition;
         }
-        public virtual void _prepare() { }
-        public virtual AbstractMesh getTriggerParameter()
-        {
-            return this._triggerParameter;
-        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="evt">
+        /// </param>
         public virtual void _executeCurrent(ActionEvent evt)
         {
             if (this._condition != null)
@@ -52,9 +92,11 @@ namespace BABYLON
                         this._condition._currentResult = false;
                         return;
                     }
+
                     this._condition._currentResult = true;
                 }
             }
+
             this._nextActiveAction.execute(evt);
             if (this._nextActiveAction._child != null)
             {
@@ -65,21 +107,66 @@ namespace BABYLON
                 this._nextActiveAction = this;
             }
         }
-        public virtual void execute(ActionEvent evt) { }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="target">
+        /// </param>
+        /// <param name="propertyPath">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual IAnimatable _getEffectiveTarget(IAnimatable target, string propertyPath)
+        {
+            return this._actionManager._getEffectiveTarget(target, propertyPath);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="propertyPath">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public virtual string _getProperty(string propertyPath)
+        {
+            return this._actionManager._getProperty(propertyPath);
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual void _prepare()
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="evt">
+        /// </param>
+        public virtual void execute(ActionEvent evt)
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public virtual AbstractMesh getTriggerParameter()
+        {
+            return this._triggerParameter;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="action">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public virtual Action then(Action action)
         {
             this._child = action;
             action._actionManager = this._actionManager;
             action._prepare();
             return action;
-        }
-        public virtual string _getProperty(string propertyPath)
-        {
-            return this._actionManager._getProperty(propertyPath);
-        }
-        public virtual IAnimatable _getEffectiveTarget(IAnimatable target, string propertyPath)
-        {
-            return this._actionManager._getEffectiveTarget(target, propertyPath);
         }
     }
 }

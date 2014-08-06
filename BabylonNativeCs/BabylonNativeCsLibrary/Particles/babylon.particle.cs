@@ -1,18 +1,52 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Web;
-namespace BABYLON {
-    public partial class Particle {
-        public BABYLON.Vector3 position = BABYLON.Vector3.Zero();
-        public BABYLON.Vector3 direction = BABYLON.Vector3.Zero();
-        public BABYLON.Color4 color = new BABYLON.Color4(0, 0, 0, 0);
-        public BABYLON.Color4 colorStep = new BABYLON.Color4(0, 0, 0, 0);
-        public double lifeTime = 1.0;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="babylon.particle.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BABYLON
+{
+    /// <summary>
+    /// </summary>
+    public partial class Particle
+    {
+        /// <summary>
+        /// </summary>
         public double age = 0;
-        public double size = 0;
+
+        /// <summary>
+        /// </summary>
         public double angle = 0;
+
+        /// <summary>
+        /// </summary>
         public double angularSpeed = 0;
+
+        /// <summary>
+        /// </summary>
+        public Color4 color = new Color4(0, 0, 0, 0);
+
+        /// <summary>
+        /// </summary>
+        public Color4 colorStep = new Color4(0, 0, 0, 0);
+
+        /// <summary>
+        /// </summary>
+        public Vector3 direction = Vector3.Zero();
+
+        /// <summary>
+        /// </summary>
+        public double lifeTime = 1.0;
+
+        /// <summary>
+        /// </summary>
+        public Vector3 position = Vector3.Zero();
+
+        /// <summary>
+        /// </summary>
+        public double size = 0;
     }
 }
