@@ -545,7 +545,7 @@ namespace BABYLON
         {
             if ((uint)index >= (uint)_size)
             {
-                throw IndexOutOfRangeException();
+                throw new IndexOutOfRangeException();
             }
 
             _size--;
