@@ -135,8 +135,12 @@ namespace BABYLON
     /// </typeparam>
     /// <typeparam name="V">
     /// </typeparam>
-    public class Map<K, V> : Dictionary<K, V>
+    public class Map<K, V>
     {
+        public IEnumerable<K> Keys { get; set; }
+
+        public IEnumerable<V> Values { get; set; }
+
         /// <summary>
         /// </summary>
         /// <param name="k">
@@ -152,13 +156,29 @@ namespace BABYLON
                     return default(V);
                 }
 
-                return base[k];
+                //return base[k];
+                return default(V);
             }
 
             set
             {
-                base[k] = value;
+                //base[k] = value;
             }
+        }
+
+        internal void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ContainsKey(K key)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Remove(K key)
+        {
+            throw new NotImplementedException();
         }
     }
 
