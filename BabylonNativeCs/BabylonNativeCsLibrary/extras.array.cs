@@ -168,10 +168,19 @@ namespace BABYLON
     /// </typeparam>
     public class Array<T> : IEnumerable<T>
     {
+        private const int _defaultCapacity = 4;
+
+        private T[] _items;
+        private int _size;
+        private int _version;
+
+        static T[] _emptyArray = new T[0];        
+
         /// <summary>
         /// </summary>
         public Array()
         {
+            _items = _emptyArray;
         }
 
         /// <summary>
@@ -234,8 +243,7 @@ namespace BABYLON
                     return default(T);
                 }
 
-                // return base[i];
-                return default(T);
+                return _items[i];
             }
 
             set
@@ -245,7 +253,7 @@ namespace BABYLON
                     this.Add(default(T));
                 }
 
-                // base[i] = value;
+                _items[i] = value;
             }
         }
 
@@ -432,15 +440,28 @@ namespace BABYLON
         /// </exception>
         public int Capacity
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
+            get { return _items.Length; }
             set
             {
-                throw new NotImplementedException();
+                if (value != _items.Length)
+                {
+                    if (value > 0)
+                    {
+                        T[] newItems = new T[value];
+                        if (_size > 0)
+                        {
+                            Array.Copy(_items, 0, newItems, 0, _size);
+                        }
+
+                        _items = newItems;
+                    }
+                    else
+                    {
+                        _items = _emptyArray;
+                    }
+                }
             }
+
         }
 
         /// <summary>
@@ -449,15 +470,7 @@ namespace BABYLON
         /// </exception>
         public int Count
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _size; }
         }
 
         /// <summary>
@@ -468,7 +481,9 @@ namespace BABYLON
         /// </exception>
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if (_size == _items.Length) EnsureCapacity(_size + 1);
+            _items[_size++] = item;
+            _version++;
         }
 
         /// <summary>
@@ -479,7 +494,10 @@ namespace BABYLON
         /// </exception>
         public void AddRange(IEnumerable<T> items)
         {
-            throw new NotImplementedException();
+            foreach (var item in items)
+            {
+                this.Add(item);
+            }
         }
 
         /// <summary>
@@ -488,7 +506,9 @@ namespace BABYLON
         /// </exception>
         public void Clear()
         {
-            throw new NotImplementedException();
+            Array.Clear(_items, 0, _size);
+            _size = 0;
+            _version++;
         }
 
         /// <summary>
@@ -510,9 +530,9 @@ namespace BABYLON
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public int IndexOf(T t)
+        public int IndexOf(T item)
         {
-            throw new NotImplementedException();
+            return Array.IndexOf(_items, item, 0, _size);
         }
 
         /// <summary>
@@ -521,9 +541,20 @@ namespace BABYLON
         /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public void RemoveAt(int i)
+        public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if ((uint)index >= (uint)_size)
+            {
+                throw IndexOutOfRangeException();
+            }
+
+            _size--;
+            if (index < _size)
+            {
+                Array.Copy(_items, index + 1, _items, index, _size - index);
+            }
+            _items[_size] = default(T);
+            _version++;
         }
 
         /// <summary>
@@ -544,6 +575,16 @@ namespace BABYLON
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        private void EnsureCapacity(int min)
+        {
+            if (_items.Length < min)
+            {
+                int newCapacity = _items.Length == 0 ? _defaultCapacity : _items.Length * 2;
+                if (newCapacity < min) newCapacity = min;
+                Capacity = newCapacity;
+            }
         }
 
         #endregion
