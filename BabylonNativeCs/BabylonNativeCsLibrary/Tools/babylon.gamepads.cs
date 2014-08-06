@@ -299,7 +299,7 @@ namespace BABYLON
     }
     public partial class GenericPad : Gamepad
     {
-        private Array<double> _buttons;
+        private ArrayValue<double> _buttons;
         private System.Action<double> _onbuttondown;
         private System.Action<double> _onbuttonup;
         public virtual void onbuttondown(System.Action<double> callback)

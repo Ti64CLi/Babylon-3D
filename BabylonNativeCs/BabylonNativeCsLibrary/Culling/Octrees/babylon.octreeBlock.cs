@@ -15,7 +15,7 @@ namespace BABYLON
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    public partial class OctreeBlock<T> : IOctreeContainer<T>
+    public partial class OctreeBlock<T> : IOctreeContainer<T> where T : class
     {
         /// <summary>
         /// </summary>

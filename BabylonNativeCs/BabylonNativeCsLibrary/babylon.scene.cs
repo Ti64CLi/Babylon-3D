@@ -2047,7 +2047,7 @@ namespace BABYLON
         /// </typeparam>
         /// <returns>
         /// </returns>
-        private Array<T> _getByTags<T>(Array<T> list, string tagsQuery)
+        private Array<T> _getByTags<T>(Array<T> list, string tagsQuery) where T : class
         {
             if (tagsQuery == null)
             {

@@ -13,7 +13,7 @@ namespace BABYLON
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    public partial class SmartArray<T> : Array<T>
+    public partial class SmartArray<T> : Array<T> where T : class
     {
         /// <summary>
         /// </summary>

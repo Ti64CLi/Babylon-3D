@@ -174,7 +174,7 @@ namespace BABYLON
         private int _size;
         private int _version;
 
-        static T[] _emptyArray = new T[0];        
+        static T[] _emptyArray = new T[0];
 
         /// <summary>
         /// </summary>
@@ -188,6 +188,7 @@ namespace BABYLON
         /// <param name="item">
         /// </param>
         public Array(T item)
+            : this()
         {
             this.Add(item);
         }
@@ -199,6 +200,7 @@ namespace BABYLON
         /// <param name="item2">
         /// </param>
         public Array(T item1, T item2)
+            : this()
         {
             this.Add(item1);
             this.Add(item2);
@@ -213,6 +215,7 @@ namespace BABYLON
         /// <param name="item3">
         /// </param>
         public Array(T item1, T item2, T item3)
+            : this()
         {
             this.Add(item1);
             this.Add(item2);
@@ -224,6 +227,7 @@ namespace BABYLON
         /// <param name="items">
         /// </param>
         public Array(params T[] items)
+            : this()
         {
             this.AddRange(items);
         }
@@ -401,6 +405,76 @@ namespace BABYLON
             throw new NotImplementedException();
         }
 
+        public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
+        {
+            private Array<T> list;
+            private int index;
+            private int version;
+            private T current;
+
+            public Enumerator(Array<T> list)
+            {
+                this.list = list;
+                index = 0;
+                version = list._version;
+                current = default(T);
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (version != list._version)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                if ((uint)index < (uint)list._size)
+                {
+                    current = list._items[index];
+                    index++;
+                    return true;
+                }
+                index = list._size + 1;
+                current = default(T);
+                return false;
+            }
+
+            public T Current
+            {
+                get
+                {
+                    return current;
+                }
+            }
+
+            Object System.Collections.IEnumerator.Current
+            {
+                get
+                {
+                    if (index == 0 || index == list._size + 1)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                    return Current;
+                }
+            }
+
+            void System.Collections.IEnumerator.Reset()
+            {
+                if (version != list._version)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                index = 0;
+                current = default(T);
+            }
+        }
+
+
         /// <summary>
         /// </summary>
         public class ComparerAdapter : IComparer<T>
@@ -450,7 +524,7 @@ namespace BABYLON
                         T[] newItems = new T[value];
                         if (_size > 0)
                         {
-                            Array.Copy(_items, 0, newItems, 0, _size);
+                            Copy(_items, newItems);
                         }
 
                         _items = newItems;
@@ -481,7 +555,11 @@ namespace BABYLON
         /// </exception>
         public void Add(T item)
         {
-            if (_size == _items.Length) EnsureCapacity(_size + 1);
+            if (_size == _items.Length)
+            {
+                EnsureCapacity(_size + 1);
+            }
+
             _items[_size++] = item;
             _version++;
         }
@@ -506,7 +584,11 @@ namespace BABYLON
         /// </exception>
         public void Clear()
         {
-            Array.Clear(_items, 0, _size);
+            for (var i = 0; i < _size; i++)
+            {
+                _items[i] = default(T);
+            }
+
             _size = 0;
             _version++;
         }
@@ -519,7 +601,7 @@ namespace BABYLON
         /// </exception>
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new Enumerator(this);
         }
 
         /// <summary>
@@ -532,7 +614,7 @@ namespace BABYLON
         /// </exception>
         public int IndexOf(T item)
         {
-            return Array.IndexOf(_items, item, 0, _size);
+            return IndexOf(_items, item);
         }
 
         /// <summary>
@@ -551,7 +633,7 @@ namespace BABYLON
             _size--;
             if (index < _size)
             {
-                Array.Copy(_items, index + 1, _items, index, _size - index);
+                Copy(_items, index + 1, _items, index, _size - index);
             }
             _items[_size] = default(T);
             _version++;
@@ -585,6 +667,35 @@ namespace BABYLON
                 if (newCapacity < min) newCapacity = min;
                 Capacity = newCapacity;
             }
+        }
+
+        private void Copy(T[] items, T[] newItems)
+        {
+            for (var i = 0; i < _size; i++)
+            {
+                newItems[i] = items[i];
+            }
+        }
+
+        private void Copy(T[] items, int startItemsIndex, T[] newItems, int startNewItensIndex, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                newItems[i + startNewItensIndex] = items[i + startItemsIndex];
+            }
+        }
+
+        private int IndexOf(T[] items, T item)
+        {
+            for (var i = 0; i < _size; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         #endregion

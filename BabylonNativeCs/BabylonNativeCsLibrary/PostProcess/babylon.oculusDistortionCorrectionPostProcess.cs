@@ -14,7 +14,7 @@ namespace BABYLON
     {
         public double aspectRatio;
         private bool _isRightEye;
-        private Array<double> _distortionFactors;
+        private ArrayValue<double> _distortionFactors;
         private double _postProcessScaleFactor;
         private double _lensCenterOffset;
         private Vector2 _scaleIn;

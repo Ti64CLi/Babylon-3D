@@ -15,7 +15,7 @@ namespace BABYLON
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    public partial interface IOctreeContainer<T>
+    public partial interface IOctreeContainer<T> where T : class
     {
         /// <summary>
         /// </summary>
@@ -26,7 +26,7 @@ namespace BABYLON
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    public partial class Octree<T> : IOctreeContainer<T>
+    public partial class Octree<T> : IOctreeContainer<T> where T : class
     {
         /// <summary>
         /// </summary>
