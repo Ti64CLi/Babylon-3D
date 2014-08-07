@@ -80,7 +80,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public static Console console;
+        public static Web.Console console;
 
         /// <summary>
         /// </summary>

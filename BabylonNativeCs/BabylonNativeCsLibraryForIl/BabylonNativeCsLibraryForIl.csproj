@@ -1,0 +1,461 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{684EE9E7-3BC6-4B8A-A991-9A1027ECFAFE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BabylonNativeCsLibraryForIl</RootNamespace>
+    <AssemblyName>BabylonNativeCsLibraryForIl</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>    
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>    
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.action.cs">
+      <Link>Actions\babylon.action.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.actionManager.cs">
+      <Link>Actions\babylon.actionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.condition.cs">
+      <Link>Actions\babylon.condition.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.directActions.cs">
+      <Link>Actions\babylon.directActions.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.interpolateValueAction.cs">
+      <Link>Actions\babylon.interpolateValueAction.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Animations\babylon.animatable.cs">
+      <Link>Animations\babylon.animatable.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Animations\babylon.animation.cs">
+      <Link>Animations\babylon.animation.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\babylon.engine.cs">
+      <Link>babylon.engine.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\babylon.mixins.cs">
+      <Link>babylon.mixins.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\babylon.node.cs">
+      <Link>babylon.node.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\babylon.scene.cs">
+      <Link>babylon.scene.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Bones\babylon.bone.cs">
+      <Link>Bones\babylon.bone.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Bones\babylon.skeleton.cs">
+      <Link>Bones\babylon.skeleton.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.anaglyphCamera.cs">
+      <Link>Cameras\babylon.anaglyphCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.arcRotateCamera.cs">
+      <Link>Cameras\babylon.arcRotateCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.camera.cs">
+      <Link>Cameras\babylon.camera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.deviceOrientationCamera.cs">
+      <Link>Cameras\babylon.deviceOrientationCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.freeCamera.cs">
+      <Link>Cameras\babylon.freeCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.gamepadCamera.cs">
+      <Link>Cameras\babylon.gamepadCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.oculusCamera.cs">
+      <Link>Cameras\babylon.oculusCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.touchCamera.cs">
+      <Link>Cameras\babylon.touchCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Cameras\babylon.virtualJoysticksCamera.cs">
+      <Link>Cameras\babylon.virtualJoysticksCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Collisions\babylon.collider.cs">
+      <Link>Collisions\babylon.collider.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Collisions\babylon.pickingInfo.cs">
+      <Link>Collisions\babylon.pickingInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Culling\babylon.BoundingBox.cs">
+      <Link>Culling\babylon.BoundingBox.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Culling\babylon.boundingInfo.cs">
+      <Link>Culling\babylon.boundingInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Culling\babylon.boundingSphere.cs">
+      <Link>Culling\babylon.boundingSphere.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Culling\Octrees\babylon.octree.cs">
+      <Link>Culling\Octrees\babylon.octree.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Culling\Octrees\babylon.octreeBlock.cs">
+      <Link>Culling\Octrees\babylon.octreeBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.animation.cs">
+      <Link>extras.animation.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.array.cs">
+      <Link>extras.array.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.const.cs">
+      <Link>extras.const.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.date.cs">
+      <Link>extras.date.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.enum.cs">
+      <Link>extras.enum.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.error.cs">
+      <Link>extras.error.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.interfaces.cs">
+      <Link>extras.interfaces.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.structs.cs">
+      <Link>extras.structs.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.web.interfaces.cs">
+      <Link>extras.web.interfaces.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Layer\babylon.layer.cs">
+      <Link>Layer\babylon.layer.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\LensFlare\babylon.lensFlare.cs">
+      <Link>LensFlare\babylon.lensFlare.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\LensFlare\babylon.lensFlareSystem.cs">
+      <Link>LensFlare\babylon.lensFlareSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\babylon.directionalLight.cs">
+      <Link>Lights\babylon.directionalLight.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\babylon.hemisphericLight.cs">
+      <Link>Lights\babylon.hemisphericLight.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\babylon.light.cs">
+      <Link>Lights\babylon.light.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\babylon.pointLight.cs">
+      <Link>Lights\babylon.pointLight.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\babylon.spotLight.cs">
+      <Link>Lights\babylon.spotLight.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Lights\Shadows\babylon.shadowGenerator.cs">
+      <Link>Lights\Shadows\babylon.shadowGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Loading\babylon.sceneLoader.cs">
+      <Link>Loading\babylon.sceneLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Loading\Plugins\babylon.babylonFileLoader.cs">
+      <Link>Loading\Plugins\babylon.babylonFileLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Loading\scenelLoadedr.waiting.for.database.cs">
+      <Link>Loading\scenelLoadedr.waiting.for.database.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.effect.cs">
+      <Link>Materials\babylon.effect.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.material.cs">
+      <Link>Materials\babylon.material.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.multiMaterial.cs">
+      <Link>Materials\babylon.multiMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.shaderMaterial.cs">
+      <Link>Materials\babylon.shaderMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.standardMaterial.cs">
+      <Link>Materials\babylon.standardMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.baseTexture.cs">
+      <Link>Materials\textures\babylon.baseTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.cubeTexture.cs">
+      <Link>Materials\textures\babylon.cubeTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.dynamicTexture.cs">
+      <Link>Materials\textures\babylon.dynamicTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.mirrorTexture.cs">
+      <Link>Materials\textures\babylon.mirrorTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.renderTargetTexture.cs">
+      <Link>Materials\textures\babylon.renderTargetTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.texture.cs">
+      <Link>Materials\textures\babylon.texture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Materials\textures\babylon.videoTexture.cs">
+      <Link>Materials\textures\babylon.videoTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Math\babylon.math.cs">
+      <Link>Math\babylon.math.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.abstractMesh.cs">
+      <Link>Mesh\babylon.abstractMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.csg.cs">
+      <Link>Mesh\babylon.csg.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.geometry.cs">
+      <Link>Mesh\babylon.geometry.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.groundMesh.cs">
+      <Link>Mesh\babylon.groundMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.InstancedMesh.cs">
+      <Link>Mesh\babylon.InstancedMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.linesMesh.cs">
+      <Link>Mesh\babylon.linesMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.mesh.cs">
+      <Link>Mesh\babylon.mesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.mesh.vertexData.cs">
+      <Link>Mesh\babylon.mesh.vertexData.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.subMesh.cs">
+      <Link>Mesh\babylon.subMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Mesh\babylon.vertexBuffer.cs">
+      <Link>Mesh\babylon.vertexBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Particles\babylon.particle.cs">
+      <Link>Particles\babylon.particle.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Particles\babylon.particleSystem.cs">
+      <Link>Particles\babylon.particleSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Physics\babylon.physicsEngine.cs">
+      <Link>Physics\babylon.physicsEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Physics\Plugins\babylon.cannonJSPlugin.cs">
+      <Link>Physics\Plugins\babylon.cannonJSPlugin.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.anaglyphPostProcess.cs">
+      <Link>PostProcess\babylon.anaglyphPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.blackAndWhitePostProcess.cs">
+      <Link>PostProcess\babylon.blackAndWhitePostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.blurPostProcess.cs">
+      <Link>PostProcess\babylon.blurPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.convolutionPostProcess.cs">
+      <Link>PostProcess\babylon.convolutionPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.displayPassPostProcess.cs">
+      <Link>PostProcess\babylon.displayPassPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.filterPostProcess.cs">
+      <Link>PostProcess\babylon.filterPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.fxaaPostProcess.cs">
+      <Link>PostProcess\babylon.fxaaPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.oculusDistortionCorrectionPostProcess.cs">
+      <Link>PostProcess\babylon.oculusDistortionCorrectionPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.passPostProcess.cs">
+      <Link>PostProcess\babylon.passPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.postProcess.cs">
+      <Link>PostProcess\babylon.postProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.postProcessManager.cs">
+      <Link>PostProcess\babylon.postProcessManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\babylon.refractionPostProcess.cs">
+      <Link>PostProcess\babylon.refractionPostProcess.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\RenderPipeline\babylon.postProcessRenderEffect.cs">
+      <Link>PostProcess\RenderPipeline\babylon.postProcessRenderEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\RenderPipeline\babylon.postProcessRenderPass.cs">
+      <Link>PostProcess\RenderPipeline\babylon.postProcessRenderPass.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\RenderPipeline\babylon.postProcessRenderPipeline.cs">
+      <Link>PostProcess\RenderPipeline\babylon.postProcessRenderPipeline.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\PostProcess\RenderPipeline\babylon.postProcessRenderPipelineManager.cs">
+      <Link>PostProcess\RenderPipeline\babylon.postProcessRenderPipelineManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Rendering\babylon.boundingBoxRenderer.cs">
+      <Link>Rendering\babylon.boundingBoxRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Rendering\babylon.renderingGroup.cs">
+      <Link>Rendering\babylon.renderingGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Rendering\babylon.renderingManager.cs">
+      <Link>Rendering\babylon.renderingManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Sprites\babylon.sprite.cs">
+      <Link>Sprites\babylon.sprite.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Sprites\babylon.spriteManager.cs">
+      <Link>Sprites\babylon.spriteManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.andOrNotEvaluator.cs">
+      <Link>Tools\babylon.andOrNotEvaluator.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.database.cs">
+      <Link>Tools\babylon.database.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.filesInput.cs">
+      <Link>Tools\babylon.filesInput.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.gamepads.cs">
+      <Link>Tools\babylon.gamepads.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.sceneSerializer.cs">
+      <Link>Tools\babylon.sceneSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.smartArray.cs">
+      <Link>Tools\babylon.smartArray.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.tags.cs">
+      <Link>Tools\babylon.tags.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.tools.cs">
+      <Link>Tools\babylon.tools.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.tools.dds.cs">
+      <Link>Tools\babylon.tools.dds.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.tools.tga.cs">
+      <Link>Tools\babylon.tools.tga.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\Tools\babylon.virtualJoystick.cs">
+      <Link>Tools\babylon.virtualJoystick.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CoreLib">
+      <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\anaglyph.fragment.fx">
+      <Link>Shaders\anaglyph.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\blackAndWhite.fragment.fx">
+      <Link>Shaders\blackAndWhite.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\blur.fragment.fx">
+      <Link>Shaders\blur.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\color.fragment.fx">
+      <Link>Shaders\color.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\color.vertex.fx">
+      <Link>Shaders\color.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\convolution.fragment.fx">
+      <Link>Shaders\convolution.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\default.fragment.fx">
+      <Link>Shaders\default.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\default.vertex.fx">
+      <Link>Shaders\default.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\displayPass.fragment.fx">
+      <Link>Shaders\displayPass.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\filter.fragment.fx">
+      <Link>Shaders\filter.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\fxaa.fragment.fx">
+      <Link>Shaders\fxaa.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\layer.fragment.fx">
+      <Link>Shaders\layer.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\layer.vertex.fx">
+      <Link>Shaders\layer.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\legacydefault.fragment.fx">
+      <Link>Shaders\legacydefault.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\legacydefault.vertex.fx">
+      <Link>Shaders\legacydefault.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\lensFlare.fragment.fx">
+      <Link>Shaders\lensFlare.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\lensFlare.vertex.fx">
+      <Link>Shaders\lensFlare.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\oculusDistortionCorrection.fragment.fx">
+      <Link>Shaders\oculusDistortionCorrection.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\particles.fragment.fx">
+      <Link>Shaders\particles.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\particles.vertex.fx">
+      <Link>Shaders\particles.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\pass.fragment.fx">
+      <Link>Shaders\pass.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\postprocess.vertex.fx">
+      <Link>Shaders\postprocess.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\refraction.fragment.fx">
+      <Link>Shaders\refraction.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\shadowMap.fragment.fx">
+      <Link>Shaders\shadowMap.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\shadowMap.vertex.fx">
+      <Link>Shaders\shadowMap.vertex.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\sprites.fragment.fx">
+      <Link>Shaders\sprites.fragment.fx</Link>
+    </Content>
+    <Content Include="..\BabylonNativeCsLibrary\Shaders\sprites.vertex.fx">
+      <Link>Shaders\sprites.vertex.fx</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

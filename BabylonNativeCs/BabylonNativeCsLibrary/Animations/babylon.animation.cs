@@ -49,7 +49,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        private IDictionary<string, object> _highLimitsCache = new Dictionary<string, object>();
+        private Map<string, object> _highLimitsCache = new Map<string, object>();
 
         /// <summary>
         /// </summary>
@@ -57,7 +57,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        private IDictionary<string, object> _offsetsCache = new Dictionary<string, object>();
+        private Map<string, object> _offsetsCache = new Map<string, object>();
 
         /// <summary>
         /// </summary>
@@ -359,8 +359,8 @@ namespace BABYLON
         public virtual void setKeys(Array<AnimationKey> values)
         {
             this._keys = values.slice(0);
-            this._offsetsCache = new Dictionary<string, object>();
-            this._highLimitsCache = new Dictionary<string, object>();
+            this._offsetsCache = new Map<string, object>();
+            this._highLimitsCache = new Map<string, object>();
         }
 
         /// <summary>
