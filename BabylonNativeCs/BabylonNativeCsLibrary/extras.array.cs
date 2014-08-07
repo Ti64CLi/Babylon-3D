@@ -339,7 +339,7 @@ namespace BABYLON
         /// </param>
         public void Sort(Func<T, T, int> compareFn)
         {
-            this.Sort(new ComparerAdapter(compareFn));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -441,38 +441,6 @@ namespace BABYLON
             }
         }
 
-
-        /// <summary>
-        /// </summary>
-        public class ComparerAdapter : IComparer<T>
-        {
-            /// <summary>
-            /// </summary>
-            private readonly Func<T, T, int> compareFn;
-
-            /// <summary>
-            /// </summary>
-            /// <param name="compareFn">
-            /// </param>
-            public ComparerAdapter(Func<T, T, int> compareFn)
-            {
-                this.compareFn = compareFn;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name="x">
-            /// </param>
-            /// <param name="y">
-            /// </param>
-            /// <returns>
-            /// </returns>
-            public int Compare(T x, T y)
-            {
-                return this.compareFn(x, y);
-            }
-        }
-
         #region implementation
 
         /// <summary>
@@ -545,6 +513,14 @@ namespace BABYLON
             }
         }
 
+        public void AddRange(T[] items)
+        {
+            foreach (var item in items)
+            {
+                this.Add(item);
+            }
+        }
+
         /// <summary>
         /// </summary>
         /// <exception cref="NotImplementedException">
@@ -604,17 +580,6 @@ namespace BABYLON
             }
             _items[_size] = default(T);
             _version++;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="comparerAdapter">
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        public void Sort(ComparerAdapter comparerAdapter)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
