@@ -131,59 +131,6 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    /// <typeparam name="K">
-    /// </typeparam>
-    /// <typeparam name="V">
-    /// </typeparam>
-    public class Map<K, V>
-    {
-        public IEnumerable<K> Keys { get; set; }
-
-        public IEnumerable<V> Values { get; set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="k">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public new V this[K k]
-        {
-            get
-            {
-                if (!this.ContainsKey(k))
-                {
-                    return default(V);
-                }
-
-                //return base[k];
-                return default(V);
-            }
-
-            set
-            {
-                //base[k] = value;
-            }
-        }
-
-        internal void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ContainsKey(K key)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void Remove(K key)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    /// <summary>
-    /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
     public class Array<T> : IEnumerable<T>
@@ -719,5 +666,94 @@ namespace BABYLON
         }
 
         #endregion
+    }
+
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="K">
+    /// </typeparam>
+    /// <typeparam name="V">
+    /// </typeparam>
+    public class Map<K, V>
+    {
+        private Array<K> _keys;
+        private Array<V> _values;
+
+        public Map()
+        {
+            _keys = new Array<K>();
+            _values = new Array<V>();
+        }
+
+        public IEnumerable<K> Keys {
+            get
+            {
+                return _keys;
+            }
+        }
+
+        public IEnumerable<V> Values {
+            get
+            {
+                return _values;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="k">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public V this[K key]
+        {
+            get
+            {
+                var index = _keys.IndexOf(key);
+                if (index == -1)
+                {
+                    return default(V);
+                }
+
+                return _values[index];
+            }
+
+            set
+            {
+                var index = _keys.IndexOf(key);
+                if (index == -1)
+                {
+                    _keys.Add(key);
+                    _values.Add(value);
+                    return;
+                }
+
+                _values[index] = value;
+            }
+        }
+
+        internal void Clear()
+        {
+            _keys.Clear();
+            _values.Clear();
+        }
+
+        public bool ContainsKey(K key)
+        {
+            return _keys.IndexOf(key) != -1;
+        }
+
+        internal void Remove(K key)
+        {
+            var index = _keys.IndexOf(key);
+            if (index == -1)
+            {
+                return;
+            }
+
+            _keys.RemoveAt(index);
+            _values.RemoveAt(index);
+        }
     }
 }
