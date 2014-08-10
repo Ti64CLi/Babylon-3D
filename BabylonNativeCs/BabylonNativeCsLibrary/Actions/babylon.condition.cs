@@ -42,7 +42,7 @@ namespace BABYLON
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual object _getEffectiveTarget(IAnimatable target, string propertyPath)
+        public virtual IAnimatable _getEffectiveTarget(IAnimatable target, string propertyPath)
         {
             return this._actionManager._getEffectiveTarget(target, propertyPath);
         }
