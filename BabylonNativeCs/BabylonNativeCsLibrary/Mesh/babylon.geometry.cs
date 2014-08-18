@@ -199,15 +199,8 @@ namespace BABYLON
             geometry.delayLoadingFile = this.delayLoadingFile;
             geometry._delayLoadingFunction = this._delayLoadingFunction;
 
-            // TODO: this code causes issue for PHI nodes
-            ////foreach (var kind in this._delayInfo)
-            ////{
-            ////    geometry._delayInfo = geometry._delayInfo ?? new Array<VertexBufferKind>();
-            ////    geometry._delayInfo.Add(kind);
-            ////}
-            for (var i = 0; i < this._delayInfo.Length; i++)
+            foreach (var kind in this._delayInfo)
             {
-                var kind = this._delayInfo[i];
                 geometry._delayInfo = geometry._delayInfo ?? new Array<VertexBufferKind>();
                 geometry._delayInfo.Add(kind);
             }

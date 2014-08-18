@@ -242,15 +242,14 @@ namespace BABYLON
             this._canvasClientRect = this._renderingCanvas.getBoundingClientRect();
             engineOptions = engineOptions ?? new EngineOptions();
             engineOptions.antialias = antialias;
-            // TODO: using ?? and Try/Catch causing issue for PHI nodes
-            ////try
-            ////{
+            try
+            {
                 this._gl = (WebGLRenderingContext)(canvas.getContext("webgl", engineOptions) ?? canvas.getContext("experimental-webgl", engineOptions));
-            ////}
-            ////catch (Exception)
-            ////{
-            ////    throw new Error("WebGL not supported");
-            ////}
+            }
+            catch (Exception)
+            {
+                throw new Error("WebGL not supported");
+            }
 
             if (this._gl == null)
             {
