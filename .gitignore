@@ -19,3 +19,5 @@ Tegra-Android
 /Playground/NativeClient/newlib
 /Playground/NativeClient/chrome_data
 /BabylonNativeCs/BabylonWpf/Core
+/Playground/NativeWindowCs/cmake-build
+/Playground/NativeWindowCs/*.obj
