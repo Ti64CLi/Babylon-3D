@@ -56,6 +56,18 @@ attributes #78812 = { nobuiltin nounwind }
 %"BabylonGlut.Program" = type {
     %"System.Object"
 }
+@"BabylonGlut.Program.GLUT_RGB" = global i32 undef
+@"BabylonGlut.Program.GLUT_RGBA" = global i32 undef
+@"BabylonGlut.Program.GLUT_INDEX" = global i32 undef
+@"BabylonGlut.Program.GLUT_SINGLE" = global i32 undef
+@"BabylonGlut.Program.GLUT_DOUBLE" = global i32 undef
+@"BabylonGlut.Program.GLUT_ACCUM" = global i32 undef
+@"BabylonGlut.Program.GLUT_ALPHA" = global i32 undef
+@"BabylonGlut.Program.GLUT_DEPTH" = global i32 undef
+@"BabylonGlut.Program.GLUT_STENCIL" = global i32 undef
+@"BabylonGlut.Program.GLUT_MULTISAMPLE" = global i32 undef
+@"BabylonGlut.Program.GLUT_STEREO" = global i32 undef
+@"BabylonGlut.Program.GLUT_LUMINANCE" = global i32 undef
 
 @"BabylonGlut.Program Virtual Table" = linkonce_odr unnamed_addr constant [6 x i8*] [
     i8* null,
@@ -107,7 +119,15 @@ define void @"Void BabylonGlut.Program..ctor()"(%"BabylonGlut.Program"* %this) #
 
 declare void @glutInit(...) #2
 
-define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** %args) #3 {
+declare void @glutInitWindowSize(...) #3
+
+declare void @glutInitDisplayMode(...) #4
+
+declare void @glutCreateWindow(...) #5
+
+declare void @glutMainLoop(...) #6
+
+define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** %args) #7 {
     %local0 = alloca i32, align 4
     %local1 = alloca i8**, align 4
     %.args = alloca %"System.String"**, align 4
@@ -120,7 +140,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.String..init()"(%"System.String"* %.r2)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.String..ctor(Char[])"(%"System.String"* %.r2, i16* bitcast ([13 x i16]* getelementptr inbounds ({ i32, [13 x i16] }* @.s1, i32 0, i32 1) to i16*))
+    call void @"Void System.String..ctor(Char[])"(%"System.String"* %.r2, i16* bitcast ([10 x i16]* getelementptr inbounds ({ i32, [10 x i16] }* @.s1, i32 0, i32 1) to i16*))
     call void @"Void System.Console.WriteLine(System.String)"(%"System.String"* %.r2)
     store i32 0, i32* %local0, align 4
     ; New array
@@ -135,12 +155,16 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     store i8** %.r8, i8*** %local1, align 4
     %.r9 = load i8*** %local1, align 4
     call void (...)* @glutInit(i32* %local0, i8** %.r9)
+    call void (...)* @glutInitWindowSize(i32 400, i32 640)
+    call void (...)* @glutInitDisplayMode(i32 18)
+    call void (...)* @glutCreateWindow(i8* null)
+    call void (...)* @glutMainLoop()
     ret void
 }
 
-@.s1 = private unnamed_addr constant { i32, [13 x i16] } { i32 12, [13 x i16] [i16 72, i16 101, i16 108, i16 108, i16 111, i16 32, i16 87, i16 111, i16 114, i16 108, i16 100, i16 46, i16 0] }, align 2
+@.s1 = private unnamed_addr constant { i32, [10 x i16] } { i32 9, [10 x i16] [i16 83, i16 116, i16 97, i16 114, i16 116, i16 105, i16 110, i16 103, i16 46, i16 0] }, align 2
 
-define i32 @main() #4 {
+define i32 @main() #8 {
     call void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** null);
     ret i32 0
 }
