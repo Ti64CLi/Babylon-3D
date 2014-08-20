@@ -105,6 +105,8 @@ define void @"Void BabylonGlut.Program..ctor()"(%"BabylonGlut.Program"* %this) #
     ret void
 }
 
+declare void @glutInit(...) #2
+
 define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** %args) #3 {
     %local0 = alloca i32, align 4
     %local1 = alloca i8**, align 4
@@ -132,10 +134,16 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; end of new array
     store i8** %.r8, i8*** %local1, align 4
     %.r9 = load i8*** %local1, align 4
+    call void (...)* @glutInit(i32* %local0, i8** %.r9)
     ret void
 }
 
 @.s1 = private unnamed_addr constant { i32, [13 x i16] } { i32 12, [13 x i16] [i16 72, i16 101, i16 108, i16 108, i16 111, i16 32, i16 87, i16 111, i16 114, i16 108, i16 100, i16 46, i16 0] }, align 2
+
+define i32 @main() #4 {
+    call void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** null);
+    ret i32 0
+}
 
 define internal void @_GLOBAL_CTORS_EXECUTE_() {
     ret void

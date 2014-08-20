@@ -33,7 +33,7 @@ if(WITH_SYSTEM_GLUT)
 else()
 	if(WIN32)
 		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/freeglut/include")
-		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/freeglut/lib/libfreeglut.a")
+		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/freeglut/lib/libfreeglut_static.a")
 	endif()
 endif()
 
@@ -45,18 +45,24 @@ include_directories(SYSTEM
 
 link_directories(.)
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -D FREEGLUT_STATIC -Wl,--subsystem,windows")
+
 add_custom_command( OUTPUT CoreLib.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll
+               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll -o=${CMAKE_BINARY_DIR}/CoreLib.obj
 )
 
 add_custom_command( OUTPUT BabylonGlut.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonGlut.ll
+               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonGlut.ll -o=${CMAKE_BINARY_DIR}/BabylonGlut.obj
 )
 
 add_custom_command( OUTPUT BabylonNativeCsLibraryForIl.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonNativeCsLibraryForIl.ll
+               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonNativeCsLibraryForIl.ll -o=${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj
 )
 
-add_executable (NativeWindowCs main.cpp CoreLib.obj BabylonGlut.obj BabylonNativeCsLibraryForIl.obj)
+add_executable (NativeWindowCs main.cpp ${CMAKE_BINARY_DIR}/CoreLib.obj ${CMAKE_BINARY_DIR}/BabylonGlut.obj ${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj)
 
-target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLUT_LIBRARY})
+target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLUT_LIBRARY} "opengl32" "winmm" "gdi32")
+
+if(WIN32)
+add_custom_command(TARGET NativeWindowCs POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NativeWindowCs_SOURCE_DIR}/../Deps/freeglut/dll/freeglut.dll" $<TARGET_FILE_DIR:NativeWindowCs>/freeglut.dll)  
+endif()
