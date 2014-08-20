@@ -284,7 +284,7 @@ namespace Babylon {
 		SAMPLE_COVERAGE                = 0x80A0,
 
 		/* ErrorCode */
-		NO_ERROR                       = 0,
+		_NO_ERROR                      = 0,
 		INVALID_ENUM                   = 0x0500,
 		INVALID_VALUE                  = 0x0501,
 		INVALID_OPERATION              = 0x0502,

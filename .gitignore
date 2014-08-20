@@ -2,6 +2,7 @@
 /cmake-build-linux
 /cmake-build-android
 /cmake-build-nacl
+/cmake-build-mingw
 /libs
 bin
 obj
