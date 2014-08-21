@@ -3,8 +3,8 @@
     using System;
     using System.Runtime.CompilerServices;
 
-    using BABYLON;
-    using BabylonWpf;
+    ////using BABYLON;
+    ////using BabylonWpf;
 
     public class Main
     {
@@ -12,10 +12,10 @@
         public const int GL_DEPTH_BUFFER_BIT = 256;
 
         [MethodImplAttribute(MethodImplOptions.Unmanaged)]
-        public static extern void glClear(int flags);
-        
-        private Engine engine;
-        private BABYLON.Scene scene;
+        public static extern void glClear(int mask);
+
+        ////private Engine engine;
+        ////private BABYLON.Scene scene;
 
         public Main()
         {
@@ -31,24 +31,24 @@
 
         public void OnInitialize()
         {
-            BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
-            BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
-            //BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            //BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            ////BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            ////BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+            //////BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            //////BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
-            var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            ////var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
 
-            this.engine = new Engine(canvas, true);
+            ////this.engine = new Engine(canvas, true);
 
-            // create scene
-            this.scene = new BABYLON.Scene(this.engine);
+            ////// create scene
+            ////this.scene = new BABYLON.Scene(this.engine);
 
-            var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), scene);
-            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), scene);
-            var origin = Mesh.CreateSphere("origin", 10, 1.0, scene);
+            ////var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), scene);
+            ////var light0 = new PointLight("Omni", new Vector3(0, 0, 10), scene);
+            ////var origin = Mesh.CreateSphere("origin", 10, 1.0, scene);
 
-            // Attach the camera to the scene
-            scene.activeCamera.attachControl(canvas);
+            ////// Attach the camera to the scene
+            ////scene.activeCamera.attachControl(canvas);
         }
 
         public void OnDraw()
