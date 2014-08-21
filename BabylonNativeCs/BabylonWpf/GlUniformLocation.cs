@@ -2,7 +2,6 @@
 {
     using System.Diagnostics;
 
-    [DebuggerDisplay("({Value})")]
     public class GlUniformLocation : Web.WebGLUniformLocation
     {
         public GlUniformLocation(int value)

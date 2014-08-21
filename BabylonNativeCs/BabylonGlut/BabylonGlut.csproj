@@ -38,6 +38,39 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\BabylonWpf\CanvasRenderingContext2DAdapter.cs">
+      <Link>CanvasRenderingContext2DAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\ClientRectAdapter.cs">
+      <Link>ClientRectAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\ConsoleAdapter.cs">
+      <Link>ConsoleAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\Defaults.cs">
+      <Link>Defaults.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\DocumentAdapter.cs">
+      <Link>DocumentAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\GlBufferAdapter.cs">
+      <Link>GlBufferAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\GlProgramAdapter.cs">
+      <Link>GlProgramAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\GlShaderAdapter.cs">
+      <Link>GlShaderAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\GlUniformLocation.cs">
+      <Link>GlUniformLocation.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\WindowAdapter.cs">
+      <Link>WindowAdapter.cs</Link>
+    </Compile>
+    <Compile Include="CanvasAdapter.cs" />
+    <Compile Include="GLRenderingContextAdapter.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +85,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

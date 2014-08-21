@@ -65,9 +65,11 @@
         public delegate void MouseDelegate(int button, int state, int x, int y);
         public delegate void KeyDelegate(byte key, int x, int y);
 
+        private static Main _main;
+
         private static void display()
         {
-            ////_main.render();
+            _main.OnDraw();
             glutSwapBuffers();
         }
 
@@ -79,7 +81,6 @@
         private static void key(byte k, int x, int y)
         {
             glutPostRedisplay();
-            throw new NotSupportedException();
         }
 
         private static void mouse(int button, int state, int x, int y)
@@ -105,11 +106,15 @@
         {
             Console.WriteLine("start.");
 
+            _main = new Main();
+            _main.MaxWidth = _main.Width = 400;
+            _main.MaxHeight = _main.Height = 640;
+
             var count = 0;
             var argsBytes = new byte[0][];
             glutInit(ref count, argsBytes);
 
-            glutInitWindowSize(400, 640);
+            glutInitWindowSize(_main.Width, _main.Height);
             glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
             glutCreateWindow(null /*"Babylon Native"*/);
 
@@ -124,7 +129,7 @@
                 glutReshapeFunc(((Delegate)new TwoDimDelegate(resize)).ToPointer());
             }
 
-            //_main.init();
+            _main.OnInitialize();
             //_main.loadSceneTutorial4();
 
             // main loop

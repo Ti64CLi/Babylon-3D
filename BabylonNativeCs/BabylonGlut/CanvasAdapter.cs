@@ -3,20 +3,63 @@
     using System;
     using BABYLON;
 
-    public class DocumentAdapter : Web.Document
+    public class CanvasAdapter : Web.HTMLCanvasElement
     {
-        private CanvasAdapter canvasAdapter;
+        private int maxWidth;
+        private int maxHeight;
+
         private Map<string, Web.EventListener> listeners;
 
-        public DocumentAdapter(CanvasAdapter canvasAdapter)
-        {
-            this.parentWindow = new WindowAdapter();
-            this.canvasAdapter = canvasAdapter;
 
+        public CanvasAdapter(int width, int height, int maxWidth, int maxHeight)
+        {
+            this.width = width;
+            this.height = height;
+            this.maxWidth = maxWidth;
+            this.maxHeight = maxHeight;
+
+            this.document = new DocumentAdapter(this);
             this.listeners = new Map<string, Web.EventListener>();
         }
 
-        public Web.HTMLElement documentElement
+        public int width
+        {
+            get;
+            set;
+        }
+
+        public int height
+        {
+            get;
+            set;
+        }
+
+        public object getContext(string contextId, params object[] args)
+        {
+            if (contextId == "webgl")
+            {
+                return new GlRenderingContextAdapter();
+            }
+
+            if (contextId == "2d")
+            {
+                return new CanvasRenderingContext2DAdapter();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public string toDataURL(string type = null, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Blob msToBlob()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object hidden
         {
             get
             {
@@ -28,7 +71,31 @@
             }
         }
 
-        public Web.MSCompatibleInfoCollection compatible
+        public object readyState
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.MouseEvent, object> onmouseleave
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.DragEvent, object> onbeforecut
         {
             get
             {
@@ -52,6 +119,18 @@
             }
         }
 
+        public Func<Web.MSEventObj, object> onmove
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.KeyboardEvent, object> onkeyup
         {
             get
@@ -64,31 +143,7 @@
             }
         }
 
-        public Web.DOMImplementation implementation
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.Event, object> onreset
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.HTMLCollection scripts
         {
             get
             {
@@ -124,7 +179,7 @@
             }
         }
 
-        public string charset
+        public string className
         {
             get
             {
@@ -148,18 +203,6 @@
             }
         }
 
-        public string vlinkColor
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.Event, object> onseeked
         {
             get
@@ -172,7 +215,7 @@
             }
         }
 
-        public string security
+        public object recordNumber
         {
             get
             {
@@ -196,7 +239,7 @@
             }
         }
 
-        public Web.MSNamespaceInfoCollection namespaces
+        public Web.Element parentTextEdit
         {
             get
             {
@@ -208,43 +251,7 @@
             }
         }
 
-        public string defaultCharset
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.HTMLCollection embeds
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.StyleSheetList styleSheets
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Window frames
+        public string outerHTML
         {
             get
             {
@@ -268,7 +275,7 @@
             }
         }
 
-        public Web.HTMLCollection all
+        public int offsetHeight
         {
             get
             {
@@ -280,7 +287,7 @@
             }
         }
 
-        public Web.HTMLCollection forms
+        public Web.HTMLCollection all
         {
             get
             {
@@ -328,18 +335,6 @@
             }
         }
 
-        public string designMode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.Event, object> onseeking
         {
             get
@@ -352,7 +347,7 @@
             }
         }
 
-        public Func<Web.UIEvent, object> ondeactivate
+        public Func<Web.Event, object> oncanplay
         {
             get
             {
@@ -364,7 +359,7 @@
             }
         }
 
-        public Func<Web.Event, object> oncanplay
+        public Func<Web.UIEvent, object> ondeactivate
         {
             get
             {
@@ -400,7 +395,7 @@
             }
         }
 
-        public Web.MSScriptHost Script
+        public int sourceIndex
         {
             get
             {
@@ -424,31 +419,7 @@
             }
         }
 
-        public string URLUnencoded
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Window defaultView
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<Web.MSEventObj, object> oncontrolselect
+        public Func<Web.MSEventObj, object> onlosecapture
         {
             get
             {
@@ -472,6 +443,18 @@
             }
         }
 
+        public Func<Web.MSEventObj, object> oncontrolselect
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.Event, object> onsubmit
         {
             get
@@ -484,7 +467,7 @@
             }
         }
 
-        public string inputEncoding
+        public Web.MSBehaviorUrnsCollection behaviorUrns
         {
             get
             {
@@ -496,7 +479,7 @@
             }
         }
 
-        public Web.Element activeElement
+        public string scopeName
         {
             get
             {
@@ -520,7 +503,19 @@
             }
         }
 
-        public Web.HTMLCollection links
+        public string id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.MSEventObj, object> onlayoutcomplete
         {
             get
             {
@@ -544,55 +539,7 @@
             }
         }
 
-        public string URL
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.UIEvent, object> onbeforeactivate
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.HTMLHeadElement head
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string cookie
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string xmlEncoding
         {
             get
             {
@@ -616,43 +563,31 @@
             }
         }
 
-        public int documentMode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string characterSet
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.HTMLCollection anchors
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.MSEventObj, object> onbeforeupdate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.MSEventObj, object> onfilterchange
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.Element offsetParent
         {
             get
             {
@@ -676,18 +611,6 @@
             }
         }
 
-        public Web.HTMLCollection plugins
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.Event, object> onsuspend
         {
             get
@@ -700,7 +623,7 @@
             }
         }
 
-        public Web.SVGSVGElement rootElement
+        public Func<Web.MouseEvent, object> onmouseenter
         {
             get
             {
@@ -712,31 +635,7 @@
             }
         }
 
-        public string readyState
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string referrer
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string alinkColor
+        public string innerText
         {
             get
             {
@@ -760,12 +659,6 @@
             }
         }
 
-        public Web.Window parentWindow
-        {
-            get;
-            set;
-        }
-
         public Func<Web.MouseEvent, object> onmouseout
         {
             get
@@ -778,7 +671,7 @@
             }
         }
 
-        public Func<Web.MSSiteModeEvent, object> onmsthumbnailclick
+        public Web.HTMLElement parentElement
         {
             get
             {
@@ -850,31 +743,31 @@
             }
         }
 
-        public string xmlVersion
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool msCapsLockWarningOff
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Func<Web.MSEventObj, object> onpropertychange
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public object filters
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.HTMLCollection children
         {
             get
             {
@@ -898,7 +791,7 @@
             }
         }
 
-        public Web.DocumentType doctype
+        public Func<Web.DragEvent, object> onbeforepaste
         {
             get
             {
@@ -922,19 +815,7 @@
             }
         }
 
-        public string bgColor
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<Web.DragEvent, object> ondragstart
+        public int offsetTop
         {
             get
             {
@@ -958,7 +839,43 @@
             }
         }
 
+        public Func<Web.DragEvent, object> ondragstart
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.DragEvent, object> onbeforecopy
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.DragEvent, object> ondrag
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string innerHTML
         {
             get
             {
@@ -982,7 +899,19 @@
             }
         }
 
-        public string linkColor
+        public string lang
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int uniqueNumber
         {
             get
             {
@@ -995,6 +924,18 @@
         }
 
         public Func<Web.Event, object> onpause
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string tagUrn
         {
             get
             {
@@ -1042,7 +983,7 @@
             }
         }
 
-        public Func<Web.Event, object> onstop
+        public Func<Web.MSEventObj, object> onresizestart
         {
             get
             {
@@ -1054,7 +995,7 @@
             }
         }
 
-        public Func<Web.MSSiteModeEvent, object> onmssitemodejumplistitemremoved
+        public int offsetLeft
         {
             get
             {
@@ -1066,7 +1007,7 @@
             }
         }
 
-        public Web.HTMLCollection applets
+        public bool isTextEdit
         {
             get
             {
@@ -1078,7 +1019,7 @@
             }
         }
 
-        public Web.HTMLElement body
+        public bool isDisabled
         {
             get
             {
@@ -1090,7 +1031,7 @@
             }
         }
 
-        public string domain
+        public Func<Web.DragEvent, object> onpaste
         {
             get
             {
@@ -1102,7 +1043,7 @@
             }
         }
 
-        public bool xmlStandalone
+        public bool canHaveHTML
         {
             get
             {
@@ -1114,7 +1055,19 @@
             }
         }
 
-        public Web.MSSelection selection
+        public Func<Web.MSEventObj, object> onmoveend
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string language
         {
             get
             {
@@ -1150,6 +1103,30 @@
             }
         }
 
+        public Web.MSStyleCSSProperties style
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool isContentEditable
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.MSEventObj, object> onbeforeeditfocus
         {
             get
@@ -1172,6 +1149,36 @@
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public string contentEditable
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int tabIndex
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.Document document
+        {
+            get;
+            set;
         }
 
         public Func<Web.ProgressEvent, object> onprogress
@@ -1222,7 +1229,7 @@
             }
         }
 
-        public string media
+        public Func<Web.MSEventObj, object> onafterupdate
         {
             get
             {
@@ -1258,7 +1265,7 @@
             }
         }
 
-        public Func<Web.MSEventObj, object> onafterupdate
+        public Func<Web.MSEventObj, object> onresizeend
         {
             get
             {
@@ -1282,31 +1289,7 @@
             }
         }
 
-        public Web.HTMLCollection images
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Location location
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<Web.UIEvent, object> onabort
+        public bool isMultiLine
         {
             get
             {
@@ -1330,19 +1313,7 @@
             }
         }
 
-        public Func<Web.Event, object> onselectionchange
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<Web.StorageEvent, object> onstoragecommit
+        public Func<Web.UIEvent, object> onabort
         {
             get
             {
@@ -1366,7 +1337,7 @@
             }
         }
 
-        public Func<Web.Event, object> onreadystatechange
+        public bool hideFocus
         {
             get
             {
@@ -1378,7 +1349,7 @@
             }
         }
 
-        public string lastModified
+        public Func<Web.Event, object> onreadystatechange
         {
             get
             {
@@ -1426,7 +1397,55 @@
             }
         }
 
+        public string outerText
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool disabled
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.UIEvent, object> onactivate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string accessKey
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.MSEventObj, object> onmovestart
         {
             get
             {
@@ -1462,7 +1481,7 @@
             }
         }
 
-        public string fgColor
+        public Func<Web.Event, object> ontimeupdate
         {
             get
             {
@@ -1474,7 +1493,19 @@
             }
         }
 
-        public Func<Web.Event, object> ontimeupdate
+        public Func<Web.UIEvent, object> onresize
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.DragEvent, object> oncut
         {
             get
             {
@@ -1510,7 +1541,7 @@
             }
         }
 
-        public Func<Web.Event, object> onended
+        public int offsetWidth
         {
             get
             {
@@ -1522,7 +1553,19 @@
             }
         }
 
-        public string compatMode
+        public Func<Web.DragEvent, object> oncopy
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<Web.Event, object> onended
         {
             get
             {
@@ -1570,91 +1613,19 @@
             }
         }
 
+        public bool canHaveChildren
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Func<Web.Event, object> oninput
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmspointerdown
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool msHidden
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string msVisibilityState
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmsgesturedoubletap
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string visibilityState
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmsmanipulationstatechanged
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmspointerhover
         {
             get
             {
@@ -1678,7 +1649,360 @@
             }
         }
 
-        public Func<object, object> onmspointermove
+        public Func<Web.Event, object> oncuechange
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool spellcheck
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.DOMTokenList classList
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmsmanipulationstatechanged
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool draggable
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.DOMStringMap dataset
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool dragDrop()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void scrollIntoView(bool top = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void addFilter(object filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void setCapture(bool containerCapture = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void focus()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAdjacentText(string where)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void insertAdjacentText(string where, string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.NodeList getElementsByClassName(string classNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void setActive()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeFilter(object filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void blur()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void clearAttributes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void releaseCapture()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.ControlRangeCollection createControlRange()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool removeBehavior(int cookie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool contains(Web.HTMLElement child)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void click()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Element insertAdjacentElement(string position, Web.Element insertedElement)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void mergeAttributes(Web.HTMLElement source, bool preserveIdentity = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string replaceAdjacentText(string where, string newText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Element applyElement(Web.Element apply, string where = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int addBehavior(string bstrUrl, object factory = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void insertAdjacentHTML(string where, string html)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.MSInputMethodContext msGetInputContext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
+        {
+            this.listeners[type] = listener;
+        }
+
+        public int scrollTop
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int clientLeft
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int scrollLeft
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string tagName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int clientWidth
+        {
+            get
+            {
+                return this.width;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int scrollWidth
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int clientHeight
+        {
+            get
+            {
+                return this.height;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int clientTop
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int scrollHeight
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string msRegionOverflow
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmspointerdown
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmsgotpointercapture
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmsgesturedoubletap
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmspointerhover
         {
             get
             {
@@ -1691,6 +2015,18 @@
         }
 
         public Func<object, object> onmsgesturehold
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Func<object, object> onmspointermove
         {
             get
             {
@@ -1786,7 +2122,7 @@
             }
         }
 
-        public bool msCSSOMElementFloatMetrics
+        public Func<object, object> onmslostpointercapture
         {
             get
             {
@@ -1810,7 +2146,7 @@
             }
         }
 
-        public bool hidden
+        public int msContentZoomFactor
         {
             get
             {
@@ -1834,19 +2170,7 @@
             }
         }
 
-        public bool msFullscreenEnabled
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmsfullscreenerror
+        public Func<Web.PointerEvent, object> onlostpointercapture
         {
             get
             {
@@ -1870,19 +2194,7 @@
             }
         }
 
-        public Web.Element msFullscreenElement
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Func<object, object> onmsfullscreenchange
+        public Func<Web.PointerEvent, object> ongotpointercapture
         {
             get
             {
@@ -1906,22 +2218,7 @@
             }
         }
 
-        public Web.HTMLElement getElementById(string elementId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string queryCommandValue(string commandId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Node adoptNode(Web.Node source)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool queryCommandIndeterm(string commandId)
+        public string getAttribute(string name = null)
         {
             throw new NotImplementedException();
         }
@@ -1931,112 +2228,52 @@
             throw new NotImplementedException();
         }
 
-        public Web.ProcessingInstruction createProcessingInstruction(string target, string data)
+        public bool hasAttributeNS(string namespaceURI, string localName)
         {
             throw new NotImplementedException();
         }
 
-        public bool execCommand(string commandId, bool showUI = false, object value = null)
+        public Web.ClientRect getBoundingClientRect()
+        {
+            return new ClientRectAdapter(0, 0, width, height);
+        }
+
+        public string getAttributeNS(string namespaceURI, string localName)
         {
             throw new NotImplementedException();
         }
 
-        public Web.Element elementFromPoint(double x, double y)
+        public Web.Attr getAttributeNodeNS(string namespaceURI, string localName)
         {
             throw new NotImplementedException();
         }
 
-        public Web.CDATASection createCDATASection(string data)
+        public Web.Attr setAttributeNodeNS(Web.Attr newAttr)
         {
             throw new NotImplementedException();
         }
 
-        public string queryCommandText(string commandId)
+        public bool msMatchesSelector(string selectors)
         {
             throw new NotImplementedException();
         }
 
-        public void write(params object[] content)
+        public bool hasAttribute(string name)
         {
             throw new NotImplementedException();
         }
 
-        public void updateSettings()
+        public void removeAttribute(string name = null)
         {
             throw new NotImplementedException();
         }
 
-        public Web.HTMLElement createElement(string tagName)
-        {
-            if (tagName == "canvas")
-            {
-                return this.canvasAdapter;
-            }
-
-            throw new NotImplementedException();
-        }
-
-        public void releaseCapture()
+        public void setAttributeNS(string namespaceURI, string qualifiedName, string value)
         {
             throw new NotImplementedException();
         }
 
-        public void writeln(params object[] content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Element createElementNS(string namespaceURI, string qualifiedName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object open(string url = null, string name = null, string features = null, bool replace = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool queryCommandSupported(string commandId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.TreeWalker createTreeWalker(Web.Node root, double whatToShow, Web.NodeFilter filter, bool entityReferenceExpansion)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Attr createAttributeNS(string namespaceURI, string qualifiedName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool queryCommandEnabled(string commandId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void focus()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void close()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.NodeList getElementsByClassName(string classNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Node importNode(Web.Node importedNode, bool deep)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Range createRange()
+        public Web.Attr getAttributeNode(string name)
         {
             throw new NotImplementedException();
         }
@@ -2046,94 +2283,74 @@
             throw new NotImplementedException();
         }
 
-        public Web.Comment createComment(string data)
-        {
-            throw new NotImplementedException();
-        }
-
         public Web.NodeList getElementsByTagName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public Web.DocumentFragment createDocumentFragment()
+        public Web.ClientRectList getClientRects()
         {
             throw new NotImplementedException();
         }
 
-        public Web.CSSStyleSheet createStyleSheet(string href = null, int index = 0)
+        public Web.Attr setAttributeNode(Web.Attr newAttr)
         {
             throw new NotImplementedException();
         }
 
-        public Web.NodeList getElementsByName(string elementName)
+        public Web.Attr removeAttributeNode(Web.Attr oldAttr)
         {
             throw new NotImplementedException();
         }
 
-        public bool queryCommandState(string commandId)
+        public void setAttribute(string name = null, string value = null)
         {
             throw new NotImplementedException();
         }
 
-        public bool hasFocus()
+        public void removeAttributeNS(string namespaceURI, string localName)
         {
             throw new NotImplementedException();
         }
 
-        public bool execCommandShowHelp(string commandId)
+        public Web.MSRangeCollection msGetRegionContent()
         {
             throw new NotImplementedException();
         }
 
-        public Web.Attr createAttribute(string name)
+        public void msReleasePointerCapture(int pointerId)
         {
             throw new NotImplementedException();
         }
 
-        public Web.Text createTextNode(string data)
+        public void msSetPointerCapture(int pointerId)
         {
             throw new NotImplementedException();
         }
 
-        public Web.NodeIterator createNodeIterator(Web.Node root, double whatToShow, Web.NodeFilter filter, bool entityReferenceExpansion)
+        public void msZoomTo(Web.MsZoomToOptions args)
         {
             throw new NotImplementedException();
         }
 
-        public Web.MSEventObj createEventObject(object eventObj = null)
+        public void setPointerCapture(int pointerId)
         {
             throw new NotImplementedException();
         }
 
-        public Web.Selection getSelection()
+        public Web.ClientRect msGetUntransformedBounds()
         {
             throw new NotImplementedException();
         }
 
-        public Web.NodeList msElementsFromPoint(double x, double y)
+        public void releasePointerCapture(int pointerId)
         {
             throw new NotImplementedException();
         }
 
-        public Web.NodeList msElementsFromRect(int left, int top, int width, int height)
+        public void msRequestFullscreen()
         {
             throw new NotImplementedException();
-        }
-
-        public void clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void msExitFullscreen()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
-        {
-            this.listeners[type] = listener;
         }
 
         public int nodeType
@@ -2627,22 +2844,7 @@
             throw new NotImplementedException();
         }
 
-        public bool attachEvent(string _event, Web.EventListener listener)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void detachEvent(string _event, Web.EventListener listener)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Event createEvent(string eventInterface)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string protocol
+        public int childElementCount
         {
             get
             {
@@ -2654,7 +2856,7 @@
             }
         }
 
-        public string fileSize
+        public Web.Element previousElementSibling
         {
             get
             {
@@ -2666,7 +2868,7 @@
             }
         }
 
-        public string fileUpdatedDate
+        public Web.Element lastElementChild
         {
             get
             {
@@ -2678,7 +2880,7 @@
             }
         }
 
-        public string nameProp
+        public Web.Element nextElementSibling
         {
             get
             {
@@ -2690,7 +2892,7 @@
             }
         }
 
-        public string fileCreatedDate
+        public Web.Element firstElementChild
         {
             get
             {
@@ -2700,55 +2902,6 @@
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public string fileModifiedDate
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string mimeType
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Node swapNode(Web.Node otherNode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Node removeNode(bool deep = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Web.Node replaceNode(Web.Node replacement)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void captureEvents()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void releaseEvents()
-        {
-            throw new NotImplementedException();
         }
 
         public Func<Web.PointerEvent, object> onpointerenter
@@ -2845,6 +2998,65 @@
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public Web.MSStyleCSSProperties runtimeStyle
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.MSCurrentStyleCSSProperties currentStyle
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void doScroll(object component = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string componentFromPoint(double x, double y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool attachEvent(string _event, Web.EventListener listener)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void detachEvent(string _event, Web.EventListener listener)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Node swapNode(Web.Node otherNode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Node removeNode(bool deep = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Web.Node replaceNode(Web.Node replacement)
+        {
+            throw new NotImplementedException();
         }
     }
 }

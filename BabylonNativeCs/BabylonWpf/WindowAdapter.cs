@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BabylonWpf
+﻿namespace BabylonWpf
 {
+    using System;
+    using BABYLON;
+
     public class WindowAdapter : Web.Window
     {
-        private Dictionary<string, Web.EventListener> listeners;
+        private Map<string, Web.EventListener> listeners;
 
         public WindowAdapter()
         {
-            this.listeners = new Dictionary<string, Web.EventListener>();
+            this.listeners = new Map<string, Web.EventListener>();
             this.console = new ConsoleAdapter();
         }
 
