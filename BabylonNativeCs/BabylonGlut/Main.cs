@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
 
     ////using BABYLON;
     ////using BabylonWpf;
@@ -11,7 +12,7 @@
         public const int GL_COLOR_BUFFER_BIT = 16384;
         public const int GL_DEPTH_BUFFER_BIT = 256;
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [DllImport("opengl", CallingConvention=CallingConvention.StdCall)]
         public static extern void glClear(int mask);
 
         ////private Engine engine;

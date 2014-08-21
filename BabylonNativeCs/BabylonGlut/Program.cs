@@ -5,46 +5,46 @@
 
     class Program
     {
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutInit(ref int argCount, byte[][] args);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutInitWindowSize(int width, int height);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutInitDisplayMode(int mode);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutCreateWindow(byte[] title);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutMainLoop();
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutDisplayFunc(void* display);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutPassiveMotionFunc(void* passiveMotion);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutMouseFunc(void* mouse);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutMotionFunc(void* motion);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutIdleFunc(void* idle);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutReshapeFunc(void* reshape);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static unsafe extern void glutKeyboardFunc(void* key);
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutPostRedisplay();
 
-        [MethodImplAttribute(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glutSwapBuffers();
 
         public const int GLUT_RGB = 0x0000;
