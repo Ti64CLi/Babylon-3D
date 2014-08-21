@@ -365,7 +365,7 @@ define void @"Void BabylonGlut.Main..ctor()"(%"BabylonGlut.Main"* %this) #6 {
     ret void
 }
 
-declare void @glClear(...) #7
+declare dllimport x86_stdcallcc void @glClear(i32) #7
 
 define i32 @"Int32 BabylonGlut.Main.get_Width()"(%"BabylonGlut.Main"* %this) #8 {
     %local0 = alloca i32, align 4
@@ -488,7 +488,7 @@ define void @"Void BabylonGlut.Main.OnInitialize()"(%"BabylonGlut.Main"* %this) 
 define void @"Void BabylonGlut.Main.OnDraw()"(%"BabylonGlut.Main"* %this) #17 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
-    call void (...)* @glClear(i32 16640)
+    call x86_stdcallcc void @glClear(i32 16640)
     ret void
 }
 
