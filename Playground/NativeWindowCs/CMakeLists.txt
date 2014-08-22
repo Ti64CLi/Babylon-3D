@@ -33,7 +33,7 @@ if(WITH_SYSTEM_GLUT)
 else()
 	if(WIN32)
 		set(GLUT_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/freeglut/include")
-		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/freeglut/lib/libfreeglut_static.a")
+		set(GLUT_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/freeglut/lib/libfreeglut.a")
 	endif()
 endif()
 
@@ -45,7 +45,7 @@ include_directories(SYSTEM
 
 link_directories(.)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -D FREEGLUT_STATIC -Wl,--subsystem,windows")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -Wl,--subsystem,windows")
 
 add_custom_command( OUTPUT CoreLib.obj
                COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll -o=${CMAKE_BINARY_DIR}/CoreLib.obj

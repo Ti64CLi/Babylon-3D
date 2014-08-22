@@ -60,8 +60,6 @@ attributes #78812 = { nobuiltin nounwind }
     i32,
     i32
 }
-@"BabylonGlut.Main.GL_COLOR_BUFFER_BIT" = global i32 undef
-@"BabylonGlut.Main.GL_DEPTH_BUFFER_BIT" = global i32 undef
 
 @"BabylonGlut.Main Virtual Table" = linkonce_odr unnamed_addr constant [6 x i8*] [
     i8* null,
@@ -104,18 +102,6 @@ define void @"Void BabylonGlut.Main..init()"(%"BabylonGlut.Main"* %this) #0 {
 %"BabylonGlut.Program" = type {
     %"System.Object"
 }
-@"BabylonGlut.Program.GLUT_RGB" = global i32 undef
-@"BabylonGlut.Program.GLUT_RGBA" = global i32 undef
-@"BabylonGlut.Program.GLUT_INDEX" = global i32 undef
-@"BabylonGlut.Program.GLUT_SINGLE" = global i32 undef
-@"BabylonGlut.Program.GLUT_DOUBLE" = global i32 undef
-@"BabylonGlut.Program.GLUT_ACCUM" = global i32 undef
-@"BabylonGlut.Program.GLUT_ALPHA" = global i32 undef
-@"BabylonGlut.Program.GLUT_DEPTH" = global i32 undef
-@"BabylonGlut.Program.GLUT_STENCIL" = global i32 undef
-@"BabylonGlut.Program.GLUT_MULTISAMPLE" = global i32 undef
-@"BabylonGlut.Program.GLUT_STEREO" = global i32 undef
-@"BabylonGlut.Program.GLUT_LUMINANCE" = global i32 undef
 @"BabylonGlut.Program._main" = global %"BabylonGlut.Main"* undef
 
 @"BabylonGlut.Program Virtual Table" = linkonce_odr unnamed_addr constant [6 x i8*] [
@@ -365,9 +351,11 @@ define void @"Void BabylonGlut.Main..ctor()"(%"BabylonGlut.Main"* %this) #6 {
     ret void
 }
 
-declare dllimport x86_stdcallcc void @glClear(i32) #7
+declare dllimport x86_stdcallcc void @glClear(i32 %mask) #7
 
-define i32 @"Int32 BabylonGlut.Main.get_Width()"(%"BabylonGlut.Main"* %this) #8 {
+declare dllimport x86_stdcallcc void @glClearColor(float %r, float %g, float %b, float %alpha) #8
+
+define i32 @"Int32 BabylonGlut.Main.get_Width()"(%"BabylonGlut.Main"* %this) #9 {
     %local0 = alloca i32, align 4
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
@@ -382,7 +370,7 @@ define i32 @"Int32 BabylonGlut.Main.get_Width()"(%"BabylonGlut.Main"* %this) #8 
     ret i32 %.r4
 }
 
-define void @"Void BabylonGlut.Main.set_Width(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #9 {
+define void @"Void BabylonGlut.Main.set_Width(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #10 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
     %.value = alloca i32, align 4
@@ -395,7 +383,7 @@ define void @"Void BabylonGlut.Main.set_Width(Int32)"(%"BabylonGlut.Main"* %this
     ret void
 }
 
-define i32 @"Int32 BabylonGlut.Main.get_Height()"(%"BabylonGlut.Main"* %this) #10 {
+define i32 @"Int32 BabylonGlut.Main.get_Height()"(%"BabylonGlut.Main"* %this) #11 {
     %local0 = alloca i32, align 4
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
@@ -410,7 +398,7 @@ define i32 @"Int32 BabylonGlut.Main.get_Height()"(%"BabylonGlut.Main"* %this) #1
     ret i32 %.r4
 }
 
-define void @"Void BabylonGlut.Main.set_Height(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #11 {
+define void @"Void BabylonGlut.Main.set_Height(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #12 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
     %.value = alloca i32, align 4
@@ -423,7 +411,7 @@ define void @"Void BabylonGlut.Main.set_Height(Int32)"(%"BabylonGlut.Main"* %thi
     ret void
 }
 
-define i32 @"Int32 BabylonGlut.Main.get_MaxWidth()"(%"BabylonGlut.Main"* %this) #12 {
+define i32 @"Int32 BabylonGlut.Main.get_MaxWidth()"(%"BabylonGlut.Main"* %this) #13 {
     %local0 = alloca i32, align 4
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
@@ -438,7 +426,7 @@ define i32 @"Int32 BabylonGlut.Main.get_MaxWidth()"(%"BabylonGlut.Main"* %this) 
     ret i32 %.r4
 }
 
-define void @"Void BabylonGlut.Main.set_MaxWidth(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #13 {
+define void @"Void BabylonGlut.Main.set_MaxWidth(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #14 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
     %.value = alloca i32, align 4
@@ -451,7 +439,7 @@ define void @"Void BabylonGlut.Main.set_MaxWidth(Int32)"(%"BabylonGlut.Main"* %t
     ret void
 }
 
-define i32 @"Int32 BabylonGlut.Main.get_MaxHeight()"(%"BabylonGlut.Main"* %this) #14 {
+define i32 @"Int32 BabylonGlut.Main.get_MaxHeight()"(%"BabylonGlut.Main"* %this) #15 {
     %local0 = alloca i32, align 4
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
@@ -466,7 +454,7 @@ define i32 @"Int32 BabylonGlut.Main.get_MaxHeight()"(%"BabylonGlut.Main"* %this)
     ret i32 %.r4
 }
 
-define void @"Void BabylonGlut.Main.set_MaxHeight(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #15 {
+define void @"Void BabylonGlut.Main.set_MaxHeight(Int32)"(%"BabylonGlut.Main"* %this, i32 %value) #16 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
     %.value = alloca i32, align 4
@@ -479,20 +467,21 @@ define void @"Void BabylonGlut.Main.set_MaxHeight(Int32)"(%"BabylonGlut.Main"* %
     ret void
 }
 
-define void @"Void BabylonGlut.Main.OnInitialize()"(%"BabylonGlut.Main"* %this) #16 {
+define void @"Void BabylonGlut.Main.OnInitialize()"(%"BabylonGlut.Main"* %this) #17 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
     ret void
 }
 
-define void @"Void BabylonGlut.Main.OnDraw()"(%"BabylonGlut.Main"* %this) #17 {
+define void @"Void BabylonGlut.Main.OnDraw()"(%"BabylonGlut.Main"* %this) #18 {
     %.this = alloca %"BabylonGlut.Main"*, align 4
     store %"BabylonGlut.Main"* %this, %"BabylonGlut.Main"** %.this, align 4
+    call x86_stdcallcc void @glClearColor(float 0x3FF0000000000000, float 0x0, float 0x0, float 0x3FF0000000000000)
     call x86_stdcallcc void @glClear(i32 16640)
     ret void
 }
 
-define void @"Void BabylonGlut.Program..ctor()"(%"BabylonGlut.Program"* %this) #18 {
+define void @"Void BabylonGlut.Program..ctor()"(%"BabylonGlut.Program"* %this) #19 {
     %.this = alloca %"BabylonGlut.Program"*, align 4
     store %"BabylonGlut.Program"* %this, %"BabylonGlut.Program"** %.this, align 4
     %.r1 = load %"BabylonGlut.Program"** %.this, align 4
@@ -502,62 +491,62 @@ define void @"Void BabylonGlut.Program..ctor()"(%"BabylonGlut.Program"* %this) #
     ret void
 }
 
-declare void @glutInit(...) #19
+declare dllimport x86_stdcallcc void @glutInit(i32* %argCount, i8** %args) #20
 
-declare void @glutInitWindowSize(...) #20
+declare dllimport x86_stdcallcc void @glutInitWindowSize(i32 %width, i32 %height) #21
 
-declare void @glutInitDisplayMode(...) #21
+declare dllimport x86_stdcallcc void @glutInitDisplayMode(i32 %mode) #22
 
-declare void @glutCreateWindow(...) #22
+declare dllimport x86_stdcallcc void @glutCreateWindow(i8* %title) #23
 
-declare void @glutMainLoop(...) #23
+declare dllimport x86_stdcallcc void @glutMainLoop() #24
 
-declare void @glutDisplayFunc(...) #24
+declare dllimport x86_stdcallcc void @glutDisplayFunc(i8* %display) #25
 
-declare void @glutPassiveMotionFunc(...) #25
+declare dllimport x86_stdcallcc void @glutPassiveMotionFunc(i8* %passiveMotion) #26
 
-declare void @glutMouseFunc(...) #26
+declare dllimport x86_stdcallcc void @glutMouseFunc(i8* %mouse) #27
 
-declare void @glutMotionFunc(...) #27
+declare dllimport x86_stdcallcc void @glutMotionFunc(i8* %motion) #28
 
-declare void @glutIdleFunc(...) #28
+declare dllimport x86_stdcallcc void @glutIdleFunc(i8* %idle) #29
 
-declare void @glutReshapeFunc(...) #29
+declare dllimport x86_stdcallcc void @glutReshapeFunc(i8* %reshape) #30
 
-declare void @glutKeyboardFunc(...) #30
+declare dllimport x86_stdcallcc void @glutKeyboardFunc(i8* %key) #31
 
-declare void @glutPostRedisplay(...) #31
+declare dllimport x86_stdcallcc void @glutPostRedisplay() #32
 
-declare void @glutSwapBuffers(...) #32
+declare dllimport x86_stdcallcc void @glutSwapBuffers() #33
 
-define void @"Void BabylonGlut.Program.display()"() #33 {
+define void @"Void BabylonGlut.Program.Display()"() #34 {
     %.r1 = load %"BabylonGlut.Main"** @"BabylonGlut.Program._main", align 4
     call void @"Void BabylonGlut.Main.OnDraw()"(%"BabylonGlut.Main"* %.r1)
-    call void (...)* @glutSwapBuffers()
+    call x86_stdcallcc void @glutSwapBuffers()
     ret void
 }
 
-define void @"Void BabylonGlut.Program.passiveMotion(Int32, Int32)"(i32 %x, i32 %y) #34 {
+define void @"Void BabylonGlut.Program.PassiveMotion(Int32, Int32)"(i32 %x, i32 %y) #35 {
     %.x = alloca i32, align 4
     store i32 %x, i32* %.x, align 4
     %.y = alloca i32, align 4
     store i32 %y, i32* %.y, align 4
-    call void (...)* @glutPostRedisplay()
+    call x86_stdcallcc void @glutPostRedisplay()
     ret void
 }
 
-define void @"Void BabylonGlut.Program.key(Byte, Int32, Int32)"(i8 %k, i32 %x, i32 %y) #35 {
+define void @"Void BabylonGlut.Program.Key(Byte, Int32, Int32)"(i8 %k, i32 %x, i32 %y) #36 {
     %.k = alloca i8, align 4
     store i8 %k, i8* %.k, align 4
     %.x = alloca i32, align 4
     store i32 %x, i32* %.x, align 4
     %.y = alloca i32, align 4
     store i32 %y, i32* %.y, align 4
-    call void (...)* @glutPostRedisplay()
+    call x86_stdcallcc void @glutPostRedisplay()
     ret void
 }
 
-define void @"Void BabylonGlut.Program.mouse(Int32, Int32, Int32, Int32)"(i32 %button, i32 %state, i32 %x, i32 %y) #36 {
+define void @"Void BabylonGlut.Program.Mouse(Int32, Int32, Int32, Int32)"(i32 %button, i32 %state, i32 %x, i32 %y) #37 {
     %.button = alloca i32, align 4
     store i32 %button, i32* %.button, align 4
     %.state = alloca i32, align 4
@@ -566,16 +555,16 @@ define void @"Void BabylonGlut.Program.mouse(Int32, Int32, Int32, Int32)"(i32 %b
     store i32 %x, i32* %.x, align 4
     %.y = alloca i32, align 4
     store i32 %y, i32* %.y, align 4
-    call void (...)* @glutPostRedisplay()
+    call x86_stdcallcc void @glutPostRedisplay()
     ret void
 }
 
-define void @"Void BabylonGlut.Program.idle()"() #37 {
-    call void (...)* @glutPostRedisplay()
+define void @"Void BabylonGlut.Program.Idle()"() #38 {
+    call x86_stdcallcc void @glutPostRedisplay()
     ret void
 }
 
-define void @"Void BabylonGlut.Program.resize(Int32, Int32)"(i32 %w, i32 %h) #38 {
+define void @"Void BabylonGlut.Program.Resize(Int32, Int32)"(i32 %w, i32 %h) #39 {
     %.w = alloca i32, align 4
     store i32 %w, i32* %.w, align 4
     %.h = alloca i32, align 4
@@ -583,7 +572,7 @@ define void @"Void BabylonGlut.Program.resize(Int32, Int32)"(i32 %w, i32 %h) #38
     ret void
 }
 
-define void @"Void BabylonGlut.Program.motion(Int32, Int32)"(i32 %x, i32 %y) #39 {
+define void @"Void BabylonGlut.Program.Motion(Int32, Int32)"(i32 %x, i32 %y) #40 {
     %.x = alloca i32, align 4
     store i32 %x, i32* %.x, align 4
     %.y = alloca i32, align 4
@@ -591,7 +580,7 @@ define void @"Void BabylonGlut.Program.motion(Int32, Int32)"(i32 %x, i32 %y) #39
     ret void
 }
 
-define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** %args) #40 {
+define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** %args) #41 {
     %local0 = alloca i32, align 4
     %local1 = alloca i8**, align 4
     %local2 = alloca i32, align 4
@@ -641,14 +630,14 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; end of new array
     store i8** %.r16, i8*** %local1, align 4
     %.r17 = load i8*** %local1, align 4
-    call void (...)* @glutInit(i32* %local0, i8** %.r17)
+    call x86_stdcallcc void @glutInit(i32* %local0, i8** %.r17)
     %.r18 = load %"BabylonGlut.Main"** @"BabylonGlut.Program._main", align 4
     %.r19 = call i32 @"Int32 BabylonGlut.Main.get_Width()"(%"BabylonGlut.Main"* %.r18)
     %.r20 = load %"BabylonGlut.Main"** @"BabylonGlut.Program._main", align 4
     %.r21 = call i32 @"Int32 BabylonGlut.Main.get_Height()"(%"BabylonGlut.Main"* %.r20)
-    call void (...)* @glutInitWindowSize(i32 %.r19, i32 %.r21)
-    call void (...)* @glutInitDisplayMode(i32 18)
-    call void (...)* @glutCreateWindow(i8* null)
+    call x86_stdcallcc void @glutInitWindowSize(i32 %.r19, i32 %.r21)
+    call x86_stdcallcc void @glutInitDisplayMode(i32 18)
+    call x86_stdcallcc void @glutCreateWindow(i8* null)
     ; New obj
     %.r22 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r22, i8 0, i32 8, i32 4, i1 false)
@@ -657,7 +646,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r23)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r23, i8* bitcast (void ()* @"Void BabylonGlut.Program.display()" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r23, i8* bitcast (void ()* @"Void BabylonGlut.Program.Display()" to i8*))
     ; New obj
     %.r24 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r24, i8 0, i32 24, i32 4, i1 false)
@@ -670,7 +659,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r26 = bitcast %"BabylonGlut.Program+EmptyDelegate"* %.r25 to %"System.Delegate"*
     %.r27 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r26)
-    call void (...)* @glutDisplayFunc(i8* %.r27)
+    call x86_stdcallcc void @glutDisplayFunc(i8* %.r27)
     ; New obj
     %.r28 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r28, i8 0, i32 8, i32 4, i1 false)
@@ -679,7 +668,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r29)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r29, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.passiveMotion(Int32, Int32)" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r29, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.PassiveMotion(Int32, Int32)" to i8*))
     ; New obj
     %.r30 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r30, i8 0, i32 24, i32 4, i1 false)
@@ -692,7 +681,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r32 = bitcast %"BabylonGlut.Program+TwoDimDelegate"* %.r31 to %"System.Delegate"*
     %.r33 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r32)
-    call void (...)* @glutPassiveMotionFunc(i8* %.r33)
+    call x86_stdcallcc void @glutPassiveMotionFunc(i8* %.r33)
     ; New obj
     %.r34 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r34, i8 0, i32 8, i32 4, i1 false)
@@ -701,7 +690,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r35)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r35, i8* bitcast (void (i32, i32, i32, i32)* @"Void BabylonGlut.Program.mouse(Int32, Int32, Int32, Int32)" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r35, i8* bitcast (void (i32, i32, i32, i32)* @"Void BabylonGlut.Program.Mouse(Int32, Int32, Int32, Int32)" to i8*))
     ; New obj
     %.r36 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r36, i8 0, i32 24, i32 4, i1 false)
@@ -714,7 +703,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r38 = bitcast %"BabylonGlut.Program+MouseDelegate"* %.r37 to %"System.Delegate"*
     %.r39 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r38)
-    call void (...)* @glutMouseFunc(i8* %.r39)
+    call x86_stdcallcc void @glutMouseFunc(i8* %.r39)
     ; New obj
     %.r40 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r40, i8 0, i32 8, i32 4, i1 false)
@@ -723,7 +712,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r41)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r41, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.motion(Int32, Int32)" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r41, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.Motion(Int32, Int32)" to i8*))
     ; New obj
     %.r42 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r42, i8 0, i32 24, i32 4, i1 false)
@@ -736,7 +725,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r44 = bitcast %"BabylonGlut.Program+TwoDimDelegate"* %.r43 to %"System.Delegate"*
     %.r45 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r44)
-    call void (...)* @glutMotionFunc(i8* %.r45)
+    call x86_stdcallcc void @glutMotionFunc(i8* %.r45)
     ; New obj
     %.r46 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r46, i8 0, i32 8, i32 4, i1 false)
@@ -745,7 +734,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r47)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r47, i8* bitcast (void ()* @"Void BabylonGlut.Program.idle()" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r47, i8* bitcast (void ()* @"Void BabylonGlut.Program.Idle()" to i8*))
     ; New obj
     %.r48 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r48, i8 0, i32 24, i32 4, i1 false)
@@ -758,7 +747,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r50 = bitcast %"BabylonGlut.Program+EmptyDelegate"* %.r49 to %"System.Delegate"*
     %.r51 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r50)
-    call void (...)* @glutIdleFunc(i8* %.r51)
+    call x86_stdcallcc void @glutIdleFunc(i8* %.r51)
     ; New obj
     %.r52 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r52, i8 0, i32 8, i32 4, i1 false)
@@ -767,7 +756,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r53)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r53, i8* bitcast (void (i8, i32, i32)* @"Void BabylonGlut.Program.key(Byte, Int32, Int32)" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r53, i8* bitcast (void (i8, i32, i32)* @"Void BabylonGlut.Program.Key(Byte, Int32, Int32)" to i8*))
     ; New obj
     %.r54 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r54, i8 0, i32 24, i32 4, i1 false)
@@ -780,7 +769,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r56 = bitcast %"BabylonGlut.Program+KeyDelegate"* %.r55 to %"System.Delegate"*
     %.r57 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r56)
-    call void (...)* @glutKeyboardFunc(i8* %.r57)
+    call x86_stdcallcc void @glutKeyboardFunc(i8* %.r57)
     ; New obj
     %.r58 = call i8* @_Znwj(i32 8)
     call void @llvm.memset.p0i8.i32(i8* %.r58, i8 0, i32 8, i32 4, i1 false)
@@ -789,7 +778,7 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     call void @"Void System.IntPtr..init()"(%"System.IntPtr"* %.r59)
     ; end of new obj
     ; Call Constructor
-    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r59, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.resize(Int32, Int32)" to i8*))
+    call void @"Void System.IntPtr..ctor(Void*)"(%"System.IntPtr"* %.r59, i8* bitcast (void (i32, i32)* @"Void BabylonGlut.Program.Resize(Int32, Int32)" to i8*))
     ; New obj
     %.r60 = call i8* @_Znwj(i32 24)
     call void @llvm.memset.p0i8.i32(i8* %.r60, i8 0, i32 24, i32 4, i1 false)
@@ -802,16 +791,16 @@ define void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"**
     ; Cast of 'This' parameter
     %.r62 = bitcast %"BabylonGlut.Program+TwoDimDelegate"* %.r61 to %"System.Delegate"*
     %.r63 = call i8* @"Void* System.Delegate.ToPointer()"(%"System.Delegate"* %.r62)
-    call void (...)* @glutReshapeFunc(i8* %.r63)
+    call x86_stdcallcc void @glutReshapeFunc(i8* %.r63)
     %.r64 = load %"BabylonGlut.Main"** @"BabylonGlut.Program._main", align 4
     call void @"Void BabylonGlut.Main.OnInitialize()"(%"BabylonGlut.Main"* %.r64)
-    call void (...)* @glutMainLoop()
+    call x86_stdcallcc void @glutMainLoop()
     ret void
 }
 
 @.s1 = private unnamed_addr constant { i32, [7 x i16] } { i32 6, [7 x i16] [i16 115, i16 116, i16 97, i16 114, i16 116, i16 46, i16 0] }, align 2
 
-define void @"Void BabylonGlut.Program+EmptyDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #41 {
+define void @"Void BabylonGlut.Program+EmptyDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #42 {
     %.this = alloca %"BabylonGlut.Program+EmptyDelegate"*, align 4
     store %"BabylonGlut.Program+EmptyDelegate"* %this, %"BabylonGlut.Program+EmptyDelegate"** %.this, align 4
     %.object = alloca %"System.Object"*, align 4
@@ -829,7 +818,7 @@ define void @"Void BabylonGlut.Program+EmptyDelegate..ctor(System.Object, System
     ret void
 }
 
-define void @"Void BabylonGlut.Program+EmptyDelegate.Invoke()"(%"BabylonGlut.Program+EmptyDelegate"* %this) #42 {
+define void @"Void BabylonGlut.Program+EmptyDelegate.Invoke()"(%"BabylonGlut.Program+EmptyDelegate"* %this) #43 {
     %.this = alloca %"BabylonGlut.Program+EmptyDelegate"*, align 4
     store %"BabylonGlut.Program+EmptyDelegate"* %this, %"BabylonGlut.Program+EmptyDelegate"** %.this, align 4
     %.r1 = load %"BabylonGlut.Program+EmptyDelegate"** %.this, align 4
@@ -855,17 +844,17 @@ static:
 }
 
 
-define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+EmptyDelegate.BeginInvoke(System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #43 {
+define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+EmptyDelegate.BeginInvoke(System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #44 {
     ret %"System.IAsyncResult"* undef
 }
 
 
-define void @"Void BabylonGlut.Program+EmptyDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.IAsyncResult"* %result) #44 {
+define void @"Void BabylonGlut.Program+EmptyDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+EmptyDelegate"* %this, %"System.IAsyncResult"* %result) #45 {
     ret void
 }
 
 
-define void @"Void BabylonGlut.Program+TwoDimDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #45 {
+define void @"Void BabylonGlut.Program+TwoDimDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #46 {
     %.this = alloca %"BabylonGlut.Program+TwoDimDelegate"*, align 4
     store %"BabylonGlut.Program+TwoDimDelegate"* %this, %"BabylonGlut.Program+TwoDimDelegate"** %.this, align 4
     %.object = alloca %"System.Object"*, align 4
@@ -883,7 +872,7 @@ define void @"Void BabylonGlut.Program+TwoDimDelegate..ctor(System.Object, Syste
     ret void
 }
 
-define void @"Void BabylonGlut.Program+TwoDimDelegate.Invoke(Int32, Int32)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, i32 %x, i32 %y) #46 {
+define void @"Void BabylonGlut.Program+TwoDimDelegate.Invoke(Int32, Int32)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, i32 %x, i32 %y) #47 {
     %.this = alloca %"BabylonGlut.Program+TwoDimDelegate"*, align 4
     store %"BabylonGlut.Program+TwoDimDelegate"* %this, %"BabylonGlut.Program+TwoDimDelegate"** %.this, align 4
     %.x = alloca i32, align 4
@@ -917,17 +906,17 @@ static:
 }
 
 
-define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+TwoDimDelegate.BeginInvoke(Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #47 {
+define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+TwoDimDelegate.BeginInvoke(Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #48 {
     ret %"System.IAsyncResult"* undef
 }
 
 
-define void @"Void BabylonGlut.Program+TwoDimDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, %"System.IAsyncResult"* %result) #48 {
+define void @"Void BabylonGlut.Program+TwoDimDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+TwoDimDelegate"* %this, %"System.IAsyncResult"* %result) #49 {
     ret void
 }
 
 
-define void @"Void BabylonGlut.Program+MouseDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+MouseDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #49 {
+define void @"Void BabylonGlut.Program+MouseDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+MouseDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #50 {
     %.this = alloca %"BabylonGlut.Program+MouseDelegate"*, align 4
     store %"BabylonGlut.Program+MouseDelegate"* %this, %"BabylonGlut.Program+MouseDelegate"** %.this, align 4
     %.object = alloca %"System.Object"*, align 4
@@ -945,7 +934,7 @@ define void @"Void BabylonGlut.Program+MouseDelegate..ctor(System.Object, System
     ret void
 }
 
-define void @"Void BabylonGlut.Program+MouseDelegate.Invoke(Int32, Int32, Int32, Int32)"(%"BabylonGlut.Program+MouseDelegate"* %this, i32 %button, i32 %state, i32 %x, i32 %y) #50 {
+define void @"Void BabylonGlut.Program+MouseDelegate.Invoke(Int32, Int32, Int32, Int32)"(%"BabylonGlut.Program+MouseDelegate"* %this, i32 %button, i32 %state, i32 %x, i32 %y) #51 {
     %.this = alloca %"BabylonGlut.Program+MouseDelegate"*, align 4
     store %"BabylonGlut.Program+MouseDelegate"* %this, %"BabylonGlut.Program+MouseDelegate"** %.this, align 4
     %.button = alloca i32, align 4
@@ -987,17 +976,17 @@ static:
 }
 
 
-define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+MouseDelegate.BeginInvoke(Int32, Int32, Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+MouseDelegate"* %this, i32 %button, i32 %state, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #51 {
+define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+MouseDelegate.BeginInvoke(Int32, Int32, Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+MouseDelegate"* %this, i32 %button, i32 %state, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #52 {
     ret %"System.IAsyncResult"* undef
 }
 
 
-define void @"Void BabylonGlut.Program+MouseDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+MouseDelegate"* %this, %"System.IAsyncResult"* %result) #52 {
+define void @"Void BabylonGlut.Program+MouseDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+MouseDelegate"* %this, %"System.IAsyncResult"* %result) #53 {
     ret void
 }
 
 
-define void @"Void BabylonGlut.Program+KeyDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+KeyDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #53 {
+define void @"Void BabylonGlut.Program+KeyDelegate..ctor(System.Object, System.IntPtr)"(%"BabylonGlut.Program+KeyDelegate"* %this, %"System.Object"* %object, %"System.IntPtr"* byval align 4 %.method) #54 {
     %.this = alloca %"BabylonGlut.Program+KeyDelegate"*, align 4
     store %"BabylonGlut.Program+KeyDelegate"* %this, %"BabylonGlut.Program+KeyDelegate"** %.this, align 4
     %.object = alloca %"System.Object"*, align 4
@@ -1015,7 +1004,7 @@ define void @"Void BabylonGlut.Program+KeyDelegate..ctor(System.Object, System.I
     ret void
 }
 
-define void @"Void BabylonGlut.Program+KeyDelegate.Invoke(Byte, Int32, Int32)"(%"BabylonGlut.Program+KeyDelegate"* %this, i8 %key, i32 %x, i32 %y) #54 {
+define void @"Void BabylonGlut.Program+KeyDelegate.Invoke(Byte, Int32, Int32)"(%"BabylonGlut.Program+KeyDelegate"* %this, i8 %key, i32 %x, i32 %y) #55 {
     %.this = alloca %"BabylonGlut.Program+KeyDelegate"*, align 4
     store %"BabylonGlut.Program+KeyDelegate"* %this, %"BabylonGlut.Program+KeyDelegate"** %.this, align 4
     %.key = alloca i8, align 4
@@ -1053,17 +1042,17 @@ static:
 }
 
 
-define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+KeyDelegate.BeginInvoke(Byte, Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+KeyDelegate"* %this, i8 %key, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #55 {
+define %"System.IAsyncResult"* @"System.IAsyncResult BabylonGlut.Program+KeyDelegate.BeginInvoke(Byte, Int32, Int32, System.AsyncCallback, System.Object)"(%"BabylonGlut.Program+KeyDelegate"* %this, i8 %key, i32 %x, i32 %y, %"System.AsyncCallback"* %callback, %"System.Object"* %object) #56 {
     ret %"System.IAsyncResult"* undef
 }
 
 
-define void @"Void BabylonGlut.Program+KeyDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+KeyDelegate"* %this, %"System.IAsyncResult"* %result) #56 {
+define void @"Void BabylonGlut.Program+KeyDelegate.EndInvoke(System.IAsyncResult)"(%"BabylonGlut.Program+KeyDelegate"* %this, %"System.IAsyncResult"* %result) #57 {
     ret void
 }
 
 
-define i32 @main() #57 {
+define i32 @main() #58 {
     call void @"Void BabylonGlut.Program.Main(System.String[])"(%"System.String"** null);
     ret i32 0
 }
@@ -1082,6 +1071,7 @@ define internal void @_GLOBAL_CTORS_EXECUTE_() {
 %"System.IAsyncResult" = type opaque
 %"System.AsyncCallback" = type opaque
 %"System.Byte" = type opaque
+%"System.Single" = type opaque
 %"System.Char" = type opaque
 %"System.Console" = type opaque
 
