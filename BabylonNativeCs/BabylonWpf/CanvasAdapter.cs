@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BabylonWpf
 {
+    using BABYLON;
+
     public class CanvasAdapter : Web.HTMLCanvasElement
     {
         private int maxWidth;
@@ -13,8 +15,7 @@ namespace BabylonWpf
 
         private SharpGL.OpenGL openGl;
 
-        private Dictionary<string, Web.EventListener> listeners;
-
+        private Map<string, Web.EventListener> listeners;
 
         public CanvasAdapter(int width, int height, int maxWidth, int maxHeight, SharpGL.OpenGL openGl)
         {
@@ -24,7 +25,7 @@ namespace BabylonWpf
             this.maxHeight = maxHeight;
 
             this.document = new DocumentAdapter(this);
-            this.listeners = new Dictionary<string, Web.EventListener>();
+            this.listeners = new Map<string, Web.EventListener>();
 
             this.openGl = openGl;
         }

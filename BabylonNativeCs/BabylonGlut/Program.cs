@@ -109,7 +109,7 @@ namespace BabylonGlut
         /// <param name="args">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -122,7 +122,7 @@ namespace BabylonGlut
         /// <param name="height">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -133,7 +133,7 @@ namespace BabylonGlut
         /// <param name="mode">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -144,7 +144,7 @@ namespace BabylonGlut
         /// <param name="title">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -153,7 +153,7 @@ namespace BabylonGlut
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -164,7 +164,7 @@ namespace BabylonGlut
         /// <param name="display">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -175,7 +175,7 @@ namespace BabylonGlut
         /// <param name="passiveMotion">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -186,7 +186,7 @@ namespace BabylonGlut
         /// <param name="mouse">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -197,7 +197,7 @@ namespace BabylonGlut
         /// <param name="motion">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -208,7 +208,7 @@ namespace BabylonGlut
         /// <param name="idle">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -219,7 +219,7 @@ namespace BabylonGlut
         /// <param name="reshape">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -230,7 +230,7 @@ namespace BabylonGlut
         /// <param name="key">
         /// </param>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -239,7 +239,7 @@ namespace BabylonGlut
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -248,7 +248,7 @@ namespace BabylonGlut
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+                [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif

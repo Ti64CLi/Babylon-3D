@@ -75,17 +75,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BabylonNativeCsLibraryForIl\BabylonNativeCsLibraryForIl.csproj">
       <Project>{684ee9e7-3bc6-4b8a-a991-9a1027ecfafe}</Project>
       <Name>BabylonNativeCsLibraryForIl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
