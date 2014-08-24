@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Text;
 
@@ -36,7 +37,7 @@
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glUniformMatrix4fv(int location, int count, byte transpose, float[] value);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public static extern uint glCreateProgram();
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
@@ -94,7 +95,7 @@
         public static extern void glDepthFunc(int func);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearDepthf(float depth);
+        public static extern void glClearDepth(double depth);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glViewport(int x, int y, int width, int height);
@@ -356,7 +357,7 @@
 
         public Web.WebGLProgram createProgram()
         {
-            var glProgramAdapter = new GlProgramAdapter((uint)glCreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(glCreateProgram());
             ErrorTest();
             return glProgramAdapter;
         }
@@ -904,7 +905,7 @@
 
         public void clearDepth(double depth)
         {
-            glClearDepthf((float)depth);
+            glClearDepth(depth);
             ErrorTest();
         }
 

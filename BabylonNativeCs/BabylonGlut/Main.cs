@@ -51,29 +51,29 @@ namespace BabylonGlut
         /// </summary>
         public int Width { get; set; }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="mask">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClear(int mask);
+        /////// <summary>
+        /////// </summary>
+        /////// <param name="mask">
+        /////// </param>
+        /////// <returns>
+        /////// </returns>
+        ////[DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        ////public static extern void glClear(int mask);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="r">
-        /// </param>
-        /// <param name="g">
-        /// </param>
-        /// <param name="b">
-        /// </param>
-        /// <param name="alpha">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearColor(float r, float g, float b, float alpha);
+        /////// <summary>
+        /////// </summary>
+        /////// <param name="r">
+        /////// </param>
+        /////// <param name="g">
+        /////// </param>
+        /////// <param name="b">
+        /////// </param>
+        /////// <param name="alpha">
+        /////// </param>
+        /////// <returns>
+        /////// </returns>
+        ////[DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        ////public static extern void glClearColor(float r, float g, float b, float alpha);
 
         /// <summary>
         /// </summary>
