@@ -380,7 +380,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform3iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform3iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -471,7 +471,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform1iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform1iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -535,7 +535,7 @@
             return attribLocation;
         }
 
-        public void uniform3i(Web.WebGLUniformLocation location, double x, double y, double z)
+        public void uniform3i(Web.WebGLUniformLocation location, int x, int y, int z)
         {
             throw new NotImplementedException();
         }
@@ -572,7 +572,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2i(Web.WebGLUniformLocation location, double x, double y)
+        public void uniform2i(Web.WebGLUniformLocation location, int x, int y)
         {
             throw new NotImplementedException();
         }
@@ -607,7 +607,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform2iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -663,9 +663,9 @@
             throw new NotImplementedException();
         }
 
-        public void uniform1i(Web.WebGLUniformLocation location, double x)
+        public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
-            this.openGl.Uniform1(location.Value, (float)x);
+            this.openGl.Uniform1(location.Value, x);
             ErrorTest();
         }
 
@@ -727,7 +727,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4i(Web.WebGLUniformLocation location, double x, double y, double z, double w)
+        public void uniform4i(Web.WebGLUniformLocation location, int x, int y, int z, int w)
         {
             throw new NotImplementedException();
         }
@@ -930,7 +930,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform4iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }

@@ -10,76 +10,73 @@
         public const int GL_NO_ERROR = 0;
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glGetUniformLocation(int location, char[] name);
+        public static extern int glGetUniformLocation(uint program, char[] name);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glBufferData(int target, float[] data, int usage);
+        public unsafe static extern void glBufferData(int target, int size, void* data, int usage);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glBufferData(int target, ushort[] data, int usage);
+        public static extern void glDepthMask(byte flag);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDepthMask(byte mask);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glLinkProgram(int program);
+        public static extern void glLinkProgram(uint program);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glBufferSubData(int target, int offset, int size, void* data);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glVertexAttribPointer(int indx, int size, int type, byte normalized, int stride, int offset);
+        public unsafe static extern void glVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glEnableVertexAttribArray(int index);
+        public static extern void glEnableVertexAttribArray(uint index);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glCullFace(int mode);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glUniformMatrix4fv(int location, int size, byte transpose, float[] data);
+        public static extern void glUniformMatrix4fv(int location, int count, byte transpose, float[] value);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glCreateProgram();
+        public static extern uint glCreateProgram();
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDeleteShader(int shader);
+        public static extern void glDeleteShader(uint shader);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glEnable(int cap);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGenBuffers(int count, uint[] value);
+        public static extern void glGenBuffers(int n, uint[] buffers);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glUseProgram(int program);
+        public static extern void glUseProgram(uint program);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDrawElements(int mode, int count, int type, int offset);
+        public unsafe static extern void glDrawElements(int mode, int count, int type, void* indices);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetShader(int shader, int type, int[] values);
+        public static extern void glGetShaderiv(uint shader, int pname, int[] @params);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern char[] glGetString(int @string);
+        public static extern byte[] glGetString(int name);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetShaderInfoLog(int shader, int maxLength, int[] length, char[] infoLog);
+        public static extern void glGetShaderInfoLog(uint shader, int maxLength, int[] length, char[] infoLog);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetInteger(int pname, int[] param);
+        public static extern void glGetIntegerv(int pname, int[] @params);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glShaderSource(int shader, char[] source);
+        public static extern void glShaderSource(uint shader, int count, char[] @string, int[] length);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glBindBuffer(int target, int value);
+        public static extern void glBindBuffer(int target, int buffer);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glGetAttribLocation(int program, char[] name);
+        public static extern int glGetAttribLocation(uint program, char[] name);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] pixels);
+        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glClear(int mode);
@@ -88,28 +85,28 @@
         public static extern void glUniform4f(int location, float x, float y, float z, float w);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glUniform1i(int location, float x);
+        public static extern void glUniform1i(int location, int x);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetProgramParameter(int program, int pname, int[] values);
+        public static extern void glGetProgramiv(uint program, int pname, int[] @params);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glDepthFunc(int func);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearDepth(float depth);
+        public static extern void glClearDepthf(float depth);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glViewport(int x, int y, int width, int height);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDeleteBuffers(int count, int[] buffers);
+        public static extern void glDeleteBuffers(int n, uint[] buffers);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glAttachShader(int program, int shader);
+        public static extern void glAttachShader(uint program, uint shader);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glCompileShader(int shader);
+        public static extern void glCompileShader(uint shader);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glClearColor(float red, float green, float blue, float alpha);
@@ -118,13 +115,10 @@
         public static extern void glUniform3f(int location, float x, float y, float z);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glCreateShader(int type);
+        public static extern uint glCreateShader(int shaderType);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glGetErrorCode();
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern char[] glGetErrorDescription(int error);
+        public static extern int glGetError();
 
         public GlRenderingContextAdapter()
         {
@@ -171,7 +165,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(glGetUniformLocation((int)program.Value, name.ToCharArray()));
+            var glUniformLocation = new GlUniformLocation(glGetUniformLocation(program.Value, name.ToCharArray()));
             ErrorTest();
             return glUniformLocation;
         }
@@ -183,13 +177,27 @@
 
         public void bufferData(int target, float[] data, int usage)
         {
-            glBufferData(target, data, usage);
+            unsafe
+            {
+                fixed (void* pdata = data)
+                {
+                    glBufferData(target, data.Length * sizeof(float), pdata, usage);
+                }
+            }
+
             ErrorTest();
         }
 
         public void bufferData(int target, ushort[] data, int usage)
         {
-            glBufferData(target, data, usage);
+            unsafe
+            {
+                fixed (void* pdata = data)
+                {
+                    glBufferData(target, data.Length * sizeof(ushort), pdata, usage);
+                }
+            }
+
             ErrorTest();
         }
 
@@ -221,7 +229,7 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            glLinkProgram((int)program.Value);
+            glLinkProgram(program.Value);
             ErrorTest();
         }
 
@@ -245,7 +253,11 @@
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
-            glVertexAttribPointer(indx, size, type, (byte) (normalized ? 1 : 0), stride, offset);
+            unsafe
+            {
+                glVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+            }
+
             ErrorTest();
         }
 
@@ -276,7 +288,7 @@
 
         public void enableVertexAttribArray(int index)
         {
-            glEnableVertexAttribArray(index);
+            glEnableVertexAttribArray((uint)index);
             ErrorTest();
         }
 
@@ -298,7 +310,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte) (transpose ? 1 : 0), value);
+            glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
             ErrorTest();
         }
 
@@ -351,7 +363,7 @@
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            glDeleteShader((int)shader.Value);
+            glDeleteShader(shader.Value);
             ErrorTest();
         }
 
@@ -411,7 +423,7 @@
 
         public void useProgram(Web.WebGLProgram program)
         {
-            glUseProgram((int)program.Value);
+            glUseProgram(program.Value);
             ErrorTest();
         }
 
@@ -487,7 +499,11 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
-            glDrawElements(mode, count, type, offset);
+            unsafe
+            {
+                glDrawElements(mode, count, type, new IntPtr(offset).ToPointer());
+            }
+
             ErrorTest();
         }
 
@@ -496,7 +512,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform3iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform3iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -516,7 +532,7 @@
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
             var k = new int[1];
-            glGetShader((int)shader.Value, GL_INFO_LOG_LENGTH, k);
+            glGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
             {
                 return string.Empty;
@@ -528,10 +544,10 @@
             }
 
             var result = new char[k[0]];
-            glGetShaderInfoLog((int)shader.Value, k[0], k, result);
+            glGetShaderInfoLog(shader.Value, k[0], k, result);
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
-            
+
             return result.ToString();
         }
 
@@ -543,7 +559,7 @@
         public object getParameter(int pname)
         {
             var i = new int[1];
-            glGetInteger(pname, i);
+            glGetIntegerv(pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
@@ -578,7 +594,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform1iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform1iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -615,7 +631,10 @@
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
-            glShaderSource((int)shader.Value, source.ToCharArray());
+            var chars = source.ToCharArray();
+            var len = new int[1];
+            len[0] = chars.Length;
+            glShaderSource(shader.Value, 1, chars, len);
             ErrorTest();
         }
 
@@ -631,18 +650,18 @@
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            glBindBuffer(target, (int) (buffer != null ? buffer.Value : 0));
+            glBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
             ErrorTest();
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            var attribLocation = glGetAttribLocation((int)program.Value, name.ToCharArray());
+            var attribLocation = glGetAttribLocation(program.Value, name.ToCharArray());
             ErrorTest();
             return attribLocation;
         }
 
-        public void uniform3i(Web.WebGLUniformLocation location, double x, double y, double z)
+        public void uniform3i(Web.WebGLUniformLocation location, int x, int y, int z)
         {
             throw new NotImplementedException();
         }
@@ -679,7 +698,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2i(Web.WebGLUniformLocation location, double x, double y)
+        public void uniform2i(Web.WebGLUniformLocation location, int x, int y)
         {
             throw new NotImplementedException();
         }
@@ -714,7 +733,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform2iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -770,16 +789,16 @@
             throw new NotImplementedException();
         }
 
-        public void uniform1i(Web.WebGLUniformLocation location, double x)
+        public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
-            glUniform1i((int)location.Value, (float)x);
+            glUniform1i(location.Value, x);
             ErrorTest();
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
             var i = new int[1];
-            glGetProgramParameter((int)program.Value, pname, i);
+            glGetProgramiv(program.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
@@ -834,7 +853,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4i(Web.WebGLUniformLocation location, double x, double y, double z, double w)
+        public void uniform4i(Web.WebGLUniformLocation location, int x, int y, int z, int w)
         {
             throw new NotImplementedException();
         }
@@ -878,14 +897,14 @@
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
             var i = new int[1];
-            glGetShader((int)shader.Value, pname, i);
+            glGetShaderiv(shader.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
         {
-            glClearDepth((float)depth);
+            glClearDepthf((float)depth);
             ErrorTest();
         }
 
@@ -922,7 +941,7 @@
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
-            glDeleteBuffers(1, new int[] { (int)buffer.Value });
+            glDeleteBuffers(1, new uint[] { buffer.Value });
             ErrorTest();
         }
 
@@ -948,13 +967,13 @@
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
-            glAttachShader((int)program.Value, (int)shader.Value);
+            glAttachShader(program.Value, shader.Value);
             ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
-            glCompileShader((int)shader.Value);
+            glCompileShader(shader.Value);
             ErrorTest();
         }
 
@@ -1027,7 +1046,7 @@
 
         public Web.WebGLShader createShader(int type)
         {
-            var shader = (uint) glCreateShader(type);
+            var shader = (uint)glCreateShader(type);
             ErrorTest();
             return new GlShaderAdapter(shader);
         }
@@ -1037,7 +1056,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4iv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform4iv(Web.WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
@@ -1054,13 +1073,13 @@
 
         private void ErrorTest()
         {
-            var error = glGetErrorCode();
+#if DEBUG
+            var error = glGetError();
             if (error != GL_NO_ERROR)
             {
-                var message = string.Format("Error : {0}, {1}", error, glGetErrorDescription(error));
-                //Debug.Fail(message);
-                Console.WriteLine(message);
+                Console.WriteLine("GL Error {0}", error);
             }
+#endif
         }
     }
 }

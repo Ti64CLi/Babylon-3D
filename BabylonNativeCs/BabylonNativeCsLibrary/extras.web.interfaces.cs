@@ -9869,9 +9869,9 @@ namespace Web
 
         void uniform1fv(WebGLUniformLocation location, Float32Array v);
 
-        void uniform1i(WebGLUniformLocation location, double x);
+        void uniform1i(WebGLUniformLocation location, int x);
 
-        void uniform1iv(WebGLUniformLocation location, float[] v);
+        void uniform1iv(WebGLUniformLocation location, int[] v);
 
         void uniform1iv(WebGLUniformLocation location, Int32Array v);
 
@@ -9881,9 +9881,9 @@ namespace Web
 
         void uniform2fv(WebGLUniformLocation location, Float32Array v);
 
-        void uniform2i(WebGLUniformLocation location, double x, double y);
+        void uniform2i(WebGLUniformLocation location, int x, int y);
 
-        void uniform2iv(WebGLUniformLocation location, float[] v);
+        void uniform2iv(WebGLUniformLocation location, int[] v);
 
         void uniform2iv(WebGLUniformLocation location, Int32Array v);
 
@@ -9893,9 +9893,9 @@ namespace Web
 
         void uniform3fv(WebGLUniformLocation location, Float32Array v);
 
-        void uniform3i(WebGLUniformLocation location, double x, double y, double z);
+        void uniform3i(WebGLUniformLocation location, int x, int y, int z);
 
-        void uniform3iv(WebGLUniformLocation location, float[] v);
+        void uniform3iv(WebGLUniformLocation location, int[] v);
 
         void uniform3iv(WebGLUniformLocation location, Int32Array v);
 
@@ -9905,9 +9905,9 @@ namespace Web
 
         void uniform4fv(WebGLUniformLocation location, Float32Array v);
 
-        void uniform4i(WebGLUniformLocation location, double x, double y, double z, double w);
+        void uniform4i(WebGLUniformLocation location, int x, int y, int z, int w);
 
-        void uniform4iv(WebGLUniformLocation location, float[] v);
+        void uniform4iv(WebGLUniformLocation location, int[] v);
 
         void uniform4iv(WebGLUniformLocation location, Int32Array v);
 

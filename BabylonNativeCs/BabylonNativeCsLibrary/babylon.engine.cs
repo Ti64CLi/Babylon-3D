@@ -1456,7 +1456,7 @@ namespace BABYLON
         /// </param>
         /// <param name="_bool">
         /// </param>
-        public virtual void setBool(WebGLUniformLocation uniform, double _bool)
+        public virtual void setBool(WebGLUniformLocation uniform, int _bool)
         {
             if (uniform == null)
             {
