@@ -341,30 +341,32 @@ namespace BabylonGlut
             main.MaxWidth = main.Width = 400;
             main.MaxHeight = main.Height = 640;
 
-            var count = 0;
-            var argsBytes = new byte[0][];
-            glutInit(ref count, argsBytes);
+            ////var count = 0;
+            ////var argsBytes = new byte[0][];
+            ////glutInit(ref count, argsBytes);
 
-            glutInitWindowSize(main.Width, main.Height);
-            glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
-            glutCreateWindow(null /*"Babylon Native"*/);
+            ////glutInitWindowSize(main.Width, main.Height);
+            ////glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
+            ////glutCreateWindow(null /*"Babylon Native"*/);
 
-            unsafe
-            {
-                glutDisplayFunc(((Delegate)new EmptyDelegate(Display)).ToPointer());
-                glutPassiveMotionFunc(((Delegate)new TwoDimDelegate(PassiveMotion)).ToPointer());
-                glutMouseFunc(((Delegate)new MouseDelegate(Mouse)).ToPointer());
-                glutMotionFunc(((Delegate)new TwoDimDelegate(Motion)).ToPointer());
-                glutIdleFunc(((Delegate)new EmptyDelegate(Idle)).ToPointer());
-                glutKeyboardFunc(((Delegate)new KeyDelegate(Key)).ToPointer());
-                glutReshapeFunc(((Delegate)new TwoDimDelegate(Resize)).ToPointer());
-            }
+            ////unsafe
+            ////{
+            ////    glutDisplayFunc(((Delegate)new EmptyDelegate(Display)).ToPointer());
+            ////    glutPassiveMotionFunc(((Delegate)new TwoDimDelegate(PassiveMotion)).ToPointer());
+            ////    glutMouseFunc(((Delegate)new MouseDelegate(Mouse)).ToPointer());
+            ////    glutMotionFunc(((Delegate)new TwoDimDelegate(Motion)).ToPointer());
+            ////    glutIdleFunc(((Delegate)new EmptyDelegate(Idle)).ToPointer());
+            ////    glutKeyboardFunc(((Delegate)new KeyDelegate(Key)).ToPointer());
+            ////    glutReshapeFunc(((Delegate)new TwoDimDelegate(Resize)).ToPointer());
+            ////}
 
             main.OnInitialize();
             // _main.loadSceneTutorial4();
 
             // main loop
-            glutMainLoop();
+            ////glutMainLoop();
+
+            Console.WriteLine("stop.");
         }
     }
 }

@@ -2,14 +2,134 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Text;
 
-    public class GlRenderingContextAdapter //: Web.WebGLRenderingContext
+    public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {
+        public const int GL_NO_ERROR = 0;
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern int glGetUniformLocation(int location, char[] name);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glBufferData(int target, float[] data, int usage);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glBufferData(int target, ushort[] data, int usage);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glDepthMask(byte mask);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glLinkProgram(int program);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public unsafe static extern void glBufferSubData(int target, int offset, int size, void* data);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glVertexAttribPointer(int indx, int size, int type, byte normalized, int stride, int offset);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glEnableVertexAttribArray(int index);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glCullFace(int mode);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glUniformMatrix4fv(int location, int size, byte transpose, float[] data);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern int glCreateProgram();
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glDeleteShader(int shader);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glEnable(int cap);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glGenBuffers(int count, uint[] value);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glUseProgram(int program);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glDrawElements(int mode, int count, int type, int offset);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glGetShader(int shader, int type, int[] values);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern char[] glGetString(int @string);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glGetShaderInfoLog(int shader, int maxLength, int[] length, char[] infoLog);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glGetInteger(int pname, int[] param);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glShaderSource(int shader, char[] source);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glBindBuffer(int target, int value);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern int glGetAttribLocation(int program, char[] name);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] pixels);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glClear(int mode);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glUniform4f(int location, float x, float y, float z, float w);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glUniform1i(int location, float x);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glGetProgramParameter(int program, int pname, int[] values);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glDepthFunc(int func);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glClearDepth(float depth);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glViewport(int x, int y, int width, int height);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glDeleteBuffers(int count, int[] buffers);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glAttachShader(int program, int shader);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glCompileShader(int shader);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glClearColor(float red, float green, float blue, float alpha);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glUniform3f(int location, float x, float y, float z);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern int glCreateShader(int type);
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern int glGetErrorCode();
+
+        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        public static extern char[] glGetErrorDescription(int error);
+
         public GlRenderingContextAdapter()
         {
         }
 
-        /*
         public int drawingBufferWidth
         {
             get
@@ -51,7 +171,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
+            var glUniformLocation = new GlUniformLocation(glGetUniformLocation((int)program.Value, name.ToCharArray()));
             ErrorTest();
             return glUniformLocation;
         }
@@ -63,13 +183,13 @@
 
         public void bufferData(int target, float[] data, int usage)
         {
-            this.openGl.BufferData((uint)target, data, (uint)usage);
+            glBufferData(target, data, usage);
             ErrorTest();
         }
 
         public void bufferData(int target, ushort[] data, int usage)
         {
-            this.openGl.BufferData((uint)target, data, (uint)usage);
+            glBufferData(target, data, usage);
             ErrorTest();
         }
 
@@ -80,7 +200,7 @@
 
         public void depthMask(bool flag)
         {
-            this.openGl.DepthMask((byte)(flag ? 1 : 0));
+            glDepthMask((byte)(flag ? 1 : 0));
             ErrorTest();
         }
 
@@ -101,7 +221,7 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            this.openGl.LinkProgram(program.Value);
+            glLinkProgram((int)program.Value);
             ErrorTest();
         }
 
@@ -112,7 +232,10 @@
 
         public void bufferSubData(int target, int offset, int size, IntPtr data)
         {
-            this.openGl.BufferSubData((uint)target, offset, size, data);
+            unsafe
+            {
+                glBufferSubData(target, offset, size, data.ToPointer());
+            }
         }
 
         public void bufferSubData(int target, int offset, float[] data)
@@ -122,7 +245,7 @@
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
-            this.openGl.VertexAttribPointer((uint)indx, size, (uint)type, normalized, stride, new IntPtr(offset));
+            glVertexAttribPointer(indx, size, type, (byte) (normalized ? 1 : 0), stride, offset);
             ErrorTest();
         }
 
@@ -153,7 +276,7 @@
 
         public void enableVertexAttribArray(int index)
         {
-            this.openGl.EnableVertexAttribArray((uint)index);
+            glEnableVertexAttribArray(index);
             ErrorTest();
         }
 
@@ -164,7 +287,7 @@
 
         public void cullFace(int mode)
         {
-            this.openGl.CullFace((uint)mode);
+            glCullFace(mode);
             ErrorTest();
         }
 
@@ -175,7 +298,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            this.openGl.UniformMatrix4(location.Value, value.Length / 16, transpose, value);
+            glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte) (transpose ? 1 : 0), value);
             ErrorTest();
         }
 
@@ -221,14 +344,14 @@
 
         public Web.WebGLProgram createProgram()
         {
-            var glProgramAdapter = new GlProgramAdapter(this.openGl.CreateProgram());
+            var glProgramAdapter = new GlProgramAdapter((uint)glCreateProgram());
             ErrorTest();
             return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            this.openGl.DeleteShader(shader.Value);
+            glDeleteShader((int)shader.Value);
             ErrorTest();
         }
 
@@ -239,7 +362,7 @@
 
         public void enable(int cap)
         {
-            this.openGl.Enable((uint)cap);
+            glEnable(cap);
             ErrorTest();
         }
 
@@ -276,7 +399,7 @@
         public Web.WebGLBuffer createBuffer()
         {
             uint[] buffers = new uint[1];
-            this.openGl.GenBuffers(1, buffers);
+            glGenBuffers(1, buffers);
             ErrorTest();
             return new GlBufferAdapter(buffers[0]);
         }
@@ -288,7 +411,7 @@
 
         public void useProgram(Web.WebGLProgram program)
         {
-            this.openGl.UseProgram(program.Value);
+            glUseProgram((int)program.Value);
             ErrorTest();
         }
 
@@ -364,7 +487,7 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
-            this.openGl.DrawElements((uint)mode, count, (uint)type, new IntPtr(offset));
+            glDrawElements(mode, count, type, offset);
             ErrorTest();
         }
 
@@ -390,10 +513,10 @@
 
         public string getShaderInfoLog(Web.WebGLShader shader)
         {
-            var GL_INFO_LOG_LENGTH = 35716U;
-            var GL_SHADING_LANGUAGE_VERSION = 35724U;
+            var GL_INFO_LOG_LENGTH = 35716;
+            //var GL_SHADING_LANGUAGE_VERSION = 35724;
             var k = new int[1];
-            this.openGl.GetShader(shader.Value, GL_INFO_LOG_LENGTH, k);
+            glGetShader((int)shader.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
             {
                 return string.Empty;
@@ -404,20 +527,11 @@
                 return string.Empty;
             }
 
-            var result = new StringBuilder();
-            result.Capacity = k[0];
-            unsafe
-            {
-                fixed (void* p = k)
-                {
-                    this.openGl.GetShaderInfoLog(shader.Value, k[0], new IntPtr(p), result);
-                }
-            }
+            var result = new char[k[0]];
+            glGetShaderInfoLog((int)shader.Value, k[0], k, result);
 
-            var version = this.openGl.GetString(GL_SHADING_LANGUAGE_VERSION);
-
-            result.AppendFormat("GL VERSION: {0}", version);
-
+            ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
+            
             return result.ToString();
         }
 
@@ -429,7 +543,7 @@
         public object getParameter(int pname)
         {
             var i = new int[1];
-            this.openGl.GetInteger((uint)pname, i);
+            glGetInteger(pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
@@ -501,7 +615,7 @@
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
-            this.openGl.ShaderSource(shader.Value, source);
+            glShaderSource((int)shader.Value, source.ToCharArray());
             ErrorTest();
         }
 
@@ -517,13 +631,13 @@
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            this.openGl.BindBuffer((uint)target, buffer != null ? buffer.Value : 0);
+            glBindBuffer(target, (int) (buffer != null ? buffer.Value : 0));
             ErrorTest();
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            var attribLocation = this.openGl.GetAttribLocation(program.Value, name);
+            var attribLocation = glGetAttribLocation((int)program.Value, name.ToCharArray());
             ErrorTest();
             return attribLocation;
         }
@@ -540,7 +654,7 @@
 
         public void clear(int mask)
         {
-            this.openGl.Clear((uint)mask);
+            glClear(mask);
             ErrorTest();
         }
 
@@ -556,7 +670,7 @@
 
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
-            this.openGl.ReadPixels(x, y, width, height, (uint)format, (uint)type, pixels);
+            glReadPixels(x, y, width, height, format, type, pixels);
             ErrorTest();
         }
 
@@ -642,7 +756,7 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
-            this.openGl.Uniform4(location.Value, (float)x, (float)y, (float)z, (float)w);
+            glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
         }
 
@@ -658,14 +772,14 @@
 
         public void uniform1i(Web.WebGLUniformLocation location, double x)
         {
-            this.openGl.Uniform1(location.Value, (float)x);
+            glUniform1i((int)location.Value, (float)x);
             ErrorTest();
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
             var i = new int[1];
-            this.openGl.GetProgram(program.Value, (uint)pname, i);
+            glGetProgramParameter((int)program.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
@@ -732,7 +846,7 @@
 
         public void depthFunc(int func)
         {
-            this.openGl.DepthFunc((uint)func);
+            glDepthFunc(func);
             ErrorTest();
         }
 
@@ -764,14 +878,14 @@
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
             var i = new int[1];
-            this.openGl.GetShader(shader.Value, (uint)pname, i);
+            glGetShader((int)shader.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
         {
-            this.openGl.ClearDepth(depth);
+            glClearDepth((float)depth);
             ErrorTest();
         }
 
@@ -782,7 +896,7 @@
 
         public void viewport(int x, int y, int width, int height)
         {
-            this.openGl.Viewport(x, y, width, height);
+            glViewport(x, y, width, height);
             ErrorTest();
         }
 
@@ -808,7 +922,7 @@
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
-            this.openGl.DeleteBuffers(1, new uint[] { buffer.Value });
+            glDeleteBuffers(1, new int[] { (int)buffer.Value });
             ErrorTest();
         }
 
@@ -834,19 +948,19 @@
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
-            this.openGl.AttachShader(program.Value, shader.Value);
+            glAttachShader((int)program.Value, (int)shader.Value);
             ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
-            this.openGl.CompileShader(shader.Value);
+            glCompileShader((int)shader.Value);
             ErrorTest();
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
-            this.openGl.ClearColor((float)red, (float)green, (float)blue, (float)alpha);
+            glClearColor((float)red, (float)green, (float)blue, (float)alpha);
             ErrorTest();
         }
 
@@ -882,7 +996,7 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
-            this.openGl.Uniform3(location.Value, (float)x, (float)y, (float)z);
+            glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
         }
 
@@ -913,7 +1027,7 @@
 
         public Web.WebGLShader createShader(int type)
         {
-            var shader = this.openGl.CreateShader((uint)type);
+            var shader = (uint) glCreateShader(type);
             ErrorTest();
             return new GlShaderAdapter(shader);
         }
@@ -940,13 +1054,13 @@
 
         private void ErrorTest()
         {
-            var error = this.openGl.GetErrorCode();
-            if (error != ErrorCode.NoError)
+            var error = glGetErrorCode();
+            if (error != GL_NO_ERROR)
             {
-                var message = string.Format("Error : {0}, {1}", error, this.openGl.GetErrorDescription((uint)error));
-                Debug.Fail(message);
+                var message = string.Format("Error : {0}, {1}", error, glGetErrorDescription(error));
+                //Debug.Fail(message);
+                Console.WriteLine(message);
             }
         }
-        */
     }
 }
