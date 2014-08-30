@@ -150,6 +150,8 @@ namespace BabylonGlut
             Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB);
             Gl.glutCreateWindow(null /*"Babylon Native"*/);
 
+            Gl.glewInit();
+
             unsafe
             {
                 Gl.glutDisplayFunc(((Delegate)new EmptyDelegate(Display)).ToPointer());

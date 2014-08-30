@@ -9979,7 +9979,7 @@ namespace Web
         uint Value { get; }
     }
 
-    public partial interface WebGLBuffer : WebGLObject
+    public partial interface  WebGLBuffer : WebGLObject
     {
         int capacity { get; set; }
 

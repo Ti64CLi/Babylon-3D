@@ -404,9 +404,9 @@ namespace BABYLON
             engine.scenes.Add(this);
             this._renderingManager = new RenderingManager(this);
             this.postProcessManager = new PostProcessManager(this);
-            this.postProcessRenderPipelineManager = new PostProcessRenderPipelineManager();
-            this._boundingBoxRenderer = new BoundingBoxRenderer(this);
-            this.attachControl();
+            ////this.postProcessRenderPipelineManager = new PostProcessRenderPipelineManager();
+            ////this._boundingBoxRenderer = new BoundingBoxRenderer(this);
+            ////this.attachControl();
         }
 
         /// <summary>

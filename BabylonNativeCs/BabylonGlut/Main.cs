@@ -78,8 +78,8 @@ namespace BabylonGlut
 
             this.engine = new Engine(canvas, true);
 
-            ////// create scene
-            ////this.scene = new Scene(this.engine);
+            // create scene
+            this.scene = new Scene(this.engine);
 
             ////var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
             ////var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
