@@ -51,38 +51,14 @@ namespace BabylonGlut
         /// </summary>
         public int Width { get; set; }
 
-        /////// <summary>
-        /////// </summary>
-        /////// <param name="mask">
-        /////// </param>
-        /////// <returns>
-        /////// </returns>
-        ////[DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        ////public static extern void glClear(int mask);
-
-        /////// <summary>
-        /////// </summary>
-        /////// <param name="r">
-        /////// </param>
-        /////// <param name="g">
-        /////// </param>
-        /////// <param name="b">
-        /////// </param>
-        /////// <param name="alpha">
-        /////// </param>
-        /////// <returns>
-        /////// </returns>
-        ////[DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        ////public static extern void glClearColor(float r, float g, float b, float alpha);
-
         /// <summary>
         /// </summary>
         /// <returns>
         /// </returns>
         public void OnDraw()
         {
-            ////glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-            ////glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // this.scene.render();
         }
@@ -102,15 +78,15 @@ namespace BabylonGlut
 
             this.engine = new Engine(canvas, true);
 
-            // create scene
-            this.scene = new Scene(this.engine);
+            ////// create scene
+            ////this.scene = new Scene(this.engine);
 
-            var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
-            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
-            var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
+            ////var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
+            ////var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
+            ////var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
 
-            // Attach the camera to the scene
-            this.scene.activeCamera.attachControl(canvas);
+            ////// Attach the camera to the scene
+            ////this.scene.activeCamera.attachControl(canvas);
         }
     }
 }

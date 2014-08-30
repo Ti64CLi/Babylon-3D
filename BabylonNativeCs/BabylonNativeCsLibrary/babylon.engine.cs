@@ -285,39 +285,25 @@ namespace BABYLON
             this.setDepthWrite(true);
             this._onFullscreenChange = (e) =>
                 {
-                    /*
-                if (document.fullscreen != null) {
-                    this.isFullscreen = document.fullscreen;
-                } else
-                if (document.mozFullScreen != null) {
-                    this.isFullscreen = document.mozFullScreen;
-                } else
-                if (document.webkitIsFullScreen != null) {
-                    this.isFullscreen = document.webkitIsFullScreen;
-                } else
-                if (document.msIsFullScreen != null) {
-                    this.isFullscreen = document.msIsFullScreen;
-                }
-                if (this.isFullscreen && this._pointerLockRequested) {
-                    canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
-                    if (canvas.requestPointerLock) {
-                        canvas.requestPointerLock();
-                    }
-                }
-                */
+                    ////if (document.fullscreen != null)
+                    ////{
+                    ////    this.isFullscreen = document.fullscreen;
+                    ////}
+                    ////if (this.isFullscreen && this._pointerLockRequested)
+                    ////{
+                    ////    canvas.requestPointerLock = canvas.requestPointerLock;
+                    ////    if (canvas.requestPointerLock)
+                    ////    {
+                    ////        canvas.requestPointerLock();
+                    ////    }
+                    ////}
                 };
             document.addEventListener("fullscreenchange", this._onFullscreenChange, false);
-            document.addEventListener("mozfullscreenchange", this._onFullscreenChange, false);
-            document.addEventListener("webkitfullscreenchange", this._onFullscreenChange, false);
-            document.addEventListener("msfullscreenchange", this._onFullscreenChange, false);
             this._onPointerLockChange = (e) =>
                 {
                     ////this.isPointerLock = document.pointerLockElement == canvas;
                 };
             document.addEventListener("pointerlockchange", this._onPointerLockChange, false);
-            document.addEventListener("mspointerlockchange", this._onPointerLockChange, false);
-            document.addEventListener("mozpointerlockchange", this._onPointerLockChange, false);
-            document.addEventListener("webkitpointerlockchange", this._onPointerLockChange, false);
         }
 
         /// <summary>
@@ -664,73 +650,73 @@ namespace BABYLON
             if (isDDS)
             {
                 Tools.LoadFile(
-                    rootUrl, 
+                    rootUrl,
                     (data) =>
+                    {
+                        var info = DDSTools.GetDDSInfo(data);
+                        var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap;
+                        gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
+                        gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 1);
+                        DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 6);
+                        if (!noMipmap && !info.isFourCC && info.mipmapCount == 1)
                         {
-                            var info = DDSTools.GetDDSInfo(data);
-                            var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap;
-                            gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
-                            gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 1);
-                            DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 6);
-                            if (!noMipmap && !info.isFourCC && info.mipmapCount == 1)
-                            {
-                                gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
-                            }
+                            gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
+                        }
 
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, loadMipmap ? Gl.LINEAR_MIPMAP_LINEAR : Gl.LINEAR);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
-                            gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
-                            this._activeTexturesCache = new Array<BaseTexture>();
-                            texture._width = info.width;
-                            texture._height = info.height;
-                            texture.isReady = true;
-                        });
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, loadMipmap ? Gl.LINEAR_MIPMAP_LINEAR : Gl.LINEAR);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
+                        gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
+                        this._activeTexturesCache = new Array<BaseTexture>();
+                        texture._width = info.width;
+                        texture._height = info.height;
+                        texture.isReady = true;
+                    });
             }
             else
             {
                 this.cascadeLoad(
-                    rootUrl, 
-                    0, 
-                    new Array<HTMLImageElement>(), 
-                    scene, 
+                    rootUrl,
+                    0,
+                    new Array<HTMLImageElement>(),
+                    scene,
                     (imgs) =>
+                    {
+                        var width = this.getExponantOfTwo(imgs[0].width, this._caps.maxCubemapTextureSize);
+                        var height = width;
+                        this._workingCanvas.width = width;
+                        this._workingCanvas.height = height;
+                        var faces = new Array<int>(
+                            Gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+                            Gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+                            Gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+                            Gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+                            Gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                            Gl.TEXTURE_CUBE_MAP_NEGATIVE_Z);
+                        gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
+                        gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
+                        for (var index = 0; index < faces.Length; index++)
                         {
-                            var width = this.getExponantOfTwo(imgs[0].width, this._caps.maxCubemapTextureSize);
-                            var height = width;
-                            this._workingCanvas.width = width;
-                            this._workingCanvas.height = height;
-                            var faces = new Array<int>(
-                                Gl.TEXTURE_CUBE_MAP_POSITIVE_X, 
-                                Gl.TEXTURE_CUBE_MAP_POSITIVE_Y, 
-                                Gl.TEXTURE_CUBE_MAP_POSITIVE_Z, 
-                                Gl.TEXTURE_CUBE_MAP_NEGATIVE_X, 
-                                Gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, 
-                                Gl.TEXTURE_CUBE_MAP_NEGATIVE_Z);
-                            gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
-                            gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
-                            for (var index = 0; index < faces.Length; index++)
-                            {
-                                this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
-                                gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
-                            }
+                            this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
+                            gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
+                        }
 
-                            if (!noMipmap)
-                            {
-                                gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
-                            }
+                        if (!noMipmap)
+                        {
+                            gl.generateMipmap(Gl.TEXTURE_CUBE_MAP);
+                        }
 
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, noMipmap ? Gl.LINEAR : Gl.LINEAR_MIPMAP_LINEAR);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
-                            gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
-                            gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
-                            this._activeTexturesCache = new Array<BaseTexture>();
-                            texture._width = width;
-                            texture._height = height;
-                            texture.isReady = true;
-                        }, 
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MAG_FILTER, Gl.LINEAR);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_MIN_FILTER, noMipmap ? Gl.LINEAR : Gl.LINEAR_MIPMAP_LINEAR);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_S, Gl.CLAMP_TO_EDGE);
+                        gl.texParameteri(Gl.TEXTURE_CUBE_MAP, Gl.TEXTURE_WRAP_T, Gl.CLAMP_TO_EDGE);
+                        gl.bindTexture(Gl.TEXTURE_CUBE_MAP, null);
+                        this._activeTexturesCache = new Array<BaseTexture>();
+                        texture._width = width;
+                        texture._height = height;
+                        texture.isReady = true;
+                    },
                     extensions);
             }
 
@@ -808,13 +794,13 @@ namespace BABYLON
         /// <returns>
         /// </returns>
         public virtual Effect createEffect(
-            EffectBaseName baseName, 
-            Array<string> attributesNames, 
-            Array<string> uniformsNames, 
-            Array<string> samplers, 
-            string defines, 
-            Array<string> optionalDefines = null, 
-            Action<Effect> onCompiled = null, 
+            EffectBaseName baseName,
+            Array<string> attributesNames,
+            Array<string> uniformsNames,
+            Array<string> samplers,
+            string defines,
+            Array<string> optionalDefines = null,
+            Action<Effect> onCompiled = null,
             Action<Effect, string> onError = null)
         {
             var vertex = baseName.vertexElement ?? baseName.vertex ?? baseName.baseName;
@@ -986,54 +972,54 @@ namespace BABYLON
             if (isTGA)
             {
                 Tools.LoadFile(
-                    url, 
+                    url,
                     (arrayBuffer) =>
-                        {
-                            var data = arrayBuffer;
-                            var header = TGATools.GetTGAHeader(data);
-                            this.prepareWebGLTexture(
-                                texture, 
-                                this._gl, 
-                                scene, 
-                                header.width, 
-                                header.height, 
-                                invertY, 
-                                noMipmap, 
-                                false, 
-                                (pos, max) => { TGATools.UploadContent(this._gl, data); }, 
-                                samplingMode);
-                        }, 
-                    null, 
-                    scene.database, 
+                    {
+                        var data = arrayBuffer;
+                        var header = TGATools.GetTGAHeader(data);
+                        this.prepareWebGLTexture(
+                            texture,
+                            this._gl,
+                            scene,
+                            header.width,
+                            header.height,
+                            invertY,
+                            noMipmap,
+                            false,
+                            (pos, max) => { TGATools.UploadContent(this._gl, data); },
+                            samplingMode);
+                    },
+                    null,
+                    scene.database,
                     true);
             }
             else if (isDDS)
             {
                 Tools.LoadFile(
-                    url, 
+                    url,
                     (data) =>
-                        {
-                            var info = DDSTools.GetDDSInfo(data);
-                            var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap
-                                             && ((info.width << (info.mipmapCount - 1)) == 1);
-                            this.prepareWebGLTexture(
-                                texture, 
-                                this._gl, 
-                                scene, 
-                                info.width, 
-                                info.height, 
-                                invertY, 
-                                !loadMipmap, 
-                                info.isFourCC, 
-                                (pos, max) =>
-                                    {
-                                        console.log("loading " + url);
-                                        DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 1);
-                                    }, 
-                                samplingMode);
-                        }, 
-                    null, 
-                    scene.database, 
+                    {
+                        var info = DDSTools.GetDDSInfo(data);
+                        var loadMipmap = (info.isRGB || info.isLuminance || info.mipmapCount > 1) && !noMipmap
+                                         && ((info.width << (info.mipmapCount - 1)) == 1);
+                        this.prepareWebGLTexture(
+                            texture,
+                            this._gl,
+                            scene,
+                            info.width,
+                            info.height,
+                            invertY,
+                            !loadMipmap,
+                            info.isFourCC,
+                            (pos, max) =>
+                            {
+                                console.log("loading " + url);
+                                DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 1);
+                            },
+                            samplingMode);
+                    },
+                    null,
+                    scene.database,
                     true);
             }
             else
@@ -1041,33 +1027,33 @@ namespace BABYLON
                 Action<HTMLImageElement> onload = (img) =>
                     {
                         this.prepareWebGLTexture(
-                            texture, 
-                            this._gl, 
-                            scene, 
-                            img.width, 
-                            img.height, 
-                            invertY, 
-                            noMipmap, 
-                            false, 
+                            texture,
+                            this._gl,
+                            scene,
+                            img.width,
+                            img.height,
+                            invertY,
+                            noMipmap,
+                            false,
                             (int potWidth, int potHeight) =>
+                            {
+                                var isPot = img.width == potWidth && img.height == potHeight;
+                                if (!isPot)
                                 {
-                                    var isPot = img.width == potWidth && img.height == potHeight;
-                                    if (!isPot)
-                                    {
-                                        this._workingCanvas.width = potWidth;
-                                        this._workingCanvas.height = potHeight;
-                                        this._workingContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, potWidth, potHeight);
-                                    }
+                                    this._workingCanvas.width = potWidth;
+                                    this._workingCanvas.height = potHeight;
+                                    this._workingContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, potWidth, potHeight);
+                                }
 
-                                    if (isPot)
-                                    {
-                                        this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, img);
-                                    }
-                                    else
-                                    {
-                                        this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
-                                    }
-                                }, 
+                                if (isPot)
+                                {
+                                    this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, img);
+                                }
+                                else
+                                {
+                                    this._gl.texImage2D(Gl.TEXTURE_2D, 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
+                                }
+                            },
                             samplingMode);
                     };
                 Action<HTMLImageElement, object> onerror = (img, err) => { scene._removePendingData(texture); };
@@ -2245,15 +2231,15 @@ namespace BABYLON
         /// <param name="samplingMode">
         /// </param>
         private void prepareWebGLTexture(
-            WebGLTexture texture, 
-            WebGLRenderingContext gl, 
-            Scene scene, 
-            int width, 
-            int height, 
-            bool invertY, 
-            bool noMipmap, 
-            bool isCompressed, 
-            Action<int, int> processFunction, 
+            WebGLTexture texture,
+            WebGLRenderingContext gl,
+            Scene scene,
+            int width,
+            int height,
+            bool invertY,
+            bool noMipmap,
+            bool isCompressed,
+            Action<int, int> processFunction,
             int samplingMode = Texture.TRILINEAR_SAMPLINGMODE)
         {
             var engine = scene.getEngine();

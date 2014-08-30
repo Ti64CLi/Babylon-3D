@@ -1,5 +1,6 @@
 ﻿namespace BabylonWpf
 {
+    using BabylonGlut;
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
@@ -8,143 +9,6 @@
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {
-        public const int GL_NO_ERROR = 0;
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetUniformLocation(uint program, char[] name);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewBufferData(int target, int size, void* data, int usage);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDepthMask(byte flag);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewLinkProgram(uint program);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewBufferSubData(int target, int offset, int size, void* data);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewEnableVertexAttribArray(uint index);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glCullFace(int mode);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniformMatrix4fv(int location, int count, byte transpose, float[] value);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern uint __glewCreateProgram();
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewDeleteShader(uint shader);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glEnable(int cap);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGenBuffers(int n, uint[] buffers);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUseProgram(uint program);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern void glDrawElements(int mode, int count, int type, void* indices);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderiv(uint shader, int pname, int[] @params);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern byte[] glGetString(int name);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int[] length, char[] infoLog);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetIntegerv(int pname, int[] @params);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewShaderSource(uint shader, int count, char[] @string, int[] length);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewBindBuffer(int target, int buffer);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetAttribLocation(uint program, char[] name);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClear(int mode);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform4f(int location, float x, float y, float z, float w);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform1i(int location, int x);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetProgramiv(uint program, int pname, int[] @params);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glDepthFunc(int func);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearDepth(double depth);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glViewport(int x, int y, int width, int height);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewDeleteBuffers(int n, uint[] buffers);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewAttachShader(uint program, uint shader);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewCompileShader(uint shader);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearColor(float red, float green, float blue, float alpha);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform3f(int location, float x, float y, float z);
-
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern uint __glewCreateShader(int shaderType);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern int glGetError();
-
         public GlRenderingContextAdapter()
         {
         }
@@ -190,7 +54,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(__glewGetUniformLocation(program.Value, name.ToCharArray()));
+            var glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, name.ToCharArray()));
             ErrorTest();
             return glUniformLocation;
         }
@@ -206,7 +70,7 @@
             {
                 fixed (void* pdata = data)
                 {
-                    __glewBufferData(target, data.Length * sizeof(float), pdata, usage);
+                    Gl.__glewBufferData(target, data.Length * sizeof(float), pdata, usage);
                 }
             }
 
@@ -219,7 +83,7 @@
             {
                 fixed (void* pdata = data)
                 {
-                    __glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
+                    Gl.__glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
                 }
             }
 
@@ -233,7 +97,7 @@
 
         public void depthMask(bool flag)
         {
-            glDepthMask((byte)(flag ? 1 : 0));
+            Gl.glDepthMask((byte)(flag ? 1 : 0));
             ErrorTest();
         }
 
@@ -254,7 +118,7 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            __glewLinkProgram(program.Value);
+            Gl.__glewLinkProgram(program.Value);
             ErrorTest();
         }
 
@@ -267,7 +131,7 @@
         {
             unsafe
             {
-                __glewBufferSubData(target, offset, size, data.ToPointer());
+                Gl.__glewBufferSubData(target, offset, size, data.ToPointer());
             }
         }
 
@@ -280,7 +144,7 @@
         {
             unsafe
             {
-                __glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+                Gl.__glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
             }
 
             ErrorTest();
@@ -313,7 +177,7 @@
 
         public void enableVertexAttribArray(int index)
         {
-            __glewEnableVertexAttribArray((uint)index);
+            Gl.__glewEnableVertexAttribArray((uint)index);
             ErrorTest();
         }
 
@@ -324,7 +188,7 @@
 
         public void cullFace(int mode)
         {
-            glCullFace(mode);
+            Gl.glCullFace(mode);
             ErrorTest();
         }
 
@@ -335,7 +199,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            __glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
+            Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
             ErrorTest();
         }
 
@@ -381,14 +245,14 @@
 
         public Web.WebGLProgram createProgram()
         {
-            var glProgramAdapter = new GlProgramAdapter(__glewCreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(Gl.__glewCreateProgram());
             ErrorTest();
             return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            __glewDeleteShader(shader.Value);
+            Gl.__glewDeleteShader(shader.Value);
             ErrorTest();
         }
 
@@ -399,7 +263,7 @@
 
         public void enable(int cap)
         {
-            glEnable(cap);
+            Gl.glEnable(cap);
             ErrorTest();
         }
 
@@ -436,7 +300,7 @@
         public Web.WebGLBuffer createBuffer()
         {
             uint[] buffers = new uint[1];
-            __glewGenBuffers(1, buffers);
+            Gl.__glewGenBuffers(1, buffers);
             ErrorTest();
             return new GlBufferAdapter(buffers[0]);
         }
@@ -448,7 +312,7 @@
 
         public void useProgram(Web.WebGLProgram program)
         {
-            __glewUseProgram(program.Value);
+            Gl.__glewUseProgram(program.Value);
             ErrorTest();
         }
 
@@ -526,7 +390,7 @@
         {
             unsafe
             {
-                glDrawElements(mode, count, type, new IntPtr(offset).ToPointer());
+                Gl.glDrawElements(mode, count, type, new IntPtr(offset).ToPointer());
             }
 
             ErrorTest();
@@ -557,7 +421,7 @@
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
             var k = new int[1];
-            __glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
+            Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
             {
                 return string.Empty;
@@ -569,7 +433,7 @@
             }
 
             var result = new char[k[0]];
-            __glewGetShaderInfoLog(shader.Value, k[0], k, result);
+            Gl.__glewGetShaderInfoLog(shader.Value, k[0], k, result);
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
@@ -584,9 +448,9 @@
         public object getParameter(int pname)
         {
             var i = new int[1];
-            glGetIntegerv(pname, i);
+            Gl.glGetIntegerv(pname, i);
             ErrorTest();
-            return i[0] == 0 ? (object)null : i[0];
+            return i[0];
         }
 
         public Web.WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype)
@@ -659,7 +523,7 @@
             var chars = source.ToCharArray();
             var len = new int[1];
             len[0] = chars.Length;
-            __glewShaderSource(shader.Value, 1, chars, len);
+            Gl.__glewShaderSource(shader.Value, 1, chars, len);
             ErrorTest();
         }
 
@@ -675,13 +539,13 @@
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            __glewBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
+            Gl.__glewBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
             ErrorTest();
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            var attribLocation = __glewGetAttribLocation(program.Value, name.ToCharArray());
+            var attribLocation = Gl.__glewGetAttribLocation(program.Value, name.ToCharArray());
             ErrorTest();
             return attribLocation;
         }
@@ -698,7 +562,7 @@
 
         public void clear(int mask)
         {
-            glClear(mask);
+            Gl.glClear(mask);
             ErrorTest();
         }
 
@@ -714,7 +578,7 @@
 
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
-            glReadPixels(x, y, width, height, format, type, pixels);
+            Gl.glReadPixels(x, y, width, height, format, type, pixels);
             ErrorTest();
         }
 
@@ -800,7 +664,7 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
-            __glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
+            Gl.__glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
         }
 
@@ -816,14 +680,14 @@
 
         public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
-            __glewUniform1i(location.Value, x);
+            Gl.__glewUniform1i(location.Value, x);
             ErrorTest();
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
             var i = new int[1];
-            __glewGetProgramiv(program.Value, pname, i);
+            Gl.__glewGetProgramiv(program.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
@@ -890,7 +754,7 @@
 
         public void depthFunc(int func)
         {
-            glDepthFunc(func);
+            Gl.glDepthFunc(func);
             ErrorTest();
         }
 
@@ -922,14 +786,14 @@
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
             var i = new int[1];
-            __glewGetShaderiv(shader.Value, pname, i);
+            Gl.__glewGetShaderiv(shader.Value, pname, i);
             ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
         {
-            glClearDepth(depth);
+            Gl.glClearDepth(depth);
             ErrorTest();
         }
 
@@ -940,7 +804,7 @@
 
         public void viewport(int x, int y, int width, int height)
         {
-            glViewport(x, y, width, height);
+            Gl.glViewport(x, y, width, height);
             ErrorTest();
         }
 
@@ -966,7 +830,7 @@
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
-            __glewDeleteBuffers(1, new uint[] { buffer.Value });
+            Gl.__glewDeleteBuffers(1, new uint[] { buffer.Value });
             ErrorTest();
         }
 
@@ -992,19 +856,19 @@
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
-            __glewAttachShader(program.Value, shader.Value);
+            Gl.__glewAttachShader(program.Value, shader.Value);
             ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
-            __glewCompileShader(shader.Value);
+            Gl.__glewCompileShader(shader.Value);
             ErrorTest();
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
-            glClearColor((float)red, (float)green, (float)blue, (float)alpha);
+            Gl.glClearColor((float)red, (float)green, (float)blue, (float)alpha);
             ErrorTest();
         }
 
@@ -1040,7 +904,7 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
-            __glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
+            Gl.__glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
         }
 
@@ -1071,7 +935,7 @@
 
         public Web.WebGLShader createShader(int type)
         {
-            var shader = (uint)__glewCreateShader(type);
+            var shader = (uint)Gl.__glewCreateShader(type);
             ErrorTest();
             return new GlShaderAdapter(shader);
         }
@@ -1099,8 +963,8 @@
         private void ErrorTest()
         {
 #if DEBUG
-            var error = glGetError();
-            if (error != GL_NO_ERROR)
+            var error = Gl.glGetError();
+            if (error != Gl.GL_NO_ERROR)
             {
                 Console.WriteLine("GL Error {0}", error);
             }

@@ -20,7 +20,7 @@ namespace BABYLON
         /// <summary>
         /// </summary>
         /// <param name="doNotRecurse">
-        /// </param>
+        /// </param> 
         void dispose(bool doNotRecurse = false);
     }
 
