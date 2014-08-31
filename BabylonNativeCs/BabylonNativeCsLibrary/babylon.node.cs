@@ -258,6 +258,9 @@ namespace BABYLON
         public virtual bool isSynchronized(bool updateCache = false)
         {
             var check = this.hasNewParent();
+
+            Console.WriteLine("asd");
+
             check = check || !this.isSynchronizedWithParent();
             check = check || !this._isSynchronized();
             if (updateCache)
