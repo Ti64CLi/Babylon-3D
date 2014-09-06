@@ -432,12 +432,18 @@
                 return string.Empty;
             }
 
-            var result = new char[k[0]];
+            var result = new byte[k[0]];
             Gl.__glewGetShaderInfoLog(shader.Value, k[0], k, result);
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
-            return result.ToString();
+            var resultUni = new char[k[0]];
+            for (var i = 0; i < resultUni.Length; i++)
+            {
+                resultUni[i] = (char)result[i];
+            }
+
+            return new string(resultUni);
         }
 
         public object getTexParameter(int target, int pname)
@@ -521,9 +527,16 @@
         public void shaderSource(Web.WebGLShader shader, string source)
         {
             var chars = source.ToCharArray();
+
+            var bytes = new byte[chars.Length];
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = (byte)chars[i];
+            }
+
             var len = new int[1];
             len[0] = chars.Length;
-            Gl.__glewShaderSource(shader.Value, 1, chars, len);
+            Gl.__glewShaderSource(shader.Value, 1, bytes, len);
             ErrorTest();
         }
 
@@ -545,7 +558,15 @@
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            var attribLocation = Gl.__glewGetAttribLocation(program.Value, name.ToCharArray());
+            var chars = name.ToCharArray();
+
+            var bytes = new byte[chars.Length];
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = (byte)chars[i];
+            }
+
+            var attribLocation = Gl.__glewGetAttribLocation(program.Value, bytes);
             ErrorTest();
             return attribLocation;
         }
@@ -910,7 +931,31 @@
 
         public string getProgramInfoLog(Web.WebGLProgram program)
         {
-            throw new NotImplementedException();
+            var GL_INFO_LOG_LENGTH = 35716;
+            //var GL_SHADING_LANGUAGE_VERSION = 35724;
+            var k = new int[1];
+            Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, k);
+            if (k[0] == -1)
+            {
+                return string.Empty;
+            }
+
+            if (k[0] == 0)
+            {
+                return string.Empty;
+            }
+
+            var result = new byte[k[0]];
+
+            Gl.__glewGetProgramInfoLog(program.Value, k[0], k, result);
+
+            var resultUni = new char[k[0]];
+            for (var i = 0; i < resultUni.Length; i++)
+            {
+                resultUni[i] = (char)result[i];
+            }
+
+            return new string(resultUni);
         }
 
         public void validateProgram(Web.WebGLProgram program)

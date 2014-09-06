@@ -312,14 +312,18 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int[] length, char[] infoLog);
+        public static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int[] length, byte[] infoLog);
+
+        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
+        public static extern void __glewGetProgramInfoLog(uint program, int maxLength, int[] length, byte[] infoLog);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glGetIntegerv(int pname, int[] @params);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewShaderSource(uint shader, int count, char[] @string, int[] length);
+        public static extern void __glewShaderSource(uint shader, int count, byte[] @string, int[] length);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -327,7 +331,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetAttribLocation(uint program, char[] name);
+        public static extern int __glewGetAttribLocation(uint program, byte[] name);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
