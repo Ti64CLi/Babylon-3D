@@ -930,7 +930,7 @@ namespace BABYLON
             this._gl.attachShader(shaderProgram, fragmentShader);
             this._gl.linkProgram(shaderProgram);
             var linked = this._gl.getProgramParameter(shaderProgram, Gl.LINK_STATUS);
-            if (linked == null)
+            if ((int)linked != Gl.TRUE)
             {
                 var error = this._gl.getProgramInfoLog(shaderProgram);
                 if (error != null)
@@ -1140,7 +1140,7 @@ namespace BABYLON
             if (instancesCount > 0)
             {
                 this._caps.instancedArrays.drawElementsInstancedANGLE(
-                    useTriangles ? Gl.TRIANGLES : Gl.LINES, indexCount, Gl.UNSIGNED_SHORT, new IntPtr(indexStart * 2), instancesCount);
+                    useTriangles ? Gl.TRIANGLES : Gl.LINES, indexCount, Gl.UNSIGNED_SHORT, indexStart * 2, instancesCount);
                 return;
             }
 
@@ -2122,7 +2122,7 @@ namespace BABYLON
             var shader = gl.createShader((type == "vertex") ? Gl.VERTEX_SHADER : Gl.FRAGMENT_SHADER);
             gl.shaderSource(shader, ((!string.IsNullOrEmpty(defines)) ? defines + "\n" : string.Empty) + source);
             gl.compileShader(shader);
-            if (gl.getShaderParameter(shader, Gl.COMPILE_STATUS) == null)
+            if ((int)gl.getShaderParameter(shader, Gl.COMPILE_STATUS) != Gl.TRUE)
             {
                 throw new Error(gl.getShaderInfoLog(shader));
             }

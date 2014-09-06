@@ -352,6 +352,7 @@ namespace BABYLON
 
                 engine.bindSamplers(this);
                 this._isReady = true;
+
                 if (this.onCompiled != null)
                 {
                     this.onCompiled(this);

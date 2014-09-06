@@ -388,11 +388,7 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
-            unsafe
-            {
-                Gl.glDrawElements(mode, count, type, new IntPtr(offset).ToPointer());
-            }
-
+            Gl.glDrawElements(mode, count, type, offset);
             ErrorTest();
         }
 
@@ -521,7 +517,7 @@
 
         public int getError()
         {
-            throw new NotImplementedException();
+            return Gl.glGetError();
         }
 
         public void shaderSource(Web.WebGLShader shader, string source)
@@ -534,9 +530,11 @@
                 bytes[i] = (byte)chars[i];
             }
 
-            var len = new int[1];
-            len[0] = chars.Length;
-            Gl.__glewShaderSource(shader.Value, 1, bytes, len);
+            var len = new int[] { chars.Length };
+            var bytesOfBytes = new byte[][] { bytes };
+
+            Gl.__glewShaderSource(shader.Value, 1, bytesOfBytes, len);
+
             ErrorTest();
         }
 
@@ -710,7 +708,7 @@
             var i = new int[1];
             Gl.__glewGetProgramiv(program.Value, pname, i);
             ErrorTest();
-            return i[0] == 0 ? (object)null : i[0];
+            return i[0];
         }
 
         public Web.WebGLActiveInfo getActiveUniform(Web.WebGLProgram program, int index)
@@ -809,7 +807,7 @@
             var i = new int[1];
             Gl.__glewGetShaderiv(shader.Value, pname, i);
             ErrorTest();
-            return i[0] == 0 ? (object)null : i[0];
+            return i[0];
         }
 
         public void clearDepth(double depth)
@@ -1012,6 +1010,7 @@
             if (error != Gl.GL_NO_ERROR)
             {
                 Console.WriteLine("GL Error {0}", error);
+                throw new Exception(string.Format("GL Error {0}", error));
             }
 #endif
         }

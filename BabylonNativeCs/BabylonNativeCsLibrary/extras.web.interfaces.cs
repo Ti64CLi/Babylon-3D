@@ -10157,7 +10157,7 @@ public interface ANGLE_instanced_arrays
 {
     void drawArraysInstancedANGLE(int mode, int first, int count, int primcount);
 
-    void drawElementsInstancedANGLE(int mode, int count, int type, IntPtr offset, int primcount);
+    void drawElementsInstancedANGLE(int mode, int count, int type, int offset, int primcount);
 
     void vertexAttribDivisorANGLE(uint index, uint divisor);
 };

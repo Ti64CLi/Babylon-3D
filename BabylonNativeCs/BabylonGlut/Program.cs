@@ -136,8 +136,6 @@ namespace BabylonGlut
         /// </param>
         private static void Main(string[] args)
         {
-            Console.WriteLine("start.");
-
             main = new Main();
             main.MaxWidth = main.Width = 400;
             main.MaxHeight = main.Height = 640;
@@ -164,12 +162,9 @@ namespace BabylonGlut
             }
 
             main.OnInitialize();
-            // _main.loadSceneTutorial4();
 
             // main loop
             Gl.glutMainLoop();
-
-            Console.WriteLine("stop.");
         }
     }
 }

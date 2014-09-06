@@ -301,7 +301,7 @@
         public static extern void __glewUseProgram(uint program);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern void glDrawElements(int mode, int count, int type, void* indices);
+        public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -323,7 +323,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewShaderSource(uint shader, int count, byte[] @string, int[] length);
+        public static extern void __glewShaderSource(uint shader, int count, byte[][] @string, int[] length);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]

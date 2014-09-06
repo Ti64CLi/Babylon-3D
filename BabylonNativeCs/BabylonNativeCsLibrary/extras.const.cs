@@ -13,6 +13,9 @@ namespace BabylonNativeCsLibrary
     /// </summary>
     public class Gl
     {
+        public const int FALSE = 0;
+        public const int TRUE = 1;
+
         /* ClearBufferMask */
 
         /// <summary>
