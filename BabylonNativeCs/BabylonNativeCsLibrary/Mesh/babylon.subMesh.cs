@@ -379,5 +379,21 @@ namespace BABYLON
 
             this._boundingInfo._update(world);
         }
+
+        public override bool Equals(object obj)
+        {
+            var subMesh = obj as SubMesh;
+            if (subMesh != null)
+            {
+                if (subMesh._id != _id)
+                {
+                    return false;
+                }
+
+                return _mesh.Equals(subMesh._mesh);
+            }
+
+            return base.Equals(obj);
+        }
     }
 }

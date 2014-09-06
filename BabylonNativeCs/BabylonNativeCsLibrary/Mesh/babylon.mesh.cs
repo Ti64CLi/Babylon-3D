@@ -1375,5 +1375,16 @@ namespace BABYLON
                 this.updateVerticesData(kind, data, updateExtends, false);
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            var mesh = obj as Mesh;
+            if (mesh != null)
+            {
+                return mesh.name.Equals(name);
+            }
+
+            return base.Equals(obj);
+        }
     }
 }
