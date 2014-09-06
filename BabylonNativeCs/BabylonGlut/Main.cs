@@ -57,10 +57,10 @@ namespace BabylonGlut
         /// </returns>
         public void OnDraw()
         {
-            Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-            Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            //Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            //Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            // this.scene.render();
+            this.scene.render();
         }
 
         /// <summary>

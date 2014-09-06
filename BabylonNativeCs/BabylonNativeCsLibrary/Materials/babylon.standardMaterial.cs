@@ -107,7 +107,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        private double _renderId;
+        private int _renderId;
 
         /// <summary>
         /// </summary>

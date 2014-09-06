@@ -33,7 +33,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public double _renderId = 0;
+        public int _renderId = 0;
 
         /// <summary>
         /// </summary>

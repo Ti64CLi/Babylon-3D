@@ -1055,7 +1055,7 @@ namespace BABYLON
                 this.rotationQuaternion = null;
             }
 
-            this._currentRenderId = double.MaxValue;
+            this._currentRenderId = int.MaxValue;
             this._isDirty = true;
         }
 

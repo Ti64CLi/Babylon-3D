@@ -21,7 +21,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public double _currentRenderId = -1;
+        public int _currentRenderId = -1;
 
         /// <summary>
         /// </summary>
@@ -258,8 +258,6 @@ namespace BABYLON
         public virtual bool isSynchronized(bool updateCache = false)
         {
             var check = this.hasNewParent();
-
-            Console.WriteLine("asd");
 
             check = check || !this.isSynchronizedWithParent();
             check = check || !this._isSynchronized();
