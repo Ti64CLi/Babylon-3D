@@ -54,7 +54,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, name.ToCharArray()));
+            var glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, Encoding.ASCII.GetBytes(name)));
             ErrorTest();
             return glUniformLocation;
         }
@@ -433,13 +433,7 @@
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
-            var resultUni = new char[k[0]];
-            for (var i = 0; i < resultUni.Length; i++)
-            {
-                resultUni[i] = (char)result[i];
-            }
-
-            return new string(resultUni);
+            return new string(Encoding.ASCII.GetChars(result));
         }
 
         public object getTexParameter(int target, int pname)
@@ -522,15 +516,9 @@
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
-            var chars = source.ToCharArray();
+            var bytes = Encoding.ASCII.GetBytes(source);
 
-            var bytes = new byte[chars.Length];
-            for (var i = 0; i < bytes.Length; i++)
-            {
-                bytes[i] = (byte)chars[i];
-            }
-
-            var len = new int[] { chars.Length };
+            var len = new int[] { bytes.Length };
             var bytesOfBytes = new byte[][] { bytes };
 
             Gl.__glewShaderSource(shader.Value, 1, bytesOfBytes, len);
@@ -944,16 +932,9 @@
             }
 
             var result = new byte[k[0]];
-
             Gl.__glewGetProgramInfoLog(program.Value, k[0], k, result);
 
-            var resultUni = new char[k[0]];
-            for (var i = 0; i < resultUni.Length; i++)
-            {
-                resultUni[i] = (char)result[i];
-            }
-
-            return new string(resultUni);
+            return new string(Encoding.ASCII.GetChars(result));
         }
 
         public void validateProgram(Web.WebGLProgram program)

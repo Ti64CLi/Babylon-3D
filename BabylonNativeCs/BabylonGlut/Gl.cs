@@ -249,7 +249,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetUniformLocation(uint program, char[] name);
+        public static extern int __glewGetUniformLocation(uint program, byte[] name);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
