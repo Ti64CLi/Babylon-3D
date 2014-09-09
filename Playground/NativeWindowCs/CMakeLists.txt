@@ -70,8 +70,7 @@ include_directories(SYSTEM
 
 link_directories(.)
 
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i686 -std=c++11 -Wall -Wl,--subsystem,windows")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i686 -std=c++11 -Wall")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i686 -std=c++11 -Wall -Wl,--subsystem,windows")
 
 add_custom_command( OUTPUT CoreLib.obj
                COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll -o=${CMAKE_BINARY_DIR}/CoreLib.obj
