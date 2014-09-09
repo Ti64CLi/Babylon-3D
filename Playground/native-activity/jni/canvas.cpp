@@ -14,12 +14,6 @@
 
 using namespace std;
 
-using namespace Ogre;
-
-static bool gInit = false;
-static Ogre::Root* gRoot = NULL;
-static Ogre::RenderWindow* gRenderWnd = NULL;
-
 
 Babylon::IGL::Ptr Canvas::getContext3d(bool antialias) {
 	FreeImage_Initialise(FALSE);
