@@ -62,6 +62,18 @@ else()
 endif()
 
 #-----------------------------------------------------------------------------
+# Configure GC
+
+if(WIN32)		
+	set(GC_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/GC/include")
+	if (MSVC)
+		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/gc-lib.lib")
+	else()
+		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/libgc-lib.a")
+	endif()
+endif()
+
+#-----------------------------------------------------------------------------
 # Configure Build
 
 include_directories(SYSTEM 
@@ -87,7 +99,7 @@ add_custom_command( OUTPUT BabylonNativeCsLibraryForIl.obj
 
 add_executable (NativeWindowCs main.cpp ${CMAKE_BINARY_DIR}/BabylonGlut.obj ${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj ${CMAKE_BINARY_DIR}/CoreLib.obj)
 
-target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} "stdc++" "opengl32")
+target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} ${GC_LIBRARY} "stdc++" "opengl32")
 
 if(WIN32)
 add_custom_command(TARGET NativeWindowCs POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NativeWindowCs_SOURCE_DIR}/../Deps/freeglut/dll/freeglut.dll" $<TARGET_FILE_DIR:NativeWindowCs>/freeglut.dll)  

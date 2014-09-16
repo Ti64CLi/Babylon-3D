@@ -192,25 +192,18 @@ namespace BABYLON
 
             var engine = this.getEngine();
             // TODO: this code causes issue with 'select'
-            ////if (this.mode == PERSPECTIVE_CAMERA)
-            ////{
-            ////    check = this._cache.fov == this.fov && this._cache.aspectRatio == engine.getAspectRatio(this);
-            ////}
-            ////else
-            ////{
-            ////    check = this._cache.orthoLeft == this.orthoLeft && this._cache.orthoRight == this.orthoRight && this._cache.orthoBottom == this.orthoBottom
-            ////            && this._cache.orthoTop == this.orthoTop && this._cache.renderWidth == engine.getRenderWidth()
-            ////            && this._cache.renderHeight == engine.getRenderHeight();
-            ////}
-
-            ////return check;
-
             if (this.mode == PERSPECTIVE_CAMERA)
             {
-                return this._cache.fov == this.fov && this._cache.aspectRatio == engine.getAspectRatio(this);
+                check = this._cache.fov == this.fov && this._cache.aspectRatio == engine.getAspectRatio(this);
+            }
+            else
+            {
+                check = this._cache.orthoLeft == this.orthoLeft && this._cache.orthoRight == this.orthoRight && this._cache.orthoBottom == this.orthoBottom
+                        && this._cache.orthoTop == this.orthoTop && this._cache.renderWidth == engine.getRenderWidth()
+                        && this._cache.renderHeight == engine.getRenderHeight();
             }
 
-            return cacheTest(engine);
+            return check;
         }
 
         private bool cacheTest(Engine engine)
