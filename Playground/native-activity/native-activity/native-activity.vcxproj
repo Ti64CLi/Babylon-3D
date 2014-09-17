@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="NsightTegraProject">
+    <NsightTegraProjectRevisionNumber>7</NsightTegraProjectRevisionNumber>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Tegra-Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Tegra-Android">
+      <Configuration>Release</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Tegra-Android">
+      <Configuration>Profile</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\grass_texture.jpg" />
+    <None Include="..\assets\Planet.png" />
+    <None Include="..\assets\text.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\jni\Android.mk" />
+    <None Include="..\jni\Application.mk" />
+    <None Include="..\libs\armeabi-v7a\libnative-activity.so" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\jni\android_native_app_glue.c" />
+    <ClCompile Include="..\jni\canvas.cpp" />
+    <ClCompile Include="..\jni\gl.cpp" />
+    <ClCompile Include="..\jni\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\res\values\strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\jni\android_native_app_glue.h" />
+    <ClInclude Include="..\jni\canvas.h" />
+    <ClInclude Include="..\jni\gl.h" />
+    <ClInclude Include="..\jni\strings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="..\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </AndroidBuild>
+    <AndroidBuild Include="..\build.xml" />
+    <AndroidBuild Include="..\local.properties" />
+    <AndroidBuild Include="..\proguard-project.txt" />
+    <AndroidBuild Include="..\project.properties" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B0EB7591-5FF4-4FD9-8AC2-4A8F752DADCE}</ProjectGuid>
+    <RootNamespace>native_activity</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <AndroidTargetAPI>android-19</AndroidTargetAPI>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <AndroidTargetAPI>android-18</AndroidTargetAPI>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
+    <AndroidTargetAPI>android-18</AndroidTargetAPI>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings"></ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <IncludePath></IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../Babylon/Engine;$(SolutionDir)../../../Babylon/Interfaces;$(SolutionDir)../../../Babylon/Mesh;$(SolutionDir)../../../Babylon/Tools;$(SolutionDir)../../../Babylon/Materials;$(SolutionDir)../../../Babylon/Textures;$(SolutionDir)../../../Babylon/PostProcess;$(SolutionDir)../../../Babylon/Animations;$(SolutionDir)../../../Babylon/Bones;$(SolutionDir)../../../Babylon/Culling;$(SolutionDir)../../../Babylon/Collisions;$(SolutionDir)../../../Babylon/Lights;$(SolutionDir)../../../Babylon/Rendering;$(SolutionDir)../../../Babylon/Cameras;$(SolutionDir)../../../Babylon/PhysicsEngine;$(SolutionDir)../../../Babylon/Particles;$(SolutionDir)../../../Babylon/Layer;$(SolutionDir)../../../Babylon/LensFlare;$(SolutionDir)../../../Babylon/Sprites;$(SolutionDir)../../../Playground/Deps/FreeImage/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Wno-error=format-security -fexceptions -frtti -std=gnu++11 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -lFreeImage -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../libs/armeabi-v7a/;$(StlLibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EchoCommandLines>true</EchoCommandLines>
+      <AdditionalDependencies></AdditionalDependencies>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(SolutionDir)..</AntBuildPath>
+    </AntBuild>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions) %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(SolutionDir)..</AntBuildPath>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lCameras -lEngine -lAnimations -lBones -lCollisions -lContext -lLayer -lLensFlare -lMesh -lMaterials -lLights -lCulling -lParticles -lPhysicsEngine -lPostProcess -lRendering -lSprites -lTextures -lTools -llog -landroid -lEGL -lGLESv2 -lsupc++ -lgnustl_static -lgcc %(AdditionalOptions) %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(SolutionDir)..</AntBuildPath>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets"></ImportGroup>
+</Project>
