@@ -40,18 +40,44 @@ namespace BabylonWpf
             //BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
             var canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
-
             this.engine = new Engine(canvas, true);
-
-            // create scene
             this.scene = new BABYLON.Scene(this.engine);
 
-            var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), scene);
-            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), scene);
-            var origin = Mesh.CreateSphere("origin", 10, 1.0, scene);
+            this.Scene2();
 
             // Attach the camera to the scene
-            scene.activeCamera.attachControl(canvas);
+            this.scene.activeCamera.attachControl(canvas);
+        }
+
+        private void Scene1()
+        {
+            var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
+            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
+            var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
+        }
+
+        private void Scene2()
+        {
+            // This creates and positions a free camera
+            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+
+            // This targets the camera to scene origin
+            camera.setTarget(BABYLON.Vector3.Zero());
+
+            // This creates a light, aiming 0,1,0 - to the sky.
+            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+
+            // Dim the light a small amount
+            light.intensity = .5;
+
+            // Let's try our built-in 'sphere' shape. Params: name, subdivisions, size, scene
+            var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);
+
+            // Move the sphere upward 1/2 its height
+            sphere.position.y = 1;
+
+            // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
+            BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
         }
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)

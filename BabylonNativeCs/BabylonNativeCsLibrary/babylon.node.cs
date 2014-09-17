@@ -128,7 +128,10 @@ namespace BABYLON
             }
 
             this._isReady = true;
-            this.onReady(this);
+            if (this.onReady != null)
+            {
+                this.onReady(this);
+            }
         }
 
         /// <summary>
