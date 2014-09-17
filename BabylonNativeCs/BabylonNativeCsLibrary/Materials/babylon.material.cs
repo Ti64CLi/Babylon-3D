@@ -86,6 +86,7 @@ namespace BABYLON
         public Material(string name, Scene scene, bool doNotAdd = false)
         {
             this.id = name;
+            this.name = name;
             this._scene = scene;
             if (!doNotAdd)
             {
@@ -299,6 +300,17 @@ namespace BABYLON
         /// </summary>
         public virtual void unbind()
         {
+        }
+
+        public override bool Equals(object obj)
+        {
+            var material = obj as Material;
+            if (material != null)
+            {
+                return material.name.Equals(name);
+            }
+
+            return base.Equals(obj);
         }
     }
 }

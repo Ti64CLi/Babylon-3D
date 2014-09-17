@@ -79,7 +79,7 @@ namespace BabylonGlut
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene1();
+            this.Scene2();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);

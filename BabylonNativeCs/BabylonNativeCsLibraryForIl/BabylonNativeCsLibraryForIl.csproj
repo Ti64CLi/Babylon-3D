@@ -453,7 +453,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /roslyn
+    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gc
 copy /Y $(TargetDir)\$(TargetName).ll D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll
 del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj
 del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe
