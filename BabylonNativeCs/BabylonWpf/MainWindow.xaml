@@ -1,0 +1,14 @@
+﻿<Window x:Class="BabylonWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:gl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <gl:OpenGLControl 
+            Name="openGLControl1" 
+            OpenGLInitialized="OpenGLControl_OpenGLInitialized"
+            OpenGLDraw="openGLControl1_OpenGLDraw" 
+            RenderContextType="FBO"
+            Resized="openGLControl1_Resized" />
+    </Grid>
+</Window>
