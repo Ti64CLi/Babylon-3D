@@ -15,6 +15,8 @@
  *
  */
 
+// --target=armv7-none-linux-androideabi
+
 //BEGIN_INCLUDE(all)
 #include <jni.h>
 #include <errno.h>
