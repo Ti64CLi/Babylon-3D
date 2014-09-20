@@ -121,7 +121,7 @@ static int engine_init_display(struct engine* engine) {
     // Initialize GL state.
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
     glEnable(GL_CULL_FACE);
-    glShadeModel(GL_SMOOTH);
+    //glShadeModel(GL_SMOOTH);
     glDisable(GL_DEPTH_TEST);
 
     return 0;
@@ -225,6 +225,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
     }
 }
 
+//int getValue();
+
 /**
  * This is the main entry point of a native application that is using
  * android_native_app_glue.  It runs in its own thread, with its own
@@ -235,6 +237,8 @@ void android_main(struct android_app* state) {
 
     // Make sure glue isn't stripped.
     app_dummy();
+
+    //int i = getValue();
 
     memset(&engine, 0, sizeof(engine));
     state->userData = &engine;

@@ -31,6 +31,9 @@
     <ClCompile Include="native_app_glue\android_native_app_glue.c">
       <Filter>native_app_glue</Filter>
     </ClCompile>
+    <ClCompile Include="jni\android_test.ll">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
