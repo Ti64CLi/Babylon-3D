@@ -23,3 +23,4 @@ APP_ABI := armeabi-v7a
 APP_PLATFORM := android-10
 APP_STL := stlport_static
 #NDK_TOOLCHAIN := clang3.4
+APP_CPPFLAGS += -Wno-error=format-security -fexceptions -frtti -std=c++11 -fPIC

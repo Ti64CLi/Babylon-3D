@@ -29,6 +29,8 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue
 LOCAL_CFLAGS := -DANDROID_NDK \
                 -DDISABLE_IMPORTGL
 
+LOCAL_LLFLAGS := -enable-pie -relocation-model=pic
+
 include $(BUILD_SHARED_LIBRARY)
 
 #$(call import-add-path, ../libs/jni)
