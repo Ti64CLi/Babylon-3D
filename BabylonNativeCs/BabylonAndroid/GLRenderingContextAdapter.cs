@@ -1,4 +1,4 @@
-﻿namespace BabylonGlut
+﻿namespace BabylonAndroid
 {
     using System;
     using System.Diagnostics;
@@ -55,7 +55,7 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            var glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, Encoding.ASCII.GetBytes(name)));
+            var glUniformLocation = new GlUniformLocation(Gl.glGetUniformLocation(program.Value, Encoding.ASCII.GetBytes(name)));
             ErrorTest();
             return glUniformLocation;
         }
@@ -71,7 +71,7 @@
             {
                 fixed (void* pdata = data)
                 {
-                    Gl.__glewBufferData(target, data.Length * sizeof(float), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(float), pdata, usage);
                 }
             }
 
@@ -84,7 +84,7 @@
             {
                 fixed (void* pdata = data)
                 {
-                    Gl.__glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(ushort), pdata, usage);
                 }
             }
 
@@ -119,7 +119,7 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            Gl.__glewLinkProgram(program.Value);
+            Gl.glLinkProgram(program.Value);
             ErrorTest();
         }
 
@@ -132,7 +132,7 @@
         {
             unsafe
             {
-                Gl.__glewBufferSubData(target, offset, size, data.ToPointer());
+                Gl.glBufferSubData(target, offset, size, data.ToPointer());
             }
         }
 
@@ -145,7 +145,7 @@
         {
             unsafe
             {
-                Gl.__glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+                Gl.glVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
             }
 
             ErrorTest();
@@ -178,7 +178,7 @@
 
         public void enableVertexAttribArray(int index)
         {
-            Gl.__glewEnableVertexAttribArray((uint)index);
+            Gl.glEnableVertexAttribArray((uint)index);
             ErrorTest();
         }
 
@@ -200,7 +200,7 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
+            Gl.glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
             ErrorTest();
         }
 
@@ -246,14 +246,14 @@
 
         public Web.WebGLProgram createProgram()
         {
-            var glProgramAdapter = new GlProgramAdapter(Gl.__glewCreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
             ErrorTest();
             return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            Gl.__glewDeleteShader(shader.Value);
+            Gl.glDeleteShader(shader.Value);
             ErrorTest();
         }
 
@@ -301,7 +301,7 @@
         public Web.WebGLBuffer createBuffer()
         {
             uint[] buffers = new uint[1];
-            Gl.__glewGenBuffers(1, buffers);
+            Gl.glGenBuffers(1, buffers);
             ErrorTest();
             return new GlBufferAdapter(buffers[0]);
         }
@@ -313,7 +313,7 @@
 
         public void useProgram(Web.WebGLProgram program)
         {
-            Gl.__glewUseProgram(program.Value);
+            Gl.glUseProgram(program.Value);
             ErrorTest();
         }
 
@@ -418,7 +418,7 @@
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
             var k = new int[1];
-            Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
+            Gl.glGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
             {
                 return string.Empty;
@@ -430,7 +430,7 @@
             }
 
             var result = new byte[k[0]];
-            Gl.__glewGetShaderInfoLog(shader.Value, k[0], k, result);
+            Gl.glGetShaderInfoLog(shader.Value, k[0], k, result);
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
@@ -522,7 +522,7 @@
             var len = new int[] { bytes.Length };
             var bytesOfBytes = new byte[][] { bytes };
 
-            Gl.__glewShaderSource(shader.Value, 1, bytesOfBytes, len);
+            Gl.glShaderSource(shader.Value, 1, bytesOfBytes, len);
 
             ErrorTest();
         }
@@ -539,7 +539,7 @@
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            Gl.__glewBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
+            Gl.glBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
             ErrorTest();
         }
 
@@ -553,7 +553,7 @@
                 bytes[i] = (byte)chars[i];
             }
 
-            var attribLocation = Gl.__glewGetAttribLocation(program.Value, bytes);
+            var attribLocation = Gl.glGetAttribLocation(program.Value, bytes);
             ErrorTest();
             return attribLocation;
         }
@@ -672,7 +672,7 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
-            Gl.__glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
+            Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
         }
 
@@ -688,14 +688,14 @@
 
         public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
-            Gl.__glewUniform1i(location.Value, x);
+            Gl.glUniform1i(location.Value, x);
             ErrorTest();
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
             var i = new int[1];
-            Gl.__glewGetProgramiv(program.Value, pname, i);
+            Gl.glGetProgramiv(program.Value, pname, i);
             ErrorTest();
             return i[0];
         }
@@ -794,7 +794,7 @@
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
             var i = new int[1];
-            Gl.__glewGetShaderiv(shader.Value, pname, i);
+            Gl.glGetShaderiv(shader.Value, pname, i);
             ErrorTest();
             return i[0];
         }
@@ -838,7 +838,7 @@
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
-            Gl.__glewDeleteBuffers(1, new uint[] { buffer.Value });
+            Gl.glDeleteBuffers(1, new uint[] { buffer.Value });
             ErrorTest();
         }
 
@@ -864,13 +864,13 @@
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
-            Gl.__glewAttachShader(program.Value, shader.Value);
+            Gl.glAttachShader(program.Value, shader.Value);
             ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
-            Gl.__glewCompileShader(shader.Value);
+            Gl.glCompileShader(shader.Value);
             ErrorTest();
         }
 
@@ -912,7 +912,7 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
-            Gl.__glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
+            Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
         }
 
@@ -921,7 +921,7 @@
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
             var k = new int[1];
-            Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, k);
+            Gl.glGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, k);
             if (k[0] == -1)
             {
                 return string.Empty;
@@ -933,7 +933,7 @@
             }
 
             var result = new byte[k[0]];
-            Gl.__glewGetProgramInfoLog(program.Value, k[0], k, result);
+            Gl.glGetProgramInfoLog(program.Value, k[0], k, result);
 
             return new string(Encoding.ASCII.GetChars(result));
         }
@@ -960,7 +960,7 @@
 
         public Web.WebGLShader createShader(int type)
         {
-            var shader = (uint)Gl.__glewCreateShader(type);
+            var shader = (uint)Gl.glCreateShader(type);
             ErrorTest();
             return new GlShaderAdapter(shader);
         }

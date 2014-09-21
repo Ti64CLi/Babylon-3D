@@ -9,6 +9,7 @@
 
 namespace BabylonAndroid
 {
+    using BABYLON;
     using System.Runtime.InteropServices;
 
     //using BABYLON;
@@ -27,11 +28,11 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
-        //private Engine engine;
+        private Engine engine;
 
         /// <summary>
         /// </summary>
-        //private Scene scene;
+        private Scene scene;
 
         /// <summary>
         /// </summary>
@@ -67,23 +68,22 @@ namespace BabylonAndroid
         /// </returns>
         public void OnInitialize()
         {
-            ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
-            ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
 
-            ////// BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            ////// BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            // BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            // BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
-            ////var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
-            ////this.engine = new Engine(canvas, true);
-            ////this.scene = new Scene(this.engine);
+            var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            this.engine = new Engine(canvas, true);
+            this.scene = new Scene(this.engine);
 
-            ////this.Scene2();
+            this.Scene2();
 
-            ////// Attach the camera to the scene
-            ////this.scene.activeCamera.attachControl(canvas);
+            // Attach the camera to the scene
+            this.scene.activeCamera.attachControl(canvas);
         }
 
-        /*
         private void Scene1()
         {
             var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
@@ -114,6 +114,5 @@ namespace BabylonAndroid
             // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
             BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
         }
-        */
     }
 }

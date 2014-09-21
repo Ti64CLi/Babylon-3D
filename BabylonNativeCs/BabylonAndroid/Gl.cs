@@ -35,143 +35,112 @@
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glClearColor(float r, float g, float b, float alpha);
 
-        /*
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewInit();
+        public static extern int glGetUniformLocation(uint program, byte[] name);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetUniformLocation(uint program, byte[] name);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glBufferData(int target, int size, void* data, int usage);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewBufferData(int target, int size, void* data, int usage);
-
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glDepthMask(byte flag);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewLinkProgram(uint program);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glLinkProgram(uint program);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewBufferSubData(int target, int offset, int size, void* data);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glBufferSubData(int target, int offset, int size, void* data);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewEnableVertexAttribArray(uint index);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glEnableVertexAttribArray(uint index);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glCullFace(int mode);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniformMatrix4fv(int location, int count, byte transpose, float[] value);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUniformMatrix4fv(int location, int count, byte transpose, float[] value);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern uint __glewCreateProgram();
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern uint glCreateProgram();
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewDeleteShader(uint shader);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glDeleteShader(uint shader);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glEnable(int cap);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGenBuffers(int n, uint[] buffers);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGenBuffers(int n, uint[] buffers);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUseProgram(uint program);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUseProgram(uint program);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderiv(uint shader, int pname, int[] @params);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGetShaderiv(uint shader, int pname, int[] @params);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern byte[] glGetString(int name);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int[] length, byte[] infoLog);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGetShaderInfoLog(uint shader, int maxLength, int[] length, byte[] infoLog);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetProgramInfoLog(uint program, int maxLength, int[] length, byte[] infoLog);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGetProgramInfoLog(uint program, int maxLength, int[] length, byte[] infoLog);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glGetIntegerv(int pname, int[] @params);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewShaderSource(uint shader, int count, byte[][] @string, int[] length);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glShaderSource(uint shader, int count, byte[][] @string, int[] length);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewBindBuffer(int target, int buffer);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glBindBuffer(int target, int buffer);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetAttribLocation(uint program, byte[] name);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern int glGetAttribLocation(uint program, byte[] name);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform4f(int location, float x, float y, float z, float w);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUniform4f(int location, float x, float y, float z, float w);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform1i(int location, int x);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUniform1i(int location, int x);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetProgramiv(uint program, int pname, int[] @params);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGetProgramiv(uint program, int pname, int[] @params);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glDepthFunc(int func);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearDepth(double depth);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glClearDepthf(float depth);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glViewport(int x, int y, int width, int height);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewDeleteBuffers(int n, uint[] buffers);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glDeleteBuffers(int n, uint[] buffers);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewAttachShader(uint program, uint shader);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glAttachShader(uint program, uint shader);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewCompileShader(uint shader);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glCompileShader(uint shader);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniform3f(int location, float x, float y, float z);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUniform3f(int location, float x, float y, float z);
 
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern uint __glewCreateShader(int shaderType);
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern uint glCreateShader(int shaderType);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern int glGetError();
-        */
     }
 }
