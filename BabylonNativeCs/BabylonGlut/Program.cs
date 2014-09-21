@@ -152,13 +152,13 @@ namespace BabylonGlut
 
             unsafe
             {
-                Gl.glutDisplayFunc(((Delegate)new EmptyDelegate(Display)).ToPointer());
-                Gl.glutPassiveMotionFunc(((Delegate)new TwoDimDelegate(PassiveMotion)).ToPointer());
-                Gl.glutMouseFunc(((Delegate)new MouseDelegate(Mouse)).ToPointer());
-                Gl.glutMotionFunc(((Delegate)new TwoDimDelegate(Motion)).ToPointer());
-                Gl.glutIdleFunc(((Delegate)new EmptyDelegate(Idle)).ToPointer());
-                Gl.glutKeyboardFunc(((Delegate)new KeyDelegate(Key)).ToPointer());
-                Gl.glutReshapeFunc(((Delegate)new TwoDimDelegate(Resize)).ToPointer());
+                Gl.glutDisplayFunc(new EmptyDelegate(Display).ToPointer());
+                Gl.glutPassiveMotionFunc(new TwoDimDelegate(PassiveMotion).ToPointer());
+                Gl.glutMouseFunc(new MouseDelegate(Mouse).ToPointer());
+                Gl.glutMotionFunc(new TwoDimDelegate(Motion).ToPointer());
+                Gl.glutIdleFunc(new EmptyDelegate(Idle).ToPointer());
+                Gl.glutKeyboardFunc(new KeyDelegate(Key).ToPointer());
+                Gl.glutReshapeFunc(new TwoDimDelegate(Resize).ToPointer());
             }
 
             main.OnInitialize();

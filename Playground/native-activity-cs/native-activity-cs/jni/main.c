@@ -225,8 +225,6 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
     }
 }
 
-//int getValue();
-
 /**
  * This is the main entry point of a native application that is using
  * android_native_app_glue.  It runs in its own thread, with its own
@@ -237,8 +235,6 @@ void android_main(struct android_app* state) {
 
     // Make sure glue isn't stripped.
     app_dummy();
-
-    //int i = getValue();
 
     memset(&engine, 0, sizeof(engine));
     state->userData = &engine;
@@ -297,7 +293,7 @@ void android_main(struct android_app* state) {
             }
         }
 
-        if (engine.animating) {
+         if (engine.animating) {
             // Done with events; draw next animation frame.
             engine.state.angle += .01f;
             if (engine.state.angle > 1) {

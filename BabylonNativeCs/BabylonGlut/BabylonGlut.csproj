@@ -92,8 +92,7 @@
     <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gc
 copy /Y $(TargetDir)\$(TargetName).ll D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll
 del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj
-del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe
-del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\NativeWindowCs.exe</PostBuildEvent>
+del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -19,15 +19,7 @@ LOCAL_MODULE := native-activity
 
 LOCAL_SRC_FILES := $(wildcard *.cpp)
 LOCAL_SRC_FILES += $(wildcard *.c)
-
-# custom build
-source_ll_files := $(wildcard *.ll)
-
-%.s:
-	llc -o $@ $(patsubst %.s,%.ll,$@)
-
-LOCAL_SRC_FILES += $(patsubst %.ll,%.s,$(source_ll_files))
-# end
+LOCAL_SRC_FILES += $(wildcard *.ll)
 
 LOCAL_ARM_MODE   := arm
 
