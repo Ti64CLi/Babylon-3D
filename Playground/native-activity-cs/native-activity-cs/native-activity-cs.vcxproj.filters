@@ -25,7 +25,7 @@
     </AndroidBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.c">
+    <ClCompile Include="jni\main.cpp">
       <Filter>jni</Filter>
     </ClCompile>
     <ClCompile Include="native_app_glue\android_native_app_glue.c">

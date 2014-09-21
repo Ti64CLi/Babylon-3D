@@ -15,7 +15,7 @@
 LOCAL_PATH := $(subst //,/,$(call my-dir))
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := native-activity
+LOCAL_MODULE := native-activity-cs
 
 LOCAL_SRC_FILES := $(wildcard *.cpp)
 LOCAL_SRC_FILES += $(wildcard *.c)
@@ -23,8 +23,10 @@ LOCAL_SRC_FILES += $(wildcard *.ll)
 
 LOCAL_ARM_MODE   := arm
 
-LOCAL_LDLIBS :=  -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
+LOCAL_LDLIBS := -lgc-lib -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
 LOCAL_STATIC_LIBRARIES := android_native_app_glue
+
+LOCAL_LDFLAGS := -L $(LOCAL_PATH)/../../../Deps/GC/lib/armeabi-v7a
 
 LOCAL_CFLAGS := -DANDROID_NDK \
                 -DDISABLE_IMPORTGL

@@ -16,7 +16,6 @@ namespace BabylonGlut
     /// </summary>
     internal class Program
     {
-
         /// <summary>
         /// </summary>
         public delegate void EmptyDelegate();
