@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BabylonWpf
+namespace BABYLON
 {
     public class CanvasRenderingContext2DAdapter : Web.CanvasRenderingContext2D
     {

@@ -1,11 +1,12 @@
-﻿namespace BabylonWpf
+﻿namespace BabylonGlut
 {
-    using BabylonGlut;
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Text;
+
+    using BABYLON;
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {

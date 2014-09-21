@@ -1,7 +1,6 @@
-﻿namespace BabylonWpf
+﻿namespace BABYLON
 {
     using System;
-    using BABYLON;
 
     public class WindowAdapter : Web.Window
     {

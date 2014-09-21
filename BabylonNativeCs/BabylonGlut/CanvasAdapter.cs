@@ -1,4 +1,4 @@
-﻿namespace BabylonWpf
+﻿namespace BabylonGlut
 {
     using System;
     using BABYLON;
