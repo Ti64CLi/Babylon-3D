@@ -56,8 +56,8 @@ namespace BabylonAndroid
         /// </returns>
         public void OnDraw()
         {
-            Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-            Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            ////Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            ////Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             Log.Info("OnDraw");
 
@@ -72,11 +72,11 @@ namespace BabylonAndroid
         {
             Log.Info("OnInitialize");
 
-            ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
-            ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
 
-            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
             var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);

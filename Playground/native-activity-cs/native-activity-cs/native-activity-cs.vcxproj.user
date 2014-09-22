@@ -4,5 +4,6 @@
     <AndroidDebugMode>native</AndroidDebugMode>
     <DebuggerFlavor>AndroidDebugger</DebuggerFlavor>
     <AndroidLaunchSuspended>false</AndroidLaunchSuspended>
+    <UseHardwareWatchpoints>false</UseHardwareWatchpoints>
   </PropertyGroup>
 </Project>

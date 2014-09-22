@@ -26,11 +26,25 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
+        /// <param name="display">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void InitFunc(void* init);
+
+        /// <summary>
+        /// </summary>
         public delegate void EmptyDelegate();
 
         /// <summary>
         /// </summary>
         private static Main main;
+
+        /// <summary>
+        /// </summary>
+        private static void Init()
+        {
+            main.OnInitialize();
+        }
 
         /// <summary>
         /// </summary>
@@ -49,10 +63,9 @@ namespace BabylonAndroid
             main.MaxWidth = main.Width = 400;
             main.MaxHeight = main.Height = 640;
 
-            main.OnInitialize();
-
             unsafe
             {
+                InitFunc(new EmptyDelegate(Init).ToPointer());
                 DisplayFunc(new EmptyDelegate(Display).ToPointer());
             }
         }

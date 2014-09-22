@@ -40,7 +40,7 @@ struct saved_state {
 	int32_t y;
 };
 
-typedef void (*defDisplayFunc)();
+typedef void (*defEmptyFunc)();
 
 /**
 * Shared state for our app.
@@ -60,7 +60,8 @@ struct engine {
 	int32_t height;
 	struct saved_state state;
 
-	defDisplayFunc displayFunc;
+	defEmptyFunc displayFunc;
+	defEmptyFunc initFunc;
 };
 
 /**
@@ -108,12 +109,16 @@ static int engine_init_display(struct engine* engine) {
 	surface = eglCreateWindowSurface(display, config, engine->app->window, NULL);
 
 	int attrib_list[3] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
-	context = eglCreateContext(display, config, EGL_NO_CONTEXT, attrib_list);
+	context = eglCreateContext(display, config, NULL, attrib_list);
 
 	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
 		LOGW("Unable to eglMakeCurrent");
 		return -1;
 	}
+
+	EGLint ver = 0;
+	eglQueryContext(display, context, EGL_CONTEXT_CLIENT_VERSION, &ver);
+	LOGI("OpenGL Version: %d", ver);
 
 	eglQuerySurface(display, surface, EGL_WIDTH, &w);
 	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
@@ -123,6 +128,11 @@ static int engine_init_display(struct engine* engine) {
 	engine->surface = surface;
 	engine->width = w;
 	engine->height = h;
+
+	if (engine->initFunc != NULL)
+	{
+		engine->initFunc();
+	}
 
 	return 0;
 }
@@ -169,7 +179,7 @@ static void engine_term_display(struct engine* engine) {
 	engine->context = EGL_NO_CONTEXT;
 	engine->surface = EGL_NO_SURFACE;
 }
- 
+
 /**
 * Process the next input event.
 */
@@ -188,12 +198,18 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 extern "C" {
 #endif
 	extern int main();
-	
-	defDisplayFunc _displayFunc;
-	
+
+	defEmptyFunc _initFunc;
+	defEmptyFunc _displayFunc;
+
+	void InitFunc(void* initFunc)
+	{
+		_initFunc = (defEmptyFunc)initFunc;	
+	}
+
 	void DisplayFunc(void* displayFunc)
 	{
-		_displayFunc = (defDisplayFunc)displayFunc;	
+		_displayFunc = (defEmptyFunc)displayFunc;	
 	}
 
 	void _logi(char * msg)
@@ -230,6 +246,12 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 	case APP_CMD_INIT_WINDOW:
 		// The window is being shown, get it ready.
 		if (engine->app->window != NULL) {
+
+			if (_initFunc != NULL)
+			{
+				engine->initFunc = _initFunc;
+				_initFunc = NULL;
+			}
 
 			if (_displayFunc != NULL)
 			{
@@ -281,6 +303,7 @@ void android_main(struct android_app* state) {
 	// Make sure glue isn't stripped.
 	app_dummy();
 
+	_initFunc = NULL;
 	_displayFunc = NULL;
 
 	memset(&engine, 0, sizeof(engine));

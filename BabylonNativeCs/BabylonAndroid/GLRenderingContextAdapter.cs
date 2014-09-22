@@ -69,7 +69,7 @@
 
         public void bufferData(int target, float[] data, int usage)
         {
-            Log.Info(string.Format("bufferData {0} {1}", target, usage));
+            Log.Info(string.Format("bufferData {0} Len:{1} {2}", target, data.Length, usage));
 
             unsafe
             {
@@ -84,7 +84,7 @@
 
         public void bufferData(int target, ushort[] data, int usage)
         {
-            Log.Info(string.Format("bufferData {0} {1}", target, usage));
+            Log.Info(string.Format("bufferData {0} Len:{1} {2}", target, data.Length, usage));
 
             unsafe
             {
@@ -127,7 +127,7 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
-            Log.Info("linkProgram");
+            Log.Info(string.Format("linkProgram {0}", program.Value));
 
             Gl.glLinkProgram(program.Value);
             ErrorTest();
@@ -140,10 +140,14 @@
 
         public void bufferSubData(int target, int offset, int size, IntPtr data)
         {
+            Log.Info(string.Format("bufferSubData {0} {1} {2}", target, offset, size));
+
             unsafe
             {
                 Gl.glBufferSubData(target, offset, size, data.ToPointer());
             }
+
+            ErrorTest();
         }
 
         public void bufferSubData(int target, int offset, float[] data)
@@ -153,7 +157,7 @@
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
-            Log.Info("vertexAttribPointer");
+            Log.Info(string.Format("vertexAttribPointer {0} {1} {2} {3} {4} {5}", indx, size, type, normalized, stride, offset));
 
             unsafe
             {
@@ -217,7 +221,8 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
-            Log.Info("uniformMatrix4fv");
+            Log.Info(string.Format("uniformMatrix4fv {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}", location.Value, transpose
+                , value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]));
             Gl.glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
             ErrorTest();
         }
@@ -268,12 +273,15 @@
 
             var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
             ErrorTest();
+
+            Log.Info(string.Format("value {0}", glProgramAdapter.Value));
+
             return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
-            Log.Info("deleteShader");
+            Log.Info(string.Format("deleteShader", shader.Value));
 
             Gl.glDeleteShader(shader.Value);
             ErrorTest();
@@ -328,7 +336,11 @@
             uint[] buffers = new uint[1];
             Gl.glGenBuffers(1, buffers);
             ErrorTest();
-            return new GlBufferAdapter(buffers[0]);
+
+            var bufferId = buffers[0];
+            Log.Info(string.Format("value {0}", (int)bufferId));
+
+            return new GlBufferAdapter(bufferId);
         }
 
         public void deleteTexture(Web.WebGLTexture texture)
@@ -415,7 +427,7 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
-            Log.Info(string.Format("drawElements {0}", mode));
+            Log.Info(string.Format("drawElements {0} {1} {2} {3}", mode, count, type, offset));
 
             Gl.glDrawElements(mode, count, type, offset);
             ErrorTest();
@@ -479,6 +491,9 @@
             var i = new int[1];
             Gl.glGetIntegerv(pname, i);
             ErrorTest();
+
+            Log.Info(string.Format("value {0}", i[0]));
+
             return i[0];
         }
 
@@ -549,7 +564,7 @@
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
-            Log.Info(string.Format("shaderSource {0}", shader.Value));
+            Log.Info(string.Format("shaderSource {0}, source length {1}", shader.Value, source.Length));
 
             var bytes = Encoding.ASCII.GetBytes(source);
 
@@ -573,14 +588,17 @@
 
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
-            Log.Info(string.Format("bindBuffer {0}", target));
-            Gl.glBindBuffer(target, (int)(buffer != null ? buffer.Value : 0));
+            var bufferId = (int)(buffer != null ? buffer.Value : 0);
+            
+            Log.Info(string.Format("bindBuffer {0} {1}", target, bufferId));
+
+            Gl.glBindBuffer(target, bufferId);
             ErrorTest();
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
-            Log.Info(string.Format("getAttribLocation {0}", name));
+            Log.Info(string.Format("getAttribLocation {0} {1}", program.Value, name));
 
             var chars = name.ToCharArray();
 
@@ -592,6 +610,9 @@
 
             var attribLocation = Gl.glGetAttribLocation(program.Value, bytes);
             ErrorTest();
+
+            Log.Info(string.Format("value {0}", attribLocation));
+
             return attribLocation;
         }
 
@@ -625,7 +646,7 @@
 
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
-            Log.Info(string.Format("readPixels {0}", format));
+            Log.Info(string.Format("readPixels {0} {1} {2} {3} {4} {5}", x, y, width, height, format, type));
 
             Gl.glReadPixels(x, y, width, height, format, type, pixels);
             ErrorTest();
@@ -713,7 +734,7 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
-            Log.Info(string.Format("uniform4f {0}", location.Value));
+            Log.Info(string.Format("uniform4f {0} {1} {2} {3} {4}", location.Value, x, y, z, w));
 
             Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
@@ -731,7 +752,7 @@
 
         public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
-            Log.Info(string.Format("uniform1i {0}", location.Value));
+            Log.Info(string.Format("uniform1i {0} {1}", location.Value, x));
 
             Gl.glUniform1i(location.Value, x);
             ErrorTest();
@@ -744,6 +765,9 @@
             var i = new int[1];
             Gl.glGetProgramiv(program.Value, pname, i);
             ErrorTest();
+
+            Log.Info(string.Format("value {0}", i[0]));
+
             return i[0];
         }
 
@@ -842,7 +866,7 @@
 
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
-            Log.Info(string.Format("getShaderParameter {0}", pname));
+            Log.Info(string.Format("getShaderParameter {0} {1}", shader.Value, pname));
 
             var i = new int[1];
             Gl.glGetShaderiv(shader.Value, pname, i);
@@ -868,7 +892,7 @@
 
         public void viewport(int x, int y, int width, int height)
         {
-            Log.Info(string.Format("viewport {0} {1}", width, height));
+            Log.Info(string.Format("viewport {0} {1} {2} {3}", x, y, width, height));
 
             Gl.glViewport(x, y, width, height);
             ErrorTest();
@@ -930,7 +954,7 @@
 
         public void compileShader(Web.WebGLShader shader)
         {
-            Log.Info(string.Format("compileShader {0}",shader.Value));
+            Log.Info(string.Format("compileShader {0}", shader.Value));
 
             Gl.glCompileShader(shader.Value);
             ErrorTest();
@@ -976,7 +1000,7 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
-            Log.Info(string.Format("uniform3f {0}", location.Value));
+            Log.Info(string.Format("uniform3f {0} {1} {2} {3}", location.Value, x, y, z));
 
             Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
