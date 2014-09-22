@@ -72,7 +72,7 @@ static int engine_init_display(struct engine* engine) {
 	/*
 	* Here specify the attributes of the desired configuration.
 	* Below, we select an EGLConfig with at least 8 bits per color
-	* component compatible with on-screen windows
+	* component compatible with on-screen windows0
 	*/
 	const EGLint attribs[] = {
 		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
@@ -124,12 +124,6 @@ static int engine_init_display(struct engine* engine) {
 	engine->width = w;
 	engine->height = h;
 
-	// Initialize GL state.
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-	glEnable(GL_CULL_FACE);
-	//glShadeModel(GL_SMOOTH);
-	glDisable(GL_DEPTH_TEST);
-
 	return 0;
 }
 
@@ -143,11 +137,8 @@ static void engine_draw_frame(struct engine* engine) {
 	}
 
 	// Just fill the screen with a color.
-	/*
-	glClearColor(((float)engine->state.x)/engine->width, 0.5,
-	((float)engine->state.y)/engine->height, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-	*/
+	////glClearColor(((float)engine->state.x)/engine->width, 0.5, ((float)engine->state.y)/engine->height, 1);
+	////glClear(GL_COLOR_BUFFER_BIT);
 
 	if (engine->displayFunc != NULL)
 	{
@@ -178,7 +169,7 @@ static void engine_term_display(struct engine* engine) {
 	engine->context = EGL_NO_CONTEXT;
 	engine->surface = EGL_NO_SURFACE;
 }
-
+ 
 /**
 * Process the next input event.
 */

@@ -72,11 +72,11 @@ namespace BabylonAndroid
         {
             Log.Info("OnInitialize");
 
-            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
-            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+            ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
 
-            ////BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            ////BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
             var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
