@@ -17,9 +17,11 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := native-activity-cs
 
-LOCAL_SRC_FILES := $(wildcard *.cpp)
-LOCAL_SRC_FILES += $(wildcard *.c)
-LOCAL_SRC_FILES += $(wildcard *.ll)
+#LOCAL_SRC_FILES := $(wildcard *.cpp)
+#LOCAL_SRC_FILES += $(wildcard *.c)
+#LOCAL_SRC_FILES += $(wildcard *.ll)
+
+LOCAL_SRC_FILES := main.cpp BabylonAndroid.ll BabylonNativeCsLibraryForIl.ll CoreLib.ll
 
 LOCAL_ARM_MODE   := arm
 

@@ -352,7 +352,7 @@
         public static extern void glDepthFunc(int func);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glClearDepthf(float depth);
+        public static extern void glClearDepth(double depth);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glViewport(int x, int y, int width, int height);

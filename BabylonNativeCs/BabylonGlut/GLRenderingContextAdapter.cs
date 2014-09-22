@@ -801,7 +801,7 @@
 
         public void clearDepth(double depth)
         {
-            Gl.glClearDepthf((float)depth);
+            Gl.glClearDepth(depth);
             ErrorTest();
         }
 

@@ -45,9 +45,6 @@
     <Compile Include="..\BabylonWpf\ClientRectAdapter.cs">
       <Link>ClientRectAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\BabylonWpf\ConsoleAdapter.cs">
-      <Link>ConsoleAdapter.cs</Link>
-    </Compile>
     <Compile Include="..\BabylonWpf\Defaults.cs">
       <Link>Defaults.cs</Link>
     </Compile>
@@ -70,6 +67,7 @@
       <Link>WindowAdapter.cs</Link>
     </Compile>
     <Compile Include="CanvasAdapter.cs" />
+    <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="Gl.cs" />
     <Compile Include="GLRenderingContextAdapter.cs" />
     <Compile Include="Main.cs" />
@@ -86,6 +84,7 @@
     <Reference Include="CoreLib">
       <HintPath>C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

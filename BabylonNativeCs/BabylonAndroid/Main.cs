@@ -59,7 +59,9 @@ namespace BabylonAndroid
             Gl.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
             Gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            //this.scene.render();
+            Log.Info("OnDraw");
+
+            this.scene.render();
         }
 
         /// <summary>
@@ -68,17 +70,19 @@ namespace BabylonAndroid
         /// </returns>
         public void OnInitialize()
         {
+            Log.Info("OnInitialize");
+
             Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
             Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
 
-            // BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            // BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            ////BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            ////BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
             var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene2();
+            this.Scene1();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -109,10 +113,10 @@ namespace BabylonAndroid
             var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this.scene);
 
             // Move the sphere upward 1/2 its height
-            sphere.position.y = 1;
+            //sphere.position.y = 1;
 
             // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
-            BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
+            //BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
         }
     }
 }
