@@ -70,6 +70,7 @@
     <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="Gl.cs" />
     <Compile Include="GLRenderingContextAdapter.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

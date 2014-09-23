@@ -160,16 +160,23 @@ void GL::bufferData(Babylon::GLenum target, Babylon::GLsizeiptr sizeiptr, Babylo
 }
 
 void GL::bufferData(Babylon::GLenum target, Babylon::Float32Array& data, Babylon::GLenum usage) { 
+	LOGI("bufferData float %d, Count:%d, Size:%d, %d", target, data.size(), data.size() * sizeof(Babylon::GLfloat), usage);
+
 	glBufferData(target, data.size() * sizeof(Babylon::GLfloat), data.data(), usage);
 	errorCheck();
 }
 
 void GL::bufferData(Babylon::GLenum target, Babylon::Int32Array& data, Babylon::GLenum usage) { 
+
+	LOGI("bufferData int32 %d, Count:%d, Size:%d, %d", target, data.size(), data.size() * sizeof(int32_t), usage);
+
 	glBufferData(target, data.size() * sizeof(int32_t), data.data(), usage);
 	errorCheck();
 }
 
 void GL::bufferData(Babylon::GLenum target, Babylon::Uint16Array& data, Babylon::GLenum usage) { 
+	LOGI("bufferData uint16 %d, Count:%d, Size:%d, %d", target, data.size(), data.size() * sizeof(char16_t), usage);
+
 	glBufferData(target, data.size() * sizeof(char16_t), data.data(), usage);
 	errorCheck();
 }
@@ -341,6 +348,9 @@ void GL::drawArrays(Babylon::GLenum mode, Babylon::GLint first, Babylon::GLsizei
 }
 
 void GL::drawElements(Babylon::GLenum mode, Babylon::GLsizei count, Babylon::GLenum type, Babylon::GLintptr offset) { 
+
+	LOGI("drawElements %d, %d, %d, %d", mode, count, type, offset);
+
 	glDrawElements(mode, count, type, (Babylon::any)offset);
 	errorCheck();
 }
@@ -755,6 +765,8 @@ void GL::uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Arr
 }
 
 void GL::uniform3f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z) { 
+	LOGI("uniform4f %d, %f, %f, %f", location->value, x, y, z);
+
 	glUniform3f(location->value, x, y, z);
 	errorCheck();
 }
@@ -775,6 +787,9 @@ void GL::uniform3iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Arr
 }
 
 void GL::uniform4f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z, Babylon::GLfloat w) {
+
+	LOGI("uniform4f %d, %f, %f, %f, %f", location->value, x, y, z, w);
+
 	glUniform4f(location->value, x, y, z, w);
 	errorCheck();
 }

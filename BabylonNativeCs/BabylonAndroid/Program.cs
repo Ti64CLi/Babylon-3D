@@ -60,8 +60,8 @@ namespace BabylonAndroid
         private static void Main(string[] args)
         {
             main = new Main();
-            main.MaxWidth = main.Width = 400;
-            main.MaxHeight = main.Height = 640;
+            main.MaxWidth = main.Width = 480;
+            main.MaxHeight = main.Height = 800;
 
             unsafe
             {

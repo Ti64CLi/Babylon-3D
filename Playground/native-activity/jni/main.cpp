@@ -394,7 +394,7 @@ static int engine_init_display(struct engine* engine) {
 		return copyFileFromAsset(engine, file);
 	});
 
-	engine->main->loadSceneTutorial4();
+	engine->main->loadSceneTutorial1();
 
 	return 0;
 }

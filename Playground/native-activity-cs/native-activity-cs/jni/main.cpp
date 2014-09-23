@@ -129,6 +129,8 @@ static int engine_init_display(struct engine* engine) {
 	engine->width = w;
 	engine->height = h;
 
+	LOGI("width/height %d/%d", w, h);
+
 	if (engine->initFunc != NULL)
 	{
 		engine->initFunc();

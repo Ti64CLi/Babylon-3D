@@ -55,10 +55,13 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
-            Log.Info(string.Format("getUniformLocation {0} {1}", program.Value, name));
+            Log.Info(string.Format("getUniformLocation {0} {1}", (int)program.Value, name));
 
             var glUniformLocation = new GlUniformLocation(Gl.glGetUniformLocation(program.Value, Encoding.ASCII.GetBytes(name)));
             ErrorTest();
+
+            Log.Info(string.Format("value {0}", glUniformLocation.Value));
+
             return glUniformLocation;
         }
 
@@ -69,7 +72,7 @@
 
         public void bufferData(int target, float[] data, int usage)
         {
-            Log.Info(string.Format("bufferData {0} Len:{1} {2}", target, data.Length, usage));
+            Log.Info(string.Format("bufferData float {0} Count:{1} Len:{2} {3}", target, data.Length, data.Length * sizeof(float), usage));
 
             unsafe
             {
@@ -84,7 +87,7 @@
 
         public void bufferData(int target, ushort[] data, int usage)
         {
-            Log.Info(string.Format("bufferData {0} Len:{1} {2}", target, data.Length, usage));
+            Log.Info(string.Format("bufferData ushort {0} Count:{1} Len:{2} {3}", target, data.Length, data.Length * sizeof(ushort), usage));
 
             unsafe
             {
