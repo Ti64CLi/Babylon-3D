@@ -82,7 +82,7 @@ namespace BabylonAndroid
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene1();
+            this.Scene2();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -113,10 +113,10 @@ namespace BabylonAndroid
             var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this.scene);
 
             // Move the sphere upward 1/2 its height
-            //sphere.position.y = 1;
+            sphere.position.y = 1;
 
             // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
-            //BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
+            BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
         }
     }
 }

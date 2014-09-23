@@ -109,6 +109,9 @@ void GL::bindAttribLocation(Babylon::IGLProgram::Ptr program, Babylon::GLuint in
 }
 
 void GL::bindBuffer(Babylon::GLenum target, Babylon::IGLBuffer::Ptr buffer) { 
+
+	LOGI("bindBuffer %d, %d", target, buffer ? buffer->value : 0);
+
 	glBindBuffer(target, buffer ? buffer->value : 0);
 	errorCheck();
 }
@@ -247,8 +250,14 @@ void GL::copyTexSubImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon
 }
 
 Babylon::IGLBuffer::Ptr GL::createBuffer() { 
+
+	LOGI("createBuffer");
+
 	::GLuint val;
 	glGenBuffers(1, &val);
+
+	LOGI("value %d", val);
+
 	return make_shared<Babylon::IGLBuffer>(val);
 }
 
@@ -284,6 +293,9 @@ void GL::cullFace(Babylon::GLenum mode) {
 }
 
 void GL::deleteBuffer(Babylon::IGLBuffer::Ptr buffer) { 
+
+	LOGI("deleteBuffer %d", buffer->value);
+
 	glDeleteBuffers(1, (const ::GLuint*) &buffer->value);
 	errorCheck();
 }
@@ -360,6 +372,9 @@ void GL::enable(Babylon::GLenum cap) {
 }
 
 void GL::enableVertexAttribArray(Babylon::GLuint index) { 
+
+	LOGI("enableVertexAttribArray %d", index);
+
 	glEnableVertexAttribArray(index);
 	errorCheck();
 }
@@ -432,7 +447,7 @@ Babylon::GLenum GL::getError() {
 
 Babylon::any GL::getFramebufferAttachmentParameter(Babylon::GLenum target, Babylon::GLenum attachment, 
 												   Babylon::GLenum pname) {
-	//return (Babylon::any) glGetFramebufferAttachmentParameteriv(target, attachment, pname);
+													   //return (Babylon::any) glGetFramebufferAttachmentParameteriv(target, attachment, pname);
 													   throw "not supported";
 }
 
@@ -663,8 +678,8 @@ void GL::stencilOpSeparate(Babylon::GLenum face, Babylon::GLenum fail, Babylon::
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat, 
 					Babylon::GLsizei width, Babylon::GLsizei height, Babylon::GLint border, Babylon::GLenum format, 
 					Babylon::GLenum type, Babylon::any pixels) { 
-	glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
-	errorCheck();
+						glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+						errorCheck();
 }
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
@@ -675,12 +690,12 @@ void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenu
 
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
 					Babylon::GLenum format, Babylon::GLenum type, Babylon::IImage::Ptr image) { 
-	auto width = image->getWidth();
-	auto height = image->getHeight();
-	auto bits = image->getBits();
+						auto width = image->getWidth();
+						auto height = image->getHeight();
+						auto bits = image->getBits();
 
-	glTexImage2D(target, level, internalformat, width, height, 0, format, type, bits);
-	errorCheck();
+						glTexImage2D(target, level, internalformat, width, height, 0, format, type, bits);
+						errorCheck();
 }
 // May throw DOMException
 void GL::texImage2D(Babylon::GLenum target, Babylon::GLint level, Babylon::GLenum internalformat,
@@ -765,7 +780,7 @@ void GL::uniform2iv(Babylon::IGLUniformLocation::Ptr location, Babylon::Int32Arr
 }
 
 void GL::uniform3f(Babylon::IGLUniformLocation::Ptr location, Babylon::GLfloat x, Babylon::GLfloat y, Babylon::GLfloat z) { 
-	LOGI("uniform4f %d, %f, %f, %f", location->value, x, y, z);
+	LOGI("uniform3f %d, %f, %f, %f", location->value, x, y, z);
 
 	glUniform3f(location->value, x, y, z);
 	errorCheck();
@@ -876,11 +891,17 @@ void GL::vertexAttrib4fv(Babylon::GLuint indx, Babylon::Float32Array& values) {
 
 void GL::vertexAttribPointer(Babylon::GLuint indx, Babylon::GLint size, Babylon::GLenum type, 
 							 Babylon::GLboolean normalized, Babylon::GLsizei stride, Babylon::GLintptr offset) { 
+
+	LOGI("vertexAttribPointer %d, %d, %d, %d, %d, %d", indx, size, type, normalized, stride, offset);
+
 								 glVertexAttribPointer(indx, size, type, normalized, stride, (Babylon::any)offset);
 								 errorCheck();
 }
 
-void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) { 
+void GL::viewport(Babylon::GLint x, Babylon::GLint y, Babylon::GLsizei width, Babylon::GLsizei height) {
+
+	LOGI("viewport %d, %d, %d, %d", x, y, width, height);
+
 	glViewport(x, y, width, height);
 }
 

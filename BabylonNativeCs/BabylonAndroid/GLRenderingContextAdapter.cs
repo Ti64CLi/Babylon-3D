@@ -1090,7 +1090,7 @@
             {
                 var msg = string.Format("GL Error {0}", error);
                 Log.Error(msg);
-                throw new Exception(msg);
+                //throw new Exception(msg);
             }
 #endif
         }
