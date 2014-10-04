@@ -33,10 +33,6 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
-        public delegate void EmptyDelegate();
-
-        /// <summary>
-        /// </summary>
         private static Main main;
 
         /// <summary>
@@ -65,8 +61,8 @@ namespace BabylonAndroid
 
             unsafe
             {
-                InitFunc(new EmptyDelegate(Init).ToPointer());
-                DisplayFunc(new EmptyDelegate(Display).ToPointer());
+                InitFunc(new Action(Init).ToPointer());
+                DisplayFunc(new Action(Display).ToPointer());
             }
         }
     }

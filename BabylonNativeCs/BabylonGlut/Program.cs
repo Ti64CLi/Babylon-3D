@@ -9,47 +9,15 @@
 
 namespace BabylonGlut
 {
+    using BABYLON;
     using System;
     using System.Runtime.InteropServices;
+    using System.Text;
 
     /// <summary>
     /// </summary>
     internal class Program
     {
-        /// <summary>
-        /// </summary>
-        public delegate void EmptyDelegate();
-
-        /// <summary>
-        /// </summary>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        public delegate void TwoDimDelegate(int x, int y);
-
-        /// <summary>
-        /// </summary>
-        /// <param name="button">
-        /// </param>
-        /// <param name="state">
-        /// </param>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        public delegate void MouseDelegate(int button, int state, int x, int y);
-
-        /// <summary>
-        /// </summary>
-        /// <param name="key">
-        /// </param>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        public delegate void KeyDelegate(byte key, int x, int y);
-
         /// <summary>
         /// </summary>
         private static Main main;
@@ -98,6 +66,26 @@ namespace BabylonGlut
         /// </param>
         private static void Mouse(int button, int state, int x, int y)
         {
+            switch (state)
+            {
+                case Gl.GLUT_UP:
+                    var onmouseup = main.canvas.onmouseup;
+                    if (onmouseup != null)
+                    {
+                        onmouseup(new MouseEventAdapter(button, x, y));
+                    }
+
+                    break;
+                case Gl.GLUT_DOWN:
+                    var onmousedown = main.canvas.onmousedown;
+                    if (onmousedown != null)
+                    {
+                        onmousedown(new MouseEventAdapter(button, x, y));
+                    }
+
+                    break;
+            }
+
             Gl.glutPostRedisplay();
         }
 
@@ -126,7 +114,13 @@ namespace BabylonGlut
         /// </param>
         private static void Motion(int x, int y)
         {
-            // _main.onMotion(x, y);
+            var onmousemove = main.canvas.onmousemove;
+            if (onmousemove != null)
+            {
+                onmousemove(new MouseEventAdapter(-1, x, y));
+            }
+
+            Gl.glutPostRedisplay();
         }
 
         /// <summary>
@@ -145,19 +139,19 @@ namespace BabylonGlut
 
             Gl.glutInitWindowSize(main.Width, main.Height);
             Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB);
-            Gl.glutCreateWindow(null /*"Babylon Native"*/);
+            Gl.glutCreateWindow(Encoding.ASCII.GetBytes("Babylon Native"));
 
             Gl.glewInit();
 
             unsafe
             {
-                Gl.glutDisplayFunc(new EmptyDelegate(Display).ToPointer());
-                Gl.glutPassiveMotionFunc(new TwoDimDelegate(PassiveMotion).ToPointer());
-                Gl.glutMouseFunc(new MouseDelegate(Mouse).ToPointer());
-                Gl.glutMotionFunc(new TwoDimDelegate(Motion).ToPointer());
-                Gl.glutIdleFunc(new EmptyDelegate(Idle).ToPointer());
-                Gl.glutKeyboardFunc(new KeyDelegate(Key).ToPointer());
-                Gl.glutReshapeFunc(new TwoDimDelegate(Resize).ToPointer());
+                Gl.glutDisplayFunc(new System.Action(Display).ToPointer());
+                Gl.glutPassiveMotionFunc(new Action<int, int>(PassiveMotion).ToPointer());
+                Gl.glutMouseFunc(new Action<int, int, int, int>(Mouse).ToPointer());
+                Gl.glutMotionFunc(new Action<int, int>(Motion).ToPointer());
+                Gl.glutIdleFunc(new System.Action(Idle).ToPointer());
+                Gl.glutKeyboardFunc(new Action<byte, int, int>(Key).ToPointer());
+                Gl.glutReshapeFunc(new Action<int, int>(Resize).ToPointer());
             }
 
             main.OnInitialize();

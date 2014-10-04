@@ -464,7 +464,7 @@ namespace BABYLON
         /// </param>
         /// <param name="noPreventDefault">
         /// </param>
-        public virtual void attachControl(HTMLElement element, bool noPreventDefault = false)
+        public override void attachControl(HTMLElement element, bool noPreventDefault = false)
         {
             PositionCoord previousPosition = null;
             var engine = this.getEngine();

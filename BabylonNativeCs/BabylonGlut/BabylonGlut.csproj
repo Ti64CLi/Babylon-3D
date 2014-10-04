@@ -63,6 +63,9 @@
     <Compile Include="..\BabylonWpf\GlUniformLocation.cs">
       <Link>GlUniformLocation.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\MouseEventAdapter.cs">
+      <Link>MouseEventAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\WindowAdapter.cs">
       <Link>WindowAdapter.cs</Link>
     </Compile>

@@ -528,15 +528,18 @@ namespace BABYLON
         /// </returns>
         public static string GetPointerPrefix()
         {
+            /*
             var eventPrefix = "pointer";
 
-            /*
             if (!navigator.pointerEnabled)
             {
                 eventPrefix = "mouse";
             }
-            */
+
             return eventPrefix;
+            */
+
+            return "mouse";
         }
 
         /// <summary>

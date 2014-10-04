@@ -27,6 +27,10 @@ namespace BabylonGlut
 
         /// <summary>
         /// </summary>
+        public CanvasAdapter canvas { get; set; }
+
+        /// <summary>
+        /// </summary>
         private Engine engine;
 
         /// <summary>
@@ -73,7 +77,7 @@ namespace BabylonGlut
             // BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             // BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
-            var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            this.canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 

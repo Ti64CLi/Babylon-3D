@@ -70,6 +70,7 @@
     <Compile Include="GlProgramAdapter.cs" />
     <Compile Include="GlShaderAdapter.cs" />
     <Compile Include="GlUniformLocation.cs" />
+    <Compile Include="MouseEventAdapter.cs" />
     <Compile Include="WindowAdapter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

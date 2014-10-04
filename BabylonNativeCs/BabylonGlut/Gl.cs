@@ -56,6 +56,34 @@
 
         /// <summary>
         /// </summary>
+        public const int GLUT_LEFT_BUTTON = 0x0000;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_MIDDLE_BUTTON = 0x0001;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_RIGHT_BUTTON = 0x0002;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_DOWN = 0x0000;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_UP = 0x0001;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_LEFT = 0x0000;
+
+        /// <summary>
+        /// </summary>
+        public const int GLUT_ENTERED = 0x0001;
+
+        /// <summary>
+        /// </summary>
         public const int GL_NO_ERROR = 0;
 
         /// <summary>
@@ -219,7 +247,7 @@
         /// </returns>
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
-#else        
+#else
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glClear(int mask);
@@ -238,7 +266,7 @@
         /// </returns>
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
-#else         
+#else
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glClearColor(float r, float g, float b, float alpha);
