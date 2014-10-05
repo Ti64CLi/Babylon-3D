@@ -2,16 +2,9 @@
 {
     using System;
 
-    public class MouseEventAdapter : Web.MouseEvent
+    public class NavigatorAdapter : Web.Navigator
     {
-        public MouseEventAdapter(int button, int x, int y)
-        {
-            this.button = button;
-            this.offsetX = this.clientX = x;
-            this.offsetY = this.clientY = y;
-        }
-
-        public bool altKey
+        public int maxTouchPoints
         {
             get
             {
@@ -23,13 +16,7 @@
             }
         }
 
-        public int button
-        {
-            get;
-            set;
-        }
-
-        public int buttons
+        public bool msManipulationViewsEnabled
         {
             get
             {
@@ -41,19 +28,7 @@
             }
         }
 
-        public int clientX
-        {
-            get;
-            set;
-        }
-
-        public int clientY
-        {
-            get;
-            set;
-        }
-
-        public bool ctrlKey
+        public int msMaxTouchPoints
         {
             get
             {
@@ -65,7 +40,7 @@
             }
         }
 
-        public Web.Element fromElement
+        public bool msPointerEnabled
         {
             get
             {
@@ -77,11 +52,11 @@
             }
         }
 
-        public int layerX
+        public bool pointerEnabled
         {
             get
             {
-                throw new NotImplementedException();
+                return true;
             }
             set
             {
@@ -89,202 +64,238 @@
             }
         }
 
-        public int layerY
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool metaKey
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int offsetX
-        {
-            get;
-            set;
-        }
-
-        public int offsetY
-        {
-            get;
-            set;
-        }
-
-        public int pageX
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int pageY
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.EventTarget relatedTarget
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int screenX
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int screenY
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool shiftKey
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Element toElement
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public double which
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public double x
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public double y
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool getModifierState(string keyArg)
+        public void msLaunchUri(string uri, Web.MSLaunchUriCallback successCallback = null, Web.MSLaunchUriCallback noHandlerCallback = null)
         {
             throw new NotImplementedException();
         }
 
-        public void initMouseEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Web.Window viewArg, int detailArg, int screenXArg, int screenYArg, int clientXArg, int clientYArg, bool ctrlKeyArg, bool altKeyArg, bool shiftKeyArg, bool metaKeyArg, int buttonArg, Web.EventTarget relatedTargetArg)
+        public string appName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string appVersion
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string platform
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string product
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string userAgent
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string vendor
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool onLine
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string appCodeName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string appMinorVersion
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string browserLanguage
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int connectionSpeed
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool cookieEnabled
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string cpuClass
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string language
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.MSMimeTypesCollection mimeTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Web.MSPluginsCollection plugins
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string systemLanguage
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string userLanguage
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool javaEnabled()
         {
             throw new NotImplementedException();
         }
 
-        public int detail
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Window view
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void initUIEvent(string typeArg, bool canBubbleArg, bool cancelableArg, Web.Window viewArg, int detailArg)
+        public bool taintEnabled()
         {
             throw new NotImplementedException();
         }
 
-        public int AT_TARGET
+        public Web.Geolocation geolocation
         {
             get
             {
@@ -296,7 +307,7 @@
             }
         }
 
-        public int BUBBLING_PHASE
+        public string msDoNotTrack
         {
             get
             {
@@ -308,165 +319,42 @@
             }
         }
 
-        public int CAPTURING_PHASE
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool bubbles
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool cancelBubble
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool cancelable
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.EventTarget currentTarget
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool defaultPrevented
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int eventPhase
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool isTrusted
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.Element srcElement
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Web.EventTarget target
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int timeStamp
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string type
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void initEvent(string eventTypeArg, bool canBubbleArg, bool cancelableArg)
+        public bool confirmSiteSpecificTrackingException(Web.ConfirmSiteSpecificExceptionsInformation args)
         {
             throw new NotImplementedException();
         }
 
-        public void preventDefault()
-        {
-        }
-
-        public void stopImmediatePropagation()
+        public bool confirmWebWideTrackingException(Web.ExceptionInformation args)
         {
             throw new NotImplementedException();
         }
 
-        public void stopPropagation()
+        public void removeSiteSpecificTrackingException(Web.ExceptionInformation args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeWebWideTrackingException(Web.ExceptionInformation args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void storeSiteSpecificTrackingException(Web.StoreSiteSpecificExceptionsInformation args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void storeWebWideTrackingException(Web.StoreExceptionsInformation args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool msSaveBlob(object blob, string defaultName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool msSaveOrOpenBlob(object blob, string defaultName = null)
         {
             throw new NotImplementedException();
         }

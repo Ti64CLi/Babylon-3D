@@ -59,12 +59,12 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
-        private static void Motion(int x, int y)
+        private static void Motion(int pointerId, int x, int y)
         {
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
-                onmousemove(new MouseEventAdapter(-1, x, y));
+                onmousemove(new PointerEventAdapter(pointerId, x, y));
             }
         }
 
@@ -82,7 +82,7 @@ namespace BabylonAndroid
             {
                 InitFunc(new System.Action(Init).ToPointer());
                 DisplayFunc(new System.Action(Display).ToPointer());
-                MotionFunc(new Action<int, int>(Motion).ToPointer());
+                MotionFunc(new Action<int, int, int>(Motion).ToPointer());
             }
         }
     }

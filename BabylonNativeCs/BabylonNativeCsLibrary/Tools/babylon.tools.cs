@@ -38,6 +38,8 @@ namespace BABYLON
     /// </summary>
     public partial class Tools
     {
+        public static Web.Navigator navigator;
+
         // Screenshots
 
         // FPS
@@ -528,7 +530,6 @@ namespace BABYLON
         /// </returns>
         public static string GetPointerPrefix()
         {
-            /*
             var eventPrefix = "pointer";
 
             if (!navigator.pointerEnabled)
@@ -537,9 +538,6 @@ namespace BABYLON
             }
 
             return eventPrefix;
-            */
-
-            return "mouse";
         }
 
         /// <summary>

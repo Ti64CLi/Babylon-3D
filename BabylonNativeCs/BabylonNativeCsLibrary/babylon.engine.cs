@@ -241,6 +241,7 @@ namespace BABYLON
             document = canvas.document;
             window = document.parentWindow;
             console = window.console;
+            Tools.navigator = window.navigator;
 
             console.info("Engine ctor()");
 

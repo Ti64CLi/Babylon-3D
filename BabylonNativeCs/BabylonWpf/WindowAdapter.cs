@@ -4,12 +4,10 @@
 
     public class WindowAdapter : Web.Window
     {
-        private Map<string, Web.EventListener> listeners;
-
         public WindowAdapter()
         {
-            this.listeners = new Map<string, Web.EventListener>();
             this.console = new ConsoleAdapter();
+            this.navigator = new NavigatorAdapter();
         }
 
         public Func<Web.DragEvent, object> ondragend
@@ -674,14 +672,8 @@
 
         public Web.Window parent
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Web.Location location
@@ -866,14 +858,8 @@
 
         public Web.Navigator navigator
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Web.StyleMedia styleMedia
@@ -1468,7 +1454,6 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
-            this.listeners[type] = listener;
         }
 
         public void removeEventListener(string type, Web.EventListener listener, bool useCapture = false)

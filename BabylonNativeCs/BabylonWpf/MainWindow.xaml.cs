@@ -27,6 +27,8 @@ namespace BabylonWpf
         private CanvasAdapter canvas;
         private Engine engine;
         private BABYLON.Scene scene;
+        private int pointerId;
+        private bool pointerLocked;
 
         public MainWindow()
         {
@@ -115,6 +117,17 @@ namespace BabylonWpf
 
                 this.canvas.onmouseup(new MouseEventAdapter(0, (int)pX, (int)pY));
             }
+
+            if (this.canvas.onpointerup != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointerup(new PointerEventAdapter(this.pointerId, (int)pX, (int)pY));
+
+                this.pointerLocked = false;
+            }
         }
 
         private void openGLControl1_MouseLeftButtonDown(object sender, MouseEventArgs e)
@@ -127,6 +140,17 @@ namespace BabylonWpf
 
                 this.canvas.onmousedown(new MouseEventAdapter(0, (int)pX, (int)pY));
             }
+
+            if (this.canvas.onpointerdown != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointerdown(new PointerEventAdapter(++this.pointerId, (int)pX, (int)pY));
+
+                this.pointerLocked = true;
+            }
         }
 
         private void openGLControl1_MouseMove(object sender, MouseEventArgs e)
@@ -138,6 +162,15 @@ namespace BabylonWpf
                 var pY = position.Y;
 
                 this.canvas.onmousemove(new MouseEventAdapter(-1, (int)pX, (int)pY));
+            }
+
+            if (this.pointerLocked && this.canvas.onpointermove != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointermove(new PointerEventAdapter(this.pointerId, (int)pX, (int)pY));
             }
         }
     }

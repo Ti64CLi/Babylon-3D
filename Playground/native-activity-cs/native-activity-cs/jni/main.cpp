@@ -36,11 +36,13 @@
 * Our saved state data.
 */
 struct saved_state {
+	int32_t pointerId;
 	int32_t x;
 	int32_t y;
 };
 
 typedef void (*defEmptyFunc)();
+typedef void (*defTheeIntFunc)(int32_t, int32_t, int32_t);
 
 /**
 * Shared state for our app.
@@ -62,6 +64,7 @@ struct engine {
 
 	defEmptyFunc displayFunc;
 	defEmptyFunc initFunc;
+	defTheeIntFunc motionFunc;
 };
 
 /**
@@ -188,8 +191,12 @@ static void engine_term_display(struct engine* engine) {
 static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) {
 	struct engine* engine = (struct engine*)app->userData;
 	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
+		engine->state.pointerId = AMotionEvent_getPointerId(event, 0);
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
+
+		engine->motionFunc(engine->state.pointerId, engine->state.x, engine->state.y);
+
 		return 1;
 	}
 
@@ -203,6 +210,7 @@ extern "C" {
 
 	defEmptyFunc _initFunc;
 	defEmptyFunc _displayFunc;
+	defTheeIntFunc _motionFunc;
 
 	void InitFunc(void* initFunc)
 	{
@@ -212,6 +220,11 @@ extern "C" {
 	void DisplayFunc(void* displayFunc)
 	{
 		_displayFunc = (defEmptyFunc)displayFunc;	
+	}
+
+	void MotionFunc(void* motionFunc)
+	{
+		_motionFunc = (defTheeIntFunc)motionFunc;	
 	}
 
 	void _logi(char * msg)
@@ -259,6 +272,12 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 			{
 				engine->displayFunc = _displayFunc;
 				_displayFunc = NULL;
+			}
+
+			if (_motionFunc != NULL)
+			{
+				engine->motionFunc = _motionFunc;
+				_motionFunc = NULL;
 			}
 
 			engine_init_display(engine);

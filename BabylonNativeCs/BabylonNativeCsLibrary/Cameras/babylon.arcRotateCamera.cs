@@ -356,11 +356,27 @@ namespace BABYLON
                             return;
                         }
 
+                        if (e == null)
+                        {
+                            Engine.console.info("e is null");
+                        }
+
+                        if (e is MouseEvent)
+                        {
+                            Engine.console.info("this is MouseEvent");
+                        }
+
+                        if (e is PointerEvent)
+                        {
+                            Engine.console.info("this is PointerEvent");
+                        }
+
+                        Engine.console.info("before cast");
+
                         var evt = (PointerEvent)e;
 
                         pointerId = evt.pointerId;
                         previousPosition = new PositionCoord { x = evt.clientX, y = evt.clientY };
-                        engine.isPointerLock = true;
                         if (!noPreventDefault)
                         {
                             evt.preventDefault();
@@ -370,7 +386,6 @@ namespace BABYLON
                     {
                         var evt = (PointerEvent)e;
 
-                        engine.isPointerLock = false;
                         previousPosition = null;
                         pointerId = 0;
                         if (!noPreventDefault)

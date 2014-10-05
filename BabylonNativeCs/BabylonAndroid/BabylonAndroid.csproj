@@ -60,6 +60,12 @@
     <Compile Include="..\BabylonWpf\MouseEventAdapter.cs">
       <Link>MouseEventAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\NavigatorAdapter.cs">
+      <Link>NavigatorAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\PointerEventAdapter.cs">
+      <Link>PointerEventAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\WindowAdapter.cs">
       <Link>WindowAdapter.cs</Link>
     </Compile>

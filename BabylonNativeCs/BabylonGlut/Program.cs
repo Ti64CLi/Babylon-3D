@@ -17,10 +17,14 @@ namespace BabylonGlut
     /// <summary>
     /// </summary>
     internal class Program
-    {
+    { 
         /// <summary>
         /// </summary>
         private static Main main;
+
+        /// <summary>
+        /// </summary>
+        private static int pointerId;
 
         /// <summary>
         /// </summary>
@@ -72,7 +76,15 @@ namespace BabylonGlut
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
                     {
+                        Log.Info("Mouse up.");
                         onmouseup(new MouseEventAdapter(button, x, y));
+                    }
+
+                    var onpointerup = main.canvas.onpointerup;
+                    if (onpointerup != null)
+                    {
+                        Log.Info("Pointer up.");
+                        onpointerup(new PointerEventAdapter(pointerId, x, y));
                     }
 
                     break;
@@ -80,7 +92,15 @@ namespace BabylonGlut
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
+                        Log.Info("Mouse down.");
                         onmousedown(new MouseEventAdapter(button, x, y));
+                    }
+
+                    var onpointerdown = main.canvas.onpointerdown;
+                    if (onpointerdown != null)
+                    {
+                        Log.Info("Pointer down.");
+                        onpointerdown(new PointerEventAdapter(++pointerId, x, y));
                     }
 
                     break;
@@ -117,7 +137,15 @@ namespace BabylonGlut
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
+                Log.Info("Mouse move.");
                 onmousemove(new MouseEventAdapter(-1, x, y));
+            }
+
+            var onpointermove = main.canvas.onpointermove;
+            if (onpointermove != null)
+            {
+                Log.Info("Pointer move.");
+                onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
 
             Gl.glutPostRedisplay();

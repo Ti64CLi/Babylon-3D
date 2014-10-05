@@ -1083,14 +1083,8 @@
 
         public Web.MSStyleCSSProperties style
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public bool isContentEditable
@@ -1833,6 +1827,15 @@
                     break;
                 case "mousedown":
                     this.onmousedown = (e) => { listener(e); return null; };
+                    break;
+                case "pointermove":
+                    this.onpointermove = (e) => { listener(e); return null; };
+                    break;
+                case "pointerup":
+                    this.onpointerup = (e) => { listener(e); return null; };
+                    break;
+                case "pointerdown":
+                    this.onpointerdown = (e) => { listener(e); return null; };
                     break;
             }
         }
@@ -2921,26 +2924,14 @@
 
         public Func<Web.PointerEvent, object> onpointerdown
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointerup
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointercancel
@@ -2969,14 +2960,8 @@
 
         public Func<Web.PointerEvent, object> onpointermove
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointerleave
