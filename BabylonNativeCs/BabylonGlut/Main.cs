@@ -81,7 +81,7 @@ namespace BabylonGlut
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene1();
+            this.Scene2();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -90,7 +90,7 @@ namespace BabylonGlut
         private void Scene1()
         {
             var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
-            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
+            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene); 
             var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
         }
 

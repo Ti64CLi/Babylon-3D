@@ -28,6 +28,10 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
+        public CanvasAdapter canvas { get; set; }
+
+        /// <summary>
+        /// </summary>
         private Engine engine;
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace BabylonAndroid
             ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
-            var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            this.canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 

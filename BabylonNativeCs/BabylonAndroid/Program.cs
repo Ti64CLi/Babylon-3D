@@ -9,6 +9,7 @@
 
 namespace BabylonAndroid
 {
+    using BABYLON;
     using System;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
@@ -26,10 +27,17 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
-        /// <param name="display">
+        /// <param name="init">
         /// </param>
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern unsafe void InitFunc(void* init);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="motion">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void MotionFunc(void* motion);
 
         /// <summary>
         /// </summary>
@@ -51,6 +59,17 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
+        private static void Motion(int x, int y)
+        {
+            var onmousemove = main.canvas.onmousemove;
+            if (onmousemove != null)
+            {
+                onmousemove(new MouseEventAdapter(-1, x, y));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="args">
         /// </param>
         private static void Main(string[] args)
@@ -61,8 +80,9 @@ namespace BabylonAndroid
 
             unsafe
             {
-                InitFunc(new Action(Init).ToPointer());
-                DisplayFunc(new Action(Display).ToPointer());
+                InitFunc(new System.Action(Init).ToPointer());
+                DisplayFunc(new System.Action(Display).ToPointer());
+                MotionFunc(new Action<int, int>(Motion).ToPointer());
             }
         }
     }
