@@ -375,12 +375,19 @@ namespace BABYLON
 
                         var evt = (PointerEvent)e;
 
+                        Engine.console.info("after cast");
+
                         pointerId = evt.pointerId;
+
+                        Engine.console.info("pointerId");
+
                         previousPosition = new PositionCoord { x = evt.clientX, y = evt.clientY };
                         if (!noPreventDefault)
                         {
                             evt.preventDefault();
                         }
+
+                        Engine.console.info("end");
                     };
                 this._onPointerUp = (e) =>
                     {
