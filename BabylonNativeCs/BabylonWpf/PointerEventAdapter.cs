@@ -12,7 +12,7 @@
         public object currentPoint
         {
             get
-            {
+            { 
                 throw new NotImplementedException();
             }
             set

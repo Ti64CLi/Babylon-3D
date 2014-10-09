@@ -64,7 +64,15 @@ namespace BabylonAndroid
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
-                onmousemove(new PointerEventAdapter(pointerId, x, y));
+                Log.Info("Mouse move.");
+                onmousemove(new MouseEventAdapter(-1, x, y));
+            }
+
+            var onpointermove = main.canvas.onpointermove;
+            if (onpointermove != null)
+            {
+                Log.Info("Pointer move.");
+                onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
         }
 

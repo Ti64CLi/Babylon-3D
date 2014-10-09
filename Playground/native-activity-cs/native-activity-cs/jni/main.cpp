@@ -195,7 +195,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
 
-		engine->motionFunc(engine->state.pointerId, engine->state.x, engine->state.y);
+		engine->motionFunc(engine->state.pointerId + 1, engine->state.x, engine->state.y);
 
 		return 1;
 	}
