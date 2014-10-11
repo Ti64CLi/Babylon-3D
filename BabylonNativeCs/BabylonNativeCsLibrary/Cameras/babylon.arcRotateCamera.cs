@@ -351,6 +351,8 @@ namespace BABYLON
             {
                 this._onPointerDown = (e) =>
                     {
+                        Engine.console.info("_onPointerDown begin");
+
                         if (pointerId > 0)
                         {
                             return;
@@ -358,6 +360,8 @@ namespace BABYLON
 
                         var evt = (PointerEvent)e;
                         pointerId = evt.pointerId;
+
+                        Engine.console.info(string.Format("_onPointerDown pointerId {0}", pointerId));
 
                         previousPosition = new PositionCoord { x = evt.clientX, y = evt.clientY };
                         if (!noPreventDefault)
@@ -367,6 +371,8 @@ namespace BABYLON
                     };
                 this._onPointerUp = (e) =>
                     {
+                        Engine.console.info("_onPointerUp begin");
+
                         var evt = (PointerEvent)e;
 
                         previousPosition = null;
@@ -378,6 +384,8 @@ namespace BABYLON
                     };
                 this._onPointerMove = (e) =>
                     {
+                        Engine.console.info("_onPointerMove begin");
+
                         var evt = (PointerEvent)e;
 
                         if (previousPosition == null)
@@ -389,6 +397,8 @@ namespace BABYLON
                         {
                             return;
                         }
+
+                        Engine.console.info(string.Format("_onPointerMove pointerId {0}", pointerId));
 
                         var offsetX = evt.clientX - previousPosition.x;
                         var offsetY = evt.clientY - previousPosition.y;

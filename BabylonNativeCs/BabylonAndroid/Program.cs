@@ -83,22 +83,6 @@ namespace BabylonAndroid
             switch (state)
             {
                 case AMOTION_EVENT_ACTION_DOWN:
-                    var onmouseup = main.canvas.onmouseup;
-                    if (onmouseup != null)
-                    {
-                        Log.Info("Mouse up.");
-                        onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
-                    }
-
-                    var onpointerup = main.canvas.onpointerup;
-                    if (onpointerup != null)
-                    {
-                        Log.Info("Pointer up.");
-                        onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
-                    }
-
-                    break;
-                case AMOTION_EVENT_ACTION_UP:
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
@@ -111,6 +95,22 @@ namespace BabylonAndroid
                     {
                         Log.Info("Pointer down.");
                         onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    break;
+                case AMOTION_EVENT_ACTION_UP:
+                    var onmouseup = main.canvas.onmouseup;
+                    if (onmouseup != null)
+                    {
+                        Log.Info("Mouse up.");
+                        onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    var onpointerup = main.canvas.onpointerup;
+                    if (onpointerup != null)
+                    {
+                        Log.Info("Pointer up.");
+                        onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     break;

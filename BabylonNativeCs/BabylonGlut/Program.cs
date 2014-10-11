@@ -72,6 +72,23 @@ namespace BabylonGlut
         {
             switch (state)
             {
+                case Gl.GLUT_DOWN:
+                    var onmousedown = main.canvas.onmousedown;
+                    if (onmousedown != null)
+                    {
+                        Log.Info("Mouse down.");
+                        onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    var onpointerdown = main.canvas.onpointerdown;
+                    if (onpointerdown != null)
+                    {
+                        Log.Info("Pointer down.");
+                        pointerId = buttonOrPointerId;
+                        onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    break;
                 case Gl.GLUT_UP:
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
@@ -85,23 +102,6 @@ namespace BabylonGlut
                     {
                         Log.Info("Pointer up.");
                         onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
-                    }
-
-                    break;
-                case Gl.GLUT_DOWN:
-                    var onmousedown = main.canvas.onmousedown;
-                    if (onmousedown != null)
-                    {
-                        Log.Info("Mouse down.");
-                        onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
-                    }
-
-                    var onpointerdown = main.canvas.onpointerdown;
-                    if (onpointerdown != null)
-                    {
-                        Log.Info("Pointer down.");
-                        this.pointerId = buttonOrPointerId;
-                        onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     break;
