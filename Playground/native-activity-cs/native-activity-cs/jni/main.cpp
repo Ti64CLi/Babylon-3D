@@ -43,6 +43,7 @@ struct saved_state {
 
 typedef void (*defEmptyFunc)();
 typedef void (*defTheeIntFunc)(int32_t, int32_t, int32_t);
+typedef void (*defFourIntFunc)(int32_t, int32_t, int32_t, int32_t);
 
 /**
 * Shared state for our app.
@@ -64,6 +65,7 @@ struct engine {
 
 	defEmptyFunc displayFunc;
 	defEmptyFunc initFunc;
+	defFourIntFunc mouseFunc;
 	defTheeIntFunc motionFunc;
 };
 
@@ -191,11 +193,25 @@ static void engine_term_display(struct engine* engine) {
 static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) {
 	struct engine* engine = (struct engine*)app->userData;
 	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
+
+		int action = AMotionEvent_getAction(event) & AMOTION_EVENT_ACTION_MASK;
+
 		engine->state.pointerId = AMotionEvent_getPointerId(event, 0);
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
 
-		engine->motionFunc(engine->state.pointerId + 1, engine->state.x, engine->state.y);
+		switch (action)
+		{
+			case AMOTION_EVENT_ACTION_DOWN:
+				engine->mouseFunc(engine->state.pointerId, AMOTION_EVENT_ACTION_DOWN, engine->state.x, engine->state.y);
+				break;
+			case AMOTION_EVENT_ACTION_UP:
+				engine->mouseFunc(engine->state.pointerId, AMOTION_EVENT_ACTION_UP, engine->state.x, engine->state.y);
+				break;
+			default:
+				engine->motionFunc(engine->state.pointerId, engine->state.x, engine->state.y);
+				break;
+		}
 
 		return 1;
 	}
@@ -211,6 +227,7 @@ extern "C" {
 	defEmptyFunc _initFunc;
 	defEmptyFunc _displayFunc;
 	defTheeIntFunc _motionFunc;
+	defFourIntFunc _mouseFunc;
 
 	void InitFunc(void* initFunc)
 	{
@@ -225,6 +242,11 @@ extern "C" {
 	void MotionFunc(void* motionFunc)
 	{
 		_motionFunc = (defTheeIntFunc)motionFunc;	
+	}
+
+	void MouseFunc(void* mouseFunc)
+	{
+		_mouseFunc = (defFourIntFunc)mouseFunc;	
 	}
 
 	void _logi(char * msg)
@@ -278,6 +300,12 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 			{
 				engine->motionFunc = _motionFunc;
 				_motionFunc = NULL;
+			}
+
+			if (_mouseFunc != NULL)
+			{
+				engine->mouseFunc = _mouseFunc;
+				_mouseFunc = NULL;
 			}
 
 			engine_init_display(engine);

@@ -68,7 +68,7 @@ namespace BabylonGlut
         /// </param>
         /// <param name="y">
         /// </param>
-        private static void Mouse(int button, int state, int x, int y)
+        private static void Mouse(int buttonOrPointerId, int state, int x, int y)
         {
             switch (state)
             {
@@ -77,14 +77,14 @@ namespace BabylonGlut
                     if (onmouseup != null)
                     {
                         Log.Info("Mouse up.");
-                        onmouseup(new MouseEventAdapter(button, x, y));
+                        onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerup = main.canvas.onpointerup;
                     if (onpointerup != null)
                     {
                         Log.Info("Pointer up.");
-                        onpointerup(new PointerEventAdapter(pointerId, x, y));
+                        onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     break;
@@ -93,14 +93,15 @@ namespace BabylonGlut
                     if (onmousedown != null)
                     {
                         Log.Info("Mouse down.");
-                        onmousedown(new MouseEventAdapter(button, x, y));
+                        onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerdown = main.canvas.onpointerdown;
                     if (onpointerdown != null)
                     {
                         Log.Info("Pointer down.");
-                        onpointerdown(new PointerEventAdapter(++pointerId, x, y));
+                        this.pointerId = buttonOrPointerId;
+                        onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     break;
