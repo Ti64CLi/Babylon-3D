@@ -28,6 +28,8 @@
 #include <android/log.h>
 #include "../native_app_glue/android_native_app_glue.h"
 
+#include <assert.h>
+
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity-cs", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity-cs", __VA_ARGS__))
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "native-activity-cs", __VA_ARGS__))
@@ -354,6 +356,8 @@ void android_main(struct android_app* state) {
 
 	_initFunc = NULL;
 	_displayFunc = NULL;
+	_motionFunc = NULL;
+	_mouseFunc = NULL;
 
 	memset(&engine, 0, sizeof(engine));
 	state->userData = &engine;
