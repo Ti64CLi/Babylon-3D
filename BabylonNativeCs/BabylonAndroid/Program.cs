@@ -18,6 +18,10 @@ namespace BabylonAndroid
     /// </summary>
     internal class Program
     {
+        public const int AMOTION_EVENT_ACTION_DOWN = 0;
+
+        public const int AMOTION_EVENT_ACTION_UP = 1;
+
         /// <summary>
         /// </summary>
         /// <param name="display">
@@ -31,6 +35,13 @@ namespace BabylonAndroid
         /// </param>
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern unsafe void InitFunc(void* init);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="mouse">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void MouseFunc(void* mouse);
 
         /// <summary>
         /// </summary>
@@ -59,12 +70,69 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
+        /// <param name="button">
+        /// </param>
+        /// <param name="state">
+        /// </param>
+        /// <param name="x">
+        /// </param>
+        /// <param name="y">
+        /// </param>
+        private static void Mouse(int buttonOrPointerId, int state, int x, int y)
+        {
+            switch (state)
+            {
+                case AMOTION_EVENT_ACTION_DOWN:
+                    var onmousedown = main.canvas.onmousedown;
+                    if (onmousedown != null)
+                    {
+                        Log.Info("Mouse down.");
+                        onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    var onpointerdown = main.canvas.onpointerdown;
+                    if (onpointerdown != null)
+                    {
+                        Log.Info("Pointer down.");
+                        onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    break;
+                case AMOTION_EVENT_ACTION_UP:
+                    var onmouseup = main.canvas.onmouseup;
+                    if (onmouseup != null)
+                    {
+                        Log.Info("Mouse up.");
+                        onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    var onpointerup = main.canvas.onpointerup;
+                    if (onpointerup != null)
+                    {
+                        Log.Info("Pointer up.");
+                        onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
+                    }
+
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
         private static void Motion(int pointerId, int x, int y)
         {
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
-                onmousemove(new PointerEventAdapter(pointerId, x, y));
+                Log.Info("Mouse move.");
+                onmousemove(new MouseEventAdapter(-1, x, y));
+            }
+
+            var onpointermove = main.canvas.onpointermove;
+            if (onpointermove != null)
+            {
+                Log.Info("Pointer move.");
+                onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
         }
 
@@ -82,6 +150,7 @@ namespace BabylonAndroid
             {
                 InitFunc(new System.Action(Init).ToPointer());
                 DisplayFunc(new System.Action(Display).ToPointer());
+                MouseFunc(new Action<int, int, int, int>(Mouse).ToPointer());
                 MotionFunc(new Action<int, int, int>(Motion).ToPointer());
             }
         }

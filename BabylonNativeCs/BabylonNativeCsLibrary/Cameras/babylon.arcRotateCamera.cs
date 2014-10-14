@@ -356,38 +356,14 @@ namespace BABYLON
                             return;
                         }
 
-                        if (e == null)
-                        {
-                            Engine.console.info("e is null");
-                        }
-
-                        if (e is MouseEvent)
-                        {
-                            Engine.console.info("this is MouseEvent");
-                        }
-
-                        if (e is PointerEvent)
-                        {
-                            Engine.console.info("this is PointerEvent");
-                        }
-
-                        Engine.console.info("before cast");
-
                         var evt = (PointerEvent)e;
-
-                        Engine.console.info("after cast");
-
                         pointerId = evt.pointerId;
-
-                        Engine.console.info("pointerId");
 
                         previousPosition = new PositionCoord { x = evt.clientX, y = evt.clientY };
                         if (!noPreventDefault)
                         {
                             evt.preventDefault();
                         }
-
-                        Engine.console.info("end");
                     };
                 this._onPointerUp = (e) =>
                     {
