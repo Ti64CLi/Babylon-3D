@@ -25,11 +25,14 @@
     </AndroidBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
     <ClCompile Include="native_app_glue\android_native_app_glue.c">
       <Filter>native_app_glue</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\main.c">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\dummy.cpp">
+      <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

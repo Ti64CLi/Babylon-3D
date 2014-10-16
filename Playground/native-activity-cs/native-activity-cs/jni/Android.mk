@@ -21,9 +21,10 @@ LOCAL_MODULE := native-activity-cs
 #LOCAL_SRC_FILES += $(wildcard *.c)
 #LOCAL_SRC_FILES += $(wildcard *.ll)
 
-LOCAL_SRC_FILES := main.cpp BabylonAndroid.ll BabylonNativeCsLibraryForIl.ll CoreLib.ll
+# APP
+LOCAL_SRC_FILES := dummy.cpp main.c BabylonAndroid.ll BabylonNativeCsLibraryForIl.ll CoreLib.ll
 
-LOCAL_ARM_MODE   := arm
+LOCAL_ARM_MODE  := arm
 
 LOCAL_LDLIBS := -lgc-lib -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
 LOCAL_STATIC_LIBRARIES := android_native_app_glue

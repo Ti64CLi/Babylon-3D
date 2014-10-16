@@ -20,7 +20,7 @@
 #----------------------------------------------------------------------------------
 # The ARMv7 is significanly faster due to the use of the hardware FPU
 APP_ABI := armeabi-v7a
-APP_PLATFORM := android-19
+APP_PLATFORM := android-15
 APP_STL := stlport_static
 #NDK_TOOLCHAIN := clang3.4
 APP_CPPFLAGS += -Wno-error=format-security -fexceptions -frtti -std=c++11 -fPIC
