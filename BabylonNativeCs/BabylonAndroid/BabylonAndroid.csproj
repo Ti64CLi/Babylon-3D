@@ -32,6 +32,17 @@
     <WarningLevel>4</WarningLevel>
     <NoStdLib>Yes</NoStdLib>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android - Release|AnyCPU'">
+    <OutputPath>bin\Android - Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\BabylonWpf\CanvasRenderingContext2DAdapter.cs">
       <Link>CanvasRenderingContext2DAdapter.cs</Link>
@@ -92,10 +103,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gc /target:armv7-none-linux-androideabi
-copy /Y $(TargetDir)\$(TargetName).ll D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\$(TargetName).ll
-
-del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe</PostBuildEvent>
+    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /llvm36 /target:armv7-none-linux-androideabi
+copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\$(TargetName).ll
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

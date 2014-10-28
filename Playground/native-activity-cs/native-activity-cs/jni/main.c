@@ -202,8 +202,10 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
 
-		switch (action)
+		if (engine->mouseFunc != NULL)
 		{
+			switch (action)
+			{
 			case AMOTION_EVENT_ACTION_DOWN:
 				engine->mouseFunc(engine->state.pointerId, AMOTION_EVENT_ACTION_DOWN, engine->state.x, engine->state.y);
 				break;
@@ -213,6 +215,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 			default:
 				engine->motionFunc(engine->state.pointerId, engine->state.x, engine->state.y);
 				break;
+			}
 		}
 
 		return 1;
@@ -283,6 +286,11 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		engine->app->savedStateSize = sizeof(struct saved_state);
 		break;
 	case APP_CMD_INIT_WINDOW:
+
+		LOGI("GC_INIT start test %d", GC_get_heap_size());
+
+		main();
+
 		// The window is being shown, get it ready.
 		if (engine->app->window != NULL) {
 
@@ -376,8 +384,6 @@ void android_main(struct android_app* state) {
 		// We are starting with a previous saved state; restore from it.
 		engine.state = *(struct saved_state*)state->savedState;
 	}
-
-	main();
 
 	// loop waiting for stuff to do.
 

@@ -19,14 +19,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidBuild Include="AndroidManifest.xml" />
-    <AndroidBuild Include="build.xml" />
+    <AndroidBuild Include="build.xml">
+      <SubType>Designer</SubType>
+    </AndroidBuild>
     <AndroidBuild Include="local.properties" />
     <AndroidBuild Include="proguard.cfg" />
     <AndroidBuild Include="project.properties" />
     <AndroidBuild Include="res\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.cpp" />
+    <ClCompile Include="jni\dummy.cpp" />
+    <ClCompile Include="jni\main.c" />
     <ClCompile Include="native_app_glue\android_native_app_glue.c" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +44,7 @@
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
     <NdkToolchainVersion>Default</NdkToolchainVersion>
     <ConfigurationType>Utility</ConfigurationType>
+    <AndroidStlType>gnustl_static</AndroidStlType>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
