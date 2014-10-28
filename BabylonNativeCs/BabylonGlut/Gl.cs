@@ -97,7 +97,7 @@
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
-        public static extern void glutInit(ref int argCount, byte[][] args);
+        public unsafe static extern void glutInit(ref int argCount, byte** args);
 
         /// <summary>
         /// </summary>
@@ -132,7 +132,7 @@
 #else
         [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
 #endif
-        public static extern void glutCreateWindow(byte[] title);
+        public unsafe static extern void glutCreateWindow(byte* title);
 
         /// <summary>
         /// </summary>
@@ -277,7 +277,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetUniformLocation(uint program, byte[] name);
+        public unsafe static extern int __glewGetUniformLocation(uint program, byte* name);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -307,7 +307,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewUniformMatrix4fv(int location, int count, byte transpose, float[] value);
+        public unsafe static extern void __glewUniformMatrix4fv(int location, int count, byte transpose, float* value);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -322,7 +322,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGenBuffers(int n, uint[] buffers);
+        public unsafe static extern void __glewGenBuffers(int n, uint* buffers);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -333,25 +333,25 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderiv(uint shader, int pname, int[] @params);
+        public unsafe static extern void __glewGetShaderiv(uint shader, int pname, int* @params);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern byte[] glGetString(int name);
+        public unsafe static extern byte* glGetString(int name);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int[] length, byte[] infoLog);
+        public unsafe static extern void __glewGetShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetProgramInfoLog(uint program, int maxLength, int[] length, byte[] infoLog);
+        public unsafe static extern void __glewGetProgramInfoLog(uint program, int maxLength, int* length, byte* infoLog);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGetIntegerv(int pname, int[] @params);
+        public unsafe static extern void glGetIntegerv(int pname, int* @params);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewShaderSource(uint shader, int count, byte[][] @string, int[] length);
+        public unsafe static extern void __glewShaderSource(uint shader, int count, byte** @string, int* length);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -359,10 +359,10 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern int __glewGetAttribLocation(uint program, byte[] name);
+        public unsafe static extern int __glewGetAttribLocation(uint program, byte* name);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
+        public unsafe static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte* data);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -374,7 +374,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewGetProgramiv(uint program, int pname, int[] @params);
+        public unsafe static extern void __glewGetProgramiv(uint program, int pname, int* @params);
 
         [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
         public static extern void glDepthFunc(int func);
@@ -387,7 +387,7 @@
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewDeleteBuffers(int n, uint[] buffers);
+        public unsafe static extern void __glewDeleteBuffers(int n, uint* buffers);
 
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]

@@ -36,7 +36,7 @@
         public static extern void glClearColor(float r, float g, float b, float alpha);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern int glGetUniformLocation(uint program, byte[] name);
+        public unsafe static extern int glGetUniformLocation(uint program, byte* name);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public unsafe static extern void glBufferData(int target, int size, void* data, int usage);
@@ -60,7 +60,7 @@
         public static extern void glCullFace(int mode);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glUniformMatrix4fv(int location, int count, byte transpose, float[] value);
+        public unsafe static extern void glUniformMatrix4fv(int location, int count, byte transpose, float* value);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern uint glCreateProgram();
@@ -72,7 +72,7 @@
         public static extern void glEnable(int cap);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGenBuffers(int n, uint[] buffers);
+        public unsafe static extern void glGenBuffers(int n, uint* buffers);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glUseProgram(uint program);
@@ -81,31 +81,31 @@
         public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGetShaderiv(uint shader, int pname, int[] @params);
+        public unsafe static extern void glGetShaderiv(uint shader, int pname, int* @params);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern byte[] glGetString(int name);
+        public unsafe static extern byte* glGetString(int name);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGetShaderInfoLog(uint shader, int maxLength, int[] length, byte[] infoLog);
+        public unsafe static extern void glGetShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGetProgramInfoLog(uint program, int maxLength, int[] length, byte[] infoLog);
+        public unsafe static extern void glGetProgramInfoLog(uint program, int maxLength, int* length, byte* infoLog);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGetIntegerv(int pname, int[] @params);
+        public unsafe static extern void glGetIntegerv(int pname, int* @params);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glShaderSource(uint shader, int count, byte[][] @string, int[] length);
+        public unsafe static extern void glShaderSource(uint shader, int count, byte** @string, int* length);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glBindBuffer(int target, int buffer);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern int glGetAttribLocation(uint program, byte[] name);
+        public unsafe static extern int glGetAttribLocation(uint program, byte* name);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte[] data);
+        public unsafe static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte* data);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glUniform4f(int location, float x, float y, float z, float w);
@@ -114,7 +114,7 @@
         public static extern void glUniform1i(int location, int x);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glGetProgramiv(uint program, int pname, int[] @params);
+        public unsafe static extern void glGetProgramiv(uint program, int pname, int* @params);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glDepthFunc(int func);
@@ -126,7 +126,7 @@
         public static extern void glViewport(int x, int y, int width, int height);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glDeleteBuffers(int n, uint[] buffers);
+        public unsafe static extern void glDeleteBuffers(int n, uint* buffers);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glAttachShader(uint program, uint shader);

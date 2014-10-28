@@ -57,7 +57,16 @@
         {
             Log.Info(string.Format("getUniformLocation {0} {1}", (int)program.Value, name));
 
-            var glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, Encoding.ASCII.GetBytes(name)));
+            var bytes = Encoding.ASCII.GetBytes(name);
+            GlUniformLocation glUniformLocation = null;
+            unsafe
+            {
+                fixed (byte* b = &bytes[0])
+                {
+                    glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, b));
+                }
+            }
+
             ErrorTest();
 
             Log.Info(string.Format("value {0}", glUniformLocation.Value));
@@ -76,7 +85,7 @@
 
             unsafe
             {
-                fixed (void* pdata = data)
+                fixed (void* pdata = &data[0])
                 {
                     Gl.__glewBufferData(target, data.Length * sizeof(float), pdata, usage);
                 }
@@ -88,10 +97,10 @@
         public void bufferData(int target, ushort[] data, int usage)
         {
             Log.Info(string.Format("bufferData ushort {0} Count:{1} Len:{2} {3}", target, data.Length, data.Length * sizeof(ushort), usage));
-     
+
             unsafe
             {
-                fixed (void* pdata = data)
+                fixed (void* pdata = &data[0])
                 {
                     Gl.__glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
                 }
@@ -224,7 +233,14 @@
             Log.Info(string.Format("uniformMatrix4fv {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}", location.Value, transpose
                 , value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]));
 
-            Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), value);
+            unsafe
+            {
+                fixed (float* pvalue = &value[0])
+                {
+                    Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
+                }
+            }
+
             ErrorTest();
         }
 
@@ -334,11 +350,14 @@
         {
             Log.Info("createBuffer");
 
-            uint[] buffers = new uint[1];
-            Gl.__glewGenBuffers(1, buffers);
+            uint bufferId;
+            unsafe
+            {
+                Gl.__glewGenBuffers(1, &bufferId);
+            }
+
             ErrorTest();
 
-            var bufferId = buffers[0];
             Log.Info(string.Format("value {0}", (int)bufferId));
 
             return new GlBufferAdapter(bufferId);
@@ -429,7 +448,7 @@
         public void drawElements(int mode, int count, int type, int offset)
         {
             Log.Info(string.Format("drawElements {0} {1} {2} {3}", mode, count, type, offset));
-            
+
             Gl.glDrawElements(mode, count, type, offset);
             ErrorTest();
         }
@@ -460,20 +479,24 @@
 
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
-            var k = new int[1];
-            Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, k);
-            if (k[0] == -1)
+            int k;
+            unsafe
+            {
+                Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
+            }
+            if (k <= 0)
             {
                 return string.Empty;
             }
 
-            if (k[0] == 0)
+            var result = new byte[k];
+            unsafe
             {
-                return string.Empty;
+                fixed (byte* presult = &result[0])
+                {
+                    Gl.__glewGetShaderInfoLog(shader.Value, k, &k, presult);
+                }
             }
-
-            var result = new byte[k[0]];
-            Gl.__glewGetShaderInfoLog(shader.Value, k[0], k, result);
 
             ////var version = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
@@ -489,13 +512,17 @@
         {
             Log.Info(string.Format("getParameter {0}", pname));
 
-            var i = new int[1];
-            Gl.glGetIntegerv(pname, i);
+            int i;
+            unsafe
+            {
+                Gl.glGetIntegerv(pname, &i);
+            }
+
             ErrorTest();
 
-            Log.Info(string.Format("value {0}", i[0]));
+            Log.Info(string.Format("value {0}", i));
 
-            return i[0];
+            return i;
         }
 
         public Web.WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype)
@@ -568,11 +595,19 @@
             Log.Info(string.Format("shaderSource {0}, source length {1}", shader.Value, source.Length));
 
             var bytes = Encoding.ASCII.GetBytes(source);
+            var len = bytes.Length;
 
-            var len = new int[] { bytes.Length };
-            var bytesOfBytes = new byte[][] { bytes };
-
-            Gl.__glewShaderSource(shader.Value, 1, bytesOfBytes, len);
+            unsafe
+            {
+                fixed (byte* b = &bytes[0])
+                {
+                    byte*[] barray = new byte*[] { b };
+                    fixed (byte** pb = &barray[0])
+                    {
+                        Gl.__glewShaderSource(shader.Value, 1, pb, &len);
+                    }
+                }
+            }
 
             ErrorTest();
         }
@@ -609,7 +644,15 @@
                 bytes[i] = (byte)chars[i];
             }
 
-            var attribLocation = Gl.__glewGetAttribLocation(program.Value, bytes);
+            var attribLocation = -1;
+            unsafe
+            {
+                fixed (byte* b = &bytes[0])
+                {
+                    attribLocation = Gl.__glewGetAttribLocation(program.Value, b);
+                }
+            }
+
             ErrorTest();
 
             Log.Info(string.Format("value {0}", attribLocation));
@@ -649,7 +692,14 @@
         {
             Log.Info(string.Format("readPixels {0} {1} {2} {3} {4} {5}", x, y, width, height, format, type));
 
-            Gl.glReadPixels(x, y, width, height, format, type, pixels);
+            unsafe
+            {
+                fixed (byte* ppixels = &pixels[0])
+                {
+                    Gl.glReadPixels(x, y, width, height, format, type, ppixels);
+                }
+            }
+
             ErrorTest();
         }
 
@@ -763,13 +813,17 @@
         {
             Log.Info(string.Format("getProgramParameter {0} {1}", program.Value, pname));
 
-            var i = new int[1];
-            Gl.__glewGetProgramiv(program.Value, pname, i);
+            int i;
+            unsafe
+            {
+                Gl.__glewGetProgramiv(program.Value, pname, &i);
+            }
+
             ErrorTest();
 
-            Log.Info(string.Format("value {0}", i[0]));
+            Log.Info(string.Format("value {0}", i));
 
-            return i[0];
+            return i;
         }
 
         public Web.WebGLActiveInfo getActiveUniform(Web.WebGLProgram program, int index)
@@ -869,13 +923,17 @@
         {
             Log.Info(string.Format("getShaderParameter {0} {1}", shader.Value, pname));
 
-            var i = new int[1];
-            Gl.__glewGetShaderiv(shader.Value, pname, i);
+            int i;
+            unsafe
+            {
+                Gl.__glewGetShaderiv(shader.Value, pname, &i);
+            }
+
             ErrorTest();
 
-            Log.Info(string.Format("value {0}", i[0]));
+            Log.Info(string.Format("value {0}", i));
 
-            return i[0];
+            return i;
         }
 
         public void clearDepth(double depth)
@@ -922,7 +980,12 @@
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
             Log.Info(string.Format("deleteBuffer {0}", buffer.Value));
-            Gl.__glewDeleteBuffers(1, new uint[] { buffer.Value });
+            var value = buffer.Value;
+            unsafe
+            {
+                Gl.__glewDeleteBuffers(1, &value);
+            }
+
             ErrorTest();
         }
 
@@ -1013,20 +1076,25 @@
 
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
-            var k = new int[1];
-            Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, k);
-            if (k[0] == -1)
+            int k;
+            unsafe
+            {
+                Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
+            }
+
+            if (k <= 0)
             {
                 return string.Empty;
             }
 
-            if (k[0] == 0)
+            var result = new byte[k];
+            unsafe
             {
-                return string.Empty;
+                fixed (byte* presult = &result[0])
+                {
+                    Gl.__glewGetProgramInfoLog(program.Value, k, &k, presult);
+                }
             }
-
-            var result = new byte[k[0]];
-            Gl.__glewGetProgramInfoLog(program.Value, k[0], k, result);
 
             return new string(Encoding.ASCII.GetChars(result));
         }

@@ -163,12 +163,22 @@ namespace BabylonGlut
             main.MaxHeight = main.Height = 640;
 
             var count = 0;
-            var argsBytes = new byte[0][];
-            Gl.glutInit(ref count, argsBytes);
+            unsafe
+            {
+                Gl.glutInit(ref count, null);
+            }
 
             Gl.glutInitWindowSize(main.Width, main.Height);
             Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB);
-            Gl.glutCreateWindow(Encoding.ASCII.GetBytes("Babylon Native"));
+
+            var bytes = Encoding.ASCII.GetBytes("Babylon Native");
+            unsafe
+            {
+                fixed (byte* b = &bytes[0])
+                {
+                    Gl.glutCreateWindow(b);
+                }
+            }
 
             Gl.glewInit();
 
