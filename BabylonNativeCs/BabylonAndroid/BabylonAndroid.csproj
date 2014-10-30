@@ -103,7 +103,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /llvm36 /target:armv7-none-linux-androideabi
+    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /target:armv7-none-linux-androideabi
 copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\$(TargetName).ll
 </PostBuildEvent>
   </PropertyGroup>

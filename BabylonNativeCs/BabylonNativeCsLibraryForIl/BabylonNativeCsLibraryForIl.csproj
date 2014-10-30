@@ -463,12 +463,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /llvm36 /target:armv7-none-linux-androideabi)
-if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /llvm36 /target:armv7-none-linux-androideabi)
+    <PostBuildEvent>if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /target:armv7-none-linux-androideabi)
+if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /target:armv7-none-linux-androideabi)
 if "$(ConfigurationName)" == "Android - Release" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\$(TargetName).ll)
 if "$(ConfigurationName)" == "Android - Release" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\CoreLib.ll)
-if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /llvm36) 
-if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /llvm36)
+if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll") 
+if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll")
 if "$(ConfigurationName)" == "Debug" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll)
 if "$(ConfigurationName)" == "Debug" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\CoreLib.ll)
 if "$(ConfigurationName)" == "Debug" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj)
