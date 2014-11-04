@@ -1,4 +1,4 @@
-﻿namespace BabylonGlut
+﻿namespace BabylonAndroid
 {
     using System;
     using BABYLON;

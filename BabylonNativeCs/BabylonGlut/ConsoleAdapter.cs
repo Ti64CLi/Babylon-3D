@@ -10,18 +10,22 @@ namespace BABYLON
     {
         public void info(object message = null, params object[] optionalParams)
         {
+            System.Console.WriteLine("INFO: {0}", message);
         }
 
         public void warn(object message = null, params object[] optionalParams)
         {
+            System.Console.WriteLine("WARN: {0}", message);
         }
 
         public void error(object message = null, params object[] optionalParams)
         {
+            System.Console.WriteLine("ERROR: {0}", message);
         }
 
         public void log(object message = null, params object[] optionalParams)
         {
+            System.Console.WriteLine(message.ToString());
         }
 
         public void profile(string reportName = null)

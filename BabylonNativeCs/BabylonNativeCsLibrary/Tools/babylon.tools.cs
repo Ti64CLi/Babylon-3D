@@ -38,6 +38,8 @@ namespace BABYLON
     /// </summary>
     public partial class Tools
     {
+        public static Web.Navigator navigator;
+
         // Screenshots
 
         // FPS
@@ -530,12 +532,11 @@ namespace BABYLON
         {
             var eventPrefix = "pointer";
 
-            /*
             if (!navigator.pointerEnabled)
             {
                 eventPrefix = "mouse";
             }
-            */
+
             return eventPrefix;
         }
 

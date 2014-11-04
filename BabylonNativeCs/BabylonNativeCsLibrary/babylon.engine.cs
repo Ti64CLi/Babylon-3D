@@ -238,6 +238,13 @@ namespace BABYLON
         /// </exception>
         public Engine(HTMLCanvasElement canvas, bool antialias = false, EngineOptions engineOptions = null)
         {
+            document = canvas.document;
+            window = document.parentWindow;
+            console = window.console;
+            Tools.navigator = window.navigator;
+
+            console.info("Engine ctor()");
+
             this._renderingCanvas = canvas;
             this._canvasClientRect = this._renderingCanvas.getBoundingClientRect();
             engineOptions = engineOptions ?? new EngineOptions();
@@ -255,10 +262,6 @@ namespace BABYLON
             {
                 throw new Error("WebGL not supported");
             }
-
-            document = canvas.document;
-            window = document.parentWindow;
-            console = window.console;
 
             this._onBlur = (e) => { this._windowIsBackground = true; };
             this._onFocus = (e) => { this._windowIsBackground = false; };

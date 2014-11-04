@@ -7,55 +7,65 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BabylonGlut
+namespace BabylonAndroid
 {
     using BABYLON;
     using System;
+    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
-    using System.Text;
 
     /// <summary>
     /// </summary>
     internal class Program
-    { 
+    {
+        public const int AMOTION_EVENT_ACTION_DOWN = 0;
+
+        public const int AMOTION_EVENT_ACTION_UP = 1;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="display">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void DisplayFunc(void* display);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="init">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void InitFunc(void* init);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="mouse">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void MouseFunc(void* mouse);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="motion">
+        /// </param>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void MotionFunc(void* motion);
+
         /// <summary>
         /// </summary>
         private static Main main;
 
         /// <summary>
         /// </summary>
-        private static int pointerId;
+        private static void Init()
+        {
+            main.OnInitialize();
+        }
 
         /// <summary>
         /// </summary>
         private static void Display()
         {
             main.OnDraw();
-            Gl.glutSwapBuffers();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        private static void PassiveMotion(int x, int y)
-        {
-            Gl.glutPostRedisplay();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="k">
-        /// </param>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        private static void Key(byte k, int x, int y)
-        {
-            Gl.glutPostRedisplay();
         }
 
         /// <summary>
@@ -72,7 +82,7 @@ namespace BabylonGlut
         {
             switch (state)
             {
-                case Gl.GLUT_DOWN:
+                case AMOTION_EVENT_ACTION_DOWN:
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
@@ -84,12 +94,11 @@ namespace BabylonGlut
                     if (onpointerdown != null)
                     {
                         Log.Info("Pointer down.");
-                        pointerId = buttonOrPointerId;
                         onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     break;
-                case Gl.GLUT_UP:
+                case AMOTION_EVENT_ACTION_UP:
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
                     {
@@ -106,34 +115,11 @@ namespace BabylonGlut
 
                     break;
             }
-
-            Gl.glutPostRedisplay();
         }
 
         /// <summary>
         /// </summary>
-        private static void Idle()
-        {
-            Gl.glutPostRedisplay();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="w">
-        /// </param>
-        /// <param name="h">
-        /// </param>
-        private static void Resize(int w, int h)
-        {
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
-        private static void Motion(int x, int y)
+        private static void Motion(int pointerId, int x, int y)
         {
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
@@ -148,8 +134,6 @@ namespace BabylonGlut
                 Log.Info("Pointer move.");
                 onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
-
-            Gl.glutPostRedisplay();
         }
 
         /// <summary>
@@ -159,44 +143,16 @@ namespace BabylonGlut
         private static void Main(string[] args)
         {
             main = new Main();
-            main.MaxWidth = main.Width = 400;
-            main.MaxHeight = main.Height = 640;
-
-            var count = 0;
-            unsafe
-            {
-                Gl.glutInit(ref count, null);
-            }
-
-            Gl.glutInitWindowSize(main.Width, main.Height);
-            Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB);
-
-            var bytes = Encoding.ASCII.GetBytes("Babylon Native");
-            unsafe
-            {
-                fixed (byte* b = &bytes[0])
-                {
-                    Gl.glutCreateWindow(b);
-                }
-            }
-
-            Gl.glewInit();
+            main.MaxWidth = main.Width = 480;
+            main.MaxHeight = main.Height = 800;
 
             unsafe
             {
-                Gl.glutDisplayFunc(new System.Action(Display).ToPointer());
-                Gl.glutPassiveMotionFunc(new Action<int, int>(PassiveMotion).ToPointer());
-                Gl.glutMouseFunc(new Action<int, int, int, int>(Mouse).ToPointer());
-                Gl.glutMotionFunc(new Action<int, int>(Motion).ToPointer());
-                Gl.glutIdleFunc(new System.Action(Idle).ToPointer());
-                Gl.glutKeyboardFunc(new Action<byte, int, int>(Key).ToPointer());
-                Gl.glutReshapeFunc(new Action<int, int>(Resize).ToPointer());
+                InitFunc(new System.Action(Init).ToPointer());
+                DisplayFunc(new System.Action(Display).ToPointer());
+                MouseFunc(new Action<int, int, int, int>(Mouse).ToPointer());
+                MotionFunc(new Action<int, int, int>(Motion).ToPointer());
             }
-
-            main.OnInitialize();
-
-            // main loop
-            Gl.glutMainLoop();
         }
     }
 }

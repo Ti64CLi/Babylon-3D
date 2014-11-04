@@ -1,4 +1,4 @@
-﻿namespace BabylonGlut
+﻿namespace BabylonAndroid
 {
     using System;
     using System.Diagnostics;
@@ -63,7 +63,7 @@
             {
                 fixed (byte* b = &bytes[0])
                 {
-                    glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, b));
+                    glUniformLocation = new GlUniformLocation(Gl.glGetUniformLocation(program.Value, b));
                 }
             }
 
@@ -85,9 +85,9 @@
 
             unsafe
             {
-                fixed (void* pdata = &data[0])
+                fixed (void* pdata = data)
                 {
-                    Gl.__glewBufferData(target, data.Length * sizeof(float), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(float), pdata, usage);
                 }
             }
 
@@ -100,9 +100,9 @@
 
             unsafe
             {
-                fixed (void* pdata = &data[0])
+                fixed (void* pdata = data)
                 {
-                    Gl.__glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(ushort), pdata, usage);
                 }
             }
 
@@ -141,7 +141,7 @@
         {
             Log.Info(string.Format("linkProgram {0}", program.Value));
 
-            Gl.__glewLinkProgram(program.Value);
+            Gl.glLinkProgram(program.Value);
             ErrorTest();
         }
 
@@ -156,8 +156,10 @@
 
             unsafe
             {
-                Gl.__glewBufferSubData(target, offset, size, data.ToPointer());
+                Gl.glBufferSubData(target, offset, size, data.ToPointer());
             }
+
+            ErrorTest();
         }
 
         public void bufferSubData(int target, int offset, float[] data)
@@ -171,7 +173,7 @@
 
             unsafe
             {
-                Gl.__glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+                Gl.glVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
             }
 
             ErrorTest();
@@ -206,7 +208,7 @@
         {
             Log.Info(string.Format("enableVertexAttribArray {0}", index));
 
-            Gl.__glewEnableVertexAttribArray((uint)index);
+            Gl.glEnableVertexAttribArray((uint)index);
             ErrorTest();
         }
 
@@ -220,6 +222,7 @@
             Log.Info(string.Format("cullFace {0}", mode));
 
             Gl.glCullFace(mode);
+
             ErrorTest();
         }
 
@@ -237,7 +240,7 @@
             {
                 fixed (float* pvalue = &value[0])
                 {
-                    Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
+                    Gl.glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
                 }
             }
 
@@ -288,7 +291,7 @@
         {
             Log.Info("createProgram");
 
-            var glProgramAdapter = new GlProgramAdapter(Gl.__glewCreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
             ErrorTest();
 
             Log.Info(string.Format("value {0}", glProgramAdapter.Value));
@@ -300,7 +303,7 @@
         {
             Log.Info(string.Format("deleteShader", shader.Value));
 
-            Gl.__glewDeleteShader(shader.Value);
+            Gl.glDeleteShader(shader.Value);
             ErrorTest();
         }
 
@@ -353,7 +356,7 @@
             uint bufferId;
             unsafe
             {
-                Gl.__glewGenBuffers(1, &bufferId);
+                Gl.glGenBuffers(1, &bufferId);
             }
 
             ErrorTest();
@@ -371,7 +374,7 @@
         public void useProgram(Web.WebGLProgram program)
         {
             Log.Info(string.Format("useProgram {0}", program.Value));
-            Gl.__glewUseProgram(program.Value);
+            Gl.glUseProgram(program.Value);
             ErrorTest();
         }
 
@@ -482,7 +485,7 @@
             int k;
             unsafe
             {
-                Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
+                Gl.glGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
             }
             if (k <= 0)
             {
@@ -494,7 +497,7 @@
             {
                 fixed (byte* presult = &result[0])
                 {
-                    Gl.__glewGetShaderInfoLog(shader.Value, k, &k, presult);
+                    Gl.glGetShaderInfoLog(shader.Value, k, &k, presult);
                 }
             }
 
@@ -604,7 +607,7 @@
                     byte*[] barray = new byte*[] { b };
                     fixed (byte** pb = &barray[0])
                     {
-                        Gl.__glewShaderSource(shader.Value, 1, pb, &len);
+                        Gl.glShaderSource(shader.Value, 1, pb, &len);
                     }
                 }
             }
@@ -625,10 +628,10 @@
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
             var bufferId = (int)(buffer != null ? buffer.Value : 0);
-
+            
             Log.Info(string.Format("bindBuffer {0} {1}", target, bufferId));
 
-            Gl.__glewBindBuffer(target, bufferId);
+            Gl.glBindBuffer(target, bufferId);
             ErrorTest();
         }
 
@@ -649,7 +652,7 @@
             {
                 fixed (byte* b = &bytes[0])
                 {
-                    attribLocation = Gl.__glewGetAttribLocation(program.Value, b);
+                    attribLocation = Gl.glGetAttribLocation(program.Value, b);
                 }
             }
 
@@ -787,7 +790,7 @@
         {
             Log.Info(string.Format("uniform4f {0} {1} {2} {3} {4}", location.Value, x, y, z, w));
 
-            Gl.__glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
+            Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
         }
 
@@ -805,7 +808,7 @@
         {
             Log.Info(string.Format("uniform1i {0} {1}", location.Value, x));
 
-            Gl.__glewUniform1i(location.Value, x);
+            Gl.glUniform1i(location.Value, x);
             ErrorTest();
         }
 
@@ -816,7 +819,7 @@
             int i;
             unsafe
             {
-                Gl.__glewGetProgramiv(program.Value, pname, &i);
+                Gl.glGetProgramiv(program.Value, pname, &i);
             }
 
             ErrorTest();
@@ -926,7 +929,7 @@
             int i;
             unsafe
             {
-                Gl.__glewGetShaderiv(shader.Value, pname, &i);
+                Gl.glGetShaderiv(shader.Value, pname, &i);
             }
 
             ErrorTest();
@@ -940,7 +943,7 @@
         {
             Log.Info(string.Format("clearDepth {0}", depth));
 
-            Gl.glClearDepth(depth);
+            Gl.glClearDepthf((float)depth);
             ErrorTest();
         }
 
@@ -983,7 +986,7 @@
             var value = buffer.Value;
             unsafe
             {
-                Gl.__glewDeleteBuffers(1, &value);
+                Gl.glDeleteBuffers(1, &value);
             }
 
             ErrorTest();
@@ -1012,7 +1015,7 @@
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
             Log.Info(string.Format("attachShader {0} {1}", program.Value, shader.Value));
-            Gl.__glewAttachShader(program.Value, shader.Value);
+            Gl.glAttachShader(program.Value, shader.Value);
             ErrorTest();
         }
 
@@ -1020,7 +1023,7 @@
         {
             Log.Info(string.Format("compileShader {0}", shader.Value));
 
-            Gl.__glewCompileShader(shader.Value);
+            Gl.glCompileShader(shader.Value);
             ErrorTest();
         }
 
@@ -1066,7 +1069,7 @@
         {
             Log.Info(string.Format("uniform3f {0} {1} {2} {3}", location.Value, x, y, z));
 
-            Gl.__glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
+            Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
         }
 
@@ -1079,7 +1082,7 @@
             int k;
             unsafe
             {
-                Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
+                Gl.glGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
             }
 
             if (k <= 0)
@@ -1092,7 +1095,7 @@
             {
                 fixed (byte* presult = &result[0])
                 {
-                    Gl.__glewGetProgramInfoLog(program.Value, k, &k, presult);
+                    Gl.glGetProgramInfoLog(program.Value, k, &k, presult);
                 }
             }
 
@@ -1123,7 +1126,7 @@
         {
             Log.Info(string.Format("createShader {0}", type));
 
-            var shader = (uint)Gl.__glewCreateShader(type);
+            var shader = (uint)Gl.glCreateShader(type);
             ErrorTest();
             return new GlShaderAdapter(shader);
         }
@@ -1156,7 +1159,7 @@
             {
                 var msg = string.Format("GL Error {0}", error);
                 Log.Error(msg);
-                throw new Exception(msg);
+                //throw new Exception(msg);
             }
 #endif
         }

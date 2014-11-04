@@ -10,18 +10,22 @@ namespace BABYLON
     {
         public void info(object message = null, params object[] optionalParams)
         {
+            BabylonAndroid.Log.Info(message.ToString());
         }
 
         public void warn(object message = null, params object[] optionalParams)
         {
+            BabylonAndroid.Log.Warn(message.ToString());
         }
 
         public void error(object message = null, params object[] optionalParams)
         {
+            BabylonAndroid.Log.Error(message.ToString());
         }
 
         public void log(object message = null, params object[] optionalParams)
         {
+            BabylonAndroid.Log.Info(message.ToString());
         }
 
         public void profile(string reportName = null)
