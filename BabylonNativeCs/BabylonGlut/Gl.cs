@@ -277,7 +277,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern int glewGetUniformLocation(uint program, byte* name);
+        public unsafe static extern int glGetUniformLocation(uint program, byte* name);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -286,7 +286,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewBufferData(int target, int size, void* data, int usage);
+        public unsafe static extern void glBufferData(int target, int size, void* data, int usage);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -298,7 +298,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewLinkProgram(uint program);
+        public static extern void glLinkProgram(uint program);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -307,7 +307,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewBufferSubData(int target, int offset, int size, void* data);
+        public unsafe static extern void glBufferSubData(int target, int offset, int size, void* data);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -316,7 +316,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
+        public unsafe static extern void glVertexAttribPointer(uint index, int size, int type, byte normalized, int stride, void* pointer);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -325,7 +325,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewEnableVertexAttribArray(uint index);
+        public static extern void glEnableVertexAttribArray(uint index);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -337,7 +337,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewUniformMatrix4fv(int location, int count, byte transpose, float* value);
+        public unsafe static extern void glUniformMatrix4fv(int location, int count, byte transpose, float* value);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -355,7 +355,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewDeleteShader(uint shader);
+        public static extern void glDeleteShader(uint shader);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -367,7 +367,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewGenBuffers(int n, uint* buffers);
+        public unsafe static extern void glGenBuffers(int n, uint* buffers);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -376,7 +376,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewUseProgram(uint program);
+        public static extern void glUseProgram(uint program);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -388,7 +388,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewGetShaderiv(uint shader, int pname, int* @params);
+        public unsafe static extern void glGetShaderiv(uint shader, int pname, int* @params);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -400,7 +400,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewGetShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
+        public unsafe static extern void glGetShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -409,7 +409,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewGetProgramInfoLog(uint program, int maxLength, int* length, byte* infoLog);
+        public unsafe static extern void glGetProgramInfoLog(uint program, int maxLength, int* length, byte* infoLog);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -421,7 +421,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewShaderSource(uint shader, int count, byte** @string, int* length);
+        public unsafe static extern void glShaderSource(uint shader, int count, byte** @string, int* length);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -430,7 +430,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewBindBuffer(int target, int buffer);
+        public static extern void glBindBuffer(int target, int buffer);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -439,7 +439,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern int glewGetAttribLocation(uint program, byte* name);
+        public unsafe static extern int glGetAttribLocation(uint program, byte* name);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -451,7 +451,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewUniform4f(int location, float x, float y, float z, float w);
+        public static extern void glUniform4f(int location, float x, float y, float z, float w);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -460,7 +460,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewUniform1i(int location, int x);
+        public static extern void glUniform1i(int location, int x);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -469,7 +469,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewGetProgramiv(uint program, int pname, int* @params);
+        public unsafe static extern void glGetProgramiv(uint program, int pname, int* @params);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -487,7 +487,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glewDeleteBuffers(int n, uint* buffers);
+        public unsafe static extern void glDeleteBuffers(int n, uint* buffers);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -496,7 +496,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewAttachShader(uint program, uint shader);
+        public static extern void glAttachShader(uint program, uint shader);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -505,7 +505,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewCompileShader(uint shader);
+        public static extern void glCompileShader(uint shader);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -514,7 +514,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glewUniform3f(int location, float x, float y, float z);
+        public static extern void glUniform3f(int location, float x, float y, float z);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
@@ -523,7 +523,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern uint glewCreateShader(int shaderType);
+        public static extern uint glCreateShader(int shaderType);
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]

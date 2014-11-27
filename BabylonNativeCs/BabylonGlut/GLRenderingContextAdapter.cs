@@ -64,7 +64,7 @@
                 fixed (byte* b = &bytes[0])
                 {
 #if GLEW_STATIC
-                    glUniformLocation = new GlUniformLocation(Gl.glewGetUniformLocation(program.Value, b));
+                    glUniformLocation = new GlUniformLocation(Gl.glGetUniformLocation(program.Value, b));
 #else
                     glUniformLocation = new GlUniformLocation(Gl.__glewGetUniformLocation(program.Value, b));
 #endif
@@ -92,7 +92,7 @@
                 fixed (void* pdata = &data[0])
                 {
 #if GLEW_STATIC
-                    Gl.glewBufferData(target, data.Length * sizeof(float), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(float), pdata, usage);
 #else
                     Gl.__glewBufferData(target, data.Length * sizeof(float), pdata, usage);
 #endif
@@ -111,7 +111,7 @@
                 fixed (void* pdata = &data[0])
                 {
 #if GLEW_STATIC
-                    Gl.glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
+                    Gl.glBufferData(target, data.Length * sizeof(ushort), pdata, usage);
 #else
                     Gl.__glewBufferData(target, data.Length * sizeof(ushort), pdata, usage);
 #endif
@@ -154,7 +154,7 @@
             Log.Info(string.Format("linkProgram {0}", program.Value));
 
 #if GLEW_STATIC
-            Gl.glewLinkProgram(program.Value);
+            Gl.glLinkProgram(program.Value);
 #else
             Gl.__glewLinkProgram(program.Value);
 #endif
@@ -174,7 +174,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewBufferSubData(target, offset, size, data.ToPointer());
+                Gl.glBufferSubData(target, offset, size, data.ToPointer());
 #else
                 Gl.__glewBufferSubData(target, offset, size, data.ToPointer());
 #endif
@@ -193,7 +193,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+                Gl.glVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
 #else
                 Gl.__glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
 #endif
@@ -231,7 +231,7 @@
         {
             Log.Info(string.Format("enableVertexAttribArray {0}", index));
 #if GLEW_STATIC
-            Gl.glewEnableVertexAttribArray((uint)index);
+            Gl.glEnableVertexAttribArray((uint)index);
 #else
             Gl.__glewEnableVertexAttribArray((uint)index);
 #endif
@@ -266,7 +266,7 @@
                 fixed (float* pvalue = &value[0])
                 {
 #if GLEW_STATIC
-                    Gl.glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
+                    Gl.glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
 #else                    
                     Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
 #endif
@@ -337,7 +337,7 @@
             Log.Info(string.Format("deleteShader", shader.Value));
 
 #if GLEW_STATIC
-            Gl.glewDeleteShader(shader.Value);
+            Gl.glDeleteShader(shader.Value);
 #else
             Gl.__glewDeleteShader(shader.Value);
 #endif
@@ -394,7 +394,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewGenBuffers(1, &bufferId);
+                Gl.glGenBuffers(1, &bufferId);
 #else
                 Gl.__glewGenBuffers(1, &bufferId);
 #endif
@@ -416,7 +416,7 @@
         {
             Log.Info(string.Format("useProgram {0}", program.Value));
 #if GLEW_STATIC
-            Gl.glewUseProgram(program.Value);
+            Gl.glUseProgram(program.Value);
 #else
             Gl.__glewUseProgram(program.Value);
 #endif
@@ -531,7 +531,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
+                Gl.glGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
 #else
                 Gl.__glewGetShaderiv(shader.Value, GL_INFO_LOG_LENGTH, &k);
 #endif
@@ -547,7 +547,7 @@
                 fixed (byte* presult = &result[0])
                 {
 #if GLEW_STATIC
-                    Gl.glewGetShaderInfoLog(shader.Value, k, &k, presult);
+                    Gl.glGetShaderInfoLog(shader.Value, k, &k, presult);
 #else
                     Gl.__glewGetShaderInfoLog(shader.Value, k, &k, presult);
 #endif
@@ -661,7 +661,7 @@
                     fixed (byte** pb = &barray[0])
                     {
 #if GLEW_STATIC
-                        Gl.glewShaderSource(shader.Value, 1, pb, &len);
+                        Gl.glShaderSource(shader.Value, 1, pb, &len);
 #else
                         Gl.__glewShaderSource(shader.Value, 1, pb, &len);
 #endif
@@ -689,7 +689,7 @@
             Log.Info(string.Format("bindBuffer {0} {1}", target, bufferId));
 
 #if GLEW_STATIC
-            Gl.glewBindBuffer(target, bufferId);
+            Gl.glBindBuffer(target, bufferId);
 #else
             Gl.__glewBindBuffer(target, bufferId);
 #endif
@@ -714,7 +714,7 @@
                 fixed (byte* b = &bytes[0])
                 {
 #if GLEW_STATIC
-                    attribLocation = Gl.glewGetAttribLocation(program.Value, b);
+                    attribLocation = Gl.glGetAttribLocation(program.Value, b);
 #else
                     attribLocation = Gl.__glewGetAttribLocation(program.Value, b);
 #endif
@@ -855,7 +855,7 @@
         {
             Log.Info(string.Format("uniform4f {0} {1} {2} {3} {4}", location.Value, x, y, z, w));
 #if GLEW_STATIC
-            Gl.glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
+            Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
 #else
             Gl.__glewUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
 #endif
@@ -876,7 +876,7 @@
         {
             Log.Info(string.Format("uniform1i {0} {1}", location.Value, x));
 #if GLEW_STATIC
-            Gl.glewUniform1i(location.Value, x);
+            Gl.glUniform1i(location.Value, x);
 #else
             Gl.__glewUniform1i(location.Value, x);
 #endif
@@ -891,7 +891,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewGetProgramiv(program.Value, pname, &i);
+                Gl.glGetProgramiv(program.Value, pname, &i);
 #else
                 Gl.__glewGetProgramiv(program.Value, pname, &i);
 #endif
@@ -1005,7 +1005,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewGetShaderiv(shader.Value, pname, &i);
+                Gl.glGetShaderiv(shader.Value, pname, &i);
 #else
                 Gl.__glewGetShaderiv(shader.Value, pname, &i);
 #endif
@@ -1066,7 +1066,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewDeleteBuffers(1, &value);
+                Gl.glDeleteBuffers(1, &value);
 #else
                 Gl.__glewDeleteBuffers(1, &value);
 #endif
@@ -1099,7 +1099,7 @@
         {
             Log.Info(string.Format("attachShader {0} {1}", program.Value, shader.Value));
 #if GLEW_STATIC
-            Gl.glewAttachShader(program.Value, shader.Value);
+            Gl.glAttachShader(program.Value, shader.Value);
 #else
             Gl.__glewAttachShader(program.Value, shader.Value);
 #endif
@@ -1110,7 +1110,7 @@
         {
             Log.Info(string.Format("compileShader {0}", shader.Value));
 #if GLEW_STATIC
-            Gl.glewCompileShader(shader.Value);
+            Gl.glCompileShader(shader.Value);
 #else
             Gl.__glewCompileShader(shader.Value);
 #endif
@@ -1159,7 +1159,7 @@
         {
             Log.Info(string.Format("uniform3f {0} {1} {2} {3}", location.Value, x, y, z));
 #if GLEW_STATIC
-            Gl.glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
+            Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
 #else
             Gl.__glewUniform3f((int)location.Value, (float)x, (float)y, (float)z);
 #endif
@@ -1176,7 +1176,7 @@
             unsafe
             {
 #if GLEW_STATIC
-                Gl.glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
+                Gl.glGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
 #else
                 Gl.__glewGetProgramiv(program.Value, GL_INFO_LOG_LENGTH, &k);
 #endif
@@ -1193,7 +1193,7 @@
                 fixed (byte* presult = &result[0])
                 {
 #if GLEW_STATIC
-                    Gl.glewGetProgramInfoLog(program.Value, k, &k, presult);
+                    Gl.glGetProgramInfoLog(program.Value, k, &k, presult);
 #else
                     Gl.__glewGetProgramInfoLog(program.Value, k, &k, presult);
 #endif
@@ -1228,7 +1228,7 @@
             Log.Info(string.Format("createShader {0}", type));
 
 #if GLEW_STATIC
-            var shader = (uint)Gl.glewCreateShader(type);
+            var shader = (uint)Gl.glCreateShader(type);
 #else
             var shader = (uint)Gl.__glewCreateShader(type);
 #endif
