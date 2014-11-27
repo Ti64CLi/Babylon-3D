@@ -43,6 +43,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Emscripten - Release|AnyCPU'">
+    <OutputPath>bin\Emscripten - Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\BabylonNativeCsLibrary\Actions\babylon.action.cs">
       <Link>Actions\babylon.action.cs</Link>
@@ -463,10 +473,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /target:armv7-none-linux-androideabi)
-if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /gctors- /target:armv7-none-linux-androideabi)
+    <PostBuildEvent>if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /android)
+if "$(ConfigurationName)" == "Android - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /android)
 if "$(ConfigurationName)" == "Android - Release" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\$(TargetName).ll)
 if "$(ConfigurationName)" == "Android - Release" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\jni\CoreLib.ll)
+if "$(ConfigurationName)" == "Emscripten - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /emscripten)
+if "$(ConfigurationName)" == "Emscripten - Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll" /emscripten)
+if "$(ConfigurationName)" == "Emscripten - Release" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Temp\IlCTests\emscripten\$(TargetName).ll)
+if "$(ConfigurationName)" == "Emscripten - Release" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Temp\IlCTests\emscripten\CoreLib.ll)
 if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll") 
 if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll")
 if "$(ConfigurationName)" == "Debug" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll)
