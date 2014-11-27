@@ -86,15 +86,18 @@ link_directories(.)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i686 -std=c++11 -Wall")
 
 add_custom_command( OUTPUT CoreLib.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll -o=${CMAKE_BINARY_DIR}/CoreLib.obj
+               COMMAND opt -filetype=asm ${NativeWindowCs_SOURCE_DIR}/CoreLib.ll -o=${CMAKE_BINARY_DIR}/CoreLib.bc
+               COMMAND llc -mtriple i686-w64-mingw32 -filetype=obj ${CMAKE_BINARY_DIR}/CoreLib.bc -o=${CMAKE_BINARY_DIR}/CoreLib.obj
 )
 
 add_custom_command( OUTPUT BabylonGlut.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonGlut.ll -o=${CMAKE_BINARY_DIR}/BabylonGlut.obj
+               COMMAND opt -filetype=asm ${NativeWindowCs_SOURCE_DIR}/BabylonGlut.ll -o=${CMAKE_BINARY_DIR}/BabylonGlut.bc
+               COMMAND llc -mtriple i686-w64-mingw32 -filetype=obj ${CMAKE_BINARY_DIR}/BabylonGlut.bc -o=${CMAKE_BINARY_DIR}/BabylonGlut.obj
 )
 
 add_custom_command( OUTPUT BabylonNativeCsLibraryForIl.obj
-               COMMAND llc -mtriple i686-pc-mingw32 -filetype=obj ${NativeWindowCs_SOURCE_DIR}/BabylonNativeCsLibraryForIl.ll -o=${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj
+               COMMAND opt -filetype=asm ${NativeWindowCs_SOURCE_DIR}/BabylonNativeCsLibraryForIl.ll -o=${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.bc
+               COMMAND llc -mtriple i686-w64-mingw32 -filetype=obj ${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.bc -o=${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj
 )
 
 add_executable (NativeWindowCs main.cpp ${CMAKE_BINARY_DIR}/BabylonGlut.obj ${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj ${CMAKE_BINARY_DIR}/CoreLib.obj)
