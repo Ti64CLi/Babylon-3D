@@ -346,7 +346,7 @@
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern uint glewCreateProgram();
+        public static extern uint glCreateProgram();
 #else
         [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]

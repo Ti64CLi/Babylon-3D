@@ -321,7 +321,7 @@
             Log.Info("createProgram");
 
 #if GLEW_STATIC
-            var glProgramAdapter = new GlProgramAdapter(Gl.glewCreateProgram());
+            var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
 #else
             var glProgramAdapter = new GlProgramAdapter(Gl.__glewCreateProgram());
 #endif
