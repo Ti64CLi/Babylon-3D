@@ -95,7 +95,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public unsafe static extern void glutInit(ref int argCount, byte** args);
 
@@ -108,7 +108,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glutInitWindowSize(int width, int height);
 
@@ -119,7 +119,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glutInitDisplayMode(int mode);
 
@@ -130,7 +130,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public unsafe static extern void glutCreateWindow(byte* title);
 
@@ -139,7 +139,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glutMainLoop();
 
@@ -150,7 +150,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutDisplayFunc(void* display);
 
@@ -161,7 +161,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutPassiveMotionFunc(void* passiveMotion);
 
@@ -172,7 +172,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutMouseFunc(void* mouse);
 
@@ -183,7 +183,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutMotionFunc(void* motion);
 
@@ -194,7 +194,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutIdleFunc(void* idle);
 
@@ -205,7 +205,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutReshapeFunc(void* reshape);
 
@@ -216,7 +216,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern unsafe void glutKeyboardFunc(void* key);
 
@@ -225,7 +225,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glutPostRedisplay();
 
@@ -234,7 +234,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("glut", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glutSwapBuffers();
 
@@ -248,7 +248,7 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glClear(int mask);
 
@@ -267,11 +267,11 @@
 #if GLUT_STATIC
                 [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
         public static extern void glClearColor(float r, float g, float b, float alpha);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glewInit();
 
@@ -293,7 +293,7 @@
         public unsafe static extern void __glewBufferData(int target, int size, void* data, int usage);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glDepthMask(byte flag);
 
 #if GLEW_STATIC
@@ -332,7 +332,7 @@
         public static extern void __glewEnableVertexAttribArray(uint index);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glCullFace(int mode);
 
 #if GLEW_STATIC
@@ -362,7 +362,7 @@
         public static extern void __glewDeleteShader(uint shader);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glEnable(int cap);
 
 #if GLEW_STATIC
@@ -383,7 +383,7 @@
         public static extern void __glewUseProgram(uint program);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
 
 #if GLEW_STATIC
@@ -395,7 +395,7 @@
         public unsafe static extern void __glewGetShaderiv(uint shader, int pname, int* @params);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern byte* glGetString(int name);
 
 #if GLEW_STATIC
@@ -416,7 +416,7 @@
         public unsafe static extern void __glewGetProgramInfoLog(uint program, int maxLength, int* length, byte* infoLog);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glGetIntegerv(int pname, int* @params);
 
 #if GLEW_STATIC
@@ -446,7 +446,7 @@
         public unsafe static extern int __glewGetAttribLocation(uint program, byte* name);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glReadPixels(int x, int y, int width, int height, int format, int type, byte* data);
 
 #if GLEW_STATIC
@@ -476,13 +476,13 @@
         public unsafe static extern void __glewGetProgramiv(uint program, int pname, int* @params);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glDepthFunc(int func);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glClearDepth(double depth);
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glViewport(int x, int y, int width, int height);
 
 #if GLEW_STATIC
@@ -530,7 +530,7 @@
         public static extern uint __glewCreateShader(int shaderType);
 #endif
 
-        [DllImport("opengl", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern int glGetError();
     }
 }
