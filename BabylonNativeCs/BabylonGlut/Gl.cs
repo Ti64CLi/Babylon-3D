@@ -93,7 +93,7 @@
         /// <param name="args">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -106,7 +106,7 @@
         /// <param name="height">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -117,7 +117,7 @@
         /// <param name="mode">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -128,7 +128,7 @@
         /// <param name="title">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -137,7 +137,7 @@
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -148,7 +148,7 @@
         /// <param name="display">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -159,7 +159,7 @@
         /// <param name="passiveMotion">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -170,7 +170,7 @@
         /// <param name="mouse">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -181,7 +181,7 @@
         /// <param name="motion">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -192,7 +192,7 @@
         /// <param name="idle">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -203,7 +203,7 @@
         /// <param name="reshape">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -214,7 +214,7 @@
         /// <param name="key">
         /// </param>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -223,7 +223,7 @@
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -232,7 +232,7 @@
         /// <summary>
         /// </summary>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -246,7 +246,7 @@
         /// <returns>
         /// </returns>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -265,7 +265,7 @@
         /// <returns>
         /// </returns>
 #if GLUT_STATIC
-                [MethodImpl(MethodImplOptions.Unmanaged)]
+        [MethodImpl(MethodImplOptions.Unmanaged)]
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
