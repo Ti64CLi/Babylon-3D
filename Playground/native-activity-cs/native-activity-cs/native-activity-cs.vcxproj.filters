@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="jni">
+      <UniqueIdentifier>e915284c-77f8-4a5d-a023-6086c0d4db78</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>1f59ce3b-3eb6-4759-b132-e3248ca2353f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>e64931de-ce4e-480f-8c6a-9351f4f577c7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="native_app_glue">
+      <UniqueIdentifier>{9272efb7-29d2-4b7b-93f6-dd89bd347f72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="build.xml" />
+    <AndroidBuild Include="local.properties" />
+    <AndroidBuild Include="proguard.cfg" />
+    <AndroidBuild Include="project.properties" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="native_app_glue\android_native_app_glue.c">
+      <Filter>native_app_glue</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\main.c">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\dummy.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="native_app_glue\android_native_app_glue.h">
+      <Filter>native_app_glue</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
