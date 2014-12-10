@@ -9,6 +9,10 @@
             OpenGLInitialized="OpenGLControl_OpenGLInitialized"
             OpenGLDraw="openGLControl1_OpenGLDraw" 
             RenderContextType="FBO"
-            Resized="openGLControl1_Resized" />
+            Resized="openGLControl1_Resized"
+            MouseLeftButtonUp ="openGLControl1_MouseLeftButtonUp"
+            MouseLeftButtonDown ="openGLControl1_MouseLeftButtonDown"
+            MouseMove = "openGLControl1_MouseMove"
+            />
     </Grid>
 </Window>

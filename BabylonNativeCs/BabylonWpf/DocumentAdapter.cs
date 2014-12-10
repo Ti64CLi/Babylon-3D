@@ -1,14 +1,13 @@
-﻿namespace BabylonWpf
+﻿namespace BABYLON
 {
     using System;
-    using BABYLON;
 
     public class DocumentAdapter : Web.Document
     {
-        private CanvasAdapter canvasAdapter;
+        private Web.HTMLCanvasElement canvasAdapter;
         private Map<string, Web.EventListener> listeners;
 
-        public DocumentAdapter(CanvasAdapter canvasAdapter)
+        public DocumentAdapter(Web.HTMLCanvasElement canvasAdapter)
         {
             this.parentWindow = new WindowAdapter();
             this.canvasAdapter = canvasAdapter;

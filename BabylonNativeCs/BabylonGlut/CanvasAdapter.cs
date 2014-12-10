@@ -1,4 +1,4 @@
-﻿namespace BabylonWpf
+﻿namespace BabylonGlut
 {
     using System;
     using BABYLON;
@@ -8,9 +8,6 @@
         private int maxWidth;
         private int maxHeight;
 
-        private Map<string, Web.EventListener> listeners;
-
-
         public CanvasAdapter(int width, int height, int maxWidth, int maxHeight)
         {
             this.width = width;
@@ -19,7 +16,6 @@
             this.maxHeight = maxHeight;
 
             this.document = new DocumentAdapter(this);
-            this.listeners = new Map<string, Web.EventListener>();
         }
 
         public int width
@@ -829,14 +825,8 @@
 
         public Func<Web.MouseEvent, object> onmouseup
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.DragEvent, object> ondragstart
@@ -949,14 +939,8 @@
 
         public Func<Web.MouseEvent, object> onmousedown
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.MouseEvent, object> onclick
@@ -1093,26 +1077,14 @@
 
         public Func<Web.MouseEvent, object> onmousemove
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Web.MSStyleCSSProperties style
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public bool isContentEditable
@@ -1843,7 +1815,29 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
-            this.listeners[type] = listener;
+            Log.Info(string.Format("addEventListener - {0}", type));
+
+            switch (type)
+            {
+                case "mousemove":
+                    this.onmousemove = (e) => { listener(e); return null; };
+                    break;
+                case "mouseup":
+                    this.onmouseup = (e) => { listener(e); return null; };
+                    break;
+                case "mousedown":
+                    this.onmousedown = (e) => { listener(e); return null; };
+                    break;
+                case "pointermove":
+                    this.onpointermove = (e) => { listener(e); return null; };
+                    break;
+                case "pointerup":
+                    this.onpointerup = (e) => { listener(e); return null; };
+                    break;
+                case "pointerdown":
+                    this.onpointerdown = (e) => { listener(e); return null; };
+                    break;
+            }
         }
 
         public int scrollTop
@@ -2930,26 +2924,14 @@
 
         public Func<Web.PointerEvent, object> onpointerdown
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointerup
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointercancel
@@ -2978,14 +2960,8 @@
 
         public Func<Web.PointerEvent, object> onpointermove
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public Func<Web.PointerEvent, object> onpointerleave

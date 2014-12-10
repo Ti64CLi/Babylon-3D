@@ -13,8 +13,6 @@ namespace BabylonGlut
 
     using BABYLON;
 
-    using BabylonWpf;
-
     /// <summary>
     /// </summary>
     public class Main
@@ -26,6 +24,10 @@ namespace BabylonGlut
         /// <summary>
         /// </summary>
         public const int GL_DEPTH_BUFFER_BIT = 256;
+
+        /// <summary>
+        /// </summary>
+        public CanvasAdapter canvas { get; set; }
 
         /// <summary>
         /// </summary>
@@ -75,11 +77,11 @@ namespace BabylonGlut
             // BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             // BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
-            var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            this.canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene2();
+            this.Scene1();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -88,7 +90,7 @@ namespace BabylonGlut
         private void Scene1()
         {
             var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
-            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
+            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene); 
             var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
         }
 

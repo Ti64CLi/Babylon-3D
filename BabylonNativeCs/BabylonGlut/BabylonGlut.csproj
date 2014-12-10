@@ -38,15 +38,23 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android - Release|AnyCPU'">
+    <OutputPath>bin\Android - Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\BabylonWpf\CanvasRenderingContext2DAdapter.cs">
       <Link>CanvasRenderingContext2DAdapter.cs</Link>
     </Compile>
     <Compile Include="..\BabylonWpf\ClientRectAdapter.cs">
       <Link>ClientRectAdapter.cs</Link>
-    </Compile>
-    <Compile Include="..\BabylonWpf\ConsoleAdapter.cs">
-      <Link>ConsoleAdapter.cs</Link>
     </Compile>
     <Compile Include="..\BabylonWpf\Defaults.cs">
       <Link>Defaults.cs</Link>
@@ -66,12 +74,23 @@
     <Compile Include="..\BabylonWpf\GlUniformLocation.cs">
       <Link>GlUniformLocation.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\MouseEventAdapter.cs">
+      <Link>MouseEventAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\NavigatorAdapter.cs">
+      <Link>NavigatorAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\PointerEventAdapter.cs">
+      <Link>PointerEventAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\WindowAdapter.cs">
       <Link>WindowAdapter.cs</Link>
     </Compile>
     <Compile Include="CanvasAdapter.cs" />
+    <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="Gl.cs" />
     <Compile Include="GLRenderingContextAdapter.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,8 +108,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Debug\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll"
+copy /Y $(TargetDir)\$(TargetName).ll D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll
+del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj
+del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

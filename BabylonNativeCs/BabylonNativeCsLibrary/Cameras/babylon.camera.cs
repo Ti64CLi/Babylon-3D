@@ -13,7 +13,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    public partial class Camera : Node
+    public abstract class Camera : Node
     {
         /// <summary>
         /// </summary>
@@ -222,9 +222,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public virtual void _update()
-        {
-        }
+        public abstract void _update();
 
         /// <summary>
         /// </summary>
@@ -265,9 +263,7 @@ namespace BABYLON
         /// </summary>
         /// <param name="element">
         /// </param>
-        public virtual void attachControl(HTMLElement element)
-        {
-        }
+        public abstract void attachControl(HTMLElement element, bool noPreventDefault = false);
 
         /// <summary>
         /// </summary>
@@ -335,9 +331,7 @@ namespace BABYLON
         /// </summary>
         /// <param name="element">
         /// </param>
-        public virtual void detachControl(HTMLElement element)
-        {
-        }
+        public abstract void detachControl(HTMLElement element);
 
         /// <summary>
         /// </summary>
