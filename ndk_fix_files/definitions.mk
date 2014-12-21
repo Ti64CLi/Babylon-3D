@@ -1291,7 +1291,7 @@ get-object-name = $(strip \
     $(subst ../,__/,\
       $(subst :,_,\
         $(eval __obj := $1)\
-        $(foreach __ext,.c .s .S .asm .ll $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION),\
+        $(foreach __ext,.c .s .S .asm .ll .bc $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION),\
             $(eval __obj := $(__obj:%$(__ext)=%$(TARGET_OBJ_EXTENSION)))\
         )\
         $(__obj)\
@@ -1664,9 +1664,49 @@ _OBJ:=$$(LOCAL_OBJS_DIR:%/=%)/$(2)
 _FLAGS := $$(LOCAL_LLFLAGS) \
           $$(TARGET_LLFLAGS) \
 	  -filetype=obj
-
+	
 _TEXT := LLVM IR $$(call get-src-file-text,$1)
 _CC   := $$(NDK_LLCACHE) $$(TARGET_LL)
+
+$$(_OBJ): PRIVATE_ABI      := $$(TARGET_ARCH_ABI)
+$$(_OBJ): PRIVATE_SRC      := $$(_SRC)
+$$(_OBJ): PRIVATE_OBJ      := $$(_OBJ)
+$$(_OBJ): PRIVATE_MODULE   := $$(LOCAL_MODULE)
+$$(_OBJ): PRIVATE_TEXT     := $$(_TEXT)
+$$(_OBJ): PRIVATE_CC       := $$(_CC)
+$$(_OBJ): PRIVATE_CFLAGS   := $$(_FLAGS)
+
+ifeq ($$(LOCAL_SHORT_COMMANDS),true)
+_OPTIONS_LISTFILE := $$(_OBJ).cflags
+$$(_OBJ): $$(call generate-list-file,$$(_FLAGS),$$(_OPTIONS_LISTFILE))
+$$(_OBJ): PRIVATE_CFLAGS := @$$(call host-path,$$(_OPTIONS_LISTFILE))
+$$(_OBJ): $$(_OPTIONS_LISTFILE)
+endif
+
+$$(call generate-file-dir,$$(_OBJ))
+$$(_OBJ): $$(_SRC) $$(LOCAL_MAKEFILE) $$(NDK_APP_APPLICATION_MK) $$(NDK_DEPENDENCIES_CONVERTER)
+	$$(call host-echo-build-step,$$(PRIVATE_ABI),$$(PRIVATE_TEXT)) "$$(PRIVATE_MODULE) <= $$(notdir $$(PRIVATE_SRC))"
+	$$(hide) $$(PRIVATE_CC) $$(PRIVATE_CFLAGS) $$(call host-path,$$(PRIVATE_SRC)) -o $$(call host-path,$$(PRIVATE_OBJ))
+endef
+
+# -----------------------------------------------------------------------------
+# Template  : ev-compile-bc-source
+# Arguments : 1: single LLVM IR byte-code file name (relative to LOCAL_PATH)
+#             2: target object file (without path)
+# Returns   : None
+# Usage     : $(eval $(call ev-compile-bc-source,<srcfile>,<objfile>)
+# Rationale : Internal template evaluated by compile-bc-source
+# -----------------------------------------------------------------------------
+define  ev-compile-bc-source
+_SRC:=$$(call local-source-file-path,$(1))
+_OBJ:=$$(LOCAL_OBJS_DIR:%/=%)/$(2)
+
+_FLAGS := $$(LOCAL_BCFLAGS) \
+          $$(TARGET_BCFLAGS) \
+	  -filetype=obj
+	
+_TEXT := LLVM IR(BC) $$(call get-src-file-text,$1)
+_CC   := $$(NDK_BCCACHE) $$(TARGET_BC)
 
 $$(_OBJ): PRIVATE_ABI      := $$(TARGET_ARCH_ABI)
 $$(_OBJ): PRIVATE_SRC      := $$(_SRC)
@@ -1737,6 +1777,16 @@ compile-asm-source = $(eval $(call ev-compile-asm-source,$1,$2))
 # Rationale : Setup everything required to build a single LLVM IR source file
 # -----------------------------------------------------------------------------
 compile-ll-source = $(eval $(call ev-compile-ll-source,$1,$2))
+
+# -----------------------------------------------------------------------------
+# Function  : compile-bc-source
+# Arguments : 1: single LLVM IR(BC) source file name (relative to LOCAL_PATH)
+#             2: object file
+# Returns   : None
+# Usage     : $(call compile-bc-source,<srcfile>,<objfile>)
+# Rationale : Setup everything required to build a single LLVM IR source file
+# -----------------------------------------------------------------------------
+compile-bc-source = $(eval $(call ev-compile-bc-source,$1,$2))
 
 define  ev-compile-cpp-source
 _SRC:=$$(call local-source-file-path,$(1))

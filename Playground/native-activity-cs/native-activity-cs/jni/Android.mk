@@ -20,6 +20,7 @@ LOCAL_MODULE := native-activity-cs
 #LOCAL_SRC_FILES := $(wildcard *.cpp)
 #LOCAL_SRC_FILES += $(wildcard *.c)
 #LOCAL_SRC_FILES += $(wildcard *.ll)
+#LOCAL_SRC_FILES += $(wildcard *.bc)
 
 # APP
 LOCAL_SRC_FILES := dummy.cpp main.c BabylonAndroid.ll BabylonNativeCsLibraryForIl.ll CoreLib.ll
