@@ -48,6 +48,7 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <ConfigurationType>Utility</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
@@ -79,6 +80,8 @@
     </Link>
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AntDeploy>Deploy</AntDeploy>
+      <SecurePropertiesLocation>D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\secure_properties.xml</SecurePropertiesLocation>
     </AntBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
