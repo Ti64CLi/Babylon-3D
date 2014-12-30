@@ -340,9 +340,9 @@ LOCAL_DEPENDENCY_DIRS :=
 # all_source_patterns contains the list of filename patterns that correspond
 # to source files recognized by our build system
 ifeq ($(TARGET_ARCH_ABI),x86)
-all_source_extensions := .c .s .S .asm .ll $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION)
+all_source_extensions := .c .s .S .asm .ll .bc $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION)
 else
-all_source_extensions := .c .s .S .ll $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION)
+all_source_extensions := .c .s .S .ll .bc $(LOCAL_CPP_EXTENSION) $(LOCAL_RS_EXTENSION)
 endif
 all_source_patterns   := $(foreach _ext,$(all_source_extensions),%$(_ext))
 all_cpp_patterns      := $(foreach _ext,$(LOCAL_CPP_EXTENSION),%$(_ext))
@@ -458,6 +458,7 @@ ifeq ($(TARGET_ARCH_ABI),x86)
 $(foreach src,$(filter %.asm,$(LOCAL_SRC_FILES)), $(call compile-asm-source,$(src),$(call get-object-name,$(src))))
 endif
 $(foreach src,$(filter %.ll,$(LOCAL_SRC_FILES)), $(call compile-ll-source,$(src),$(call get-object-name,$(src))))
+$(foreach src,$(filter %.bc,$(LOCAL_SRC_FILES)), $(call compile-bc-source,$(src),$(call get-object-name,$(src))))
 
 #
 # The compile-xxx-source calls updated LOCAL_OBJECTS and LOCAL_DEPENDENCY_DIRS

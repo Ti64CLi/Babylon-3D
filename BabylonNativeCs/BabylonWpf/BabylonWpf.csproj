@@ -76,6 +76,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,9 +101,11 @@
     <Compile Include="GlProgramAdapter.cs" />
     <Compile Include="GlShaderAdapter.cs" />
     <Compile Include="GlUniformLocation.cs" />
+    <Compile Include="ImageDataAdapter.cs" />
     <Compile Include="MouseEventAdapter.cs" />
     <Compile Include="NavigatorAdapter.cs" />
     <Compile Include="PointerEventAdapter.cs" />
+    <Compile Include="WebGLTextureAdapter.cs" />
     <Compile Include="WindowAdapter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

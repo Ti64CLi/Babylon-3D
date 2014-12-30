@@ -105,6 +105,9 @@
     <Compile Include="..\BabylonWpf\PointerEventAdapter.cs">
       <Link>PointerEventAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\WebGLTextureAdapter.cs">
+      <Link>WebGLTextureAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\WindowAdapter.cs">
       <Link>WindowAdapter.cs</Link>
     </Compile>
@@ -112,6 +115,7 @@
     <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="Gl.cs" />
     <Compile Include="GLRenderingContextAdapter.cs" />
+    <Compile Include="ImageDataAdapter.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />

@@ -120,6 +120,14 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
+        internal readonly WebGLRenderingContext _gl;
+
+        /// <summary>
+        /// </summary>
+        internal HTMLCanvasElement _canvas;
+
+        /// <summary>
+        /// </summary>
         private bool _alphaTest;
 
         /// <summary>
@@ -165,10 +173,6 @@ namespace BABYLON
         /// <summary>
         /// </summary>
         private bool _depthMask;
-
-        /// <summary>
-        /// </summary>
-        private readonly WebGLRenderingContext _gl;
 
         /// <summary>
         /// </summary>
@@ -242,6 +246,7 @@ namespace BABYLON
             window = document.parentWindow;
             console = window.console;
             Tools.navigator = window.navigator;
+            _canvas = canvas;
 
             console.info("Engine ctor()");
 
@@ -682,7 +687,7 @@ namespace BABYLON
                 this.cascadeLoad(
                     rootUrl,
                     0,
-                    new Array<HTMLImageElement>(),
+                    new Array<Web.ImageData>(),
                     scene,
                     (imgs) =>
                     {
@@ -1027,7 +1032,7 @@ namespace BABYLON
             }
             else
             {
-                Action<HTMLImageElement> onload = (img) =>
+                Action<Web.ImageData> onload = (img) =>
                     {
                         this.prepareWebGLTexture(
                             texture,
@@ -1041,6 +1046,10 @@ namespace BABYLON
                             (int potWidth, int potHeight) =>
                             {
                                 var isPot = img.width == potWidth && img.height == potHeight;
+
+                                // TODO: my fix. why we need to use canvas to draw image?
+                                isPot = true;
+
                                 if (!isPot)
                                 {
                                     this._workingCanvas.width = potWidth;
@@ -1059,8 +1068,8 @@ namespace BABYLON
                             },
                             samplingMode);
                     };
-                Action<HTMLImageElement, object> onerror = (img, err) => { scene._removePendingData(texture); };
-                Tools.LoadImage(url, onload, onerror, scene.database);
+                Action<Web.ImageData, object> onerror = (img, err) => { scene._removePendingData(texture); };
+                Tools.LoadImage(url, onload, onerror, scene.database, this._canvas);
             }
 
             return texture;
@@ -2085,10 +2094,10 @@ namespace BABYLON
         /// <param name="extensions">
         /// </param>
         private void cascadeLoad(
-            string rootUrl, int index, Array<HTMLImageElement> loadedImages, Scene scene, Action<Array<HTMLImageElement>> onfinish, Array<string> extensions)
+            string rootUrl, int index, Array<Web.ImageData> loadedImages, Scene scene, Action<Array<Web.ImageData>> onfinish, Array<string> extensions)
         {
             HTMLImageElement img = null;
-            Action<HTMLImageElement> onload = (HTMLImageElement imageElement) =>
+            Action<Web.ImageData> onload = (imageElement) =>
                 {
                     loadedImages.Add(imageElement);
                     scene._removePendingData(imageElement);
@@ -2101,8 +2110,8 @@ namespace BABYLON
                         onfinish(loadedImages);
                     }
                 };
-            Action<HTMLImageElement, object> onerror = (HTMLImageElement imageElement, object err) => { scene._removePendingData(imageElement); };
-            img = Tools.LoadImage(rootUrl + extensions[index], onload, onerror, scene.database);
+            Action<Web.ImageData, object> onerror = (imageElement, err) => { scene._removePendingData(imageElement); };
+            img = Tools.LoadImage(rootUrl + extensions[index], onload, onerror, scene.database, this._canvas);
             scene._addPendingData(img);
         }
 
@@ -2249,7 +2258,7 @@ namespace BABYLON
             var potWidth = this.getExponantOfTwo(width, engine.getCaps().maxTextureSize);
             var potHeight = this.getExponantOfTwo(height, engine.getCaps().maxTextureSize);
             gl.bindTexture(Gl.TEXTURE_2D, texture);
-            gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, invertY ? 1 : 0);
+            //gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, invertY ? 1 : 0);
             processFunction(potWidth, potHeight);
             var filters = this.getSamplingParameters(samplingMode, !noMipmap, gl);
             gl.texParameteri(Gl.TEXTURE_2D, Gl.TEXTURE_MAG_FILTER, filters.mag);

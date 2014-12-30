@@ -3034,5 +3034,13 @@
         {
             throw new NotImplementedException();
         }
+
+        public void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror)
+        {
+            // TODO: here should be loading of image
+            throw new NotImplementedException();
+
+            onload(new ImageDataAdapter());
+        }
     }
 }

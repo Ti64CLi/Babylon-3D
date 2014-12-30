@@ -1,20 +1,57 @@
 ﻿namespace BabylonWpf
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
 
     using BABYLON;
+    using SharpGL;
     using SharpGL.Enumerations;
     using Web;
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {
         private SharpGL.OpenGL openGl;
+        private IDictionary<string, uint> _constMap = new Dictionary<string, uint>();
 
         public GlRenderingContextAdapter(SharpGL.OpenGL openGl)
         {
             this.openGl = openGl;
+
+            _constMap["TEXTURE"] = OpenGL.GL_TEXTURE;
+            _constMap["TEXTURE0"] = OpenGL.GL_TEXTURE0;
+            _constMap["TEXTURE1"] = OpenGL.GL_TEXTURE1;
+            _constMap["TEXTURE2"] = OpenGL.GL_TEXTURE2;
+            _constMap["TEXTURE3"] = OpenGL.GL_TEXTURE3;
+            _constMap["TEXTURE4"] = OpenGL.GL_TEXTURE4;
+            _constMap["TEXTURE5"] = OpenGL.GL_TEXTURE5;
+            _constMap["TEXTURE6"] = OpenGL.GL_TEXTURE6;
+            _constMap["TEXTURE7"] = OpenGL.GL_TEXTURE7;
+            _constMap["TEXTURE8"] = OpenGL.GL_TEXTURE8;
+            _constMap["TEXTURE9"] = OpenGL.GL_TEXTURE9;
+            _constMap["TEXTURE10"] = OpenGL.GL_TEXTURE10;
+            _constMap["TEXTURE11"] = OpenGL.GL_TEXTURE11;
+            _constMap["TEXTURE12"] = OpenGL.GL_TEXTURE12;
+            _constMap["TEXTURE13"] = OpenGL.GL_TEXTURE13;
+            _constMap["TEXTURE14"] = OpenGL.GL_TEXTURE14;
+            _constMap["TEXTURE15"] = OpenGL.GL_TEXTURE15;
+            _constMap["TEXTURE16"] = OpenGL.GL_TEXTURE16;
+            _constMap["TEXTURE17"] = OpenGL.GL_TEXTURE17;
+            _constMap["TEXTURE18"] = OpenGL.GL_TEXTURE18;
+            _constMap["TEXTURE19"] = OpenGL.GL_TEXTURE19;
+            _constMap["TEXTURE20"] = OpenGL.GL_TEXTURE20;
+            _constMap["TEXTURE21"] = OpenGL.GL_TEXTURE21;
+            _constMap["TEXTURE22"] = OpenGL.GL_TEXTURE22;
+            _constMap["TEXTURE23"] = OpenGL.GL_TEXTURE23;
+            _constMap["TEXTURE24"] = OpenGL.GL_TEXTURE24;
+            _constMap["TEXTURE25"] = OpenGL.GL_TEXTURE25;
+            _constMap["TEXTURE26"] = OpenGL.GL_TEXTURE26;
+            _constMap["TEXTURE27"] = OpenGL.GL_TEXTURE27;
+            _constMap["TEXTURE28"] = OpenGL.GL_TEXTURE28;
+            _constMap["TEXTURE29"] = OpenGL.GL_TEXTURE29;
+            _constMap["TEXTURE30"] = OpenGL.GL_TEXTURE30;
+            _constMap["TEXTURE31"] = OpenGL.GL_TEXTURE31;
         }
 
         public int drawingBufferWidth
@@ -65,7 +102,8 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
-            throw new NotImplementedException();
+            this.openGl.BindTexture((uint)target, texture != null ? texture.Value : 0);
+            ErrorTest();
         }
 
         public void bufferData(int target, float[] data, int usage)
@@ -145,7 +183,10 @@
 
         public Web.WebGLTexture createTexture()
         {
-            throw new NotImplementedException();
+            var val = new uint[1];
+            this.openGl.GenTextures(1, val);
+            return new WebGLTextureAdapter(val[0]);
+
         }
 
         public void hint(int target, int mode)
@@ -277,7 +318,7 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
-            throw new NotImplementedException();
+            this.openGl.TexImage2D((uint)target, level, (uint)internalformat, pixels.width, pixels.height, 0, (uint)format, (uint)type, pixels.dataBytes);
         }
 
         public Web.WebGLBuffer createBuffer()
@@ -361,7 +402,7 @@
 
         public void disableVertexAttribArray(int index)
         {
-            throw new NotImplementedException();
+            this.openGl.DisableVertexAttribArray((uint)index);
         }
 
         public void blendFunc(int sfactor, int dfactor)
@@ -553,7 +594,7 @@
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
         {
-            throw new NotImplementedException();
+            this.openGl.BlendFuncSeparate((uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
         }
 
         public void stencilFuncSeparate(int face, int func, int _ref, int mask)
@@ -589,7 +630,7 @@
 
         public void generateMipmap(int target)
         {
-            throw new NotImplementedException();
+            this.openGl.GenerateMipmapEXT((uint)target);
         }
 
         public void bindAttribLocation(Web.WebGLProgram program, int index, string name)
@@ -689,12 +730,13 @@
 
         public void pixelStorei(int pname, int param)
         {
-            throw new NotImplementedException();
+            this.openGl.PixelStore((uint)pname, param);
+            ErrorTest();
         }
 
         public void disable(int cap)
         {
-            throw new NotImplementedException();
+            this.openGl.Disable((uint)cap);
         }
 
         public void vertexAttrib4fv(int indx, float[] values)
@@ -760,7 +802,8 @@
 
         public void texParameteri(int target, int pname, int param)
         {
-            throw new NotImplementedException();
+            this.openGl.TexParameter((uint)target, (uint)pname, param);
+            ErrorTest();
         }
 
         public void vertexAttrib4f(int indx, double x, double y, double z, double w)
@@ -784,7 +827,7 @@
 
         public void activeTexture(int texture)
         {
-            throw new NotImplementedException();
+            this.openGl.ActiveTexture((uint)texture);
         }
 
         public void viewport(int x, int y, int width, int height)
@@ -879,7 +922,7 @@
 
         public void uniform2f(Web.WebGLUniformLocation location, double x, double y)
         {
-            throw new NotImplementedException();
+            this.openGl.Uniform2(location.Value, (float)x, (float)y);
         }
 
         public void renderbufferStorage(int target, int internalformat, int width, int height)
@@ -942,7 +985,10 @@
 
         public int this[string enumName]
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return (int)this._constMap[enumName];
+            }
         }
 
         [Conditional("DEBUG")]

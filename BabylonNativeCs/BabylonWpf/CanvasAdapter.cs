@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BabylonWpf
 {
+    using System.Drawing;
     using BABYLON;
 
     public class CanvasAdapter : Web.HTMLCanvasElement
@@ -3040,6 +3041,12 @@ namespace BabylonWpf
         public Web.Node replaceNode(Web.Node replacement)
         {
             throw new NotImplementedException();
+        }
+
+        public void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror)
+        {
+            var bmp = Bitmap.FromFile(url);
+            onload(new ImageDataAdapter(bmp));
         }
     }
 }

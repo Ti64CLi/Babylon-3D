@@ -1,17 +1,54 @@
 ﻿namespace BabylonGlut
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Text;
-
+    using BabylonWpf;
     using BABYLON;
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext
     {
+        private IDictionary<string, uint> _constMap = new Dictionary<string, uint>();
+
         public GlRenderingContextAdapter()
         {
+
+            _constMap["TEXTURE"] = Gl.GL_TEXTURE;
+            _constMap["TEXTURE0"] = Gl.GL_TEXTURE0;
+            _constMap["TEXTURE1"] = Gl.GL_TEXTURE1;
+            _constMap["TEXTURE2"] = Gl.GL_TEXTURE2;
+            _constMap["TEXTURE3"] = Gl.GL_TEXTURE3;
+            _constMap["TEXTURE4"] = Gl.GL_TEXTURE4;
+            _constMap["TEXTURE5"] = Gl.GL_TEXTURE5;
+            _constMap["TEXTURE6"] = Gl.GL_TEXTURE6;
+            _constMap["TEXTURE7"] = Gl.GL_TEXTURE7;
+            _constMap["TEXTURE8"] = Gl.GL_TEXTURE8;
+            _constMap["TEXTURE9"] = Gl.GL_TEXTURE9;
+            _constMap["TEXTURE10"] = Gl.GL_TEXTURE10;
+            _constMap["TEXTURE11"] = Gl.GL_TEXTURE11;
+            _constMap["TEXTURE12"] = Gl.GL_TEXTURE12;
+            _constMap["TEXTURE13"] = Gl.GL_TEXTURE13;
+            _constMap["TEXTURE14"] = Gl.GL_TEXTURE14;
+            _constMap["TEXTURE15"] = Gl.GL_TEXTURE15;
+            _constMap["TEXTURE16"] = Gl.GL_TEXTURE16;
+            _constMap["TEXTURE17"] = Gl.GL_TEXTURE17;
+            _constMap["TEXTURE18"] = Gl.GL_TEXTURE18;
+            _constMap["TEXTURE19"] = Gl.GL_TEXTURE19;
+            _constMap["TEXTURE20"] = Gl.GL_TEXTURE20;
+            _constMap["TEXTURE21"] = Gl.GL_TEXTURE21;
+            _constMap["TEXTURE22"] = Gl.GL_TEXTURE22;
+            _constMap["TEXTURE23"] = Gl.GL_TEXTURE23;
+            _constMap["TEXTURE24"] = Gl.GL_TEXTURE24;
+            _constMap["TEXTURE25"] = Gl.GL_TEXTURE25;
+            _constMap["TEXTURE26"] = Gl.GL_TEXTURE26;
+            _constMap["TEXTURE27"] = Gl.GL_TEXTURE27;
+            _constMap["TEXTURE28"] = Gl.GL_TEXTURE28;
+            _constMap["TEXTURE29"] = Gl.GL_TEXTURE29;
+            _constMap["TEXTURE30"] = Gl.GL_TEXTURE30;
+            _constMap["TEXTURE31"] = Gl.GL_TEXTURE31;
         }
 
         public int drawingBufferWidth
@@ -80,7 +117,8 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
-            throw new NotImplementedException();
+            Gl.__glewBindTexture(target, (int) (texture != null ? texture.Value : 0));
+            ErrorTest();
         }
 
         public void bufferData(int target, float[] data, int usage)
@@ -214,7 +252,23 @@
 
         public Web.WebGLTexture createTexture()
         {
-            throw new NotImplementedException();
+            Log.Info("createTexture");
+
+            uint textureId;
+            unsafe
+            {
+#if GLEW_STATIC
+                Gl.glGenTextures(1, &textureId);
+#else
+                Gl.__glewGenTextures(1, &textureId);
+#endif
+            }
+
+            ErrorTest();
+
+            Log.Info(string.Format("value {0}", (int)textureId));
+
+            return new WebGLTextureAdapter(textureId);
         }
 
         public void hint(int target, int mode)
@@ -267,7 +321,7 @@
                 {
 #if GLEW_STATIC
                     Gl.glUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
-#else                    
+#else
                     Gl.__glewUniformMatrix4fv((int)location.Value, value.Length / 16, (byte)(transpose ? 1 : 0), pvalue);
 #endif
                 }
@@ -383,7 +437,24 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                fixed (byte* pData = &pixels.dataBytes[0])
+                {
+                    Gl.__glewTexImage2D(
+                        target,
+                        level,
+                        internalformat,
+                        pixels.width,
+                        pixels.height,
+                        0,
+                        format,
+                        type,
+                        pData);
+                }
+            }
+
+            ErrorTest();
         }
 
         public Web.WebGLBuffer createBuffer()
@@ -485,7 +556,7 @@
 
         public void disableVertexAttribArray(int index)
         {
-            throw new NotImplementedException();
+            Gl.__glewDisableVertexAttribArray(index);
         }
 
         public void blendFunc(int sfactor, int dfactor)
@@ -748,7 +819,8 @@
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
         {
-            throw new NotImplementedException();
+            Gl.__glewBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+            ErrorTest();
         }
 
         public void stencilFuncSeparate(int face, int func, int _ref, int mask)
@@ -793,7 +865,8 @@
 
         public void generateMipmap(int target)
         {
-            throw new NotImplementedException();
+            Gl.glGenerateMipmap(target);
+            ErrorTest();
         }
 
         public void bindAttribLocation(Web.WebGLProgram program, int index, string name)
@@ -916,12 +989,13 @@
 
         public void pixelStorei(int pname, int param)
         {
-            throw new NotImplementedException();
+            Gl.__glewPixelStore(pname, param);
+            ErrorTest();
         }
 
         public void disable(int cap)
         {
-            throw new NotImplementedException();
+            Gl.glDisable(cap);
         }
 
         public void vertexAttrib4fv(int indx, float[] values)
@@ -989,7 +1063,8 @@
 
         public void texParameteri(int target, int pname, int param)
         {
-            throw new NotImplementedException();
+            Gl.__glewTexParameter(target, pname, param);
+            ErrorTest();
         }
 
         public void vertexAttrib4f(int indx, double x, double y, double z, double w)
@@ -1028,7 +1103,7 @@
 
         public void activeTexture(int texture)
         {
-            throw new NotImplementedException();
+            Gl.glActiveTexture(texture);
         }
 
         public void viewport(int x, int y, int width, int height)
@@ -1147,7 +1222,7 @@
 
         public void uniform2f(Web.WebGLUniformLocation location, double x, double y)
         {
-            throw new NotImplementedException();
+            Gl.__glewUniform2f(location.Value, (float)x, (float)y);
         }
 
         public void renderbufferStorage(int target, int internalformat, int width, int height)
@@ -1253,7 +1328,10 @@
 
         public int this[string enumName]
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return (int)this._constMap[enumName];
+            }
         }
 
         private void ErrorTest()

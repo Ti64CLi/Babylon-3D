@@ -1333,6 +1333,8 @@ namespace Web
         Blob msToBlob();
 
         string toDataURL(string type = null, params object[] args);
+
+        void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror);
     }
 
     public partial interface Window : EventTarget,
@@ -4028,6 +4030,17 @@ namespace Web
             int canvasImageWidth = 0,
             int canvasImageHeight = 0);
 
+        void drawImage(
+            Web.ImageData image,
+            int offsetX,
+            int offsetY,
+            int width = 0,
+            int height = 0,
+            int canvasOffsetX = 0,
+            int canvasOffsetY = 0,
+            int canvasImageWidth = 0,
+            int canvasImageHeight = 0);
+
         void fill(string fillRule = null);
 
         void fillRect(double x, double y, double w, int h);
@@ -6250,9 +6263,11 @@ namespace Web
     {
         Uint8Array data { get; set; }
 
+        byte[] dataBytes { get; set; }
+
         int height { get; set; }
 
-        uint width { get; set; }
+        int width { get; set; }
     }
 
     public partial interface HTMLTableColElement : HTMLElement, HTMLTableAlignment

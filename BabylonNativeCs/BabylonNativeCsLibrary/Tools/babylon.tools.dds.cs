@@ -176,7 +176,7 @@ namespace BABYLON.Internals
                     {
                         var unpackAlignment = (int)gl.getParameter(Gl.UNPACK_ALIGNMENT);
                         var unpaddedRowSize = width;
-                        var paddedRowSize = (int)Math.Floor((width + unpackAlignment - 1) / unpackAlignment) * unpackAlignment;
+                        var paddedRowSize = (int)Math.Floor((double)(width + unpackAlignment - 1) / unpackAlignment) * unpackAlignment;
                         dataLength = paddedRowSize * (height - 1) + unpaddedRowSize;
                         byteArray = GetLuminanceArrayBuffer(width, height, dataOffset, dataLength, arrayBuffer);
                         gl.texImage2D(sampler, i, Gl.LUMINANCE, width, height, 0, Gl.LUMINANCE, Gl.UNSIGNED_BYTE, byteArray);

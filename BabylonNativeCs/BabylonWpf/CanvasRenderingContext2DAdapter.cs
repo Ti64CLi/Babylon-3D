@@ -366,6 +366,11 @@ namespace BABYLON
             throw new NotImplementedException();
         }
 
+        public void drawImage(Web.ImageData image, int offsetX, int offsetY, int width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0)
+        {
+            throw new NotImplementedException();
+        }
+
         public void drawImage(Web.HTMLElement image, int offsetX, int offsetY, int width = 0, int height = 0, int canvasOffsetX = 0, int canvasOffsetY = 0, int canvasImageWidth = 0, int canvasImageHeight = 0)
         {
             throw new NotImplementedException();

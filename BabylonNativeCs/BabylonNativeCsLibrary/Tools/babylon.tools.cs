@@ -10,7 +10,7 @@
 namespace BABYLON
 {
     using System;
-
+    using System.IO;
     using Web;
 
     /// <summary>
@@ -611,7 +611,8 @@ namespace BABYLON
                 }
             }
              */
-            throw new NotImplementedException();
+
+            BABYLON.Tools.ReadFile(url, callback, progressCallBack, true);
         }
 
         /// <summary>
@@ -648,8 +649,11 @@ namespace BABYLON
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public static HTMLImageElement LoadImage(string url, Action<HTMLImageElement> onload, Action<HTMLImageElement, object> onerror, object database)
+        public static HTMLImageElement LoadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror, object database, HTMLCanvasElement canvas)
         {
+            canvas.loadImage(url, onload, onerror);
+            return null;
+
             /*
             url = Tools.CleanUrl(url);
             var img = new Image();
@@ -689,7 +693,6 @@ namespace BABYLON
             }
             return img;
              */
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -727,7 +730,15 @@ namespace BABYLON
                 reader.readAsArrayBuffer(fileToLoad);
             }
             */
-            throw new NotImplementedException();
+        }
+
+        public static void ReadFile(string fileName, Action<byte[]> callback, Action<object> progressCallBack, bool useArrayBuffer = false)
+        {
+            if (callback != null)
+            {
+                var bytes = System.IO.File.ReadAllBytes(fileName);
+                callback(bytes);
+            }
         }
 
         /// <summary>

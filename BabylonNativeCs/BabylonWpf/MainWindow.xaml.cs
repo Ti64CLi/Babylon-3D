@@ -46,7 +46,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene1();
+            this.Scene3();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -81,6 +81,88 @@ namespace BabylonWpf
 
             // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
             BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+        }
+
+        private void Scene3()
+        {
+            // Creating a camera looking to the zero point (0,0,0), a light, and a sphere of size 1
+            var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, Vector3.Zero(), scene);
+            var light0 = new PointLight("Omni", new Vector3(20, 20, 100), scene);
+
+            //Creation of 6 spheres
+            var sphere1 = Mesh.CreateSphere("Sphere1", 10, 6.0, scene);
+            var sphere2 = Mesh.CreateSphere("Sphere2", 2, 7.0, scene);//Only two segments
+            var sphere3 = Mesh.CreateSphere("Sphere3", 10, 9.0, scene);
+            var sphere4 = Mesh.CreateSphere("Sphere4", 10, 9.0, scene);
+            var sphere5 = Mesh.CreateSphere("Sphere5", 10, 9.0, scene);
+            var sphere6 = Mesh.CreateSphere("Sphere6", 10, 9.0, scene);
+
+            //Positioning spheres
+            sphere1.position.x = 40;
+            sphere2.position.x = 30;
+            sphere3.position.x = 10;
+            sphere4.position.x = 0;
+            sphere5.position.x = -20;
+            sphere6.position.x = -30;
+
+            //Creation of a plane
+            var plan = Mesh.CreatePlane("plan", 120, scene);
+            plan.position.z = -10;
+            plan.rotation.y = 3.14;
+
+            //Creation of a material in wireFrame
+            var materialSphere1 = new StandardMaterial("texture1", scene);
+            materialSphere1.wireframe = true;
+
+            //Creation of a red material with alpha
+            var materialSphere2 = new StandardMaterial("texture2", scene);
+            materialSphere2.diffuseColor = new Color3(1, 0, 0); //Red
+            materialSphere2.alpha = 0.3;
+
+
+            //Creation of a material with an image
+            var materialSphere3 = new StandardMaterial("texture3", scene);
+            materialSphere3.diffuseTexture = new Texture("text.jpg", scene);
+
+            //Creation of a material, with translated texture
+            var materialSphere4 = new StandardMaterial("texture4", scene);
+            materialSphere4.diffuseTexture = new Texture("text.jpg", scene) { vOffset = 0.1, uOffset = 0.4 };
+            //Offset of 10% vertical
+            //Offset of 40% horizontal
+
+            //Creation of a material with alpha texture
+            var materialSphere5 = new StandardMaterial("texture5", scene);
+            materialSphere5.diffuseTexture = new Texture("Planet.png", scene);//Planet
+            materialSphere5.diffuseTexture.hasAlpha = true;//Have an alpha
+
+            //Creation of a material and allways show all the faces
+            var materialSphere6 = new StandardMaterial("texture6", scene);
+            materialSphere6.diffuseTexture = new Texture("Planet.png", scene);//Planet
+            materialSphere6.diffuseTexture.hasAlpha = true;//Have an alpha
+            materialSphere6.backFaceCulling = false;//Allways show all the faces of the element
+
+            //Creation of a repeated textured material
+            var materialPlan = new StandardMaterial("texturePlane", scene);
+            materialPlan.diffuseTexture = new Texture("grass_texture.jpg", scene) { uScale = 5.0, vScale = 5.0 };
+            //Wood effect
+            //Repeat 5 times on the Vertical Axes
+            //Repeat 5 times on the Horizontal Axes
+            materialPlan.backFaceCulling = false;//Allways show the front and the back of an element
+
+            //Applying the materials to the mesh
+            sphere1.material = materialSphere1;
+            sphere2.material = materialSphere2;
+
+            sphere3.material = materialSphere3;
+            sphere4.material = materialSphere4;
+
+            sphere5.material = materialSphere5;
+            sphere6.material = materialSphere6;
+
+            plan.material = materialPlan;
+
+            // Attach the camera to the scene
+            scene.activeCamera.attachControl(canvas);
         }
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)

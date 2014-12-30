@@ -142,6 +142,21 @@ namespace BABYLON
                 sortedArray.Sort(
                     (SubMesh a, SubMesh b) =>
                         {
+                            if (a == b)
+                            {
+                                return 0;
+                            }
+
+                            if (a == null)
+                            {
+                                return 1;
+                            }
+
+                            if (b == null)
+                            {
+                                return -1;
+                            }
+
                             if (a._distanceToCamera < b._distanceToCamera)
                             {
                                 return 1;

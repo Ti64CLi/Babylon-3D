@@ -229,7 +229,7 @@ namespace BABYLON
             var ground = new GroundMesh(name, scene);
             ground._subdivisions = subdivisions;
             ground._setReady(false);
-            Action<HTMLImageElement> onload = (img) =>
+            Action<Web.ImageData> onload = (img) =>
                 {
                     var canvas = (HTMLCanvasElement)Engine.document.createElement("canvas");
                     var context = (CanvasRenderingContext2D)canvas.getContext("2d");
@@ -244,7 +244,7 @@ namespace BABYLON
                     vertexData.applyToMesh(ground, updatable);
                     ground._setReady(true);
                 };
-            Tools.LoadImage(url, onload, (img, err) => { }, scene.database);
+            Tools.LoadImage(url, onload, (img, err) => { }, scene.database, scene.getEngine()._canvas);
             return ground;
         }
 

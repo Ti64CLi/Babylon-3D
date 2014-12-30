@@ -12,6 +12,7 @@ namespace BABYLON
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Reflection;
     using System.Text;
 
     /// <summary>
@@ -339,7 +340,22 @@ namespace BABYLON
         /// </param>
         public void Sort(Func<T, T, int> compareFn)
         {
-            throw new NotImplementedException();
+            Array.Sort(this._items, new CompareAdapter<T>(compareFn));
+        }
+
+        public class CompareAdapter<T> : IComparer<T>
+        {
+            private Func<T, T, int> _compareFn;
+
+            public CompareAdapter(Func<T, T, int> compareFn)
+            {
+                _compareFn = compareFn;
+            }
+
+            public int Compare(T x, T y)
+            {
+                return _compareFn(x, y);
+            }
         }
 
         /// <summary>
@@ -354,7 +370,9 @@ namespace BABYLON
         /// </exception>
         public Array<T> slice(int index, int length = 0)
         {
-            throw new NotImplementedException();
+            var destinationArray = new T[length];
+            Array.Copy(this._items, 0, destinationArray, 0, length);
+            return new Array<T>(destinationArray);
         }
 
         /// <summary>
