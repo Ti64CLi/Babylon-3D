@@ -399,8 +399,14 @@
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glEnable(int cap);
 
-        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glGenerateMipmap(int target);
+#if GLEW_STATIC
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glGenerateMipmap(int target);
+#else
+        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
+        public static extern void __glewGenerateMipmap(int target);
+#endif
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
@@ -411,14 +417,8 @@
         public unsafe static extern void __glewGenBuffers(int n, uint* buffers);
 #endif
 
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glGenTextures(int n, uint* textures);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewGenTextures(int n, uint* textures);
-#endif
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
@@ -492,14 +492,8 @@
         public static extern void __glewBlendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
 #endif
 
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glTexImage2D(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public unsafe static extern void __glewTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte* dataBytes);
-#endif
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
+        public unsafe static extern void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte* dataBytes);
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
@@ -510,32 +504,14 @@
         public static extern void __glewBindBuffer(int target, int buffer);
 #endif
 
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glBindTexture(int target, int buffer);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewBindTexture(int target, int texture);
-#endif
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glBindTexture(int target, int texture);
 
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glTexParameter(int target, int pname, int param);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewTexParameter(int target, int pname, int param);
-#endif
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glTexParameteri(int target, int pname, int param);
 
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern void glPixelStore(int pname, int param);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static extern void __glewPixelStore(int pname, int param);
-#endif
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
+        public static extern void glPixelStorei(int pname, int param);
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
@@ -588,8 +564,14 @@
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glViewport(int x, int y, int width, int height);
 
-        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
-        public static extern void glActiveTexture(int texture);
+#if GLEW_STATIC
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glActiveTexture(int texture);
+#else
+        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
+        public static extern void __glewActiveTexture(int texture);
+#endif
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]

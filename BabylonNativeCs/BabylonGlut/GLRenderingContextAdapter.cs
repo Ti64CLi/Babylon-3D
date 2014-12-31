@@ -117,7 +117,7 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
-            Gl.__glewBindTexture(target, (int) (texture != null ? texture.Value : 0));
+            Gl.glBindTexture(target, (int) (texture != null ? texture.Value : 0));
             ErrorTest();
         }
 
@@ -257,11 +257,7 @@
             uint textureId;
             unsafe
             {
-#if GLEW_STATIC
                 Gl.glGenTextures(1, &textureId);
-#else
-                Gl.__glewGenTextures(1, &textureId);
-#endif
             }
 
             ErrorTest();
@@ -441,7 +437,7 @@
             {
                 fixed (byte* pData = &pixels.dataBytes[0])
                 {
-                    Gl.__glewTexImage2D(
+                    Gl.glTexImage2D(
                         target,
                         level,
                         internalformat,
@@ -865,7 +861,7 @@
 
         public void generateMipmap(int target)
         {
-            Gl.glGenerateMipmap(target);
+            Gl.__glewGenerateMipmap(target);
             ErrorTest();
         }
 
@@ -989,7 +985,7 @@
 
         public void pixelStorei(int pname, int param)
         {
-            Gl.__glewPixelStore(pname, param);
+            Gl.glPixelStorei(pname, param);
             ErrorTest();
         }
 
@@ -1063,7 +1059,7 @@
 
         public void texParameteri(int target, int pname, int param)
         {
-            Gl.__glewTexParameter(target, pname, param);
+            Gl.glTexParameteri(target, pname, param);
             ErrorTest();
         }
 
@@ -1103,7 +1099,7 @@
 
         public void activeTexture(int texture)
         {
-            Gl.glActiveTexture(texture);
+            Gl.__glewActiveTexture(texture);
         }
 
         public void viewport(int x, int y, int width, int height)
