@@ -499,13 +499,15 @@ if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studi
 if "$(ConfigurationName)" == "Debug" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Release\Il2Bc.exe" /debug "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll")
 if "$(ConfigurationName)" == "Debug" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll)
 if "$(ConfigurationName)" == "Debug" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\CoreLib.ll)
-if "$(ConfigurationName)" == "Debug" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj)
+if "$(ConfigurationName)" == "Debug" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).*)
+if "$(ConfigurationName)" == "Debug" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\CoreLib.ll.*)
 if "$(ConfigurationName)" == "Debug" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe)
 if "$(ConfigurationName)" == "Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Release\Il2Bc.exe" "$(TargetPath)" /corelib:"C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll") 
 if "$(ConfigurationName)" == "Release" ("C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\Il2Native\bin\Release\Il2Bc.exe" "C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll")
 if "$(ConfigurationName)" == "Release" (copy /Y "$(TargetDir)\$(TargetName).ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\$(TargetName).ll)
 if "$(ConfigurationName)" == "Release" (copy /Y "$(TargetDir)\CoreLib.ll" D:\Developing\BabylonNative\Playground\NativeWindowCs\CoreLib.ll)
-if "$(ConfigurationName)" == "Release" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).obj)
+if "$(ConfigurationName)" == "Release" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\$(TargetName).*)
+if "$(ConfigurationName)" == "Release" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\CoreLib.*)
 if "$(ConfigurationName)" == "Release" (del D:\Developing\BabylonNative\Playground\NativeWindowCs\cmake-build\*.exe)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
