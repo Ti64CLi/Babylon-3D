@@ -4,7 +4,7 @@ namespace BabylonGlut
 {
     using Web;
 
-    class ImageDataAdapter : Web.ImageData
+    public class ImageDataAdapter : Web.ImageData
     {
         private byte[] _data;
 

@@ -19,6 +19,18 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 #-----------------------------------------------------------------------------
+# Configure GC
+
+if(WIN32)		
+	set(GC_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/GC/include")
+	if (MSVC)
+		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/vc/gc-lib.lib")
+	else()
+		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/mingw32/libgc-lib.a")
+	endif()
+endif()
+
+#-----------------------------------------------------------------------------
 # Configure OpenGL
 
 find_package(OpenGL)
@@ -62,15 +74,16 @@ else()
 endif()
 
 #-----------------------------------------------------------------------------
-# Configure GC
+# Configure FreeImage
 
 if(WIN32)		
-	set(GC_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/GC/include")
+	set(FREEIMAGE_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/../Deps/FreeImage/include")
 	if (MSVC)
-		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/vc/gc-lib.lib")
+		set(FREEIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/FreeImage/lib/Win/x86/freeimage.lib")
 	else()
-		set(GC_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/GC/lib/mingw32/libgc-lib.a")
+		set(FREEIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/../Deps/FreeImage/lib/MinGW/x86/freeimage.lib")
 	endif()
+else()
 endif()
 
 #-----------------------------------------------------------------------------
@@ -102,8 +115,9 @@ add_custom_command( OUTPUT BabylonNativeCsLibraryForIl.obj
 
 add_executable (NativeWindowCs main.cpp ${CMAKE_BINARY_DIR}/BabylonGlut.obj ${CMAKE_BINARY_DIR}/BabylonNativeCsLibraryForIl.obj ${CMAKE_BINARY_DIR}/CoreLib.obj)
 
-target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} ${GC_LIBRARY} "stdc++" "opengl32")
+target_link_libraries (NativeWindowCs ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARY} ${GLUT_LIBRARY} ${FREEIMAGE_LIBRARY} ${GC_LIBRARY} "stdc++" "opengl32")
 
 if(WIN32)
 add_custom_command(TARGET NativeWindowCs POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NativeWindowCs_SOURCE_DIR}/../Deps/freeglut/dll/freeglut.dll" $<TARGET_FILE_DIR:NativeWindowCs>/freeglut.dll)  
+add_custom_command(TARGET NativeWindowCs POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${NativeWindowCs_SOURCE_DIR}/../Deps/freeimage/lib/MinGW/x86/freeimage.dll" $<TARGET_FILE_DIR:NativeWindowCs>/freeimage.dll)  
 endif()
