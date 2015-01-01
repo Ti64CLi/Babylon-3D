@@ -15,7 +15,6 @@
 
         public GlRenderingContextAdapter()
         {
-
             _constMap["TEXTURE"] = Gl.GL_TEXTURE;
             _constMap["TEXTURE0"] = Gl.GL_TEXTURE0;
             _constMap["TEXTURE1"] = Gl.GL_TEXTURE1;
