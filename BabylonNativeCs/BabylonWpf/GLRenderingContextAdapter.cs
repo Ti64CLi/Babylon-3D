@@ -318,6 +318,11 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
+            if (format == OpenGL.GL_RGBA)
+            {
+                format = (int)OpenGL.GL_BGRA;
+            }
+
             this.openGl.TexImage2D((uint)target, level, (uint)internalformat, pixels.width, pixels.height, 0, (uint)format, (uint)type, pixels.dataBytes);
         }
 

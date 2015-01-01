@@ -120,6 +120,10 @@
         public const int GL_TEXTURE30 = 34014;
         public const int GL_TEXTURE31 = 34015;
 
+        public const int GL_RGBA = 6408;
+        public const int GL_BGRA = 32993;
+
+
         /// <summary>
         /// </summary>
         /// <param name="argCount">

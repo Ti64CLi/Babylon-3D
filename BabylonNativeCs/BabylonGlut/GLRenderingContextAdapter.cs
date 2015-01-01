@@ -432,6 +432,11 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
+            if (format == Gl.GL_RGBA)
+	        {
+		        format = Gl.GL_BGRA;
+	        }
+
             unsafe
             {
                 byte[] dataBytes = pixels.dataBytes;
