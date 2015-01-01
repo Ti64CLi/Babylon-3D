@@ -44,7 +44,12 @@ namespace BabylonWpf
         public byte[] dataBytes
         {
             get { return _data; }
+            set { throw new NotImplementedException(); }
+        }
 
+        public IntPtr dataBytesPointer
+        {
+            get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 

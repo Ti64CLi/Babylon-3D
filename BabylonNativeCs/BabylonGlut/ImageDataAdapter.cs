@@ -6,10 +6,15 @@ namespace BabylonGlut
 
     public class ImageDataAdapter : Web.ImageData
     {
-        private byte[] _data;
+        private IntPtr _data;
+        private int _width;
+        private int _height;
 
-        public ImageDataAdapter()
+        public unsafe ImageDataAdapter(int width, int height, IntPtr data)
         {
+            this._width = width;
+            this._height = height;
+            this._data = data;
         }
 
         public Uint8Array data
@@ -20,19 +25,25 @@ namespace BabylonGlut
 
         public byte[] dataBytes
         {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public unsafe IntPtr dataBytesPointer
+        {
             get { return _data; }
             set { throw new NotImplementedException(); }
         }
 
         public int height
         {
-            get { throw new NotImplementedException(); }
+            get { return _height; }
             set { throw new NotImplementedException(); }
         }
 
         public int width
         {
-            get { throw new NotImplementedException(); }
+            get { return _width; }
             set { throw new NotImplementedException(); }
         }
     }
