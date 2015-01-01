@@ -3038,7 +3038,14 @@
         public void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror)
         {
             var imageDataAdapter = FreeImageWrapper.Load(url);
-            onload(imageDataAdapter);
+            if (imageDataAdapter != null)
+            {
+                onload(imageDataAdapter);
+            }
+            else
+            {
+                onerror(null, null);
+            }
         }
     }
 }

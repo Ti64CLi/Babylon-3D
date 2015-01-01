@@ -35,7 +35,7 @@
 #else
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
 #endif
-        public unsafe static extern byte* FreeImage_Load(int fileFormat, byte* fileName);
+        public unsafe static extern byte* FreeImage_Load(int fileFormat, byte* fileName, int flags = 0);
 
 #if FREEIMAGE_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
