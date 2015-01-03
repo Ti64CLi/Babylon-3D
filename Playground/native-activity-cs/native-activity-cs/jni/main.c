@@ -234,6 +234,8 @@ extern "C" {
 	defTheeIntFunc _motionFunc;
 	defFourIntFunc _mouseFunc;
 
+	void* _assetManager;
+
 	void InitFunc(void* initFunc)
 	{
 		_initFunc = (defEmptyFunc)initFunc;	
@@ -252,6 +254,11 @@ extern "C" {
 	void MouseFunc(void* mouseFunc)
 	{
 		_mouseFunc = (defFourIntFunc)mouseFunc;	
+	}
+
+	void* GetAssetManagerFunc()
+	{
+		return _assetManager;
 	}
 
 	void _logi(char * msg)
@@ -362,10 +369,14 @@ void android_main(struct android_app* state) {
 	// Make sure glue isn't stripped.
 	app_dummy();
 
+	// init functions bridge
 	_initFunc = NULL;
 	_displayFunc = NULL;
 	_motionFunc = NULL;
 	_mouseFunc = NULL;
+
+	// store asset manager pointer
+	_assetManager = state->activity->assetManager;
 
 	memset(&engine, 0, sizeof(engine));
 	state->userData = &engine;

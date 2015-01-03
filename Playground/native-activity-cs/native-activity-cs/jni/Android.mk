@@ -28,9 +28,13 @@ LOCAL_SRC_FILES := dummy.cpp main.c BabylonAndroid.ll BabylonNativeCsLibraryForI
 LOCAL_ARM_MODE  := arm
 
 LOCAL_LDLIBS := -lgc-lib -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
+# uncomment this line to rebuild FreeImage shared lib
+#LOCAL_STATIC_LIBRARIES := android_native_app_glue FreeImage
 LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
-LOCAL_LDFLAGS := -L $(LOCAL_PATH)/../../../Deps/GC/lib/armeabi-v7a
+LOCAL_SRC_FILES:= libs/$(TARGET_ARCH_ABI)/libFreeImage$(TARGET_SONAME_EXTENSION)
+
+LOCAL_LDFLAGS := -L$(LOCAL_PATH)/../../../Deps/GC/lib/armeabi-v7a/
 
 LOCAL_CFLAGS := -DANDROID_NDK \
                 -DDISABLE_IMPORTGL
@@ -39,6 +43,9 @@ LOCAL_LLFLAGS := -enable-pie -relocation-model=pic
 
 include $(BUILD_SHARED_LIBRARY)
 
-#$(call import-add-path, ../libs/jni)
+# uncomment this line to rebuild FreeImage shared lib
+#$(call import-add-path, $(LOCAL_PATH)/../../../../../LibSources/)
 
 $(call import-module,android/native_app_glue)
+# uncomment this line to rebuild FreeImage shared lib
+#$(call import-module,FreeImage/jni)

@@ -83,6 +83,9 @@
       <AntDeploy>Deploy</AntDeploy>
       <SecurePropertiesLocation>D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\secure_properties.xml</SecurePropertiesLocation>
     </AntBuild>
+    <NdkBuild>
+      <Build>NDK_DEBUG=0</Build>
+    </NdkBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
     <ClCompile>

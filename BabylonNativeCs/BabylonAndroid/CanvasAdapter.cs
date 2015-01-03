@@ -1,15 +1,28 @@
 ﻿namespace BabylonAndroid
 {
     using System;
+    using System.Runtime.CompilerServices;
+    using System.Text;
     using Babylon;
     using BABYLON;
 
     public class CanvasAdapter : Web.HTMLCanvasElement
     {
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public extern static unsafe long AAsset_getLength(void* fileAsset);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public extern static unsafe void* AAsset_getBuffer(void* fileAsset);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public extern static unsafe void* AAssetManager_open(void* assetManager, byte* file, int mode);
+
         private int maxWidth;
         private int maxHeight;
 
-        public CanvasAdapter(int width, int height, int maxWidth, int maxHeight)
+        private IntPtr _assetManager;
+
+        public CanvasAdapter(int width, int height, int maxWidth, int maxHeight, IntPtr assetManager)
         {
             this.width = width;
             this.height = height;
@@ -17,6 +30,8 @@
             this.maxHeight = maxHeight;
 
             this.document = new DocumentAdapter(this);
+
+            this._assetManager = assetManager;
         }
 
         public int width
@@ -1816,8 +1831,9 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
+#if DEBUG
             Log.Info(string.Format("addEventListener - {0}", type));
-
+#endif
             switch (type)
             {
                 case "mousemove":
@@ -3038,8 +3054,28 @@
 
         public void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror)
         {
+            IntPtr data = new IntPtr(0);
+            int size = 0;
+
+            int AASSET_MODE_BUFFER = 3;
+
             // load file from Asset Manager
-            var imageDataAdapter = FreeImageWrapper.LoadFromMemory(new IntPtr(0), 0);
+            unsafe
+            {
+                fixed (byte* file = Encoding.ASCII.GetBytes(url))
+                {
+                    void* assetManager = null;
+                    void* fileAsset = AAssetManager_open(_assetManager.ToPointer(), file, AASSET_MODE_BUFFER);
+                    void* fileData = AAsset_getBuffer(fileAsset);
+                    long fileLen = AAsset_getLength(fileAsset);
+
+                    data = new IntPtr(fileData);
+                    size = (int)fileLen;
+                }
+            }
+
+
+            var imageDataAdapter = FreeImageWrapper.LoadFromMemory(data, size);
             if (imageDataAdapter != null)
             {
                 onload(imageDataAdapter);

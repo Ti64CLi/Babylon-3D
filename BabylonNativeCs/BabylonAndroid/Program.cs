@@ -52,13 +52,22 @@ namespace BabylonAndroid
 
         /// <summary>
         /// </summary>
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void* GetAssetManagerFunc();
+
+        /// <summary>
+        /// </summary>
         private static Main main;
+
+        /// <summary>
+        /// </summary>
+        private static IntPtr assetManager;
 
         /// <summary>
         /// </summary>
         private static void Init()
         {
-            main.OnInitialize();
+            main.OnInitialize(assetManager);
         }
 
         /// <summary>
@@ -86,14 +95,18 @@ namespace BabylonAndroid
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
+#if DEBUG
                         Log.Info("Mouse down.");
+#endif
                         onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerdown = main.canvas.onpointerdown;
                     if (onpointerdown != null)
                     {
+#if DEBUG
                         Log.Info("Pointer down.");
+#endif
                         onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
@@ -102,14 +115,18 @@ namespace BabylonAndroid
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
                     {
+#if DEBUG
                         Log.Info("Mouse up.");
+#endif
                         onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerup = main.canvas.onpointerup;
                     if (onpointerup != null)
                     {
+#if DEBUG
                         Log.Info("Pointer up.");
+#endif
                         onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
@@ -124,14 +141,18 @@ namespace BabylonAndroid
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
+#if DEBUG
                 Log.Info("Mouse move.");
+#endif
                 onmousemove(new MouseEventAdapter(-1, x, y));
             }
 
             var onpointermove = main.canvas.onpointermove;
             if (onpointermove != null)
             {
+#if DEBUG
                 Log.Info("Pointer move.");
+#endif
                 onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
         }
@@ -152,6 +173,7 @@ namespace BabylonAndroid
                 DisplayFunc(new System.Action(Display).ToPointer());
                 MouseFunc(new Action<int, int, int, int>(Mouse).ToPointer());
                 MotionFunc(new Action<int, int, int>(Motion).ToPointer());
+                assetManager = new IntPtr(GetAssetManagerFunc());
             }
         }
     }
