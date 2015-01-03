@@ -76,14 +76,18 @@ namespace BabylonGlut
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
+#if DEBUG
                         Log.Info("Mouse down.");
+#endif
                         onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerdown = main.canvas.onpointerdown;
                     if (onpointerdown != null)
                     {
+#if DEBUG
                         Log.Info("Pointer down.");
+#endif
                         pointerId = buttonOrPointerId;
                         onpointerdown(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
@@ -93,14 +97,18 @@ namespace BabylonGlut
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
                     {
+#if DEBUG
                         Log.Info("Mouse up.");
+#endif
                         onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
                     }
 
                     var onpointerup = main.canvas.onpointerup;
                     if (onpointerup != null)
                     {
+#if DEBUG
                         Log.Info("Pointer up.");
+#endif
                         onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
                     }
 
@@ -138,14 +146,18 @@ namespace BabylonGlut
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
+#if DEBUG
                 Log.Info("Mouse move.");
+#endif
                 onmousemove(new MouseEventAdapter(-1, x, y));
             }
 
             var onpointermove = main.canvas.onpointermove;
             if (onpointermove != null)
             {
+#if DEBUG
                 Log.Info("Pointer move.");
+#endif
                 onpointermove(new PointerEventAdapter(pointerId, x, y));
             }
 
@@ -169,12 +181,12 @@ namespace BabylonGlut
             }
 
             Gl.glutInitWindowSize(main.Width, main.Height);
-            Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB);
+            Gl.glutInitDisplayMode(Gl.GLUT_DOUBLE | Gl.GLUT_DEPTH | Gl.GLUT_RGB | Gl.GLUT_MULTISAMPLE);
 
             var bytes = Encoding.ASCII.GetBytes("Babylon Native");
             unsafe
             {
-                fixed (byte* b = &bytes[0])
+                fixed (byte* b = bytes)
                 {
                     Gl.glutCreateWindow(b);
                 }
