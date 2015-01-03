@@ -1815,7 +1815,9 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
+#if DEBUG
             Log.Info(string.Format("addEventListener - {0}", type));
+#endif
 
             switch (type)
             {
