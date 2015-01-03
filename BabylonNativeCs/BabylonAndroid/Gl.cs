@@ -10,6 +10,42 @@
         /// </summary>
         public const int GL_NO_ERROR = 0;
 
+        public const int GL_TEXTURE = 5890;
+        public const int GL_TEXTURE0 = 33984;
+        public const int GL_TEXTURE1 = 33985;
+        public const int GL_TEXTURE2 = 33986;
+        public const int GL_TEXTURE3 = 33987;
+        public const int GL_TEXTURE4 = 33988;
+        public const int GL_TEXTURE5 = 33989;
+        public const int GL_TEXTURE6 = 33990;
+        public const int GL_TEXTURE7 = 33991;
+        public const int GL_TEXTURE8 = 33992;
+        public const int GL_TEXTURE9 = 33993;
+        public const int GL_TEXTURE10 = 33994;
+        public const int GL_TEXTURE11 = 33995;
+        public const int GL_TEXTURE12 = 33996;
+        public const int GL_TEXTURE13 = 33997;
+        public const int GL_TEXTURE14 = 33998;
+        public const int GL_TEXTURE15 = 33999;
+        public const int GL_TEXTURE16 = 34000;
+        public const int GL_TEXTURE17 = 34001;
+        public const int GL_TEXTURE18 = 34002;
+        public const int GL_TEXTURE19 = 34003;
+        public const int GL_TEXTURE20 = 34004;
+        public const int GL_TEXTURE21 = 34005;
+        public const int GL_TEXTURE22 = 34006;
+        public const int GL_TEXTURE23 = 34007;
+        public const int GL_TEXTURE24 = 34008;
+        public const int GL_TEXTURE25 = 34009;
+        public const int GL_TEXTURE26 = 34010;
+        public const int GL_TEXTURE27 = 34011;
+        public const int GL_TEXTURE28 = 34012;
+        public const int GL_TEXTURE29 = 34013;
+        public const int GL_TEXTURE30 = 34014;
+        public const int GL_TEXTURE31 = 34015;
+
+        public const int GL_RGBA = 6408;
+        public const int GL_BGRA = 32993;
 
         /// <summary>
         /// </summary>
@@ -142,5 +178,44 @@
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern int glGetError();
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glBindTexture(int target, int p);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void glGenTextures(int p1, uint* p2);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern unsafe void glTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int p5,
+            int format,
+            int type,
+            byte* pData);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glDisableVertexAttribArray(int index);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glBlendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glGenerateMipmap(int target);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glPixelStorei(int pname, int param);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glDisable(int cap);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glTexParameteri(int target, int pname, int param);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glUniform2f(int p1, float p2, float p3);
     }
 }

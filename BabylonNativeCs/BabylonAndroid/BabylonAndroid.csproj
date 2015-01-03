@@ -31,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>Yes</NoStdLib>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Android - Release|AnyCPU'">
     <OutputPath>bin\Android - Release\</OutputPath>
@@ -65,6 +66,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\BabylonGlut\FreeImageWrapper.cs">
+      <Link>FreeImageWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonGlut\ImageDataAdapter.cs">
+      <Link>ImageDataAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\CanvasRenderingContext2DAdapter.cs">
       <Link>CanvasRenderingContext2DAdapter.cs</Link>
     </Compile>
@@ -97,6 +104,9 @@
     </Compile>
     <Compile Include="..\BabylonWpf\PointerEventAdapter.cs">
       <Link>PointerEventAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\BabylonWpf\WebGLTextureAdapter.cs">
+      <Link>WebGLTextureAdapter.cs</Link>
     </Compile>
     <Compile Include="..\BabylonWpf\WindowAdapter.cs">
       <Link>WindowAdapter.cs</Link>

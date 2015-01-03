@@ -1,4 +1,4 @@
-﻿namespace BabylonWpf
+﻿namespace Babylon
 {
     using System;
     using Web;

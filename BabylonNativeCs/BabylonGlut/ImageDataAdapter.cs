@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BabylonGlut
+namespace Babylon
 {
     using Web;
 

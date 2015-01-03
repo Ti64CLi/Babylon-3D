@@ -1,6 +1,7 @@
 ﻿namespace BabylonGlut
 {
     using System;
+    using Babylon;
     using BABYLON;
 
     public class CanvasAdapter : Web.HTMLCanvasElement

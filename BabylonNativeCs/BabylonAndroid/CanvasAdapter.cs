@@ -1,6 +1,7 @@
 ﻿namespace BabylonAndroid
 {
     using System;
+    using Babylon;
     using BABYLON;
 
     public class CanvasAdapter : Web.HTMLCanvasElement
@@ -3033,6 +3034,20 @@
         public Web.Node replaceNode(Web.Node replacement)
         {
             throw new NotImplementedException();
+        }
+
+        public void loadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror)
+        {
+            // load file from Asset Manager
+            var imageDataAdapter = FreeImageWrapper.LoadFromMemory(new IntPtr(0), 0);
+            if (imageDataAdapter != null)
+            {
+                onload(imageDataAdapter);
+            }
+            else
+            {
+                onerror(null, null);
+            }
         }
     }
 }

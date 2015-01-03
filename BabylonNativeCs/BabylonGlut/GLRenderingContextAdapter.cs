@@ -52,41 +52,23 @@
 
         public int drawingBufferWidth
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         public int drawingBufferHeight
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         public Web.HTMLCanvasElement canvas
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
@@ -98,7 +80,7 @@
             GlUniformLocation glUniformLocation = null;
             unsafe
             {
-                fixed (byte* b = &bytes[0])
+                fixed (byte* b = bytes)
                 {
 #if GLEW_STATIC
                     glUniformLocation = new GlUniformLocation(Gl.glGetUniformLocation(program.Value, b));
@@ -119,7 +101,7 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
-            Gl.glBindTexture(target, (int) (texture != null ? texture.Value : 0));
+            Gl.glBindTexture(target, (int)(texture != null ? texture.Value : 0));
             ErrorTest();
         }
 
@@ -131,7 +113,7 @@
 
             unsafe
             {
-                fixed (void* pdata = &data[0])
+                fixed (void* pdata = data)
                 {
 #if GLEW_STATIC
                     Gl.glBufferData(target, data.Length * sizeof(float), pdata, usage);
@@ -151,7 +133,7 @@
 #endif
             unsafe
             {
-                fixed (void* pdata = &data[0])
+                fixed (void* pdata = data)
                 {
 #if GLEW_STATIC
                     Gl.glBufferData(target, data.Length * sizeof(ushort), pdata, usage);
@@ -205,7 +187,6 @@
             Gl.__glewLinkProgram(program.Value);
 #endif
             ErrorTest();
-
         }
 
         public BABYLON.Array<string> getSupportedExtensions()
@@ -244,7 +225,13 @@
 #if GLEW_STATIC
                 Gl.glVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
 #else
-                Gl.__glewVertexAttribPointer((uint)indx, size, type, (byte)(normalized ? 1 : 0), stride, new IntPtr(offset).ToPointer());
+                Gl.__glewVertexAttribPointer(
+                    (uint)indx,
+                    size,
+                    type,
+                    (byte)(normalized ? 1 : 0),
+                    stride,
+                    new IntPtr(offset).ToPointer());
 #endif
             }
 
@@ -296,7 +283,7 @@
         {
 #if DEBUG
             Log.Info(string.Format("enableVertexAttribArray {0}", index));
-#endif 
+#endif
 
 #if GLEW_STATIC
             Gl.glEnableVertexAttribArray((uint)index);
@@ -368,7 +355,14 @@
             throw new NotImplementedException();
         }
 
-        public void compressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, byte[] data)
+        public void compressedTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            byte[] data)
         {
             throw new NotImplementedException();
         }
@@ -431,7 +425,7 @@
         {
 #if DEBUG
             Log.Info(string.Format("enable {0}", cap));
-#endif 
+#endif
             Gl.glEnable(cap);
             ErrorTest();
         }
@@ -441,22 +435,49 @@
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte[] pixels)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            int format,
+            int type,
+            byte[] pixels)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLImageElement image)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int format,
+            int type,
+            Web.HTMLImageElement image)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLCanvasElement canvas)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int format,
+            int type,
+            Web.HTMLCanvasElement canvas)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLVideoElement video)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int format,
+            int type,
+            Web.HTMLVideoElement video)
         {
             throw new NotImplementedException();
         }
@@ -464,9 +485,9 @@
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
             if (format == Gl.GL_RGBA)
-	        {
-		        format = Gl.GL_BGRA;
-	        }
+            {
+                format = Gl.GL_BGRA;
+            }
 
             unsafe
             {
@@ -572,32 +593,77 @@
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, int type, Web.ArrayBufferView pixels)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int width,
+            int height,
+            int format,
+            int type,
+            Web.ArrayBufferView pixels)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLImageElement image)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            Web.HTMLImageElement image)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLCanvasElement canvas)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            Web.HTMLCanvasElement canvas)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLVideoElement video)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            Web.HTMLVideoElement video)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.ImageData pixels)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            Web.ImageData pixels)
         {
             throw new NotImplementedException();
         }
 
-        public void copyTexImage2D(int target, int level, int internalformat, double x, double y, int width, int height, int border)
+        public void copyTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            double x,
+            double y,
+            int width,
+            int height,
+            int border)
         {
             throw new NotImplementedException();
         }
@@ -730,7 +796,15 @@
             throw new NotImplementedException();
         }
 
-        public void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, Web.ArrayBufferView data)
+        public void compressedTexSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int width,
+            int height,
+            int format,
+            Web.ArrayBufferView data)
         {
             throw new NotImplementedException();
         }
@@ -1234,7 +1308,15 @@
             ErrorTest();
         }
 
-        public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height)
+        public void copyTexSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            double x,
+            double y,
+            int width,
+            int height)
         {
             throw new NotImplementedException();
         }
@@ -1301,7 +1383,11 @@
             throw new NotImplementedException();
         }
 
-        public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, Web.WebGLRenderbuffer renderbuffer)
+        public void framebufferRenderbuffer(
+            int target,
+            int attachment,
+            int renderbuffertarget,
+            Web.WebGLRenderbuffer renderbuffer)
         {
             throw new NotImplementedException();
         }
@@ -1425,10 +1511,7 @@
 
         public int this[string enumName]
         {
-            get
-            {
-                return (int)this._constMap[enumName];
-            }
+            get { return (int)this._constMap[enumName]; }
         }
 
         private void ErrorTest()
