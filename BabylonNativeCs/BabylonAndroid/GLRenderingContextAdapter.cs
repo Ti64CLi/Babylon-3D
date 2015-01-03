@@ -55,7 +55,9 @@
 
         public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
         {
+#if DEBUG 
             Log.Info(string.Format("getUniformLocation {0} {1}", (int)program.Value, name));
+#endif
 
             var bytes = Encoding.ASCII.GetBytes(name);
             GlUniformLocation glUniformLocation = null;
@@ -69,8 +71,9 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", glUniformLocation.Value));
-
+#endif
             return glUniformLocation;
         }
 
@@ -81,7 +84,9 @@
 
         public void bufferData(int target, float[] data, int usage)
         {
+#if DEBUG 
             Log.Info(string.Format("bufferData float {0} Count:{1} Len:{2} {3}", target, data.Length, data.Length * sizeof(float), usage));
+#endif
 
             unsafe
             {
@@ -96,7 +101,9 @@
 
         public void bufferData(int target, ushort[] data, int usage)
         {
+#if DEBUG 
             Log.Info(string.Format("bufferData ushort {0} Count:{1} Len:{2} {3}", target, data.Length, data.Length * sizeof(ushort), usage));
+#endif
 
             unsafe
             {
@@ -116,7 +123,9 @@
 
         public void depthMask(bool flag)
         {
+#if DEBUG 
             Log.Info(string.Format("depthMask {0}", flag));
+#endif
 
             Gl.glDepthMask((byte)(flag ? 1 : 0));
             ErrorTest();
@@ -139,7 +148,9 @@
 
         public void linkProgram(Web.WebGLProgram program)
         {
+#if DEBUG 
             Log.Info(string.Format("linkProgram {0}", program.Value));
+#endif
 
             Gl.glLinkProgram(program.Value);
             ErrorTest();
@@ -152,7 +163,9 @@
 
         public void bufferSubData(int target, int offset, int size, IntPtr data)
         {
+#if DEBUG 
             Log.Info(string.Format("bufferSubData {0} {1} {2}", target, offset, size));
+#endif
 
             unsafe
             {
@@ -169,7 +182,9 @@
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
+#if DEBUG 
             Log.Info(string.Format("vertexAttribPointer {0} {1} {2} {3} {4} {5}", indx, size, type, normalized, stride, offset));
+#endif
 
             unsafe
             {
@@ -206,7 +221,9 @@
 
         public void enableVertexAttribArray(int index)
         {
+#if DEBUG 
             Log.Info(string.Format("enableVertexAttribArray {0}", index));
+#endif
 
             Gl.glEnableVertexAttribArray((uint)index);
             ErrorTest();
@@ -219,7 +236,9 @@
 
         public void cullFace(int mode)
         {
+#if DEBUG 
             Log.Info(string.Format("cullFace {0}", mode));
+#endif
 
             Gl.glCullFace(mode);
 
@@ -233,8 +252,10 @@
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
         {
+#if DEBUG 
             Log.Info(string.Format("uniformMatrix4fv {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}", location.Value, transpose
                 , value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]));
+#endif
 
             unsafe
             {
@@ -289,19 +310,25 @@
 
         public Web.WebGLProgram createProgram()
         {
+#if DEBUG 
             Log.Info("createProgram");
+#endif
 
             var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", glProgramAdapter.Value));
+#endif
 
             return glProgramAdapter;
         }
 
         public void deleteShader(Web.WebGLShader shader)
         {
+#if DEBUG 
             Log.Info(string.Format("deleteShader", shader.Value));
+#endif
 
             Gl.glDeleteShader(shader.Value);
             ErrorTest();
@@ -314,7 +341,9 @@
 
         public void enable(int cap)
         {
+#if DEBUG 
             Log.Info(string.Format("enable {0}", cap));
+#endif
             Gl.glEnable(cap);
             ErrorTest();
         }
@@ -351,7 +380,9 @@
 
         public Web.WebGLBuffer createBuffer()
         {
+#if DEBUG 
             Log.Info("createBuffer");
+#endif
 
             uint bufferId;
             unsafe
@@ -361,7 +392,9 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", (int)bufferId));
+#endif
 
             return new GlBufferAdapter(bufferId);
         }
@@ -373,7 +406,9 @@
 
         public void useProgram(Web.WebGLProgram program)
         {
+#if DEBUG 
             Log.Info(string.Format("useProgram {0}", program.Value));
+#endif
             Gl.glUseProgram(program.Value);
             ErrorTest();
         }
@@ -450,7 +485,9 @@
 
         public void drawElements(int mode, int count, int type, int offset)
         {
+#if DEBUG 
             Log.Info(string.Format("drawElements {0} {1} {2} {3}", mode, count, type, offset));
+#endif
 
             Gl.glDrawElements(mode, count, type, offset);
             ErrorTest();
@@ -478,7 +515,9 @@
 
         public string getShaderInfoLog(Web.WebGLShader shader)
         {
+#if DEBUG 
             Log.Info("getShaderInfoLog");
+#endif
 
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
@@ -513,7 +552,9 @@
 
         public object getParameter(int pname)
         {
+#if DEBUG 
             Log.Info(string.Format("getParameter {0}", pname));
+#endif
 
             int i;
             unsafe
@@ -523,7 +564,9 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", i));
+#endif
 
             return i;
         }
@@ -595,7 +638,9 @@
 
         public void shaderSource(Web.WebGLShader shader, string source)
         {
+#if DEBUG 
             Log.Info(string.Format("shaderSource {0}, source length {1}", shader.Value, source.Length));
+#endif
 
             var bytes = Encoding.ASCII.GetBytes(source);
             var len = bytes.Length;
@@ -628,8 +673,10 @@
         public void bindBuffer(int target, Web.WebGLBuffer buffer)
         {
             var bufferId = (int)(buffer != null ? buffer.Value : 0);
-            
+
+#if DEBUG 
             Log.Info(string.Format("bindBuffer {0} {1}", target, bufferId));
+#endif
 
             Gl.glBindBuffer(target, bufferId);
             ErrorTest();
@@ -637,7 +684,9 @@
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
         {
+#if DEBUG 
             Log.Info(string.Format("getAttribLocation {0} {1}", program.Value, name));
+#endif
 
             var chars = name.ToCharArray();
 
@@ -658,7 +707,9 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", attribLocation));
+#endif
 
             return attribLocation;
         }
@@ -675,7 +726,9 @@
 
         public void clear(int mask)
         {
+#if DEBUG 
             Log.Info(string.Format("clear {0}", mask));
+#endif
 
             Gl.glClear(mask);
             ErrorTest();
@@ -693,7 +746,9 @@
 
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
+#if DEBUG 
             Log.Info(string.Format("readPixels {0} {1} {2} {3} {4} {5}", x, y, width, height, format, type));
+#endif
 
             unsafe
             {
@@ -788,7 +843,9 @@
 
         public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
         {
+#if DEBUG 
             Log.Info(string.Format("uniform4f {0} {1} {2} {3} {4}", location.Value, x, y, z, w));
+#endif
 
             Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
             ErrorTest();
@@ -806,7 +863,9 @@
 
         public void uniform1i(Web.WebGLUniformLocation location, int x)
         {
+#if DEBUG 
             Log.Info(string.Format("uniform1i {0} {1}", location.Value, x));
+#endif
 
             Gl.glUniform1i(location.Value, x);
             ErrorTest();
@@ -814,7 +873,9 @@
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
         {
+#if DEBUG 
             Log.Info(string.Format("getProgramParameter {0} {1}", program.Value, pname));
+#endif
 
             int i;
             unsafe
@@ -824,7 +885,9 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", i));
+#endif
 
             return i;
         }
@@ -891,7 +954,9 @@
 
         public void depthFunc(int func)
         {
+#if DEBUG 
             Log.Info(string.Format("depthFunc {0}", func));
+#endif
 
             Gl.glDepthFunc(func);
             ErrorTest();
@@ -924,7 +989,9 @@
 
         public object getShaderParameter(Web.WebGLShader shader, int pname)
         {
+#if DEBUG 
             Log.Info(string.Format("getShaderParameter {0} {1}", shader.Value, pname));
+#endif
 
             int i;
             unsafe
@@ -934,14 +1001,18 @@
 
             ErrorTest();
 
+#if DEBUG 
             Log.Info(string.Format("value {0}", i));
+#endif
 
             return i;
         }
 
         public void clearDepth(double depth)
         {
+#if DEBUG 
             Log.Info(string.Format("clearDepth {0}", depth));
+#endif
 
             Gl.glClearDepthf((float)depth);
             ErrorTest();
@@ -954,7 +1025,9 @@
 
         public void viewport(int x, int y, int width, int height)
         {
+#if DEBUG 
             Log.Info(string.Format("viewport {0} {1} {2} {3}", x, y, width, height));
+#endif
 
             Gl.glViewport(x, y, width, height);
             ErrorTest();
@@ -982,7 +1055,9 @@
 
         public void deleteBuffer(Web.WebGLBuffer buffer)
         {
+#if DEBUG 
             Log.Info(string.Format("deleteBuffer {0}", buffer.Value));
+#endif
             var value = buffer.Value;
             unsafe
             {
@@ -1014,14 +1089,18 @@
 
         public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
         {
+#if DEBUG 
             Log.Info(string.Format("attachShader {0} {1}", program.Value, shader.Value));
+#endif
             Gl.glAttachShader(program.Value, shader.Value);
             ErrorTest();
         }
 
         public void compileShader(Web.WebGLShader shader)
         {
+#if DEBUG 
             Log.Info(string.Format("compileShader {0}", shader.Value));
+#endif
 
             Gl.glCompileShader(shader.Value);
             ErrorTest();
@@ -1029,7 +1108,9 @@
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
+#if DEBUG 
             Log.Info(string.Format("clearColor {0} {1} {2} {3}", red, green, blue, alpha));
+#endif
 
             Gl.glClearColor((float)red, (float)green, (float)blue, (float)alpha);
             ErrorTest();
@@ -1067,7 +1148,9 @@
 
         public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
         {
+#if DEBUG 
             Log.Info(string.Format("uniform3f {0} {1} {2} {3}", location.Value, x, y, z));
+#endif
 
             Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
             ErrorTest();
@@ -1075,7 +1158,9 @@
 
         public string getProgramInfoLog(Web.WebGLProgram program)
         {
+#if DEBUG 
             Log.Info(string.Format("getProgramInfoLog {0}", program.Value));
+#endif
 
             var GL_INFO_LOG_LENGTH = 35716;
             //var GL_SHADING_LANGUAGE_VERSION = 35724;
@@ -1124,7 +1209,9 @@
 
         public Web.WebGLShader createShader(int type)
         {
+#if DEBUG 
             Log.Info(string.Format("createShader {0}", type));
+#endif
 
             var shader = (uint)Gl.glCreateShader(type);
             ErrorTest();
