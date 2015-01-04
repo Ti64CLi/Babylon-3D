@@ -1753,6 +1753,8 @@ namespace BABYLON
         /// </param>
         public virtual void setTexture(int channel, BaseTexture texture)
         {
+            Tools.Log("setTexture (BaseTexture)");
+
             if (channel < 0)
             {
                 return;

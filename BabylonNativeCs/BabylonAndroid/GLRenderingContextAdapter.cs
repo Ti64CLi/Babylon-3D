@@ -97,11 +97,13 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
+            var textureId = (int)(texture != null ? texture.Value : 0);
+
 #if _DEBUG
-            Log.Info(string.Format("bindTexture {0} {1}", target, texture.Value));
+            Log.Info(string.Format("bindTexture {0} {1}", target, textureId));
 #endif
 
-            Gl.glBindTexture(target, (int)(texture != null ? texture.Value : 0));
+            Gl.glBindTexture(target, textureId);
             ErrorTest();
         }
 

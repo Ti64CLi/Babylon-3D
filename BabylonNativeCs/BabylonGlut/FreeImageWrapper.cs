@@ -143,44 +143,48 @@
 
         public static unsafe ImageDataAdapter LoadFromMemory(IntPtr buffer, int size)
         {
-            //int fif = FIF_UNKNOWN;
-            //byte* dib = null;
-            //byte* memory = null;
+            ////int fif = FIF_UNKNOWN;
+            ////byte* dib = null;
+            ////byte* memory = null;
 
-            //memory = FreeImage_OpenMemory((byte*)buffer.ToPointer(), size);
+            ////memory = FreeImage_OpenMemory((byte*)buffer.ToPointer(), size);
 
-            //fif = FreeImage_GetFileTypeFromMemory(memory, 0);
-            //if (fif == FIF_UNKNOWN)
-            //{
-            //    return null;
-            //}
+            ////fif = FreeImage_GetFileTypeFromMemory(memory, 0);
+            ////if (fif == FIF_UNKNOWN)
+            ////{
+            ////    return null;
+            ////}
 
-            //if (FreeImage_FIFSupportsReading(fif) > 0)
-            //{
-            //    dib = FreeImage_LoadFromMemory(fif, memory, 0);
-            //}
+            ////if (FreeImage_FIFSupportsReading(fif) > 0)
+            ////{
+            ////    dib = FreeImage_LoadFromMemory(fif, memory, 0);
+            ////}
 
-            //if (dib == null)
-            //{
-            //    return null;
-            //}
+            ////if (dib == null)
+            ////{
+            ////    return null;
+            ////}
 
-            //var dib32bit = FreeImage_ConvertTo32Bits(dib);
+            ////var dib32bit = FreeImage_ConvertTo32Bits(dib);
 
-            //FreeImage_Unload(dib);
-            //FreeImage_CloseMemory(memory);
+            ////FreeImage_Unload(dib);
+            ////FreeImage_CloseMemory(memory);
 
-            //var width = FreeImage_GetWidth(dib32bit);
-            //var height = FreeImage_GetHeight(dib32bit);
+            ////var width = FreeImage_GetWidth(dib32bit);
+            ////var height = FreeImage_GetHeight(dib32bit);
 
-            //var bits = FreeImage_GetBits(dib32bit);
-            //return new ImageDataAdapter(width, height, new IntPtr(bits));
+            ////var bits = FreeImage_GetBits(dib32bit);
+            ////return new ImageDataAdapter(width, height, new IntPtr(bits));
 
+            /*
             var width = 64;
             var height = 64;
-            var bytes = new byte[width * height * 4 * 16];
+            var bytes = new byte[width * height * 4];
 
             return new ImageDataAdapter(width, height, bytes);
+            */
+
+            return new ImageDataAdapter(0, 0, new IntPtr(0));
         }
     }
 }

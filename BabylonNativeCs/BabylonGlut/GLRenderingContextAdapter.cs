@@ -6,7 +6,7 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Text;
-    using BabylonWpf;
+    using Babylon;
     using BABYLON;
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext
