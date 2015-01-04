@@ -7,6 +7,7 @@ namespace Babylon
     public class ImageDataAdapter : Web.ImageData
     {
         private IntPtr _data;
+        private byte[] _dataBytes;
         private int _width;
         private int _height;
 
@@ -17,6 +18,13 @@ namespace Babylon
             this._data = data;
         }
 
+        public unsafe ImageDataAdapter(int width, int height, byte[] dataBytes)
+        {
+            this._width = width;
+            this._height = height;
+            this._dataBytes = dataBytes;
+        }
+
         public Uint8Array data
         {
             get { throw new NotImplementedException(); }
@@ -25,7 +33,7 @@ namespace Babylon
 
         public byte[] dataBytes
         {
-            get { return null; }
+            get { return _dataBytes; }
             set { throw new NotImplementedException(); }
         }
 

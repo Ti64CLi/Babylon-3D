@@ -97,6 +97,10 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
+#if _DEBUG
+            Log.Info(string.Format("bindTexture {0} {1}", target, texture.Value));
+#endif
+
             Gl.glBindTexture(target, (int)(texture != null ? texture.Value : 0));
             ErrorTest();
         }
@@ -450,6 +454,14 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
+#if _DEBUG
+            Log.Info(string.Format("texImage2D {0} {1} {2} {3} {4}", target, level, internalformat, format, type));
+            if (pixels != null)
+            {
+                Log.Info(string.Format("ImageData {0} {1}", pixels.width, pixels.height));
+            }
+#endif
+
             if (format == Gl.GL_RGBA)
             {
                 format = Gl.GL_BGRA;
@@ -951,6 +963,10 @@
 
         public void generateMipmap(int target)
         {
+#if _DEBUG
+            Log.Info(string.Format("generateMipmap {0}", target));
+#endif
+
             Gl.glGenerateMipmap(target);
             ErrorTest();
         }
@@ -1073,13 +1089,22 @@
 
         public void pixelStorei(int pname, int param)
         {
+#if _DEBUG
+            Log.Info(string.Format("pixelStorei {0} {1}", pname, param));
+#endif
+
             Gl.glPixelStorei(pname, param);
             ErrorTest();
         }
 
         public void disable(int cap)
         {
+#if _DEBUG
+            Log.Info(string.Format("disable {0}", cap));
+#endif
+
             Gl.glDisable(cap);
+            ErrorTest();
         }
 
         public void vertexAttrib4fv(int indx, float[] values)
@@ -1149,6 +1174,10 @@
 
         public void texParameteri(int target, int pname, int param)
         {
+#if _DEBUG
+            Log.Info(string.Format("texParameteri {0} {1} {2}", target, pname, param));
+#endif
+
             Gl.glTexParameteri(target, pname, param);
             ErrorTest();
         }

@@ -3087,7 +3087,7 @@
 #if _DEBUG
                 Tools.Log("(FreeImageWrapper)loaded");
 #endif
-                //onload(imageDataAdapter);
+                onload(imageDataAdapter);
             }
             else
             {
