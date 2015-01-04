@@ -29,6 +29,7 @@
 #include "../native_app_glue/android_native_app_glue.h"
 
 #include <assert.h>
+#include <unistd.h>
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity-cs", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity-cs", __VA_ARGS__))
@@ -368,6 +369,8 @@ void android_main(struct android_app* state) {
 
 	// Make sure glue isn't stripped.
 	app_dummy();
+
+	//sleep(20);
 
 	// init functions bridge
 	_initFunc = NULL;

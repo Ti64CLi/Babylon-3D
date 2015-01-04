@@ -76,7 +76,7 @@ namespace BabylonGlut
                     var onmousedown = main.canvas.onmousedown;
                     if (onmousedown != null)
                     {
-#if DEBUG
+#if _DEBUG
                         Log.Info("Mouse down.");
 #endif
                         onmousedown(new MouseEventAdapter(buttonOrPointerId, x, y));
@@ -85,7 +85,7 @@ namespace BabylonGlut
                     var onpointerdown = main.canvas.onpointerdown;
                     if (onpointerdown != null)
                     {
-#if DEBUG
+#if _DEBUG
                         Log.Info("Pointer down.");
 #endif
                         pointerId = buttonOrPointerId;
@@ -97,7 +97,7 @@ namespace BabylonGlut
                     var onmouseup = main.canvas.onmouseup;
                     if (onmouseup != null)
                     {
-#if DEBUG
+#if _DEBUG
                         Log.Info("Mouse up.");
 #endif
                         onmouseup(new MouseEventAdapter(buttonOrPointerId, x, y));
@@ -106,7 +106,7 @@ namespace BabylonGlut
                     var onpointerup = main.canvas.onpointerup;
                     if (onpointerup != null)
                     {
-#if DEBUG
+#if _DEBUG
                         Log.Info("Pointer up.");
 #endif
                         onpointerup(new PointerEventAdapter(buttonOrPointerId, x, y));
@@ -146,7 +146,7 @@ namespace BabylonGlut
             var onmousemove = main.canvas.onmousemove;
             if (onmousemove != null)
             {
-#if DEBUG
+#if _DEBUG
                 Log.Info("Mouse move.");
 #endif
                 onmousemove(new MouseEventAdapter(-1, x, y));
@@ -155,7 +155,7 @@ namespace BabylonGlut
             var onpointermove = main.canvas.onpointermove;
             if (onpointermove != null)
             {
-#if DEBUG
+#if _DEBUG
                 Log.Info("Pointer move.");
 #endif
                 onpointermove(new PointerEventAdapter(pointerId, x, y));

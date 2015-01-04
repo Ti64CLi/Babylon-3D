@@ -1831,7 +1831,7 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
-#if DEBUG
+#if _DEBUG
             Log.Info(string.Format("addEventListener - {0}", type));
 #endif
             switch (type)
@@ -3059,8 +3059,9 @@
 
             int AASSET_MODE_BUFFER = 3;
 
+#if _DEBUG
             Tools.Log(string.Format("(ASSET)loading image {0}", url));
-
+#endif
             // load file from Asset Manager
             unsafe
             {
@@ -3076,15 +3077,23 @@
                 }
             }
 
-            Tools.Log(string.Format("(FreeImageWrapper)loading image {0}", url));
+#if _DEBUG
+            Tools.Log("(FreeImageWrapper)loading image");
+#endif
 
             var imageDataAdapter = FreeImageWrapper.LoadFromMemory(data, size);
             if (imageDataAdapter != null)
             {
-                onload(imageDataAdapter);
+#if _DEBUG
+                Tools.Log("(FreeImageWrapper)loaded");
+#endif
+                //onload(imageDataAdapter);
             }
             else
             {
+#if _DEBUG
+                Tools.Log("(FreeImageWrapper) NOT LOADED!");
+#endif
                 onerror(null, null);
             }
         }

@@ -7,27 +7,45 @@
     public class Log
     {
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        private static extern int _logi(byte[] msg);
+        private static extern unsafe int _logi(byte* msg);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        private static extern int _logw(byte[] msg);
-        
+        private static extern unsafe int _logw(byte* msg);
+
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        private static extern int _loge(byte[] msg);
+        private static extern unsafe int _loge(byte* msg);
 
         public static void Info(string msg)
         {
-            _logi(Encoding.ASCII.GetBytes(msg));
+            unsafe
+            {
+                fixed (byte* b = Encoding.ASCII.GetBytes(msg))
+                {
+                    _logi(b);
+                }
+            }
         }
 
         public static void Warn(string msg)
         {
-            _logw(Encoding.ASCII.GetBytes(msg));
+            unsafe
+            {
+                fixed (byte* b = Encoding.ASCII.GetBytes(msg))
+                {
+                    _logw(b);
+                }
+            }
         }
-        
+
         public static void Error(string msg)
         {
-            _loge(Encoding.ASCII.GetBytes(msg));
+            unsafe
+            {
+                fixed (byte* b = Encoding.ASCII.GetBytes(msg))
+                {
+                    _loge(b);
+                }
+            }
         }
     }
 }
