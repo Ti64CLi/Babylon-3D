@@ -14,13 +14,14 @@
 #
 LOCAL_PATH := $(subst //,/,$(call my-dir))
 
-#
-# libFreeImage.so
-#
 include $(CLEAR_VARS)
+
 LOCAL_MODULE := FreeImage
-LOCAL_SRC_FILES := ../libs/$(TARGET_ARCH_ABI)/libFreeImage$(TARGET_SONAME_EXTENSION)
-include $(PREBUILT_SHARED_LIBRARY)
+LOCAL_ARM_MODE  := arm
+LOCAL_SRC_FILES := ../../../Deps/FreeImage/lib/Android/$(TARGET_ARCH_ABI)/lib$(LOCAL_MODULE).a
+#LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
+
+include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
@@ -38,8 +39,7 @@ LOCAL_ARM_MODE  := arm
 
 LOCAL_LDLIBS := -lgc-lib -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
 
-LOCAL_STATIC_LIBRARIES := android_native_app_glue 
-LOCAL_SHARED_LIBRARIES := FreeImage
+LOCAL_STATIC_LIBRARIES := android_native_app_glue FreeImage
 
 LOCAL_LDFLAGS := -L$(LOCAL_PATH)/../../../Deps/GC/lib/armeabi-v7a/
 
@@ -50,9 +50,7 @@ LOCAL_LLFLAGS := -enable-pie -relocation-model=pic
 
 include $(BUILD_SHARED_LIBRARY)
 
-# uncomment this line to rebuild FreeImage shared lib
-#$(call import-add-path, $(LOCAL_PATH)/../../../../../LibSources/)
-
 $(call import-module,android/native_app_glue)
-# uncomment this line to rebuild FreeImage shared lib
+# uncomment next 2 lines to rebuild FreeImage shared lib
+#$(call import-add-path, $(LOCAL_PATH)/../../../../../LibSources/)
 #$(call import-module,FreeImage/jni)

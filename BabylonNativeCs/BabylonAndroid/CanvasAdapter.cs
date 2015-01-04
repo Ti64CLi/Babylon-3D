@@ -3059,6 +3059,8 @@
 
             int AASSET_MODE_BUFFER = 3;
 
+            Tools.Log(string.Format("(ASSET)loading image {0}", url));
+
             // load file from Asset Manager
             unsafe
             {
@@ -3074,6 +3076,7 @@
                 }
             }
 
+            Tools.Log(string.Format("(FreeImageWrapper)loading image {0}", url));
 
             var imageDataAdapter = FreeImageWrapper.LoadFromMemory(data, size);
             if (imageDataAdapter != null)
