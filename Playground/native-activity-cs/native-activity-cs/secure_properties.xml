@@ -1,0 +1,6 @@
+<project name="secure_properties">
+  <property name="key.store" value="D:\Developing\BabylonNative\Playground\native-activity-cs\native-activity-cs\native-activity-cs-release-key.keystore" />
+  <property name="key.store.password" value="asdasd" />
+  <property name="key.alias" value="native-activity-cs" />
+  <property name="key.alias.password" value="asdasd" />
+</project>

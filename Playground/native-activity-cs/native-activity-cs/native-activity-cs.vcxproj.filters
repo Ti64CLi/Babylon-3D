@@ -13,6 +13,9 @@
     <Filter Include="native_app_glue">
       <UniqueIdentifier>{9272efb7-29d2-4b7b-93f6-dd89bd347f72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="asset">
+      <UniqueIdentifier>{ed16b615-2972-48a9-8400-d01915386b87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <AndroidBuild Include="AndroidManifest.xml" />
@@ -39,5 +42,16 @@
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
       <Filter>native_app_glue</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\grass_texture.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\Planet.png">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\text.jpg">
+      <Filter>asset</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -35,6 +35,11 @@
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\grass_texture.jpg" />
+    <None Include="assets\Planet.png" />
+    <None Include="assets\text.jpg" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9C1A3328-CC2D-47BA-8F70-9D4D874C1487}</ProjectGuid>
     <RootNamespace>native_activity_cs</RootNamespace>

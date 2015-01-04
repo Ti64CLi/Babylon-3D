@@ -13,6 +13,15 @@
 # limitations under the License.
 #
 LOCAL_PATH := $(subst //,/,$(call my-dir))
+
+#
+# libFreeImage.so
+#
+include $(CLEAR_VARS)
+LOCAL_MODULE := FreeImage
+LOCAL_SRC_FILES := ../libs/$(TARGET_ARCH_ABI)/libFreeImage$(TARGET_SONAME_EXTENSION)
+include $(PREBUILT_SHARED_LIBRARY)
+
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := native-activity-cs
@@ -28,11 +37,9 @@ LOCAL_SRC_FILES := dummy.cpp main.c BabylonAndroid.ll BabylonNativeCsLibraryForI
 LOCAL_ARM_MODE  := arm
 
 LOCAL_LDLIBS := -lgc-lib -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lOpenSLES
-# uncomment this line to rebuild FreeImage shared lib
-#LOCAL_STATIC_LIBRARIES := android_native_app_glue FreeImage
-LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
-LOCAL_SRC_FILES:= libs/$(TARGET_ARCH_ABI)/libFreeImage$(TARGET_SONAME_EXTENSION)
+LOCAL_STATIC_LIBRARIES := android_native_app_glue 
+LOCAL_SHARED_LIBRARIES := FreeImage
 
 LOCAL_LDFLAGS := -L$(LOCAL_PATH)/../../../Deps/GC/lib/armeabi-v7a/
 
