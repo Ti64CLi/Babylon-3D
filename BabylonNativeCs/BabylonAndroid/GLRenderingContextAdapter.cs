@@ -87,7 +87,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", glUniformLocation.Value));
@@ -104,7 +106,9 @@
 #endif
 
             Gl.glBindTexture(target, textureId);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void bufferData(int target, float[] data, int usage)
@@ -121,7 +125,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void bufferData(int target, ushort[] data, int usage)
@@ -138,7 +144,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void bufferData(int target, int size, int usage)
@@ -153,7 +161,9 @@
 #endif
 
             Gl.glDepthMask((byte)(flag ? 1 : 0));
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public object getUniform(Web.WebGLProgram program, Web.WebGLUniformLocation location)
@@ -178,7 +188,9 @@
 #endif
 
             Gl.glLinkProgram(program.Value);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public BABYLON.Array<string> getSupportedExtensions()
@@ -197,7 +209,9 @@
                 Gl.glBufferSubData(target, offset, size, data.ToPointer());
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void bufferSubData(int target, int offset, float[] data)
@@ -222,7 +236,9 @@
                     new IntPtr(offset).ToPointer());
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void polygonOffset(int factor, int units)
@@ -247,7 +263,9 @@
                 Gl.glGenTextures(1, &textureId);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", (int)textureId));
@@ -273,7 +291,9 @@
 #endif
 
             Gl.glEnableVertexAttribArray((uint)index);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void depthRange(double zNear, double zFar)
@@ -289,7 +309,9 @@
 
             Gl.glCullFace(mode);
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public Web.WebGLFramebuffer createFramebuffer()
@@ -312,7 +334,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
@@ -369,7 +393,9 @@
 #endif
 
             var glProgramAdapter = new GlProgramAdapter(Gl.glCreateProgram());
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", glProgramAdapter.Value));
@@ -385,7 +411,9 @@
 #endif
 
             Gl.glDeleteShader(shader.Value);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public BABYLON.Array<Web.WebGLShader> getAttachedShaders(Web.WebGLProgram program)
@@ -399,7 +427,9 @@
             Log.Info(string.Format("enable {0}", cap));
 #endif
             Gl.glEnable(cap);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void blendEquation(int mode)
@@ -472,23 +502,7 @@
             unsafe
             {
                 byte[] dataBytes = pixels.dataBytes;
-                if (dataBytes != null)
-                {
-                    fixed (byte* pData = dataBytes)
-                    {
-                        Gl.glTexImage2D(
-                            target,
-                            level,
-                            internalformat,
-                            pixels.width,
-                            pixels.height,
-                            0,
-                            format,
-                            type,
-                            pData);
-                    }
-                }
-                else
+                fixed (byte* pData = dataBytes)
                 {
                     Gl.glTexImage2D(
                         target,
@@ -499,11 +513,13 @@
                         0,
                         format,
                         type,
-                        (byte*)pixels.dataBytesPointer.ToPointer());
+                        pData);
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public Web.WebGLBuffer createBuffer()
@@ -518,7 +534,9 @@
                 Gl.glGenBuffers(1, &bufferId);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", (int)bufferId));
@@ -538,7 +556,9 @@
             Log.Info(string.Format("useProgram {0}", program.Value));
 #endif
             Gl.glUseProgram(program.Value);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void vertexAttrib2fv(int indx, float[] values)
@@ -663,7 +683,9 @@
 #endif
 
             Gl.glDrawElements(mode, count, type, offset);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public bool isFramebuffer(Web.WebGLFramebuffer framebuffer)
@@ -735,7 +757,9 @@
                 Gl.glGetIntegerv(pname, &i);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", i));
@@ -838,7 +862,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void deleteRenderbuffer(Web.WebGLRenderbuffer renderbuffer)
@@ -860,7 +886,9 @@
 #endif
 
             Gl.glBindBuffer(target, bufferId);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public int getAttribLocation(Web.WebGLProgram program, string name)
@@ -886,7 +914,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", attribLocation));
@@ -912,13 +942,17 @@
 #endif
 
             Gl.glClear(mask);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
         {
             Gl.glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void stencilFuncSeparate(int face, int func, int _ref, int mask)
@@ -940,7 +974,9 @@
                 }
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void scissor(int x, int y, int width, int height)
@@ -970,7 +1006,9 @@
 #endif
 
             Gl.glGenerateMipmap(target);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void bindAttribLocation(Web.WebGLProgram program, int index, string name)
@@ -1035,7 +1073,9 @@
 #endif
 
             Gl.glUniform4f((int)location.Value, (float)x, (float)y, (float)z, (float)w);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void deleteProgram(Web.WebGLProgram program)
@@ -1055,7 +1095,9 @@
 #endif
 
             Gl.glUniform1i(location.Value, x);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public object getProgramParameter(Web.WebGLProgram program, int pname)
@@ -1070,7 +1112,9 @@
                 Gl.glGetProgramiv(program.Value, pname, &i);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", i));
@@ -1096,7 +1140,9 @@
 #endif
 
             Gl.glPixelStorei(pname, param);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void disable(int cap)
@@ -1106,7 +1152,9 @@
 #endif
 
             Gl.glDisable(cap);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void vertexAttrib4fv(int indx, float[] values)
@@ -1156,7 +1204,9 @@
 #endif
 
             Gl.glDepthFunc(func);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void texParameterf(int target, int pname, float param)
@@ -1181,7 +1231,9 @@
 #endif
 
             Gl.glTexParameteri(target, pname, param);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void vertexAttrib4f(int indx, double x, double y, double z, double w)
@@ -1201,7 +1253,9 @@
                 Gl.glGetShaderiv(shader.Value, pname, &i);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
 
 #if _DEBUG
             Log.Info(string.Format("value {0}", i));
@@ -1217,12 +1271,21 @@
 #endif
 
             Gl.glClearDepthf((float)depth);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void activeTexture(int texture)
         {
-            throw new NotImplementedException();
+#if _DEBUG
+            Log.Info(string.Format("activeTexture {0}", texture));
+#endif
+
+            Gl.glActiveTexture(texture);
+#if _DEBUG
+            ErrorTest();
+#endif
         }
 
         public void viewport(int x, int y, int width, int height)
@@ -1232,7 +1295,9 @@
 #endif
 
             Gl.glViewport(x, y, width, height);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void detachShader(Web.WebGLProgram program, Web.WebGLShader shader)
@@ -1266,7 +1331,9 @@
                 Gl.glDeleteBuffers(1, &value);
             }
 
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void copyTexSubImage2D(
@@ -1303,7 +1370,9 @@
             Log.Info(string.Format("attachShader {0} {1}", program.Value, shader.Value));
 #endif
             Gl.glAttachShader(program.Value, shader.Value);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void compileShader(Web.WebGLShader shader)
@@ -1313,7 +1382,9 @@
 #endif
 
             Gl.glCompileShader(shader.Value);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
@@ -1323,7 +1394,9 @@
 #endif
 
             Gl.glClearColor((float)red, (float)green, (float)blue, (float)alpha);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public bool isShader(Web.WebGLShader shader)
@@ -1367,7 +1440,9 @@
 #endif
 
             Gl.glUniform3f((int)location.Value, (float)x, (float)y, (float)z);
+#if _DEBUG
             ErrorTest();
+#endif
         }
 
         public string getProgramInfoLog(Web.WebGLProgram program)
@@ -1428,7 +1503,9 @@
 #endif
 
             var shader = (uint)Gl.glCreateShader(type);
+#if _DEBUG
             ErrorTest();
+#endif
             return new GlShaderAdapter(shader);
         }
 

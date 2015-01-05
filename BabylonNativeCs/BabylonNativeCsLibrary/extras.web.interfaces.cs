@@ -6265,8 +6265,6 @@ namespace Web
 
         byte[] dataBytes { get; set; }
 
-        IntPtr dataBytesPointer { get; set; }
-
         int height { get; set; }
 
         int width { get; set; }

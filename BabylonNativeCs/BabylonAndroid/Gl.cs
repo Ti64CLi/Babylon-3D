@@ -159,6 +159,9 @@
         public static extern void glClearDepthf(float depth);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glActiveTexture(int textureId);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glViewport(int x, int y, int width, int height);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]

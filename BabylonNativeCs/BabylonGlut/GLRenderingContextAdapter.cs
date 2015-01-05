@@ -492,23 +492,7 @@
             unsafe
             {
                 byte[] dataBytes = pixels.dataBytes;
-                if (dataBytes != null)
-                {
-                    fixed (byte* pData = &dataBytes[0])
-                    {
-                        Gl.glTexImage2D(
-                            target,
-                            level,
-                            internalformat,
-                            pixels.width,
-                            pixels.height,
-                            0,
-                            format,
-                            type,
-                            pData);
-                    }
-                }
-                else
+                fixed (byte* pData = &dataBytes[0])
                 {
                     Gl.glTexImage2D(
                         target,
@@ -519,7 +503,7 @@
                         0,
                         format,
                         type,
-                        (byte*)pixels.dataBytesPointer.ToPointer());
+                        pData);
                 }
             }
 

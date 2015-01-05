@@ -164,15 +164,9 @@ namespace BABYLON
                 this._effect.setMatrices("mBones", mesh.skeleton.getTransformMatrices());
             }
 
-            Tools.Log("diffuseTexture - test");
             if (this.diffuseTexture != null && DiffuseTextureEnabled)
             {
-                Tools.Log("diffuseTexture - setTexture, diffuseSampler");
-
                 this._effect.setTexture("diffuseSampler", this.diffuseTexture);
-
-                Tools.Log("diffuseTexture - vDiffuseInfos");
-
                 this._effect.setFloat2("vDiffuseInfos", this.diffuseTexture.coordinatesIndex, this.diffuseTexture.level);
                 this._effect.setMatrix("diffuseMatrix", this.diffuseTexture.getTextureMatrix());
                 this._baseColor.copyFromFloats(1, 1, 1);

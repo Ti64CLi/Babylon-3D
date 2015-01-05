@@ -689,8 +689,6 @@ namespace BABYLON
         /// </param>
         public virtual void setTexture(string channel, BaseTexture texture)
         {
-            Tools.Log("setTexture");
-
             this._engine.setTexture(this._samplers.IndexOf(channel), texture);
         }
 
