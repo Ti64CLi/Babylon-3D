@@ -101,6 +101,10 @@
 
         public void bindTexture(int target, Web.WebGLTexture texture)
         {
+#if _DEBUG
+            Log.Info(string.Format("bindTexture {0}", target, (int)(texture != null ? texture.Value : 0)));
+#endif
+
             Gl.glBindTexture(target, (int)(texture != null ? texture.Value : 0));
             ErrorTest();
         }
@@ -484,10 +488,18 @@
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
         {
-            if (format == Gl.GL_RGBA)
+#if _DEBUG
+            Log.Info(string.Format("texImage2D {0} {1} {2} {3} {4}", target, level, internalformat, format, type));
+            if (pixels != null)
             {
-                format = Gl.GL_BGRA;
+                Log.Info(string.Format("ImageData {0} {1}", pixels.width, pixels.height));
             }
+#endif
+
+            ////if (format == Gl.GL_RGBA)
+            ////{
+            ////    format = Gl.GL_BGRA;
+            ////}
 
             unsafe
             {
@@ -1128,6 +1140,9 @@
 
         public void disable(int cap)
         {
+#if _DEBUG
+            Log.Info(string.Format("disable {0}", cap));
+#endif
             Gl.glDisable(cap);
         }
 
@@ -1242,6 +1257,9 @@
 
         public void activeTexture(int texture)
         {
+#if _DEBUG
+            Log.Info(string.Format("activeTexture {0}", texture));
+#endif
             Gl.__glewActiveTexture(texture);
         }
 
