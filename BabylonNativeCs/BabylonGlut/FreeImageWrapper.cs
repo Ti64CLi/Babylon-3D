@@ -198,7 +198,7 @@
 
             for (var i = 0; i < len; i++)
             {
-                bytes[i] = 127;
+                bytes[i] = 255;
             }
 
             return new ImageDataAdapter(width, height, bytes);

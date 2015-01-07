@@ -494,10 +494,10 @@
             }
 #endif
 
-            if (format == Gl.GL_RGBA)
-            {
-                format = Gl.GL_BGRA;
-            }
+            ////if (format == Gl.GL_RGBA)
+            ////{
+            ////    format = Gl.GL_BGRA;
+            ////}
 
             unsafe
             {

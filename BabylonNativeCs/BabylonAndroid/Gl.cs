@@ -195,7 +195,7 @@
             int internalformat,
             int width,
             int height,
-            int p5,
+            int border,
             int format,
             int type,
             byte* pData);

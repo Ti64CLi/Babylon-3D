@@ -12,11 +12,16 @@ namespace BabylonWpf
 
     class ImageDataAdapter : Web.ImageData
     {
+        private int _width;
+        private int _height;
         private byte[] _data;
 
         public ImageDataAdapter(Image bmp)
         {
             this.Bitmap = bmp;
+
+            _width = this.Bitmap.Width;
+            _height = this.Bitmap.Height;
 
             var data = ((Bitmap)bmp).LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
                 ImageLockMode.ReadOnly,
@@ -55,13 +60,13 @@ namespace BabylonWpf
 
         public int height
         {
-            get { return this.Bitmap.Height; }
+            get { return _height; }
             set { throw new NotImplementedException(); }
         }
 
         public int width
         {
-            get { return this.Bitmap.Width; }
+            get { return _width; }
             set { throw new NotImplementedException(); }
         }
     }

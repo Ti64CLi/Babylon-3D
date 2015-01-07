@@ -3059,23 +3059,23 @@
 
             int AASSET_MODE_BUFFER = 3;
 
-////#if _DEBUG
-////            Tools.Log(string.Format("(ASSET)loading image {0}", url));
-////#endif
-////            // load file from Asset Manager
-////            unsafe
-////            {
-////                fixed (byte* file = Encoding.ASCII.GetBytes(url))
-////                {
-////                    void* assetManager = null;
-////                    void* fileAsset = AAssetManager_open(_assetManager.ToPointer(), file, AASSET_MODE_BUFFER);
-////                    void* fileData = AAsset_getBuffer(fileAsset);
-////                    long fileLen = AAsset_getLength(fileAsset);
+#if _DEBUG
+            Tools.Log(string.Format("(ASSET)loading image {0}", url));
+#endif
+            // load file from Asset Manager
+            unsafe
+            {
+                fixed (byte* file = Encoding.ASCII.GetBytes(url))
+                {
+                    void* assetManager = null;
+                    void* fileAsset = AAssetManager_open(_assetManager.ToPointer(), file, AASSET_MODE_BUFFER);
+                    void* fileData = AAsset_getBuffer(fileAsset);
+                    long fileLen = AAsset_getLength(fileAsset);
 
-////                    data = new IntPtr(fileData);
-////                    size = (int)fileLen;
-////                }
-////            }
+                    data = new IntPtr(fileData);
+                    size = (int)fileLen;
+                }
+            }
 
 #if _DEBUG
             Tools.Log("(FreeImageWrapper)loading image");
