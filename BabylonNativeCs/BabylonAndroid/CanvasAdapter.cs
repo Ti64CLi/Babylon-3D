@@ -17,6 +17,9 @@
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public extern static unsafe void* AAssetManager_open(void* assetManager, byte* file, int mode);
 
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public extern static unsafe void AAsset_close(void* fileAsset);
+
         private int maxWidth;
         private int maxHeight;
 
@@ -3063,30 +3066,40 @@
             Tools.Log(string.Format("(ASSET)loading image {0}", url));
 #endif
             // load file from Asset Manager
+            ImageDataAdapter imageDataAdapter;
             unsafe
             {
+                void* fileAsset;
+
                 fixed (byte* file = Encoding.ASCII.GetBytes(url))
                 {
                     void* assetManager = null;
-                    void* fileAsset = AAssetManager_open(_assetManager.ToPointer(), file, AASSET_MODE_BUFFER);
+                    fileAsset = AAssetManager_open(_assetManager.ToPointer(), file, AASSET_MODE_BUFFER);
                     void* fileData = AAsset_getBuffer(fileAsset);
                     long fileLen = AAsset_getLength(fileAsset);
 
                     data = new IntPtr(fileData);
                     size = (int)fileLen;
                 }
-            }
 
 #if _DEBUG
-            Tools.Log("(FreeImageWrapper)loading image");
+                Tools.Log("(FreeImageWrapper)loading image");
 #endif
 
-            var imageDataAdapter = FreeImageWrapper.LoadFromMemory(data, size);
+                imageDataAdapter = FreeImageWrapper.LoadFromMemory(data, size);
+
+                if (fileAsset != null)
+                {
+                    AAsset_close(fileAsset);
+                }
+            }
+
             if (imageDataAdapter != null)
             {
 #if _DEBUG
                 Tools.Log("(FreeImageWrapper)loaded");
 #endif
+
                 onload(imageDataAdapter);
             }
             else
@@ -3094,6 +3107,7 @@
 #if _DEBUG
                 Tools.Log("(FreeImageWrapper) NOT LOADED!");
 #endif
+
                 onerror(null, null);
             }
         }

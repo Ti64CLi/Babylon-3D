@@ -494,11 +494,6 @@
             }
 #endif
 
-            ////if (format == Gl.GL_RGBA)
-            ////{
-            ////    format = Gl.GL_BGRA;
-            ////}
-
             unsafe
             {
                 byte[] dataBytes = pixels.dataBytes;

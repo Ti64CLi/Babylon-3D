@@ -150,55 +150,52 @@
 
         public static unsafe ImageDataAdapter LoadFromMemory(IntPtr buffer, int size)
         {
-            ////int fif = FIF_UNKNOWN;
-            ////byte* dib = null;
-            ////byte* memory = null;
+            int fif = FIF_UNKNOWN;
+            byte* dib = null;
+            byte* memory = null;
 
-            ////memory = FreeImage_OpenMemory((byte*)buffer.ToPointer(), size);
+            memory = FreeImage_OpenMemory((byte*)buffer.ToPointer(), size);
 
-            ////fif = FreeImage_GetFileTypeFromMemory(memory, 0);
-            ////if (fif == FIF_UNKNOWN)
-            ////{
-            ////    return null;
-            ////}
+            fif = FreeImage_GetFileTypeFromMemory(memory, 0);
+            if (fif == FIF_UNKNOWN)
+            {
+                return null;
+            }
 
-            ////if (FreeImage_FIFSupportsReading(fif) > 0)
-            ////{
-            ////    dib = FreeImage_LoadFromMemory(fif, memory, 0);
-            ////}
+            if (FreeImage_FIFSupportsReading(fif) > 0)
+            {
+                dib = FreeImage_LoadFromMemory(fif, memory, 0);
+            }
 
-            ////if (dib == null)
-            ////{
-            ////    return null;
-            ////}
+            if (dib == null)
+            {
+                return null;
+            }
 
-            ////var dib32bit = FreeImage_ConvertTo32Bits(dib);
+            var dib32bit = FreeImage_ConvertTo32Bits(dib);
 
-            ////FreeImage_Unload(dib);
-            ////FreeImage_CloseMemory(memory);
+            FreeImage_Unload(dib);
+            FreeImage_CloseMemory(memory);
 
-            ////var width = FreeImage_GetWidth(dib32bit);
-            ////var height = FreeImage_GetHeight(dib32bit);
+            var width = FreeImage_GetWidth(dib32bit);
+            var height = FreeImage_GetHeight(dib32bit);
 
-            ////var bits = FreeImage_GetBits(dib32bit);
+            var bits = FreeImage_GetBits(dib32bit);
 
-            ////var len = width * height * 4;
-            ////var bytes = new byte[len];
-
-            ////Memcpy(bytes, 0, bits, 0, len);
-
-            ////FreeImage_Unload(dib32bit);
-
-            ////return new ImageDataAdapter(width, height, bytes);
-
-            var width = 256;
-            var height = 256;
             var len = width * height * 4;
             var bytes = new byte[len];
 
-            for (var i = 0; i < len; i++)
+            Memcpy(bytes, 0, bits, 0, len);
+
+            FreeImage_Unload(dib32bit);
+
+            // convert RGBA to BGRA
+            for (var i = 0; i < len; i += 4)
             {
-                bytes[i] = 255;
+                var red = bytes[i];
+                // set blue to red
+                bytes[i] = bytes[i + 2];
+                bytes[i + 2] = red;
             }
 
             return new ImageDataAdapter(width, height, bytes);
