@@ -228,7 +228,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 #ifdef __cplusplus
 extern "C" {
 #endif
-	extern int main();
+	extern int main(int argc, wchar_t** args);
 
 	defEmptyFunc _initFunc;
 	defEmptyFunc _displayFunc;
@@ -297,7 +297,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
 		LOGI("GC_INIT start test %d", GC_get_heap_size());
 
-		main();
+		main(0, NULL);
 
 		// The window is being shown, get it ready.
 		if (engine->app->window != NULL) {
