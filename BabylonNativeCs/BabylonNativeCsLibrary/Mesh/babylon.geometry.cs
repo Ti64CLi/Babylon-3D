@@ -453,26 +453,26 @@ namespace BABYLON
             this.delayLoadState = Engine.DELAYLOADSTATE_LOADING;
             scene._addPendingData(this);
             Tools.LoadFile(
-                this.delayLoadingFile, 
-                (byte[] data) =>
+                this.delayLoadingFile,
+                (string data) =>
+                {
+                    this._delayLoadingFunction(data /*JSON.parse(data)*/, this);
+                    this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
+                    this._delayInfo = new Array<VertexBufferKind>();
+                    scene._removePendingData(this);
+                    var meshes = this._meshes;
+                    var numOfMeshes = meshes.Length;
+                    for (var index = 0; index < numOfMeshes; index++)
                     {
-                        this._delayLoadingFunction(data /*JSON.parse(data)*/, this);
-                        this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
-                        this._delayInfo = new Array<VertexBufferKind>();
-                        scene._removePendingData(this);
-                        var meshes = this._meshes;
-                        var numOfMeshes = meshes.Length;
-                        for (var index = 0; index < numOfMeshes; index++)
-                        {
-                            this._applyToMesh(meshes[index]);
-                        }
+                        this._applyToMesh(meshes[index]);
+                    }
 
-                        if (onLoaded != null)
-                        {
-                            onLoaded();
-                        }
-                    }, 
-                (o) => { }, 
+                    if (onLoaded != null)
+                    {
+                        onLoaded();
+                    }
+                },
+                () => { },
                 scene.database);
         }
 

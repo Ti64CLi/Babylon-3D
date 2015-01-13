@@ -210,7 +210,7 @@ namespace BABYLON
         {
             get
             {
-                if (i >= this.Count)
+                if (i < 0 || i >= this.Count)
                 {
                     return default(T);
                 }

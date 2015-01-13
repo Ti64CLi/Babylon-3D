@@ -9,121 +9,148 @@
 
 namespace BABYLON
 {
-    /*
-    public partial interface ISceneLoaderPlugin
+    using System;
+
+    public interface ISceneLoaderPlugin
     {
-        string extensions
-        {
-            get;
-        }
+        string extensions { get; set; }
+
         System.Func<object, Scene, object, string, Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>, bool> importMesh
         {
             get;
         }
+
         System.Func<Scene, string, string, bool> load
         {
             get;
         }
     }
-    public partial class SceneLoader
+
+    public class SceneLoader
     {
-        private static bool _ForceFullSceneLoadingForIncremental = false;
-        public static dynamic ForceFullSceneLoadingForIncremental
-        {
-            get
-            {
-                return SceneLoader._ForceFullSceneLoadingForIncremental;
-            }
-            set
-            {
-                SceneLoader._ForceFullSceneLoadingForIncremental = value;
-            }
-        }
+        public static bool ForceFullSceneLoadingForIncremental { get; set; }
+
         private static Array<ISceneLoaderPlugin> _registeredPlugins = new Array<ISceneLoaderPlugin>();
+
+        static SceneLoader()
+        {
+            ForceFullSceneLoadingForIncremental = false;
+        }
+
         private static ISceneLoaderPlugin _getPluginForFilename(string sceneFilename)
         {
             var dotPosition = sceneFilename.LastIndexOf(".");
-            var extension = sceneFilename.Substring(dotPosition).toLowerCase();
-            for (var index = 0; index < this._registeredPlugins.Length; index++)
+            var extension = sceneFilename.Substring(dotPosition).ToLower();
+            foreach (var plugin in _registeredPlugins)
             {
-                var plugin = this._registeredPlugins[index];
                 if (plugin.extensions.IndexOf(extension) != -1)
                 {
                     return plugin;
                 }
             }
-            return this._registeredPlugins[this._registeredPlugins.Length - 1];
+
+            return _registeredPlugins[_registeredPlugins.Length - 1];
         }
+
         public static void RegisterPlugin(ISceneLoaderPlugin plugin)
         {
-            plugin.extensions = plugin.extensions.toLowerCase();
+            plugin.extensions = plugin.extensions.ToLower();
             SceneLoader._registeredPlugins.Add(plugin);
         }
+
         public static void ImportMesh(object meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action progressCallBack = null, System.Action<Scene> onerror = null)
         {
-            var manifestChecked = (success) =>
-            {
-                scene.database = database;
-                var plugin = this._getPluginForFilename(sceneFilename);
-                var importMeshFromData = (data) =>
+            Database database = null;
+
+            var manifestChecked = new Func<object, object>(
+                success =>
                 {
-                    var meshes = new Array<object>();
-                    var particleSystems = new Array<object>();
-                    var skeletons = new Array<object>();
-                    if (!plugin.importMesh(meshesNames, scene, data, rootUrl, meshes, particleSystems, skeletons))
+                    scene.database = database;
+                    var plugin = _getPluginForFilename(sceneFilename);
+                    var importMeshFromData = new Action<string>(
+                        data =>
+                        {
+                            var meshes = new Array<AbstractMesh>();
+                            var particleSystems = new Array<ParticleSystem>();
+                            var skeletons = new Array<Skeleton>();
+                            if (
+                                !plugin.importMesh(
+                                    meshesNames,
+                                    scene,
+                                    data,
+                                    rootUrl,
+                                    meshes,
+                                    particleSystems,
+                                    skeletons))
+                            {
+                                if (onerror != null)
+                                {
+                                    onerror(scene);
+                                }
+                                return;
+                            }
+                            if (onsuccess != null)
+                            {
+                                scene.importedMeshesFiles.Add(rootUrl + sceneFilename);
+                                onsuccess(meshes, particleSystems, skeletons);
+                            }
+                        });
+
+                    if (sceneFilename.Substring(0, 5) == "data:")
                     {
-                        if (onerror)
+                        importMeshFromData(sceneFilename.Substring(5));
+                        return null;
+                    }
+
+                    BABYLON.Tools.LoadFile(
+                        rootUrl + sceneFilename,
+                        (data) =>
+                        {
+                            importMeshFromData(data);
+                        },
+                        progressCallBack,
+                        database);
+
+                    return null;
+                });
+
+            database = new BABYLON.Database(rootUrl + sceneFilename, manifestChecked);
+        }
+
+        public static void Load(string rootUrl, string sceneFilename, Engine engine, System.Action<Scene> onsuccess = null, System.Action progressCallBack = null, System.Action<Scene> onerror = null)
+        {
+            var plugin = _getPluginForFilename(sceneFilename);
+            Database database = null;
+            var loadSceneFromData = new Action<string>(
+                data =>
+                {
+                    var scene = new BABYLON.Scene(engine);
+                    scene.database = database;
+                    if (!plugin.load(scene, data, rootUrl))
+                    {
+                        if (onerror != null)
                         {
                             onerror(scene);
                         }
                         return;
                     }
-                    if (onsuccess)
+
+                    if (onsuccess != null)
                     {
-                        scene.importedMeshesFiles.Add(rootUrl + sceneFilename);
-                        onsuccess(meshes, particleSystems, skeletons);
+                        onsuccess(scene);
                     }
-                };
-                if (sceneFilename.substr && sceneFilename.substr(0, 5) == "data:")
+                });
+
+            var manifestChecked = new Func<object, object>(
+                success =>
                 {
-                    importMeshFromData(sceneFilename.substr(5));
-                    return;
-                }
-                BABYLON.Tools.LoadFile(rootUrl + sceneFilename, (data) =>
-                {
-                    importMeshFromData(data);
-                }, progressCallBack, database);
-            };
-            var database = new BABYLON.Database(rootUrl + sceneFilename, manifestChecked);
-        }
-        public static void Load(string rootUrl, object sceneFilename, Engine engine, System.Action<Scene> onsuccess = null, object progressCallBack = null, System.Action<Scene> onerror = null)
-        {
-            var plugin = this._getPluginForFilename(sceneFilename.name || sceneFilename);
-            var database;
-            var loadSceneFromData = (data) =>
+                    BABYLON.Tools.LoadFile(rootUrl + sceneFilename, loadSceneFromData, progressCallBack, database);
+                    return null;
+                });
+
+            if (sceneFilename.Substring(0, 5) == "data:")
             {
-                var scene = new BABYLON.Scene(engine);
-                scene.database = database;
-                if (!plugin.load(scene, data, rootUrl))
-                {
-                    if (onerror)
-                    {
-                        onerror(scene);
-                    }
-                    return;
-                }
-                if (onsuccess)
-                {
-                    onsuccess(scene);
-                }
-            };
-            var manifestChecked = (success) =>
-            {
-                BABYLON.Tools.LoadFile(rootUrl + sceneFilename, loadSceneFromData, progressCallBack, database);
-            };
-            if (sceneFilename.substr && sceneFilename.substr(0, 5) == "data:")
-            {
-                loadSceneFromData(sceneFilename.substr(5));
+                loadSceneFromData(sceneFilename.Substring(5));
                 return;
             }
             if (rootUrl.IndexOf("file:") == -1)
@@ -136,5 +163,4 @@ namespace BABYLON
             }
         }
     }
-    */
 }

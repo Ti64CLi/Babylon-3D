@@ -46,7 +46,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene3();
+            this.Scene4();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -164,6 +164,14 @@ namespace BabylonWpf
             // Attach the camera to the scene
             scene.activeCamera.attachControl(canvas);
         }
+
+        private void Scene4()
+        {
+            var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
+
+            SceneLoader.Load("", "skull.babylon", engine);
+        }
+
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {

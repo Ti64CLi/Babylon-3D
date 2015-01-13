@@ -574,7 +574,7 @@ namespace BABYLON
         /// <exception cref="NotImplementedException">
         /// </exception>
         public static void LoadFile(
-            string url, Action<byte[]> callback, Action<object> progressCallBack = null, object database = null, bool useArrayBuffer = false)
+            string url, Action<byte[]> callback, System.Action progressCallBack = null, Database database = null, bool useArrayBuffer = false)
         {
             /*
             url = Tools.CleanUrl(url);
@@ -630,9 +630,9 @@ namespace BABYLON
         /// <exception cref="NotImplementedException">
         /// </exception>
         public static void LoadFile(
-            string url, Action<string> callback, Action<object> progressCallBack = null, object database = null, bool useArrayBuffer = false)
+            string url, Action<string> callback, System.Action progressCallBack = null, Database database = null, bool useArrayBuffer = false)
         {
-            throw new NotImplementedException();
+            BABYLON.Tools.ReadFile(url, callback, progressCallBack, true);
         }
 
         /// <summary>
@@ -716,23 +716,16 @@ namespace BABYLON
         /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public static void ReadFile(object fileToLoad, object callback, object progressCallBack, bool useArrayBuffer = false)
+        public static void ReadFile(string fileName, Action<string> callback, System.Action progressCallBack, bool useArrayBuffer = false)
         {
-            /*
-            FileReader reader = null;// new FileReader();
-            reader.onload = (e) => {
-                callback(e.target.result);
-            };
-            reader.onprogress = progressCallBack;
-            if (!useArrayBuffer) {
-                reader.readAsText(fileToLoad);
-            } else {
-                reader.readAsArrayBuffer(fileToLoad);
+            if (callback != null)
+            {
+                var text = System.IO.File.ReadAllText(fileName);
+                callback(text);
             }
-            */
         }
 
-        public static void ReadFile(string fileName, Action<byte[]> callback, Action<object> progressCallBack, bool useArrayBuffer = false)
+        public static void ReadFile(string fileName, Action<byte[]> callback, System.Action progressCallBack, bool useArrayBuffer = false)
         {
             if (callback != null)
             {

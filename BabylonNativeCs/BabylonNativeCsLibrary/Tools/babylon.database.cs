@@ -9,21 +9,21 @@
 
 namespace BABYLON
 {
+    using System;
+    using Web;
+
     /// <summary>
     /// </summary>
     public partial class Database
     {
-        /*
         private System.Func<object, object> callbackManifestChecked;
         private string currentSceneUrl;
-        private IDBDatabase db;
         private bool enableSceneOffline;
         private bool enableTexturesOffline;
         private double manifestVersionFound;
         private bool mustUpdateRessources;
         private bool hasReachedQuota;
         private bool isSupported;
-        private IDBFactory idbFactory = (IDBFactory)window.indexedDB;
 
         private static Web.Document document;
         private static Web.Window window;
@@ -32,8 +32,7 @@ namespace BABYLON
         public Database(string urlToScene, System.Func<object, object> callbackManifestChecked)
         {
             this.callbackManifestChecked = callbackManifestChecked;
-            this.currentSceneUrl = BABYLON.Database.ReturnFullUrlLocation(urlToScene);
-            this.db = null;
+            this.currentSceneUrl = urlToScene;
             this.enableSceneOffline = false;
             this.enableTexturesOffline = false;
             this.manifestVersionFound = 0;
@@ -41,6 +40,8 @@ namespace BABYLON
             this.hasReachedQuota = false;
             this.checkManifestFile();
         }
+
+        /*
         static string parseURL(object url)
         {
             var a = document.createElement("a");
@@ -49,52 +50,14 @@ namespace BABYLON
             var absLocation = url.Substring(0, url.IndexOf(fileName, 0));
             return absLocation;
         }
-
-        static string ReturnFullUrlLocation(object url)
-        {
-            if (url.IndexOf("http:/") == -1) {
-                return (BABYLON.Database.parseURL(window.location.href) + url);
-            } else {
-                return url;
-            }
-        }
+        */
 
         public virtual void checkManifestFile()
         {
-            var that = this;
-            var manifestURL = this.currentSceneUrl + ".manifest";
-            var xhr = new XMLHttpRequest();
-            var manifestURLTimeStamped = manifestURL + ((new Regex(@"\?").Match(manifestURL).Success) ? "?" : "&") + (new Date()).getTime();
-            xhr.open("GET", manifestURLTimeStamped, true);
-            xhr.addEventListener("load", () {
-                if (xhr.status == 200 || BABYLON.Tools.ValidateXHRData(xhr, 1)) {
-                    try {
-                        var manifestFile = JSON.parse(xhr.response);
-                        that.enableSceneOffline = manifestFile.enableSceneOffline;
-                        that.enableTexturesOffline = manifestFile.enableTexturesOffline;
-                        if (manifestFile.version && !isNaN(parseInt(manifestFile.version))) {
-                            that.manifestVersionFound = manifestFile.version;
-                        }
-                        if (that.callbackManifestChecked) {
-                            that.callbackManifestChecked(true);
-                        }
-                    } catch (Exception ex) {
-                        noManifestFile();
-                    }
-                } else {
-                    noManifestFile();
-                }
-            }, false);
-            xhr.addEventListener("error", (object _event) {
-                noManifestFile();
-            }, false);
-            try {
-                xhr.send();
-            } catch (Exception ex) {
-                BABYLON.Tools.Error("Error on XHR send request.");
-                that.callbackManifestChecked(false);
-            }
+            callbackManifestChecked(false);
         }
+
+        /*
         public virtual void openAsync(object successCallback, object errorCallback)
         {
             var that = this;

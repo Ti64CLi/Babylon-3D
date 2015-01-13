@@ -10,7 +10,7 @@
 namespace BABYLON.Internals
 {
     /*
-    //BABYLON.SceneLoader.RegisterPlugin(new {});
+    BABYLON.SceneLoader.RegisterPlugin(new {});
 
     CubeTexture loadCubeTexture(object rootUrl, object parsedTexture, Scene scene)
     {
@@ -780,5 +780,5 @@ namespace BABYLON.Internals
             scene._selectionOctree.addMesh(mesh);
         }
     }
-    */
+     */
 }

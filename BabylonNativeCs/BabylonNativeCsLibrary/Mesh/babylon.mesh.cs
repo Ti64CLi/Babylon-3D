@@ -467,7 +467,7 @@ namespace BABYLON
                             this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
                             scene._removePendingData(this);
                         }, 
-                    (o) => { }, 
+                    () => { }, 
                     scene.database);
             }
         }

@@ -130,7 +130,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public object database;
+        public Database database;
 
         /// <summary>
         /// </summary>
