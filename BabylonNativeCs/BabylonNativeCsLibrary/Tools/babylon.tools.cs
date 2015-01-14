@@ -708,7 +708,7 @@ namespace BABYLON
         /// </summary>
         /// <param name="fileToLoad">
         /// </param>
-        /// <param name="callback">
+        /// <param name="callback">=2222
         /// </param>
         /// <param name="progressCallBack">
         /// </param>

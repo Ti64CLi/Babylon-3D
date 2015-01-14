@@ -71,6 +71,11 @@ namespace BABYLON
             return new Color3(array[0], array[1], array[2]);
         }
 
+        public static Color3 FromArray(double[] array)
+        {
+            return new Color3(array[0], array[1], array[2]);
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="r">
@@ -1134,6 +1139,11 @@ namespace BABYLON
         /// <returns>
         /// </returns>
         public static Vector3 FromArray(Array<double> array, int offset = 0)
+        {
+            return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
+        }
+
+        public static Vector3 FromArray(double[] array, int offset = 0)
         {
             return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
         }

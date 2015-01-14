@@ -813,6 +813,17 @@ namespace BABYLON.Internals
             var parser = new JsmnParser(256);
             //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
             var r = parser.Parse(data);
+
+            var parsedData = new JsmnParserAdapter(parser.GetTokens());
+
+            // Scene
+            scene.useDelayedTextureLoading = parsedData["useDelayedTextureLoading"] && !BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental;
+            scene.autoClear = parsedData["autoClear"];
+            scene.clearColor = BABYLON.Color3.FromArray(parsedData["clearColor"]);
+            scene.ambientColor = BABYLON.Color3.FromArray(parsedData["ambientColor"]);
+            scene.gravity = BABYLON.Vector3.FromArray(parsedData["gravity"]);
+
+
             return false;
         }
     }

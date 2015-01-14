@@ -11,7 +11,9 @@
 
 namespace BABYLON
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// </summary>
@@ -74,8 +76,11 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
+    [DebuggerDisplay("{type}, {source.Substring(start, end-start)}")]
     internal class JsmnTok
     {
+        private string _value;
+
         /// <summary>
         /// </summary>
         internal JsmnType type;
@@ -91,12 +96,32 @@ namespace BABYLON
         /// <summary>
         /// </summary>
         internal int size;
-#if JSMN_PARENT_LINKS
 
+#if JSMN_PARENT_LINKS
         /// <summary>
         /// </summary>
         internal int parent;
 #endif
+
+        internal string source;
+
+        public string Value
+        {
+            get
+            {
+                if (_value == null)
+                {
+                    _value  = this.source.Substring(this.start, this.end - this.start);
+                }
+
+                return _value;
+            }
+        }
+
+        public bool EqualsTo(string other)
+        {
+            return other.Equals(this.Value);
+        }
     }
 
     /**
@@ -124,6 +149,10 @@ namespace BABYLON
         /// </summary>
         internal Array<JsmnTok> tokens;
 
+        /// <summary>
+        /// </summary>
+        internal string source;
+
         public JsmnParser(int tokensCount = 255)
         {
             this.Init();
@@ -143,6 +172,9 @@ namespace BABYLON
             tok.size = 0;
 #if JSMN_PARENT_LINKS
             tok.parent = -1;
+#endif
+#if DEBUG
+            tok.source = this.source;
 #endif
             return tok;
         }
@@ -311,6 +343,10 @@ namespace BABYLON
             JsmnTok token;
             int count = 0;
             int len = js.Length;
+
+#if DEBUG
+            this.source = js;
+#endif
 
             for (; this.pos < len && js[this.pos] != '\0'; this.pos++)
             {
@@ -501,6 +537,135 @@ namespace BABYLON
             this.pos = 0;
             this.toknext = 0;
             this.toksuper = -1;
+        }
+
+        internal Array<JsmnTok> GetTokens()
+        {
+            return this.tokens;
+        }
+    }
+
+    internal class JsmnParserAdapter
+    {
+        /// <summary>
+        /// </summary>
+        internal Array<JsmnTok> _tokens;
+
+        private int _currentToken;
+        private int _selectedToken;
+
+        public JsmnParserAdapter(Array<JsmnTok> tokens)
+        {
+            _tokens = tokens;
+            _currentToken = 0;
+        }
+
+        public JsmnParserAdapter this[string key]
+        {
+            get
+            {
+                SeekValue(key);
+                return this;
+            }
+        }
+
+        public static implicit operator bool(JsmnParserAdapter that)
+        {
+            var selectedValue = that.GetValue();
+            return Convert.ToBoolean(selectedValue);
+        }
+
+        public static implicit operator double[](JsmnParserAdapter that)
+        {
+            var index = 0;
+            var values = new double[that.GetChildrenCount(that._selectedToken)];
+            foreach (var childToken in that.GetChildrenTokens(that._selectedToken))
+            {
+                var selectedValue = that.GetValue(childToken);
+                values[index++] = Convert.ToDouble(selectedValue);
+            }
+
+            return values;
+        }
+
+        private string GetValue()
+        {
+            if (_selectedToken == -1)
+            {
+                return null;
+            }
+
+            return _tokens[_selectedToken].Value;
+        }
+
+        private string GetValue(int token)
+        {
+            if (token == -1)
+            {
+                return null;
+            }
+
+            return _tokens[token].Value;
+        }
+
+        private void SeekValue(string key)
+        {
+            var current = _tokens[_currentToken];
+            if (current.type != JsmnType.Object)
+            {
+                throw new NotSupportedException();
+            }
+
+            _selectedToken = -1;
+            foreach (var childTokenIndex in this.GetChildrenTokens(_currentToken))
+            {
+                var childToken = _tokens[childTokenIndex];
+                if (childToken.EqualsTo(key))
+                {
+                    _selectedToken = GetFirstChildrenToken(childTokenIndex);
+                    return;
+                }
+            }
+        }
+
+        private int GetChildrenCount(int currentTokenIndex)
+        {
+            var current = _tokens[currentTokenIndex];
+
+            if (current.type != JsmnType.Array)
+            {
+                throw new NotSupportedException();
+            }
+
+            return current.size;
+        }
+
+        private IEnumerable<int> GetChildrenTokens(int currentTokenIndex)
+        {
+            var current = _tokens[currentTokenIndex];
+            var currentChildTokenIndex = currentTokenIndex + 1;
+            var childToken = _tokens[currentChildTokenIndex];
+            var size = current.size;
+            while (size > 0)
+            {
+                if (childToken.parent == currentTokenIndex)
+                {
+                    size--;
+                    yield return currentChildTokenIndex;
+                }
+
+                childToken = _tokens[++currentChildTokenIndex];
+            }            
+        }
+
+        private int GetFirstChildrenToken(int currentTokenIndex)
+        {
+            foreach (var childToken in this.GetChildrenTokens(currentTokenIndex))
+            {
+                return childToken;
+            }
+
+            throw new IndexOutOfRangeException();
         }
     }
 }
