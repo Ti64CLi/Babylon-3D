@@ -811,7 +811,8 @@ namespace BABYLON.Internals
         public bool load(Scene scene, string data, string rootUrl)
         {
             var parser = new JsmnParser(256);
-            var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
+            //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
+            var r = parser.Parse(data);
             return false;
         }
     }
