@@ -11,6 +11,8 @@
 
 namespace BABYLON
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// </summary>
     internal enum JsmnType
@@ -120,12 +122,13 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        internal JsmnTok[] tokens;
+        internal Array<JsmnTok> tokens;
 
         public JsmnParser(int tokensCount = 255)
         {
             this.Init();
-            this.tokens = new JsmnTok[tokensCount];
+            this.tokens = new Array<JsmnTok>();
+            this.tokens.Capacity = tokensCount;
         }
 
         /**
@@ -134,10 +137,6 @@ namespace BABYLON
         JsmnTok AllocateToken()
         {
             JsmnTok tok;
-            if (this.toknext >= tokens.Length)
-            {
-                return default(JsmnTok);
-            }
             tok = tokens[this.toknext++] = new JsmnTok();
             tok.type = JsmnType.Any;
             tok.start = tok.end = -1;
@@ -163,11 +162,11 @@ namespace BABYLON
         /**
          * Fills next available token with JSON primitive.
          */
-        JsmnError ParsePrimitive(string js,
-                int len, JsmnTok[] tokens, int num_tokens)
+        JsmnError ParsePrimitive(string js)
         {
             JsmnTok token;
             int start;
+            var len = js.Length;
 
             start = this.pos;
 
@@ -311,7 +310,6 @@ namespace BABYLON
             int i;
             JsmnTok token;
             int count = 0;
-            int num_tokens = tokens.Length;
             int len = js.Length;
 
             for (; this.pos < len && js[this.pos] != '\0'; this.pos++)
@@ -467,7 +465,7 @@ namespace BABYLON
                     /* In non-strict mode every unquoted value is a primitive */
                     default:
 #endif
-                        r = ParsePrimitive(js, len, tokens, num_tokens);
+                        r = ParsePrimitive(js);
                         if (r < 0) return r;
                         count++;
                         if (this.toksuper != -1 && tokens != null)
