@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -132,6 +133,7 @@
     <Compile Include="extras.enum.cs" />
     <Compile Include="extras.error.cs" />
     <Compile Include="extras.interfaces.cs" />
+    <Compile Include="extras.json.cs" />
     <Compile Include="extras.web.interfaces.cs" />
     <Compile Include="extras.structs.cs" />
     <Compile Include="Layer\babylon.layer.cs" />
@@ -145,7 +147,6 @@
     <Compile Include="Lights\Shadows\babylon.shadowGenerator.cs" />
     <Compile Include="Loading\babylon.sceneLoader.cs" />
     <Compile Include="Loading\Plugins\babylon.babylonFileLoader.cs" />
-    <Compile Include="Loading\scenelLoadedr.waiting.for.database.cs" />
     <Compile Include="Materials\babylon.effect.cs" />
     <Compile Include="Materials\babylon.material.cs" />
     <Compile Include="Materials\babylon.multiMaterial.cs" />

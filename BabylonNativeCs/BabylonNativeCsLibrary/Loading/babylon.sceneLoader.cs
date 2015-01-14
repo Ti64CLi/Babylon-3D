@@ -15,15 +15,9 @@ namespace BABYLON
     {
         string extensions { get; set; }
 
-        System.Func<object, Scene, object, string, Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>, bool> importMesh
-        {
-            get;
-        }
+        bool importMesh(object meshesNames, Scene scene, object data, string rootUrl, Array<AbstractMesh> meshes, Array<ParticleSystem> particleSystems, Array<Skeleton> skeletons);
 
-        System.Func<Scene, string, string, bool> load
-        {
-            get;
-        }
+        bool load(Scene scene, string data, string rootUrl);
     }
 
     public class SceneLoader
@@ -117,8 +111,19 @@ namespace BABYLON
             database = new BABYLON.Database(rootUrl + sceneFilename, manifestChecked);
         }
 
-        public static void Load(string rootUrl, string sceneFilename, Engine engine, System.Action<Scene> onsuccess = null, System.Action progressCallBack = null, System.Action<Scene> onerror = null)
+        public static void Load(
+            string rootUrl,
+            string sceneFilename,
+            Engine engine,
+            System.Action<Scene> onsuccess = null,
+            System.Action progressCallBack = null,
+            System.Action<Scene> onerror = null)
         {
+            if (SceneLoader._registeredPlugins.Length == 0)
+            {
+                BABYLON.SceneLoader.RegisterPlugin(new BABYLON.Internals.BabylonFileLoader());
+            }
+
             var plugin = _getPluginForFilename(sceneFilename);
             Database database = null;
             var loadSceneFromData = new Action<string>(

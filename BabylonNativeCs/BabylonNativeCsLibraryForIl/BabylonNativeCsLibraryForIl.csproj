@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -172,6 +172,9 @@
     <Compile Include="..\BabylonNativeCsLibrary\extras.interfaces.cs">
       <Link>extras.interfaces.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonNativeCsLibrary\extras.json.cs">
+      <Link>extras.json.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonNativeCsLibrary\extras.structs.cs">
       <Link>extras.structs.cs</Link>
     </Compile>
@@ -210,9 +213,6 @@
     </Compile>
     <Compile Include="..\BabylonNativeCsLibrary\Loading\Plugins\babylon.babylonFileLoader.cs">
       <Link>Loading\Plugins\babylon.babylonFileLoader.cs</Link>
-    </Compile>
-    <Compile Include="..\BabylonNativeCsLibrary\Loading\scenelLoadedr.waiting.for.database.cs">
-      <Link>Loading\scenelLoadedr.waiting.for.database.cs</Link>
     </Compile>
     <Compile Include="..\BabylonNativeCsLibrary\Materials\babylon.effect.cs">
       <Link>Materials\babylon.effect.cs</Link>
@@ -477,9 +477,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CoreLib">
-      <HintPath>C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
+    <Reference Include="CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
