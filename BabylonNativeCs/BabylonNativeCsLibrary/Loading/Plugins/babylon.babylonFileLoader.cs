@@ -834,9 +834,10 @@ namespace BABYLON.Internals
             if (parsedGeometry["subMeshes"])
             {
                 mesh.subMeshes = new Array<SubMesh>();
-                for (var subIndex = 0; subIndex < parsedGeometry["subMeshes"].Length; subIndex++)
+                var subMeshes = parsedGeometry["subMeshes"];
+                for (var subIndex = 0; subIndex < subMeshes.Length; subIndex++)
                 {
-                    var parsedSubMesh = parsedGeometry["subMeshes"][subIndex];
+                    var parsedSubMesh = subMeshes[subIndex];
                     var subMesh = new BABYLON.SubMesh(parsedSubMesh["materialIndex"], parsedSubMesh["verticesStart"], parsedSubMesh["verticesCount"], parsedSubMesh["indexStart"], parsedSubMesh["indexCount"], mesh);
                 }
             }
