@@ -76,7 +76,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    [DebuggerDisplay("{type}, {source.Substring(start, end-start)}")]
+    [DebuggerDisplay("{type}, {Value}")]
     internal class JsmnTok
     {
         private string _value;
@@ -151,7 +151,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        internal string source;
+        internal string _js;
 
         public JsmnParser(int tokensCount = 255)
         {
@@ -174,7 +174,7 @@ namespace BABYLON
             tok.parent = -1;
 #endif
 #if DEBUG
-            tok.source = this.source;
+            tok.source = this._js;
 #endif
             return tok;
         }
@@ -194,17 +194,17 @@ namespace BABYLON
         /**
          * Fills next available token with JSON primitive.
          */
-        JsmnError ParsePrimitive(string js)
+        JsmnError ParsePrimitive()
         {
             JsmnTok token;
             int start;
-            var len = js.Length;
+            var len = _js.Length;
 
             start = this.pos;
 
-            for (; this.pos < len && js[this.pos] != '\0'; this.pos++)
+            for (; this.pos < len && _js[this.pos] != '\0'; this.pos++)
             {
-                switch (js[this.pos])
+                switch (_js[this.pos])
                 {
 #if !JSMN_STRICT
                     /* In strict mode primitive must be followed by "," or "}" or "]" */
@@ -219,7 +219,7 @@ namespace BABYLON
                     case '}':
                         goto found;
                 }
-                if (js[this.pos] < 32 || js[this.pos] >= 127)
+                if (_js[this.pos] < 32 || _js[this.pos] >= 127)
                 {
                     this.pos = start;
                     return JsmnError.Invalid;
@@ -254,10 +254,10 @@ namespace BABYLON
         /**
          * Filsl next token with JSON string.
          */
-        JsmnError ParseString(string js)
+        JsmnError ParseString()
         {
             JsmnTok token;
-            var len = js.Length;
+            var len = _js.Length;
 
             int start = this.pos;
 
@@ -266,7 +266,7 @@ namespace BABYLON
             /* Skip starting quote */
             for (; this.pos < len; this.pos++)
             {
-                char c = js[this.pos];
+                char c = _js[this.pos];
 
                 /* Quote: end of string */
                 if (c == '\"')
@@ -293,7 +293,7 @@ namespace BABYLON
                 {
                     int i;
                     this.pos++;
-                    switch (js[this.pos])
+                    switch (_js[this.pos])
                     {
                         /* Allowed escaped symbols */
                         case '\"':
@@ -308,12 +308,12 @@ namespace BABYLON
                         /* Allows escaped symbol \uXXXX */
                         case 'u':
                             this.pos++;
-                            for (i = 0; i < 4 && this.pos < len && js[this.pos] != '\0'; i++)
+                            for (i = 0; i < 4 && this.pos < len && _js[this.pos] != '\0'; i++)
                             {
                                 /* If it isn't a hex character we have an error */
-                                if (!((js[this.pos] >= 48 && js[this.pos] <= 57) || /* 0-9 */
-                                            (js[this.pos] >= 65 && js[this.pos] <= 70) || /* A-F */
-                                            (js[this.pos] >= 97 && js[this.pos] <= 102)))
+                                if (!((_js[this.pos] >= 48 && _js[this.pos] <= 57) || /* 0-9 */
+                                            (_js[this.pos] >= 65 && _js[this.pos] <= 70) || /* A-F */
+                                            (_js[this.pos] >= 97 && _js[this.pos] <= 102)))
                                 { /* a-f */
                                     this.pos = start;
                                     return JsmnError.Invalid;
@@ -344,16 +344,14 @@ namespace BABYLON
             int count = 0;
             int len = js.Length;
 
-#if DEBUG
-            this.source = js;
-#endif
+            this._js = js;
 
-            for (; this.pos < len && js[this.pos] != '\0'; this.pos++)
+            for (; this.pos < len && _js[this.pos] != '\0'; this.pos++)
             {
                 char c;
                 JsmnType type;
 
-                c = js[this.pos];
+                c = _js[this.pos];
                 switch (c)
                 {
                     case '{':
@@ -435,7 +433,7 @@ namespace BABYLON
 #endif
                         break;
                     case '\"':
-                        r = ParseString(js);
+                        r = ParseString();
                         if (r < 0) return r;
                         count++;
                         if (this.toksuper != -1 && tokens != null)
@@ -501,7 +499,7 @@ namespace BABYLON
                     /* In non-strict mode every unquoted value is a primitive */
                     default:
 #endif
-                        r = ParsePrimitive(js);
+                        r = ParsePrimitive();
                         if (r < 0) return r;
                         count++;
                         if (this.toksuper != -1 && tokens != null)
@@ -539,43 +537,110 @@ namespace BABYLON
             this.toksuper = -1;
         }
 
-        internal Array<JsmnTok> GetTokens()
-        {
-            return this.tokens;
-        }
-    }
-
-    internal class JsmnParserAdapter
-    {
-        /// <summary>
-        /// </summary>
-        internal Array<JsmnTok> _tokens;
-
-        private int _currentToken;
-        private int _selectedToken;
-
-        public JsmnParserAdapter(Array<JsmnTok> tokens)
-        {
-            _tokens = tokens;
-            _currentToken = 0;
-        }
-
-        public JsmnParserAdapter this[string key]
+        internal Array<JsmnTok> Tokens
         {
             get
             {
-                SeekValue(key);
-                return this;
+                return this.tokens;
+            }
+        }
+    }
+
+    internal struct JsmnParserValue
+    {
+        private int _selectedToken;
+
+        private Array<JsmnTok> _tokens;
+
+        public JsmnParserValue(int tokenIndex, Array<JsmnTok> tokens)
+        {
+            _selectedToken = tokenIndex;
+            _tokens = tokens;
+        }
+
+        public JsmnParserValue this[string key]
+        {
+            get
+            {
+                return new JsmnParserValue(SeekValue(key), _tokens);
             }
         }
 
-        public static implicit operator bool(JsmnParserAdapter that)
+        public int Length
         {
-            var selectedValue = that.GetValue();
-            return Convert.ToBoolean(selectedValue);
+            get
+            {
+                return this.GetArrayLength();
+            }
         }
 
-        public static implicit operator double[](JsmnParserAdapter that)
+        public bool HasValue
+        {
+            get
+            {
+                return _selectedToken != -1;
+            }
+        }
+
+        public JsmnParserValue this[int index]
+        {
+            get
+            {
+                return new JsmnParserValue(SeekValue(index), _tokens);
+            }
+        }
+
+        public static implicit operator bool(JsmnParserValue that)
+        {
+            var selectedValue = that.GetValue();
+
+            if (selectedValue == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                return Convert.ToBoolean(selectedValue);
+            }
+            catch (FormatException)
+            {
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            try
+            {
+                return (int)Convert.ToDouble(selectedValue) > 0;
+            }
+            catch (FormatException)
+            {
+            }
+
+            return true;
+        }
+
+        public static implicit operator int(JsmnParserValue that)
+        {
+            var selectedValue = that.GetValue();
+            return (int)Convert.ToDouble(selectedValue);
+        }
+
+        public static implicit operator double(JsmnParserValue that)
+        {
+            var selectedValue = that.GetValue();
+            return Convert.ToDouble(selectedValue);
+        }
+
+        public static implicit operator string(JsmnParserValue that)
+        {
+            var selectedValue = that.GetValue();
+            return selectedValue;
+        }
+
+        public static implicit operator double[](JsmnParserValue that)
         {
             var index = 0;
             var values = new double[that.GetChildrenCount(that._selectedToken)];
@@ -583,6 +648,19 @@ namespace BABYLON
             {
                 var selectedValue = that.GetValue(childToken);
                 values[index++] = Convert.ToDouble(selectedValue);
+            }
+
+            return values;
+        }
+
+        public static implicit operator string[](JsmnParserValue that)
+        {
+            var index = 0;
+            var values = new string[that.GetChildrenCount(that._selectedToken)];
+            foreach (var childToken in that.GetChildrenTokens(that._selectedToken))
+            {
+                var selectedValue = that.GetValue(childToken);
+                values[index++] = selectedValue;
             }
 
             return values;
@@ -608,36 +686,50 @@ namespace BABYLON
             return _tokens[token].Value;
         }
 
-        private void SeekValue(string key)
+        private int GetChildrenCount(int currentTokenIndex)
         {
-            var current = _tokens[_currentToken];
+            var current = _tokens[currentTokenIndex];
+            return current.size;
+        }
+
+        private int SeekValue(string key)
+        {
+            var current = _tokens[_selectedToken];
             if (current.type != JsmnType.Object)
             {
                 throw new NotSupportedException();
             }
 
-            _selectedToken = -1;
-            foreach (var childTokenIndex in this.GetChildrenTokens(_currentToken))
+            foreach (var childTokenIndex in this.GetChildrenTokens(_selectedToken))
             {
                 var childToken = _tokens[childTokenIndex];
                 if (childToken.EqualsTo(key))
                 {
-                    _selectedToken = GetFirstChildrenToken(childTokenIndex);
-                    return;
+                    return GetFirstChildrenToken(childTokenIndex);
                 }
             }
+
+            return -1;
         }
 
-        private int GetChildrenCount(int currentTokenIndex)
+        private int SeekValue(int indexToSelect)
         {
-            var current = _tokens[currentTokenIndex];
-
+            var current = _tokens[_selectedToken];
             if (current.type != JsmnType.Array)
             {
                 throw new NotSupportedException();
             }
 
-            return current.size;
+            var index = -1;
+            foreach (var childTokenIndex in this.GetChildrenTokens(_selectedToken))
+            {
+                if (++index == indexToSelect)
+                {
+                    return childTokenIndex;
+                }
+            }
+
+            return -1;
         }
 
         private IEnumerable<int> GetChildrenTokens(int currentTokenIndex)
@@ -655,7 +747,7 @@ namespace BABYLON
                 }
 
                 childToken = _tokens[++currentChildTokenIndex];
-            }            
+            }
         }
 
         private int GetFirstChildrenToken(int currentTokenIndex)
@@ -666,6 +758,18 @@ namespace BABYLON
             }
 
             throw new IndexOutOfRangeException();
+        }
+
+        private int GetArrayLength()
+        {
+            var current = _tokens[_selectedToken];
+
+            if (current.type != JsmnType.Array)
+            {
+                throw new NotSupportedException();
+            }
+
+            return current.size;
         }
     }
 }

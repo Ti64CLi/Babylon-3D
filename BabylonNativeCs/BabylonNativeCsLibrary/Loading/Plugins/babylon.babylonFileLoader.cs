@@ -147,9 +147,9 @@ namespace BABYLON.Internals
         }
         Material parseMaterialById(object id, object parsedData, Scene scene, object rootUrl)
         {
-            for (var index = 0; index < parsedData.materials.Length; index++)
+            for (var index = 0; index < parsedData["materials"].Length; index++)
             {
-                var parsedMaterial = parsedData.materials[index];
+                var parsedMaterial = parsedData["materials"][index];
                 if (parsedMaterial.id == id)
                 {
                     return parseMaterial(parsedMaterial, scene, rootUrl);
@@ -269,109 +269,129 @@ namespace BABYLON.Internals
             animation.setKeys(keys);
             return animation;
         }
-        Light parseLight(object parsedLight, Scene scene)
+        */
+
+        // TODO: finish loading animation
+        void parseLight(JsmnParserValue parsedLight, Scene scene)
         {
-            Light light;
-            switch (parsedLight.type)
+            Light light = null;
+            switch ((int)parsedLight["type"])
             {
                 case 0:
-                    light = new BABYLON.PointLight(parsedLight.name, BABYLON.Vector3.FromArray(parsedLight.position), scene);
+                    light = new BABYLON.PointLight(parsedLight["name"], BABYLON.Vector3.FromArray(parsedLight["position"]), scene);
                     break;
                 case 1:
-                    light = new BABYLON.DirectionalLight(parsedLight.name, BABYLON.Vector3.FromArray(parsedLight.direction), scene);
-                    light.position = BABYLON.Vector3.FromArray(parsedLight.position);
+                    var directionalLight = new BABYLON.DirectionalLight(parsedLight["name"], BABYLON.Vector3.FromArray(parsedLight["direction"]), scene);
+                    directionalLight.position = BABYLON.Vector3.FromArray(parsedLight["position"]);
+                    light = directionalLight;
                     break;
                 case 2:
-                    light = new BABYLON.SpotLight(parsedLight.name, BABYLON.Vector3.FromArray(parsedLight.position), BABYLON.Vector3.FromArray(parsedLight.direction), parsedLight.angle, parsedLight.exponent, scene);
+                    light = new BABYLON.SpotLight(parsedLight["name"], BABYLON.Vector3.FromArray(parsedLight["position"]), BABYLON.Vector3.FromArray(parsedLight["direction"]), parsedLight["angle"], parsedLight["exponent"], scene);
                     break;
                 case 3:
-                    light = new BABYLON.HemisphericLight(parsedLight.name, BABYLON.Vector3.FromArray(parsedLight.direction), scene);
-                    light.groundColor = BABYLON.Color3.FromArray(parsedLight.groundColor);
+                    var hemisphericLight = new BABYLON.HemisphericLight(parsedLight["name"], BABYLON.Vector3.FromArray(parsedLight["direction"]), scene);
+                    hemisphericLight.groundColor = BABYLON.Color3.FromArray(parsedLight["groundColor"]);
+                    light = hemisphericLight;
                     break;
             }
-            light.id = parsedLight.id;
-            BABYLON.Tags.AddTagsTo(light, parsedLight.tags);
-            if (parsedLight.intensity != null)
+
+            if (light == null)
             {
-                light.intensity = parsedLight.intensity;
+                throw new Exception("wrong light type");
             }
-            if (parsedLight.range)
+
+            light.id = parsedLight["id"];
+            ////BABYLON.Tags.AddTagsTo(light, parsedLight["tags"]);
+            if (parsedLight["intensity"])
             {
-                light.range = parsedLight.range;
+                light.intensity = parsedLight["intensity"];
             }
-            light.diffuse = BABYLON.Color3.FromArray(parsedLight.diffuse);
-            light.specular = BABYLON.Color3.FromArray(parsedLight.specular);
-            if (parsedLight.excludedMeshesIds)
+            
+            if (parsedLight["range"])
             {
-                light._excludedMeshesIds = parsedLight.excludedMeshesIds;
+                light.range = parsedLight["range"];
             }
-            if (parsedLight.animations)
+
+            light.diffuse = BABYLON.Color3.FromArray(parsedLight["diffuse"]);
+            light.specular = BABYLON.Color3.FromArray(parsedLight["specular"]);
+            if (parsedLight["excludedMeshesIds"])
             {
-                for (var animationIndex = 0; animationIndex < parsedLight.animations.Length; animationIndex++)
+                light._excludedMeshesIds.AddRange(parsedLight["excludedMeshesIds"]);
+            }
+
+            if (parsedLight["animations"])
+            {
+                for (var animationIndex = 0; animationIndex < parsedLight["animations"].Length; animationIndex++)
                 {
-                    var parsedAnimation = parsedLight.animations[animationIndex];
-                    light.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = parsedLight["animations"][animationIndex];
+                    ////light.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
-            if (parsedLight.autoAnimate)
+
+            if (parsedLight["autoAnimate"])
             {
-                scene.beginAnimation(light, parsedLight.autoAnimateFrom, parsedLight.autoAnimateTo, parsedLight.autoAnimateLoop, 1.0);
+                //scene.beginAnimation(light, parsedLight["autoAnimateFrom"], parsedLight["autoAnimateTo"], parsedLight["autoAnimateLoop"], 1.0);
             }
         }
-        Camera parseCamera(object parsedCamera, Scene scene)
+
+        // TODO: finish ags and animation
+        Camera parseCamera(JsmnParserValue parsedCamera, Scene scene)
         {
-            var camera = new BABYLON.FreeCamera(parsedCamera.name, BABYLON.Vector3.FromArray(parsedCamera.position), scene);
-            camera.id = parsedCamera.id;
-            BABYLON.Tags.AddTagsTo(camera, parsedCamera.tags);
-            if (parsedCamera.parentId)
+            var camera = new BABYLON.FreeCamera(parsedCamera["name"], BABYLON.Vector3.FromArray(parsedCamera["position"]), scene);
+            camera.id = parsedCamera["id"];
+            ////BABYLON.Tags.AddTagsTo(camera, parsedCamera["tags"]);
+            if (parsedCamera["parentId"])
             {
-                camera._waitingParentId = parsedCamera.parentId;
+                camera._waitingParentId = parsedCamera["parentId"];
             }
-            if (parsedCamera.target)
+            if (parsedCamera["target"])
             {
-                camera.setTarget(BABYLON.Vector3.FromArray(parsedCamera.target));
+                camera.setTarget(BABYLON.Vector3.FromArray(parsedCamera["target"]));
             }
             else
             {
-                camera.rotation = BABYLON.Vector3.FromArray(parsedCamera.rotation);
+                camera.rotation = BABYLON.Vector3.FromArray(parsedCamera["rotation"]);
             }
-            if (parsedCamera.lockedTargetId)
+            if (parsedCamera["lockedTargetId"])
             {
-                camera._waitingLockedTargetId = parsedCamera.lockedTargetId;
+                camera._waitingLockedTargetId = parsedCamera["lockedTargetId"];
             }
-            camera.fov = parsedCamera.fov;
-            camera.minZ = parsedCamera.minZ;
-            camera.maxZ = parsedCamera.maxZ;
-            camera.speed = parsedCamera.speed;
-            camera.inertia = parsedCamera.inertia;
-            camera.checkCollisions = parsedCamera.checkCollisions;
-            camera.applyGravity = parsedCamera.applyGravity;
-            if (parsedCamera.ellipsoid)
+            camera.fov = parsedCamera["fov"];
+            camera.minZ = parsedCamera["minZ"];
+            camera.maxZ = parsedCamera["maxZ"];
+            camera.speed = parsedCamera["speed"];
+            camera.inertia = parsedCamera["inertia"];
+            camera.checkCollisions = parsedCamera["checkCollisions"];
+            camera.applyGravity = parsedCamera["applyGravity"];
+            if (parsedCamera["ellipsoid"])
             {
-                camera.ellipsoid = BABYLON.Vector3.FromArray(parsedCamera.ellipsoid);
+                camera.ellipsoid = BABYLON.Vector3.FromArray(parsedCamera["ellipsoid"]);
             }
-            if (parsedCamera.animations)
+            if (parsedCamera["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedCamera.animations.Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedCamera["animations"].Length; animationIndex++)
                 {
-                    var parsedAnimation = parsedCamera.animations[animationIndex];
-                    camera.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = parsedCamera["animations"][animationIndex];
+                    ////camera.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
-            if (parsedCamera.autoAnimate)
+            if (parsedCamera["autoAnimate"])
             {
-                scene.beginAnimation(camera, parsedCamera.autoAnimateFrom, parsedCamera.autoAnimateTo, parsedCamera.autoAnimateLoop, 1.0);
+                ////scene.beginAnimation(camera, parsedCamera["autoAnimateFrom"], parsedCamera["autoAnimateTo"], parsedCamera["autoAnimateLoop"], 1.0);
             }
-            if (parsedCamera.layerMask && (!isNaN(parsedCamera.layerMask)))
+            if (parsedCamera["layerMask"] && (!Double.IsNaN(parsedCamera["layerMask"])))
             {
-                camera.layerMask = Math.Abs(parseInt(parsedCamera.layerMask));
+                camera.layerMask = (uint) Math.Abs(parsedCamera["layerMask"]);
             }
             else
             {
                 camera.layerMask = 0xFFFFFFFF;
             }
+
             return camera;
         }
+
+        /*
         Geometry parseGeometry(object parsedGeometry, Scene scene)
         {
             var id = parsedGeometry.id;
@@ -814,7 +834,7 @@ namespace BABYLON.Internals
             //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
             var r = parser.Parse(data);
 
-            var parsedData = new JsmnParserAdapter(parser.GetTokens());
+            var parsedData = new JsmnParserValue(0, parser.Tokens);
 
             // Scene
             scene.useDelayedTextureLoading = parsedData["useDelayedTextureLoading"] && !BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental;
@@ -823,6 +843,35 @@ namespace BABYLON.Internals
             scene.ambientColor = BABYLON.Color3.FromArray(parsedData["ambientColor"]);
             scene.gravity = BABYLON.Vector3.FromArray(parsedData["gravity"]);
 
+            // Fog
+            if (parsedData["fogMode"] && parsedData["fogMode"] != 0) {
+                scene.fogMode = parsedData["fogMode"];
+                scene.fogColor = BABYLON.Color3.FromArray(parsedData["fogColor"]);
+                scene.fogStart = parsedData["fogStart"];
+                scene.fogEnd = parsedData["fogEnd"];
+                scene.fogDensity = parsedData["fogDensity"];
+            }
+
+            // Lights
+            var lights = parsedData["lights"];
+            for (var index = 0; index < lights.Length; index++)
+            {
+                var parsedLight = lights[index];
+                parseLight(parsedLight, scene);
+            }
+
+            // Cameras
+            var cameras = parsedData["cameras"];
+            for (var index = 0; index < cameras.Length; index++)
+            {
+                var parsedCamera = cameras[index];
+                parseCamera(parsedCamera, scene);
+            }
+
+            if (parsedData["activeCameraID"])
+            {
+                scene.setActiveCameraByID(parsedData["activeCameraID"]);
+            }
 
             return false;
         }
