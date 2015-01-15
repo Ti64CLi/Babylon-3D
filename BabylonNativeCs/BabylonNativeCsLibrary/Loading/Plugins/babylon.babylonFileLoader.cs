@@ -81,7 +81,7 @@ namespace BABYLON.Internals
             texture.wrapV = parsedTexture["wrapV"];
             if (parsedTexture["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedTexture["animations"]["Length"]; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedTexture["animations"].Length; animationIndex++)
                 {
                     var parsedAnimation = parsedTexture["animations"][animationIndex];
                     ////texture.animations.Add(parseAnimation(parsedAnimation));
@@ -99,7 +99,7 @@ namespace BABYLON.Internals
         Skeleton parseSkeleton(JsmnParserValue parsedSkeleton, Scene scene)
         {
             var skeleton = new BABYLON.Skeleton(parsedSkeleton["name"], parsedSkeleton["id"], scene);
-            for (var index = 0; index < parsedSkeleton["bones"]["Length"]; index++)
+            for (var index = 0; index < parsedSkeleton["bones"].Length; index++)
             {
                 var parsedBone = parsedSkeleton["bones"][index];
                 Bone parentBone = null;
@@ -181,7 +181,7 @@ namespace BABYLON.Internals
             var multiMaterial = new BABYLON.MultiMaterial(parsedMultiMaterial["name"], scene);
             multiMaterial.id = parsedMultiMaterial["id"];
             ////BABYLON.Tags.AddTagsTo(multiMaterial, parsedMultiMaterial["tags"]);
-            for (var matIndex = 0; matIndex < parsedMultiMaterial["materials"]["Length"]; matIndex++)
+            for (var matIndex = 0; matIndex < parsedMultiMaterial["materials"].Length; matIndex++)
             {
                 var subMatId = parsedMultiMaterial["materials"][matIndex];
                 if (subMatId)
@@ -201,7 +201,7 @@ namespace BABYLON.Internals
             var emitter = scene.getLastEntryByID(parsedLensFlareSystem["emitterId"]);
             var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem#" + parsedLensFlareSystem["emitterId"], emitter, scene);
             lensFlareSystem.borderLimit = parsedLensFlareSystem["borderLimit"];
-            for (var index = 0; index < parsedLensFlareSystem["flares"]["Length"]; index++)
+            for (var index = 0; index < parsedLensFlareSystem["flares"].Length; index++)
             {
                 var parsedFlare = parsedLensFlareSystem["flares"][index];
                 var flare = new BABYLON.LensFlare(parsedFlare["size"], parsedFlare["position"], BABYLON.Color3.FromArray(parsedFlare["color"]), rootUrl + parsedFlare["textureName"], lensFlareSystem);
@@ -246,7 +246,7 @@ namespace BABYLON.Internals
         {
             var light = scene.getLightByID(parsedShadowGenerator["lightId"]);
             var shadowGenerator = new BABYLON.ShadowGenerator(CreateSize(parsedShadowGenerator["mapSize"]), light as DirectionalLight);
-            for (var meshIndex = 0; meshIndex < parsedShadowGenerator["renderList"]["Length"]; meshIndex++)
+            for (var meshIndex = 0; meshIndex < parsedShadowGenerator["renderList"].Length; meshIndex++)
             {
                 var mesh = scene.getMeshByID(parsedShadowGenerator["renderList"][meshIndex]);
                 shadowGenerator.getShadowMap().renderList.Add(mesh);
@@ -346,7 +346,7 @@ namespace BABYLON.Internals
 
             if (parsedLight["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedLight["animations"]["Length"]; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedLight["animations"].Length; animationIndex++)
                 {
                     var parsedAnimation = parsedLight["animations"][animationIndex];
                     ////light.animations.Add(parseAnimation(parsedAnimation));
@@ -394,7 +394,7 @@ namespace BABYLON.Internals
             }
             if (parsedCamera["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedCamera["animations"]["Length"]; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedCamera["animations"].Length; animationIndex++)
                 {
                     var parsedAnimation = parsedCamera["animations"][animationIndex];
                     ////camera.animations.Add(parseAnimation(parsedAnimation));
@@ -892,7 +892,7 @@ namespace BABYLON.Internals
 
             // Lights
             var lights = parsedData["lights"];
-            for (var index = 0; index < lights["Length"]; index++)
+            for (var index = 0; index < lights.Length; index++)
             {
                 var parsedLight = lights[index];
                 parseLight(parsedLight, scene);
@@ -900,7 +900,7 @@ namespace BABYLON.Internals
 
             // Cameras
             var cameras = parsedData["cameras"];
-            for (var index = 0; index < cameras["Length"]; index++)
+            for (var index = 0; index < cameras.Length; index++)
             {
                 var parsedCamera = cameras[index];
                 parseCamera(parsedCamera, scene);
@@ -915,7 +915,7 @@ namespace BABYLON.Internals
             var materials = parsedData["materials"];
             if (materials)
             {
-                for (var index = 0; index < materials["Length"]; index++)
+                for (var index = 0; index < materials.Length; index++)
                 {
                     var parsedMaterial = materials[index];
                     parseMaterial(parsedMaterial, scene, rootUrl);
@@ -924,7 +924,7 @@ namespace BABYLON.Internals
 
             if (parsedData["multiMaterials"])
             {
-                for (var index = 0; index < parsedData["multiMaterials"]["Length"]; index++)
+                for (var index = 0; index < parsedData["multiMaterials"].Length; index++)
                 {
                     var parsedMultiMaterial = parsedData["multiMaterials"][index];
                     parseMultiMaterial(parsedMultiMaterial, scene);
@@ -934,7 +934,7 @@ namespace BABYLON.Internals
             // Skeletons
             if (parsedData["skeletons"])
             {
-                for (var index = 0; index < parsedData["skeletons"]["Length"]; index++)
+                for (var index = 0; index < parsedData["skeletons"].Length; index++)
                 {
                     var parsedSkeleton = parsedData["skeletons"][index];
                     parseSkeleton(parsedSkeleton, scene);
@@ -1020,7 +1020,7 @@ namespace BABYLON.Internals
             */
 
             // Meshes
-            for (var index = 0; index < parsedData["meshes"]["Length"]; index++)
+            for (var index = 0; index < parsedData["meshes"].Length; index++)
             {
                 var parsedMesh = parsedData["meshes"][index];
                 parseMesh(parsedMesh, scene, rootUrl);
@@ -1050,7 +1050,7 @@ namespace BABYLON.Internals
             // Particles Systems
             if (parsedData["particleSystems"])
             {
-                for (var index = 0; index < parsedData["particleSystems"]["Length"]; index++)
+                for (var index = 0; index < parsedData["particleSystems"].Length; index++)
                 {
                     var parsedParticleSystem = parsedData["particleSystems"][index];
                     parseParticleSystem(parsedParticleSystem, scene, rootUrl);
@@ -1060,7 +1060,7 @@ namespace BABYLON.Internals
             // Lens flares
             if (parsedData["lensFlareSystems"])
             {
-                for (var index = 0; index < parsedData["lensFlareSystems"]["Length"]; index++)
+                for (var index = 0; index < parsedData["lensFlareSystems"].Length; index++)
                 {
                     var parsedLensFlareSystem = parsedData["lensFlareSystems"][index];
                     parseLensFlareSystem(parsedLensFlareSystem, scene, rootUrl);
@@ -1070,7 +1070,7 @@ namespace BABYLON.Internals
             // Shadows
             if (parsedData["shadowGenerators"])
             {
-                for (var index = 0; index < parsedData["shadowGenerators"]["Length"]; index++)
+                for (var index = 0; index < parsedData["shadowGenerators"].Length; index++)
                 {
                     var parsedShadowGenerator = parsedData["shadowGenerators"][index];
 
