@@ -789,10 +789,14 @@ namespace BABYLON.Internals
                 }
             }
             else
-                if (parsedGeometry["positions"] && parsedGeometry["normals"] && parsedGeometry["indices"])
+            {
+                var positions = parsedGeometry["positions"];
+                var normals = parsedGeometry["normals"];
+                var indices = parsedGeometry["indices"];
+                if (positions && normals && indices)
                 {
-                    mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, Array<double>.New(parsedGeometry["positions"]), false);
-                    mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, Array<double>.New(parsedGeometry["normals"]), false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, Array<double>.New(positions), false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, Array<double>.New(normals), false);
                     if (parsedGeometry["uvs"])
                     {
                         mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, Array<double>.New(parsedGeometry["uvs"]), false);
@@ -805,14 +809,15 @@ namespace BABYLON.Internals
                     {
                         mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, Array<double>.New(parsedGeometry["colors"]), false);
                     }
-                    if (parsedGeometry["matricesIndices"])
+                    var matricesIndices = parsedGeometry["matricesIndices"];
+                    if (matricesIndices)
                     {
-                        if (!parsedGeometry["matricesIndices"]["_isExpanded"])
+                        if (!matricesIndices["_isExpanded"])
                         {
                             var floatIndices = new Array<double>();
-                            for (var i = 0; i < parsedGeometry["matricesIndices"].Length; i++)
+                            for (var i = 0; i < matricesIndices.Length; i++)
                             {
-                                var matricesIndex = parsedGeometry["matricesIndices"][i];
+                                var matricesIndex = matricesIndices[i];
                                 floatIndices.Add(matricesIndex & 0x000000FF);
                                 floatIndices.Add((matricesIndex & 0x0000FF00) << 8);
                                 floatIndices.Add((matricesIndex & 0x00FF0000) << 16);
@@ -822,19 +827,21 @@ namespace BABYLON.Internals
                         }
                         else
                         {
-                            mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, Array<double>.New(parsedGeometry["matricesIndices"]), false);
+                            mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, Array<double>.New(matricesIndices), false);
                         }
                     }
-                    if (parsedGeometry["matricesWeights"])
+                    var matricesWeights = parsedGeometry["matricesWeights"];
+                    if (matricesWeights)
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, Array<double>.New(parsedGeometry["matricesWeights"]), false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, Array<double>.New(matricesWeights), false);
                     }
-                    mesh.setIndices(Array<int>.New(ArrayConvert.AsInt(parsedGeometry["indices"])));
+                    mesh.setIndices(Array<int>.New(ArrayConvert.AsInt(indices)));
                 }
-            if (parsedGeometry["subMeshes"])
+            }
+            var subMeshes = parsedGeometry["subMeshes"];
+            if (subMeshes)
             {
                 mesh.subMeshes = new Array<SubMesh>();
-                var subMeshes = parsedGeometry["subMeshes"];
                 for (var subIndex = 0; subIndex < subMeshes.Length; subIndex++)
                 {
                     var parsedSubMesh = subMeshes[subIndex];
@@ -923,21 +930,23 @@ namespace BABYLON.Internals
                 }
             }
 
-            if (parsedData["multiMaterials"])
+            var multiMaterials = parsedData["multiMaterials"];
+            if (multiMaterials)
             {
-                for (var index = 0; index < parsedData["multiMaterials"].Length; index++)
+                for (var index = 0; index < multiMaterials.Length; index++)
                 {
-                    var parsedMultiMaterial = parsedData["multiMaterials"][index];
+                    var parsedMultiMaterial = multiMaterials[index];
                     parseMultiMaterial(parsedMultiMaterial, scene);
                 }
             }
 
             // Skeletons
-            if (parsedData["skeletons"])
+            var skeletons = parsedData["skeletons"];
+            if (skeletons)
             {
-                for (var index = 0; index < parsedData["skeletons"].Length; index++)
+                for (var index = 0; index < skeletons.Length; index++)
                 {
-                    var parsedSkeleton = parsedData["skeletons"][index];
+                    var parsedSkeleton = skeletons[index];
                     parseSkeleton(parsedSkeleton, scene);
                 }
             }
@@ -1021,9 +1030,10 @@ namespace BABYLON.Internals
             */
 
             // Meshes
-            for (var index = 0; index < parsedData["meshes"].Length; index++)
+            var meshes = parsedData["meshes"];
+            for (var index = 0; index < meshes.Length; index++)
             {
-                var parsedMesh = parsedData["meshes"][index];
+                var parsedMesh = meshes[index];
                 parseMesh(parsedMesh, scene, rootUrl);
             }
 
@@ -1049,31 +1059,34 @@ namespace BABYLON.Internals
             }
 
             // Particles Systems
-            if (parsedData["particleSystems"])
+            var particleSystems = parsedData["particleSystems"];
+            if (particleSystems)
             {
-                for (var index = 0; index < parsedData["particleSystems"].Length; index++)
+                for (var index = 0; index < particleSystems.Length; index++)
                 {
-                    var parsedParticleSystem = parsedData["particleSystems"][index];
+                    var parsedParticleSystem = particleSystems[index];
                     parseParticleSystem(parsedParticleSystem, scene, rootUrl);
                 }
             }
 
             // Lens flares
-            if (parsedData["lensFlareSystems"])
+            var lensFlareSystems = parsedData["lensFlareSystems"];
+            if (lensFlareSystems)
             {
-                for (var index = 0; index < parsedData["lensFlareSystems"].Length; index++)
+                for (var index = 0; index < lensFlareSystems.Length; index++)
                 {
-                    var parsedLensFlareSystem = parsedData["lensFlareSystems"][index];
+                    var parsedLensFlareSystem = lensFlareSystems[index];
                     parseLensFlareSystem(parsedLensFlareSystem, scene, rootUrl);
                 }
             }
 
             // Shadows
-            if (parsedData["shadowGenerators"])
+            var shadowGenerators = parsedData["shadowGenerators"];
+            if (shadowGenerators)
             {
-                for (var index = 0; index < parsedData["shadowGenerators"].Length; index++)
+                for (var index = 0; index < shadowGenerators.Length; index++)
                 {
-                    var parsedShadowGenerator = parsedData["shadowGenerators"][index];
+                    var parsedShadowGenerator = shadowGenerators[index];
 
                     parseShadowGenerator(parsedShadowGenerator, scene);
                 }

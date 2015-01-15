@@ -76,7 +76,6 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    [DebuggerDisplay("{type}, {Value}")]
     public class JsmnTok
     {
         private string _value;
