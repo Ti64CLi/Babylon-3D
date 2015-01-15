@@ -378,7 +378,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        private Octree<AbstractMesh> _selectionOctree;
+        public Octree<AbstractMesh> _selectionOctree;
 
         /// <summary>
         /// </summary>

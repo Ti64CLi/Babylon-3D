@@ -40,7 +40,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public Action<string, Mesh> _delayLoadingFunction;
+        public Action<JsmnParserValue, Mesh> _delayLoadingFunction;
 
         /// <summary>
         /// </summary>
@@ -463,7 +463,7 @@ namespace BABYLON
                     (data) =>
                         {
                             // TODO: finish it
-                            this._delayLoadingFunction(data /*JSON.parse(data)*/, this);
+                            this._delayLoadingFunction(JsmnParser.Parse(data), this);
                             this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
                             scene._removePendingData(this);
                         }, 

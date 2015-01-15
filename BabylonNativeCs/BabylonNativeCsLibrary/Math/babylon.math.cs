@@ -399,6 +399,11 @@ namespace BABYLON
             return new Color4(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
 
+        public static Color4 FromArray(double[] array, int offset = 0)
+        {
+            return new Color4(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="r">
@@ -1919,6 +1924,11 @@ namespace BABYLON
             return new Quaternion(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
 
+        public static Quaternion FromArray(double[] array, int offset = 0)
+        {
+            return new Quaternion(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="axis">
@@ -2257,6 +2267,13 @@ namespace BABYLON
             return result;
         }
 
+        public static Matrix FromArray(double[] array, int offset = 0)
+        {
+            var result = new Matrix();
+            FromArrayToRef(array, offset, result);
+            return result;
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="array">
@@ -2266,6 +2283,14 @@ namespace BABYLON
         /// <param name="result">
         /// </param>
         public static void FromArrayToRef(Array<double> array, int offset, Matrix result)
+        {
+            for (var index = 0; index < 16; index++)
+            {
+                result.m[index] = array[index + offset];
+            }
+        }
+
+        public static void FromArrayToRef(double[] array, int offset, Matrix result)
         {
             for (var index = 0; index < 16; index++)
             {
@@ -3465,7 +3490,18 @@ namespace BABYLON
         /// </param>
         /// <returns>
         /// </returns>
-        private static Plane FromArray(Array<double> array)
+        public static Plane FromArray(Array<double> array)
+        {
+            return new Plane(array[0], array[1], array[2], array[3]);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="array">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static Plane FromArray(double[] array)
         {
             return new Plane(array[0], array[1], array[2], array[3]);
         }

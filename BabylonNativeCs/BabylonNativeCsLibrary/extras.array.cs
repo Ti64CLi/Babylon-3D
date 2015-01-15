@@ -57,6 +57,17 @@ namespace BABYLON
             return newArray;
         }
 
+        public static int[] AsInt(double[] array)
+        {
+            var newArray = new int[array.Length];
+            for (var index = 0; index < array.Length; index++)
+            {
+                newArray[index] = (int)array[index];
+            }
+
+            return newArray;
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="array">
@@ -649,6 +660,14 @@ namespace BABYLON
         }
 
         #endregion
+
+        public static Array<T> New(T[] items)
+        {
+            var arr = new Array<T>();
+            arr.Capacity = items.Length;
+            arr.AddRange(items);
+            return arr;
+        }
     }
 
 

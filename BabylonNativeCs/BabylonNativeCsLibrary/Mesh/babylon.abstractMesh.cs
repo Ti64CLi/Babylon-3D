@@ -302,6 +302,11 @@ namespace BABYLON
             {
                 return this._receiveShadows;
             }
+
+            set
+            {
+                this._receiveShadows = value;
+            }
         }
 
         /// <summary>
@@ -326,6 +331,11 @@ namespace BABYLON
             get
             {
                 return this._visibility;
+            }
+
+            set
+            {
+                this._visibility = value;
             }
         }
 

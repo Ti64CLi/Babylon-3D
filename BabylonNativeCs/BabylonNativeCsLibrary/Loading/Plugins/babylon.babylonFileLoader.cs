@@ -20,233 +20,257 @@ namespace BABYLON.Internals
             _extensions = ".babylon";
         }
 
-        /*
-        CubeTexture loadCubeTexture(object rootUrl, object parsedTexture, Scene scene)
+        CubeTexture loadCubeTexture(string rootUrl, JsmnParserValue parsedTexture, Scene scene)
         {
-            var texture = new BABYLON.CubeTexture(rootUrl + parsedTexture.name, scene);
-            texture.name = parsedTexture.name;
-            texture.hasAlpha = parsedTexture.hasAlpha;
-            texture.level = parsedTexture.level;
-            texture.coordinatesMode = parsedTexture.coordinatesMode;
+            var texture = new BABYLON.CubeTexture(rootUrl + parsedTexture["name"], scene);
+            texture.name = parsedTexture["name"];
+            texture.hasAlpha = parsedTexture["hasAlpha"];
+            texture.level = parsedTexture["level"];
+            texture.coordinatesMode = parsedTexture["coordinatesMode"];
             return texture;
         }
-        Texture loadTexture(object rootUrl, object parsedTexture, Scene scene)
+
+        // TODO: finish animation
+        Texture loadTexture(string rootUrl, JsmnParserValue parsedTexture, Scene scene)
         {
-            if (!parsedTexture.name && !parsedTexture.isRenderTarget)
+            if (!parsedTexture["name"] && !parsedTexture["isRenderTarget"])
             {
                 return null;
             }
-            if (parsedTexture.isCube)
+            if (parsedTexture["isCube"])
             {
                 return loadCubeTexture(rootUrl, parsedTexture, scene);
             }
             Texture texture;
-            if (parsedTexture.mirrorPlane)
+            if (parsedTexture["mirrorPlane"])
             {
-                texture = new BABYLON.MirrorTexture(parsedTexture.name, parsedTexture.renderTargetSize, scene);
-                texture._waitingRenderList = parsedTexture.renderList;
-                texture.mirrorPlane = BABYLON.Plane.FromArray(parsedTexture.mirrorPlane);
+                var renderTargetSize = parsedTexture["renderTargetSize"];
+                var size = CreateSize(renderTargetSize);
+                var mirrorTexture = new BABYLON.MirrorTexture(parsedTexture["name"], size, scene);
+                mirrorTexture._waitingRenderList.AddRange(parsedTexture["renderList"]);
+                mirrorTexture.mirrorPlane = BABYLON.Plane.FromArray(parsedTexture["mirrorPlane"]);
+                texture = mirrorTexture;
             }
             else
-                if (parsedTexture.isRenderTarget)
+                if (parsedTexture["isRenderTarget"])
                 {
-                    texture = new BABYLON.RenderTargetTexture(parsedTexture.name, parsedTexture.renderTargetSize, scene);
-                    texture._waitingRenderList = parsedTexture.renderList;
+                    var renderTargetSize = parsedTexture["renderTargetSize"];
+                    var size = new Size() { width = renderTargetSize["width"], height = renderTargetSize["height"] };
+                    var renderTargetTexture = new BABYLON.RenderTargetTexture(parsedTexture["name"], size, scene);
+                    renderTargetTexture._waitingRenderList.AddRange(parsedTexture["renderList"]);
+                    texture = renderTargetTexture;
                 }
                 else
                 {
-                    texture = new BABYLON.Texture(rootUrl + parsedTexture.name, scene);
+                    texture = new BABYLON.Texture(rootUrl + parsedTexture["name"], scene);
                 }
-            texture.name = parsedTexture.name;
-            texture.hasAlpha = parsedTexture.hasAlpha;
-            texture.getAlphaFromRGB = parsedTexture.getAlphaFromRGB;
-            texture.level = parsedTexture.level;
-            texture.coordinatesIndex = parsedTexture.coordinatesIndex;
-            texture.coordinatesMode = parsedTexture.coordinatesMode;
-            texture.uOffset = parsedTexture.uOffset;
-            texture.vOffset = parsedTexture.vOffset;
-            texture.uScale = parsedTexture.uScale;
-            texture.vScale = parsedTexture.vScale;
-            texture.uAng = parsedTexture.uAng;
-            texture.vAng = parsedTexture.vAng;
-            texture.wAng = parsedTexture.wAng;
-            texture.wrapU = parsedTexture.wrapU;
-            texture.wrapV = parsedTexture.wrapV;
-            if (parsedTexture.animations)
+            texture.name = parsedTexture["name"];
+            texture.hasAlpha = parsedTexture["hasAlpha"];
+            texture.getAlphaFromRGB = parsedTexture["getAlphaFromRGB"];
+            texture.level = parsedTexture["level"];
+            texture.coordinatesIndex = parsedTexture["coordinatesIndex"];
+            texture.coordinatesMode = parsedTexture["coordinatesMode"];
+            texture.uOffset = parsedTexture["uOffset"];
+            texture.vOffset = parsedTexture["vOffset"];
+            texture.uScale = parsedTexture["uScale"];
+            texture.vScale = parsedTexture["vScale"];
+            texture.uAng = parsedTexture["uAng"];
+            texture.vAng = parsedTexture["vAng"];
+            texture.wAng = parsedTexture["wAng"];
+            texture.wrapU = parsedTexture["wrapU"];
+            texture.wrapV = parsedTexture["wrapV"];
+            if (parsedTexture["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedTexture.animations.Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedTexture["animations"]["Length"]; animationIndex++)
                 {
-                    var parsedAnimation = parsedTexture.animations[animationIndex];
-                    texture.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = parsedTexture["animations"][animationIndex];
+                    ////texture.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
             return texture;
         }
-        Skeleton parseSkeleton(object parsedSkeleton, Scene scene)
+
+        private static Size CreateSize(JsmnParserValue renderTargetSize)
         {
-            var skeleton = new BABYLON.Skeleton(parsedSkeleton.name, parsedSkeleton.id, scene);
-            for (var index = 0; index < parsedSkeleton.bones.Length; index++)
+            var size = new Size() { width = renderTargetSize["width"], height = renderTargetSize["height"] };
+            return size;
+        }
+
+        Skeleton parseSkeleton(JsmnParserValue parsedSkeleton, Scene scene)
+        {
+            var skeleton = new BABYLON.Skeleton(parsedSkeleton["name"], parsedSkeleton["id"], scene);
+            for (var index = 0; index < parsedSkeleton["bones"]["Length"]; index++)
             {
-                var parsedBone = parsedSkeleton.bones[index];
-                var parentBone = null;
-                if (parsedBone.parentBoneIndex > -1)
+                var parsedBone = parsedSkeleton["bones"][index];
+                Bone parentBone = null;
+                if (parsedBone["parentBoneIndex"] > -1)
                 {
-                    parentBone = skeleton.bones[parsedBone.parentBoneIndex];
+                    parentBone = skeleton.bones[parsedBone["parentBoneIndex"]];
                 }
-                var bone = new BABYLON.Bone(parsedBone.name, skeleton, parentBone, BABYLON.Matrix.FromArray(parsedBone.matrix));
-                if (parsedBone.animation)
+                var bone = new BABYLON.Bone(parsedBone["name"], skeleton, parentBone, BABYLON.Matrix.FromArray(parsedBone["matrix"]));
+                if (parsedBone["animation"])
                 {
-                    bone.animations.Add(parseAnimation(parsedBone.animation));
+                    //bone.animations.Add(parseAnimation(parsedBone["animation"]));
                 }
             }
             return skeleton;
         }
-        Material parseMaterial(object parsedMaterial, Scene scene, object rootUrl)
+
+        // TODO: finish animation
+        Material parseMaterial(JsmnParserValue parsedMaterial, Scene scene, string rootUrl)
         {
-            Material material;
-            material = new BABYLON.StandardMaterial(parsedMaterial.name, scene);
-            material.ambientColor = BABYLON.Color3.FromArray(parsedMaterial.ambient);
-            material.diffuseColor = BABYLON.Color3.FromArray(parsedMaterial.diffuse);
-            material.specularColor = BABYLON.Color3.FromArray(parsedMaterial.specular);
-            material.specularPower = parsedMaterial.specularPower;
-            material.emissiveColor = BABYLON.Color3.FromArray(parsedMaterial.emissive);
-            material.alpha = parsedMaterial.alpha;
-            material.id = parsedMaterial.id;
-            BABYLON.Tags.AddTagsTo(material, parsedMaterial.tags);
-            material.backFaceCulling = parsedMaterial.backFaceCulling;
-            material.wireframe = parsedMaterial.wireframe;
-            if (parsedMaterial.diffuseTexture)
+            var material = new BABYLON.StandardMaterial(parsedMaterial["name"], scene);
+            material.ambientColor = BABYLON.Color3.FromArray(parsedMaterial["ambient"]);
+            material.diffuseColor = BABYLON.Color3.FromArray(parsedMaterial["diffuse"]);
+            material.specularColor = BABYLON.Color3.FromArray(parsedMaterial["specular"]);
+            material.specularPower = parsedMaterial["specularPower"];
+            material.emissiveColor = BABYLON.Color3.FromArray(parsedMaterial["emissive"]);
+            material.alpha = parsedMaterial["alpha"];
+            material.id = parsedMaterial["id"];
+            ////BABYLON.Tags.AddTagsTo(material, parsedMaterial["tags"]);
+            material.backFaceCulling = parsedMaterial["backFaceCulling"];
+            material.wireframe = parsedMaterial["wireframe"];
+            if (parsedMaterial["diffuseTexture"])
             {
-                material.diffuseTexture = loadTexture(rootUrl, parsedMaterial.diffuseTexture, scene);
+                material.diffuseTexture = loadTexture(rootUrl, parsedMaterial["diffuseTexture"], scene);
             }
-            if (parsedMaterial.ambientTexture)
+            if (parsedMaterial["ambientTexture"])
             {
-                material.ambientTexture = loadTexture(rootUrl, parsedMaterial.ambientTexture, scene);
+                material.ambientTexture = loadTexture(rootUrl, parsedMaterial["ambientTexture"], scene);
             }
-            if (parsedMaterial.opacityTexture)
+            if (parsedMaterial["opacityTexture"])
             {
-                material.opacityTexture = loadTexture(rootUrl, parsedMaterial.opacityTexture, scene);
+                material.opacityTexture = loadTexture(rootUrl, parsedMaterial["opacityTexture"], scene);
             }
-            if (parsedMaterial.reflectionTexture)
+            if (parsedMaterial["reflectionTexture"])
             {
-                material.reflectionTexture = loadTexture(rootUrl, parsedMaterial.reflectionTexture, scene);
+                material.reflectionTexture = loadTexture(rootUrl, parsedMaterial["reflectionTexture"], scene);
             }
-            if (parsedMaterial.emissiveTexture)
+            if (parsedMaterial["emissiveTexture"])
             {
-                material.emissiveTexture = loadTexture(rootUrl, parsedMaterial.emissiveTexture, scene);
+                material.emissiveTexture = loadTexture(rootUrl, parsedMaterial["emissiveTexture"], scene);
             }
-            if (parsedMaterial.specularTexture)
+            if (parsedMaterial["specularTexture"])
             {
-                material.specularTexture = loadTexture(rootUrl, parsedMaterial.specularTexture, scene);
+                material.specularTexture = loadTexture(rootUrl, parsedMaterial["specularTexture"], scene);
             }
-            if (parsedMaterial.bumpTexture)
+            if (parsedMaterial["bumpTexture"])
             {
-                material.bumpTexture = loadTexture(rootUrl, parsedMaterial.bumpTexture, scene);
+                material.bumpTexture = loadTexture(rootUrl, parsedMaterial["bumpTexture"], scene);
             }
+
             return material;
         }
-        Material parseMaterialById(object id, object parsedData, Scene scene, object rootUrl)
+
+        Material parseMaterialById(string id, JsmnParserValue parsedData, Scene scene, string rootUrl)
         {
-            for (var index = 0; index < parsedData["materials"].Length; index++)
+            var materials = parsedData["materials"];
+            for (var index = 0; index < materials.Length; index++)
             {
-                var parsedMaterial = parsedData["materials"][index];
-                if (parsedMaterial.id == id)
+                var parsedMaterial = materials[index];
+                if (parsedMaterial["id"] == id)
                 {
                     return parseMaterial(parsedMaterial, scene, rootUrl);
                 }
             }
             return null;
         }
-        MultiMaterial parseMultiMaterial(object parsedMultiMaterial, Scene scene)
+
+        MultiMaterial parseMultiMaterial(JsmnParserValue parsedMultiMaterial, Scene scene)
         {
-            var multiMaterial = new BABYLON.MultiMaterial(parsedMultiMaterial.name, scene);
-            multiMaterial.id = parsedMultiMaterial.id;
-            BABYLON.Tags.AddTagsTo(multiMaterial, parsedMultiMaterial.tags);
-            for (var matIndex = 0; matIndex < parsedMultiMaterial.materials.Length; matIndex++)
+            var multiMaterial = new BABYLON.MultiMaterial(parsedMultiMaterial["name"], scene);
+            multiMaterial.id = parsedMultiMaterial["id"];
+            ////BABYLON.Tags.AddTagsTo(multiMaterial, parsedMultiMaterial["tags"]);
+            for (var matIndex = 0; matIndex < parsedMultiMaterial["materials"]["Length"]; matIndex++)
             {
-                var subMatId = parsedMultiMaterial.materials[matIndex];
+                var subMatId = parsedMultiMaterial["materials"][matIndex];
                 if (subMatId)
                 {
                     multiMaterial.subMaterials.Add(scene.getMaterialByID(subMatId));
                 }
                 else
                 {
-                    multiMaterial.subMaterials.Add(null);
+                    multiMaterial.subMaterials.Add((Material)null);
                 }
             }
             return multiMaterial;
         }
-        LensFlareSystem parseLensFlareSystem(object parsedLensFlareSystem, Scene scene, object rootUrl)
+
+        LensFlareSystem parseLensFlareSystem(JsmnParserValue parsedLensFlareSystem, Scene scene, string rootUrl)
         {
-            var emitter = scene.getLastEntryByID(parsedLensFlareSystem.emitterId);
-            var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem#" + parsedLensFlareSystem.emitterId, emitter, scene);
-            lensFlareSystem.borderLimit = parsedLensFlareSystem.borderLimit;
-            for (var index = 0; index < parsedLensFlareSystem.flares.Length; index++)
+            var emitter = scene.getLastEntryByID(parsedLensFlareSystem["emitterId"]);
+            var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem#" + parsedLensFlareSystem["emitterId"], emitter, scene);
+            lensFlareSystem.borderLimit = parsedLensFlareSystem["borderLimit"];
+            for (var index = 0; index < parsedLensFlareSystem["flares"]["Length"]; index++)
             {
-                var parsedFlare = parsedLensFlareSystem.flares[index];
-                var flare = new BABYLON.LensFlare(parsedFlare.size, parsedFlare.position, BABYLON.Color3.FromArray(parsedFlare.color), rootUrl + parsedFlare.textureName, lensFlareSystem);
+                var parsedFlare = parsedLensFlareSystem["flares"][index];
+                var flare = new BABYLON.LensFlare(parsedFlare["size"], parsedFlare["position"], BABYLON.Color3.FromArray(parsedFlare["color"]), rootUrl + parsedFlare["textureName"], lensFlareSystem);
             }
             return lensFlareSystem;
         }
-        ParticleSystem parseParticleSystem(object parsedParticleSystem, Scene scene, object rootUrl)
+
+        ParticleSystem parseParticleSystem(JsmnParserValue parsedParticleSystem, Scene scene, string rootUrl)
         {
-            var emitter = scene.getLastMeshByID(parsedParticleSystem.emitterId);
-            var particleSystem = new BABYLON.ParticleSystem("particles#" + emitter.name, parsedParticleSystem.capacity, scene);
-            if (parsedParticleSystem.textureName)
+            var emitter = scene.getLastMeshByID(parsedParticleSystem["emitterId"]);
+            var particleSystem = new BABYLON.ParticleSystem("particles#" + emitter.name, parsedParticleSystem["capacity"], scene);
+            if (parsedParticleSystem["textureName"])
             {
-                particleSystem.particleTexture = new BABYLON.Texture(rootUrl + parsedParticleSystem.textureName, scene);
-                particleSystem.particleTexture.name = parsedParticleSystem.textureName;
+                particleSystem.particleTexture = new BABYLON.Texture(rootUrl + parsedParticleSystem["textureName"], scene);
+                particleSystem.particleTexture.name = parsedParticleSystem["textureName"];
             }
-            particleSystem.minAngularSpeed = parsedParticleSystem.minAngularSpeed;
-            particleSystem.maxAngularSpeed = parsedParticleSystem.maxAngularSpeed;
-            particleSystem.minSize = parsedParticleSystem.minSize;
-            particleSystem.maxSize = parsedParticleSystem.maxSize;
-            particleSystem.minLifeTime = parsedParticleSystem.minLifeTime;
-            particleSystem.maxLifeTime = parsedParticleSystem.maxLifeTime;
+            particleSystem.minAngularSpeed = parsedParticleSystem["minAngularSpeed"];
+            particleSystem.maxAngularSpeed = parsedParticleSystem["maxAngularSpeed"];
+            particleSystem.minSize = parsedParticleSystem["minSize"];
+            particleSystem.maxSize = parsedParticleSystem["maxSize"];
+            particleSystem.minLifeTime = parsedParticleSystem["minLifeTime"];
+            particleSystem.maxLifeTime = parsedParticleSystem["maxLifeTime"];
             particleSystem.emitter = emitter;
-            particleSystem.emitRate = parsedParticleSystem.emitRate;
-            particleSystem.minEmitBox = BABYLON.Vector3.FromArray(parsedParticleSystem.minEmitBox);
-            particleSystem.maxEmitBox = BABYLON.Vector3.FromArray(parsedParticleSystem.maxEmitBox);
-            particleSystem.gravity = BABYLON.Vector3.FromArray(parsedParticleSystem.gravity);
-            particleSystem.direction1 = BABYLON.Vector3.FromArray(parsedParticleSystem.direction1);
-            particleSystem.direction2 = BABYLON.Vector3.FromArray(parsedParticleSystem.direction2);
-            particleSystem.color1 = BABYLON.Color4.FromArray(parsedParticleSystem.color1);
-            particleSystem.color2 = BABYLON.Color4.FromArray(parsedParticleSystem.color2);
-            particleSystem.colorDead = BABYLON.Color4.FromArray(parsedParticleSystem.colorDead);
-            particleSystem.updateSpeed = parsedParticleSystem.updateSpeed;
-            particleSystem.targetStopDuration = parsedParticleSystem.targetStopFrame;
-            particleSystem.textureMask = BABYLON.Color4.FromArray(parsedParticleSystem.textureMask);
-            particleSystem.blendMode = parsedParticleSystem.blendMode;
+            particleSystem.emitRate = parsedParticleSystem["emitRate"];
+            particleSystem.minEmitBox = BABYLON.Vector3.FromArray(parsedParticleSystem["minEmitBox"]);
+            particleSystem.maxEmitBox = BABYLON.Vector3.FromArray(parsedParticleSystem["maxEmitBox"]);
+            particleSystem.gravity = BABYLON.Vector3.FromArray(parsedParticleSystem["gravity"]);
+            particleSystem.direction1 = BABYLON.Vector3.FromArray(parsedParticleSystem["direction1"]);
+            particleSystem.direction2 = BABYLON.Vector3.FromArray(parsedParticleSystem["direction2"]);
+            particleSystem.color1 = BABYLON.Color4.FromArray(parsedParticleSystem["color1"]);
+            particleSystem.color2 = BABYLON.Color4.FromArray(parsedParticleSystem["color2"]);
+            particleSystem.colorDead = BABYLON.Color4.FromArray(parsedParticleSystem["colorDead"]);
+            particleSystem.updateSpeed = parsedParticleSystem["updateSpeed"];
+            particleSystem.targetStopDuration = parsedParticleSystem["targetStopFrame"];
+            particleSystem.textureMask = BABYLON.Color4.FromArray(parsedParticleSystem["textureMask"]);
+            particleSystem.blendMode = parsedParticleSystem["blendMode"];
             particleSystem.start();
             return particleSystem;
         }
-        ShadowGenerator parseShadowGenerator(object parsedShadowGenerator, Scene scene)
+
+        ShadowGenerator parseShadowGenerator(JsmnParserValue parsedShadowGenerator, Scene scene)
         {
-            var light = scene.getLightByID(parsedShadowGenerator.lightId);
-            var shadowGenerator = new BABYLON.ShadowGenerator(parsedShadowGenerator.mapSize, light);
-            for (var meshIndex = 0; meshIndex < parsedShadowGenerator.renderList.Length; meshIndex++)
+            var light = scene.getLightByID(parsedShadowGenerator["lightId"]);
+            var shadowGenerator = new BABYLON.ShadowGenerator(CreateSize(parsedShadowGenerator["mapSize"]), light as DirectionalLight);
+            for (var meshIndex = 0; meshIndex < parsedShadowGenerator["renderList"]["Length"]; meshIndex++)
             {
-                var mesh = scene.getMeshByID(parsedShadowGenerator.renderList[meshIndex]);
+                var mesh = scene.getMeshByID(parsedShadowGenerator["renderList"][meshIndex]);
                 shadowGenerator.getShadowMap().renderList.Add(mesh);
             }
-            if (parsedShadowGenerator.usePoissonSampling)
+            if (parsedShadowGenerator["usePoissonSampling"])
             {
                 shadowGenerator.usePoissonSampling = true;
             }
             else
             {
-                shadowGenerator.useVarianceShadowMap = parsedShadowGenerator.useVarianceShadowMap;
+                shadowGenerator.useVarianceShadowMap = parsedShadowGenerator["useVarianceShadowMap"];
             }
             return shadowGenerator;
         }
-        Animation parseAnimation(Animation parsedAnimation)
+
+        /*
+        Animation parseAnimation(JsmnParserValue parsedAnimation)
         {
-            var animation = new BABYLON.Animation(parsedAnimation.name, parsedAnimation.property, parsedAnimation.framePerSecond, parsedAnimation.dataType, parsedAnimation.loopBehavior);
-            var dataType = parsedAnimation.dataType;
+            var animation = new BABYLON.Animation(parsedAnimation["name"], parsedAnimation["property"], parsedAnimation["framePerSecond"], parsedAnimation["dataType"], parsedAnimation["loopBehavior"]);
+            var dataType = (int)parsedAnimation["dataType"];
             var keys = new Array<object>();
-            for (var index = 0; index < parsedAnimation.keys.Length; index++)
+            for (var index = 0; index < parsedAnimation["keys"].Length; index++)
             {
-                var key = parsedAnimation.keys[index];
+                var key = parsedAnimation["keys"]["index"];
                 int data;
                 switch (dataType)
                 {
@@ -266,6 +290,7 @@ namespace BABYLON.Internals
                 }
                 keys.Add(new { });
             }
+
             animation.setKeys(keys);
             return animation;
         }
@@ -306,7 +331,7 @@ namespace BABYLON.Internals
             {
                 light.intensity = parsedLight["intensity"];
             }
-            
+
             if (parsedLight["range"])
             {
                 light.range = parsedLight["range"];
@@ -321,7 +346,7 @@ namespace BABYLON.Internals
 
             if (parsedLight["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedLight["animations"].Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedLight["animations"]["Length"]; animationIndex++)
                 {
                     var parsedAnimation = parsedLight["animations"][animationIndex];
                     ////light.animations.Add(parseAnimation(parsedAnimation));
@@ -330,7 +355,7 @@ namespace BABYLON.Internals
 
             if (parsedLight["autoAnimate"])
             {
-                //scene.beginAnimation(light, parsedLight["autoAnimateFrom"], parsedLight["autoAnimateTo"], parsedLight["autoAnimateLoop"], 1.0);
+                //scene.beginAnimation(light, parsedLight["autoAnimateFrom"], parsedLight["autoAnimateTo"], parsedLight["autoAnimateLoop"], 1["0"]);
             }
         }
 
@@ -369,7 +394,7 @@ namespace BABYLON.Internals
             }
             if (parsedCamera["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedCamera["animations"].Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedCamera["animations"]["Length"]; animationIndex++)
                 {
                     var parsedAnimation = parsedCamera["animations"][animationIndex];
                     ////camera.animations.Add(parseAnimation(parsedAnimation));
@@ -377,11 +402,11 @@ namespace BABYLON.Internals
             }
             if (parsedCamera["autoAnimate"])
             {
-                ////scene.beginAnimation(camera, parsedCamera["autoAnimateFrom"], parsedCamera["autoAnimateTo"], parsedCamera["autoAnimateLoop"], 1.0);
+                ////scene.beginAnimation(camera, parsedCamera["autoAnimateFrom"], parsedCamera["autoAnimateTo"], parsedCamera["autoAnimateLoop"], 1["0"]);
             }
             if (parsedCamera["layerMask"] && (!Double.IsNaN(parsedCamera["layerMask"])))
             {
-                camera.layerMask = (uint) Math.Abs(parsedCamera["layerMask"]);
+                camera.layerMask = (uint)Math.Abs(parsedCamera["layerMask"]);
             }
             else
             {
@@ -391,120 +416,129 @@ namespace BABYLON.Internals
             return camera;
         }
 
-        /*
-        Geometry parseGeometry(object parsedGeometry, Scene scene)
+        bool parseGeometry(JsmnParserValue parsedGeometry, Scene scene)
         {
-            var id = parsedGeometry.id;
-            return scene.getGeometryByID(id);
+            var id = parsedGeometry["id"];
+            return scene.getGeometryByID(id) != null;
         }
-        Geometry.Primitives.Box parseBox(object parsedBox, Scene scene)
+
+        /*
+        Geometry.Primitives.Box parseBox(JsmnParserValue parsedBox, Scene scene)
         {
             if (parseGeometry(parsedBox, scene))
             {
                 return null;
             }
-            var box = new BABYLON.Geometry.Primitives.Box(parsedBox.id, scene, parsedBox.size, parsedBox.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(box, parsedBox.tags);
+            var box = new BABYLON.Geometry.Primitives.Box(parsedBox["id"], scene, parsedBox["size"], parsedBox["canBeRegenerated"], null);
+            BABYLON.Tags.AddTagsTo(box, parsedBox["tags"]);
             scene.pushGeometry(box, true);
             return box;
         }
-        BABYLON.Geometry.Primitives.Sphere parseSphere(object parsedSphere, Scene scene)
+
+        BABYLON.Geometry.Primitives.Sphere parseSphere(JsmnParserValue parsedSphere, Scene scene)
         {
             if (parseGeometry(parsedSphere, scene))
             {
                 return null;
             }
-            var sphere = new BABYLON.Geometry.Primitives.Sphere(parsedSphere.id, scene, parsedSphere.segments, parsedSphere.diameter, parsedSphere.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(sphere, parsedSphere.tags);
+            var sphere = new BABYLON.Geometry.Primitives.Sphere(parsedSphere["id"], scene, parsedSphere["segments"], parsedSphere["diameter"], parsedSphere["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(sphere, parsedSphere["tags"]);
             scene.pushGeometry(sphere, true);
             return sphere;
         }
-        BABYLON.Geometry.Primitives.Cylinder parseCylinder(object parsedCylinder, Scene scene)
+
+        BABYLON.Geometry.Primitives.Cylinder parseCylinder(JsmnParserValue parsedCylinder, Scene scene)
         {
             if (parseGeometry(parsedCylinder, scene))
             {
                 return null;
             }
-            var cylinder = new BABYLON.Geometry.Primitives.Cylinder(parsedCylinder.id, scene, parsedCylinder.height, parsedCylinder.diameterTop, parsedCylinder.diameterBottom, parsedCylinder.tessellation, parsedCylinder.subdivisions, parsedCylinder.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(cylinder, parsedCylinder.tags);
+            var cylinder = new BABYLON.Geometry.Primitives.Cylinder(parsedCylinder["id"], scene, parsedCylinder["height"], parsedCylinder["diameterTop"], parsedCylinder["diameterBottom"], parsedCylinder["tessellation"], parsedCylinder["subdivisions"], parsedCylinder["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(cylinder, parsedCylinder["tags"]);
             scene.pushGeometry(cylinder, true);
             return cylinder;
         }
-        BABYLON.Geometry.Primitives.Torus parseTorus(object parsedTorus, Scene scene)
+
+        BABYLON.Geometry.Primitives.Torus parseTorus(JsmnParserValue parsedTorus, Scene scene)
         {
             if (parseGeometry(parsedTorus, scene))
             {
                 return null;
             }
-            var torus = new BABYLON.Geometry.Primitives.Torus(parsedTorus.id, scene, parsedTorus.diameter, parsedTorus.thickness, parsedTorus.tessellation, parsedTorus.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(torus, parsedTorus.tags);
+            var torus = new BABYLON.Geometry.Primitives.Torus(parsedTorus["id"], scene, parsedTorus["diameter"], parsedTorus["thickness"], parsedTorus["tessellation"], parsedTorus["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(torus, parsedTorus["tags"]);
             scene.pushGeometry(torus, true);
             return torus;
         }
-        BABYLON.Geometry.Primitives.Ground parseGround(object parsedGround, Scene scene)
+
+        BABYLON.Geometry.Primitives.Ground parseGround(JsmnParserValue parsedGround, Scene scene)
         {
             if (parseGeometry(parsedGround, scene))
             {
                 return null;
             }
-            var ground = new BABYLON.Geometry.Primitives.Ground(parsedGround.id, scene, parsedGround.width, parsedGround.height, parsedGround.subdivisions, parsedGround.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(ground, parsedGround.tags);
+            var ground = new BABYLON.Geometry.Primitives.Ground(parsedGround["id"], scene, parsedGround["width"], parsedGround["height"], parsedGround["subdivisions"], parsedGround["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(ground, parsedGround["tags"]);
             scene.pushGeometry(ground, true);
             return ground;
         }
-        BABYLON.Geometry.Primitives.Plane parsePlane(object parsedPlane, Scene scene)
+
+        BABYLON.Geometry.Primitives.Plane parsePlane(JsmnParserValue parsedPlane, Scene scene)
         {
             if (parseGeometry(parsedPlane, scene))
             {
                 return null;
             }
-            var plane = new BABYLON.Geometry.Primitives.Plane(parsedPlane.id, scene, parsedPlane.size, parsedPlane.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(plane, parsedPlane.tags);
+            var plane = new BABYLON.Geometry.Primitives.Plane(parsedPlane["id"], scene, parsedPlane["size"], parsedPlane["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(plane, parsedPlane["tags"]);
             scene.pushGeometry(plane, true);
             return plane;
         }
-        BABYLON.Geometry.Primitives.TorusKnot parseTorusKnot(object parsedTorusKnot, Scene scene)
+
+        BABYLON.Geometry.Primitives.TorusKnot parseTorusKnot(JsmnParserValue parsedTorusKnot, Scene scene)
         {
             if (parseGeometry(parsedTorusKnot, scene))
             {
                 return null;
             }
-            var torusKnot = new BABYLON.Geometry.Primitives.TorusKnot(parsedTorusKnot.id, scene, parsedTorusKnot.radius, parsedTorusKnot.tube, parsedTorusKnot.radialSegments, parsedTorusKnot.tubularSegments, parsedTorusKnot.p, parsedTorusKnot.q, parsedTorusKnot.canBeRegenerated, null);
-            BABYLON.Tags.AddTagsTo(torusKnot, parsedTorusKnot.tags);
+            var torusKnot = new BABYLON.Geometry.Primitives.TorusKnot(parsedTorusKnot["id"], scene, parsedTorusKnot["radius"], parsedTorusKnot["tube"], parsedTorusKnot["radialSegments"], parsedTorusKnot["tubularSegments"], parsedTorusKnot["p"], parsedTorusKnot["q"], parsedTorusKnot["canBeRegenerated"], null);
+            ////BABYLON.Tags.AddTagsTo(torusKnot, parsedTorusKnot["tags"]);
             scene.pushGeometry(torusKnot, true);
             return torusKnot;
         }
-        Geometry parseVertexData(object parsedVertexData, Scene scene, object rootUrl)
+        */
+
+        Geometry parseVertexData(JsmnParserValue parsedVertexData, Scene scene, string rootUrl)
         {
             if (parseGeometry(parsedVertexData, scene))
             {
                 return null;
             }
-            var geometry = new BABYLON.Geometry(parsedVertexData.id, scene);
-            BABYLON.Tags.AddTagsTo(geometry, parsedVertexData.tags);
-            if (parsedVertexData.delayLoadingFile)
+            var geometry = new BABYLON.Geometry(parsedVertexData["id"], scene);
+            ////BABYLON.Tags.AddTagsTo(geometry, parsedVertexData["tags"]);
+            if (parsedVertexData["delayLoadingFile"])
             {
                 geometry.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NOTLOADED;
-                geometry.delayLoadingFile = rootUrl + parsedVertexData.delayLoadingFile;
-                geometry._boundingInfo = new BABYLON.BoundingInfo(BABYLON.Vector3.FromArray(parsedVertexData.boundingBoxMinimum), BABYLON.Vector3.FromArray(parsedVertexData.boundingBoxMaximum));
-                geometry._delayInfo = new Array<object>();
-                if (parsedVertexData.hasUVs)
+                geometry.delayLoadingFile = rootUrl + parsedVertexData["delayLoadingFile"];
+                geometry._boundingInfo = new BABYLON.BoundingInfo(BABYLON.Vector3.FromArray(parsedVertexData["boundingBoxMinimum"]), BABYLON.Vector3.FromArray(parsedVertexData["boundingBoxMaximum"]));
+                geometry._delayInfo = new Array<VertexBufferKind>();
+                if (parsedVertexData["hasUVs"])
                 {
                     geometry._delayInfo.Add(BABYLON.VertexBufferKind.UVKind);
                 }
-                if (parsedVertexData.hasUVs2)
+                if (parsedVertexData["hasUVs2"])
                 {
                     geometry._delayInfo.Add(BABYLON.VertexBufferKind.UV2Kind);
                 }
-                if (parsedVertexData.hasColors)
+                if (parsedVertexData["hasColors"])
                 {
                     geometry._delayInfo.Add(BABYLON.VertexBufferKind.ColorKind);
                 }
-                if (parsedVertexData.hasMatricesIndices)
+                if (parsedVertexData["hasMatricesIndices"])
                 {
                     geometry._delayInfo.Add(BABYLON.VertexBufferKind.MatricesIndicesKind);
                 }
-                if (parsedVertexData.hasMatricesWeights)
+                if (parsedVertexData["hasMatricesWeights"])
                 {
                     geometry._delayInfo.Add(BABYLON.VertexBufferKind.MatricesWeightsKind);
                 }
@@ -517,75 +551,77 @@ namespace BABYLON.Internals
             scene.pushGeometry(geometry, true);
             return geometry;
         }
-        Mesh parseMesh(object parsedMesh, Scene scene, object rootUrl)
+
+        // TODO: finish physics
+        Mesh parseMesh(JsmnParserValue parsedMesh, Scene scene, string rootUrl)
         {
-            var mesh = new BABYLON.Mesh(parsedMesh.name, scene);
-            mesh.id = parsedMesh.id;
-            BABYLON.Tags.AddTagsTo(mesh, parsedMesh.tags);
-            mesh.position = BABYLON.Vector3.FromArray(parsedMesh.position);
-            if (parsedMesh.rotationQuaternion)
+            var mesh = new BABYLON.Mesh(parsedMesh["name"], scene);
+            mesh.id = parsedMesh["id"];
+            ////BABYLON.Tags.AddTagsTo(mesh, parsedMesh["tags"]);
+            mesh.position = BABYLON.Vector3.FromArray(parsedMesh["position"]);
+            if (parsedMesh["rotationQuaternion"])
             {
-                mesh.rotationQuaternion = BABYLON.Quaternion.FromArray(parsedMesh.rotationQuaternion);
+                mesh.rotationQuaternion = BABYLON.Quaternion.FromArray(parsedMesh["rotationQuaternion"]);
             }
             else
-                if (parsedMesh.rotation)
+                if (parsedMesh["rotation"])
                 {
-                    mesh.rotation = BABYLON.Vector3.FromArray(parsedMesh.rotation);
+                    mesh.rotation = BABYLON.Vector3.FromArray(parsedMesh["rotation"]);
                 }
-            mesh.scaling = BABYLON.Vector3.FromArray(parsedMesh.scaling);
-            if (parsedMesh.localMatrix)
+            mesh.scaling = BABYLON.Vector3.FromArray(parsedMesh["scaling"]);
+            if (parsedMesh["localMatrix"])
             {
-                mesh.setPivotMatrix(BABYLON.Matrix.FromArray(parsedMesh.localMatrix));
+                mesh.setPivotMatrix(BABYLON.Matrix.FromArray(parsedMesh["localMatrix"]));
             }
             else
-                if (parsedMesh.pivotMatrix)
+                if (parsedMesh["pivotMatrix"])
                 {
-                    mesh.setPivotMatrix(BABYLON.Matrix.FromArray(parsedMesh.pivotMatrix));
+                    mesh.setPivotMatrix(BABYLON.Matrix.FromArray(parsedMesh["pivotMatrix"]));
                 }
-            mesh.setEnabled(parsedMesh.isEnabled);
-            mesh.isVisible = parsedMesh.isVisible;
-            mesh.infiniteDistance = parsedMesh.infiniteDistance;
-            mesh.showBoundingBox = parsedMesh.showBoundingBox;
-            mesh.showSubMeshesBoundingBox = parsedMesh.showSubMeshesBoundingBox;
-            if (parsedMesh.pickable != null)
+            mesh.setEnabled(parsedMesh["isEnabled"]);
+            mesh.isVisible = parsedMesh["isVisible"];
+            mesh.infiniteDistance = parsedMesh["infiniteDistance"];
+            mesh.showBoundingBox = parsedMesh["showBoundingBox"];
+            mesh.showSubMeshesBoundingBox = parsedMesh["showSubMeshesBoundingBox"];
+            if (parsedMesh["pickable"])
             {
-                mesh.isPickable = parsedMesh.pickable;
+                mesh.isPickable = parsedMesh["pickable"];
             }
-            mesh.receiveShadows = parsedMesh.receiveShadows;
-            mesh.billboardMode = parsedMesh.billboardMode;
-            if (parsedMesh.visibility != null)
+            mesh.receiveShadows = parsedMesh["receiveShadows"];
+            mesh.billboardMode = parsedMesh["billboardMode"];
+            if (parsedMesh["visibility"])
             {
-                mesh.visibility = parsedMesh.visibility;
+                mesh.visibility = parsedMesh["visibility"];
             }
-            mesh.checkCollisions = parsedMesh.checkCollisions;
-            mesh._shouldGenerateFlatShading = parsedMesh.useFlatShading;
-            if (parsedMesh.parentId)
+            mesh.checkCollisions = parsedMesh["checkCollisions"];
+            mesh._shouldGenerateFlatShading = parsedMesh["useFlatShading"];
+            if (parsedMesh["parentId"])
             {
-                mesh.parent = scene.getLastEntryByID(parsedMesh.parentId);
+                mesh.parent = scene.getLastEntryByID(parsedMesh["parentId"]);
             }
-            if (parsedMesh.delayLoadingFile)
+            if (parsedMesh["delayLoadingFile"])
             {
                 mesh.delayLoadState = BABYLON.Engine.DELAYLOADSTATE_NOTLOADED;
-                mesh.delayLoadingFile = rootUrl + parsedMesh.delayLoadingFile;
-                mesh._boundingInfo = new BABYLON.BoundingInfo(BABYLON.Vector3.FromArray(parsedMesh.boundingBoxMinimum), BABYLON.Vector3.FromArray(parsedMesh.boundingBoxMaximum));
-                mesh._delayInfo = new Array<object>();
-                if (parsedMesh.hasUVs)
+                mesh.delayLoadingFile = rootUrl + parsedMesh["delayLoadingFile"];
+                mesh._boundingInfo = new BABYLON.BoundingInfo(BABYLON.Vector3.FromArray(parsedMesh["boundingBoxMinimum"]), BABYLON.Vector3.FromArray(parsedMesh["boundingBoxMaximum"]));
+                mesh._delayInfo = new Array<VertexBufferKind>();
+                if (parsedMesh["hasUVs"])
                 {
                     mesh._delayInfo.Add(BABYLON.VertexBufferKind.UVKind);
                 }
-                if (parsedMesh.hasUVs2)
+                if (parsedMesh["hasUVs2"])
                 {
                     mesh._delayInfo.Add(BABYLON.VertexBufferKind.UV2Kind);
                 }
-                if (parsedMesh.hasColors)
+                if (parsedMesh["hasColors"])
                 {
                     mesh._delayInfo.Add(BABYLON.VertexBufferKind.ColorKind);
                 }
-                if (parsedMesh.hasMatricesIndices)
+                if (parsedMesh["hasMatricesIndices"])
                 {
                     mesh._delayInfo.Add(BABYLON.VertexBufferKind.MatricesIndicesKind);
                 }
-                if (parsedMesh.hasMatricesWeights)
+                if (parsedMesh["hasMatricesWeights"])
                 {
                     mesh._delayInfo.Add(BABYLON.VertexBufferKind.MatricesWeightsKind);
                 }
@@ -599,78 +635,81 @@ namespace BABYLON.Internals
             {
                 importGeometry(parsedMesh, mesh);
             }
-            if (parsedMesh.materialId)
+            if (parsedMesh["materialId"])
             {
-                mesh.setMaterialByID(parsedMesh.materialId);
+                mesh.setMaterialByID(parsedMesh["materialId"]);
             }
             else
             {
                 mesh.material = null;
             }
-            if (parsedMesh.skeletonId > -1)
+            if (parsedMesh["skeletonId"] > -1)
             {
-                mesh.skeleton = scene.getLastSkeletonByID(parsedMesh.skeletonId);
+                mesh.skeleton = scene.getLastSkeletonByID(parsedMesh["skeletonId"]);
             }
-            if (parsedMesh.physicsImpostor)
+            if (parsedMesh["physicsImpostor"])
             {
                 if (!scene.isPhysicsEnabled())
                 {
-                    scene.enablePhysics();
+                    //scene.enablePhysics();
                 }
-                mesh.setPhysicsState(new { });
+                mesh.setPhysicsState();
             }
-            if (parsedMesh.animations)
+            if (parsedMesh["animations"])
             {
-                for (var animationIndex = 0; animationIndex < parsedMesh.animations.Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < parsedMesh["animations"].Length; animationIndex++)
                 {
-                    var parsedAnimation = parsedMesh.animations[animationIndex];
-                    mesh.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = parsedMesh["animations"][animationIndex];
+                    //mesh.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
-            if (parsedMesh.autoAnimate)
+            if (parsedMesh["autoAnimate"])
             {
-                scene.beginAnimation(mesh, parsedMesh.autoAnimateFrom, parsedMesh.autoAnimateTo, parsedMesh.autoAnimateLoop, 1.0);
+                //scene.beginAnimation(mesh, parsedMesh["autoAnimateFrom"], parsedMesh["autoAnimateTo"], parsedMesh["autoAnimateLoop"], 1.0);
             }
-            if (parsedMesh.layerMask && (!isNaN(parsedMesh.layerMask)))
+            if (parsedMesh["layerMask"] && (!Double.IsNaN(parsedMesh["layerMask"])))
             {
-                mesh.layerMask = Math.Abs(parseInt(parsedMesh.layerMask));
+                mesh.layerMask = (uint) Math.Abs((int)parsedMesh["layerMask"]);
             }
             else
             {
                 mesh.layerMask = 0xFFFFFFFF;
             }
-            if (parsedMesh.instances)
+            if (parsedMesh["instances"])
             {
-                for (var index = 0; index < parsedMesh.instances.Length; index++)
+                for (var index = 0; index < parsedMesh["instances"].Length; index++)
                 {
-                    var parsedInstance = parsedMesh.instances[index];
-                    var instance = mesh.createInstance(parsedInstance.name);
-                    BABYLON.Tags.AddTagsTo(instance, parsedInstance.tags);
-                    instance.position = BABYLON.Vector3.FromArray(parsedInstance.position);
-                    if (parsedInstance.rotationQuaternion)
+                    var parsedInstance = parsedMesh["instances"][index];
+                    var instance = mesh.createInstance(parsedInstance["name"]);
+                    ////BABYLON.Tags.AddTagsTo(instance, parsedInstance["tags"]);
+                    instance.position = BABYLON.Vector3.FromArray(parsedInstance["position"]);
+                    if (parsedInstance["rotationQuaternion"])
                     {
-                        instance.rotationQuaternion = BABYLON.Quaternion.FromArray(parsedInstance.rotationQuaternion);
+                        instance.rotationQuaternion = BABYLON.Quaternion.FromArray(parsedInstance["rotationQuaternion"]);
                     }
                     else
-                        if (parsedInstance.rotation)
+                        if (parsedInstance["rotation"])
                         {
-                            instance.rotation = BABYLON.Vector3.FromArray(parsedInstance.rotation);
+                            instance.rotation = BABYLON.Vector3.FromArray(parsedInstance["rotation"]);
                         }
-                    instance.scaling = BABYLON.Vector3.FromArray(parsedInstance.scaling);
+                    instance.scaling = BABYLON.Vector3.FromArray(parsedInstance["scaling"]);
                     instance.checkCollisions = mesh.checkCollisions;
-                    if (parsedMesh.animations)
+                    var animations = parsedMesh["animations"];
+                    if (animations)
                     {
-                        for (animationIndex = 0; animationIndex < parsedMesh.animations.Length; animationIndex++)
+                        for (var animationIndex = 0; animationIndex < animations.Length; animationIndex++)
                         {
-                            parsedAnimation = parsedMesh.animations[animationIndex];
-                            instance.animations.Add(parseAnimation(parsedAnimation));
+                            var parsedAnimation = animations[animationIndex];
+                            //instance.animations.Add(parseAnimation(parsedAnimation));
                         }
                     }
                 }
             }
             return mesh;
         }
-        bool isDescendantOf(object mesh, object names, object hierarchyIds)
+
+        /*
+        bool isDescendantOf(Mesh mesh, object names, Array<string> hierarchyIds)
         {
             names = ((names is Array)) ? names : new Array<object>(names);
             foreach (var i in names)
@@ -688,88 +727,92 @@ namespace BABYLON.Internals
             }
             return false;
         }
-        VertexData importVertexData(object parsedVertexData, object geometry)
+        */
+
+        void importVertexData(JsmnParserValue parsedVertexData, Geometry geometry)
         {
             var vertexData = new BABYLON.VertexData();
-            var positions = parsedVertexData.positions;
+            var positions = parsedVertexData["positions"];
             if (positions)
             {
-                vertexData.set(positions, BABYLON.VertexBufferKind.PositionKind);
+                vertexData.set(Array<double>.New(positions), BABYLON.VertexBufferKind.PositionKind);
             }
-            var normals = parsedVertexData.normals;
+            var normals = parsedVertexData["normals"];
             if (normals)
             {
-                vertexData.set(normals, BABYLON.VertexBufferKind.NormalKind);
+                vertexData.set(Array<double>.New(normals), BABYLON.VertexBufferKind.NormalKind);
             }
-            var uvs = parsedVertexData.uvs;
+            var uvs = parsedVertexData["uvs"];
             if (uvs)
             {
-                vertexData.set(uvs, BABYLON.VertexBufferKind.UVKind);
+                vertexData.set(Array<double>.New(uvs), BABYLON.VertexBufferKind.UVKind);
             }
-            var uv2s = parsedVertexData.uv2s;
+            var uv2s = parsedVertexData["uv2s"];
             if (uv2s)
             {
-                vertexData.set(uv2s, BABYLON.VertexBufferKind.UV2Kind);
+                vertexData.set(Array<double>.New(uv2s), BABYLON.VertexBufferKind.UV2Kind);
             }
-            var colors = parsedVertexData.colors;
+            var colors = parsedVertexData["colors"];
             if (colors)
             {
-                vertexData.set(colors, BABYLON.VertexBufferKind.ColorKind);
+                vertexData.set(Array<double>.New(colors), BABYLON.VertexBufferKind.ColorKind);
             }
-            var matricesIndices = parsedVertexData.matricesIndices;
+            var matricesIndices = parsedVertexData["matricesIndices"];
             if (matricesIndices)
             {
-                vertexData.set(matricesIndices, BABYLON.VertexBufferKind.MatricesIndicesKind);
+                vertexData.set(Array<double>.New(matricesIndices), BABYLON.VertexBufferKind.MatricesIndicesKind);
             }
-            var matricesWeights = parsedVertexData.matricesWeights;
+            var matricesWeights = parsedVertexData["matricesWeights"];
             if (matricesWeights)
             {
-                vertexData.set(matricesWeights, BABYLON.VertexBufferKind.MatricesWeightsKind);
+                vertexData.set(Array<double>.New(matricesWeights), BABYLON.VertexBufferKind.MatricesWeightsKind);
             }
-            var indices = parsedVertexData.indices;
+            var indices = parsedVertexData["indices"];
             if (indices)
             {
-                vertexData.indices = indices;
+                vertexData.indices.AddRange(ArrayConvert.AsInt(indices));
             }
-            geometry.setAllVerticesData(vertexData, parsedVertexData.updatable);
+
+            geometry.setAllVerticesData(vertexData, parsedVertexData["updatable"]);
         }
-        void importGeometry(Geometry parsedGeometry, AbstractMesh mesh)
+
+        void importGeometry(JsmnParserValue parsedGeometry, Mesh mesh)
         {
             var scene = mesh.getScene();
-            var geometryId = parsedGeometry.geometryId;
+            var geometryId = parsedGeometry["geometryId"];
             if (geometryId)
             {
                 var geometry = scene.getGeometryByID(geometryId);
-                if (geometry)
+                if (geometry != null)
                 {
                     geometry.applyToMesh(mesh);
                 }
             }
             else
-                if (parsedGeometry.positions && parsedGeometry.normals && parsedGeometry.indices)
+                if (parsedGeometry["positions"] && parsedGeometry["normals"] && parsedGeometry["indices"])
                 {
-                    mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, parsedGeometry.positions, false);
-                    mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, parsedGeometry.normals, false);
-                    if (parsedGeometry.uvs)
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, Array<double>.New(parsedGeometry["positions"]), false);
+                    mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, Array<double>.New(parsedGeometry["normals"]), false);
+                    if (parsedGeometry["uvs"])
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, parsedGeometry.uvs, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, Array<double>.New(parsedGeometry["uvs"]), false);
                     }
-                    if (parsedGeometry.uvs2)
+                    if (parsedGeometry["uvs2"])
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, parsedGeometry.uvs2, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, Array<double>.New(parsedGeometry["uvs2"]), false);
                     }
-                    if (parsedGeometry.colors)
+                    if (parsedGeometry["colors"])
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, parsedGeometry.colors, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, Array<double>.New(parsedGeometry["colors"]), false);
                     }
-                    if (parsedGeometry.matricesIndices)
+                    if (parsedGeometry["matricesIndices"])
                     {
-                        if (!parsedGeometry.matricesIndices._isExpanded)
+                        if (!parsedGeometry["matricesIndices"]["_isExpanded"])
                         {
-                            var floatIndices = new Array<object>();
-                            for (var i = 0; i < parsedGeometry.matricesIndices.Length; i++)
+                            var floatIndices = new Array<double>();
+                            for (var i = 0; i < parsedGeometry["matricesIndices"].Length; i++)
                             {
-                                var matricesIndex = parsedGeometry.matricesIndices[i];
+                                var matricesIndex = parsedGeometry["matricesIndices"][i];
                                 floatIndices.Add(matricesIndex & 0x000000FF);
                                 floatIndices.Add((matricesIndex & 0x0000FF00) << 8);
                                 floatIndices.Add((matricesIndex & 0x00FF0000) << 16);
@@ -779,39 +822,37 @@ namespace BABYLON.Internals
                         }
                         else
                         {
-                            parsedGeometry.matricesIndices._isExpanded = null;
-                            mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, parsedGeometry.matricesIndices, false);
+                            mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, Array<double>.New(parsedGeometry["matricesIndices"]), false);
                         }
                     }
-                    if (parsedGeometry.matricesWeights)
+                    if (parsedGeometry["matricesWeights"])
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, parsedGeometry.matricesWeights, false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, Array<double>.New(parsedGeometry["matricesWeights"]), false);
                     }
-                    mesh.setIndices(parsedGeometry.indices);
+                    mesh.setIndices(Array<int>.New(ArrayConvert.AsInt(parsedGeometry["indices"])));
                 }
-            if (parsedGeometry.subMeshes)
+            if (parsedGeometry["subMeshes"])
             {
-                mesh.subMeshes = new Array<object>();
-                for (var subIndex = 0; subIndex < parsedGeometry.subMeshes.Length; subIndex++)
+                mesh.subMeshes = new Array<SubMesh>();
+                for (var subIndex = 0; subIndex < parsedGeometry["subMeshes"].Length; subIndex++)
                 {
-                    var parsedSubMesh = parsedGeometry.subMeshes[subIndex];
-                    var subMesh = new BABYLON.SubMesh(parsedSubMesh.materialIndex, parsedSubMesh.verticesStart, parsedSubMesh.verticesCount, parsedSubMesh.indexStart, parsedSubMesh.indexCount, mesh);
+                    var parsedSubMesh = parsedGeometry["subMeshes"][subIndex];
+                    var subMesh = new BABYLON.SubMesh(parsedSubMesh["materialIndex"], parsedSubMesh["verticesStart"], parsedSubMesh["verticesCount"], parsedSubMesh["indexStart"], parsedSubMesh["indexCount"], mesh);
                 }
             }
             if (mesh._shouldGenerateFlatShading)
             {
                 mesh.convertToFlatShadedMesh();
-                mesh._shouldGenerateFlatShading = null;
+                mesh._shouldGenerateFlatShading = false;
             }
             mesh.computeWorldMatrix(true);
-            if (scene._selectionOctree)
+            if (scene._selectionOctree != null)
             {
                 scene._selectionOctree.addMesh(mesh);
             }
         }
-        */
 
-        public string extensions 
+        public string extensions
         {
             get
             {
@@ -830,11 +871,7 @@ namespace BABYLON.Internals
 
         public bool load(Scene scene, string data, string rootUrl)
         {
-            var parser = new JsmnParser(256);
-            //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
-            var r = parser.Parse(data);
-
-            var parsedData = new JsmnParserValue(0, parser.Tokens);
+            var parsedData = JsmnParser.Parse(data);
 
             // Scene
             scene.useDelayedTextureLoading = parsedData["useDelayedTextureLoading"] && !BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental;
@@ -844,7 +881,8 @@ namespace BABYLON.Internals
             scene.gravity = BABYLON.Vector3.FromArray(parsedData["gravity"]);
 
             // Fog
-            if (parsedData["fogMode"] && parsedData["fogMode"] != 0) {
+            if (parsedData["fogMode"] && parsedData["fogMode"] != 0)
+            {
                 scene.fogMode = parsedData["fogMode"];
                 scene.fogColor = BABYLON.Color3.FromArray(parsedData["fogColor"]);
                 scene.fogStart = parsedData["fogStart"];
@@ -854,7 +892,7 @@ namespace BABYLON.Internals
 
             // Lights
             var lights = parsedData["lights"];
-            for (var index = 0; index < lights.Length; index++)
+            for (var index = 0; index < lights["Length"]; index++)
             {
                 var parsedLight = lights[index];
                 parseLight(parsedLight, scene);
@@ -862,7 +900,7 @@ namespace BABYLON.Internals
 
             // Cameras
             var cameras = parsedData["cameras"];
-            for (var index = 0; index < cameras.Length; index++)
+            for (var index = 0; index < cameras["Length"]; index++)
             {
                 var parsedCamera = cameras[index];
                 parseCamera(parsedCamera, scene);
@@ -873,7 +911,174 @@ namespace BABYLON.Internals
                 scene.setActiveCameraByID(parsedData["activeCameraID"]);
             }
 
-            return false;
+            // Materials
+            var materials = parsedData["materials"];
+            if (materials)
+            {
+                for (var index = 0; index < materials["Length"]; index++)
+                {
+                    var parsedMaterial = materials[index];
+                    parseMaterial(parsedMaterial, scene, rootUrl);
+                }
+            }
+
+            if (parsedData["multiMaterials"])
+            {
+                for (var index = 0; index < parsedData["multiMaterials"]["Length"]; index++)
+                {
+                    var parsedMultiMaterial = parsedData["multiMaterials"][index];
+                    parseMultiMaterial(parsedMultiMaterial, scene);
+                }
+            }
+
+            // Skeletons
+            if (parsedData["skeletons"])
+            {
+                for (var index = 0; index < parsedData["skeletons"]["Length"]; index++)
+                {
+                    var parsedSkeleton = parsedData["skeletons"][index];
+                    parseSkeleton(parsedSkeleton, scene);
+                }
+            }
+
+            /*
+            // Geometries
+            var geometries = parsedData["geometries"];
+            if (geometries) {
+                // Boxes
+                var boxes = geometries["boxes"];
+                if (boxes) {
+                    for (var index = 0; index < boxes.Length; index++) {
+                        var parsedBox = boxes[index];
+                        parseBox(parsedBox, scene);
+                    }
+                }
+
+                // Spheres
+                var spheres = geometries["spheres"];
+                if (spheres) {
+                    for (var index = 0; index < spheres.Length; index++) {
+                        var parsedSphere = spheres[index];
+                        parseSphere(parsedSphere, scene);
+                    }
+                }
+
+                // Cylinders
+                var cylinders = geometries["cylinders"];
+                if (cylinders) {
+                    for (var index = 0; index < cylinders.Length; index++) {
+                        var parsedCylinder = cylinders[index];
+                        parseCylinder(parsedCylinder, scene);
+                    }
+                }
+
+                // Toruses
+                var toruses = geometries["toruses"];
+                if (toruses) {
+                    for (var index = 0; index < toruses.Length; index++) {
+                        var parsedTorus = toruses[index];
+                        parseTorus(parsedTorus, scene);
+                    }
+                }
+
+                // Grounds
+                var grounds = geometries["grounds"];
+                if (grounds) {
+                    for (var index = 0; index < grounds.Length; index++) {
+                        var parsedGround = grounds[index];
+                        parseGround(parsedGround, scene);
+                    }
+                }
+
+                // Planes
+                var planes = geometries["planes"];
+                if (planes) {
+                    for (var index = 0; index < planes.Length; index++) {
+                        var parsedPlane = planes[index];
+                        parsePlane(parsedPlane, scene);
+                    }
+                }
+
+                // TorusKnots
+                var torusKnots = geometries["torusKnots"];
+                if (torusKnots) {
+                    for (var index = 0; index < torusKnots.Length; index++) {
+                        var parsedTorusKnot = torusKnots[index];
+                        parseTorusKnot(parsedTorusKnot, scene);
+                    }
+                }
+
+                // VertexData
+                var vertexData = geometries["vertexData"];
+                if (vertexData) {
+                    for (var index = 0; index < vertexData.Length; index++) {
+                        var parsedVertexData = vertexData[index];
+                        parseVertexData(parsedVertexData, scene, rootUrl);
+                    }
+                }
+            }
+            */
+
+            // Meshes
+            for (var index = 0; index < parsedData["meshes"]["Length"]; index++)
+            {
+                var parsedMesh = parsedData["meshes"][index];
+                parseMesh(parsedMesh, scene, rootUrl);
+            }
+
+            // Connecting cameras parents and locked target
+            for (var index = 0; index < scene.cameras.Length; index++)
+            {
+                var camera = scene.cameras[index];
+                if (camera._waitingParentId != null)
+                {
+                    camera.parent = scene.getLastEntryByID(camera._waitingParentId);
+                    camera._waitingParentId = null;
+                }
+
+                if (camera is BABYLON.FreeCamera)
+                {
+                    var freecamera = (FreeCamera)camera;
+                    if (freecamera._waitingLockedTargetId != null)
+                    {
+                        freecamera.lockedTarget = scene.getLastEntryByID(freecamera._waitingLockedTargetId);
+                        freecamera._waitingLockedTargetId = null;
+                    }
+                }
+            }
+
+            // Particles Systems
+            if (parsedData["particleSystems"])
+            {
+                for (var index = 0; index < parsedData["particleSystems"]["Length"]; index++)
+                {
+                    var parsedParticleSystem = parsedData["particleSystems"][index];
+                    parseParticleSystem(parsedParticleSystem, scene, rootUrl);
+                }
+            }
+
+            // Lens flares
+            if (parsedData["lensFlareSystems"])
+            {
+                for (var index = 0; index < parsedData["lensFlareSystems"]["Length"]; index++)
+                {
+                    var parsedLensFlareSystem = parsedData["lensFlareSystems"][index];
+                    parseLensFlareSystem(parsedLensFlareSystem, scene, rootUrl);
+                }
+            }
+
+            // Shadows
+            if (parsedData["shadowGenerators"])
+            {
+                for (var index = 0; index < parsedData["shadowGenerators"]["Length"]; index++)
+                {
+                    var parsedShadowGenerator = parsedData["shadowGenerators"][index];
+
+                    parseShadowGenerator(parsedShadowGenerator, scene);
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    internal enum JsmnType
+    public enum JsmnType
     {
         /// <summary>
         /// </summary>
@@ -46,7 +46,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    internal enum JsmnError
+    public enum JsmnError
     {
         /* Not enough tokens were provided */
 
@@ -77,33 +77,33 @@ namespace BABYLON
     /// <summary>
     /// </summary>
     [DebuggerDisplay("{type}, {Value}")]
-    internal class JsmnTok
+    public class JsmnTok
     {
         private string _value;
 
         /// <summary>
         /// </summary>
-        internal JsmnType type;
+        public JsmnType type;
 
         /// <summary>
         /// </summary>
-        internal int start;
+        public int start;
 
         /// <summary>
         /// </summary>
-        internal int end;
+        public int end;
 
         /// <summary>
         /// </summary>
-        internal int size;
+        public int size;
 
 #if JSMN_PARENT_LINKS
         /// <summary>
         /// </summary>
-        internal int parent;
+        public int parent;
 #endif
 
-        internal string source;
+        public string source;
 
         public string Value
         {
@@ -135,29 +135,39 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
-        internal int pos; /* offset in the JSON string */
+        public int pos; /* offset in the JSON string */
 
         /// <summary>
         /// </summary>
-        internal int toknext; /* next token to allocate */
+        public int toknext; /* next token to allocate */
 
         /// <summary>
         /// </summary>
-        internal int toksuper; /* superior token node, e.g parent object or array */
+        public int toksuper; /* superior token node, e.g parent object or array */
 
         /// <summary>
         /// </summary>
-        internal Array<JsmnTok> tokens;
+        public Array<JsmnTok> tokens;
 
         /// <summary>
         /// </summary>
-        internal string _js;
+        public string _js;
 
         public JsmnParser(int tokensCount = 255)
         {
             this.Init();
             this.tokens = new Array<JsmnTok>();
             this.tokens.Capacity = tokensCount;
+        }
+
+        public static JsmnParserValue Parse(string data)
+        {
+            var parser = new JsmnParser(256);
+            //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
+            var r = parser.ParseJson(data);
+
+            var parsedData = new JsmnParserValue(0, parser.Tokens);
+            return parsedData;
         }
 
         /**
@@ -336,7 +346,7 @@ namespace BABYLON
         /**
          * Parse JSON string and fill tokens.
          */
-        internal JsmnError Parse(string js)
+        public JsmnError ParseJson(string js)
         {
             JsmnError r;
             int i;
@@ -537,7 +547,7 @@ namespace BABYLON
             this.toksuper = -1;
         }
 
-        internal Array<JsmnTok> Tokens
+        public Array<JsmnTok> Tokens
         {
             get
             {
@@ -546,7 +556,7 @@ namespace BABYLON
         }
     }
 
-    internal struct JsmnParserValue
+    public struct JsmnParserValue
     {
         private int _selectedToken;
 

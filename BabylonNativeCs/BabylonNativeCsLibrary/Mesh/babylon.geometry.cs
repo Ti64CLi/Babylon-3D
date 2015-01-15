@@ -27,7 +27,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public Action<object, object> _delayLoadingFunction;
+        public Action<JsmnParserValue, Geometry> _delayLoadingFunction;
 
         /// <summary>
         /// </summary>
@@ -456,7 +456,7 @@ namespace BABYLON
                 this.delayLoadingFile,
                 (string data) =>
                 {
-                    this._delayLoadingFunction(data /*JSON.parse(data)*/, this);
+                    this._delayLoadingFunction(JsmnParser.Parse(data), this);
                     this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
                     this._delayInfo = new Array<VertexBufferKind>();
                     scene._removePendingData(this);
@@ -655,6 +655,80 @@ namespace BABYLON
             if (this._indexBuffer != null)
             {
                 this._indexBuffer.references = numOfMeshes;
+            }
+        }
+
+        public static class Primitives
+        {
+            /// Abstract class
+            public class _Primitive : BABYLON.Geometry
+            {
+                // Private 
+                private bool _beingRegenerated;
+                private bool _canBeRegenerated;
+
+                public _Primitive(int id, Scene scene, VertexData vertexData = null, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, vertexData, false, mesh) // updatable = false to be sure not to update vertices 
+                {
+                    this._beingRegenerated = true;
+                    this._canBeRegenerated = canBeRegenerated;
+
+                    this._beingRegenerated = false;
+                }
+
+                public bool canBeRegenerated()
+                {
+                    return this._canBeRegenerated;
+                }
+
+                public void regenerate()
+                {
+                    if (!this._canBeRegenerated)
+                    {
+                        return;
+                    }
+                    this._beingRegenerated = true;
+                    this.setAllVerticesData(this._regenerateVertexData(), false);
+                    this._beingRegenerated = false;
+                }
+
+                public Geometry asNewGeometry(int id)
+                {
+                    return base.copy(id);
+                }
+
+                // overrides
+                public override void setAllVerticesData(VertexData vertexData, bool updatable = false)
+                {
+                    if (!this._beingRegenerated)
+                    {
+                        return;
+                    }
+
+                    base.setAllVerticesData(vertexData, updatable);
+                }
+
+                public override void setVerticesData(VertexBufferKind kind, Array<double> data, bool updatable = false)
+                {
+                    if (!this._beingRegenerated)
+                    {
+                        return;
+                    }
+
+                    base.setVerticesData(kind, data, updatable);
+                }
+
+                // to override
+                // protected
+                public virtual VertexData _regenerateVertexData()
+                {
+                    throw new Error("Abstract method");
+                }
+
+                public virtual Geometry copy(string id)
+                {
+                    throw new Error("Must be overriden in sub-classes.");
+                }
             }
         }
     }

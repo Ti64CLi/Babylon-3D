@@ -11,7 +11,7 @@ namespace BABYLON
 {
     /// <summary>
     /// </summary>
-    public partial class CubeTexture : BaseTexture
+    public partial class CubeTexture : Texture
     {
         /// <summary>
         /// </summary>
@@ -40,7 +40,7 @@ namespace BABYLON
         /// <param name="noMipmap">
         /// </param>
         public CubeTexture(string rootUrl, Scene scene, Array<string> extensions = null, bool noMipmap = false)
-            : base(scene)
+            : base(rootUrl, scene)
         {
             this.name = rootUrl;
             this.url = rootUrl;
