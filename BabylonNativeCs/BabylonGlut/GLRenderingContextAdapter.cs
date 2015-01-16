@@ -369,7 +369,7 @@
 #endif
 
 #if GLEW_STATIC
-            Gl.glFramebufferTexture2D(target, attachment, textarget, texture != null ? texture.Value : 0, level);
+            Gl.glFramebufferTexture2D(target, attachment, textarget, (int)(texture != null ? texture.Value : 0), level);
 #else
             Gl.__glewFramebufferTexture2D(target, attachment, textarget, (int)(texture != null ? texture.Value : 0), level);
 #endif

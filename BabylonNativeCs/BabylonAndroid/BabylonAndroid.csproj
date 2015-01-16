@@ -87,6 +87,9 @@
     <Compile Include="..\BabylonWpf\GlBufferAdapter.cs">
       <Link>GlBufferAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\GlFramebufferAdapter.cs">
+      <Link>GlFramebufferAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\GlProgramAdapter.cs">
       <Link>GlProgramAdapter.cs</Link>
     </Compile>
@@ -127,9 +130,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CoreLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
+    <Reference Include="CoreLib">
+      <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

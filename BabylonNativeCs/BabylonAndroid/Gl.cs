@@ -220,5 +220,17 @@
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public static extern void glUniform2f(int p1, float p2, float p3);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glBindRenderbuffer(int target, int renderbuffer);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public static extern void glBindFramebuffer(int target, int framebuffer);
+
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glGenFramebuffers(int n, uint* buffers);
     }
 }
