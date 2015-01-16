@@ -169,14 +169,13 @@ namespace BabylonWpf
         {
             SceneLoader.Load(
                 "",
-                "skull.babylon",
+                "Spaceship.babylon",
                 engine,
                 loadedScene =>
                 {
                     this.scene = loadedScene;
                 });
         }
-
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {

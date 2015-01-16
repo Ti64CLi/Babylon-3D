@@ -81,7 +81,7 @@ namespace BabylonGlut
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene3();
+            this.Scene4();
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -198,6 +198,18 @@ namespace BabylonGlut
 
             // Attach the camera to the scene
             scene.activeCamera.attachControl(canvas);
+        }
+
+        private void Scene4()
+        {
+            SceneLoader.Load(
+                "",
+                "skull.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                });
         }
     }
 }
