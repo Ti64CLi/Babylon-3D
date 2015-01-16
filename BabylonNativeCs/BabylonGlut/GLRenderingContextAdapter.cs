@@ -371,7 +371,7 @@
 #if GLEW_STATIC
             Gl.glFramebufferTexture2D(target, attachment, textarget, texture != null ? texture.Value : 0, level);
 #else
-            Gl.__glewFramebufferTexture2D(target, attachment, textarget, texture != null ? texture.Value : 0, level);
+            Gl.__glewFramebufferTexture2D(target, attachment, textarget, (int)(texture != null ? texture.Value : 0), level);
 #endif
 
             ErrorTest();
@@ -487,7 +487,7 @@
                 fixed (byte* pixelsPtr = pixels)
                 {
 #if GLEW_STATIC
-                    Gl.gltexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
+                    Gl.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
 #else
                     Gl.__glewTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
 #endif
@@ -833,7 +833,7 @@
 
         public void bindFramebuffer(int target, Web.WebGLFramebuffer framebuffer)
         {
-            var bufferId = (int)(buffer != null ? buffer.Value : 0);
+            var bufferId = (int)(framebuffer != null ? framebuffer.Value : 0);
 
 #if _DEBUG
             Log.Info(string.Format("bindFramebuffer {0} {1}", target, bufferId));
@@ -1553,7 +1553,7 @@
 
         public void bindRenderbuffer(int target, Web.WebGLRenderbuffer renderbuffer)
         {
-            var bufferId = (int)(buffer != null ? buffer.Value : 0);
+            var bufferId = (int)(renderbuffer != null ? renderbuffer.Value : 0);
 
 #if _DEBUG
             Log.Info(string.Format("bindRenderbuffer {0} {1}", target, bufferId));
