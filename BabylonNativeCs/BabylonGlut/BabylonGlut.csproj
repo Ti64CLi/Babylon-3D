@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CoreLib">
-      <HintPath>..\..\..\Temp\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
+      <HintPath>C:\Users\Alexander\Documents\Visual Studio 2012\Projects\Il2Native\CoreLib\bin\Release\CoreLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -108,6 +108,11 @@ namespace BABYLON
         {
             get
             {
+                if (type != JsmnType.Primitive && type != JsmnType.String)
+                {
+                    return null;
+                }
+
                 if (_value == null)
                 {
                     _value  = this.source.Substring(this.start, this.end - this.start);
@@ -119,7 +124,7 @@ namespace BABYLON
 
         public bool EqualsTo(string other)
         {
-            return other.Equals(this.Value);
+            return string.Compare(other, 0, this.source, this.start, Math.Max(other.Length, this.end - this.start)) == 0;
         }
     }
 
@@ -595,7 +600,15 @@ namespace BABYLON
         {
             get
             {
-                return IsNullHelper(this._selectedToken);
+                return !HasValue || IsNullHelper(this._selectedToken);
+            }
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return !HasValue || IsEmptyHelper(this._selectedToken);
             }
         }
 
@@ -620,6 +633,21 @@ namespace BABYLON
             if (!that.HasValue || that.IsNull)
             {
                 return false;
+            }
+
+            if (that.Type == JsmnType.NotSet)
+            {
+                return false;
+            }
+
+            if (that.Type == JsmnType.Array || that.Type == JsmnType.Object)
+            {
+                return !that.IsEmpty;
+            }
+
+            if (that.Type == JsmnType.String)
+            {
+                return !that.IsEmpty;
             }
 
             var selectedValue = that.GetValue();
@@ -740,7 +768,19 @@ namespace BABYLON
         private bool IsNullHelper(int currentTokenIndex)
         {
             var current = _tokens[currentTokenIndex];
-            return current.type == JsmnType.Primitive && current.Value == "null";
+            return current.EqualsTo("null");
+        }
+
+        private bool IsEmptyHelper(int currentTokenIndex)
+        {
+            var current = _tokens[currentTokenIndex];
+            if (current.type == JsmnType.Array || current.type == JsmnType.Object)
+            {
+                return current.size == 0;
+            }
+
+            return current.type == JsmnType.Primitive &&
+                   (current.start == current.end || current.start == -1 || current.end == -1);
         }
 
         private int SeekValue(string key)
