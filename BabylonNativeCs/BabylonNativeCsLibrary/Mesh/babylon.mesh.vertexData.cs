@@ -234,56 +234,56 @@ namespace BABYLON
             subdivisions = (subdivisions < 1) ? 1 : subdivisions;
             var getCircleVector = new Func<int, Vector3>(
                 (i) =>
-                    {
-                        var angle = i * 2.0 * Math.PI / tessellation;
-                        var dx = Math.Cos(angle);
-                        var dz = Math.Sin(angle);
-                        return new Vector3(dx, 0, dz);
-                    });
+                {
+                    var angle = i * 2.0 * Math.PI / tessellation;
+                    var dx = Math.Cos(angle);
+                    var dz = Math.Sin(angle);
+                    return new Vector3(dx, 0, dz);
+                });
             Vector3 offset;
             var createCylinderCap = new Action<bool>(
                 (isTop) =>
+                {
+                    var radius = isTop ? radiusTop : radiusBottom;
+                    if (radius == 0.0)
                     {
-                        var radius = isTop ? radiusTop : radiusBottom;
-                        if (radius == 0.0)
-                        {
-                            return;
-                        }
+                        return;
+                    }
 
-                        var vbase = positions.Length / 3;
-                        offset = new Vector3(0, height / 2, 0);
-                        var textureScale = new Vector2(0.5, 0.5);
+                    var vbase = positions.Length / 3;
+                    offset = new Vector3(0, height / 2, 0);
+                    var textureScale = new Vector2(0.5, 0.5);
+                    if (!isTop)
+                    {
+                        offset.scaleInPlace(-1.0);
+                        textureScale.x = -textureScale.x;
+                    }
+
+                    for (var i = 0; i < tessellation; i++)
+                    {
+                        var circleVector = getCircleVector(i);
+                        var position = circleVector.scale(radius).add(offset);
+                        var textureCoordinate = new Vector2(circleVector.x * textureScale.x + 0.5, circleVector.z * textureScale.y + 0.5);
+                        positions.Add(position.x, position.y, position.z);
+                        uvs.Add(textureCoordinate.x, textureCoordinate.y);
+                    }
+
+                    for (var i = 0; i < tessellation - 2; i++)
+                    {
                         if (!isTop)
                         {
-                            offset.scaleInPlace(-1.0);
-                            textureScale.x = -textureScale.x;
+                            indices.Add(vbase);
+                            indices.Add(vbase + (i + 2) % tessellation);
+                            indices.Add(vbase + (i + 1) % tessellation);
                         }
-
-                        for (var i = 0; i < tessellation; i++)
+                        else
                         {
-                            var circleVector = getCircleVector(i);
-                            var position = circleVector.scale(radius).add(offset);
-                            var textureCoordinate = new Vector2(circleVector.x * textureScale.x + 0.5, circleVector.z * textureScale.y + 0.5);
-                            positions.Add(position.x, position.y, position.z);
-                            uvs.Add(textureCoordinate.x, textureCoordinate.y);
+                            indices.Add(vbase);
+                            indices.Add(vbase + (i + 1) % tessellation);
+                            indices.Add(vbase + (i + 2) % tessellation);
                         }
-
-                        for (var i = 0; i < tessellation - 2; i++)
-                        {
-                            if (!isTop)
-                            {
-                                indices.Add(vbase);
-                                indices.Add(vbase + (i + 2) % tessellation);
-                                indices.Add(vbase + (i + 1) % tessellation);
-                            }
-                            else
-                            {
-                                indices.Add(vbase);
-                                indices.Add(vbase + (i + 1) % tessellation);
-                                indices.Add(vbase + (i + 2) % tessellation);
-                            }
-                        }
-                    });
+                    }
+                });
             var _base = new Vector3(0, -1, 0).scale(height / 2);
             offset = new Vector3(0, 1, 0).scale(height / subdivisions);
             var stride = tessellation + 1;
@@ -613,9 +613,9 @@ namespace BABYLON
                         for (var col = 0; col < precision.w; col++)
                         {
                             var square = new Array<int>(
-                                _base + col + row * rowLength, 
-                                _base + (col + 1) + row * rowLength, 
-                                _base + (col + 1) + (row + 1) * rowLength, 
+                                _base + col + row * rowLength,
+                                _base + (col + 1) + row * rowLength,
+                                _base + (col + 1) + (row + 1) * rowLength,
                                 _base + col + (row + 1) * rowLength);
 
                             indices.Add(square[1]);
@@ -734,16 +734,16 @@ namespace BABYLON
             var uvs = new Array<double>();
             var getPos = new Func<double, Vector3>(
                 angle =>
-                    {
-                        var cu = Math.Cos(angle);
-                        var su = Math.Sin(angle);
-                        var quOverP = q / p * angle;
-                        var cs = Math.Cos(quOverP);
-                        var tx = radius * (2 + cs) * 0.5 * cu;
-                        var ty = radius * (2 + cs) * su * 0.5;
-                        var tz = radius * Math.Sin(quOverP) * 0.5;
-                        return new Vector3(tx, ty, tz);
-                    });
+                {
+                    var cu = Math.Cos(angle);
+                    var su = Math.Sin(angle);
+                    var quOverP = q / p * angle;
+                    var cs = Math.Cos(quOverP);
+                    var tx = radius * (2 + cs) * 0.5 * cu;
+                    var ty = radius * (2 + cs) * su * 0.5;
+                    var tz = radius * Math.Sin(quOverP) * 0.5;
+                    return new Vector3(tx, ty, tz);
+                });
             for (var i = 0; i <= radialSegments; i++)
             {
                 var modI = i % radialSegments;

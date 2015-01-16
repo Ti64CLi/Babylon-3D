@@ -422,7 +422,6 @@ namespace BABYLON.Internals
             return scene.getGeometryByID(id) != null;
         }
 
-        /*
         Geometry.Primitives.Box parseBox(JsmnParserValue parsedBox, Scene scene)
         {
             if (parseGeometry(parsedBox, scene))
@@ -430,7 +429,7 @@ namespace BABYLON.Internals
                 return null;
             }
             var box = new BABYLON.Geometry.Primitives.Box(parsedBox["id"], scene, parsedBox["size"], parsedBox["canBeRegenerated"], null);
-            BABYLON.Tags.AddTagsTo(box, parsedBox["tags"]);
+            ////BABYLON.Tags.AddTagsTo(box, parsedBox["tags"]);
             scene.pushGeometry(box, true);
             return box;
         }
@@ -506,7 +505,6 @@ namespace BABYLON.Internals
             scene.pushGeometry(torusKnot, true);
             return torusKnot;
         }
-        */
 
         Geometry parseVertexData(JsmnParserValue parsedVertexData, Scene scene, string rootUrl)
         {
@@ -951,7 +949,6 @@ namespace BABYLON.Internals
                 }
             }
 
-            /*
             // Geometries
             var geometries = parsedData["geometries"];
             if (geometries) {
@@ -1027,7 +1024,6 @@ namespace BABYLON.Internals
                     }
                 }
             }
-            */
 
             // Meshes
             var meshes = parsedData["meshes"];

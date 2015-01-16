@@ -730,6 +730,222 @@ namespace BABYLON
                     throw new Error("Must be overriden in sub-classes.");
                 }
             }
+
+            public class Box : _Primitive
+            {
+                // Members
+                public double size;
+
+                public Box(int id, Scene scene, double size, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateBox(size), canBeRegenerated, mesh)
+                {
+                    this.size = size;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateBox(this.size);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Box(id, this.getScene(), this.size, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class Sphere : _Primitive
+            {
+                // Members
+                public int segments;
+                public double diameter;
+
+                public Sphere(int id, Scene scene, int segments, double diameter, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateSphere(segments, diameter), canBeRegenerated, mesh)
+                {
+
+                    this.segments = segments;
+                    this.diameter = diameter;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateSphere(this.segments, this.diameter);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Sphere(id, this.getScene(), this.segments, this.diameter, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class Cylinder : _Primitive
+            {
+                // Members
+                public double height;
+                public double diameterTop;
+                public double diameterBottom;
+                public int tessellation;
+                public int subdivisions;
+
+                public Cylinder(int id, Scene scene, double height, double diameterTop, double diameterBottom, int tessellation, int subdivisions = 1, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateCylinder(height, diameterTop, diameterBottom, tessellation, subdivisions), canBeRegenerated, mesh)
+                {
+                    this.height = height;
+                    this.diameterTop = diameterTop;
+                    this.diameterBottom = diameterBottom;
+                    this.tessellation = tessellation;
+                    this.subdivisions = subdivisions;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateCylinder(this.height, this.diameterTop, this.diameterBottom, this.tessellation, this.subdivisions);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Cylinder(id, this.getScene(), this.height, this.diameterTop, this.diameterBottom, this.tessellation, this.subdivisions, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class Torus : _Primitive
+            {
+                // Members
+                public double diameter;
+                public double thickness;
+                public int tessellation;
+
+                public Torus(int id, Scene scene, double diameter, double thickness, int tessellation, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateTorus(diameter, thickness, tessellation), canBeRegenerated, mesh)
+                {
+                    this.diameter = diameter;
+                    this.thickness = thickness;
+                    this.tessellation = tessellation;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateTorus(this.diameter, this.thickness, this.tessellation);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Torus(id, this.getScene(), this.diameter, this.thickness, this.tessellation, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class Ground : _Primitive
+            {
+                // Members
+                public int width;
+                public int height;
+                public int subdivisions;
+
+                public Ground(int id, Scene scene, int width, int height, int subdivisions, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateGround(width, height, subdivisions), canBeRegenerated, mesh)
+                {
+                    this.width = width;
+                    this.height = height;
+                    this.subdivisions = subdivisions;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateGround(this.width, this.height, this.subdivisions);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Ground(id, this.getScene(), this.width, this.height, this.subdivisions, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class TiledGround : _Primitive
+            {
+                // Members
+                public int xmin;
+                public int zmin;
+                public int xmax;
+                public int zmax;
+                public SizeI subdivisions;
+                public SizeI precision;
+
+                public TiledGround(int id, Scene scene, int xmin, int zmin, int xmax, int zmax, SizeI subdivisions, SizeI precision, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateTiledGround(xmin, zmin, xmax, zmax, subdivisions, precision), canBeRegenerated, mesh)
+                {
+                    this.xmin = xmin;
+                    this.zmin = zmin;
+                    this.xmax = xmax;
+                    this.zmax = zmax;
+                    this.subdivisions = subdivisions;
+                    this.precision = precision;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateTiledGround(this.xmin, this.zmin, this.xmax, this.zmax, this.subdivisions, this.precision);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new TiledGround(id, this.getScene(), this.xmin, this.zmin, this.xmax, this.zmax, this.subdivisions, this.precision, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class Plane : _Primitive
+            {
+                // Members
+                public double size;
+
+                public Plane(int id, Scene scene, double size, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreatePlane(size), canBeRegenerated, mesh)
+                {
+                    this.size = size;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreatePlane(this.size);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new Box(id, this.getScene(), this.size, this.canBeRegenerated(), null);
+                }
+            }
+
+            public class TorusKnot : _Primitive
+            {
+                // Members
+                public double radius;
+                public double tube;
+                public int radialSegments;
+                public int tubularSegments;
+                public double p;
+                public double q;
+
+                public TorusKnot(int id, Scene scene, double radius, double tube, int radialSegments, int tubularSegments, double p, double q, bool canBeRegenerated = false, Mesh mesh = null)
+                    : base(id, scene, VertexData.CreateTorusKnot(radius, tube, radialSegments, tubularSegments, p, q), canBeRegenerated, mesh)
+                {
+                    this.radius = radius;
+                    this.tube = tube;
+                    this.radialSegments = radialSegments;
+                    this.tubularSegments = tubularSegments;
+                    this.p = p;
+                    this.q = q;
+                }
+
+                public VertexData _regenerateVertexData()
+                {
+                    return VertexData.CreateTorusKnot(this.radius, this.tube, this.radialSegments, this.tubularSegments, this.p, this.q);
+                }
+
+                public Geometry copy(int id)
+                {
+                    return new TorusKnot(id, this.getScene(), this.radius, this.tube, this.radialSegments, this.tubularSegments, this.p, this.q, this.canBeRegenerated(), null);
+                }
+            }
+
         }
     }
 }
