@@ -486,11 +486,7 @@
             {
                 fixed (byte* pixelsPtr = pixels)
                 {
-#if GLEW_STATIC
                     Gl.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
-#else
-                    Gl.__glewTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
-#endif
                 }
             }
 

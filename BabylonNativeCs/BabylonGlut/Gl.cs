@@ -669,14 +669,5 @@
 
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern int glGetError();
-
-#if GLEW_STATIC
-        [MethodImpl(MethodImplOptions.Unmanaged)]
-        public static extern uint glTexImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, byte* data);
-#else
-        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
-        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
-        public static unsafe extern uint __glewTexImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, byte* data);
-#endif
     }
 }
