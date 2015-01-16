@@ -87,6 +87,9 @@
     <Compile Include="..\BabylonWpf\GlBufferAdapter.cs">
       <Link>GlBufferAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\GlFramebufferAdapter.cs">
+      <Link>GlFramebufferAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\GlProgramAdapter.cs">
       <Link>GlProgramAdapter.cs</Link>
     </Compile>

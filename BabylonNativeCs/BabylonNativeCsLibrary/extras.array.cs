@@ -663,6 +663,11 @@ namespace BABYLON
 
         public static Array<T> New(T[] items)
         {
+            if (items == null)
+            {
+                return null;
+            }
+
             var arr = new Array<T>();
             arr.Capacity = items.Length;
             arr.AddRange(items);

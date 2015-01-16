@@ -174,11 +174,6 @@ namespace BabylonWpf
                 loadedScene =>
                 {
                     this.scene = loadedScene;
-
-                    //// This creates and positions a free camera
-                    var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
-                    this.scene.activeCamera = camera;
-                    ////this.scene.activeCamera.attachControl(canvas);
                 });
         }
 

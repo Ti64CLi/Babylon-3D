@@ -218,7 +218,10 @@
 
         public Web.WebGLFramebuffer createFramebuffer()
         {
-            throw new NotImplementedException();
+            uint[] buffers = new uint[1];
+            this.openGl.GenFramebuffersEXT(1, buffers);
+            ErrorTest();
+            return new GlFramebufferAdapter(buffers[0]);
         }
 
         public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
@@ -234,7 +237,8 @@
 
         public void framebufferTexture2D(int target, int attachment, int textarget, Web.WebGLTexture texture, int level)
         {
-            throw new NotImplementedException();
+            this.openGl.FramebufferTexture2DEXT((uint)target, (uint)attachment, (uint)textarget, texture != null ? texture.Value : 0, level);
+            ErrorTest();
         }
 
         public void deleteFramebuffer(Web.WebGLFramebuffer framebuffer)
@@ -298,7 +302,8 @@
 
         public void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte[] pixels)
         {
-            throw new NotImplementedException();
+            this.openGl.TexImage2D((uint)target, level, (uint)internalformat, width, height, border, (uint)format, (uint)type, pixels);
+            ErrorTest();
         }
 
         public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLImageElement image)
@@ -504,7 +509,8 @@
 
         public void bindFramebuffer(int target, Web.WebGLFramebuffer framebuffer)
         {
-            throw new NotImplementedException();
+            this.openGl.BindFramebufferEXT((uint)target, framebuffer != null ? framebuffer.Value : 0);
+            ErrorTest();
         }
 
         public void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, Web.ArrayBufferView data)
@@ -975,7 +981,8 @@
 
         public void bindRenderbuffer(int target, Web.WebGLRenderbuffer renderbuffer)
         {
-            throw new NotImplementedException();
+            this.openGl.BindRenderbufferEXT((uint)target, renderbuffer != null ? renderbuffer.Value : 0);
+            ErrorTest();
         }
 
         public void uniform4iv(Web.WebGLUniformLocation location, int[] v)

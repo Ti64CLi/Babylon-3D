@@ -47,7 +47,7 @@ namespace BABYLON.Internals
                 var renderTargetSize = parsedTexture["renderTargetSize"];
                 var size = CreateSize(renderTargetSize);
                 var mirrorTexture = new BABYLON.MirrorTexture(parsedTexture["name"], size, scene);
-                mirrorTexture._waitingRenderList.AddRange(parsedTexture["renderList"]);
+                mirrorTexture._waitingRenderList = Array<string>.New(parsedTexture["renderList"]);
                 mirrorTexture.mirrorPlane = BABYLON.Plane.FromArray(parsedTexture["mirrorPlane"]);
                 texture = mirrorTexture;
             }
@@ -57,7 +57,7 @@ namespace BABYLON.Internals
                     var renderTargetSize = parsedTexture["renderTargetSize"];
                     var size = new Size() { width = renderTargetSize["width"], height = renderTargetSize["height"] };
                     var renderTargetTexture = new BABYLON.RenderTargetTexture(parsedTexture["name"], size, scene);
-                    renderTargetTexture._waitingRenderList.AddRange(parsedTexture["renderList"]);
+                    renderTargetTexture._waitingRenderList = Array<string>.New(parsedTexture["renderList"]);
                     texture = renderTargetTexture;
                 }
                 else
@@ -92,8 +92,12 @@ namespace BABYLON.Internals
 
         private static Size CreateSize(JsmnParserValue renderTargetSize)
         {
-            var size = new Size() { width = renderTargetSize["width"], height = renderTargetSize["height"] };
-            return size;
+            if (renderTargetSize.Type == JsmnType.Primitive)
+            {
+                return new Size() { width = renderTargetSize, height = renderTargetSize };
+            }
+
+            return new Size() { width = renderTargetSize["width"], height = renderTargetSize["height"] };
         }
 
         Skeleton parseSkeleton(JsmnParserValue parsedSkeleton, Scene scene)
@@ -341,7 +345,7 @@ namespace BABYLON.Internals
             light.specular = BABYLON.Color3.FromArray(parsedLight["specular"]);
             if (parsedLight["excludedMeshesIds"])
             {
-                light._excludedMeshesIds.AddRange(parsedLight["excludedMeshesIds"]);
+                light._excludedMeshesIds = Array<string>.New(parsedLight["excludedMeshesIds"]);
             }
 
             if (parsedLight["animations"])
@@ -641,7 +645,7 @@ namespace BABYLON.Internals
             {
                 mesh.material = null;
             }
-            if (parsedMesh["skeletonId"] > -1)
+            if (parsedMesh["skeletonId"])
             {
                 mesh.skeleton = scene.getLastSkeletonByID(parsedMesh["skeletonId"]);
             }
@@ -768,7 +772,7 @@ namespace BABYLON.Internals
             var indices = parsedVertexData["indices"];
             if (indices)
             {
-                vertexData.indices.AddRange(ArrayConvert.AsInt(indices));
+                vertexData.indices = Array<int>.New(ArrayConvert.AsInt(indices));
             }
 
             geometry.setAllVerticesData(vertexData, parsedVertexData["updatable"]);

@@ -591,6 +591,22 @@ namespace BABYLON
             }
         }
 
+        public bool IsNull
+        {
+            get
+            {
+                return IsNullHelper(this._selectedToken);
+            }
+        }
+
+        public JsmnType Type
+        {
+            get
+            {
+                return _tokens[this._selectedToken].type;
+            }
+        }
+
         public JsmnParserValue this[int index]
         {
             get
@@ -601,12 +617,12 @@ namespace BABYLON
 
         public static implicit operator bool(JsmnParserValue that)
         {
-            var selectedValue = that.GetValue();
-
-            if (selectedValue == null)
+            if (!that.HasValue || that.IsNull)
             {
                 return false;
             }
+
+            var selectedValue = that.GetValue();
 
             try
             {
@@ -639,18 +655,33 @@ namespace BABYLON
 
         public static implicit operator double(JsmnParserValue that)
         {
+            if (that.IsNull)
+            {
+                return 0.0;
+            }
+
             var selectedValue = that.GetValue();
             return Convert.ToDouble(selectedValue);
         }
 
         public static implicit operator string(JsmnParserValue that)
         {
+            if (that.IsNull)
+            {
+                return null;
+            }
+
             var selectedValue = that.GetValue();
             return selectedValue;
         }
 
         public static implicit operator double[](JsmnParserValue that)
         {
+            if (that.IsNull)
+            {
+                return null;
+            }
+
             var index = 0;
             var values = new double[that.GetChildrenCount(that._selectedToken)];
             foreach (var childToken in that.GetChildrenTokens(that._selectedToken))
@@ -664,6 +695,11 @@ namespace BABYLON
 
         public static implicit operator string[](JsmnParserValue that)
         {
+            if (that.IsNull)
+            {
+                return null;
+            }
+
             var index = 0;
             var values = new string[that.GetChildrenCount(that._selectedToken)];
             foreach (var childToken in that.GetChildrenTokens(that._selectedToken))
@@ -699,6 +735,12 @@ namespace BABYLON
         {
             var current = _tokens[currentTokenIndex];
             return current.size;
+        }
+
+        private bool IsNullHelper(int currentTokenIndex)
+        {
+            var current = _tokens[currentTokenIndex];
+            return current.type == JsmnType.Primitive && current.Value == "null";
         }
 
         private int SeekValue(string key)

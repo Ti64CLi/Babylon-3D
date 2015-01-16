@@ -1150,6 +1150,11 @@ namespace BABYLON
 
         public static Vector3 FromArray(double[] array, int offset = 0)
         {
+            if (array == null)
+            {
+                return null;
+            }
+
             return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
         }
 
@@ -3503,6 +3508,11 @@ namespace BABYLON
         /// </returns>
         public static Plane FromArray(double[] array)
         {
+            if (array == null)
+            {
+                return null;
+            }
+
             return new Plane(array[0], array[1], array[2], array[3]);
         }
 

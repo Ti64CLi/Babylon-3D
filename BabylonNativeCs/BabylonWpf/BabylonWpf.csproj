@@ -99,6 +99,7 @@
     <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="GlBufferAdapter.cs" />
+    <Compile Include="GlFramebufferAdapter.cs" />
     <Compile Include="GlProgramAdapter.cs" />
     <Compile Include="GlShaderAdapter.cs" />
     <Compile Include="GlUniformLocation.cs" />
