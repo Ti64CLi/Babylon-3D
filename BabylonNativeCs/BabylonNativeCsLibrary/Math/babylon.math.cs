@@ -73,6 +73,11 @@ namespace BABYLON
 
         public static Color3 FromArray(double[] array)
         {
+            if (array == null || array.Length < 3)
+            {
+                return null;
+            }
+
             return new Color3(array[0], array[1], array[2]);
         }
 
@@ -401,6 +406,11 @@ namespace BABYLON
 
         public static Color4 FromArray(double[] array, int offset = 0)
         {
+            if (array == null || array.Length < 4)
+            {
+                return null;
+            }
+
             return new Color4(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
 
@@ -698,6 +708,11 @@ namespace BABYLON
         /// </returns>
         public static Vector2 FromArray(Array<double> array, int offset = 0)
         {
+            if (array == null || array.Length < 2)
+            {
+                return null;
+            }
+
             return new Vector2(array[offset], array[offset + 1]);
         }
 
@@ -1150,7 +1165,7 @@ namespace BABYLON
 
         public static Vector3 FromArray(double[] array, int offset = 0)
         {
-            if (array == null)
+            if (array == null || array.Length < 3)
             {
                 return null;
             }
@@ -1931,6 +1946,11 @@ namespace BABYLON
 
         public static Quaternion FromArray(double[] array, int offset = 0)
         {
+            if (array == null || array.Length < 4)
+            {
+                return null;
+            }
+
             return new Quaternion(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
         }
 
@@ -2274,6 +2294,11 @@ namespace BABYLON
 
         public static Matrix FromArray(double[] array, int offset = 0)
         {
+            if (array == null || array.Length < 16)
+            {
+                return null;
+            }
+
             var result = new Matrix();
             FromArrayToRef(array, offset, result);
             return result;
@@ -3508,7 +3533,7 @@ namespace BABYLON
         /// </returns>
         public static Plane FromArray(double[] array)
         {
-            if (array == null)
+            if (array == null || array.Length < 4)
             {
                 return null;
             }

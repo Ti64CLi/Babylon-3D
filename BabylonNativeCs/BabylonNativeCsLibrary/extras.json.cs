@@ -166,9 +166,17 @@ namespace BABYLON
 
         public static JsmnParserValue Parse(string data)
         {
+#if _DEBUG
+            BABYLON.Tools.Log(string.Format("JSON Parsing: {0}...", data.Substring(0, Math.Min(1000, data.Length))));
+#endif
+
             var parser = new JsmnParser(256);
             //var r = parser.Parse("{ \"name\" : \"Jack\", \"age\" : 27 }");
             var r = parser.ParseJson(data);
+
+#if _DEBUG
+            BABYLON.Tools.Log(string.Format("Parsed tokens: {1}, error: {0}", (int)r, parser.Tokens.Length));
+#endif
 
             var parsedData = new JsmnParserValue(0, parser.Tokens);
             return parsedData;
@@ -187,9 +195,8 @@ namespace BABYLON
 #if JSMN_PARENT_LINKS
             tok.parent = -1;
 #endif
-#if DEBUG
             tok.source = this._js;
-#endif
+
             return tok;
         }
 
@@ -761,18 +768,33 @@ namespace BABYLON
 
         private int GetChildrenCount(int currentTokenIndex)
         {
+            if (currentTokenIndex < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             var current = _tokens[currentTokenIndex];
             return current.size;
         }
 
         private bool IsNullHelper(int currentTokenIndex)
         {
+            if (currentTokenIndex < 0)
+            {
+                return true;
+            }
+
             var current = _tokens[currentTokenIndex];
             return current.EqualsTo("null");
         }
 
         private bool IsEmptyHelper(int currentTokenIndex)
         {
+            if (currentTokenIndex < 0)
+            {
+                return true;
+            }
+
             var current = _tokens[currentTokenIndex];
             if (current.type == JsmnType.Array || current.type == JsmnType.Object)
             {
@@ -785,6 +807,11 @@ namespace BABYLON
 
         private int SeekValue(string key)
         {
+            if (_selectedToken < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             var current = _tokens[_selectedToken];
             if (current.type != JsmnType.Object)
             {
@@ -805,6 +832,15 @@ namespace BABYLON
 
         private int SeekValue(int indexToSelect)
         {
+#if _DEBUG
+            BABYLON.Tools.Log(string.Format("JSON Index: {0}", indexToSelect));
+#endif
+
+            if (_selectedToken < 0 || indexToSelect < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             var current = _tokens[_selectedToken];
             if (current.type != JsmnType.Array)
             {
@@ -820,11 +856,20 @@ namespace BABYLON
                 }
             }
 
+#if _DEBUG
+            BABYLON.Tools.Log("NOT FOUND");
+#endif
+
             return -1;
         }
 
         private IEnumerable<int> GetChildrenTokens(int currentTokenIndex)
         {
+            if (currentTokenIndex < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             var current = _tokens[currentTokenIndex];
             var currentChildTokenIndex = currentTokenIndex + 1;
             var childToken = _tokens[currentChildTokenIndex];
@@ -853,6 +898,11 @@ namespace BABYLON
 
         private int GetArrayLength()
         {
+            if (_selectedToken < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             var current = _tokens[_selectedToken];
 
             if (current.type != JsmnType.Array)

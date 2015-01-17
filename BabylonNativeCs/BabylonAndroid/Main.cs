@@ -88,10 +88,7 @@ namespace BabylonAndroid
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene3();
-
-            // Attach the camera to the scene
-            this.scene.activeCamera.attachControl(canvas);
+            this.Scene5();
         }
 
         private void Scene1()
@@ -99,6 +96,9 @@ namespace BabylonAndroid
             var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
             var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
             var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
+
+            // Attach the camera to the scene
+            this.scene.activeCamera.attachControl(canvas);
         }
 
         private void Scene2()
@@ -123,6 +123,9 @@ namespace BabylonAndroid
 
             // Let's try our built-in 'ground' shape.  Params: name, width, depth, subdivisions, scene
             BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, this.scene);
+
+            // Attach the camera to the scene
+            this.scene.activeCamera.attachControl(canvas);
         }
 
         private void Scene3()
@@ -205,6 +208,37 @@ namespace BabylonAndroid
 
             // Attach the camera to the scene
             scene.activeCamera.attachControl(canvas);
+        }
+
+        private void Scene4()
+        {
+            SceneLoader.Load(
+                "",
+                "skull.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    // Attach the camera to the scene
+                    this.scene.activeCamera.attachControl(canvas);
+                });
+        }
+
+        private void Scene5()
+        {
+            SceneLoader.Load(
+                "",
+                "Spaceship.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
+                    this.scene.meshes[0].scaling = new Vector3(0.04, 0.04, 0.04);
+                    this.scene.activeCamera.detachControl(this.canvas);
+                    this.scene.activeCamera = camera;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
         }
     }
 }
