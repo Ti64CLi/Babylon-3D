@@ -573,9 +573,10 @@ namespace BABYLON
         /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public static void LoadFile(
-            string url, Action<byte[]> callback, System.Action progressCallBack = null, Database database = null, bool useArrayBuffer = false)
+        public static void LoadFile(string url, Action<byte[]> callback, System.Action<int, int> progressCallBack = null, Database database = null, bool useArrayBuffer = false)
         {
+            //BABYLON.Tools.ReadFile(url, callback, progressCallBack, true);
+            Engine.document.loadFile(url, callback, progressCallBack);
             /*
             url = Tools.CleanUrl(url);
             var noIndexedDB = () => {
@@ -611,8 +612,6 @@ namespace BABYLON
                 }
             }
              */
-
-            BABYLON.Tools.ReadFile(url, callback, progressCallBack, true);
         }
 
         /// <summary>
@@ -629,14 +628,14 @@ namespace BABYLON
         /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public static void LoadFile(
-            string url, Action<string> callback, System.Action progressCallBack = null, Database database = null, bool useArrayBuffer = false)
+        public static void LoadFile(string url, Action<string> callback, System.Action<int, int> progressCallBack = null, Database database = null, bool useArrayBuffer = false)
         {
-            BABYLON.Tools.ReadFile(url, callback, progressCallBack, true);
+            Engine.document.loadFile(url, callback, progressCallBack);
         }
 
         /// <summary>
         /// </summary>
+        /// <param name="canvas"></param>
         /// <param name="url">
         /// </param>
         /// <param name="onload">
@@ -649,7 +648,7 @@ namespace BABYLON
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public static HTMLImageElement LoadImage(string url, Action<Web.ImageData> onload, Action<Web.ImageData, object> onerror, object database, HTMLCanvasElement canvas)
+        public static HTMLImageElement LoadImage(HTMLCanvasElement canvas, string url, Action<ImageData> onload, Action<ImageData, object> onerror, object database)
         {
             canvas.loadImage(url, onload, onerror);
             return null;
@@ -702,36 +701,6 @@ namespace BABYLON
         public static void QueueNewFrame(FrameRequestCallback func)
         {
             Engine.window.requestAnimationFrame(func);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="fileToLoad">
-        /// </param>
-        /// <param name="callback">=2222
-        /// </param>
-        /// <param name="progressCallBack">
-        /// </param>
-        /// <param name="useArrayBuffer">
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        public static void ReadFile(string fileName, Action<string> callback, System.Action progressCallBack, bool useArrayBuffer = false)
-        {
-            if (callback != null)
-            {
-                var text = System.IO.File.ReadAllText(fileName);
-                callback(text);
-            }
-        }
-
-        public static void ReadFile(string fileName, Action<byte[]> callback, System.Action progressCallBack, bool useArrayBuffer = false)
-        {
-            if (callback != null)
-            {
-                var bytes = System.IO.File.ReadAllBytes(fileName);
-                callback(bytes);
-            }
         }
 
         /// <summary>

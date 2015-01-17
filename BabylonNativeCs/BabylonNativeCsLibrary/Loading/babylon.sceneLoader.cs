@@ -52,7 +52,7 @@ namespace BABYLON
             SceneLoader._registeredPlugins.Add(plugin);
         }
 
-        public static void ImportMesh(object meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action progressCallBack = null, System.Action<Scene> onerror = null)
+        public static void ImportMesh(object meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action<int, int> progressCallBack = null, System.Action<Scene> onerror = null)
         {
             Database database = null;
 
@@ -116,7 +116,7 @@ namespace BABYLON
             string sceneFilename,
             Engine engine,
             System.Action<Scene> onsuccess = null,
-            System.Action progressCallBack = null,
+            System.Action<int, int> progressCallBack = null,
             System.Action<Scene> onerror = null)
         {
             if (SceneLoader._registeredPlugins.Length == 0)
@@ -164,7 +164,7 @@ namespace BABYLON
             }
             else
             {
-                BABYLON.Tools.ReadFile(sceneFilename, loadSceneFromData, progressCallBack);
+                BABYLON.Tools.LoadFile(sceneFilename, loadSceneFromData, progressCallBack);
             }
         }
     }

@@ -84,7 +84,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public static Document document;
+        public static HTMLDocument document;
 
         /// <summary>
         /// </summary>
@@ -242,7 +242,7 @@ namespace BABYLON
         /// </exception>
         public Engine(HTMLCanvasElement canvas, bool antialias = false, EngineOptions engineOptions = null)
         {
-            document = canvas.document;
+            document = canvas.document as HTMLDocument;
             window = document.parentWindow;
             console = window.console;
             Tools.navigator = window.navigator;
@@ -1069,7 +1069,7 @@ namespace BABYLON
                             samplingMode);
                     };
                 Action<Web.ImageData, object> onerror = (img, err) => { scene._removePendingData(texture); };
-                Tools.LoadImage(url, onload, onerror, scene.database, this._canvas);
+                Tools.LoadImage(this._canvas, url, onload, onerror, scene.database);
             }
 
             return texture;
@@ -2113,7 +2113,7 @@ namespace BABYLON
                     }
                 };
             Action<Web.ImageData, object> onerror = (imageElement, err) => { scene._removePendingData(imageElement); };
-            img = Tools.LoadImage(rootUrl + extensions[index], onload, onerror, scene.database, this._canvas);
+            img = Tools.LoadImage(this._canvas, rootUrl + extensions[index], onload, onerror, scene.database);
             scene._addPendingData(img);
         }
 

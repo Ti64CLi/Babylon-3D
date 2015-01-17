@@ -7,6 +7,7 @@ namespace Web
     using BABYLON;
 
     using Intl;
+    using Action = System.Action;
 
     public partial interface ArrayBuffer
     {
@@ -9508,6 +9509,10 @@ namespace Web
 
     public partial interface HTMLDocument : Document
     {
+        // my addon
+        void loadFile(string url, Action<string> callback, Action<int, int> progressCallBack);
+
+        void loadFile(string url, Action<byte[]> callback, Action<int, int> progressCallBack);
     }
 
     public partial interface KeyPair

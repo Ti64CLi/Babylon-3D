@@ -36,8 +36,10 @@
     <ClInclude Include="native_app_glue\android_native_app_glue.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\0.png" />
     <None Include="assets\grass_texture.jpg" />
     <None Include="assets\Planet.png" />
+    <None Include="assets\Spaceship.babylon" />
     <None Include="assets\text.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

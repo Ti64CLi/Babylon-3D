@@ -244,7 +244,7 @@ namespace BABYLON
                     vertexData.applyToMesh(ground, updatable);
                     ground._setReady(true);
                 };
-            Tools.LoadImage(url, onload, (img, err) => { }, scene.database, scene.getEngine()._canvas);
+            Tools.LoadImage(scene.getEngine()._canvas, url, onload, (img, err) => { }, scene.database);
             return ground;
         }
 
@@ -467,7 +467,7 @@ namespace BABYLON
                             this.delayLoadState = Engine.DELAYLOADSTATE_LOADED;
                             scene._removePendingData(this);
                         }, 
-                    () => { }, 
+                    (max, pos) => { }, 
                     scene.database);
             }
         }

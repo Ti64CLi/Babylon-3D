@@ -472,7 +472,7 @@ namespace BABYLON
                         onLoaded();
                     }
                 },
-                () => { },
+                (max, pos) => { },
                 scene.database);
         }
 

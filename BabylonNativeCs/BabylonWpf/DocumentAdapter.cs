@@ -1,8 +1,9 @@
 ﻿namespace BABYLON
 {
     using System;
+    using Web;
 
-    public class DocumentAdapter : Web.Document
+    public class DocumentAdapter : HTMLDocument
     {
         private Web.HTMLCanvasElement canvasAdapter;
         private Map<string, Web.EventListener> listeners;
@@ -2843,6 +2844,24 @@
             set
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public void loadFile(string fileName, Action<string> callback, System.Action<int, int> progressCallBack)
+        {
+            if (callback != null)
+            {
+                var text = System.IO.File.ReadAllText(fileName);
+                callback(text);
+            }
+        }
+
+        public void loadFile(string fileName, Action<byte[]> callback, System.Action<int, int> progressCallBack)
+        {
+            if (callback != null)
+            {
+                var bytes = System.IO.File.ReadAllBytes(fileName);
+                callback(bytes);
             }
         }
     }
