@@ -248,7 +248,7 @@ namespace BABYLON
             Tools.navigator = window.navigator;
             _canvas = canvas;
 
-            console.info("Engine ctor()");
+            Tools.Log("Engine ctor()");
 
             this._renderingCanvas = canvas;
             this._canvasClientRect = this._renderingCanvas.getBoundingClientRect();
@@ -1021,7 +1021,7 @@ namespace BABYLON
                             info.isFourCC,
                             (pos, max) =>
                             {
-                                console.log("loading " + url);
+                                Tools.Log("loading " + url);
                                 DDSTools.UploadDDSLevels(this._gl, this.getCaps().s3tc, data, info, loadMipmap, 1);
                             },
                             samplingMode);

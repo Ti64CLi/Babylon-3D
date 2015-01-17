@@ -137,7 +137,7 @@ namespace BABYLON.Internals
                         internalFormat = ext.COMPRESSED_RGBA_S3TC_DXT5_EXT;
                         break;
                     default:
-                        Engine.console.error("Unsupported FourCC code:", fourCC);
+                        Tools.Error(string.Format("Unsupported FourCC code: {0}", fourCC));
                         return;
                 }
             }
