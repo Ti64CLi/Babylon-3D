@@ -81,9 +81,6 @@
     <Compile Include="..\BabylonWpf\Defaults.cs">
       <Link>Defaults.cs</Link>
     </Compile>
-    <Compile Include="..\BabylonWpf\DocumentAdapter.cs">
-      <Link>DocumentAdapter.cs</Link>
-    </Compile>
     <Compile Include="..\BabylonWpf\GlBufferAdapter.cs">
       <Link>GlBufferAdapter.cs</Link>
     </Compile>
@@ -116,6 +113,7 @@
     </Compile>
     <Compile Include="CanvasAdapter.cs" />
     <Compile Include="ConsoleAdapter.cs" />
+    <Compile Include="DocumentAdapter.cs" />
     <Compile Include="Gl.cs" />
     <Compile Include="GLRenderingContextAdapter.cs" />
     <Compile Include="Log.cs" />
