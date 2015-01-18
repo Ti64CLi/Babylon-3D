@@ -576,13 +576,10 @@ namespace BABYLON
 
         private Array<JsmnTok> _tokens;
 
-        private int _to_simulate_alignment;
-
         public JsmnParserValue(int tokenIndex, Array<JsmnTok> tokens)
         {
             _selectedToken = tokenIndex;
             _tokens = tokens;
-            _to_simulate_alignment = 0;
         }
 
         public JsmnParserValue this[string key]
