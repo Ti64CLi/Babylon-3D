@@ -567,16 +567,22 @@ namespace BABYLON
         }
     }
 
+    // on ARM CPU it does not work if size of struct is 12 bytes (but it is skill aligned)
+    // NOTE: If the stack is not eight-byte aligned the use of LDRD and STRD might cause an alignment fault, depending on the target and configuration used
+    // 8-byte stack alignment for ARM Cortex-A9
     public struct JsmnParserValue
     {
         private int _selectedToken;
 
         private Array<JsmnTok> _tokens;
 
+        private int _to_simulate_alignment;
+
         public JsmnParserValue(int tokenIndex, Array<JsmnTok> tokens)
         {
             _selectedToken = tokenIndex;
             _tokens = tokens;
+            _to_simulate_alignment = 0;
         }
 
         public JsmnParserValue this[string key]
@@ -807,6 +813,10 @@ namespace BABYLON
 
         private int SeekValue(string key)
         {
+#if _DEBUG
+            BABYLON.Tools.Log(string.Format("JSON SeekValue: {0}", key));
+#endif
+
             if (_selectedToken < 0)
             {
                 throw new IndexOutOfRangeException();
@@ -827,15 +837,15 @@ namespace BABYLON
                 }
             }
 
+#if _DEBUG
+            BABYLON.Tools.Log("NOT FOUND");
+#endif
+
             return -1;
         }
 
         private int SeekValue(int indexToSelect)
         {
-#if _DEBUG
-            BABYLON.Tools.Log(string.Format("JSON Index: {0}", indexToSelect));
-#endif
-
             if (_selectedToken < 0 || indexToSelect < 0)
             {
                 throw new IndexOutOfRangeException();
@@ -855,10 +865,6 @@ namespace BABYLON
                     return childTokenIndex;
                 }
             }
-
-#if _DEBUG
-            BABYLON.Tools.Log("NOT FOUND");
-#endif
 
             return -1;
         }

@@ -886,8 +886,27 @@ namespace BABYLON.Internals
             // Scene
             scene.useDelayedTextureLoading = parsedData["useDelayedTextureLoading"] && !BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental;
             scene.autoClear = parsedData["autoClear"];
-            scene.clearColor = BABYLON.Color3.FromArray(parsedData["clearColor"]);
+
+#if _DEBUG
+            BABYLON.Tools.Log("next is clearColor");
+
+            //scene.clearColor = Color3.FromArray(new double[] { 1.0, 2.0, 3.0 });
+            //BABYLON.Tools.Log("test done");
+#endif
+
+            var c = BABYLON.Color3.FromArray(parsedData["clearColor"]);
+            scene.clearColor = c;
+
+#if _DEBUG
+            BABYLON.Tools.Log("next is ambientColor");
+#endif
+
             scene.ambientColor = BABYLON.Color3.FromArray(parsedData["ambientColor"]);
+
+#if _DEBUG
+            BABYLON.Tools.Log("next is gravity");
+#endif
+
             scene.gravity = BABYLON.Vector3.FromArray(parsedData["gravity"]);
 
             // Fog

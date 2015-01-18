@@ -73,12 +73,25 @@ namespace BABYLON
 
         public static Color3 FromArray(double[] array)
         {
+#if _DEBUG
+            BABYLON.Tools.Log(" Color3 FromArray");
+#endif
+
             if (array == null || array.Length < 3)
             {
+#if _DEBUG
+                BABYLON.Tools.Log(" Color3 is null");
+#endif
+
                 return null;
             }
 
-            return new Color3(array[0], array[1], array[2]);
+            var c = new Color3(array[0], array[1], array[2]);
+
+#if _DEBUG
+            BABYLON.Tools.Log(string.Format("returning  Color3 {0} {1} {2}", c.r, c.g, c.b));
+#endif
+            return c;
         }
 
         /// <summary>
@@ -2365,21 +2378,21 @@ namespace BABYLON
         /// <returns>
         /// </returns>
         public static Matrix FromValues(
-            double initialM11, 
-            double initialM12, 
-            double initialM13, 
-            double initialM14, 
-            double initialM21, 
-            double initialM22, 
-            double initialM23, 
-            double initialM24, 
-            double initialM31, 
-            double initialM32, 
-            double initialM33, 
-            double initialM34, 
-            double initialM41, 
-            double initialM42, 
-            double initialM43, 
+            double initialM11,
+            double initialM12,
+            double initialM13,
+            double initialM14,
+            double initialM21,
+            double initialM22,
+            double initialM23,
+            double initialM24,
+            double initialM31,
+            double initialM32,
+            double initialM33,
+            double initialM34,
+            double initialM41,
+            double initialM42,
+            double initialM43,
             double initialM44)
         {
             var result = new Matrix();
@@ -2439,22 +2452,22 @@ namespace BABYLON
         /// <param name="result">
         /// </param>
         public static void FromValuesToRef(
-            double initialM11, 
-            double initialM12, 
-            double initialM13, 
-            double initialM14, 
-            double initialM21, 
-            double initialM22, 
-            double initialM23, 
-            double initialM24, 
-            double initialM31, 
-            double initialM32, 
-            double initialM33, 
-            double initialM34, 
-            double initialM41, 
-            double initialM42, 
-            double initialM43, 
-            double initialM44, 
+            double initialM11,
+            double initialM12,
+            double initialM13,
+            double initialM14,
+            double initialM21,
+            double initialM22,
+            double initialM23,
+            double initialM24,
+            double initialM31,
+            double initialM32,
+            double initialM33,
+            double initialM34,
+            double initialM41,
+            double initialM42,
+            double initialM43,
+            double initialM44,
             Matrix result)
         {
             result.m[0] = initialM11;
@@ -3071,21 +3084,21 @@ namespace BABYLON
         public virtual Matrix clone()
         {
             return FromValues(
-                this.m[0], 
-                this.m[1], 
-                this.m[2], 
-                this.m[3], 
-                this.m[4], 
-                this.m[5], 
-                this.m[6], 
-                this.m[7], 
-                this.m[8], 
-                this.m[9], 
-                this.m[10], 
-                this.m[11], 
-                this.m[12], 
-                this.m[13], 
-                this.m[14], 
+                this.m[0],
+                this.m[1],
+                this.m[2],
+                this.m[3],
+                this.m[4],
+                this.m[5],
+                this.m[6],
+                this.m[7],
+                this.m[8],
+                this.m[9],
+                this.m[10],
+                this.m[11],
+                this.m[12],
+                this.m[13],
+                this.m[14],
                 this.m[15]);
         }
 
@@ -3967,7 +3980,7 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
-        LOCAL, 
+        LOCAL,
 
         /// <summary>
         /// </summary>
