@@ -476,6 +476,9 @@ namespace BABYLON
 
             if (!this._cache.scaling.equals(this.scaling))
             {
+#if _DEBUG
+                Tools.Log(string.Format("scaling not equal: new {0}, {1}, {2}", this.scaling.x, this.scaling.y, this.scaling.z));
+#endif
                 return false;
             }
 
@@ -586,7 +589,14 @@ namespace BABYLON
             }
 
             this._cache.position.copyFrom(this.position);
+#if _DEBUG
+                Tools.Log(string.Format("scaling: to set {0}, {1}, {2}", this.scaling.x, this.scaling.y, this.scaling.z));
+                Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
+#endif
             this._cache.scaling.copyFrom(this.scaling);
+#if _DEBUG
+                Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
+#endif
             this._cache.pivotMatrixUpdated = false;
             this._currentRenderId = this.getScene().getRenderId();
             this._isDirty = false;
