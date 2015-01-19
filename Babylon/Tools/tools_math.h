@@ -1,8 +1,0 @@
-#include "viewport.h"
-#include "color3.h"
-#include "color4.h"
-#include "vector2.h"
-#include "vector3.h"
-#include "matrix.h"
-#include "quaternion.h"
-#include "plane.h"
