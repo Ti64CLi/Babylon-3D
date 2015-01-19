@@ -399,11 +399,11 @@ namespace BABYLON
             }
 
             collider._collide(
-                subMesh, 
-                subMesh._lastColliderWorldVertices, 
-                this.getIndices(), 
-                subMesh.indexStart, 
-                subMesh.indexStart + subMesh.indexCount, 
+                subMesh,
+                subMesh._lastColliderWorldVertices,
+                this.getIndices(),
+                subMesh.indexStart,
+                subMesh.indexStart + subMesh.indexCount,
                 subMesh.verticesStart);
         }
 
@@ -583,19 +583,32 @@ namespace BABYLON
         /// </returns>
         public virtual Matrix computeWorldMatrix(bool force = false)
         {
+#if _DEBUG
+            Tools.Log(string.Format("computeWorldMatrix force - {0}", force));
+            Tools.Log(string.Format("current render id {0}, scene render id {1}", this._currentRenderId, this.getScene().getRenderId()));
+#endif
+
             if (!force && (this._currentRenderId == this.getScene().getRenderId() || this.isSynchronized(true)))
             {
+#if _DEBUG
+                Tools.Log("current _worldMatrix returned");
+#endif
+
                 return this._worldMatrix;
             }
 
+#if _DEBUG
+            Tools.Log("new _worldMatrix is being calculated");
+#endif
+
             this._cache.position.copyFrom(this.position);
 #if _DEBUG
-                Tools.Log(string.Format("scaling: to set {0}, {1}, {2}", this.scaling.x, this.scaling.y, this.scaling.z));
-                Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
+            Tools.Log(string.Format("scaling: to set {0}, {1}, {2}", this.scaling.x, this.scaling.y, this.scaling.z));
+            Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
 #endif
             this._cache.scaling.copyFrom(this.scaling);
 #if _DEBUG
-                Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
+            Tools.Log(string.Format("cached scaling: to set {0}, {1}, {2}", this._cache.scaling.x, this._cache.scaling.y, this._cache.scaling.z));
 #endif
             this._cache.pivotMatrixUpdated = false;
             this._currentRenderId = this.getScene().getRenderId();
@@ -618,9 +631,9 @@ namespace BABYLON
                 var cameraWorldMatrix = camera.getWorldMatrix();
                 var cameraGlobalPosition = new Vector3(cameraWorldMatrix.m[12], cameraWorldMatrix.m[13], cameraWorldMatrix.m[14]);
                 Matrix.TranslationToRef(
-                    this.position.x + cameraGlobalPosition.x, 
-                    this.position.y + cameraGlobalPosition.y, 
-                    this.position.z + cameraGlobalPosition.z, 
+                    this.position.x + cameraGlobalPosition.x,
+                    this.position.y + cameraGlobalPosition.y,
+                    this.position.z + cameraGlobalPosition.z,
                     this._localTranslation);
             }
             else
