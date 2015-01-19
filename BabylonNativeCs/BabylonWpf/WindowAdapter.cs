@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿namespace BabylonWpf
 {
     using System;
@@ -11,6 +12,18 @@
         {
             this.listeners = new Map<string, Web.EventListener>();
             this.console = new ConsoleAdapter();
+=======
+﻿namespace BABYLON
+{
+    using System;
+
+    public class WindowAdapter : Web.Window
+    {
+        public WindowAdapter()
+        {
+            this.console = new ConsoleAdapter();
+            this.navigator = new NavigatorAdapter();
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.DragEvent, object> ondragend
@@ -675,6 +688,7 @@
 
         public Web.Window parent
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -683,6 +697,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Web.Location location
@@ -867,6 +885,7 @@
 
         public Web.Navigator navigator
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -875,6 +894,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Web.StyleMedia styleMedia
@@ -1469,7 +1492,10 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
+<<<<<<< HEAD
             this.listeners[type] = listener;
+=======
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public void removeEventListener(string type, Web.EventListener listener, bool useCapture = false)

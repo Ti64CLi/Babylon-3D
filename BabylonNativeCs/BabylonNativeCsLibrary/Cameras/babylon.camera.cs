@@ -13,7 +13,11 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
+<<<<<<< HEAD
     public partial class Camera : Node
+=======
+    public abstract class Camera : Node
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
     {
         /// <summary>
         /// </summary>
@@ -222,9 +226,13 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
+<<<<<<< HEAD
         public virtual void _update()
         {
         }
+=======
+        public abstract void _update();
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
         /// <summary>
         /// </summary>
@@ -265,9 +273,13 @@ namespace BABYLON
         /// </summary>
         /// <param name="element">
         /// </param>
+<<<<<<< HEAD
         public virtual void attachControl(HTMLElement element)
         {
         }
+=======
+        public abstract void attachControl(HTMLElement element, bool noPreventDefault = false);
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
         /// <summary>
         /// </summary>
@@ -335,9 +347,13 @@ namespace BABYLON
         /// </summary>
         /// <param name="element">
         /// </param>
+<<<<<<< HEAD
         public virtual void detachControl(HTMLElement element)
         {
         }
+=======
+        public abstract void detachControl(HTMLElement element);
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
         /// <summary>
         /// </summary>

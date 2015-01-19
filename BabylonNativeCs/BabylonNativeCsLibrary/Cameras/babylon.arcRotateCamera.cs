@@ -336,7 +336,11 @@ namespace BABYLON
         /// </param>
         /// <param name="noPreventDefault">
         /// </param>
+<<<<<<< HEAD
         public virtual void attachControl(HTMLElement element, bool noPreventDefault = false)
+=======
+        public override void attachControl(HTMLElement element, bool noPreventDefault = false)
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         {
             PositionCoord previousPosition = null;
             var pointerId = 0;
@@ -357,8 +361,13 @@ namespace BABYLON
                         }
 
                         var evt = (PointerEvent)e;
+<<<<<<< HEAD
 
                         pointerId = evt.pointerId;
+=======
+                        pointerId = evt.pointerId;
+
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
                         previousPosition = new PositionCoord { x = evt.clientX, y = evt.clientY };
                         if (!noPreventDefault)
                         {
@@ -519,8 +528,13 @@ namespace BABYLON
             element.addEventListener("DOMMouseScroll", this._wheel, false);
             Tools.RegisterTopRootEvents(
                 new Array<EventDts>(
+<<<<<<< HEAD
                     new EventDts { name = "keydown", handler = this._onKeyDown }, 
                     new EventDts { name = "keyup", handler = this._onKeyUp }, 
+=======
+                    new EventDts { name = "keydown", handler = this._onKeyDown },
+                    new EventDts { name = "keyup", handler = this._onKeyUp },
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
                     new EventDts { name = "blur", handler = this._onLostFocus }));
         }
 
@@ -547,8 +561,13 @@ namespace BABYLON
             element.removeEventListener("DOMMouseScroll", this._wheel);
             Tools.UnregisterTopRootEvents(
                 new Array<EventDts>(
+<<<<<<< HEAD
                     new EventDts { name = "keydown", handler = this._onKeyDown }, 
                     new EventDts { name = "keyup", handler = this._onKeyUp }, 
+=======
+                    new EventDts { name = "keydown", handler = this._onKeyDown },
+                    new EventDts { name = "keyup", handler = this._onKeyUp },
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
                     new EventDts { name = "blur", handler = this._onLostFocus }));
 
             // this._MSGestureHandler = null;

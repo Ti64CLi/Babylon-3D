@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿namespace BabylonWpf
+=======
+﻿namespace BabylonGlut
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 {
     using System;
     using BABYLON;
@@ -8,9 +12,12 @@
         private int maxWidth;
         private int maxHeight;
 
+<<<<<<< HEAD
         private Map<string, Web.EventListener> listeners;
 
 
+=======
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         public CanvasAdapter(int width, int height, int maxWidth, int maxHeight)
         {
             this.width = width;
@@ -19,7 +26,10 @@
             this.maxHeight = maxHeight;
 
             this.document = new DocumentAdapter(this);
+<<<<<<< HEAD
             this.listeners = new Map<string, Web.EventListener>();
+=======
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public int width
@@ -829,6 +839,7 @@
 
         public Func<Web.MouseEvent, object> onmouseup
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -837,6 +848,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.DragEvent, object> ondragstart
@@ -949,6 +964,7 @@
 
         public Func<Web.MouseEvent, object> onmousedown
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -957,6 +973,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.MouseEvent, object> onclick
@@ -1093,6 +1113,7 @@
 
         public Func<Web.MouseEvent, object> onmousemove
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -1101,10 +1122,15 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Web.MSStyleCSSProperties style
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -1113,6 +1139,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public bool isContentEditable
@@ -1843,7 +1873,33 @@
 
         public void addEventListener(string type, Web.EventListener listener, bool useCapture = false)
         {
+<<<<<<< HEAD
             this.listeners[type] = listener;
+=======
+            Log.Info(string.Format("addEventListener - {0}", type));
+
+            switch (type)
+            {
+                case "mousemove":
+                    this.onmousemove = (e) => { listener(e); return null; };
+                    break;
+                case "mouseup":
+                    this.onmouseup = (e) => { listener(e); return null; };
+                    break;
+                case "mousedown":
+                    this.onmousedown = (e) => { listener(e); return null; };
+                    break;
+                case "pointermove":
+                    this.onpointermove = (e) => { listener(e); return null; };
+                    break;
+                case "pointerup":
+                    this.onpointerup = (e) => { listener(e); return null; };
+                    break;
+                case "pointerdown":
+                    this.onpointerdown = (e) => { listener(e); return null; };
+                    break;
+            }
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public int scrollTop
@@ -2930,6 +2986,7 @@
 
         public Func<Web.PointerEvent, object> onpointerdown
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -2938,10 +2995,15 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.PointerEvent, object> onpointerup
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -2950,6 +3012,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.PointerEvent, object> onpointercancel
@@ -2978,6 +3044,7 @@
 
         public Func<Web.PointerEvent, object> onpointermove
         {
+<<<<<<< HEAD
             get
             {
                 throw new NotImplementedException();
@@ -2986,6 +3053,10 @@
             {
                 throw new NotImplementedException();
             }
+=======
+            get;
+            set;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         }
 
         public Func<Web.PointerEvent, object> onpointerleave

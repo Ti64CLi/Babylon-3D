@@ -530,13 +530,21 @@ namespace BABYLON
                     if (pickResult.hit)
                     {
                         this.setPointerOverMesh(pickResult.pickedMesh);
+<<<<<<< HEAD
                         canvas.style.cursor = "pointer";
+=======
+                        //canvas.style.cursor = "pointer";
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
                         this._meshUnderPointer = pickResult.pickedMesh;
                     }
                     else
                     {
                         this.setPointerOverMesh(null);
+<<<<<<< HEAD
                         canvas.style.cursor = string.Empty;
+=======
+                        //canvas.style.cursor = string.Empty;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
                         this._meshUnderPointer = null;
                     }
                 };

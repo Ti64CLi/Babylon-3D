@@ -13,8 +13,11 @@ namespace BabylonGlut
 
     using BABYLON;
 
+<<<<<<< HEAD
     using BabylonWpf;
 
+=======
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
     /// <summary>
     /// </summary>
     public class Main
@@ -29,6 +32,13 @@ namespace BabylonGlut
 
         /// <summary>
         /// </summary>
+<<<<<<< HEAD
+=======
+        public CanvasAdapter canvas { get; set; }
+
+        /// <summary>
+        /// </summary>
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         private Engine engine;
 
         /// <summary>
@@ -75,11 +85,19 @@ namespace BabylonGlut
             // BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             // BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
+<<<<<<< HEAD
             var canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
             this.Scene2();
+=======
+            this.canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight);
+            this.engine = new Engine(canvas, true);
+            this.scene = new Scene(this.engine);
+
+            this.Scene1();
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -88,7 +106,11 @@ namespace BabylonGlut
         private void Scene1()
         {
             var camera = new ArcRotateCamera("Camera", 1, 0.8, 10, new Vector3(0, 0, 0), this.scene);
+<<<<<<< HEAD
             var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene);
+=======
+            var light0 = new PointLight("Omni", new Vector3(0, 0, 10), this.scene); 
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
             var origin = Mesh.CreateSphere("origin", 10, 1.0, this.scene);
         }
 

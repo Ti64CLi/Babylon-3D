@@ -24,8 +24,16 @@ namespace BabylonWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+<<<<<<< HEAD
         private Engine engine;
         private BABYLON.Scene scene;
+=======
+        private CanvasAdapter canvas;
+        private Engine engine;
+        private BABYLON.Scene scene;
+        private int pointerId;
+        private bool pointerLocked;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
         public MainWindow()
         {
@@ -39,11 +47,19 @@ namespace BabylonWpf
             //BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             //BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
+<<<<<<< HEAD
             var canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
             this.Scene2();
+=======
+            this.canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
+            this.engine = new Engine(canvas, true);
+            this.scene = new BABYLON.Scene(this.engine);
+
+            this.Scene1();
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
 
             // Attach the camera to the scene
             this.scene.activeCamera.attachControl(canvas);
@@ -103,5 +119,75 @@ namespace BabylonWpf
             //  Back to the modelview.
             gl.MatrixMode(MatrixMode.Modelview);
         }
+<<<<<<< HEAD
+=======
+
+        private void openGLControl1_MouseLeftButtonUp(object sender, MouseEventArgs e)
+        {
+            if (this.canvas.onmouseup != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onmouseup(new MouseEventAdapter(0, (int)pX, (int)pY));
+            }
+
+            if (this.canvas.onpointerup != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointerup(new PointerEventAdapter(this.pointerId, (int)pX, (int)pY));
+
+                this.pointerLocked = false;
+            }
+        }
+
+        private void openGLControl1_MouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
+            if (this.canvas.onmousedown != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onmousedown(new MouseEventAdapter(0, (int)pX, (int)pY));
+            }
+
+            if (this.canvas.onpointerdown != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointerdown(new PointerEventAdapter(++this.pointerId, (int)pX, (int)pY));
+
+                this.pointerLocked = true;
+            }
+        }
+
+        private void openGLControl1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.canvas.onmousemove != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onmousemove(new MouseEventAdapter(-1, (int)pX, (int)pY));
+            }
+
+            if (this.pointerLocked && this.canvas.onpointermove != null)
+            {
+                System.Windows.Point position = e.GetPosition(this);
+                var pX = position.X;
+                var pY = position.Y;
+
+                this.canvas.onpointermove(new PointerEventAdapter(this.pointerId, (int)pX, (int)pY));
+            }
+        }
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
     }
 }

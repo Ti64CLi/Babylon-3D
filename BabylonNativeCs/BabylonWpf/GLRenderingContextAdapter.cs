@@ -4,8 +4,13 @@
     using System.Diagnostics;
     using System.Text;
 
+<<<<<<< HEAD
     using SharpGL.Enumerations;
 
+=======
+    using BABYLON;
+    using SharpGL.Enumerations;
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
     using Web;
 
     public class GlRenderingContextAdapter : Web.WebGLRenderingContext

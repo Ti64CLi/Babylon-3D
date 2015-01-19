@@ -38,6 +38,11 @@ namespace BABYLON
     /// </summary>
     public partial class Tools
     {
+<<<<<<< HEAD
+=======
+        public static Web.Navigator navigator;
+
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
         // Screenshots
 
         // FPS
@@ -530,12 +535,19 @@ namespace BABYLON
         {
             var eventPrefix = "pointer";
 
+<<<<<<< HEAD
             /*
+=======
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
             if (!navigator.pointerEnabled)
             {
                 eventPrefix = "mouse";
             }
+<<<<<<< HEAD
             */
+=======
+
+>>>>>>> f265f07661031677698c527dcba26356bdf55cab
             return eventPrefix;
         }
 
