@@ -234,10 +234,9 @@ namespace BabylonAndroid
                 {
                     this.scene = loadedScene;
                     var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
-                    this.scene.meshes[0].scaling = new Vector3(20, 20, 20);
-                    //this.scene.meshes[0].scaling = new Vector3(0.04, 0.04, 0.04);
-                    //this.scene.activeCamera.detachControl(this.canvas);
-                    //this.scene.activeCamera = camera;
+                    this.scene.meshes[0].scaling = new Vector3(0.04, 0.04, 0.04);
+                    this.scene.activeCamera.detachControl(this.canvas);
+                    this.scene.activeCamera = camera;
                     this.scene.activeCamera.attachControl(this.canvas);
                 });
         }

@@ -269,10 +269,6 @@ namespace BABYLON
                 this.updateCache(true);
             }
 
-#if _DEBUG
-                Tools.Log(string.Format("Node: isSynchronized {0}", !check));
-#endif
-
             return !check;
         }
 
