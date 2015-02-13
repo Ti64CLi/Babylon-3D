@@ -88,7 +88,7 @@ namespace BabylonAndroid
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene5();
+            this.Scene8();
         }
 
         private void Scene1()
@@ -239,6 +239,89 @@ namespace BabylonAndroid
                     this.scene.activeCamera = camera;
                     this.scene.activeCamera.attachControl(this.canvas);
                 });
+        }
+
+        private void Scene6()
+        {
+            SceneLoader.Load(
+                "",
+                "Viper.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
+                    // Attach the camera to the scene
+                    this.scene.meshes[0].scaling = new Vector3(4.0, 4.0, 4.0);
+                    this.scene.activeCamera.detachControl(this.canvas);
+                    this.scene.activeCamera = camera;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
+        }
+
+        private void Scene7()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 100, 2), scene);
+            var sphere = BABYLON.Mesh.CreateSphere("Sphere", 16, 3, scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            material.bumpTexture = new BABYLON.Texture("normalMap.jpg", scene);
+            material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+
+            sphere.material = material;
+
+            camera.setPosition(new BABYLON.Vector3(-5, 5, 0));
+
+            // Animations
+            scene.registerBeforeRender(() =>
+            {
+                sphere.rotation.y += 0.02;
+            });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene8()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 100, 2), scene);
+
+
+            var material0 = new BABYLON.StandardMaterial("mat0", scene);
+            material0.diffuseColor = new BABYLON.Color3(1, 0, 0);
+            material0.bumpTexture = new BABYLON.Texture("normalMap.jpg", scene);
+
+            var material1 = new BABYLON.StandardMaterial("mat1", scene);
+            material1.diffuseColor = new BABYLON.Color3(0, 0, 1);
+
+            var material2 = new BABYLON.StandardMaterial("mat2", scene);
+            material2.emissiveColor = new BABYLON.Color3(0.4, 0, 0.4);
+
+            var multimat = new BABYLON.MultiMaterial("multi", scene);
+            multimat.subMaterials.Add(material0);
+            multimat.subMaterials.Add(material1);
+            multimat.subMaterials.Add(material2);
+
+            var sphere = BABYLON.Mesh.CreateSphere("Sphere0", 16, 3, scene);
+            sphere.material = multimat;
+
+            sphere.subMeshes = new Array<SubMesh>();
+            ;
+            var verticesCount = sphere.getTotalVertices();
+
+            sphere.subMeshes.Add(new BABYLON.SubMesh(0, 0, verticesCount, 0, 900, sphere));
+            sphere.subMeshes.Add(new BABYLON.SubMesh(1, 0, verticesCount, 900, 900, sphere));
+            sphere.subMeshes.Add(new BABYLON.SubMesh(2, 0, verticesCount, 1800, 2088, sphere));
+
+            camera.setPosition(new BABYLON.Vector3(-3, 3, 0));
+
+            // Animations
+            scene.registerBeforeRender(
+                () => { sphere.rotation.y += 0.01; });
+
+            this.scene.activeCamera.attachControl(this.canvas);
         }
     }
 }
