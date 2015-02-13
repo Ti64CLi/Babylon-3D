@@ -703,11 +703,12 @@ namespace BABYLON
                             Gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
                             Gl.TEXTURE_CUBE_MAP_NEGATIVE_Z);
                         gl.bindTexture(Gl.TEXTURE_CUBE_MAP, texture);
-                        gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
+                        //gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
                         for (var index = 0; index < faces.Length; index++)
                         {
-                            this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
-                            gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
+                            //this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
+                            //gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
+                            gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, imgs[index]);
                         }
 
                         if (!noMipmap)

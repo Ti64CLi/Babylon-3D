@@ -40,7 +40,7 @@ namespace BABYLON
         /// <param name="noMipmap">
         /// </param>
         public CubeTexture(string rootUrl, Scene scene, Array<string> extensions = null, bool noMipmap = false)
-            : base(rootUrl, scene)
+            : base(null, scene)
         {
             this.name = rootUrl;
             this.url = rootUrl;

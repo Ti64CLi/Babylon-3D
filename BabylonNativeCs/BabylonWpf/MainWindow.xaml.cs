@@ -341,15 +341,15 @@ namespace BabylonWpf
             light3.specular = new BABYLON.Color3(1, 1, 1);
 
             // Skybox
-            ////var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
-            ////var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-            ////skyboxMaterial.backFaceCulling = false;
-            ////skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
-            ////skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-            ////skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-            ////skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-            ////skybox.material = skyboxMaterial;
-            ////skybox.infiniteDistance = true;
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+            skybox.infiniteDistance = true;
 
             // Animations
             var alpha = 0.0;

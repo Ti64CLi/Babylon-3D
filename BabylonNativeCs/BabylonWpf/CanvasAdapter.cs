@@ -3047,6 +3047,7 @@ namespace BabylonWpf
         {
             var bmp = Bitmap.FromFile(url);
             onload(new ImageDataAdapter(bmp));
+            //onerror(null, null);
         }
     }
 }
