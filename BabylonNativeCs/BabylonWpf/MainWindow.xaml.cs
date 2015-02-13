@@ -49,7 +49,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene8();
+            this.Scene9();
         }
 
         private void Scene1()
@@ -281,6 +281,90 @@ namespace BabylonWpf
             // Animations
             scene.registerBeforeRender(
                 () => { sphere.rotation.y += 0.01; });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene9()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 10, 0), scene);
+            var light1 = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, -10, 0), scene);
+            var light2 = new BABYLON.PointLight("Omni2", new BABYLON.Vector3(10, 0, 0), scene);
+            var light3 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(1, -1, 0), scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            var sphere = BABYLON.Mesh.CreateSphere("Sphere", 16, 3, scene);
+
+            camera.setPosition(new BABYLON.Vector3(-10, 10, 0));
+
+            light3.parent = camera;
+
+            // Creating light sphere
+            var lightSphere0 = BABYLON.Mesh.CreateSphere("Sphere0", 16, 0.5, scene);
+            var lightSphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 16, 0.5, scene);
+            var lightSphere2 = BABYLON.Mesh.CreateSphere("Sphere2", 16, 0.5, scene);
+
+            var material1 = new BABYLON.StandardMaterial("red", scene);
+            material1.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material1.specularColor = new BABYLON.Color3(0, 0, 0);
+            material1.emissiveColor = new BABYLON.Color3(1, 0, 0);
+            lightSphere0.material = material1;
+
+            var material2 = new BABYLON.StandardMaterial("green", scene);
+            material2.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material2.specularColor = new BABYLON.Color3(0, 0, 0);
+            material2.emissiveColor = new BABYLON.Color3(0, 1, 0);
+            lightSphere1.material = material2;
+
+            var material3 = new BABYLON.StandardMaterial("blue", scene);
+            material3.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material3.specularColor = new BABYLON.Color3(0, 0, 0);
+            material3.emissiveColor = new BABYLON.Color3(0, 0, 1);
+            lightSphere2.material = material3;
+
+            // Sphere material
+            material.diffuseColor = new BABYLON.Color3(1, 1, 1);
+            sphere.material = material;
+
+            // Lights colors
+            light0.diffuse = new BABYLON.Color3(1, 0, 0);
+            light0.specular = new BABYLON.Color3(1, 0, 0);
+
+            light1.diffuse = new BABYLON.Color3(0, 1, 0);
+            light1.specular = new BABYLON.Color3(0, 1, 0);
+
+            light2.diffuse = new BABYLON.Color3(0, 0, 1);
+            light2.specular = new BABYLON.Color3(0, 0, 1);
+
+            light3.diffuse = new BABYLON.Color3(1, 1, 1);
+            light3.specular = new BABYLON.Color3(1, 1, 1);
+
+            // Skybox
+            ////var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            ////var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            ////skyboxMaterial.backFaceCulling = false;
+            ////skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            ////skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            ////skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            ////skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            ////skybox.material = skyboxMaterial;
+            ////skybox.infiniteDistance = true;
+
+            // Animations
+            var alpha = 0.0;
+            scene.registerBeforeRender(() =>
+            {
+                light0.position = new BABYLON.Vector3(10 * Math.Sin(alpha), 0, 10 * Math.Cos(alpha));
+                light1.position = new BABYLON.Vector3(10 * Math.Sin(alpha), 0, -10 * Math.Cos(alpha));
+                light2.position = new BABYLON.Vector3(10 * Math.Cos(alpha), 0, 10 * Math.Sin(alpha));
+
+                lightSphere0.position = light0.position;
+                lightSphere1.position = light1.position;
+                lightSphere2.position = light2.position;
+
+                alpha += 0.01;
+            });
 
             this.scene.activeCamera.attachControl(this.canvas);
         }

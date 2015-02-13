@@ -38,6 +38,7 @@
   <ItemGroup>
     <None Include="assets\0.png" />
     <None Include="assets\grass_texture.jpg" />
+    <None Include="assets\normalMap.jpg" />
     <None Include="assets\Planet.png" />
     <None Include="assets\Spaceship.babylon" />
     <None Include="assets\text.jpg" />

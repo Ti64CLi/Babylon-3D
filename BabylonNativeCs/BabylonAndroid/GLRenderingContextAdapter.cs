@@ -406,6 +406,22 @@
 
         public object getExtension(string name)
         {
+            if (name == "OES_standard_derivatives")
+            {
+                unsafe
+                {
+                    var result = Gl.glGetString(Gl.GL_EXTENSIONS);
+                    var ext = new string(result);
+
+#if _DEBUG
+                    Log.Info(string.Format("Extension: {0}", ext));
+#endif
+
+                    //return ext.Contains(name) ? new object() : null;
+                    return new object();
+                }
+            }
+
             return null;
         }
 

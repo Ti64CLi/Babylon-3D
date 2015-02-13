@@ -47,6 +47,8 @@
         public const int GL_RGBA = 6408;
         public const int GL_BGRA = 32993;
 
+        public const int GL_EXTENSIONS = 7939;
+
         /// <summary>
         /// </summary>
         /// <param name="mask">

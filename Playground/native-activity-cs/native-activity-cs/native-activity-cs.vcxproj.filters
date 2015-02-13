@@ -59,5 +59,8 @@
     <None Include="assets\Spaceship.babylon">
       <Filter>asset</Filter>
     </None>
+    <None Include="assets\normalMap.jpg">
+      <Filter>asset</Filter>
+    </None>
   </ItemGroup>
 </Project>
