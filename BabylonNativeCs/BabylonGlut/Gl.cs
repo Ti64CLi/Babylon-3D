@@ -123,6 +123,7 @@
         public const int GL_RGBA = 6408;
         public const int GL_BGRA = 32993;
 
+        public const int GL_EXTENSIONS = 7939;
 
         /// <summary>
         /// </summary>
@@ -403,6 +404,9 @@
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public static extern void glEnable(int cap);
 
+        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
+        public static extern unsafe byte* glGetString(int param);
+
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public unsafe static extern void glGenerateMipmap(int target);
@@ -452,7 +456,7 @@
 #endif
 
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
+        public unsafe static extern void glDrawElements(int mode, int count, int type, void* indices);
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]
@@ -462,9 +466,6 @@
         [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
         public unsafe static extern void __glewGetShaderiv(uint shader, int pname, int* @params);
 #endif
-
-        [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern byte* glGetString(int name);
 
 #if GLEW_STATIC
         [MethodImpl(MethodImplOptions.Unmanaged)]

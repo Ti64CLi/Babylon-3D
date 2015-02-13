@@ -712,7 +712,10 @@
             Log.Info(string.Format("drawElements {0} {1} {2} {3}", mode, count, type, offset));
 #endif
 
-            Gl.glDrawElements(mode, count, type, offset);
+            unsafe
+            {
+                Gl.glDrawElements(mode, count, type, (void*)offset);
+            }
 #if _DEBUG
             ErrorTest();
 #endif

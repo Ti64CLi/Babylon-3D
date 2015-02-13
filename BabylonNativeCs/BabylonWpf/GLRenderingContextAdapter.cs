@@ -10,112 +10,94 @@
     using SharpGL.Enumerations;
     using Web;
 
-    public class GlRenderingContextAdapter : Web.WebGLRenderingContext
+    public class GlRenderingContextAdapter : WebGLRenderingContext
     {
-        private SharpGL.OpenGL openGl;
-        private IDictionary<string, uint> _constMap = new Dictionary<string, uint>();
+        private readonly IDictionary<string, uint> _constMap = new Dictionary<string, uint>();
+        private readonly OpenGL openGl;
 
-        public GlRenderingContextAdapter(SharpGL.OpenGL openGl)
+        public GlRenderingContextAdapter(OpenGL openGl)
         {
             this.openGl = openGl;
 
-            _constMap["TEXTURE"] = OpenGL.GL_TEXTURE;
-            _constMap["TEXTURE0"] = OpenGL.GL_TEXTURE0;
-            _constMap["TEXTURE1"] = OpenGL.GL_TEXTURE1;
-            _constMap["TEXTURE2"] = OpenGL.GL_TEXTURE2;
-            _constMap["TEXTURE3"] = OpenGL.GL_TEXTURE3;
-            _constMap["TEXTURE4"] = OpenGL.GL_TEXTURE4;
-            _constMap["TEXTURE5"] = OpenGL.GL_TEXTURE5;
-            _constMap["TEXTURE6"] = OpenGL.GL_TEXTURE6;
-            _constMap["TEXTURE7"] = OpenGL.GL_TEXTURE7;
-            _constMap["TEXTURE8"] = OpenGL.GL_TEXTURE8;
-            _constMap["TEXTURE9"] = OpenGL.GL_TEXTURE9;
-            _constMap["TEXTURE10"] = OpenGL.GL_TEXTURE10;
-            _constMap["TEXTURE11"] = OpenGL.GL_TEXTURE11;
-            _constMap["TEXTURE12"] = OpenGL.GL_TEXTURE12;
-            _constMap["TEXTURE13"] = OpenGL.GL_TEXTURE13;
-            _constMap["TEXTURE14"] = OpenGL.GL_TEXTURE14;
-            _constMap["TEXTURE15"] = OpenGL.GL_TEXTURE15;
-            _constMap["TEXTURE16"] = OpenGL.GL_TEXTURE16;
-            _constMap["TEXTURE17"] = OpenGL.GL_TEXTURE17;
-            _constMap["TEXTURE18"] = OpenGL.GL_TEXTURE18;
-            _constMap["TEXTURE19"] = OpenGL.GL_TEXTURE19;
-            _constMap["TEXTURE20"] = OpenGL.GL_TEXTURE20;
-            _constMap["TEXTURE21"] = OpenGL.GL_TEXTURE21;
-            _constMap["TEXTURE22"] = OpenGL.GL_TEXTURE22;
-            _constMap["TEXTURE23"] = OpenGL.GL_TEXTURE23;
-            _constMap["TEXTURE24"] = OpenGL.GL_TEXTURE24;
-            _constMap["TEXTURE25"] = OpenGL.GL_TEXTURE25;
-            _constMap["TEXTURE26"] = OpenGL.GL_TEXTURE26;
-            _constMap["TEXTURE27"] = OpenGL.GL_TEXTURE27;
-            _constMap["TEXTURE28"] = OpenGL.GL_TEXTURE28;
-            _constMap["TEXTURE29"] = OpenGL.GL_TEXTURE29;
-            _constMap["TEXTURE30"] = OpenGL.GL_TEXTURE30;
-            _constMap["TEXTURE31"] = OpenGL.GL_TEXTURE31;
+            this._constMap["TEXTURE"] = OpenGL.GL_TEXTURE;
+            this._constMap["TEXTURE0"] = OpenGL.GL_TEXTURE0;
+            this._constMap["TEXTURE1"] = OpenGL.GL_TEXTURE1;
+            this._constMap["TEXTURE2"] = OpenGL.GL_TEXTURE2;
+            this._constMap["TEXTURE3"] = OpenGL.GL_TEXTURE3;
+            this._constMap["TEXTURE4"] = OpenGL.GL_TEXTURE4;
+            this._constMap["TEXTURE5"] = OpenGL.GL_TEXTURE5;
+            this._constMap["TEXTURE6"] = OpenGL.GL_TEXTURE6;
+            this._constMap["TEXTURE7"] = OpenGL.GL_TEXTURE7;
+            this._constMap["TEXTURE8"] = OpenGL.GL_TEXTURE8;
+            this._constMap["TEXTURE9"] = OpenGL.GL_TEXTURE9;
+            this._constMap["TEXTURE10"] = OpenGL.GL_TEXTURE10;
+            this._constMap["TEXTURE11"] = OpenGL.GL_TEXTURE11;
+            this._constMap["TEXTURE12"] = OpenGL.GL_TEXTURE12;
+            this._constMap["TEXTURE13"] = OpenGL.GL_TEXTURE13;
+            this._constMap["TEXTURE14"] = OpenGL.GL_TEXTURE14;
+            this._constMap["TEXTURE15"] = OpenGL.GL_TEXTURE15;
+            this._constMap["TEXTURE16"] = OpenGL.GL_TEXTURE16;
+            this._constMap["TEXTURE17"] = OpenGL.GL_TEXTURE17;
+            this._constMap["TEXTURE18"] = OpenGL.GL_TEXTURE18;
+            this._constMap["TEXTURE19"] = OpenGL.GL_TEXTURE19;
+            this._constMap["TEXTURE20"] = OpenGL.GL_TEXTURE20;
+            this._constMap["TEXTURE21"] = OpenGL.GL_TEXTURE21;
+            this._constMap["TEXTURE22"] = OpenGL.GL_TEXTURE22;
+            this._constMap["TEXTURE23"] = OpenGL.GL_TEXTURE23;
+            this._constMap["TEXTURE24"] = OpenGL.GL_TEXTURE24;
+            this._constMap["TEXTURE25"] = OpenGL.GL_TEXTURE25;
+            this._constMap["TEXTURE26"] = OpenGL.GL_TEXTURE26;
+            this._constMap["TEXTURE27"] = OpenGL.GL_TEXTURE27;
+            this._constMap["TEXTURE28"] = OpenGL.GL_TEXTURE28;
+            this._constMap["TEXTURE29"] = OpenGL.GL_TEXTURE29;
+            this._constMap["TEXTURE30"] = OpenGL.GL_TEXTURE30;
+            this._constMap["TEXTURE31"] = OpenGL.GL_TEXTURE31;
         }
 
         public int drawingBufferWidth
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         public int drawingBufferHeight
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
-        public Web.HTMLCanvasElement canvas
+        public HTMLCanvasElement canvas
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
-        public Web.WebGLUniformLocation getUniformLocation(Web.WebGLProgram program, string name)
+        public WebGLUniformLocation getUniformLocation(WebGLProgram program, string name)
         {
             var glUniformLocation = new GlUniformLocation(this.openGl.GetUniformLocation(program.Value, name));
-            ErrorTest();
+            this.ErrorTest();
             return glUniformLocation;
         }
 
-        public void bindTexture(int target, Web.WebGLTexture texture)
+        public void bindTexture(int target, WebGLTexture texture)
         {
             this.openGl.BindTexture((uint)target, texture != null ? texture.Value : 0);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void bufferData(int target, float[] data, int usage)
         {
             this.openGl.BufferData((uint)target, data, (uint)usage);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void bufferData(int target, ushort[] data, int usage)
         {
             this.openGl.BufferData((uint)target, data, (uint)usage);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void bufferData(int target, int size, int usage)
@@ -126,10 +108,10 @@
         public void depthMask(bool flag)
         {
             this.openGl.DepthMask((byte)(flag ? 1 : 0));
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public object getUniform(Web.WebGLProgram program, Web.WebGLUniformLocation location)
+        public object getUniform(WebGLProgram program, WebGLUniformLocation location)
         {
             throw new NotImplementedException();
         }
@@ -139,18 +121,18 @@
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib3fv(int indx, Web.Float32Array values)
+        public void vertexAttrib3fv(int indx, Float32Array values)
         {
             throw new NotImplementedException();
         }
 
-        public void linkProgram(Web.WebGLProgram program)
+        public void linkProgram(WebGLProgram program)
         {
             this.openGl.LinkProgram(program.Value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public BABYLON.Array<string> getSupportedExtensions()
+        public Array<string> getSupportedExtensions()
         {
             throw new NotImplementedException();
         }
@@ -168,7 +150,7 @@
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)
         {
             this.openGl.VertexAttribPointer((uint)indx, size, (uint)type, normalized, stride, new IntPtr(offset));
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void polygonOffset(int factor, int units)
@@ -181,12 +163,11 @@
             throw new NotImplementedException();
         }
 
-        public Web.WebGLTexture createTexture()
+        public WebGLTexture createTexture()
         {
             var val = new uint[1];
             this.openGl.GenTextures(1, val);
             return new WebGLTextureAdapter(val[0]);
-
         }
 
         public void hint(int target, int mode)
@@ -202,7 +183,7 @@
         public void enableVertexAttribArray(int index)
         {
             this.openGl.EnableVertexAttribArray((uint)index);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void depthRange(double zNear, double zFar)
@@ -213,35 +194,35 @@
         public void cullFace(int mode)
         {
             this.openGl.CullFace((uint)mode);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public Web.WebGLFramebuffer createFramebuffer()
+        public WebGLFramebuffer createFramebuffer()
         {
-            uint[] buffers = new uint[1];
+            var buffers = new uint[1];
             this.openGl.GenFramebuffersEXT(1, buffers);
-            ErrorTest();
+            this.ErrorTest();
             return new GlFramebufferAdapter(buffers[0]);
         }
 
-        public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
+        public void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, float[] value)
         {
             this.openGl.UniformMatrix4(location.Value, value.Length / 16, transpose, value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void uniformMatrix4fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
+        public void framebufferTexture2D(int target, int attachment, int textarget, WebGLTexture texture, int level)
         {
-            throw new NotImplementedException();
+            this.openGl.FramebufferTexture2DEXT(
+                (uint)target,
+                (uint)attachment,
+                (uint)textarget,
+                texture != null ? texture.Value : 0,
+                level);
+            this.ErrorTest();
         }
 
-        public void framebufferTexture2D(int target, int attachment, int textarget, Web.WebGLTexture texture, int level)
-        {
-            this.openGl.FramebufferTexture2DEXT((uint)target, (uint)attachment, (uint)textarget, texture != null ? texture.Value : 0, level);
-            ErrorTest();
-        }
-
-        public void deleteFramebuffer(Web.WebGLFramebuffer framebuffer)
+        public void deleteFramebuffer(WebGLFramebuffer framebuffer)
         {
             throw new NotImplementedException();
         }
@@ -251,40 +232,55 @@
             throw new NotImplementedException();
         }
 
-        public void compressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, byte[] data)
+        public void compressedTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            byte[] data)
         {
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix2fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
+        public void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, float[] value)
         {
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix2fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
+        public void uniformMatrix2fv(WebGLUniformLocation location, bool transpose, Float32Array value)
         {
             throw new NotImplementedException();
         }
 
         public object getExtension(string name)
         {
+            if (name == "OES_standard_derivatives")
+            {
+                var ext = this.openGl.GetExtensionsStringARB();
+                //return ext.Contains(name) ? new object() : null;
+                return new object();
+            }
+
+            // return interfase of extention (TODO: implement)
             return null;
         }
 
-        public Web.WebGLProgram createProgram()
+        public WebGLProgram createProgram()
         {
             var glProgramAdapter = new GlProgramAdapter(this.openGl.CreateProgram());
-            ErrorTest();
+            this.ErrorTest();
             return glProgramAdapter;
         }
 
-        public void deleteShader(Web.WebGLShader shader)
+        public void deleteShader(WebGLShader shader)
         {
             this.openGl.DeleteShader(shader.Value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public BABYLON.Array<Web.WebGLShader> getAttachedShaders(Web.WebGLProgram program)
+        public Array<WebGLShader> getAttachedShaders(WebGLProgram program)
         {
             throw new NotImplementedException();
         }
@@ -292,7 +288,7 @@
         public void enable(int cap)
         {
             this.openGl.Enable((uint)cap);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void blendEquation(int mode)
@@ -300,54 +296,87 @@
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, byte[] pixels)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            int format,
+            int type,
+            byte[] pixels)
         {
-            this.openGl.TexImage2D((uint)target, level, (uint)internalformat, width, height, border, (uint)format, (uint)type, pixels);
-            ErrorTest();
+            this.openGl.TexImage2D(
+                (uint)target,
+                level,
+                (uint)internalformat,
+                width,
+                height,
+                border,
+                (uint)format,
+                (uint)type,
+                pixels);
+            this.ErrorTest();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLImageElement image)
+        public void texImage2D(int target, int level, int internalformat, int format, int type, HTMLImageElement image)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLCanvasElement canvas)
+        public void texImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int format,
+            int type,
+            HTMLCanvasElement canvas)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.HTMLVideoElement video)
+        public void texImage2D(int target, int level, int internalformat, int format, int type, HTMLVideoElement video)
         {
             throw new NotImplementedException();
         }
 
-        public void texImage2D(int target, int level, int internalformat, int format, int type, Web.ImageData pixels)
+        public void texImage2D(int target, int level, int internalformat, int format, int type, ImageData pixels)
         {
             if (format == OpenGL.GL_RGBA)
             {
                 format = (int)OpenGL.GL_BGRA;
             }
 
-            this.openGl.TexImage2D((uint)target, level, (uint)internalformat, pixels.width, pixels.height, 0, (uint)format, (uint)type, pixels.dataBytes);
+            this.openGl.TexImage2D(
+                (uint)target,
+                level,
+                (uint)internalformat,
+                pixels.width,
+                pixels.height,
+                0,
+                (uint)format,
+                (uint)type,
+                pixels.dataBytes);
         }
 
-        public Web.WebGLBuffer createBuffer()
+        public WebGLBuffer createBuffer()
         {
-            uint[] buffers = new uint[1];
+            var buffers = new uint[1];
             this.openGl.GenBuffers(1, buffers);
-            ErrorTest();
+            this.ErrorTest();
             return new GlBufferAdapter(buffers[0]);
         }
 
-        public void deleteTexture(Web.WebGLTexture texture)
+        public void deleteTexture(WebGLTexture texture)
         {
             throw new NotImplementedException();
         }
 
-        public void useProgram(Web.WebGLProgram program)
+        public void useProgram(WebGLProgram program)
         {
             this.openGl.UseProgram(program.Value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void vertexAttrib2fv(int indx, float[] values)
@@ -355,7 +384,7 @@
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib2fv(int indx, Web.Float32Array values)
+        public void vertexAttrib2fv(int indx, Float32Array values)
         {
             throw new NotImplementedException();
         }
@@ -375,32 +404,77 @@
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, int type, Web.ArrayBufferView pixels)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int width,
+            int height,
+            int format,
+            int type,
+            ArrayBufferView pixels)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLImageElement image)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            HTMLImageElement image)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLCanvasElement canvas)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            HTMLCanvasElement canvas)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.HTMLVideoElement video)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            HTMLVideoElement video)
         {
             throw new NotImplementedException();
         }
 
-        public void texSubImage2D(int target, int level, double xoffset, double yoffset, int format, int type, Web.ImageData pixels)
+        public void texSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int format,
+            int type,
+            ImageData pixels)
         {
             throw new NotImplementedException();
         }
 
-        public void copyTexImage2D(int target, int level, int internalformat, double x, double y, int width, int height, int border)
+        public void copyTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            double x,
+            double y,
+            int width,
+            int height,
+            int border)
         {
             throw new NotImplementedException();
         }
@@ -423,20 +497,20 @@
         public void drawElements(int mode, int count, int type, int offset)
         {
             this.openGl.DrawElements((uint)mode, count, (uint)type, new IntPtr(offset));
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public bool isFramebuffer(Web.WebGLFramebuffer framebuffer)
+        public bool isFramebuffer(WebGLFramebuffer framebuffer)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform3iv(Web.WebGLUniformLocation location, int[] v)
+        public void uniform3iv(WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform3iv(Web.WebGLUniformLocation location, Web.Int32Array v)
+        public void uniform3iv(WebGLUniformLocation location, Int32Array v)
         {
             throw new NotImplementedException();
         }
@@ -446,7 +520,7 @@
             throw new NotImplementedException();
         }
 
-        public string getShaderInfoLog(Web.WebGLShader shader)
+        public string getShaderInfoLog(WebGLShader shader)
         {
             var GL_INFO_LOG_LENGTH = 35716U;
             var GL_SHADING_LANGUAGE_VERSION = 35724U;
@@ -488,16 +562,16 @@
         {
             var i = new int[1];
             this.openGl.GetInteger((uint)pname, i);
-            ErrorTest();
+            this.ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
-        public Web.WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype)
+        public WebGLShaderPrecisionFormat getShaderPrecisionFormat(int shadertype, int precisiontype)
         {
             throw new NotImplementedException();
         }
 
-        public Web.WebGLContextAttributes getContextAttributes()
+        public WebGLContextAttributes getContextAttributes()
         {
             throw new NotImplementedException();
         }
@@ -507,13 +581,21 @@
             throw new NotImplementedException();
         }
 
-        public void bindFramebuffer(int target, Web.WebGLFramebuffer framebuffer)
+        public void bindFramebuffer(int target, WebGLFramebuffer framebuffer)
         {
             this.openGl.BindFramebufferEXT((uint)target, framebuffer != null ? framebuffer.Value : 0);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void compressedTexSubImage2D(int target, int level, double xoffset, double yoffset, int width, int height, int format, Web.ArrayBufferView data)
+        public void compressedTexSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            int width,
+            int height,
+            int format,
+            ArrayBufferView data)
         {
             throw new NotImplementedException();
         }
@@ -523,12 +605,12 @@
             throw new NotImplementedException();
         }
 
-        public void uniform1iv(Web.WebGLUniformLocation location, int[] v)
+        public void uniform1iv(WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform1iv(Web.WebGLUniformLocation location, Web.Int32Array v)
+        public void uniform1iv(WebGLUniformLocation location, Int32Array v)
         {
             throw new NotImplementedException();
         }
@@ -538,17 +620,17 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2fv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform2fv(WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform2fv(Web.WebGLUniformLocation location, Web.Float32Array v)
+        public void uniform2fv(WebGLUniformLocation location, Float32Array v)
         {
             throw new NotImplementedException();
         }
 
-        public bool isTexture(Web.WebGLTexture texture)
+        public bool isTexture(WebGLTexture texture)
         {
             throw new NotImplementedException();
         }
@@ -558,13 +640,13 @@
             throw new NotImplementedException();
         }
 
-        public void shaderSource(Web.WebGLShader shader, string source)
+        public void shaderSource(WebGLShader shader, string source)
         {
             this.openGl.ShaderSource(shader.Value, source);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void deleteRenderbuffer(Web.WebGLRenderbuffer renderbuffer)
+        public void deleteRenderbuffer(WebGLRenderbuffer renderbuffer)
         {
             throw new NotImplementedException();
         }
@@ -574,20 +656,20 @@
             throw new NotImplementedException();
         }
 
-        public void bindBuffer(int target, Web.WebGLBuffer buffer)
+        public void bindBuffer(int target, WebGLBuffer buffer)
         {
             this.openGl.BindBuffer((uint)target, buffer != null ? buffer.Value : 0);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public int getAttribLocation(Web.WebGLProgram program, string name)
+        public int getAttribLocation(WebGLProgram program, string name)
         {
             var attribLocation = this.openGl.GetAttribLocation(program.Value, name);
-            ErrorTest();
+            this.ErrorTest();
             return attribLocation;
         }
 
-        public void uniform3i(Web.WebGLUniformLocation location, int x, int y, int z)
+        public void uniform3i(WebGLUniformLocation location, int x, int y, int z)
         {
             throw new NotImplementedException();
         }
@@ -600,7 +682,7 @@
         public void clear(int mask)
         {
             this.openGl.Clear((uint)mask);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
@@ -616,7 +698,7 @@
         public void readPixels(int x, int y, int width, int height, int format, int type, byte[] pixels)
         {
             this.openGl.ReadPixels(x, y, width, height, (uint)format, (uint)type, pixels);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void scissor(int x, int y, int width, int height)
@@ -624,17 +706,17 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2i(Web.WebGLUniformLocation location, int x, int y)
+        public void uniform2i(WebGLUniformLocation location, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public Web.WebGLActiveInfo getActiveAttrib(Web.WebGLProgram program, int index)
+        public WebGLActiveInfo getActiveAttrib(WebGLProgram program, int index)
         {
             throw new NotImplementedException();
         }
 
-        public string getShaderSource(Web.WebGLShader shader)
+        public string getShaderSource(WebGLShader shader)
         {
             throw new NotImplementedException();
         }
@@ -644,27 +726,27 @@
             this.openGl.GenerateMipmapEXT((uint)target);
         }
 
-        public void bindAttribLocation(Web.WebGLProgram program, int index, string name)
+        public void bindAttribLocation(WebGLProgram program, int index, string name)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform1fv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform1fv(WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform1fv(Web.WebGLUniformLocation location, Web.Float32Array v)
+        public void uniform1fv(WebGLUniformLocation location, Float32Array v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform2iv(Web.WebGLUniformLocation location, int[] v)
+        public void uniform2iv(WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform2iv(Web.WebGLUniformLocation location, Web.Int32Array v)
+        public void uniform2iv(WebGLUniformLocation location, Int32Array v)
         {
             throw new NotImplementedException();
         }
@@ -674,12 +756,12 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4fv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform4fv(WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform4fv(Web.WebGLUniformLocation location, Web.Float32Array v)
+        public void uniform4fv(WebGLUniformLocation location, Float32Array v)
         {
             throw new NotImplementedException();
         }
@@ -689,7 +771,7 @@
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib1fv(int indx, Web.Float32Array values)
+        public void vertexAttrib1fv(int indx, Float32Array values)
         {
             throw new NotImplementedException();
         }
@@ -699,37 +781,37 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4f(Web.WebGLUniformLocation location, double x, double y, double z, double w)
+        public void uniform4f(WebGLUniformLocation location, double x, double y, double z, double w)
         {
             this.openGl.Uniform4(location.Value, (float)x, (float)y, (float)z, (float)w);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void deleteProgram(Web.WebGLProgram program)
+        public void deleteProgram(WebGLProgram program)
         {
             throw new NotImplementedException();
         }
 
-        public bool isRenderbuffer(Web.WebGLRenderbuffer renderbuffer)
+        public bool isRenderbuffer(WebGLRenderbuffer renderbuffer)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform1i(Web.WebGLUniformLocation location, int x)
+        public void uniform1i(WebGLUniformLocation location, int x)
         {
             this.openGl.Uniform1(location.Value, x);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public object getProgramParameter(Web.WebGLProgram program, int pname)
+        public object getProgramParameter(WebGLProgram program, int pname)
         {
             var i = new int[1];
             this.openGl.GetProgram(program.Value, (uint)pname, i);
-            ErrorTest();
+            this.ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
-        public Web.WebGLActiveInfo getActiveUniform(Web.WebGLProgram program, int index)
+        public WebGLActiveInfo getActiveUniform(WebGLProgram program, int index)
         {
             throw new NotImplementedException();
         }
@@ -742,7 +824,7 @@
         public void pixelStorei(int pname, int param)
         {
             this.openGl.PixelStore((uint)pname, param);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void disable(int cap)
@@ -755,17 +837,17 @@
             throw new NotImplementedException();
         }
 
-        public void vertexAttrib4fv(int indx, Web.Float32Array values)
+        public void vertexAttrib4fv(int indx, Float32Array values)
         {
             throw new NotImplementedException();
         }
 
-        public Web.WebGLRenderbuffer createRenderbuffer()
+        public WebGLRenderbuffer createRenderbuffer()
         {
             throw new NotImplementedException();
         }
 
-        public bool isBuffer(Web.WebGLBuffer buffer)
+        public bool isBuffer(WebGLBuffer buffer)
         {
             throw new NotImplementedException();
         }
@@ -780,7 +862,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform4i(Web.WebGLUniformLocation location, int x, int y, int z, int w)
+        public void uniform4i(WebGLUniformLocation location, int x, int y, int z, int w)
         {
             throw new NotImplementedException();
         }
@@ -793,7 +875,7 @@
         public void depthFunc(int func)
         {
             this.openGl.DepthFunc((uint)func);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void texParameterf(int target, int pname, float param)
@@ -814,7 +896,7 @@
         public void texParameteri(int target, int pname, int param)
         {
             this.openGl.TexParameter((uint)target, (uint)pname, param);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void vertexAttrib4f(int indx, double x, double y, double z, double w)
@@ -822,18 +904,18 @@
             throw new NotImplementedException();
         }
 
-        public object getShaderParameter(Web.WebGLShader shader, int pname)
+        public object getShaderParameter(WebGLShader shader, int pname)
         {
             var i = new int[1];
             this.openGl.GetShader(shader.Value, (uint)pname, i);
-            ErrorTest();
+            this.ErrorTest();
             return i[0] == 0 ? (object)null : i[0];
         }
 
         public void clearDepth(double depth)
         {
             this.openGl.ClearDepth(depth);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void activeTexture(int texture)
@@ -844,46 +926,54 @@
         public void viewport(int x, int y, int width, int height)
         {
             this.openGl.Viewport(x, y, width, height);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void detachShader(Web.WebGLProgram program, Web.WebGLShader shader)
+        public void detachShader(WebGLProgram program, WebGLShader shader)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform1f(Web.WebGLUniformLocation location, double x)
+        public void uniform1f(WebGLUniformLocation location, double x)
         {
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix3fv(Web.WebGLUniformLocation location, bool transpose, float[] value)
+        public void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, float[] value)
         {
             throw new NotImplementedException();
         }
 
-        public void uniformMatrix3fv(Web.WebGLUniformLocation location, bool transpose, Web.Float32Array value)
+        public void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, Float32Array value)
         {
             throw new NotImplementedException();
         }
 
-        public void deleteBuffer(Web.WebGLBuffer buffer)
+        public void deleteBuffer(WebGLBuffer buffer)
         {
-            this.openGl.DeleteBuffers(1, new uint[] { buffer.Value });
-            ErrorTest();
+            this.openGl.DeleteBuffers(1, new[] { buffer.Value });
+            this.ErrorTest();
         }
 
-        public void copyTexSubImage2D(int target, int level, double xoffset, double yoffset, double x, double y, int width, int height)
+        public void copyTexSubImage2D(
+            int target,
+            int level,
+            double xoffset,
+            double yoffset,
+            double x,
+            double y,
+            int width,
+            int height)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform3fv(Web.WebGLUniformLocation location, float[] v)
+        public void uniform3fv(WebGLUniformLocation location, float[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform3fv(Web.WebGLUniformLocation location, Web.Float32Array v)
+        public void uniform3fv(WebGLUniformLocation location, Float32Array v)
         {
             throw new NotImplementedException();
         }
@@ -893,25 +983,25 @@
             throw new NotImplementedException();
         }
 
-        public void attachShader(Web.WebGLProgram program, Web.WebGLShader shader)
+        public void attachShader(WebGLProgram program, WebGLShader shader)
         {
             this.openGl.AttachShader(program.Value, shader.Value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void compileShader(Web.WebGLShader shader)
+        public void compileShader(WebGLShader shader)
         {
             this.openGl.CompileShader(shader.Value);
-            ErrorTest();
+            this.ErrorTest();
         }
 
         public void clearColor(double red, double green, double blue, double alpha)
         {
             this.openGl.ClearColor((float)red, (float)green, (float)blue, (float)alpha);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public bool isShader(Web.WebGLShader shader)
+        public bool isShader(WebGLShader shader)
         {
             throw new NotImplementedException();
         }
@@ -921,7 +1011,11 @@
             throw new NotImplementedException();
         }
 
-        public void framebufferRenderbuffer(int target, int attachment, int renderbuffertarget, Web.WebGLRenderbuffer renderbuffer)
+        public void framebufferRenderbuffer(
+            int target,
+            int attachment,
+            int renderbuffertarget,
+            WebGLRenderbuffer renderbuffer)
         {
             throw new NotImplementedException();
         }
@@ -931,7 +1025,7 @@
             throw new NotImplementedException();
         }
 
-        public void uniform2f(Web.WebGLUniformLocation location, double x, double y)
+        public void uniform2f(WebGLUniformLocation location, double x, double y)
         {
             this.openGl.Uniform2(location.Value, (float)x, (float)y);
         }
@@ -941,18 +1035,18 @@
             throw new NotImplementedException();
         }
 
-        public void uniform3f(Web.WebGLUniformLocation location, double x, double y, double z)
+        public void uniform3f(WebGLUniformLocation location, double x, double y, double z)
         {
             this.openGl.Uniform3(location.Value, (float)x, (float)y, (float)z);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public string getProgramInfoLog(Web.WebGLProgram program)
+        public string getProgramInfoLog(WebGLProgram program)
         {
             throw new NotImplementedException();
         }
 
-        public void validateProgram(Web.WebGLProgram program)
+        public void validateProgram(WebGLProgram program)
         {
             throw new NotImplementedException();
         }
@@ -967,40 +1061,42 @@
             throw new NotImplementedException();
         }
 
-        public bool isProgram(Web.WebGLProgram program)
+        public bool isProgram(WebGLProgram program)
         {
             throw new NotImplementedException();
         }
 
-        public Web.WebGLShader createShader(int type)
+        public WebGLShader createShader(int type)
         {
             var shader = this.openGl.CreateShader((uint)type);
-            ErrorTest();
+            this.ErrorTest();
             return new GlShaderAdapter(shader);
         }
 
-        public void bindRenderbuffer(int target, Web.WebGLRenderbuffer renderbuffer)
+        public void bindRenderbuffer(int target, WebGLRenderbuffer renderbuffer)
         {
             this.openGl.BindRenderbufferEXT((uint)target, renderbuffer != null ? renderbuffer.Value : 0);
-            ErrorTest();
+            this.ErrorTest();
         }
 
-        public void uniform4iv(Web.WebGLUniformLocation location, int[] v)
+        public void uniform4iv(WebGLUniformLocation location, int[] v)
         {
             throw new NotImplementedException();
         }
 
-        public void uniform4iv(Web.WebGLUniformLocation location, Web.Int32Array v)
+        public void uniform4iv(WebGLUniformLocation location, Int32Array v)
         {
             throw new NotImplementedException();
         }
 
         public int this[string enumName]
         {
-            get
-            {
-                return (int)this._constMap[enumName];
-            }
+            get { return (int)this._constMap[enumName]; }
+        }
+
+        public void uniformMatrix4fv(WebGLUniformLocation location, bool transpose, Float32Array value)
+        {
+            throw new NotImplementedException();
         }
 
         [Conditional("DEBUG")]

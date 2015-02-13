@@ -42,11 +42,14 @@ namespace BabylonWpf
             //BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
             //BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
+            BABYLON.Effect.ShadersStore["defaultVertexShader"] = Defaults.DefaultVertexShader;
+            BABYLON.Effect.ShadersStore["defaultPixelShader"] = Defaults.DefaultPixelShader;
+
             this.canvas = new CanvasAdapter((int)this.Width, (int)this.Height, (int)this.MaxWidth, (int)this.MaxHeight, args.OpenGL);
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
            
-            this.Scene5();
+            this.Scene7();
         }
 
         private void Scene1()
@@ -199,13 +202,51 @@ namespace BabylonWpf
                 });
         }
 
+        private void Scene6()
+        {
+            SceneLoader.Load(
+                "",
+                "Viper.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
+                    // Attach the camera to the scene
+                    this.scene.meshes[0].scaling = new Vector3(4.0, 4.0, 4.0);
+                    this.scene.activeCamera.detachControl(this.canvas);
+                    this.scene.activeCamera = camera;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
+        }
+
+        private void Scene7()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 100, 2), scene);
+            var sphere = BABYLON.Mesh.CreateSphere("Sphere", 16, 3, scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            material.bumpTexture = new BABYLON.Texture("normalMap.jpg", scene);
+            material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+    
+            sphere.material = material;
+    
+            camera.setPosition(new BABYLON.Vector3(-5, 5, 0));
+
+            // Animations
+            scene.registerBeforeRender(() => {
+                sphere.rotation.y += 0.02;
+            });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+       }
+
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             //  Get the OpenGL instance. 
-            var gl = args.OpenGL;
-
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-
+            //var gl = args.OpenGL;
+            //gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             this.scene.render();
         }
 

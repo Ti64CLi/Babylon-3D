@@ -114,7 +114,7 @@
         public static extern void glUseProgram(uint program);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
-        public unsafe static extern void glDrawElements(int mode, int count, int type, int indices);
+        public unsafe static extern void glDrawElements(int mode, int count, int type, void* indices);
 
         [MethodImpl(MethodImplOptions.Unmanaged)]
         public unsafe static extern void glGetShaderiv(uint shader, int pname, int* @params);
