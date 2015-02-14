@@ -693,8 +693,9 @@ namespace BABYLON
                     {
                         var width = this.getExponantOfTwo(imgs[0].width, this._caps.maxCubemapTextureSize);
                         var height = width;
-                        this._workingCanvas.width = width;
-                        this._workingCanvas.height = height;
+                        // TODO: my fix
+                        //this._workingCanvas.width = width;
+                        //this._workingCanvas.height = height;
                         var faces = new Array<int>(
                             Gl.TEXTURE_CUBE_MAP_POSITIVE_X,
                             Gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
@@ -706,6 +707,7 @@ namespace BABYLON
                         //gl.pixelStorei(Gl.UNPACK_FLIP_Y_WEBGL, 0);
                         for (var index = 0; index < faces.Length; index++)
                         {
+                            // TODO: my fix
                             //this._workingContext.drawImage(imgs[index], 0, 0, imgs[index].width, imgs[index].height, 0, 0, width, height);
                             //gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, this._workingCanvas);
                             gl.texImage2D(faces[index], 0, Gl.RGBA, Gl.RGBA, Gl.UNSIGNED_BYTE, imgs[index]);
@@ -1874,6 +1876,7 @@ namespace BABYLON
         {
             var width = requiredWidth == 0 ? this._renderingCanvas.width : requiredWidth;
             var height = requiredHeight == 0 ? this._renderingCanvas.height : requiredHeight;
+            
             var x = viewport.x;
             var y = viewport.y;
             this._cachedViewport = viewport;

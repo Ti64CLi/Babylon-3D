@@ -62,5 +62,23 @@
     <None Include="assets\normalMap.jpg">
       <Filter>asset</Filter>
     </None>
+    <None Include="assets\skybox_nx.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\skybox_ny.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\skybox_nz.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\skybox_px.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\skybox_py.jpg">
+      <Filter>asset</Filter>
+    </None>
+    <None Include="assets\skybox_pz.jpg">
+      <Filter>asset</Filter>
+    </None>
   </ItemGroup>
 </Project>

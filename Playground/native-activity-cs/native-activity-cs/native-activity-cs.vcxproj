@@ -40,6 +40,12 @@
     <None Include="assets\grass_texture.jpg" />
     <None Include="assets\normalMap.jpg" />
     <None Include="assets\Planet.png" />
+    <None Include="assets\skybox_nx.jpg" />
+    <None Include="assets\skybox_ny.jpg" />
+    <None Include="assets\skybox_nz.jpg" />
+    <None Include="assets\skybox_px.jpg" />
+    <None Include="assets\skybox_py.jpg" />
+    <None Include="assets\skybox_pz.jpg" />
     <None Include="assets\Spaceship.babylon" />
     <None Include="assets\text.jpg" />
   </ItemGroup>

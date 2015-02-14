@@ -30,8 +30,7 @@ namespace BabylonWpf
 
         public int width
         {
-            get;
-            set;
+            get; set;
         }
 
         public int height

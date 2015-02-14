@@ -379,10 +379,11 @@ namespace BABYLON
         /// </returns>
         /// <exception cref="NotImplementedException">
         /// </exception>
-        public Array<T> slice(int index, int length = 0)
+        public Array<T> slice(int index, int length = -1)
         {
-            var destinationArray = new T[length];
-            Array.Copy(this._items, 0, destinationArray, 0, length);
+            var effectiveLength = length == -1 ? this.Count - index : length;
+            var destinationArray = new T[effectiveLength];
+            Array.Copy(this._items, 0, destinationArray, 0, effectiveLength);
             return new Array<T>(destinationArray);
         }
 

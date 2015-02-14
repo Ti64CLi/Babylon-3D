@@ -85,7 +85,7 @@ namespace BabylonGlut
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene9();
+            this.Scene10();
         }
 
         private void Scene1()
@@ -400,6 +400,51 @@ namespace BabylonGlut
                 lightSphere2.position = light2.position;
 
                 alpha += 0.01;
+            });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene10()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, -20), scene);
+            var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 100, 2), scene);
+            var sphere0 = BABYLON.Mesh.CreateSphere("Sphere0", 16, 3, scene);
+            var sphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 16, 3, scene);
+            var sphere2 = BABYLON.Mesh.CreateSphere("Sphere2", 16, 3, scene);
+
+            var material0 = new BABYLON.StandardMaterial("mat0", scene);
+            material0.diffuseColor = new BABYLON.Color3(1, 0, 0);
+            sphere0.material = material0;
+            sphere0.position = new BABYLON.Vector3(-10, 0, 0);
+
+            var material1 = new BABYLON.StandardMaterial("mat1", scene);
+            material1.diffuseColor = new BABYLON.Color3(1, 1, 0);
+            sphere1.material = material1;
+
+            var material2 = new BABYLON.StandardMaterial("mat2", scene);
+            material2.diffuseColor = new BABYLON.Color3(1, 0, 1);
+            sphere2.material = material2;
+            sphere2.position = new BABYLON.Vector3(10, 0, 0);
+
+            sphere1.convertToFlatShadedMesh();
+
+            camera.setTarget(new BABYLON.Vector3(0, 0, 0));
+
+            // Fog
+            scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+            scene.fogDensity = 0.1;
+
+            // Animations
+            var alpha = 0.0;
+            scene.registerBeforeRender(() =>
+            {
+                sphere0.position.z = 4 * Math.Cos(alpha);
+                sphere1.position.z = 4 * Math.Sin(alpha);
+                sphere2.position.z = 4 * Math.Cos(alpha);
+
+                alpha += 0.1;
             });
 
             this.scene.activeCamera.attachControl(this.canvas);
