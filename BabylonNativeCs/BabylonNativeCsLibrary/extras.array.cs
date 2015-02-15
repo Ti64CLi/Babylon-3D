@@ -651,7 +651,7 @@ namespace BABYLON
         {
             for (var i = 0; i < _size; i++)
             {
-                if (items[i].Equals(item))
+                if (item.Equals(items[i]))
                 {
                     return i;
                 }

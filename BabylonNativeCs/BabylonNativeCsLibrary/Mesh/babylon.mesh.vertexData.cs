@@ -398,7 +398,7 @@ namespace BABYLON
         /// <returns>
         /// </returns>
         public static VertexData CreateGroundFromHeightMap(
-            double width, double height, int subdivisions, double minHeight, double maxHeight, Uint8Array buffer, double bufferWidth, double bufferHeight)
+            double width, double height, int subdivisions, double minHeight, double maxHeight, byte[] buffer, int bufferWidth, int bufferHeight)
         {
             var indices = new Array<int>();
             var positions = new Array<double>();
@@ -409,9 +409,11 @@ namespace BABYLON
                 for (var col = 0; col <= subdivisions; col++)
                 {
                     var position = new Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
-                    var heightMapX = ((position.x + width / 2) / width) * (bufferWidth - 1);
-                    var heightMapY = (1.0 - (position.z + height / 2) / height) * (bufferHeight - 1);
-                    var pos = (int)(heightMapX + heightMapY * bufferWidth) * 4;
+                    //var heightMapX = ((position.x + width / 2) / width) * (bufferWidth - 1);
+                    //var heightMapY = (1.0 - (position.z + height / 2) / height) * (bufferHeight - 1);
+                    var heightMapX = (col / width) * (bufferWidth - 1);
+                    var heightMapY = (row / height) * (bufferHeight - 1);
+                    var pos = ((int)heightMapX + (int)heightMapY * bufferWidth) * 4;
                     var r = buffer[pos] / 255.0;
                     var g = buffer[pos + 1] / 255.0;
                     var b = buffer[pos + 2] / 255.0;

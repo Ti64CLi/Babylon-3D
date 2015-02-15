@@ -231,16 +231,16 @@ namespace BABYLON
             ground._setReady(false);
             Action<Web.ImageData> onload = (img) =>
                 {
-                    var canvas = (HTMLCanvasElement)Engine.document.createElement("canvas");
-                    var context = (CanvasRenderingContext2D)canvas.getContext("2d");
+                    //var canvas = (HTMLCanvasElement)Engine.document.createElement("canvas");
+                    //var context = (CanvasRenderingContext2D)canvas.getContext("2d");
                     var heightMapWidth = img.width;
                     var heightMapHeight = img.height;
-                    canvas.width = heightMapWidth;
-                    canvas.height = heightMapHeight;
-                    context.drawImage(img, 0, 0);
-                    var buffer = context.getImageData(0, 0, heightMapWidth, heightMapHeight).data;
+                    //canvas.width = heightMapWidth;
+                    //canvas.height = heightMapHeight;
+                    //context.drawImage(img, 0, 0);
+                    //var buffer = context.getImageData(0, 0, heightMapWidth, heightMapHeight).data;
                     var vertexData = VertexData.CreateGroundFromHeightMap(
-                        width, height, subdivisions, minHeight, maxHeight, buffer, heightMapWidth, heightMapHeight);
+                        width, height, subdivisions, minHeight, maxHeight, img.dataBytes, heightMapWidth, heightMapHeight);
                     vertexData.applyToMesh(ground, updatable);
                     ground._setReady(true);
                 };
