@@ -409,10 +409,10 @@ namespace BABYLON
                 for (var col = 0; col <= subdivisions; col++)
                 {
                     var position = new Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
-                    //var heightMapX = ((position.x + width / 2) / width) * (bufferWidth - 1);
-                    //var heightMapY = (1.0 - (position.z + height / 2) / height) * (bufferHeight - 1);
-                    var heightMapX = (col / width) * (bufferWidth - 1);
-                    var heightMapY = (row / height) * (bufferHeight - 1);
+                    var heightMapX = ((position.x + width / 2) / width) * (bufferWidth - 1);
+                    var heightMapY = (1.0 - (position.z + height / 2) / height) * (bufferHeight - 1);
+                    //var heightMapX = (col / width) * (bufferWidth - 1);
+                    //var heightMapY = (row / height) * (bufferHeight - 1);
                     var pos = ((int)heightMapX + (int)heightMapY * bufferWidth) * 4;
                     var r = buffer[pos] / 255.0;
                     var g = buffer[pos + 1] / 255.0;
@@ -421,7 +421,7 @@ namespace BABYLON
                     position.y = minHeight + (maxHeight - minHeight) * gradient;
                     positions.Add(position.x, position.y, position.z);
                     normals.Add(0, 0, 0);
-                    uvs.Add(col / subdivisions, 1.0 - row / subdivisions);
+                    uvs.Add((float)col / (float)subdivisions, 1.0 - (float)row / (float)subdivisions);
                 }
             }
 
