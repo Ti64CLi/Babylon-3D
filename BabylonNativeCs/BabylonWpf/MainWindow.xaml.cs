@@ -52,7 +52,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene12();
+            this.Scene13();
         }
 
         private void Scene1()
@@ -559,6 +559,43 @@ namespace BabylonWpf
                 torus2.rotation.x += 0.02;
                 torus2.rotation.y += 0.01;
             });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene13()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 10, 0), scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            var sphere = BABYLON.Mesh.CreateSphere("sphere0", 16, 1, scene);
+
+            camera.setPosition(new BABYLON.Vector3(-10, 10, 0));
+
+            // Sphere material
+            material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+            material.specularColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+            material.specularPower = 32;
+            material.checkReadyOnEveryCall = false;
+            sphere.material = material;
+
+            // Fog
+            scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+            scene.fogDensity = 0.05;
+
+            // Clone spheres
+            var random = new Random();
+            var playgroundSize = 50;
+            for (var index = 0; index < 8000; index++)
+            {
+                var clone = sphere.clone("sphere" + (index + 1), null, true);
+                var scale = random.Next() * 0.8 + 0.6;
+                clone.scaling = new BABYLON.Vector3(scale, scale, scale);
+                clone.position = new BABYLON.Vector3(random.Next() * 2 * playgroundSize - playgroundSize, random.Next() * 2 * playgroundSize - playgroundSize, random.Next() * 2 * playgroundSize - playgroundSize);
+            }
+            sphere.setEnabled(false);
+            scene.createOrUpdateSelectionOctree();
 
             this.scene.activeCamera.attachControl(this.canvas);
         }
