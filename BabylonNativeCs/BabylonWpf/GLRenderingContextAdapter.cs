@@ -936,7 +936,7 @@
 
         public void uniform1f(WebGLUniformLocation location, double x)
         {
-            throw new NotImplementedException();
+            this.openGl.Uniform1(location.Value, (float)x);
         }
 
         public void uniformMatrix3fv(WebGLUniformLocation location, bool transpose, float[] value)
