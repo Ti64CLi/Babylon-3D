@@ -85,7 +85,7 @@ namespace BabylonGlut
             this.engine = new Engine(canvas, true);
             this.scene = new Scene(this.engine);
 
-            this.Scene10();
+            this.Scene11();
         }
 
         private void Scene1()
@@ -446,6 +446,55 @@ namespace BabylonGlut
 
                 alpha += 0.1;
             });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene11()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
+
+            camera.setPosition(new BABYLON.Vector3(-20, 20, 0));
+
+            // Skybox
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+
+            // Ground
+            var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "heightMap.png", 100, 100, 100, 0, 10, scene, false);
+            var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+            var texture1 = new BABYLON.Texture("ground.jpg", scene);
+            texture1.uScale = 6;
+            texture1.vScale = 6;
+            groundMaterial.diffuseTexture = texture1;
+            groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            ground.position.y = -2.05;
+            ground.material = groundMaterial;
+
+            System.Action beforeRenderFunction = () =>
+            {
+                // Camera
+                if (camera.beta < 0.1)
+                    camera.beta = 0.1;
+                else if (camera.beta > (Math.PI / 2) * 0.9)
+                    camera.beta = (Math.PI / 2) * 0.9;
+
+                if (camera.radius > 50)
+                    camera.radius = 50;
+
+                if (camera.radius < 5)
+                    camera.radius = 5;
+            };
+
+            scene.registerBeforeRender(beforeRenderFunction);
 
             this.scene.activeCamera.attachControl(this.canvas);
         }

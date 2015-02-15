@@ -423,14 +423,14 @@ namespace BabylonWpf
             camera.setPosition(new BABYLON.Vector3(-20, 20, 0));
 
             // Skybox
-            //var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
-            //var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-            //skyboxMaterial.backFaceCulling = false;
-            //skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
-            //skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-            //skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-            //skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-            //skybox.material = skyboxMaterial;
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
 
             // Ground
             var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "heightMap.png", 100, 100, 100, 0, 10, scene, false);
