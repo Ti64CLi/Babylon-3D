@@ -706,8 +706,9 @@ namespace BABYLON
             {
                 var mesh = this.meshes[index];
                 mesh.computeWorldMatrix(true);
-                var minBox = mesh.getBoundingInfo().boundingBox.minimumWorld;
-                var maxBox = mesh.getBoundingInfo().boundingBox.maximumWorld;
+                var boundingBox = mesh.getBoundingInfo().boundingBox;
+                var minBox = boundingBox.minimumWorld;
+                var maxBox = boundingBox.maximumWorld;
                 Tools.CheckExtends(minBox, min, Max);
                 Tools.CheckExtends(maxBox, min, Max);
             }

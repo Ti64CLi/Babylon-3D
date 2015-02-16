@@ -586,13 +586,13 @@ namespace BabylonWpf
 
             // Clone spheres
             var random = new Random();
-            var playgroundSize = 50;
+            var playgroundSize = 50.0;
             for (var index = 0; index < 8000; index++)
             {
                 var clone = sphere.clone("sphere" + (index + 1), null, true);
-                var scale = random.Next() * 0.8 + 0.6;
+                var scale = random.NextDouble() * 0.8 + 0.6;
                 clone.scaling = new BABYLON.Vector3(scale, scale, scale);
-                clone.position = new BABYLON.Vector3(random.Next() * 2 * playgroundSize - playgroundSize, random.Next() * 2 * playgroundSize - playgroundSize, random.Next() * 2 * playgroundSize - playgroundSize);
+                clone.position = new BABYLON.Vector3(random.NextDouble() * 2.0 * playgroundSize - playgroundSize, random.NextDouble() * 2.0 * playgroundSize - playgroundSize, random.NextDouble() * 2.0 * playgroundSize - playgroundSize);
             }
             sphere.setEnabled(false);
             scene.createOrUpdateSelectionOctree();

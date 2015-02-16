@@ -724,9 +724,9 @@ namespace BABYLON
         /// </returns>
         public override AbstractMesh clone(string name, Node newParent, bool doNotCloneChildren = false)
         {
-            //var result = new Mesh(name, this.getScene());
-            var result = (Mesh)this.MemberwiseClone();
+            var result = new Mesh(name, this.getScene());
             this._geometry.applyToMesh(result);
+            // TODO: finish it
             //Tools.DeepCopy(this, result, new Array<string>("name", "material", "skeleton"), new Array<string>());
             result.material = this.material;
             result.name = name;
