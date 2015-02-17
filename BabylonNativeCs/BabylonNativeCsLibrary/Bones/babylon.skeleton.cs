@@ -11,7 +11,7 @@ namespace BABYLON
 {
     /// <summary>
     /// </summary>
-    public partial class Skeleton
+    public partial class Skeleton : IAnimatable
     {
         /// <summary>
         /// </summary>

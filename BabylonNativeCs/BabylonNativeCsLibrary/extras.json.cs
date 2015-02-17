@@ -822,7 +822,7 @@ namespace BABYLON
             var current = _tokens[_selectedToken];
             if (current.type != JsmnType.Object)
             {
-                throw new NotSupportedException();
+                return -1;
             }
 
             foreach (var childTokenIndex in this.GetChildrenTokens(_selectedToken))

@@ -52,7 +52,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene13();
+            this.Scene15();
         }
 
         private void Scene1()
@@ -598,6 +598,59 @@ namespace BabylonWpf
             scene.createOrUpdateSelectionOctree();
 
             this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene14()
+        {
+            SceneLoader.Load(
+                "",
+                "Dude.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
+        }
+
+        private void Scene15()
+        {
+            var scene = new BABYLON.Scene(engine);
+            var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, -1.0), scene);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 30, 0), scene);
+            camera.setPosition(new BABYLON.Vector3(20, 70, 120));
+            light.position = new BABYLON.Vector3(20, 150, 70);
+            camera.minZ = 10.0;
+
+            scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+
+            // Ground
+            var ground = BABYLON.Mesh.CreateGround("ground", 1000, 1000, 1, scene, false);
+            var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+            groundMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+            groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            ground.material = groundMaterial;
+            ground.receiveShadows = true;
+
+            // Shadows
+            var shadowGenerator = new BABYLON.ShadowGenerator(new BABYLON.Size() { width = 1024, height = 1024 }, light);
+
+            // Meshes
+            // Dude
+            BABYLON.SceneLoader.ImportMesh("him", "Scenes/Dude/", "Dude.babylon", scene, (newMeshes2, particleSystems2, skeletons2) =>
+            {
+                var dude = newMeshes2[0];
+
+                for (var index = 0; index < newMeshes2.Length; index++)
+                {
+                    shadowGenerator.getShadowMap().renderList.Add(newMeshes2[index]);
+                }
+
+                dude.rotation.y = Math.PI;
+                dude.position = new BABYLON.Vector3(0, 0, -80);
+
+                scene.beginAnimation(skeletons2[0], 0, 100, true, 1.0);
+            });
         }
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
