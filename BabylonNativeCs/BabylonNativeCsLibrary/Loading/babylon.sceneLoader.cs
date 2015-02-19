@@ -15,7 +15,7 @@ namespace BABYLON
     {
         string extensions { get; set; }
 
-        bool importMesh(object meshesNames, Scene scene, object data, string rootUrl, Array<AbstractMesh> meshes, Array<ParticleSystem> particleSystems, Array<Skeleton> skeletons);
+        bool importMesh(Array<string> meshesNames, Scene scene, string data, string rootUrl, Array<AbstractMesh> meshes, Array<ParticleSystem> particleSystems, Array<Skeleton> skeletons);
 
         bool load(Scene scene, string data, string rootUrl);
     }
@@ -52,7 +52,7 @@ namespace BABYLON
             SceneLoader._registeredPlugins.Add(plugin);
         }
 
-        public static void ImportMesh(object meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action<int, int> progressCallBack = null, System.Action<Scene> onerror = null)
+        public static void ImportMesh(Array<string> meshesNames, string rootUrl, string sceneFilename, Scene scene, System.Action<Array<AbstractMesh>, Array<ParticleSystem>, Array<Skeleton>> onsuccess = null, System.Action<int, int> progressCallBack = null, System.Action<Scene> onerror = null)
         {
             Database database = null;
 
@@ -60,6 +60,11 @@ namespace BABYLON
                 success =>
                 {
                     scene.database = database;
+                    if (SceneLoader._registeredPlugins.Length == 0)
+                    {
+                        BABYLON.SceneLoader.RegisterPlugin(new BABYLON.Internals.BabylonFileLoader());
+                    }
+
                     var plugin = _getPluginForFilename(sceneFilename);
                     var importMeshFromData = new Action<string>(
                         data =>

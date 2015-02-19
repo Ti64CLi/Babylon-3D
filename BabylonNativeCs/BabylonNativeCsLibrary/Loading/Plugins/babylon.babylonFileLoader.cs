@@ -671,7 +671,7 @@ namespace BABYLON.Internals
             }
             if (parsedMesh["layerMask"] && (!Double.IsNaN(parsedMesh["layerMask"])))
             {
-                mesh.layerMask = (uint) Math.Abs((int)parsedMesh["layerMask"]);
+                mesh.layerMask = (uint)Math.Abs((int)parsedMesh["layerMask"]);
             }
             else
             {
@@ -874,9 +874,125 @@ namespace BABYLON.Internals
             }
         }
 
-        public bool importMesh(object meshesNames, Scene scene, object data, string rootUrl, Array<AbstractMesh> meshes, Array<ParticleSystem> particleSystems, Array<Skeleton> skeletons)
+        public bool isDescendantOf(JsmnParserValue mesh, Array<string> names, Array<string> hierarchyIds)
         {
-            throw new NotImplementedException();
+            foreach (var name in names)
+            {
+                if (mesh["name"] == name)
+                {
+                    hierarchyIds.Add((string)mesh["id"]);
+                    return true;
+                }
+            }
+
+            if (mesh["parentId"] && hierarchyIds.IndexOf(mesh["parentId"]) != -1)
+            {
+                hierarchyIds.Add((string)mesh["id"]);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool importMesh(Array<string> meshesNames, Scene scene, string data, string rootUrl, Array<AbstractMesh> meshes, Array<ParticleSystem> particleSystems, Array<Skeleton> skeletons)
+        {
+            var parsedData = JsmnParser.Parse(data);
+
+            var loadedSkeletonsIds = new Array<string>();
+            var loadedMaterialsIds = new Array<string>();
+            var hierarchyIds = new Array<string>();
+            var meshes1 = parsedData["meshes"];
+            for (var index = 0; index < meshes1.Length; index++)
+            {
+                var parsedMesh = meshes1[index];
+
+                if (meshesNames != null || isDescendantOf(parsedMesh, meshesNames, hierarchyIds))
+                {
+                    // Remove found mesh name from list.
+                    var name = parsedMesh["name"];
+                    var indexOf = meshesNames.IndexOf(name);
+                    if (indexOf != -1)
+                    {
+                        meshesNames.RemoveAt(indexOf);
+                    }
+
+                    // Material ?
+                    if (parsedMesh["materialId"])
+                    {
+                        var materialFound = (loadedMaterialsIds.IndexOf(parsedMesh["materialId"]) != -1);
+
+                        if (!materialFound)
+                        {
+                            var multiMaterials = parsedData["multiMaterials"];
+                            for (var multimatIndex = 0; multimatIndex < multiMaterials.Length; multimatIndex++)
+                            {
+                                var parsedMultiMaterial = multiMaterials[multimatIndex];
+                                if ((string)parsedMultiMaterial["id"] == (string)parsedMesh["materialId"])
+                                {
+                                    var materials = parsedMultiMaterial["materials"];
+                                    for (var matIndex = 0; matIndex < materials.Length; matIndex++)
+                                    {
+                                        var subMatId = materials[matIndex];
+                                        loadedMaterialsIds.Add((string)subMatId);
+                                        parseMaterialById(subMatId, parsedData, scene, rootUrl);
+                                    }
+
+                                    loadedMaterialsIds.Add((string)parsedMultiMaterial["id"]);
+                                    parseMultiMaterial(parsedMultiMaterial, scene);
+                                    materialFound = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!materialFound)
+                        {
+                            loadedMaterialsIds.Add((string)parsedMesh["materialId"]);
+                            parseMaterialById(parsedMesh["materialId"], parsedData, scene, rootUrl);
+                        }
+                    }
+
+                    // Skeleton ?
+                    if (parsedMesh["skeletonId"] > -1 && scene.skeletons != null)
+                    {
+                        var skeletonAlreadyLoaded = (loadedSkeletonsIds.IndexOf(parsedMesh["skeletonId"]) > -1);
+
+                        if (!skeletonAlreadyLoaded)
+                        {
+                            var skeletons1 = parsedData["skeletons"];
+                            for (var skeletonIndex = 0; skeletonIndex < skeletons1.Length; skeletonIndex++)
+                            {
+                                var parsedSkeleton = skeletons1[skeletonIndex];
+
+                                if ((string)parsedSkeleton["id"] == (string)parsedMesh["skeletonId"])
+                                {
+                                    skeletons.Add(parseSkeleton(parsedSkeleton, scene));
+                                    loadedSkeletonsIds.Add((string)parsedSkeleton["id"]);
+                                }
+                            }
+                        }
+                    }
+
+                    var mesh = parseMesh(parsedMesh, scene, rootUrl);
+                    meshes.Add(mesh);
+                }
+            }
+
+            // Particles
+            if (parsedData["particleSystems"])
+            {
+                for (var index = 0; index < parsedData["particleSystems"].Length; index++)
+                {
+                    var parsedParticleSystem = parsedData["particleSystems"][index];
+
+                    if (hierarchyIds.IndexOf(parsedParticleSystem["emitterId"]) != -1)
+                    {
+                        particleSystems.Add(parseParticleSystem(parsedParticleSystem, scene, rootUrl));
+                    }
+                }
+            }
+
+            return true;
         }
 
         public bool load(Scene scene, string data, string rootUrl)
@@ -887,25 +1003,9 @@ namespace BABYLON.Internals
             scene.useDelayedTextureLoading = parsedData["useDelayedTextureLoading"] && !BABYLON.SceneLoader.ForceFullSceneLoadingForIncremental;
             scene.autoClear = parsedData["autoClear"];
 
-#if _DEBUG
-            BABYLON.Tools.Log("next is clearColor");
-
-            //scene.clearColor = Color3.FromArray(new double[] { 1.0, 2.0, 3.0 });
-            //BABYLON.Tools.Log("test done");
-#endif
-
-            var c = BABYLON.Color3.FromArray(parsedData["clearColor"]);
-            scene.clearColor = c;
-
-#if _DEBUG
-            BABYLON.Tools.Log("next is ambientColor");
-#endif
+            scene.clearColor = BABYLON.Color3.FromArray(parsedData["clearColor"]);
 
             scene.ambientColor = BABYLON.Color3.FromArray(parsedData["ambientColor"]);
-
-#if _DEBUG
-            BABYLON.Tools.Log("next is gravity");
-#endif
 
             scene.gravity = BABYLON.Vector3.FromArray(parsedData["gravity"]);
 
@@ -974,11 +1074,14 @@ namespace BABYLON.Internals
 
             // Geometries
             var geometries = parsedData["geometries"];
-            if (geometries) {
+            if (geometries)
+            {
                 // Boxes
                 var boxes = geometries["boxes"];
-                if (boxes) {
-                    for (var index = 0; index < boxes.Length; index++) {
+                if (boxes)
+                {
+                    for (var index = 0; index < boxes.Length; index++)
+                    {
                         var parsedBox = boxes[index];
                         parseBox(parsedBox, scene);
                     }
@@ -986,8 +1089,10 @@ namespace BABYLON.Internals
 
                 // Spheres
                 var spheres = geometries["spheres"];
-                if (spheres) {
-                    for (var index = 0; index < spheres.Length; index++) {
+                if (spheres)
+                {
+                    for (var index = 0; index < spheres.Length; index++)
+                    {
                         var parsedSphere = spheres[index];
                         parseSphere(parsedSphere, scene);
                     }
@@ -995,8 +1100,10 @@ namespace BABYLON.Internals
 
                 // Cylinders
                 var cylinders = geometries["cylinders"];
-                if (cylinders) {
-                    for (var index = 0; index < cylinders.Length; index++) {
+                if (cylinders)
+                {
+                    for (var index = 0; index < cylinders.Length; index++)
+                    {
                         var parsedCylinder = cylinders[index];
                         parseCylinder(parsedCylinder, scene);
                     }
@@ -1004,8 +1111,10 @@ namespace BABYLON.Internals
 
                 // Toruses
                 var toruses = geometries["toruses"];
-                if (toruses) {
-                    for (var index = 0; index < toruses.Length; index++) {
+                if (toruses)
+                {
+                    for (var index = 0; index < toruses.Length; index++)
+                    {
                         var parsedTorus = toruses[index];
                         parseTorus(parsedTorus, scene);
                     }
@@ -1013,8 +1122,10 @@ namespace BABYLON.Internals
 
                 // Grounds
                 var grounds = geometries["grounds"];
-                if (grounds) {
-                    for (var index = 0; index < grounds.Length; index++) {
+                if (grounds)
+                {
+                    for (var index = 0; index < grounds.Length; index++)
+                    {
                         var parsedGround = grounds[index];
                         parseGround(parsedGround, scene);
                     }
@@ -1022,8 +1133,10 @@ namespace BABYLON.Internals
 
                 // Planes
                 var planes = geometries["planes"];
-                if (planes) {
-                    for (var index = 0; index < planes.Length; index++) {
+                if (planes)
+                {
+                    for (var index = 0; index < planes.Length; index++)
+                    {
                         var parsedPlane = planes[index];
                         parsePlane(parsedPlane, scene);
                     }
@@ -1031,8 +1144,10 @@ namespace BABYLON.Internals
 
                 // TorusKnots
                 var torusKnots = geometries["torusKnots"];
-                if (torusKnots) {
-                    for (var index = 0; index < torusKnots.Length; index++) {
+                if (torusKnots)
+                {
+                    for (var index = 0; index < torusKnots.Length; index++)
+                    {
                         var parsedTorusKnot = torusKnots[index];
                         parseTorusKnot(parsedTorusKnot, scene);
                     }
@@ -1040,8 +1155,10 @@ namespace BABYLON.Internals
 
                 // VertexData
                 var vertexData = geometries["vertexData"];
-                if (vertexData) {
-                    for (var index = 0; index < vertexData.Length; index++) {
+                if (vertexData)
+                {
+                    for (var index = 0; index < vertexData.Length; index++)
+                    {
                         var parsedVertexData = vertexData[index];
                         parseVertexData(parsedVertexData, scene, rootUrl);
                     }

@@ -1106,7 +1106,7 @@
             if (error != ErrorCode.NoError)
             {
                 var message = string.Format("Error : {0}, {1}", error, this.openGl.GetErrorDescription((uint)error));
-                Debug.Fail(message);
+                //Debug.Fail(message);
             }
         }
     }

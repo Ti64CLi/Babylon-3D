@@ -64,9 +64,36 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
+        /// <param name="subPropertyName">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get { return null; }
+            set { }
+        }
+
+        /// <summary>
+        /// </summary>
+        public object value { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public Array<Animation> animations { get; set; }
+
+        /// <summary>
+        /// </summary>
         public virtual void _markAsDirty()
         {
             this._isDirty = true;
+        }
+
+        /// <summary>
+        /// </summary>
+        public void markAsDirty(string propertyName)
+        {
+            // todo: finish;
         }
 
         /// <summary>

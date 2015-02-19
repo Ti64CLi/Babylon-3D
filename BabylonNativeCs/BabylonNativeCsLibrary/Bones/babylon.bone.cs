@@ -17,7 +17,11 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
-        public Array<Animation> animations = new Array<Animation>();
+        public Array<Animation> _animations;
+
+        /// <summary>
+        /// </summary>
+        public Array<IAnimatable> _animatables;
 
         /// <summary>
         /// </summary>
@@ -67,6 +71,8 @@ namespace BABYLON
         /// </param>
         public Bone(string name, Skeleton skeleton, Bone parentBone, Matrix matrix)
         {
+            this.animations = new Array<Animation>();
+
             this.name = name;
             this._skeleton = skeleton;
             this._matrix = matrix;
@@ -123,22 +129,7 @@ namespace BABYLON
             }
         }
 
-        /// <summary>
-        /// </summary>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        Array<Animation> IAnimatable.animations
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Array<Animation> animations { get; set; }
 
         /// <summary>
         /// </summary>
@@ -165,7 +156,7 @@ namespace BABYLON
         /// </exception>
         public Array<IAnimatable> getAnimatables()
         {
-            throw new NotImplementedException();
+            return this._animatables;
         }
 
         /// <summary>

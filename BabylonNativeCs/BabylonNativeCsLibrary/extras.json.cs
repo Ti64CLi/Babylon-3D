@@ -804,7 +804,7 @@ namespace BABYLON
                 return current.size == 0;
             }
 
-            return current.type == JsmnType.Primitive &&
+            return (current.type == JsmnType.Primitive || current.type == JsmnType.String) &&
                    (current.start == current.end || current.start == -1 || current.end == -1);
         }
 

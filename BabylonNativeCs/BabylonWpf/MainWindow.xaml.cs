@@ -637,8 +637,11 @@ namespace BabylonWpf
 
             // Meshes
             // Dude
-            BABYLON.SceneLoader.ImportMesh("him", "Scenes/Dude/", "Dude.babylon", scene, (newMeshes2, particleSystems2, skeletons2) =>
+            BABYLON.SceneLoader.ImportMesh(new Array<string>("him"), "", "Dude.babylon", scene, (newMeshes2, particleSystems2, skeletons2) =>
             {
+                this.scene = scene;
+                this.scene.activeCamera.attachControl(this.canvas);
+
                 var dude = newMeshes2[0];
 
                 for (var index = 0; index < newMeshes2.Length; index++)
