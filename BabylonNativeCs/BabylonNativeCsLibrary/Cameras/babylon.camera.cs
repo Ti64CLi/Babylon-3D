@@ -13,7 +13,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    public abstract class Camera : Node
+    public abstract class Camera : Node, IAnimatable
     {
         /// <summary>
         /// </summary>
@@ -476,5 +476,33 @@ namespace BABYLON
         /// <summary>
         /// </summary>
         public const int ORTHOGRAPHIC_CAMERA = 1;
+
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public object value
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public Array<Animation> animations
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public Array<IAnimatable> getAnimatables()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void markAsDirty(string propertyName)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -30,7 +30,6 @@ namespace BABYLON.Internals
             return texture;
         }
 
-        // TODO: finish animation
         Texture loadTexture(string rootUrl, JsmnParserValue parsedTexture, Scene scene)
         {
             if (!parsedTexture["name"] && !parsedTexture["isRenderTarget"])
@@ -79,12 +78,14 @@ namespace BABYLON.Internals
             texture.wAng = parsedTexture["wAng"];
             texture.wrapU = parsedTexture["wrapU"];
             texture.wrapV = parsedTexture["wrapV"];
-            if (parsedTexture["animations"])
+
+            var animations = parsedTexture["animations"];
+            if (animations)
             {
-                for (var animationIndex = 0; animationIndex < parsedTexture["animations"].Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < animations.Length; animationIndex++)
                 {
-                    var parsedAnimation = parsedTexture["animations"][animationIndex];
-                    ////texture.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = animations[animationIndex];
+                    texture.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
             return texture;
@@ -112,15 +113,15 @@ namespace BABYLON.Internals
                     parentBone = skeleton.bones[parsedBone["parentBoneIndex"]];
                 }
                 var bone = new BABYLON.Bone(parsedBone["name"], skeleton, parentBone, BABYLON.Matrix.FromArray(parsedBone["matrix"]));
-                if (parsedBone["animation"])
+                var animation = parsedBone["animation"];
+                if (animation)
                 {
-                    //bone.animations.Add(parseAnimation(parsedBone["animation"]));
+                    bone.animations.Add(parseAnimation(animation));
                 }
             }
             return skeleton;
         }
 
-        // TODO: finish animation
         Material parseMaterial(JsmnParserValue parsedMaterial, Scene scene, string rootUrl)
         {
             var material = new BABYLON.StandardMaterial(parsedMaterial["name"], scene);
@@ -266,41 +267,38 @@ namespace BABYLON.Internals
             return shadowGenerator;
         }
 
-        /*
         Animation parseAnimation(JsmnParserValue parsedAnimation)
         {
             var animation = new BABYLON.Animation(parsedAnimation["name"], parsedAnimation["property"], parsedAnimation["framePerSecond"], parsedAnimation["dataType"], parsedAnimation["loopBehavior"]);
             var dataType = (int)parsedAnimation["dataType"];
-            var keys = new Array<object>();
+            var keys = new Array<AnimationKey>();
             for (var index = 0; index < parsedAnimation["keys"].Length; index++)
             {
                 var key = parsedAnimation["keys"]["index"];
-                int data;
+                object data;
                 switch (dataType)
                 {
                     case BABYLON.Animation.ANIMATIONTYPE_FLOAT:
-                        data = key.values[0];
+                        data = key["values"][0];
                         break;
                     case BABYLON.Animation.ANIMATIONTYPE_QUATERNION:
-                        data = BABYLON.Quaternion.FromArray(key.values);
+                        data = BABYLON.Quaternion.FromArray(key["values"]);
                         break;
                     case BABYLON.Animation.ANIMATIONTYPE_MATRIX:
-                        data = BABYLON.Matrix.FromArray(key.values);
+                        data = BABYLON.Matrix.FromArray(key["values"]);
                         break;
                     case BABYLON.Animation.ANIMATIONTYPE_VECTOR3:
                     default:
-                        data = BABYLON.Vector3.FromArray(key.values);
+                        data = BABYLON.Vector3.FromArray(key["values"]);
                         break;
                 }
-                keys.Add(new { });
+                keys.Add(new AnimationKey() { frame = key["frame"], value = data });
             }
 
             animation.setKeys(keys);
             return animation;
         }
-        */
 
-        // TODO: finish loading animation
         void parseLight(JsmnParserValue parsedLight, Scene scene)
         {
             Light light = null;
@@ -348,22 +346,23 @@ namespace BABYLON.Internals
                 light._excludedMeshesIds = Array<string>.New(parsedLight["excludedMeshesIds"]);
             }
 
-            if (parsedLight["animations"])
+            var animations = parsedLight["animations"];
+            if (animations)
             {
-                for (var animationIndex = 0; animationIndex < parsedLight["animations"].Length; animationIndex++)
+                for (var animationIndex = 0; animationIndex < animations.Length; animationIndex++)
                 {
-                    var parsedAnimation = parsedLight["animations"][animationIndex];
-                    ////light.animations.Add(parseAnimation(parsedAnimation));
+                    var parsedAnimation = animations[animationIndex];
+                    light.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
 
             if (parsedLight["autoAnimate"])
             {
-                //scene.beginAnimation(light, parsedLight["autoAnimateFrom"], parsedLight["autoAnimateTo"], parsedLight["autoAnimateLoop"], 1["0"]);
+                scene.beginAnimation(light, parsedLight["autoAnimateFrom"], parsedLight["autoAnimateTo"], parsedLight["autoAnimateLoop"], 1.0);
             }
         }
 
-        // TODO: finish ags and animation
+        // TODO: finish tags
         Camera parseCamera(JsmnParserValue parsedCamera, Scene scene)
         {
             var camera = new BABYLON.FreeCamera(parsedCamera["name"], BABYLON.Vector3.FromArray(parsedCamera["position"]), scene);
@@ -401,12 +400,12 @@ namespace BABYLON.Internals
                 for (var animationIndex = 0; animationIndex < parsedCamera["animations"].Length; animationIndex++)
                 {
                     var parsedAnimation = parsedCamera["animations"][animationIndex];
-                    ////camera.animations.Add(parseAnimation(parsedAnimation));
+                    camera.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
             if (parsedCamera["autoAnimate"])
             {
-                ////scene.beginAnimation(camera, parsedCamera["autoAnimateFrom"], parsedCamera["autoAnimateTo"], parsedCamera["autoAnimateLoop"], 1["0"]);
+                scene.beginAnimation(camera, parsedCamera["autoAnimateFrom"], parsedCamera["autoAnimateTo"], parsedCamera["autoAnimateLoop"], 1.0);
             }
             if (parsedCamera["layerMask"] && (!Double.IsNaN(parsedCamera["layerMask"])))
             {
@@ -662,12 +661,12 @@ namespace BABYLON.Internals
                 for (var animationIndex = 0; animationIndex < parsedMesh["animations"].Length; animationIndex++)
                 {
                     var parsedAnimation = parsedMesh["animations"][animationIndex];
-                    //mesh.animations.Add(parseAnimation(parsedAnimation));
+                    mesh.animations.Add(parseAnimation(parsedAnimation));
                 }
             }
             if (parsedMesh["autoAnimate"])
             {
-                //scene.beginAnimation(mesh, parsedMesh["autoAnimateFrom"], parsedMesh["autoAnimateTo"], parsedMesh["autoAnimateLoop"], 1.0);
+                scene.beginAnimation(mesh, parsedMesh["autoAnimateFrom"], parsedMesh["autoAnimateTo"], parsedMesh["autoAnimateLoop"], 1.0);
             }
             if (parsedMesh["layerMask"] && (!Double.IsNaN(parsedMesh["layerMask"])))
             {
@@ -702,34 +701,13 @@ namespace BABYLON.Internals
                         for (var animationIndex = 0; animationIndex < animations.Length; animationIndex++)
                         {
                             var parsedAnimation = animations[animationIndex];
-                            //instance.animations.Add(parseAnimation(parsedAnimation));
+                            instance.animations.Add(parseAnimation(parsedAnimation));
                         }
                     }
                 }
             }
             return mesh;
         }
-
-        /*
-        bool isDescendantOf(Mesh mesh, object names, Array<string> hierarchyIds)
-        {
-            names = ((names is Array)) ? names : new Array<object>(names);
-            foreach (var i in names)
-            {
-                if (mesh.name == names[i])
-                {
-                    hierarchyIds.Add(mesh.id);
-                    return true;
-                }
-            }
-            if (mesh.parentId && hierarchyIds.IndexOf(mesh.parentId) != -1)
-            {
-                hierarchyIds.Add(mesh.id);
-                return true;
-            }
-            return false;
-        }
-        */
 
         void importVertexData(JsmnParserValue parsedVertexData, Geometry geometry)
         {

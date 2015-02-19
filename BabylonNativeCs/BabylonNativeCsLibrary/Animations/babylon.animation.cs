@@ -86,86 +86,6 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public static int ANIMATIONLOOPMODE_CONSTANT
-        {
-            get
-            {
-                return _ANIMATIONLOOPMODE_CONSTANT;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONLOOPMODE_CYCLE
-        {
-            get
-            {
-                return _ANIMATIONLOOPMODE_CYCLE;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONLOOPMODE_RELATIVE
-        {
-            get
-            {
-                return _ANIMATIONLOOPMODE_RELATIVE;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONTYPE_COLOR3
-        {
-            get
-            {
-                return _ANIMATIONTYPE_COLOR3;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONTYPE_FLOAT
-        {
-            get
-            {
-                return _ANIMATIONTYPE_FLOAT;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONTYPE_MATRIX
-        {
-            get
-            {
-                return _ANIMATIONTYPE_MATRIX;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONTYPE_QUATERNION
-        {
-            get
-            {
-                return _ANIMATIONTYPE_QUATERNION;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        public static int ANIMATIONTYPE_VECTOR3
-        {
-            get
-            {
-                return _ANIMATIONTYPE_VECTOR3;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
         /// <param name="delay">
         /// </param>
         /// <param name="from">
@@ -227,16 +147,16 @@ namespace BABYLON
                         var toValue = this._interpolate(to, 0, ANIMATIONLOOPMODE_CYCLE);
                         switch (this.dataType)
                         {
-                            case _ANIMATIONTYPE_FLOAT:
+                            case ANIMATIONTYPE_FLOAT:
                                 this._offsetsCache[keyOffset] = (double)toValue - (double)fromValue;
                                 break;
-                            case _ANIMATIONTYPE_QUATERNION:
+                            case ANIMATIONTYPE_QUATERNION:
                                 this._offsetsCache[keyOffset] = ((Quaternion)toValue).subtract((Quaternion)fromValue);
                                 break;
-                            case _ANIMATIONTYPE_VECTOR3:
+                            case ANIMATIONTYPE_VECTOR3:
                                 this._offsetsCache[keyOffset] = ((Vector3)toValue).subtract((Vector3)fromValue);
                                 break;
-                            case _ANIMATIONTYPE_COLOR3:
+                            case ANIMATIONTYPE_COLOR3:
                                 this._offsetsCache[keyOffset] = ((Color3)toValue).subtract((Color3)fromValue);
                                 break;
                             default:
@@ -410,26 +330,26 @@ namespace BABYLON
                     var gradient = (currentFrame - this._keys[key].frame) / (double)(this._keys[key + 1].frame - this._keys[key].frame);
                     switch (this.dataType)
                     {
-                        case _ANIMATIONTYPE_FLOAT:
+                        case ANIMATIONTYPE_FLOAT:
                             switch (loopMode)
                             {
-                                case _ANIMATIONLOOPMODE_CYCLE:
-                                case _ANIMATIONLOOPMODE_CONSTANT:
+                                case ANIMATIONLOOPMODE_CYCLE:
+                                case ANIMATIONLOOPMODE_CONSTANT:
                                     return this.floatInterpolateFunction((double)startValue, (double)endValue, gradient);
-                                case _ANIMATIONLOOPMODE_RELATIVE:
+                                case ANIMATIONLOOPMODE_RELATIVE:
                                     return (double)offsetValue * repeatCount + this.floatInterpolateFunction((double)startValue, (double)endValue, gradient);
                             }
 
                             break;
-                        case _ANIMATIONTYPE_QUATERNION:
+                        case ANIMATIONTYPE_QUATERNION:
                             Quaternion quaternion = null;
                             switch (loopMode)
                             {
-                                case _ANIMATIONLOOPMODE_CYCLE:
-                                case _ANIMATIONLOOPMODE_CONSTANT:
+                                case ANIMATIONLOOPMODE_CYCLE:
+                                case ANIMATIONLOOPMODE_CONSTANT:
                                     quaternion = this.quaternionInterpolateFunction((Quaternion)startValue, (Quaternion)endValue, gradient);
                                     break;
-                                case _ANIMATIONLOOPMODE_RELATIVE:
+                                case ANIMATIONLOOPMODE_RELATIVE:
                                     quaternion =
                                         this.quaternionInterpolateFunction((Quaternion)startValue, (Quaternion)endValue, gradient)
                                             .add(((Quaternion)offsetValue).scale(repeatCount));
@@ -437,38 +357,38 @@ namespace BABYLON
                             }
 
                             return quaternion;
-                        case _ANIMATIONTYPE_VECTOR3:
+                        case ANIMATIONTYPE_VECTOR3:
                             switch (loopMode)
                             {
-                                case _ANIMATIONLOOPMODE_CYCLE:
-                                case _ANIMATIONLOOPMODE_CONSTANT:
+                                case ANIMATIONLOOPMODE_CYCLE:
+                                case ANIMATIONLOOPMODE_CONSTANT:
                                     return this.vector3InterpolateFunction((Vector3)startValue, (Vector3)endValue, gradient);
-                                case _ANIMATIONLOOPMODE_RELATIVE:
+                                case ANIMATIONLOOPMODE_RELATIVE:
                                     return
                                         this.vector3InterpolateFunction((Vector3)startValue, (Vector3)endValue, gradient)
                                             .add(((Vector3)offsetValue).scale(repeatCount));
                             }
 
                             break;
-                        case _ANIMATIONTYPE_COLOR3:
+                        case ANIMATIONTYPE_COLOR3:
                             switch (loopMode)
                             {
-                                case _ANIMATIONLOOPMODE_CYCLE:
-                                case _ANIMATIONLOOPMODE_CONSTANT:
+                                case ANIMATIONLOOPMODE_CYCLE:
+                                case ANIMATIONLOOPMODE_CONSTANT:
                                     return this.color3InterpolateFunction((Color3)startValue, (Color3)endValue, gradient);
-                                case _ANIMATIONLOOPMODE_RELATIVE:
+                                case ANIMATIONLOOPMODE_RELATIVE:
                                     return
                                         this.color3InterpolateFunction((Color3)startValue, (Color3)endValue, gradient)
                                             .add(((Color3)offsetValue).scale(repeatCount));
                             }
 
                             break;
-                        case _ANIMATIONTYPE_MATRIX:
+                        case ANIMATIONTYPE_MATRIX:
                             switch (loopMode)
                             {
-                                case _ANIMATIONLOOPMODE_CYCLE:
-                                case _ANIMATIONLOOPMODE_CONSTANT:
-                                case _ANIMATIONLOOPMODE_RELATIVE:
+                                case ANIMATIONLOOPMODE_CYCLE:
+                                case ANIMATIONLOOPMODE_CONSTANT:
+                                case ANIMATIONLOOPMODE_RELATIVE:
                                     return startValue;
                             }
 
@@ -486,34 +406,34 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONTYPE_FLOAT = 0;
+        public const int ANIMATIONTYPE_FLOAT = 0;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONTYPE_VECTOR3 = 1;
+        public const int ANIMATIONTYPE_VECTOR3 = 1;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONTYPE_QUATERNION = 2;
+        public const int ANIMATIONTYPE_QUATERNION = 2;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONTYPE_MATRIX = 3;
+        public const int ANIMATIONTYPE_MATRIX = 3;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONTYPE_COLOR3 = 4;
+        public const int ANIMATIONTYPE_COLOR3 = 4;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONLOOPMODE_RELATIVE = 0;
+        public const int ANIMATIONLOOPMODE_RELATIVE = 0;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONLOOPMODE_CYCLE = 1;
+        public const int ANIMATIONLOOPMODE_CYCLE = 1;
 
         /// <summary>
         /// </summary>
-        private const int _ANIMATIONLOOPMODE_CONSTANT = 2;
+        public const int ANIMATIONLOOPMODE_CONSTANT = 2;
     }
 }

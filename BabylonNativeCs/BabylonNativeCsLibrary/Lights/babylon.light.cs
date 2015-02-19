@@ -11,7 +11,7 @@ namespace BABYLON
 {
     /// <summary>
     /// </summary>
-    public partial class Light : Node
+    public partial class Light : Node, IAnimatable
     {
         /// <summary>
         /// </summary>
@@ -121,6 +121,52 @@ namespace BABYLON
         /// </param>
         public virtual void transferToEffect(Effect effect, string uniformName0 = null, string uniformName1 = null)
         {
+        }
+
+        public new Array<Animation> animations
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public Array<IAnimatable> getAnimatables()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void markAsDirty(string propertyName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public object value
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

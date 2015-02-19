@@ -32,7 +32,7 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    public partial class Mesh : AbstractMesh, IGetSetVerticesData
+    public partial class Mesh : AbstractMesh, IGetSetVerticesData, IAnimatable
     {
         /// <summary>
         /// </summary>
@@ -881,6 +881,12 @@ namespace BABYLON
             base.dispose(doNotRecurse);
         }
 
+        public Array<Animation> animations
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         /// <summary>
         /// </summary>
         /// <returns>
@@ -1389,6 +1395,18 @@ namespace BABYLON
             }
 
             return base.Equals(obj);
+        }
+
+        public IAnimatableProperty this[string subPropertyName]
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public object value
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
     }
 }
