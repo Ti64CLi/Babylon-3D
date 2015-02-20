@@ -145,7 +145,7 @@ namespace BABYLON
             throw new System.NotImplementedException();
         }
 
-        public IAnimatableProperty this[string subPropertyName]
+        public object this[string subPropertyName]
         {
             get
             {

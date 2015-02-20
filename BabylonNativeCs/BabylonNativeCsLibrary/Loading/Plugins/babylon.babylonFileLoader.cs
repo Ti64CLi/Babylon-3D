@@ -271,10 +271,13 @@ namespace BABYLON.Internals
         {
             var animation = new BABYLON.Animation(parsedAnimation["name"], parsedAnimation["property"], parsedAnimation["framePerSecond"], parsedAnimation["dataType"], parsedAnimation["loopBehavior"]);
             var dataType = (int)parsedAnimation["dataType"];
-            var keys = new Array<AnimationKey>();
-            for (var index = 0; index < parsedAnimation["keys"].Length; index++)
+            var animationKeys = new Array<AnimationKey>();
+            var keys = parsedAnimation["keys"];
+            for (var index = 0; index < keys.Length; index++)
             {
-                var key = parsedAnimation["keys"]["index"];
+                var key = keys[index];
+                var frame = key["frame"];
+
                 object data;
                 switch (dataType)
                 {
@@ -292,10 +295,10 @@ namespace BABYLON.Internals
                         data = BABYLON.Vector3.FromArray(key["values"]);
                         break;
                 }
-                keys.Add(new AnimationKey() { frame = key["frame"], value = data });
+                animationKeys.Add(new AnimationKey() { frame = frame, value = data });
             }
 
-            animation.setKeys(keys);
+            animation.setKeys(animationKeys);
             return animation;
         }
 

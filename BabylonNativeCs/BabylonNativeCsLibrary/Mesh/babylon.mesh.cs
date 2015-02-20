@@ -1397,7 +1397,7 @@ namespace BABYLON
             return base.Equals(obj);
         }
 
-        public IAnimatableProperty this[string subPropertyName]
+        public object this[string subPropertyName]
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

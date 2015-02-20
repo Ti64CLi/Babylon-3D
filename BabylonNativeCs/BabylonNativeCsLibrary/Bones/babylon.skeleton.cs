@@ -9,6 +9,8 @@
 
 namespace BABYLON
 {
+    using System;
+
     /// <summary>
     /// </summary>
     public partial class Skeleton : IAnimatable
@@ -68,10 +70,10 @@ namespace BABYLON
         /// </param>
         /// <returns>
         /// </returns>
-        public IAnimatableProperty this[string subPropertyName]
+        public object this[string subPropertyName]
         {
-            get { return null; }
-            set { }
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         /// <summary>
@@ -84,16 +86,9 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public virtual void _markAsDirty()
-        {
-            this._isDirty = true;
-        }
-
-        /// <summary>
-        /// </summary>
         public void markAsDirty(string propertyName)
         {
-            // todo: finish;
+            this._isDirty = true;
         }
 
         /// <summary>

@@ -176,17 +176,17 @@ namespace BABYLON
             var currentValue = this._interpolate(currentFrame, repeatCount, this.loopMode, offsetValue, highLimitValue);
             if (this.targetPropertyPath.Length > 1)
             {
-                var property = this._target[this.targetPropertyPath[0]];
+                var property = this._target[this.targetPropertyPath[0]] as IAnimatable;
                 for (var index = 1; index < this.targetPropertyPath.Length - 1; index++)
                 {
-                    property = property[this.targetPropertyPath[index]];
+                    property = property[this.targetPropertyPath[index]] as IAnimatable;
                 }
 
-                property[this.targetPropertyPath[this.targetPropertyPath.Length - 1]].value = currentValue;
+                property[this.targetPropertyPath[this.targetPropertyPath.Length - 1]] = currentValue;
             }
             else
             {
-                this._target[this.targetPropertyPath[0]].value = currentValue;
+                this._target[this.targetPropertyPath[0]] = currentValue;
             }
 
             this._target.markAsDirty(this.targetProperty);

@@ -477,7 +477,7 @@ namespace BABYLON
         /// </summary>
         public const int ORTHOGRAPHIC_CAMERA = 1;
 
-        public IAnimatableProperty this[string subPropertyName]
+        public object this[string subPropertyName]
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }

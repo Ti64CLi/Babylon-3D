@@ -102,7 +102,7 @@ namespace BABYLON
         /// </exception>
         /// <returns>
         /// </returns>
-        public IAnimatableProperty this[string subPropertyName]
+        public object this[string subPropertyName]
         {
             get
             {

@@ -15,8 +15,10 @@ namespace BABYLON
 
     /// <summary>
     /// </summary>
-    public partial interface IAnimatable : IAnimatableProperty
+    public partial interface IAnimatable
     {
+        object this[string propertyName] { get; set; }
+
         /// <summary>
         /// </summary>
         Array<Animation> animations { get; set; }

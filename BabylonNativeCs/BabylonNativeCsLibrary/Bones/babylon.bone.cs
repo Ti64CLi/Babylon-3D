@@ -99,15 +99,26 @@ namespace BABYLON
         /// </exception>
         /// <returns>
         /// </returns>
-        public IAnimatableProperty this[string propertyName]
+        public object this[string propertyName]
         {
             get
             {
+                if (propertyName == "_matrix")
+                {
+                    return _matrix;
+                }
+
                 throw new NotImplementedException();
             }
 
             set
             {
+                if (propertyName == "_matrix")
+                {
+                    _matrix = (Matrix) value;
+                    return;
+                }
+
                 throw new NotImplementedException();
             }
         }
@@ -206,20 +217,13 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public virtual void markAsDirty()
-        {
-            this._skeleton._markAsDirty();
-        }
-
-        /// <summary>
-        /// </summary>
         /// <param name="propertyName">
         /// </param>
         /// <exception cref="NotImplementedException">
         /// </exception>
         public void markAsDirty(string propertyName)
         {
-            throw new NotImplementedException();
+            this._skeleton.markAsDirty(propertyName);
         }
 
         /// <summary>
@@ -229,7 +233,7 @@ namespace BABYLON
         public virtual void updateMatrix(Matrix matrix)
         {
             this._matrix = matrix;
-            this._skeleton._markAsDirty();
+            this._skeleton.markAsDirty(null);
             this._updateDifferenceMatrix();
         }
 

@@ -133,7 +133,7 @@ namespace BABYLON
             var properties = propertyPath.Split('.');
             for (var index = 0; index < properties.Length - 1; index++)
             {
-                target = target[properties[index]].value as IAnimatable;
+                target = target[properties[index]] as IAnimatable;
             }
 
             return target;
