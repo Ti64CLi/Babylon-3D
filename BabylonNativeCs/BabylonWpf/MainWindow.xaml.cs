@@ -710,21 +710,23 @@ namespace BabylonWpf
             // Post-process
             var blurWidth = 1.0;
 
-            //var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
-            //var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", new Array<string>("screenSize", "highlightThreshold"), null, 0.25, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
-            //postProcess1.onApply = (effect) => {
-            //    effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
-            //    effect.setFloat("highlightThreshold", 0.90);
-            //};
-            //var postProcess2 = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), blurWidth, 0.25, camera);
-            //var postProcess3 = new BABYLON.BlurPostProcess("Vertical blur", new BABYLON.Vector2(0, 1.0), blurWidth, 0.25, camera);
-            //var postProcess4 = new BABYLON.PostProcess("Final compose", "./postprocesses/compose", new Array<string>("sceneIntensity", "glowIntensity", "highlightIntensity"), new Array<string>("sceneSampler"), 1, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
-            //postProcess4.onApply = (effect) => {
-            //    effect.setTextureFromPostProcess("sceneSampler", postProcess0);
-            //    effect.setFloat("sceneIntensity", 0.5);
-            //    effect.setFloat("glowIntensity", 0.4);
-            //    effect.setFloat("highlightIntensity", 1.0);
-            //};
+            var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+            var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", new Array<string>("screenSize", "highlightThreshold"), null, 0.25, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
+            postProcess1.onApply = (effect) =>
+            {
+                effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
+                effect.setFloat("highlightThreshold", 0.90);
+            };
+            var postProcess2 = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), blurWidth, 0.25, camera);
+            var postProcess3 = new BABYLON.BlurPostProcess("Vertical blur", new BABYLON.Vector2(0, 1.0), blurWidth, 0.25, camera);
+            var postProcess4 = new BABYLON.PostProcess("Final compose", "./postprocesses/compose", new Array<string>("sceneIntensity", "glowIntensity", "highlightIntensity"), new Array<string>("sceneSampler"), 1, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
+            postProcess4.onApply = (effect) =>
+            {
+                effect.setTextureFromPostProcess("sceneSampler", postProcess0);
+                effect.setFloat("sceneIntensity", 0.5);
+                effect.setFloat("glowIntensity", 0.4);
+                effect.setFloat("highlightIntensity", 1.0);
+            };
 
             // Animations
             var alpha = 0.0;
