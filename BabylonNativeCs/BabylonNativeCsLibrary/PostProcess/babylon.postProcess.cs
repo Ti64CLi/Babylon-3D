@@ -35,11 +35,11 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public Action<Camera> onActivate;
+        public System.Action<Camera> onActivate;
 
         /// <summary>
         /// </summary>
-        public Action<Effect> onApply;
+        public System.Action<Effect> onApply;
 
         /// <summary>
         /// </summary>

@@ -101,6 +101,7 @@
     <Compile Include="GlBufferAdapter.cs" />
     <Compile Include="GlFramebufferAdapter.cs" />
     <Compile Include="GlProgramAdapter.cs" />
+    <Compile Include="GlRenderbufferAdapter.cs" />
     <Compile Include="GlShaderAdapter.cs" />
     <Compile Include="GlUniformLocation.cs" />
     <Compile Include="ImageDataAdapter.cs" />

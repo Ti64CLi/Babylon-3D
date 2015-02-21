@@ -844,7 +844,10 @@
 
         public WebGLRenderbuffer createRenderbuffer()
         {
-            throw new NotImplementedException();
+            var buffers = new uint[1];
+            this.openGl.GenRenderbuffersEXT(1, buffers);
+            this.ErrorTest();
+            return new GlRenderbufferAdapter(buffers[0]);
         }
 
         public bool isBuffer(WebGLBuffer buffer)
@@ -1017,7 +1020,7 @@
             int renderbuffertarget,
             WebGLRenderbuffer renderbuffer)
         {
-            throw new NotImplementedException();
+            this.openGl.FramebufferRenderbufferEXT((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer.Value);
         }
 
         public void finish()
@@ -1032,7 +1035,7 @@
 
         public void renderbufferStorage(int target, int internalformat, int width, int height)
         {
-            throw new NotImplementedException();
+            this.openGl.RenderbufferStorageEXT((uint)target, (uint)internalformat, width, height);
         }
 
         public void uniform3f(WebGLUniformLocation location, double x, double y, double z)
@@ -1106,7 +1109,7 @@
             if (error != ErrorCode.NoError)
             {
                 var message = string.Format("Error : {0}, {1}", error, this.openGl.GetErrorDescription((uint)error));
-                //Debug.Fail(message);
+                Debug.Fail(message);
             }
         }
     }
