@@ -647,7 +647,7 @@ namespace BABYLON.Internals
             {
                 mesh.material = null;
             }
-            if (parsedMesh["skeletonId"])
+            if (parsedMesh["skeletonId"] > -1)
             {
                 mesh.skeleton = scene.getLastSkeletonByID(parsedMesh["skeletonId"]);
             }
