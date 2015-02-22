@@ -224,6 +224,11 @@ namespace BABYLON
         private readonly Matrix _worldMatrix = Matrix.Zero();
 
         /// <summary>
+        /// field to save temporary data
+        /// </summary>
+        public Material _savedMaterial;
+
+        /// <summary>
         /// </summary>
         /// <param name="name">
         /// </param>

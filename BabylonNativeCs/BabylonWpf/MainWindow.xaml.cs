@@ -65,7 +65,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene18();
+            this.Scene19();
         }
 
         private void Scene1()
@@ -878,6 +878,129 @@ namespace BabylonWpf
             skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
             skybox.material = skyboxMaterial;
 
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene19()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            material.diffuseColor = BABYLON.Color3.Purple();
+            var light = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(-17.6, 18.8, -49.9), scene);
+
+            camera.setPosition(new BABYLON.Vector3(-15, 10, -20));
+            camera.minZ = 1.0;
+            camera.maxZ = 120.0;
+
+            // Skybox
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+
+            // depth material
+            BABYLON.Effect.ShadersStore["depthVertexShader"] = 
+                "#ifdef GL_ES\n" +
+                "precision highp float;\n" +
+                "#endif\n" +
+                "attribute vec3 position;\n" +
+                "uniform mat4 worldViewProjection;\n" +
+                "void main(void) {\n" +
+                "gl_Position = worldViewProjection * vec4(position, 1.0);\n" +
+                "}";
+            BABYLON.Effect.ShadersStore["depthPixelShader"] =
+                "#ifdef GL_ES\n" +
+                "precision highp float;\n" +
+                "#endif\n" +
+
+                "void main(void) {\n" +
+                "float depth =  1.0 - (2.0 / (100.0 + 1.0 - gl_FragCoord.z * (100.0 - 1.0)));\n" +
+                "gl_FragColor = vec4(depth, depth, depth, 1.0);\n" +
+                "}\n" +
+                "";
+
+            var depthMaterial = new BABYLON.ShaderMaterial(
+                "depth",
+                scene,
+                "depth",
+                new ShaderMaterialOptions()
+                {
+                    attributes = new Array<string>("position"),
+                    uniforms = new Array<string>("worldViewProjection")
+                });
+
+            depthMaterial.backFaceCulling = false;
+
+            // Plane
+            var plane = BABYLON.Mesh.CreatePlane("map", 10, scene);
+            plane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+            plane.scaling.y = 1.0 / engine.getAspectRatio(scene.activeCamera);
+
+            // Render target
+            var renderTarget = new BABYLON.RenderTargetTexture(
+                "depth",
+                new BABYLON.Size() { width = 1024, height = 1024 },
+                scene);
+
+            renderTarget.renderList.Add(skybox);
+            scene.customRenderTargets.Add(renderTarget);
+
+            renderTarget.onBeforeRender = () =>
+            {
+                for (var index = 0; index < renderTarget.renderList.Length; index++)
+                {
+                    renderTarget.renderList[index]._savedMaterial = renderTarget.renderList[index].material;
+                    renderTarget.renderList[index].material = depthMaterial;
+                }
+            };
+
+            renderTarget.onAfterRender = () =>
+            {
+                // Restoring previoux material
+                for (var index = 0; index < renderTarget.renderList.Length; index++)
+                {
+                    renderTarget.renderList[index].material = renderTarget.renderList[index]._savedMaterial;
+                }
+            };
+
+            // Spheres
+            var spheresCount = 20;
+            var alpha = 0.0;
+            for (var index = 0; index < spheresCount; index++) {
+                var sphere = BABYLON.Mesh.CreateSphere("Sphere" + index, 32, 3, scene);
+                sphere.position.x = 10 * Math.Cos(alpha);
+                sphere.position.z = 10 * Math.Sin(alpha);
+                sphere.material = material;
+
+                alpha += (2 * Math.PI) / spheresCount;
+
+                renderTarget.renderList.Add(sphere);
+            }
+
+            // Plane material
+            var mat = new BABYLON.StandardMaterial("plan mat", scene);
+            mat.diffuseColor = BABYLON.Color3.Black();
+            mat.specularColor = BABYLON.Color3.Black();
+            mat.emissiveTexture = renderTarget;
+
+            plane.material = mat;
+
+
+            // Animations
+            var isReady = false;
+            scene.registerBeforeRender(() => {
+                camera.alpha += 0.01 * scene.getAnimationRatio();
+
+                if (!isReady && scene.isReady()) {
+                    isReady = true;
+                }
+            });
+            
             this.scene.activeCamera.attachControl(this.canvas);
         }
 
