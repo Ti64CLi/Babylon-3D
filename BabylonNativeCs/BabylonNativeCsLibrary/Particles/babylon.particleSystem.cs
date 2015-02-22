@@ -236,6 +236,10 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
+        private readonly Random randomGen = new Random();
+
+        /// <summary>
+        /// </summary>
         /// <param name="name">
         /// </param>
         /// <param name="capacity">
@@ -653,12 +657,12 @@ namespace BABYLON
         /// </returns>
         private double randomNumber(double min, double max)
         {
-            if (min == max)
+            if (Math.Abs(min - max) < 0.0001)
             {
                 return min;
             }
 
-            var random = new Random().Next();
+            var random = this.randomGen.NextDouble();
             return (random * (max - min)) + min;
         }
 

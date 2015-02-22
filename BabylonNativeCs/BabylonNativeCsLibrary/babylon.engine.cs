@@ -1993,9 +1993,9 @@ namespace BABYLON
         /// </param>
         /// <param name="vertices">
         /// </param>
-        /// <param name="length">
+        /// <param name="offset">
         /// </param>
-        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, Array<double> vertices, int length = 0)
+        public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, Array<double> vertices, int offset = 0)
         {
             this._gl.bindBuffer(Gl.ARRAY_BUFFER, vertexBuffer);
             this._gl.bufferSubData(Gl.ARRAY_BUFFER, 0, ArrayConvert.AsFloat(vertices));
@@ -2008,7 +2008,7 @@ namespace BABYLON
         /// </param>
         /// <param name="vertices">
         /// </param>
-        /// <param name="length">
+        /// <param name="offset">
         /// </param>
         public virtual void updateDynamicVertexBuffer(WebGLBuffer vertexBuffer, double[] vertices, int length = 0)
         {

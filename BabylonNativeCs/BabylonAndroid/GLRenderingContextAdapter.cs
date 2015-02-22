@@ -151,7 +151,15 @@
 
         public void bufferData(int target, int size, int usage)
         {
-            throw new NotImplementedException();
+#if _DEBUG
+            Log.Info(string.Format("bufferData {0} {1} {2}", target, size, usage));
+#endif
+            unsafe
+            {
+                Gl.glBufferData(target, size, null, usage);
+            }
+
+            this.ErrorTest();
         }
 
         public void depthMask(bool flag)
@@ -216,7 +224,15 @@
 
         public void bufferSubData(int target, int offset, float[] data)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                fixed (void* p = data)
+                {
+                    this.openGl.BufferSubData((uint)target, offset, data.Length * sizeof(float), new IntPtr(p));
+                }
+            }
+
+            this.ErrorTest();
         }
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)

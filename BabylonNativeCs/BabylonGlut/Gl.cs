@@ -434,6 +434,16 @@
         public unsafe static extern void __glewGenFramebuffers(int n, uint* buffers);
 #endif
 
+#if GLEW_STATIC
+        [MethodImpl(MethodImplOptions.Unmanaged)]
+        public unsafe static extern void glGenRenderbuffers(int n, uint* buffers);
+#else
+        [DllImport("glew", CallingConvention = CallingConvention.StdCall)]
+        [MethodImpl(MethodImplOptions.Unmanaged | MethodImplOptions.ForwardRef)]
+        public unsafe static extern void __glewGenRenderbuffers(int n, uint* buffers);
+#endif
+
+
         [DllImport(" ", CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern void glGenTextures(int n, uint* textures);
 

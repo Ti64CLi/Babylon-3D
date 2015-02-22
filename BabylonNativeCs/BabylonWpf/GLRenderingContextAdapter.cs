@@ -102,7 +102,8 @@
 
         public void bufferData(int target, int size, int usage)
         {
-            throw new NotImplementedException();
+            this.openGl.BufferData((uint)target, size, new IntPtr(0), (uint)usage);
+            this.ErrorTest();
         }
 
         public void depthMask(bool flag)
@@ -140,11 +141,20 @@
         public void bufferSubData(int target, int offset, int size, IntPtr data)
         {
             this.openGl.BufferSubData((uint)target, offset, size, data);
+            this.ErrorTest();
         }
 
         public void bufferSubData(int target, int offset, float[] data)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                fixed (void* p = data)
+                {
+                    this.openGl.BufferSubData((uint)target, offset, data.Length * sizeof (float), new IntPtr(p));
+                }
+            }
+
+            this.ErrorTest();
         }
 
         public void vertexAttribPointer(int indx, int size, int type, bool normalized, int stride, int offset)

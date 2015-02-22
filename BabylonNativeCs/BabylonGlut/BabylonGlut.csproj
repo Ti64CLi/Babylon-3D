@@ -93,6 +93,9 @@
     <Compile Include="..\BabylonWpf\GlProgramAdapter.cs">
       <Link>GlProgramAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\BabylonWpf\GlRenderbufferAdapter.cs">
+      <Link>GlRenderbufferAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\BabylonWpf\GlShaderAdapter.cs">
       <Link>GlShaderAdapter.cs</Link>
     </Compile>

@@ -78,13 +78,24 @@ namespace BabylonAndroid
         {
             Log.Info("OnInitialize");
 
-            Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
-            Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
-            ////Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
-            ////Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
+            BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.LegacyVertexShader;
+            BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.LegacyPixelShader;
+            //BABYLON.Effect.ShadersStore["legacydefaultVertexShader"] = Defaults.BasicVertexShader;
+            //BABYLON.Effect.ShadersStore["legacydefaultPixelShader"] = Defaults.BasicPixelShader;
 
             BABYLON.Effect.ShadersStore["defaultVertexShader"] = Defaults.DefaultVertexShader;
             BABYLON.Effect.ShadersStore["defaultPixelShader"] = Defaults.DefaultPixelShader;
+
+            BABYLON.Effect.ShadersStore["shadowMapVertexShader"] = Defaults.ShadowMapVertexShader;
+            BABYLON.Effect.ShadersStore["shadowMapPixelShader"] = Defaults.ShadowMapPixelShader;
+
+            BABYLON.Effect.ShadersStore["particlesVertexShader"] = Defaults.ParticlesVertexShader;
+            BABYLON.Effect.ShadersStore["particlesPixelShader"] = Defaults.ParticlesPixelShader;
+
+            BABYLON.Effect.ShadersStore["postprocessVertexShader"] = Defaults.PostProcessVertexShader;
+            BABYLON.Effect.ShadersStore["passPixelShader"] = Defaults.PassPixelShader;
+
+            BABYLON.Effect.ShadersStore["blurPixelShader"] = Defaults.BlurPixelShader;
 
             this.canvas = new CanvasAdapter(this.Width, this.Height, this.MaxWidth, this.MaxHeight, assetManager);
             this.engine = new Engine(canvas, true);
@@ -596,6 +607,268 @@ namespace BabylonAndroid
                 torus.rotation.z += 0.02;
                 torus2.rotation.x += 0.02;
                 torus2.rotation.y += 0.01;
+            });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene13()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 10, 0), scene);
+            var material = new BABYLON.StandardMaterial("kosh", scene);
+            var sphere = BABYLON.Mesh.CreateSphere("sphere0", 16, 1, scene);
+
+            camera.setPosition(new BABYLON.Vector3(-10, 10, 0));
+
+            // Sphere material
+            material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+            material.specularColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+            material.specularPower = 32;
+            material.checkReadyOnEveryCall = false;
+            sphere.material = material;
+
+            // Fog
+            scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+            scene.fogDensity = 0.05;
+
+            // Clone spheres
+            var random = new Random();
+            var playgroundSize = 50.0;
+            for (var index = 0; index < 8000; index++)
+            {
+                var clone = sphere.clone("sphere" + (index + 1), null, true);
+                var scale = random.NextDouble() * 0.8 + 0.6;
+                clone.scaling = new BABYLON.Vector3(scale, scale, scale);
+                clone.position = new BABYLON.Vector3(random.NextDouble() * 2.0 * playgroundSize - playgroundSize, random.NextDouble() * 2.0 * playgroundSize - playgroundSize, random.NextDouble() * 2.0 * playgroundSize - playgroundSize);
+            }
+            sphere.setEnabled(false);
+            scene.createOrUpdateSelectionOctree();
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene14()
+        {
+            SceneLoader.Load(
+                "",
+                "Dude.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
+        }
+
+        private void Scene15()
+        {
+            var scene = new BABYLON.Scene(engine);
+            var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, -1.0), scene);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 30, 0), scene);
+            camera.setPosition(new BABYLON.Vector3(20, 70, 120));
+            light.position = new BABYLON.Vector3(20, 150, 70);
+            camera.minZ = 10.0;
+
+            scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+
+            // Ground
+            var ground = BABYLON.Mesh.CreateGround("ground", 1000, 1000, 1, scene, false);
+            var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+            groundMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+            groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            ground.material = groundMaterial;
+            ground.receiveShadows = true;
+
+            // Shadows
+            var shadowGenerator = new BABYLON.ShadowGenerator(new BABYLON.Size() { width = 1024, height = 1024 }, light);
+
+            // Meshes
+            // Dude
+            BABYLON.SceneLoader.ImportMesh(new Array<string>("him"), "", "Dude.babylon", scene, (newMeshes2, particleSystems2, skeletons2) =>
+            {
+                this.scene = scene;
+                this.scene.activeCamera.attachControl(this.canvas);
+
+                var dude = newMeshes2[0];
+
+                for (var index = 0; index < newMeshes2.Length; index++)
+                {
+                    shadowGenerator.getShadowMap().renderList.Add(newMeshes2[index]);
+                }
+
+                dude.rotation.y = Math.PI;
+                dude.position = new BABYLON.Vector3(0, 0, -80);
+
+                scene.beginAnimation(skeletons2[0], 0, 100, true, 1.0);
+            });
+        }
+
+        private void Scene16()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -1, -0.2), scene);
+            var light2 = new BABYLON.DirectionalLight("dir02", new BABYLON.Vector3(-1, -2, -1), scene);
+            light.position = new BABYLON.Vector3(0, 30, 0);
+            light2.position = new BABYLON.Vector3(10, 20, 10);
+
+            light.intensity = 0.6;
+            light2.intensity = 0.6;
+
+            camera.setPosition(new BABYLON.Vector3(-40, 40, 0));
+            camera.lowerBetaLimit = (Math.PI / 2) * 0.9;
+
+            // Skybox
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+
+            // Spheres
+            var sphere0 = BABYLON.Mesh.CreateSphere("Sphere0", 16, 10, scene);
+            var sphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 16, 10, scene);
+            var sphere2 = BABYLON.Mesh.CreateSphere("Sphere2", 16, 10, scene);
+            var cube = BABYLON.Mesh.CreateBox("Cube", 10.0, scene);
+
+            var material0 = new BABYLON.StandardMaterial("white", scene);
+            material0.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material0.specularColor = new BABYLON.Color3(0, 0, 0);
+            material0.emissiveColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+            sphere0.material = material0;
+
+            sphere1.material = sphere0.material;
+            sphere2.material = sphere0.material;
+
+            var material1 = new BABYLON.StandardMaterial("red", scene);
+            material1.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material1.specularColor = new BABYLON.Color3(0, 0, 0);
+            material1.emissiveColor = new BABYLON.Color3(1.0, 0, 0);
+            cube.material = material1;
+
+            // Post-process
+            var blurWidth = 1.0;
+
+            var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+            var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", new Array<string>("screenSize", "highlightThreshold"), null, 0.25, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
+            postProcess1.onApply = (effect) =>
+            {
+                effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
+                effect.setFloat("highlightThreshold", 0.90);
+            };
+            var postProcess2 = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), blurWidth, 0.25, camera);
+            var postProcess3 = new BABYLON.BlurPostProcess("Vertical blur", new BABYLON.Vector2(0, 1.0), blurWidth, 0.25, camera);
+            var postProcess4 = new BABYLON.PostProcess("Final compose", "./postprocesses/compose", new Array<string>("sceneIntensity", "glowIntensity", "highlightIntensity"), new Array<string>("sceneSampler"), 1, camera, BABYLON.Texture.BILINEAR_SAMPLINGMODE);
+            postProcess4.onApply = (effect) =>
+            {
+                effect.setTextureFromPostProcess("sceneSampler", postProcess0);
+                effect.setFloat("sceneIntensity", 0.5);
+                effect.setFloat("glowIntensity", 0.4);
+                effect.setFloat("highlightIntensity", 1.0);
+            };
+
+            // Animations
+            var alpha = 0.0;
+            scene.registerBeforeRender(() =>
+            {
+                sphere0.position = new BABYLON.Vector3(20 * Math.Sin(alpha), 0, 20 * Math.Cos(alpha));
+                sphere1.position = new BABYLON.Vector3(20 * Math.Sin(alpha), 0, -20 * Math.Cos(alpha));
+                sphere2.position = new BABYLON.Vector3(20 * Math.Cos(alpha), 0, 20 * Math.Sin(alpha));
+
+                cube.rotation.y += 0.01;
+                cube.rotation.z += 0.01;
+
+                alpha += 0.01;
+            });
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene17()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            camera.setPosition(new BABYLON.Vector3(-5, 5, 0));
+            camera.lowerBetaLimit = 0.1;
+            camera.upperBetaLimit = (Math.PI / 2) * 0.99;
+            camera.lowerRadiusLimit = 5;
+
+            // Mirror
+            var mirror = BABYLON.Mesh.CreateBox("Mirror", 1.0, scene);
+            mirror.scaling = new BABYLON.Vector3(100.0, 0.01, 100.0);
+            var material = new BABYLON.StandardMaterial("mirror", scene);
+            material.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
+            material.specularColor = new BABYLON.Color3(0, 0, 0);
+            //material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
+            //material.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, 0.0);
+            //material.reflectionTexture.level = 0.2;
+            mirror.material = material;
+            mirror.position = new BABYLON.Vector3(0, 0.0, 0);
+
+            // Emitters
+            var emitter0 = BABYLON.Mesh.CreateBox("emitter0", 0.1, scene);
+            emitter0.isVisible = true;
+
+            var emitter1 = BABYLON.Mesh.CreateBox("emitter1", 0.1, scene);
+            emitter1.isVisible = true;
+
+            //mirror.material.reflectionTexture.renderList.push(emitter0);
+            //mirror.material.reflectionTexture.renderList.push(emitter1);
+
+            // Particles
+            var particleSystem = new BABYLON.ParticleSystem("particles", 4000, scene);
+            particleSystem.particleTexture = new BABYLON.Texture("Flare.png", scene);
+            particleSystem.minAngularSpeed = -0.5;
+            particleSystem.maxAngularSpeed = 0.5;
+            particleSystem.minSize = 0.1;
+            particleSystem.maxSize = 0.5;
+            particleSystem.minLifeTime = 0.5;
+            particleSystem.maxLifeTime = 2.0;
+            particleSystem.minEmitPower = 0.5;
+            particleSystem.maxEmitPower = 4.0;
+            particleSystem.emitter = emitter0;
+            particleSystem.emitRate = 400;
+            particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+            particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, 0, -0.5);
+            particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0, 0.5);
+            particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
+            particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
+            particleSystem.color1 = new BABYLON.Color4(1, 0, 0, 1);
+            particleSystem.color2 = new BABYLON.Color4(0, 1, 1, 1);
+            particleSystem.gravity = new BABYLON.Vector3(0, -2.0, 0);
+            particleSystem.start();
+
+            var particleSystem2 = new BABYLON.ParticleSystem("particles", 4000, scene);
+            particleSystem2.particleTexture = new BABYLON.Texture("Flare.png", scene);
+            particleSystem2.minSize = 0.1;
+            particleSystem2.maxSize = 0.3;
+            particleSystem2.minEmitPower = 1.0;
+            particleSystem2.maxEmitPower = 2.0;
+            particleSystem2.minLifeTime = 0.5;
+            particleSystem2.maxLifeTime = 1.0;
+            particleSystem2.emitter = emitter1;
+            particleSystem2.emitRate = 500;
+            particleSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+            particleSystem2.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+            particleSystem2.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
+            particleSystem2.gravity = new BABYLON.Vector3(0, -0.5, 0);
+            particleSystem2.direction1 = new BABYLON.Vector3(0, 0, 0);
+            particleSystem2.direction2 = new BABYLON.Vector3(0, 0, 0);
+            particleSystem2.start();
+
+            var alpha = 0.0;
+            scene.registerBeforeRender(() =>
+            {
+                emitter1.position.x = 3.0 * Math.Cos(alpha);
+                emitter1.position.y = 1.0;
+                emitter1.position.z = 3.0 * Math.Sin(alpha);
+
+                alpha += 0.05 * scene.getAnimationRatio();
             });
 
             this.scene.activeCamera.attachControl(this.canvas);
