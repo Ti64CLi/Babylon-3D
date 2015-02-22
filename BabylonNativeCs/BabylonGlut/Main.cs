@@ -799,7 +799,7 @@ namespace BabylonGlut
             var material = new BABYLON.StandardMaterial("mirror", scene);
             material.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
             material.specularColor = new BABYLON.Color3(0, 0, 0);
-            //material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
+            material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
             //material.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, 0.0);
             //material.reflectionTexture.level = 0.2;
             mirror.material = material;
@@ -807,10 +807,10 @@ namespace BabylonGlut
 
             // Emitters
             var emitter0 = BABYLON.Mesh.CreateBox("emitter0", 0.1, scene);
-            emitter0.isVisible = true;
+            emitter0.isVisible = false;
 
             var emitter1 = BABYLON.Mesh.CreateBox("emitter1", 0.1, scene);
-            emitter1.isVisible = true;
+            emitter1.isVisible = false;
 
             //mirror.material.reflectionTexture.renderList.push(emitter0);
             //mirror.material.reflectionTexture.renderList.push(emitter1);

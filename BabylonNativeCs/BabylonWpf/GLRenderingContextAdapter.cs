@@ -177,6 +177,7 @@
         {
             var val = new uint[1];
             this.openGl.GenTextures(1, val);
+            this.ErrorTest();
             return new WebGLTextureAdapter(val[0]);
         }
 
@@ -368,6 +369,7 @@
                 (uint)format,
                 (uint)type,
                 pixels.dataBytes);
+            this.ErrorTest();
         }
 
         public WebGLBuffer createBuffer()
@@ -497,6 +499,7 @@
         public void disableVertexAttribArray(int index)
         {
             this.openGl.DisableVertexAttribArray((uint)index);
+            this.ErrorTest();
         }
 
         public void blendFunc(int sfactor, int dfactor)
@@ -559,6 +562,8 @@
             var version = this.openGl.GetString(GL_SHADING_LANGUAGE_VERSION);
 
             result.AppendFormat("GL VERSION: {0}", version);
+
+            this.ErrorTest();
 
             return result.ToString();
         }
@@ -698,6 +703,7 @@
         public void blendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
         {
             this.openGl.BlendFuncSeparate((uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
+            this.ErrorTest();
         }
 
         public void stencilFuncSeparate(int face, int func, int _ref, int mask)
@@ -734,6 +740,7 @@
         public void generateMipmap(int target)
         {
             this.openGl.GenerateMipmapEXT((uint)target);
+            this.ErrorTest();
         }
 
         public void bindAttribLocation(WebGLProgram program, int index, string name)
@@ -840,6 +847,7 @@
         public void disable(int cap)
         {
             this.openGl.Disable((uint)cap);
+            this.ErrorTest();
         }
 
         public void vertexAttrib4fv(int indx, float[] values)
@@ -934,6 +942,7 @@
         public void activeTexture(int texture)
         {
             this.openGl.ActiveTexture((uint)texture);
+            this.ErrorTest();
         }
 
         public void viewport(int x, int y, int width, int height)
@@ -1031,6 +1040,7 @@
             WebGLRenderbuffer renderbuffer)
         {
             this.openGl.FramebufferRenderbufferEXT((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer.Value);
+            this.ErrorTest();
         }
 
         public void finish()
@@ -1041,11 +1051,13 @@
         public void uniform2f(WebGLUniformLocation location, double x, double y)
         {
             this.openGl.Uniform2(location.Value, (float)x, (float)y);
+            this.ErrorTest();
         }
 
         public void renderbufferStorage(int target, int internalformat, int width, int height)
         {
             this.openGl.RenderbufferStorageEXT((uint)target, (uint)internalformat, width, height);
+            this.ErrorTest();
         }
 
         public void uniform3f(WebGLUniformLocation location, double x, double y, double z)

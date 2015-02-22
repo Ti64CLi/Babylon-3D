@@ -1236,14 +1236,21 @@
             byte[] pixels)
         {
 #if _DEBUG
-            Log.Info(string.Format("texImage2D {0} {1} {2} {3} {4} {5} {6} {7} Pixels: {8}", target, level, internalformat, width, height, border, format, type, pixels.Length));
+            Log.Info(string.Format("texImage2D {0} {1} {2} {3} {4} {5} {6} {7} Pixels: {8}", target, level, internalformat, width, height, border, format, type, pixels != null ? pixels.Length.ToString() : "null"));
 #endif
 
             unsafe
             {
-                fixed (byte* pixelsPtr = pixels)
+                if (pixels != null)
                 {
-                    Gl.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
+                    fixed (byte* pixelsPtr = pixels)
+                    {
+                        Gl.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixelsPtr);
+                    }
+                }
+                else
+                {
+                    Gl.glTexImage2D(target, level, internalformat, width, height, border, format, type, null);
                 }
             }
 

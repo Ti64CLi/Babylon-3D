@@ -765,7 +765,7 @@ namespace BabylonWpf
             var material = new BABYLON.StandardMaterial("mirror", scene);
             material.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
             material.specularColor = new BABYLON.Color3(0, 0, 0);
-            //material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
+            material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
             //material.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, 0.0);
             //material.reflectionTexture.level = 0.2;
             mirror.material = material;
