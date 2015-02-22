@@ -15,6 +15,10 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
+        public Vector3 position;
+
+        /// <summary>
+        /// </summary>
         public Array<string> _excludedMeshesIds = new Array<string>();
 
         /// <summary>

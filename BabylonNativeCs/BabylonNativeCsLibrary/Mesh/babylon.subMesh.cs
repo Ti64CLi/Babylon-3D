@@ -380,6 +380,11 @@ namespace BABYLON
             this._boundingInfo._update(world);
         }
 
+        public override int GetHashCode()
+        {
+            return this._id.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             var subMesh = obj as SubMesh;

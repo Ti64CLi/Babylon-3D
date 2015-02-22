@@ -214,7 +214,19 @@ namespace BABYLON
         /// </returns>
         public virtual Vector3 getEmitterPosition()
         {
-            return ((Mesh)this._emitter).getAbsolutePosition();
+            var mesh = this._emitter as Mesh;
+            if (mesh != null)
+            {
+                return mesh.getAbsolutePosition();
+            }
+
+            var light = this._emitter as Light;
+            if (light != null)
+            {
+                return light.position;
+            }
+
+            throw new NotImplementedException();
         }
 
         /// <summary>

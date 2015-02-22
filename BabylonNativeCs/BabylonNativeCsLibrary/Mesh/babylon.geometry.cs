@@ -742,12 +742,12 @@ namespace BABYLON
                     this.size = size;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateBox(this.size);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Box(id, this.getScene(), this.size, this.canBeRegenerated(), null);
                 }
@@ -767,12 +767,12 @@ namespace BABYLON
                     this.diameter = diameter;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateSphere(this.segments, this.diameter);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Sphere(id, this.getScene(), this.segments, this.diameter, this.canBeRegenerated(), null);
                 }
@@ -797,12 +797,12 @@ namespace BABYLON
                     this.subdivisions = subdivisions;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateCylinder(this.height, this.diameterTop, this.diameterBottom, this.tessellation, this.subdivisions);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Cylinder(id, this.getScene(), this.height, this.diameterTop, this.diameterBottom, this.tessellation, this.subdivisions, this.canBeRegenerated(), null);
                 }
@@ -823,12 +823,12 @@ namespace BABYLON
                     this.tessellation = tessellation;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateTorus(this.diameter, this.thickness, this.tessellation);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Torus(id, this.getScene(), this.diameter, this.thickness, this.tessellation, this.canBeRegenerated(), null);
                 }
@@ -849,12 +849,12 @@ namespace BABYLON
                     this.subdivisions = subdivisions;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateGround(this.width, this.height, this.subdivisions);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Ground(id, this.getScene(), this.width, this.height, this.subdivisions, this.canBeRegenerated(), null);
                 }
@@ -881,12 +881,12 @@ namespace BABYLON
                     this.precision = precision;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateTiledGround(this.xmin, this.zmin, this.xmax, this.zmax, this.subdivisions, this.precision);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new TiledGround(id, this.getScene(), this.xmin, this.zmin, this.xmax, this.zmax, this.subdivisions, this.precision, this.canBeRegenerated(), null);
                 }
@@ -903,12 +903,12 @@ namespace BABYLON
                     this.size = size;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreatePlane(this.size);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new Box(id, this.getScene(), this.size, this.canBeRegenerated(), null);
                 }
@@ -935,12 +935,12 @@ namespace BABYLON
                     this.q = q;
                 }
 
-                public VertexData _regenerateVertexData()
+                public override VertexData _regenerateVertexData()
                 {
                     return VertexData.CreateTorusKnot(this.radius, this.tube, this.radialSegments, this.tubularSegments, this.p, this.q);
                 }
 
-                public Geometry copy(int id)
+                public override Geometry copy(int id)
                 {
                     return new TorusKnot(id, this.getScene(), this.radius, this.tube, this.radialSegments, this.tubularSegments, this.p, this.q, this.canBeRegenerated(), null);
                 }

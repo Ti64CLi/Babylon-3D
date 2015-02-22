@@ -53,6 +53,9 @@ namespace BabylonWpf
             BABYLON.Effect.ShadersStore["particlesVertexShader"] = Defaults.ParticlesVertexShader;
             BABYLON.Effect.ShadersStore["particlesPixelShader"] = Defaults.ParticlesPixelShader;
 
+            BABYLON.Effect.ShadersStore["lensFlareVertexShader"] = Defaults.LensFlareVertexShader;
+            BABYLON.Effect.ShadersStore["lensFlarePixelShader"] = Defaults.LensFlarePixelShader;
+
             BABYLON.Effect.ShadersStore["postprocessVertexShader"] = Defaults.PostProcessVertexShader;
             BABYLON.Effect.ShadersStore["passPixelShader"] = Defaults.PassPixelShader;
 
@@ -62,7 +65,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene17();
+            this.Scene18();
         }
 
         private void Scene1()
@@ -765,9 +768,11 @@ namespace BabylonWpf
             var material = new BABYLON.StandardMaterial("mirror", scene);
             material.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
             material.specularColor = new BABYLON.Color3(0, 0, 0);
-            material.reflectionTexture = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
-            //material.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, 0.0);
-            //material.reflectionTexture.level = 0.2;
+
+            //var reflectionTexture0 = new BABYLON.MirrorTexture("mirror", new BABYLON.Size { width = 512, height = 512 }, scene, true);
+            //reflectionTexture0.mirrorPlane = new BABYLON.Plane(0, -1.0, 0, 0.0);
+            //reflectionTexture0.level = 0.2;
+            //material.reflectionTexture = reflectionTexture0;
             mirror.material = material;
             mirror.position = new BABYLON.Vector3(0, 0.0, 0);
 
@@ -780,7 +785,7 @@ namespace BabylonWpf
 
             //mirror.material.reflectionTexture.renderList.push(emitter0);
             //mirror.material.reflectionTexture.renderList.push(emitter1);
-            
+
             // Particles
             var particleSystem = new BABYLON.ParticleSystem("particles", 4000, scene);
             particleSystem.particleTexture = new BABYLON.Texture("Flare.png", scene);
@@ -835,12 +840,53 @@ namespace BabylonWpf
             this.scene.activeCamera.attachControl(this.canvas);
         }
 
+        private void Scene18()
+        {
+            this.scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+            var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(21.84, 50, -28.26), scene);
+
+            camera.alpha = 2.8;
+            camera.beta = 2.25;
+
+            // Creating light sphere
+            var lightSphere0 = BABYLON.Mesh.CreateSphere("Sphere0", 16, 0.5, scene);
+
+            var material0 = new BABYLON.StandardMaterial("white", scene);
+            material0.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            material0.specularColor = new BABYLON.Color3(0, 0, 0);
+            material0.emissiveColor = new BABYLON.Color3(1, 1, 1);
+            lightSphere0.material = material0;
+
+            lightSphere0.position = light0.position;
+
+            var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", light0, scene);
+            var flare00 = new BABYLON.LensFlare(0.2, 0, new BABYLON.Color3(1, 1, 1), "lens5.png", lensFlareSystem);
+            var flare01 = new BABYLON.LensFlare(0.5, 0.2, new BABYLON.Color3(0.5, 0.5, 1), "lens4.png", lensFlareSystem);
+            var flare02 = new BABYLON.LensFlare(0.2, 1.0, new BABYLON.Color3(1, 1, 1), "lens4.png", lensFlareSystem);
+            var flare03 = new BABYLON.LensFlare(0.4, 0.4, new BABYLON.Color3(1, 0.5, 1), "Flare.png", lensFlareSystem);
+            var flare04 = new BABYLON.LensFlare(0.1, 0.6, new BABYLON.Color3(1, 1, 1), "lens5.png", lensFlareSystem);
+            var flare05 = new BABYLON.LensFlare(0.3, 0.8, new BABYLON.Color3(1, 1, 1), "lens4.png", lensFlareSystem);
+
+            // Skybox
+            var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("skybox", scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+
+            this.scene.activeCamera.attachControl(this.canvas);
+        }
+
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             //  Get the OpenGL instance. 
             //var gl = args.OpenGL;
             //gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-             this.scene.render();
+            this.scene.render();
         }
 
         private void openGLControl1_Resized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)

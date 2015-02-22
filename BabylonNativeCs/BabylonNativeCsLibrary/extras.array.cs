@@ -351,10 +351,10 @@ namespace BABYLON
         /// </param>
         public void Sort(Func<T, T, int> compareFn)
         {
-            Array.Sort(this._items, new CompareAdapter<T>(compareFn));
+            Array.Sort(this._items, new CompareAdapter(compareFn));
         }
 
-        public class CompareAdapter<T> : IComparer<T>
+        public class CompareAdapter : IComparer<T>
         {
             private Func<T, T, int> _compareFn;
 

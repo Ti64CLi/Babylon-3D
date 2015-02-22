@@ -1998,5 +1998,43 @@ void main(void) {
 
 	gl_FragColor = (baseColor * textureMask + (vec4(1., 1., 1., 1.) - textureMask)) * vColor;
 }";
+
+        public const string LensFlareVertexShader = @"#ifdef GL_ES
+precision highp float;
+#endif
+
+// Attributes
+attribute vec2 position;
+
+// Uniforms
+uniform mat4 viewportMatrix;
+
+// Output
+varying vec2 vUV;
+
+const vec2 madd = vec2(0.5, 0.5);
+
+void main(void) {	
+
+	vUV = position * madd + madd;
+	gl_Position = viewportMatrix * vec4(position, 0.0, 1.0);
+}";
+
+        public const string LensFlarePixelShader = @"#ifdef GL_ES
+precision highp float;
+#endif
+
+// Samplers
+varying vec2 vUV;
+uniform sampler2D textureSampler;
+
+// Color
+uniform vec4 color;
+
+void main(void) {
+	vec4 baseColor = texture2D(textureSampler, vUV);
+
+	gl_FragColor = baseColor * color;
+}";
     }
 }

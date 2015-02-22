@@ -881,12 +881,6 @@ namespace BABYLON
             base.dispose(doNotRecurse);
         }
 
-        public Array<Animation> animations
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         /// <summary>
         /// </summary>
         /// <returns>
@@ -1384,6 +1378,11 @@ namespace BABYLON
                 this.makeGeometryUnique();
                 this.updateVerticesData(kind, data, updateExtends, false);
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.name.GetHashCode();
         }
 
         public override bool Equals(object obj)

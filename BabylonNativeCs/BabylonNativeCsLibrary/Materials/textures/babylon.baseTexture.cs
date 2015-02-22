@@ -59,7 +59,7 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public int level = 1;
+        public double level = 1.0;
 
         /// <summary>
         /// </summary>

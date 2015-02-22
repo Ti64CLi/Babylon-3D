@@ -302,6 +302,11 @@ namespace BABYLON
         {
         }
 
+        public override int GetHashCode()
+        {
+            return this.name.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             var material = obj as Material;

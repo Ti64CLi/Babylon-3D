@@ -25,10 +25,6 @@ namespace BABYLON
 
         /// <summary>
         /// </summary>
-        public Array<Animation> animations = new Array<Animation>();
-
-        /// <summary>
-        /// </summary>
         public string id;
 
         /// <summary>
@@ -71,6 +67,12 @@ namespace BABYLON
             this.id = name;
             this._scene = scene;
             this._initCache();
+        }
+
+        public Array<Animation> animations
+        {
+            get;
+            set;
         }
 
         /// <summary>

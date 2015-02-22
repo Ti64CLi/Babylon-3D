@@ -489,12 +489,6 @@ namespace BABYLON
             set { throw new System.NotImplementedException(); }
         }
 
-        public Array<Animation> animations
-        {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
         public Array<IAnimatable> getAnimatables()
         {
             throw new System.NotImplementedException();

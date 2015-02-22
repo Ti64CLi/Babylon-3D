@@ -15,10 +15,6 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
-        public string url;
-
-        /// <summary>
-        /// </summary>
         private readonly Array<string> _extensions;
 
         /// <summary>

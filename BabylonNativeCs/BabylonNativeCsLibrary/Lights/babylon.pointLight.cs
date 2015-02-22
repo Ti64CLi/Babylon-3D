@@ -15,10 +15,6 @@ namespace BABYLON
     {
         /// <summary>
         /// </summary>
-        public Vector3 position;
-
-        /// <summary>
-        /// </summary>
         private Vector3 _transformedPosition;
 
         /// <summary>
