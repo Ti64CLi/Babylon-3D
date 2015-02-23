@@ -904,7 +904,7 @@ namespace BabylonWpf
             skybox.material = skyboxMaterial;
 
             // depth material
-            BABYLON.Effect.ShadersStore["depthVertexShader"] = 
+            BABYLON.Effect.ShadersStore["depthVertexShader"] =
                 "#ifdef GL_ES\n" +
                 "precision highp float;\n" +
                 "#endif\n" +
@@ -971,7 +971,8 @@ namespace BabylonWpf
             // Spheres
             var spheresCount = 20;
             var alpha = 0.0;
-            for (var index = 0; index < spheresCount; index++) {
+            for (var index = 0; index < spheresCount; index++)
+            {
                 var sphere = BABYLON.Mesh.CreateSphere("Sphere" + index, 32, 3, scene);
                 sphere.position.x = 10 * Math.Cos(alpha);
                 sphere.position.z = 10 * Math.Sin(alpha);
@@ -990,17 +991,18 @@ namespace BabylonWpf
 
             plane.material = mat;
 
-
             // Animations
             var isReady = false;
-            scene.registerBeforeRender(() => {
+            scene.registerBeforeRender(() =>
+            {
                 camera.alpha += 0.01 * scene.getAnimationRatio();
 
-                if (!isReady && scene.isReady()) {
+                if (!isReady && scene.isReady())
+                {
                     isReady = true;
                 }
             });
-            
+
             this.scene.activeCamera.attachControl(this.canvas);
         }
 

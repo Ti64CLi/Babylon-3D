@@ -170,7 +170,7 @@ namespace BABYLON
         /// </summary>
         /// <returns>
         /// </returns>
-        public virtual bool isReady()
+        public override bool isReady(AbstractMesh mesh = null, bool useInstances = false)
         {
             var engine = this.getScene().getEngine();
             this._effect = engine.createEffect(

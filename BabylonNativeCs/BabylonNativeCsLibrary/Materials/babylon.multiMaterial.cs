@@ -51,7 +51,7 @@ namespace BABYLON
         /// </param>
         /// <returns>
         /// </returns>
-        public virtual bool isReady(AbstractMesh mesh = null)
+        public override bool isReady(AbstractMesh mesh = null, bool useInstances = false)
         {
             for (var index = 0; index < this.subMaterials.Length; index++)
             {
