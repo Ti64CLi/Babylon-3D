@@ -65,7 +65,7 @@ namespace BabylonWpf
             this.engine = new Engine(canvas, true);
             this.scene = new BABYLON.Scene(this.engine);
 
-            this.Scene19();
+            this.Scene20();
         }
 
         private void Scene1()
@@ -1004,6 +1004,23 @@ namespace BabylonWpf
             });
 
             this.scene.activeCamera.attachControl(this.canvas);
+        }
+
+        private void Scene20()
+        {
+            SceneLoader.Load(
+                "",
+                "SSAOcat.babylon",
+                engine,
+                loadedScene =>
+                {
+                    this.scene = loadedScene;
+                    // Attach the camera to the scene
+                    var camera = new ArcRotateCamera("Camera", 0, 0.8, 100, this.scene.meshes[0], scene);
+                    this.scene.activeCamera.detachControl(this.canvas);
+                    this.scene.activeCamera = camera;
+                    this.scene.activeCamera.attachControl(this.canvas);
+                });
         }
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)

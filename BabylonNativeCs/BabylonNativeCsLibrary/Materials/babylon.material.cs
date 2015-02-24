@@ -85,6 +85,8 @@ namespace BABYLON
         /// </param>
         public Material(string name, Scene scene, bool doNotAdd = false)
         {
+            this.animations = new Array<Animation>();
+
             this.id = name;
             this.name = name;
             this._scene = scene;
@@ -119,10 +121,7 @@ namespace BABYLON
         /// </summary>
         public virtual Array<Animation> animations
         {
-            get
-            {
-                return null;
-            }
+            get; set;
         }
 
         /// <summary>
@@ -130,23 +129,6 @@ namespace BABYLON
         /// <exception cref="NotImplementedException">
         /// </exception>
         public object value
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <exception cref="NotImplementedException">
-        /// </exception>
-        Array<Animation> IAnimatable.animations
         {
             get
             {
