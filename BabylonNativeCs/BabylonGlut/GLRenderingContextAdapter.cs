@@ -844,7 +844,7 @@
                 unsafe
                 {
                     var result = Gl.glGetString(Gl.GL_EXTENSIONS);
-                    var ext = new string(result);
+                    var ext = new string((sbyte*)result);
 
 #if _DEBUG
                     Log.Info(string.Format("Extension: {0}", ext));

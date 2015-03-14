@@ -780,17 +780,20 @@ namespace BABYLON.Internals
                 {
                     mesh.setVerticesData(BABYLON.VertexBufferKind.PositionKind, Array<double>.New(positions), false);
                     mesh.setVerticesData(BABYLON.VertexBufferKind.NormalKind, Array<double>.New(normals), false);
-                    if (parsedGeometry["uvs"])
+                    var uvs = parsedGeometry["uvs"];
+                    if (uvs)
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, Array<double>.New(parsedGeometry["uvs"]), false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.UVKind, Array<double>.New(uvs), false);
                     }
-                    if (parsedGeometry["uvs2"])
+                    var uvs2 = parsedGeometry["uvs2"];
+                    if (uvs2)
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, Array<double>.New(parsedGeometry["uvs2"]), false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.UV2Kind, Array<double>.New(uvs2), false);
                     }
-                    if (parsedGeometry["colors"])
+                    var colors = parsedGeometry["colors"];
+                    if (colors)
                     {
-                        mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, Array<double>.New(parsedGeometry["colors"]), false);
+                        mesh.setVerticesData(BABYLON.VertexBufferKind.ColorKind, Array<double>.New(colors), false);
                     }
                     var matricesIndices = parsedGeometry["matricesIndices"];
                     if (matricesIndices)
@@ -813,11 +816,13 @@ namespace BABYLON.Internals
                             mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesIndicesKind, Array<double>.New(matricesIndices), false);
                         }
                     }
+                    
                     var matricesWeights = parsedGeometry["matricesWeights"];
                     if (matricesWeights)
                     {
                         mesh.setVerticesData(BABYLON.VertexBufferKind.MatricesWeightsKind, Array<double>.New(matricesWeights), false);
                     }
+
                     mesh.setIndices(Array<int>.New(ArrayConvert.AsInt(indices)));
                 }
             }
